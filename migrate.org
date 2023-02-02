@@ -1,0 +1,183 @@
+#+TITLE: migrate from doom to guix-home style emacs
+
+* Prep
+
+** Doom
+
+*** Collect list of packages required by doom emacs
+
+#+begin_src shell :results output file :file doom.pkg
+find ~/.emacs.doom/.local/straight/repos/ -maxdepth 1 -type d | sed -e "s/^.*\.local\/straight\/repos\///" | sort
+#+end_src
+
+#+name: pkg-doom
+#+RESULTS:
+[[file:doom.pkg]]
+
+** Daviwil
+
+*** Collect list of packages required by daviwil emacs
+
+#+begin_src shell :results output file :file daviwil.pkg
+grep -re "^\s*(setup (:pkg" ~/.emacs.new/.emacs.daviwil/modules/ \
+    | sed -e "s/^.*:pkg//" \
+    | sed -e "s/[):].*$//" \
+    | sort
+#+end_src
+
+#+name: pkg-daviwil
+#+RESULTS:
+[[file:daviwil.pkg]]
+
+*** Collect list of packages via straight
+
+#+begin_src shell :results output file :file daviwil-straight.pkg
+grep -re "^\s*(setup (:pkg.*:straight" ~/.emacs.new/.emacs.daviwil/modules/ \
+    | sed -e "s/^.*:pkg//" \
+    | sed -e "s/[):].*$//" \
+    | sort
+#+end_src
+
+#+name: pkg-daviwil-straight
+#+RESULTS:
+[[file:daviwil-straight.pkg]]
+
+
+** Packages
+
+*** All packages
+
+#+begin_src shell :results output file :file all-packages.pkg
+cat doom.pkg daviwil.pkg | sort
+#+end_src
+
+#+RESULTS:
+[[file:all-packages.pkg]]
+
+*** Merge package lists
+
+**** Guix packages from daviwil
+
+#+begin_src shell :results output file :file daviwil-guix.pkg
+diff --ignore-all-space daviwil.pkg daviwil-straight.pkg | grep -e "^<" | sed -e 's/^<\s*//' | sort
+#+end_src
+
+#+RESULTS:
+[[file:daviwil-guix.pkg]]
+
+***** emit the initial guix manifest
+
+This could be a scheme script that programmatically defines a manifest
+
+#+begin_src shell :results output file :file daviwil.scm
+echo "(specifications->manifest '("
+awk '{prif}'
+
+echo "     ))"
+#+end_src
+
+**** Packages unique to doom
+
+#+begin_src shell :results output file :file doom-only.pkg
+diff --ignore-all-space doom.pkg daviwil.pkg | grep -e "^<" | sed -e 's/^<\s*//' | sort
+#+end_src
+
+#+RESULTS:
+[[file:doom-only.pkg]]
+
+**** Packages unique to daviwil
+
+#+begin_src shell :results output file :file daviwil-only.pkg
+diff --ignore-all-space daviwil.pkg doom.pkg | grep -e "^<" | sed -e 's/^<\s*//' | sort
+#+end_src
+
+#+RESULTS:
+[[file:daviwil-only.pkg]]
+
+*** Guix Graph
+
+#+begin_src shell :results output file :file ./daviwil-guix.png
+guix graph emacs-0x0  emacs-a emacs-ace-window emacs-alert emacs-all-the-icons-dired emacs-apheleia emacs-app-launcher emacs-auth-source-pass emacs-avy emacs-buffer-env emacs-consult emacs-consult-dir emacs-corfu emacs-daemons emacs-default-text-scale emacs-desktop-environment emacs-dired-collapse emacs-dired-rainbow emacs-dired-ranger emacs-docker emacs-doom-modeline emacs-doom-themes emacs-eglot emacs-elfeed emacs-elpher emacs-embark emacs-emms emacs-esh-autosuggest emacs-eshell-syntax-highlighting emacs-eshell-toggle emacs-eshell-z emacs-evil emacs-evil-collection emacs-evil-nerd-commenter emacs-evil-org emacs-exec-path-from-shell emacs-exwm emacs-geiser emacs-general emacs-git-link emacs-guix emacs-helpful emacs-hydra emacs-jabber emacs-js2-mode emacs-keycast emacs-kind-icon emacs-ledger-mode emacs-lispy emacs-lispyville emacs-live-crafter emacs-magit emacs-marginalia emacs-markdown-mode emacs-minions emacs-no-littering emacs-obs-websocket  emacs-openwith emacs-orderless emacs-org emacs-org-appear emacs-org-make-toc emacs-org-pomodoro emacs-org-present emacs-org-roam emacs-password-store emacs-pcmpl-args emacs-popper emacs-posframe emacs-project emacs-pulseaudio-control emacs-rainbow-delimiters emacs-rainbow-mode emacs-request emacs-scheme-mode emacs-skewer-mode emacs-sly emacs-smartparens emacs-super-save emacs-telega emacs-tmr emacs-tracking emacs-typescript-mode emacs-undo-tree emacs-vertico emacs-visual-fill-column emacs-vterm emacs-web-mode emacs-wgrep emacs-ws-butler emacs-xterm-color emacs-yaml-mode emacs-yasnippet \
+    | dot -Tpng -o .cache/guix.png
+#+end_src
+
+** Packages for Features
+
+*** For latex
+
+#+begin_src shell :results output table
+grep -e "tex" *-only.pkg | sed -e "s/:/\t/"
+#+end_src
+
+#+RESULTS:
+| daviwil-only.pkg | default-text-scale |
+| doom-only.pkg    | auctex             |
+| doom-only.pkg    | cdlatex            |
+| doom-only.pkg    | company-auctex     |
+| doom-only.pkg    | company-reftex     |
+| doom-only.pkg    | helm-bibtex        |
+| doom-only.pkg    | latex-preview-pane |
+
+* Modules
+
+** Daviwil
+
+Evilmode is set up. I guess i'll give it a try...
+
+*** auth
+
++ contains pgp/pinentry
+
+*** autorest
+
+*** core
+
++ needed, minimal changes
+
+*** desktop (n/a)
+
+*** dev
+
++ contains lispyville config
+
+*** dev-misc
+
++ zig-mode ... i'm just going to zag
+
+*** dev-web
+
+n/a for now
+
+*** exwm
+
+*** finance
+
+*** interface
+
+*** mail
+
+*** media
+
+*** org
+
+*** package
+
+*** present
+
+*** settings
+
+*** shell
+
+*** social
+
+*** streaming
+
+*** swagger
+
+*** system
+
+*** vimb
+
+*** workflow
+
++ contains org-roam
