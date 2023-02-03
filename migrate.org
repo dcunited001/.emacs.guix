@@ -152,6 +152,9 @@ Evilmode is set up. I guess i'll give it a try...
 
 **** dev
 
++ requires:
+  - dw/adl-mode.el
+
 + contains lispyville config
 + packages
   - rainbow-delimiters
@@ -192,6 +195,9 @@ Evilmode is set up. I guess i'll give it a try...
 
 **** workflow (515 LOC)
 
++ requires:
+  - dw-org
+
 + org
   - reset org-directory
 + org-agenda
@@ -202,6 +208,51 @@ Evilmode is set up. I guess i'll give it a try...
   - remove org-habit
 + org-modern
   - try fetching from guix
+
+org-src-lang-modes
+
+#+begin_example
+Value
+(("dot" . graphviz-dot)
+ ("translate" . text)
+ ("md" . markdown)
+ ("C" . c)
+ ("C++" . c++)
+ ("asymptote" . asy)
+ ("bash" . sh)
+ ("beamer" . latex)
+ ("calc" . fundamental)
+ ("cpp" . c++)
+ ("ditaa" . artist)
+ ("desktop" . conf-desktop)
+ ("dot" . fundamental)
+ ("elisp" . emacs-lisp)
+ ("ocaml" . tuareg)
+ ("screen" . shell-script)
+ ("shell" . sh)
+ ("sqlite" . sql)
+ ("toml" . conf-toml))
+
+Original Value
+(("C" . c)
+ ("C++" . c++)
+ ("asymptote" . asy)
+ ("bash" . sh)
+ ("beamer" . latex)
+ ("calc" . fundamental)
+ ("cpp" . c++)
+ ("ditaa" . artist)
+ ("desktop" . conf-desktop)
+ ("dot" . fundamental)
+ ("elisp" . emacs-lisp)
+ ("ocaml" . tuareg)
+ ("screen" . shell-script)
+ ("shell" . sh)
+ ("sqlite" . sql)
+ ("toml" . conf-toml))
+
+#+end_example
+
 
 **** social
 

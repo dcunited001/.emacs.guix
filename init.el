@@ -15,15 +15,15 @@
                              ;; (setq gc-cons-threshold (* 2 1000 1000))
                              (setq gc-cons-threshold (* 20 1000 1000))))
 
-(setq dc/emacs-chemacs "~/.emacs.d"
-      dc/emacs-d "~/.emacs.new"
-      dc/emacs-cache "~/.cache/emacs"
+(setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
+      dc/emacs-d (expand-file-name "~/.emacs.guix/")
+      dc/emacs-cache (expand-file-name "~/.cache/emacs/")
       dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
       dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules"))
 
-(setq org-directory (getenv "ORG_DIRECTORY")
-      org-roam-directory (concat (file-name-as-directory org-directory) "roam")
-      org-roam-db-location (concat (file-name-as-directory (concat (getenv "HOME") "/.local/share/org-roam")) "org-roam.db")
+(setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
+      org-roam-directory (concat org-directory "roam")
+      org-roam-db-location (expand-file-name "~/.local/share/org-roam/org-roam.db")
       org-roam-file-extensions '("org"))
 
 ;; Add configuration modules to load path
@@ -33,17 +33,25 @@
 ;; Load pertinent modules
 (require 'dw-package)
 ;; (require 'dw-settings) ;; TODO: per-system-settings
-(require 'dw-core)
-(require 'dw-interface)
-(require 'dc-auth)
+
+;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
+;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
+
+;; (require 'dw-core)
+;; (require 'dw-interface)
+;; (require 'dc-auth)
+
+
 ;; (require 'dw-shell)
 ;; (require 'dw-dev)
 ;; (require 'dw-dev-web)
-(require 'dc-workflow)
+
+;; (require 'dc-workflow)
+
 ;; (require 'dw-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
-
 
 ;; activated outside of init.el
 ;; (require 'dw-mail) ;; n/a

@@ -1,8 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+;;;* ORG
 (require 'dw-org)
-
-;;; -- General Org Mode Config -----
 
 ;; '("Cadl.org" "Personal.org" "Mesche.org" "SystemCrafters.org")
 (setq org-agenda-files nil)
@@ -25,50 +24,57 @@
 (when dw/is-guix-system
   (straight-use-package '(org :type built-in)))
 
+;;** ORG
+
+;;*** org-mode main config
+
 (setup (:pkg org)
-  (:also-load org-tempo)
-  (:hook dw/org-mode-setup)
-  (setq org-ellipsis " ▾"
-        org-hide-emphasis-markers t
-        org-src-fontify-natively t
-        org-fontify-quote-and-verse-blocks t
-        org-src-tab-acts-natively t
-        org-edit-src-content-indentation 2
-        org-hide-block-startup nil
-        org-src-preserve-indentation nil
-        org-startup-folded 'content
-        org-cycle-separator-lines 2
-        org-capture-bookmark nil)
+       (:also-load org-tempo)
+       (:hook dw/org-mode-setup)
+       (setq org-ellipsis " ▾"
+             org-hide-emphasis-markers t
+             org-src-fontify-natively t
+             org-fontify-quote-and-verse-blocks t
+             org-src-tab-acts-natively t
+             org-edit-src-content-indentation 2
+             org-hide-block-startup nil
+             org-src-preserve-indentation nil
+             org-startup-folded 'content
+             org-cycle-separator-lines 2
+             org-capture-bookmark nil)
 
-  (setq org-modules
-    '(org-crypt
-        org-habit
-        org-bookmark
-        org-eshell
-        org-irc))
+       (setq org-modules
+             '(org-crypt
+               ;; org-habit
+               ;; org-eshell
+               ;; org-irc
+               org-bookmark))
 
-  (setq org-refile-targets '((nil :maxlevel . 1)
-                             (org-agenda-files :maxlevel . 1)))
+       (setq org-refile-targets '((nil :maxlevel . 1)
+                                  (org-agenda-files :maxlevel . 1)))
 
-  (setq org-outline-path-complete-in-steps nil)
-  (setq org-refile-use-outline-path t)
+       (setq org-outline-path-complete-in-steps nil)
+       (setq org-refile-use-outline-path t)
 
-  (evil-define-key '(normal insert visual) org-mode-map (kbd "C-j") 'org-next-visible-heading)
-  (evil-define-key '(normal insert visual) org-mode-map (kbd "C-k") 'org-previous-visible-heading)
+       (evil-define-key '(normal insert visual) org-mode-map (kbd "C-j") 'org-next-visible-heading)
+       (evil-define-key '(normal insert visual) org-mode-map (kbd "C-k") 'org-previous-visible-heading)
 
-  (evil-define-key '(normal insert visual) org-mode-map (kbd "M-j") 'org-metadown)
-  (evil-define-key '(normal insert visual) org-mode-map (kbd "M-k") 'org-metaup)
+       (evil-define-key '(normal insert visual) org-mode-map (kbd "M-j") 'org-metadown)
+       (evil-define-key '(normal insert visual) org-mode-map (kbd "M-k") 'org-metaup)
 
-  (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((emacs-lisp . t)))
-      ;(ledger . t))) -- Not working right now
+       (org-babel-do-load-languages
+        'org-babel-load-languages
+        '((emacs-lisp . t)))
+                                        ;(ledger . t))) -- Not working right now
 
-  (push '("conf-unix" . conf-unix) org-src-lang-modes))
+       (push '("conf-unix" . conf-unix) org-src-lang-modes))
+
+;;*** org-faces
 
 ;; TODO: Pull from Guix
 (setup (:pkg org-modern :straight t)
-  (global-org-modern-mode))
+       (global-org-modern-mode))
+
 
 ;; (unless dw/is-termux
 ;;   (setup (:pkg org-superstar)
@@ -83,36 +89,36 @@
 ;;                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (setup org-faces
-  ;; Make sure org-indent face is available
-  (:also-load org-indent)
-  (:when-loaded
-    ;; Increase the size of various headings
-    (set-face-attribute 'org-document-title nil :font "Iosevka Aile" :weight 'bold :height 1.3)
+       ;; Make sure org-indent face is available
+       (:also-load org-indent)
+       (:when-loaded
+        ;; Increase the size of various headings
+        (set-face-attribute 'org-document-title nil :font "Iosevka Aile" :weight 'bold :height 1.3)
 
-    (dolist (face '((org-level-1 . 1.2)
-                    (org-level-2 . 1.1)
-                    (org-level-3 . 1.05)
-                    (org-level-4 . 1.0)
-                    (org-level-5 . 1.1)
-                    (org-level-6 . 1.1)
-                    (org-level-7 . 1.1)
-                    (org-level-8 . 1.1)))
-      (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'medium :height (cdr face)))
+        (dolist (face '((org-level-1 . 1.2)
+                        (org-level-2 . 1.1)
+                        (org-level-3 . 1.05)
+                        (org-level-4 . 1.0)
+                        (org-level-5 . 1.1)
+                        (org-level-6 . 1.1)
+                        (org-level-7 . 1.1)
+                        (org-level-8 . 1.1)))
+          (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'medium :height (cdr face)))
 
-    ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-    (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-    (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
-    (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-    (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
-    (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-    (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-    (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+        ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+        (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+        (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
+        (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+        (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+        (set-face-attribute 'org-indent nil :inherit '(org-hide fixed-pitch))
+        (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+        (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+        (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+        (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-    ;; Get rid of the background on column views
-    (set-face-attribute 'org-column nil :background nil)
-    (set-face-attribute 'org-column-title nil :background nil)))
+        ;; Get rid of the background on column views
+        (set-face-attribute 'org-column nil :background nil)
+        (set-face-attribute 'org-column-title nil :background nil)))
 
 ;; TODO: Others to consider
 ;; '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
@@ -123,36 +129,73 @@
 ;; '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
 ;; '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
+;;*** org-tempo
+;; autoexpand snippets
 ;; This is needed as of Org 9.2
 (setup org-tempo
-  (:when-loaded
-    (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-    (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
-    (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
-    (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
-    (add-to-list 'org-structure-template-alist '("py" . "src python"))
-    (add-to-list 'org-structure-template-alist '("go" . "src go"))
-    (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
-    (add-to-list 'org-structure-template-alist '("json" . "src json"))))
+       (:when-loaded
+        (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+        (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+        (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
+        (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+        (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+        (add-to-list 'org-structure-template-alist '("py" . "src python"))
+        (add-to-list 'org-structure-template-alist '("go" . "src go"))
+        (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+        (add-to-list 'org-structure-template-alist '("json" . "src json"))))
 
-(setup (:pkg org-pomodoro)
-  (setq org-pomodoro-start-sound "~/.dotfiles/.emacs.d/sounds/focus_bell.wav")
-  (setq org-pomodoro-short-break-sound "~/.dotfiles/.emacs.d/sounds/three_beeps.wav")
-  (setq org-pomodoro-long-break-sound "~/.dotfiles/.emacs.d/sounds/three_beeps.wav")
-  (setq org-pomodoro-finished-sound "~/.dotfiles/.emacs.d/sounds/meditation_bell.wav")
+;;*** org-agenda packages
 
-  (dw/leader-key-def
-    "op"  '(org-pomodoro :which-key "pomodoro")))
+;;*** org-agenda config
+
+;;**** org-clock
+
+;;*** org-roam
+
+;;**** org-roam-protocol
+
+;;*** org-roam: daviwil
+
+;;****  Project Templates
+
+;;**** Roam Node Insert
+
+;;**** Roam Capture Task: project captures
+
+;;*** org-capture
+
+;;**** org-capture protocols
 
 (require 'org-protocol)
 
+;;*** org-refile
+
+;;*** org-mode misc
+
+;;**** org-krita
+
+;;**** org-drill
+
+;;**** org-treeusage
+
+;;**** org-make-toc
+
+(setup (:pkg org-make-toc)
+  (:hook-into org-mode))
+
+;;**** org-appear
+
+(setup (:pkg org-appear)
+  (:hook-into org-mode))
+
+;;*** org-mode keys
+
 (setup (:pkg evil-org)
-  (:hook-into org-mode org-agenda-mode)
-  (require 'evil-org)
-  (require 'evil-org-agenda)
-  (evil-org-set-key-theme '(navigation todo insert textobjects additional))
-  (evil-org-agenda-set-keys))
+       (:hook-into org-mode org-agenda-mode)
+       (require 'evil-org)
+       (require 'evil-org-agenda)
+       (evil-org-set-key-theme '(navigation todo insert textobjects additional))
+       (evil-org-agenda-set-keys))
 
 (dw/ctrl-c-keys
   "o"   '(:ignore t :which-key "org mode")
@@ -169,18 +212,9 @@
   "oc"  '(org-capture t :which-key "capture")
   "ox"  '(org-export-dispatch t :which-key "export"))
 
-(setup (:pkg org-make-toc)
-  (:hook-into org-mode))
 
-;; (use-package org-wild-notifier
-;;   :after org
-;;   :config
-;;   ; Make sure we receive notifications for non-TODO events
-;;   ; like those synced from Google Calendar
-;;   (setq org-wild-notifier-keyword-whitelist nil)
-;;   (setq org-wild-notifier-notification-title "Agenda Reminder")
-;;   (setq org-wild-notifier-alert-time 15)
-;;   (org-wild-notifier-mode))
+;; TODO org-roam
+
 
 (defvar dw/org-roam-project-template
   '("p" "project" plain "** TODO %?"
@@ -313,27 +347,6 @@ _d_: date        ^ ^              ^ ^
     (:bind "C-c n i" org-roam-node-insert
            "C-c n I" org-roam-insert-immediate)))
 
-(setup (:pkg org-appear)
-  (:hook-into org-mode))
-
-(setup (:pkg denote :straight t)
-  (setq denote-directory "~/Notes/Denote")
-
-  ;; Top-level keywords
-  (setq denote-known-keywords '("journal" "workflow" "daily" "weekly" "monthly"))
-
-  ;; Buttonize all denote links in text buffers
-  (add-hook 'find-file-hook #'denote-link-buttonize-buffer))
-
-(defun dw/denote-find-daily-log ()
-  (interactive)
-  (let* ((default-directory denote-directory)
-         (existing-file (denote--directory-files-matching-regexp (format-time-string "^%Y%m%d.*_daily"))))
-    (if existing-file
-        (find-file (expand-file-name (car existing-file)))
-      ;; TODO: Initialize with daily note format
-      (denote (format-time-string "%A, %B %e, %Y")
-              '("daily")))))
 
 (with-eval-after-load 'org-roam
   (defun my/org-roam-project-finalize-hook ()

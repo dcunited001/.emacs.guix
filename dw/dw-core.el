@@ -22,10 +22,6 @@
 
 ;;; -- Basic Configuration Paths -----
 
-;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
-(setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-      url-history-file (expand-file-name "url/history" user-emacs-directory))
-
 ;; Use no-littering to automatically set common paths to the new user-emacs-directory
 (setup (:pkg no-littering)
   (require 'no-littering))
