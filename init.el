@@ -15,13 +15,16 @@
                              ;; (setq gc-cons-threshold (* 2 1000 1000))
                              (setq gc-cons-threshold (* 20 1000 1000))))
 
-(setq dc/emacs-chemacs "~/.emacs.d")
-(setq dc/emacs-d "~/.emacs.new")
-(setq dc/emacs-cache "~/.cache/emacs")
-(setq dc/emacs-dw
-      (concat (file-name-as-directory dc/emacs-d) "dw"))
-(setq dc/emacs-modules
-      (concat (file-name-as-directory dc/emacs-d) "modules"))
+(setq dc/emacs-chemacs "~/.emacs.d"
+      dc/emacs-d "~/.emacs.new"
+      dc/emacs-cache "~/.cache/emacs"
+      dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
+      dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules"))
+
+(setq org-directory (getenv "ORG_DIRECTORY")
+      org-roam-directory (concat (file-name-as-directory org-directory) "roam")
+      org-roam-db-location (concat (file-name-as-directory (concat (getenv "HOME") "/.local/share/org-roam")) "org-roam.db")
+      org-roam-file-extensions '("org"))
 
 ;; Add configuration modules to load path
 (add-to-list 'load-path dc/emacs-dw)
@@ -32,14 +35,18 @@
 ;; (require 'dw-settings) ;; TODO: per-system-settings
 (require 'dw-core)
 (require 'dw-interface)
-;; (require 'dw-auth)
+(require 'dc-auth)
 ;; (require 'dw-shell)
 ;; (require 'dw-dev)
 ;; (require 'dw-dev-web)
-;; (require 'dw-workflow)
+(require 'dc-workflow)
 ;; (require 'dw-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
+
+
+;; activated outside of init.el
+;; (require 'dw-mail) ;; n/a
 
 ;; (when (string= system-name "acidburn")
 ;;   (require 'dw-streaming))

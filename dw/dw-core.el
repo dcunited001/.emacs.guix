@@ -592,21 +592,21 @@
   (org-show-subtree)
   (forward-line))
 
-(dw/leader-key-def
-  "fn" '((lambda () (interactive) (counsel-find-file "~/Notes/")) :which-key "notes")
-  "fd"  '(:ignore t :which-key "dotfiles")
-  "fdd" '((lambda () (interactive) (find-file "~/.dotfiles/Desktop.org")) :which-key "desktop")
-  ;; "fdc" '((lambda () (interactive) (find-file (expand-file-name (concat  "~/.dotfiles/daviwil/systems/" system-name ".scm")))) :which-key "system config")
-  "fdc" '((lambda () (interactive) (find-file (expand-file-name (concat  "~/.dotfiles/.config/guix/systems/" system-name ".scm")))) :which-key "system config")
-  "fde" '((lambda () (interactive) (find-file (expand-file-name "~/.dotfiles/.emacs.d/init.el"))) :which-key  "edit config")
-  "fdE" '((lambda () (interactive) (dw/org-file-show-headings "~/.dotfiles/Emacs.org")) :which-key "edit config")
-  "fdm" '((lambda () (interactive) (find-file "~/.dotfiles/Mail.org")) :which-key "mail")
-  "fdM" '((lambda () (interactive) (counsel-find-file "~/.dotfiles/.config/guix/manifests/")) :which-key "manifests")
-  "fds" '((lambda () (interactive) (dw/org-file-jump-to-heading "~/.dotfiles/Systems.org" "Base Configuration")) :which-key "base system")
-  "fdS" '((lambda () (interactive) (dw/org-file-jump-to-heading "~/.dotfiles/Systems.org" system-name)) :which-key "this system")
-  "fdp" '((lambda () (interactive) (dw/org-file-jump-to-heading "~/.dotfiles/Desktop.org" "Panel via Polybar")) :which-key "polybar")
-  "fdw" '((lambda () (interactive) (find-file (expand-file-name "~/.dotfiles/Workflow.org"))) :which-key "workflow")
-  "fdv" '((lambda () (interactive) (find-file "~/.dotfiles/.config/vimb/config")) :which-key "vimb"))
+;; (dw/leader-key-def
+;;   "fn" '((lambda () (interactive) (counsel-find-file "~/Notes/")) :which-key "notes")
+;;   "fd"  '(:ignore t :which-key "dotfiles")
+;;   "fdd" '((lambda () (interactive) (find-file "~/.dotfiles/Desktop.org")) :which-key "desktop")
+;;   ;; "fdc" '((lambda () (interactive) (find-file (expand-file-name (concat  "~/.dotfiles/daviwil/systems/" system-name ".scm")))) :which-key "system config")
+;;   "fdc" '((lambda () (interactive) (find-file (expand-file-name (concat  "~/.dotfiles/.config/guix/systems/" system-name ".scm")))) :which-key "system config")
+;;   "fde" '((lambda () (interactive) (find-file (expand-file-name "~/.dotfiles/.emacs.d/init.el"))) :which-key  "edit config")
+;;   "fdE" '((lambda () (interactive) (dw/org-file-show-headings "~/.dotfiles/Emacs.org")) :which-key "edit config")
+;;   "fdm" '((lambda () (interactive) (find-file "~/.dotfiles/Mail.org")) :which-key "mail")
+;;   "fdM" '((lambda () (interactive) (counsel-find-file "~/.dotfiles/.config/guix/manifests/")) :which-key "manifests")
+;;   "fds" '((lambda () (interactive) (dw/org-file-jump-to-heading "~/.dotfiles/Systems.org" "Base Configuration")) :which-key "base system")
+;;   "fdS" '((lambda () (interactive) (dw/org-file-jump-to-heading "~/.dotfiles/Systems.org" system-name)) :which-key "this system")
+;;   "fdp" '((lambda () (interactive) (dw/org-file-jump-to-heading "~/.dotfiles/Desktop.org" "Panel via Polybar")) :which-key "polybar")
+;;   "fdw" '((lambda () (interactive) (find-file (expand-file-name "~/.dotfiles/Workflow.org"))) :which-key "workflow")
+;;   "fdv" '((lambda () (interactive) (find-file "~/.dotfiles/.config/vimb/config")) :which-key "vimb"))
 
 ;;; -- Start the Daemon -----
 

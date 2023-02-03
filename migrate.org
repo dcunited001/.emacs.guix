@@ -97,8 +97,7 @@ diff --ignore-all-space daviwil.pkg doom.pkg | grep -e "^<" | sed -e 's/^<\s*//'
 *** Guix Graph
 
 #+begin_src shell :results output file :file ./daviwil-guix.png
-guix graph emacs-0x0  emacs-a emacs-ace-window emacs-alert emacs-all-the-icons-dired emacs-apheleia emacs-app-launcher emacs-auth-source-pass emacs-avy emacs-buffer-env emacs-consult emacs-consult-dir emacs-corfu emacs-daemons emacs-default-text-scale emacs-desktop-environment emacs-dired-collapse emacs-dired-rainbow emacs-dired-ranger emacs-docker emacs-doom-modeline emacs-doom-themes emacs-eglot emacs-elfeed emacs-elpher emacs-embark emacs-emms emacs-esh-autosuggest emacs-eshell-syntax-highlighting emacs-eshell-toggle emacs-eshell-z emacs-evil emacs-evil-collection emacs-evil-nerd-commenter emacs-evil-org emacs-exec-path-from-shell emacs-exwm emacs-geiser emacs-general emacs-git-link emacs-guix emacs-helpful emacs-hydra emacs-jabber emacs-js2-mode emacs-keycast emacs-kind-icon emacs-ledger-mode emacs-lispy emacs-lispyville emacs-live-crafter emacs-magit emacs-marginalia emacs-markdown-mode emacs-minions emacs-no-littering emacs-obs-websocket  emacs-openwith emacs-orderless emacs-org emacs-org-appear emacs-org-make-toc emacs-org-pomodoro emacs-org-present emacs-org-roam emacs-password-store emacs-pcmpl-args emacs-popper emacs-posframe emacs-project emacs-pulseaudio-control emacs-rainbow-delimiters emacs-rainbow-mode emacs-request emacs-scheme-mode emacs-skewer-mode emacs-sly emacs-smartparens emacs-super-save emacs-telega emacs-tmr emacs-tracking emacs-typescript-mode emacs-undo-tree emacs-vertico emacs-visual-fill-column emacs-vterm emacs-web-mode emacs-wgrep emacs-ws-butler emacs-xterm-color emacs-yaml-mode emacs-yasnippet \
-    | dot -Tpng -o .cache/guix.png
+
 #+end_src
 
 ** Packages for Features
@@ -120,64 +119,120 @@ grep -e "tex" *-only.pkg | sed -e "s/:/\t/"
 
 * Modules
 
-** Daviwil
 
+** Daviwil
+I would like to import most of these as they are.
+
+*** Activated in Init
 Evilmode is set up. I guess i'll give it a try...
 
-*** auth
+**** package
 
-+ contains pgp/pinentry
+**** settings
 
-*** autorest
-
-*** core
+**** core
 
 + needed, minimal changes
++ probably the largest module though
 
-*** desktop (n/a)
 
-*** dev
+**** interface
+
++ packages
+  - projectile
+
+**** auth
+
++ contains pgp/pinentry
+  - I don't want emacs to do this because I'm paranoid
+  - rather than frequently type the GPG PIN, i would rather use something like
+    the =emacs-agent-set= script I use to make emacs aware of an SSH agent
+
+**** shell (300 LOC)
+
+**** dev
 
 + contains lispyville config
++ packages
+  - rainbow-delimiters
+  - rainbow-mode
+  - smartparens
++ VCS packages
+  - magit, magit-todos
+  - smerge
+  - git-link
++ Code Formatting
+  - apheleia
+  - lispy
+  - lispyville
++ Code
+  - flycheck
++ Emacs Lisp
++ Common Lisp
++ Scheme
++ Mesche
++ CADL
++ Snippets
+  - yasnippet
 
-*** dev-misc
+**** dev-web
+
++ typescript
+  - typescript-mode
+  - eglot
++ javascript
+  - js2-mode
++ markdown
+  - markdown-mode
++ web
+  - web-mode
+  - impatient-mode
+  - skewer-mode
+  - yaml-mode
+
+**** workflow (515 LOC)
+
++ org
+  - reset org-directory
++ org-agenda
+  - empty org-agenda-files
++ org-modules
+  - remove org-eshell
+  - remove org-irc
+  - remove org-habit
++ org-modern
+  - try fetching from guix
+
+**** social
+
+**** media
+
+**** system
+
+
+*** Activated Elsewhere
+
+**** autorest
+
+**** desktop (n/a)
+
+**** dev-misc
 
 + zig-mode ... i'm just going to zag
+  - zig looks like an interesting language, but it's not homoiconic
 
-*** dev-web
+**** exwm
 
-n/a for now
+**** finance
 
-*** exwm
+**** mail
 
-*** finance
+**** org
 
-*** interface
+**** present
 
-*** mail
+**** streaming
 
-*** media
+**** swagger
 
-*** org
-
-*** package
-
-*** present
-
-*** settings
-
-*** shell
-
-*** social
-
-*** streaming
-
-*** swagger
-
-*** system
-
-*** vimb
-
-*** workflow
-
-+ contains org-roam
+**** vimb
