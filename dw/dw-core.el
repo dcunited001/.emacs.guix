@@ -2,10 +2,10 @@
 
 (require 'subr-x)
 
-;;; -- System Identification -----
+;;* Core
 
-(defvar dw/is-termux
-  (string-suffix-p "Android" (string-trim (shell-command-to-string "uname -a"))))
+;;** Basics
+;;*** System Identification
 
 (defvar dw/is-guix-system (and (eq system-type 'gnu/linux)
                                (with-temp-buffer
@@ -13,14 +13,7 @@
                                  (search-forward "ID=guix" nil t))
                                t))
 
-(defvar dw/exwm-enabled (and (not dw/is-termux)
-                             (eq window-system 'x)
-                             (seq-contains command-line-args "--use-exwm")))
-
-(defvar dw/mail-enabled (member system-name '("zerocool" "acidburn")))
-(setq dw/mu4e-inbox-query nil)
-
-;;; -- Basic Configuration Paths -----
+;;*** Configuration Paths
 
 ;; Use no-littering to automatically set common paths to the new user-emacs-directory
 (setup (:pkg no-littering)
@@ -33,7 +26,7 @@
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
 (load custom-file t)
 
-;;; -- Native Compilation -----
+;;*** Native Compilation
 
 ;; Silence compiler warnings as they can be pretty disruptive
 (setq native-comp-async-report-warnings-errors nil)
@@ -41,49 +34,38 @@
 ;; Set the right directory to store the native comp cache
 (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
 
-;;; -- Basic Emacs Settings -----
+;;*** Timers
 
-;; Thanks, but no thanks
-(setq inhibit-startup-message t)
+(setup (:pkg tmr))
 
-(unless dw/is-termux
-  (scroll-bar-mode -1)        ; Disable visible scrollbar
-  (tool-bar-mode -1)          ; Disable the toolbar
-  (tooltip-mode -1)           ; Disable tooltips
-  (set-fringe-mode 10))       ; Give some breathing room
+(defun dw/tmr-mode-line ()
+  (if (not (and (boundp 'tmr--timers)
+                tmr--timers))
+      ""
+    (propertize (format " 🕐 %s: %s"
+                        (tmr--format-remaining (car tmr--timers))
+                        (tmr--timer-description (car tmr--timers)))
+                'tab-bar '(:foreground "orange"))))
 
-(menu-bar-mode -1)            ; Disable the menu bar
+;;*** Notifications
 
-;; TODO: Mode this to another section
-(setq-default fill-column 80)
+(setup (:pkg alert)
+  (:option alert-default-style 'notifications))
 
-;; Set up the visible bell
-(setq visible-bell t)
+;;** Editor
 
-(unless dw/is-termux
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
-  (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-  (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-  (setq scroll-step 1) ;; keyboard scroll one line at a time
-  (setq use-dialog-box nil)) ;; Disable dialog boxes since they weren't working in Mac OSX
-
-(unless dw/is-termux
-  (set-frame-parameter (selected-frame) 'alpha-background 90)
-  (add-to-list 'default-frame-alist '(alpha-background 90))
-  (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
-  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
-
-;; Use UTF-8 by default
-(set-default-coding-systems 'utf-8)
-
-;;; -- Core Key Bindings and Packages ----
-
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(global-set-key (kbd "C-M-u") 'universal-argument)
+;;** Keys
 
 (setup (:pkg undo-tree)
   (setq undo-tree-auto-save-history nil)
   (global-undo-tree-mode 1))
+
+;;*** Core Key Bindings
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "C-M-u") 'universal-argument)
+
+;;*** Evil Mode
 
 (setup (:pkg evil)
   ;; Pre-load configuration
@@ -118,20 +100,19 @@
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
-  (unless dw/is-termux
-    (defun dw/dont-arrow-me-bro ()
-      (interactive)
-      (message "Arrow keys are bad, you know?"))
+  (defun dw/dont-arrow-me-bro ()
+    (interactive)
+    (message "Arrow keys are bad, you know?"))
 
-    ;; Disable arrow keys in normal and visual modes
-    (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro))
+  ;; Disable arrow keys in normal and visual modes
+  (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
+  (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
+  (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
+  (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal))
@@ -156,8 +137,6 @@
   (general-create-definer dw/ctrl-c-keys
     :prefix "C-c"))
 
-(column-number-mode)
-
 ;; Enable line numbers for some modes
 (dolist (mode '(text-mode-hook
                 prog-mode-hook
@@ -165,102 +144,7 @@
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
 
-(setq large-file-warning-threshold nil)
-(setq vc-follow-symlinks t)
-(setq ad-redefinition-action 'accept)
-
-;;; -- Appearance -----
-
-(setup (:pkg doom-themes))
-(unless dw/is-termux
-  ;; TODO: Move this to a system setting
-  (load-theme
-   (pcase system-name
-     ("acidburn" 'doom-ayu-dark)
-     ("phantom" 'doom-molokai)
-     (_ 'doom-palenight))
-   t)
-
-  (doom-themes-visual-bell-config))
-
-;; TODO: Do I use this?  Is it needed?
-(setup (:pkg default-text-scale)
-  (default-text-scale-mode))
-
-;; Set the font face based on platform
-(pcase system-type
-  ((or 'gnu/linux 'windows-nt 'cygwin)
-   (set-face-attribute 'default nil
-                       :font "JetBrains Mono"
-                       :weight 'light
-                       :height (dw/system-settings-get 'emacs/default-face-size)))
-  ('darwin (set-face-attribute 'default nil :font "Fira Mono" :height 170)))
-
-;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil
-                    :font "JetBrains Mono"
-                    :weight 'light
-                    :height (dw/system-settings-get 'emacs/fixed-face-size))
-
-;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil
-                    ;; :font "Cantarell"
-                    :font "Iosevka Aile"
-                    :height (dw/system-settings-get 'emacs/variable-face-size)
-                    :weight 'light)
-
-(setq display-time-format "%l:%M %p %b %d W%U"
-      display-time-load-average-threshold 0.0)
-
-;; You must run (all-the-icons-install-fonts) one time after
-;; installing this package!
-
-;;; -- Mode Line -----
-
-(setup (:pkg minions)
-  (:hook-into doom-modeline-mode))
-
-(defun dw/start-doom-modeline ()
-  (require 'doom-modeline)
-
-  ;; Start it
-  (doom-modeline-mode 1)
-
-  ;; Customize the default modeline
-  (doom-modeline-def-modeline 'default
-    '(bar window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(objed-state grip debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
-  (doom-modeline-set-modeline 'default t))
-
-(setup (:pkg doom-modeline)
-  (add-hook 'after-init-hook #'dw/start-doom-modeline)
-  (:option doom-modeline-height 15
-           doom-modeline-bar-width 6
-           doom-modeline-lsp t
-           doom-modeline-github nil
-           doom-modeline-mu4e nil
-           doom-modeline-irc nil
-           doom-modeline-minor-modes t
-           doom-modeline-persp-name nil
-           doom-modeline-buffer-file-name-style 'truncate-except-project
-           doom-modeline-major-mode-icon nil)
-  (custom-set-faces '(mode-line ((t (:height 0.85))))
-                    '(mode-line-inactive ((t (:height 0.85))))))
-
-;;; -- Timers -----
-
-(setup (:pkg tmr))
-
-(defun dw/tmr-mode-line ()
-  (if (not (and (boundp 'tmr--timers)
-                tmr--timers))
-      ""
-    (propertize (format " 🕐 %s: %s"
-                        (tmr--format-remaining (car tmr--timers))
-                        (tmr--timer-description (car tmr--timers)))
-                'tab-bar '(:foreground "orange"))))
-
-;;; -- Tab Bar Workspaces -----
+;;*** Tab Bar Workspaces
 
 (setup (:pkg tabspaces :straight t)
   (tabspaces-mode 1)
@@ -300,23 +184,13 @@
 (global-set-key (kbd "C-M-k") #'tab-bar-switch-to-tab)
 (global-set-key (kbd "C-M-n") #'tab-bar-switch-to-next-tab)
 
-(defun dw/exwm-workspace-icon ()
-  (when dw/exwm-enabled
-    (format " %s" (pcase exwm-workspace-current-index
-                    (0 "💬")
-                    (1 "💻")
-                    (2 "🏄")
-                    (3 "📬")
-                    (4 "📸")))))
-
 (defun dw/set-tab-bar-faces ()
   (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
     (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil :weight 'semi-bold :underline `(:color ,color) :inherit nil)
     (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground nil :inherit 'mode-line)))
 
 (setq tab-bar-close-button-show nil
-      tab-bar-format '(dw/exwm-workspace-icon
-                       tab-bar-format-history
+      tab-bar-format '(tab-bar-format-history
                        tab-bar-format-tabs-groups
                        tab-bar-separator
                        dw/tmr-mode-line
@@ -338,12 +212,7 @@
   (tab-bar-mode 1)
   (tab-bar-rename-tab "Main"))
 
-;;; -- Notifications -----
-
-(setup (:pkg alert)
-  (:option alert-default-style 'notifications))
-
-;;; -- Editing Configuration -----
+;;*** Editing Configuration
 
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
@@ -384,7 +253,7 @@
     "jw"  '(avy-goto-word-0 :which-key "jump to word")
     "jl"  '(avy-goto-line :which-key "jump to line")))
 
-;;; -- Window Management -----
+;;*** Window Management
 
 (setup (:pkg ace-window)
   (:global "M-o" ace-window)
@@ -405,13 +274,6 @@
 
 ;; If a popup does happen, don't resize windows to be equal-sized
 (setq even-window-sizes nil)
-
-(defun dw/popper-window-height (window)
-  (let (buffer-mode (with-current-buffer (window-buffer window)
-                      major-mode))
-    (pcase buffer-mode
-      ('exwm-mode 40)
-      (_ 15))))
 
 (setup (:pkg popper
              :host github
@@ -441,9 +303,11 @@
   (require 'popper) ;; Needed because I disabled autoloads
   (popper-mode 1))
 
-;;; -- Dired -----
+;;*** Dired
 
 (setup (:pkg all-the-icons-dired))
+;; You must run (all-the-icons-install-fonts) one time after
+;; installing this package!
 (setup (:pkg dired-single :straight t))
 (setup (:pkg dired-ranger))
 (setup (:pkg dired-collapse))
@@ -472,8 +336,7 @@
                 (all-the-icons-dired-mode 1))
               (hl-line-mode 1)))
 
-  (unless dw/exwm-enabled
-    (global-set-key (kbd "s-e") #'dired-jump))
+;;  (global-set-key (kbd "s-e") #'dired-jump)
 
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-single-up-directory
@@ -528,7 +391,7 @@
                  "zathura"
                  '(file))))))
 
-;;; -- World Clock -----
+;;*** World Clock
 
 (setq display-time-world-list
   '(("Etc/UTC" "UTC")
@@ -542,7 +405,7 @@
 
 (setq display-time-world-time-format "%a, %d %b %I:%M %p %Z")
 
-;;; -- Save Minibuffer History -----
+;;*** Save Minibuffer History
 
 (setup savehist
   (setq history-length 25)
@@ -553,7 +416,7 @@
 ;;(put 'evil-ex-history 'history-length 50)
 ;;(put 'kill-ring 'history-length 25))
 
-;;; -- Make Help More Helpful -----
+;;*** Make Help More Helpful
 
 (setup (:pkg helpful)
   (:option counsel-describe-function-function #'helpful-callable
@@ -567,7 +430,7 @@
 ;; Load the info system for info files
 (add-to-list 'auto-mode-alist '("\\.info\\'" . Info-on-current-buffer))
 
-;;; -- Convenience Key Bindings ----
+;;*** Convenience Key Bindings ----
 
 (defun dw/org-file-jump-to-heading (org-file heading-title)
   (interactive)
@@ -604,7 +467,7 @@
 ;;   "fdw" '((lambda () (interactive) (find-file (expand-file-name "~/.dotfiles/Workflow.org"))) :which-key "workflow")
 ;;   "fdv" '((lambda () (interactive) (find-file "~/.dotfiles/.config/vimb/config")) :which-key "vimb"))
 
-;;; -- Start the Daemon -----
+;;*** Start the Daemon
 
 (server-start)
 

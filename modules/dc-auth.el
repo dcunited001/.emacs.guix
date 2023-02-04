@@ -4,11 +4,9 @@
 
 (setq dc/use-pinentry nil)
 
-(if dc/use-pinentry
-    (unless (or dw/is-termux
-                (eq system-type 'windows-nt))
-      (setq epa-pinentry-mode 'loopback)
-      (pinentry-start)))
+(when dc/use-pinentry
+  (setq epa-pinentry-mode 'loopback)
+  (pinentry-start))
 
 ;;; -- Password Management -----
 

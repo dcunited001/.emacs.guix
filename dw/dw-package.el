@@ -9,7 +9,8 @@
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
           (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           ;; "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           "file:///home/dc/.emacs.guix/install.el"
            'silent 'inhibit-cookies)
         (goto-char (point-max))
         (eval-print-last-sexp)))
@@ -51,13 +52,11 @@ installed via Guix.")
 
 (setup-define :pkg
   (lambda (&rest recipe)
-    (if (and dw/is-guix-system
-             (or (eq (length recipe) 1)
-                 (plist-get (cdr recipe) :guix)))
-        `(add-to-list 'dw/guix-emacs-packages
-                      ,(or (plist-get recipe :guix)
-                           (concat "emacs-" (symbol-name (car recipe)))))
-      `(straight-use-package ',(dw/filter-straight-recipe recipe))))
+    (if (plist-get (cdr recipe) :straight)
+      `(straight-use-package ',(dw/filter-straight-recipe recipe))
+      `(add-to-list 'dw/guix-emacs-packages
+                    ,(or (plist-get recipe :guix)
+                         (concat "emacs-" (symbol-name (car recipe)))))))
   :documentation "Install RECIPE via Guix or straight.el"
   :shorthand #'cadr)
 

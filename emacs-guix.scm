@@ -1,13 +1,20 @@
 (specifications->manifest
- '("emacs-next-pgtk"
+ '(;; fonts
+   "font-juliamono"
+   "font-jetbrains-mono"
+
+   ;; certs
+   "nss-certs"
+
+   "emacs-next-pgtk"
 
    "emacs-tmr"
    "emacs-buffer-env"
 
    "emacs-no-littering"
    
-   "emacs-exwm"
-   "emacs-desktop-environment"
+   ;;"emacs-exwm"
+   ;;"emacs-desktop-environment"
    
    "emacs-evil"
    "emacs-evil-collection"
@@ -164,7 +171,7 @@
    "emacs-posframe"
    "emacs-keycast"
    
-   "emacs-obs-websocket-el"
+   ;;"emacs-obs-websocket-el"
    
    "emacs-a"
    "emacs-request"
@@ -199,7 +206,7 @@
    
    "emacs-erc-image"
    "emacs-erc-hl-nicks"
-   
+
    "emacs-elfeed"
    
    "emacs-emms"
@@ -215,5 +222,7 @@
    "emacs-docker"
    "emacs-docker-tramp"
    "emacs-dockerfile-mode"
-   
+
+   "emacs-ef-themes"
+   "emacs-burly"
    ))

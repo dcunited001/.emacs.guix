@@ -21,8 +21,9 @@
   (setq evil-auto-indent nil))
 
 ;; Make sure Straight pulls Org from Guix
-(when dw/is-guix-system
-  (straight-use-package '(org :type built-in)))
+;;(when dw/is-guix-system
+  (straight-use-package '(org :type built-in))
+  ;)
 
 ;;** ORG
 

@@ -40,6 +40,7 @@
 
 ;; (require 'dw-core)
 ;; (require 'dw-interface)
+;; (require 'dc-interface)
 ;; (require 'dc-auth)
 
 
@@ -59,5 +60,3 @@
 ;; (when (string= system-name "acidburn")
 ;;   (require 'dw-streaming))
 
-;; (when dw/exwm-enabled (require 'dw-desktop))
-;; (when dw/mail-enabled (require 'dw-mail))
