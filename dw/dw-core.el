@@ -32,25 +32,7 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ;; Set the right directory to store the native comp cache
-(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
-
-;;*** Timers
-
-(setup (:pkg tmr))
-
-(defun dw/tmr-mode-line ()
-  (if (not (and (boundp 'tmr--timers)
-                tmr--timers))
-      ""
-    (propertize (format " 🕐 %s: %s"
-                        (tmr--format-remaining (car tmr--timers))
-                        (tmr--timer-description (car tmr--timers)))
-                'tab-bar '(:foreground "orange"))))
-
-;;*** Notifications
-
-(setup (:pkg alert)
-  (:option alert-default-style 'notifications))
+(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)
 
 ;;** Editor
 
@@ -144,6 +126,19 @@
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
 
+;;*** Timers
+
+(setup (:pkg tmr))
+
+(defun dw/tmr-mode-line ()
+  (if (not (and (boundp 'tmr--timers)
+                tmr--timers))
+      ""
+    (propertize (format " 🕐 %s: %s"
+                        (tmr--format-remaining (car tmr--timers))
+                        (tmr--timer-description (car tmr--timers)))
+                'tab-bar '(:foreground "orange"))))
+
 ;;*** Tab Bar Workspaces
 
 (setup (:pkg tabspaces :straight t)
@@ -212,6 +207,11 @@
   (tab-bar-mode 1)
   (tab-bar-rename-tab "Main"))
 
+;;*** Notifications
+
+(setup (:pkg alert)
+  (:option alert-default-style 'notifications))
+
 ;;*** Editing Configuration
 
 (setq-default tab-width 2)
@@ -276,6 +276,7 @@
 (setq even-window-sizes nil)
 
 (setup (:pkg popper
+             :straight t
              :host github
              :repo "karthink/popper"
              :build (:not autoloads))
@@ -331,8 +332,7 @@
               (interactive)
               (dired-omit-mode 1)
               (dired-hide-details-mode 1)
-              (unless (or dw/is-termux
-                          (s-equals? "/gnu/store/" (expand-file-name default-directory)))
+              (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
                 (all-the-icons-dired-mode 1))
               (hl-line-mode 1)))
 
@@ -370,26 +370,25 @@
    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
 
 (setup (:pkg openwith)
-  (unless dw/is-termux
-    (require 'openwith)
-    (setq openwith-associations
-          (list
-           (list (openwith-make-extension-regexp
-                  '("mpg" "mpeg" "mp3" "mp4"
-                    "avi" "wmv" "wav" "mov" "flv"
-                    "ogm" "ogg" "mkv"))
-                 "mpv"
-                 '(file))
-           (list (openwith-make-extension-regexp
-                  '("xbm" "pbm" "pgm" "ppm" "pnm"
-                    "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
-                 ;; causing feh to be opened...
-                 "feh"
-                 '(file))
-           (list (openwith-make-extension-regexp
-                  '("pdf"))
-                 "zathura"
-                 '(file))))))
+  (require 'openwith)
+  (setq openwith-associations
+        (list
+         (list (openwith-make-extension-regexp
+                '("mpg" "mpeg" "mp3" "mp4"
+                  "avi" "wmv" "wav" "mov" "flv"
+                  "ogm" "ogg" "mkv"))
+               "mpv"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("xbm" "pbm" "pgm" "ppm" "pnm"
+                  "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
+               ;; causing feh to be opened...
+               "feh"
+               '(file))
+         (list (openwith-make-extension-regexp
+                '("pdf"))
+               "zathura"
+               '(file)))))
 
 ;;*** World Clock
 
@@ -446,7 +445,7 @@
   (interactive)
   (find-file (expand-file-name org-file))
   (counsel-org-goto)
-  (org-overview)
+ (org-overview)
   (org-reveal)
   (org-show-subtree)
   (forward-line))

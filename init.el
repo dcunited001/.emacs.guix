@@ -38,7 +38,7 @@
 ;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
-;; (require 'dw-core)
+(require 'dw-core)
 ;; (require 'dw-interface)
 ;; (require 'dc-interface)
 ;; (require 'dc-auth)
