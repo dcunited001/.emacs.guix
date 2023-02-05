@@ -144,6 +144,7 @@ nicely.
 
 #+end_example
 
+Here's the =dw/ctrl-c-keys= keymap
 
 #+begin_example emacs-lisp
 (setup (:pkg general)
@@ -175,7 +176,8 @@ nicely.
 
 Unfortunately, to support this behavior, the packages that establish keybindings
 either need to import general as a dependency (not necessary) or AFAIK all their
-keybindings need to be reimported ... which is one thing Doom does.
+keybindings need to be reimported ... which is one thing Doom does. See
+[[https://github.com/noctuid/general.el#switching-completely-to-general][Switching Completely To General]] for more info.
 
 ** Keybindings
 
@@ -218,6 +220,8 @@ Keymaps are created with =(make-sparse-keymap)= and assigned to a map
   (define-key map "p" #'previous-line)
   map)
 #+end_example
+
+*** Projectile
 
 
 *** Which Keys

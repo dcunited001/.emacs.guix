@@ -1,0 +1,269 @@
+#+title: Projectile
+
+* From Doom
+** RSS
+
+For performance
+
+#+begin_example
+./app/rss/autoload.el:88:  ;; `delete-file-projectile-remove-from-cache' slows down `elfeed-db-compact'
+./app/rss/autoload.el:89:  ;; tremendously, so we disable the projectile cache:
+./app/rss/autoload.el:90:  (let (projectile-enable-caching)
+#+end_example
+
+** Ivy
+
+#+begin_example
+./completion/ivy/autoload/ivy.el:228:(defun +ivy/projectile-find-file ()
+./completion/ivy/autoload/ivy.el:229:  "A more sensible `counsel-projectile-find-file', which will revert to
+./completion/ivy/autoload/ivy.el:231:from a non-project, `projectile-find-file' if in a big project (more than
+./completion/ivy/autoload/ivy.el:232:`ivy-sort-max-size' files), or `counsel-projectile-find-file' otherwise.
+./completion/ivy/autoload/ivy.el:248:            (let ((files (projectile-current-project-files)))
+./completion/ivy/autoload/ivy.el:250:                  #'counsel-projectile-find-file
+./completion/ivy/autoload/ivy.el:251:                #'projectile-find-file)))
+./completion/ivy/autoload/ivy.el:296:                        (projectile-project-name))
+./completion/ivy/autoload/ivy.el:335:  (counsel-compile (projectile-project-root)))
+./completion/ivy/packages.el:11:(package! counsel-projectile :pin "40d1e1d4bb70acb00fddd6f4df9778bf2c52734b")
+./completion/ivy/README.org:33:- [[doom-package:counsel-projectile]]
+./completion/ivy/README.org:76:Command-T, this module provides similar functionality by bringing [[doom-package:projectile]] and
+./completion/ivy/README.org:79:https://assets.doomemacs.org/completion/ivy/projectile.png
+./completion/ivy/config.el:140:              ;; Apply switch buffer transformers to `counsel-projectile-switch-to-buffer' as well
+./completion/ivy/config.el:141:              'counsel-projectile-switch-to-buffer
+./completion/ivy/config.el:171:  (after! counsel-projectile
+./completion/ivy/config.el:173:           '(counsel-projectile
+./completion/ivy/config.el:174:             counsel-projectile-find-file
+./completion/ivy/config.el:175:             counsel-projectile-find-dir)))
+./completion/ivy/config.el:202:    [remap projectile-compile-project] #'+ivy/project-compile
+./completion/ivy/config.el:211:  ;; HACK Fix an issue where `counsel-projectile-find-file-action' would try to
+./completion/ivy/config.el:215:    :around #'counsel-projectile-find-file-action
+./completion/ivy/config.el:245:  ;; Make `counsel-compile' projectile-aware (if you prefer it over
+./completion/ivy/config.el:247:  (add-to-list 'counsel-compile-root-functions #'projectile-project-root)
+./completion/ivy/config.el:290:        (cond ((when-let (fd (executable-find (or doom-projectile-fd-binary "fd") t))
+./completion/ivy/config.el:292:                         (cl-loop for dir in projectile-globally-ignored-directories
+./completion/ivy/config.el:298:                       (cl-loop for dir in projectile-globally-ignored-directories
+./completion/ivy/config.el:317:(use-package! counsel-projectile
+./completion/ivy/config.el:321:    [remap projectile-find-file]        #'+ivy/projectile-find-file
+./completion/ivy/config.el:322:    [remap projectile-find-dir]         #'counsel-projectile-find-dir
+./completion/ivy/config.el:323:    [remap projectile-switch-to-buffer] #'counsel-projectile-switch-to-buffer
+./completion/ivy/config.el:324:    [remap projectile-grep]             #'counsel-projectile-grep
+./completion/ivy/config.el:325:    [remap projectile-ag]               #'counsel-projectile-ag
+./completion/ivy/config.el:326:    [remap projectile-switch-project]   #'counsel-projectile-switch-project)
+./completion/ivy/config.el:328:  ;; A more sensible `counsel-projectile-find-file' that reverts to
+./completion/ivy/config.el:330:  ;; from a non-project, `projectile-find-file' if in a big project (more than
+./completion/ivy/config.el:331:  ;; `ivy-sort-max-size' files), or `counsel-projectile-find-file' otherwise.
+./completion/ivy/config.el:332:  (setf (alist-get 'projectile-find-file counsel-projectile-key-bindings)
+./completion/ivy/config.el:333:        #'+ivy/projectile-find-file)
+./completion/ivy/config.el:336:  (ivy-set-display-transformer #'counsel-projectile-find-file nil)
+./completion/ivy/config.el:339:    (setq counsel-projectile-sort-files t)))
+#+end_example
+
+** Vertico
+
+#+begin_example
+./completion/vertico/autoload/vertico.el:226:  (if doom-projectile-fd-binary
+./completion/vertico/README.org:98:[[doom-package:projectile]]:
+./completion/vertico/README.org:100:https://assets.doomemacs.org/completion/vertico/projectile.png
+./completion/vertico/config.el:135:          (if doom-projectile-fd-binary
+./completion/vertico/config.el:137:                      doom-projectile-fd-binary
+./completion/vertico/config.el:288:            '(projectile-find-file . project-file)
+./completion/vertico/config.el:289:            '(projectile-recentf . project-file)
+./completion/vertico/config.el:290:            '(projectile-switch-to-buffer . buffer)
+./completion/vertico/config.el:291:            '(projectile-switch-project . project-file)))
+./config/default/+emacs.el:3:(require 'projectile) ; we need its keybinds immediately
+#+end_example
+
+** File Search
+
+#+begin_example
+./config/default/autoload/default.el:16:         #'projectile-compile-project
+./config/default/autoload/files.el:7:;; NOTE No need for find-in-project, use `projectile-find-file'
+./config/default/autoload/files.el:41:  "Discover projects in `projectile-project-search-path'.
+./config/default/autoload/files.el:45:      (call-interactively #'projectile-discover-projects-in-directory)
+./config/default/autoload/files.el:46:    (if (not projectile-project-search-path)
+./config/default/autoload/files.el:47:        (user-error "`projectile-project-search-path' is empty; don't know where to search")
+./config/default/autoload/files.el:48:      (letf! (defun projectile-add-known-project (project-root)
+./config/default/autoload/files.el:49:               (unless (projectile-ignored-project-p project-root)
+./config/default/autoload/files.el:50:                 (funcall projectile-add-known-project project-root)
+./config/default/autoload/files.el:52:        (dolist (dir projectile-project-search-path)
+./config/default/autoload/files.el:56:              (projectile-discover-projects-in-directory dir depth))))))))
+./config/default/autoload/files.el:65:             (list (completing-read "Open dired in project: " projectile-known-projects))
+./config/default/autoload/search.el:75:  (let* ((projectile-project-root nil)
+./config/default/autoload/search.el:80:               (if-let (projects (projectile-relevant-known-projects))
+./config/default/autoload/search.el:88:           (#'projectile-ripgrep)))))
+./config/default/autoload/search.el:102:         (let ((projectile-project-root nil))
+./config/default/autoload/search.el:104:               (if-let (projects (projectile-relevant-known-projects))
+./emacs/dired/config.el:215:  :when doom-projectile-fd-binary
+./emacs/ibuffer/config.el:69:(use-package! ibuffer-projectile
+./emacs/ibuffer/config.el:71:  :hook (ibuffer . ibuffer-projectile-set-filter-groups)
+./emacs/ibuffer/config.el:73:  (setq ibuffer-projectile-prefix
+./emacs/ibuffer/packages.el:4:(package! ibuffer-projectile :pin "ecbe482804a217b1471593f6c7a8b3d64f3cdc47")
+./emacs/ibuffer/README.org:21:- [[doom-package:ibuffer-projectile]]
+./tools/lookup/config.el:150:  ;; We already have `projectile-find-tag' and `evil-jump-to-tag', no need for
+./tools/lookup/config.el:153:  ;; ...however, it breaks `projectile-find-tag', unless we put it back.
+./tools/lookup/config.el:154:  (defadvice! +lookup--projectile-find-tag-a (fn)
+./tools/lookup/config.el:155:    :around #'projectile-find-tag
+#+end_example
+
+** Keybindings
+
+#+begin_example
+./config/default/+emacs-bindings.el:7:;; persp-mode and projectile in different prefixes
+./config/default/+emacs-bindings.el:9:(after! projectile
+./config/default/+emacs-bindings.el:10:  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+./config/default/+emacs-bindings.el:87:       :desc "Recent project files"        "R"   #'projectile-recentf
+./config/default/+emacs-bindings.el:288:       ;; later expanded by projectile
+./config/default/+evil-bindings.el:316:      :desc "Find file in project"  "SPC"  #'projectile-find-file
+./config/default/+evil-bindings.el:649:       :desc "Run cmd in project root"      "!" #'projectile-run-shell-command-in-root
+./config/default/+evil-bindings.el:650:       :desc "Async cmd in project root"    "&" #'projectile-run-async-shell-command-in-root
+./config/default/+evil-bindings.el:651:       :desc "Add new project"              "a" #'projectile-add-known-project
+./config/default/+evil-bindings.el:652:       :desc "Switch to project buffer"     "b" #'projectile-switch-to-buffer
+./config/default/+evil-bindings.el:653:       :desc "Compile in project"           "c" #'projectile-compile-project
+./config/default/+evil-bindings.el:654:       :desc "Repeat last command"          "C" #'projectile-repeat-last-command
+./config/default/+evil-bindings.el:655:       :desc "Remove known project"         "d" #'projectile-remove-known-project
+./config/default/+evil-bindings.el:657:       :desc "Edit project .dir-locals"     "e" #'projectile-edit-dir-locals
+./config/default/+evil-bindings.el:658:       :desc "Find file in project"         "f" #'projectile-find-file
+./config/default/+evil-bindings.el:660:       :desc "Configure project"            "g" #'projectile-configure-project
+./config/default/+evil-bindings.el:661:       :desc "Invalidate project cache"     "i" #'projectile-invalidate-cache
+./config/default/+evil-bindings.el:662:       :desc "Kill project buffers"         "k" #'projectile-kill-buffers
+./config/default/+evil-bindings.el:663:       :desc "Find other file"              "o" #'projectile-find-other-file
+./config/default/+evil-bindings.el:664:       :desc "Switch project"               "p" #'projectile-switch-project
+./config/default/+evil-bindings.el:665:       :desc "Find recent project files"    "r" #'projectile-recentf
+./config/default/+evil-bindings.el:666:       :desc "Run project"                  "R" #'projectile-run-project
+./config/default/+evil-bindings.el:667:       :desc "Save project files"           "s" #'projectile-save-project-buffers
+./config/default/+evil-bindings.el:669:       :desc "Test project"                 "T" #'projectile-test-project
+./editor/evil/+commands.el:55:(evil-ex-define-cmd "a"           #'projectile-find-other-file)
+#+end_example
+
+** Lang
+
+#+begin_example
+./lang/cc/autoload.el:89:           else if (projectile-locate-dominating-file path dir)
+./lang/cc/config.el:286:  (after! projectile
+./lang/cc/config.el:287:    (add-to-list 'projectile-globally-ignored-directories "^.ccls-cache$")
+./lang/cc/config.el:288:    (add-to-list 'projectile-project-root-files-bottom-up ".ccls-root")
+./lang/cc/config.el:289:    (add-to-list 'projectile-project-root-files-top-down-recurring "compile_commands.json"))
+./lang/clojure/config.el:3:(after! projectile
+./lang/clojure/config.el:4:  (pushnew! projectile-project-root-files "project.clj" "build.boot" "deps.edn"))
+./lang/elixir/config.el:3:(after! projectile
+./lang/elixir/config.el:4:  (add-to-list 'projectile-project-root-files "mix.exs"))
+./lang/ess/config.el:3:(after! projectile
+./lang/ess/config.el:4:  (add-to-list 'projectile-project-root-files "DESCRIPTION"))
+./lang/gdscript/config.el:3:(after! projectile
+./lang/gdscript/config.el:4:  (add-to-list 'projectile-project-root-files "project.godot"))
+./lang/haskell/config.el:3:(after! projectile
+./lang/haskell/config.el:4:  (add-to-list 'projectile-project-root-files "stack.yaml"))
+./lang/java/config.el:20:(after! projectile
+./lang/java/config.el:21:  (pushnew! projectile-project-root-files "gradlew" "build.gradle"))
+./lang/javascript/config.el:3:(after! projectile
+./lang/javascript/config.el:4:  (pushnew! projectile-project-root-files "package.json")
+./lang/javascript/config.el:5:  (pushnew! projectile-globally-ignored-directories "^node_modules$" "^flow-typed$"))
+./lang/lua/autoload/lua.el:26:      (or (projectile-locate-dominating-file default-directory "main.lua")
+./lang/lua/autoload/lua.el:27:          (when-let (root (projectile-locate-dominating-file default-directory "src/main.lua"))
+./lang/lua/autoload/lua.el:30:               (or (projectile-locate-dominating-file default-directory "main.moon")
+./lang/lua/autoload/lua.el:31:                   (when-let (root (projectile-locate-dominating-file default-directory "src/main.moon"))
+./lang/org/autoload/org-capture.el:151:   +org-capture-projects-file (projectile-project-name)))
+./lang/org/autoload/org-capture.el:157:   +org-capture-projects-file (projectile-project-name)))
+./lang/org/autoload/org-capture.el:163:   +org-capture-projects-file (projectile-project-name)))
+./lang/org/config.el:495:    (after! projectile
+./lang/org/config.el:496:      (add-to-list 'projectile-globally-ignored-directories org-attach-id-dir)))
+./lang/php/config.el:15:(after! projectile
+./lang/php/config.el:16:  (add-to-list 'projectile-project-root-files "composer.json"))
+./lang/python/autoload/pyenv.el:21:  (when-let (root-path (projectile-locate-dominating-file default-directory ".python-version"))
+./lang/python/autoload/python.el:19:            ((when-let (bin (projectile-locate-dominating-file default-directory "bin/python"))
+./lang/python/config.el:9:(after! projectile
+./lang/python/config.el:10:  (pushnew! projectile-project-root-files "pyproject.toml" "requirements.txt" "setup.py"))
+./lang/python/config.el:205:  :init (setq pipenv-with-projectile nil)
+./lang/racket/config.el:3:(after! projectile
+./lang/racket/config.el:4:  (add-to-list 'projectile-project-root-files "info.rkt"))
+./lang/ruby/config.el:3:(after! projectile
+./lang/ruby/config.el:4:  (add-to-list 'projectile-project-root-files "Gemfile"))
+./lang/ruby/config.el:184:(use-package! projectile-rails
+./lang/ruby/config.el:186:  :hook ((ruby-mode inf-ruby-mode projectile-rails-server-mode) . projectile-rails-mode)
+./lang/ruby/config.el:187:  :hook (projectile-rails-server-mode . doom-mark-buffer-as-real-h)
+./lang/ruby/config.el:188:  :hook (projectile-rails-mode . auto-insert-mode)
+./lang/ruby/config.el:193:    (add-hook 'web-mode-hook #'projectile-rails-mode))
+./lang/ruby/config.el:195:  (set-popup-rule! "^\\*\\(projectile-\\)?rails" :ttl nil)
+./lang/ruby/config.el:197:    (add-hook 'projectile-rails-mode-hook #'evil-normalize-keymaps))
+./lang/ruby/config.el:199:        :map projectile-rails-mode-map
+./lang/ruby/config.el:200:        "r" #'projectile-rails-command-map))
+./lang/ruby/packages.el:35:  (package! projectile-rails :pin "772f4766b5d1159a395b93459f07d5f1f6c02f4e")
+./lang/ruby/README.org:50:  - [[doom-package:projectile-rails]]
+./lang/ruby/README.org:84:*** projectile-rails
+./lang/ruby/README.org:85:The projectile-rails prefix is [[kbd:][<localleader> r]]:
+./lang/ruby/README.org:88:| ~projectile-rails-console~    | [[kbd:][<localleader> r r]] | Open Rails console                                |
+./lang/ruby/README.org:89:| ~projectile-rails-server~     | [[kbd:][<localleader> r R]] | Open Rails server                                 |
+./lang/ruby/README.org:90:| ~projectile-rails-find-model~ | [[kbd:][<localleader> r m]] | Find any model of the project                     |
+./lang/ruby/README.org:91:| ~projectile-rails-find-model~ | [[kbd:][<localleader> r M]] | Find the model related of currently open resource |
+./lang/rust/config.el:3:(after! projectile
+./lang/rust/config.el:4:  (add-to-list 'projectile-project-root-files "Cargo.toml"))
+./lang/scala/config.el:3:(after! projectile
+./lang/scala/config.el:4:  (add-to-list 'projectile-project-root-files "build.sbt"))
+./lang/web/+css.el:11:(after! projectile
+./lang/web/+css.el:12:  (pushnew! projectile-other-file-alist
+./lang/zig/config.el:3:(after! projectile
+./lang/zig/config.el:4:  (add-to-list 'projectile-project-root-files "build.zig"))
+#+end_example
+
+** Tools
+
+#+begin_example
+./tools/debugger/config.el:41:(use-package! projectile-variable
+./tools/debugger/config.el:43:  :commands (projectile-variable-put
+./tools/debugger/config.el:44:             projectile-variable-get
+./tools/debugger/config.el:45:             projectile-variable-alist
+./tools/debugger/config.el:46:             projectile-variable-plist))
+./tools/magit/README.org:29:- [[doom-package:magit]] has been modified to invalidate the projectile cache when you check out
+./tools/magit/config.el:45:    ;; projectile cache so it can be regenerated later.
+./tools/magit/config.el:46:    (projectile-invalidate-cache nil)
+#+end_example
+
+** Modeline/Dashboard
+
+#+begin_example
+./ui/doom-dashboard/test/test-doom-dashboard.el:5:(require 'projectile)
+./ui/doom-dashboard/test/test-doom-dashboard.el:9:  :var (default-directory projectile-enable-caching)
+./ui/doom-dashboard/test/test-doom-dashboard.el:11:    (setq projectile-enable-caching nil
+./ui/doom-dashboard/test/test-doom-dashboard.el:14:  (before-each (projectile-mode +1))
+./ui/doom-dashboard/test/test-doom-dashboard.el:15:  (after-each  (projectile-mode -1))
+./ui/doom-dashboard/config.el:66:     :action projectile-switch-project)
+./ui/modeline/+light.el:374:             projectile-after-switch-project-hook
+./ui/modeline/config.el:23:  (setq projectile-dynamic-mode-line nil)
+#+end_example
+
+** Workspaces
+
+#+begin_example
+./ui/workspaces/autoload/workspaces.el:518:  "A `projectile-switch-project-action' that sets the project directory for
+./ui/workspaces/autoload/workspaces.el:531:This be hooked to `projectile-after-switch-project-hook'."
+./ui/workspaces/autoload/workspaces.el:534:  ;; HACK Clear projectile-project-root, otherwise cached roots may interfere
+./ui/workspaces/autoload/workspaces.el:536:  (let (projectile-project-root)
+./ui/workspaces/autoload/workspaces.el:538:      (when projectile-before-switch-project-hook
+./ui/workspaces/autoload/workspaces.el:544:          (run-hooks 'projectile-before-switch-project-hook)))
+./ui/workspaces/autoload/workspaces.el:572:        (run-hooks 'projectile-after-switch-project-hook)
+./ui/workspaces/README.org:57:- Switch to a project using ~projectile-switch-project~.
+./ui/workspaces/config.el:14:  "The function to run after `projectile-switch-project' or
+./ui/workspaces/config.el:15:`counsel-projectile-switch-project'. This function must take one argument: the
+./ui/workspaces/config.el:184:  (setq projectile-switch-project-action (lambda () (+workspaces-set-project-action-fn) (+workspaces-switch-to-project-h))
+./ui/workspaces/config.el:185:        counsel-projectile-switch-project-action
+./ui/workspaces/config.el:187:            ("O" counsel-projectile-switch-project-action "jump to a project buffer or file")
+./ui/workspaces/config.el:188:            ("f" counsel-projectile-switch-project-action-find-file "jump to a project file")
+./ui/workspaces/config.el:189:            ("d" counsel-projectile-switch-project-action-find-dir "jump to a project directory")
+./ui/workspaces/config.el:190:            ("D" counsel-projectile-switch-project-action-dired "open project in dired")
+./ui/workspaces/config.el:191:            ("b" counsel-projectile-switch-project-action-switch-to-buffer "jump to a project buffer")
+./ui/workspaces/config.el:192:            ("m" counsel-projectile-switch-project-action-find-file-manually "find file manually from project root")
+./ui/workspaces/config.el:193:            ("w" counsel-projectile-switch-project-action-save-all-buffers "save all project buffers")
+./ui/workspaces/config.el:194:            ("k" counsel-projectile-switch-project-action-kill-buffers "kill all project buffers")
+./ui/workspaces/config.el:195:            ("r" counsel-projectile-switch-project-action-remove-known-project "remove project from known projects")
+./ui/workspaces/config.el:196:            ("c" counsel-projectile-switch-project-action-compile "run project compilation command")
+./ui/workspaces/config.el:197:            ("C" counsel-projectile-switch-project-action-configure "run project configure command")
+./ui/workspaces/config.el:198:            ("e" counsel-projectile-switch-project-action-edit-dir-locals "edit project dir-locals")
+./ui/workspaces/config.el:199:            ("v" counsel-projectile-switch-project-action-vc "open project in vc-dir / magit / monky")
+./ui/workspaces/config.el:201:                   (let ((projectile-switch-project-action
+./ui/workspaces/config.el:203:                     (counsel-projectile-switch-project-by-name project))) "search project")
+./ui/workspaces/config.el:204:            ("xs" counsel-projectile-switch-project-action-run-shell "invoke shell from project root")
+./ui/workspaces/config.el:205:            ("xe" counsel-projectile-switch-project-action-run-eshell "invoke eshell from project root")
+./ui/workspaces/config.el:206:            ("xt" counsel-projectile-switch-project-action-run-term "invoke term from project root")
+./ui/workspaces/config.el:207:            ("X" counsel-projectile-switch-project-action-org-capture "org-capture into project")))
+./ui/workspaces/config.el:210:    (after! helm-projectile
+./ui/workspaces/config.el:211:      (setcar helm-source-projectile-projects-actions
+#+end_example
