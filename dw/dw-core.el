@@ -49,68 +49,8 @@
 
 ;;*** Evil Mode
 
-(setup (:pkg evil)
-  ;; Pre-load configuration
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  (setq evil-respect-visual-line-mode t)
-  (setq evil-undo-system 'undo-tree)
-
-  ;; Activate the Evil
-  (evil-mode 1)
-
-  ;; Set Emacs state modes
-  (dolist (mode '(custom-mode
-                  eshell-mode
-                  git-rebase-mode
-                  erc-mode
-                  circe-server-mode
-                  circe-chat-mode
-                  circe-query-mode
-                  term-mode))
-    (add-to-list 'evil-emacs-state-modes mode))
-
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-  ;; Clear the binding of C-k so that it doesn't conflict with Corfu
-  (define-key evil-insert-state-map (kbd "C-k") nil)
-
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-  (defun dw/dont-arrow-me-bro ()
-    (interactive)
-    (message "Arrow keys are bad, you know?"))
-
-  ;; Disable arrow keys in normal and visual modes
-  (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
-  (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
-  (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
-  (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
-  (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
-  (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
-  (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
-  (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro)
-
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
-
-(setup (:pkg evil-collection)
-  ;; Is this a bug in evil-collection?
-  (setq evil-collection-company-use-tng nil)
-  (:load-after evil
-    (:option evil-collection-outline-bind-tab-p nil
-             (remove evil-collection-mode-list) 'lispy
-             (remove evil-collection-mode-list) 'org-present)
-    (evil-collection-init)))
 
 (setup (:pkg general)
-  (general-evil-setup t)
-
   (general-create-definer dw/leader-key-def
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
@@ -215,12 +155,8 @@
 ;;*** Editing Configuration
 
 (setq-default tab-width 2)
-(setq-default evil-shift-width tab-width)
 
 (setq-default indent-tabs-mode nil)
-
-(setup (:pkg evil-nerd-commenter)
-  (:global "M-/" evilnc-comment-or-uncomment-lines))
 
 (setup (:pkg ws-butler)
   (:hook-into text-mode prog-mode))
@@ -264,8 +200,9 @@
 
 (setup winner
   (winner-mode)
-  (define-key evil-window-map "u" 'winner-undo)
-  (define-key evil-window-map "U" 'winner-redo))
+  ;; (define-key evil-window-map "u" 'winner-undo)
+  ;; (define-key evil-window-map "U" 'winner-redo)
+  )
 
 ;; (setq display-buffer-base-action
 ;;       '(display-buffer-reuse-mode-window
@@ -309,15 +246,16 @@
                 (all-the-icons-dired-mode 1))
               (hl-line-mode 1)))
 
-;;  (global-set-key (kbd "s-e") #'dired-jump)
+  ;;  (global-set-key (kbd "s-e") #'dired-jump)
 
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "h" 'dired-single-up-directory
-    "H" 'dired-omit-mode
-    "l" 'dired-single-buffer
-    "y" 'dired-ranger-copy
-    "X" 'dired-ranger-move
-    "p" 'dired-ranger-paste))
+  ;; (evil-collection-define-key 'normal 'dired-mode-map
+  ;;   "h" 'dired-single-up-directory
+  ;;   "H" 'dired-omit-mode
+  ;;   "l" 'dired-single-buffer
+  ;;   "y" 'dired-ranger-copy
+  ;;   "X" 'dired-ranger-move
+  ;;   "p" 'dired-ranger-paste)
+  )
 
 (setup (:pkg dired-rainbow)
   (:load-after dired
