@@ -158,15 +158,14 @@
   (require 'popper) ;; Needed because I disabled autoloads
   (popper-mode 1))
 
+;; not sure how to get popups on the side
+;; - oh well
 (general-def popper-mode-map
-  :prefix "C-c `"
+  :prefix "M-`"
   "`" 'popper-toggle-latest
   "~" 'popper-cycle
+  ;; raise/lower popups
   "M-`" 'popper-toggle-type)
-
-;; (:global "C-M-'" popper-toggle-latest
-;;          "M-'" popper-cycle
-;;          "C-M-\"" popper-toggle-type)
 
 ;;*** Hydra
 (setup (:pkg hydra)

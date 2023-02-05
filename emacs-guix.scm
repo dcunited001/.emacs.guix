@@ -19,9 +19,18 @@
    ;; packages
    "emacs-ef-themes"
    "emacs-burly"
+   ;; "emacs-firestarter"
+   "emacs-elf-mode"
+   "emacs-ssh-config-mode"
+   "emacs-tldr"
+   ;; "emacs-x509-mode"
+   ;; "emacs-info-colors"
+   "emacs-git-timemachine"
+   ;; "emacs-crontab-mode"
+   ;; "emacs-magit-tbdiff"
+   ;; "emacs-xdg-paths"
 
    ;; evil-tutor (not on guix)
-
    "emacs-next-pgtk"
 
    "emacs-tmr"

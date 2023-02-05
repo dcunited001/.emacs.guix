@@ -51,6 +51,8 @@
 (require 'dw-dev)
 ;; (require 'dw-dev-web)
 
+(require 'dc-tools)
+
 ;; (require 'dc-workflow)
 
 ;; (require 'dw-social)

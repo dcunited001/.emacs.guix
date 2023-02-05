@@ -281,7 +281,40 @@ Written by karthink, who actually uses hyperkey.
 i haven't looked into that since like 2013. However, most window managers don't
 properly process it. Sway doesn't even interpret it.
 
+
 * Modules
+
+** DC
+
+*** Tools
+
+#+begin_example emacs-lisp
+;; (package! xdg-paths)
+;; (package! info-colors)
+;; (package! tldr)
+;; (package! magit-tbdiff)
+;; (package! repo)
+;; (package! firestarter)
+;; (package! guix)
+;; (package! journalctl-mode)
+;; (package! crontab-mode)
+;; (package! ssh-config-mode)
+;; (package! x509-mode)
+
+(package! pcap-mode
+  :recipe (:host github
+           :repo "orgcandman/pcap-mode"))
+;; TODO ssh-agency
+;; TODO ssh-tunnels
+
+;; ok apparently there is an elf-mode :)
+;; (package! elf-mode)
+
+;; (package! rpm-spec-mode) ; apparently broken
+;; (package! archive-rpm)
+#+end_example
+
+
 
 ** Daviwil
 I would like to import most of these as they are.
