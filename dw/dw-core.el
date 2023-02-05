@@ -275,35 +275,6 @@
 ;; If a popup does happen, don't resize windows to be equal-sized
 (setq even-window-sizes nil)
 
-(setup (:pkg popper
-             :straight t
-             :host github
-             :repo "karthink/popper"
-             :build (:not autoloads))
-  (:global "C-M-'" popper-toggle-latest
-           "M-'" popper-cycle
-           "C-M-\"" popper-toggle-type)
-  (:option popper-window-height 20
-           ;; (popper-window-height
-           ;; (lambda (window)
-           ;;   (let ((buffer-mode (with-current-buffer (window-buffer window)
-           ;;                        major-mode)))
-           ;;     (message "BUFFER MODE: %s" buffer-mode)
-           ;;     (pcase buffer-mode
-           ;;       ('exwm-mode 40)
-           ;;       ('helpful-mode 20)
-           ;;       ('eshell-mode (progn (message "eshell!") 10))
-           ;;       (_ 15)))))
-           popper-reference-buffers '(eshell-mode
-                                      vterm-mode
-                                      geiser-repl-mode
-                                      help-mode
-                                      grep-mode
-                                      helpful-mode
-                                      compilation-mode))
-  (require 'popper) ;; Needed because I disabled autoloads
-  (popper-mode 1))
-
 ;;*** Dired
 
 (setup (:pkg all-the-icons-dired :straight t))

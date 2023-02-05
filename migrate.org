@@ -221,9 +221,6 @@ Keymaps are created with =(make-sparse-keymap)= and assigned to a map
   map)
 #+end_example
 
-*** Projectile
-
-
 *** Which Keys
 
 **** Doom Config
