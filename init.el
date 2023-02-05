@@ -39,10 +39,9 @@
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
 (require 'dw-core)
-;; (require 'dw-interface)
-;; (require 'dc-interface)
-;; (require 'dc-auth)
 
+(require 'dc-interface)
+;; (require 'dc-auth)
 
 ;; (require 'dw-shell)
 ;; (require 'dw-dev)
@@ -53,10 +52,4 @@
 ;; (require 'dw-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
-
-;; activated outside of init.el
-;; (require 'dw-mail) ;; n/a
-
-;; (when (string= system-name "acidburn")
-;;   (require 'dw-streaming))
 
