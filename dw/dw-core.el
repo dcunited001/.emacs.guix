@@ -32,7 +32,7 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ;; Set the right directory to store the native comp cache
-(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory)
+(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
 
 ;;** Editor
 
@@ -283,7 +283,7 @@
   (:global "C-M-'" popper-toggle-latest
            "M-'" popper-cycle
            "C-M-\"" popper-toggle-type)
-  (:option popper-window-height 12
+  (:option popper-window-height 20
            ;; (popper-window-height
            ;; (lambda (window)
            ;;   (let ((buffer-mode (with-current-buffer (window-buffer window)
@@ -306,19 +306,21 @@
 
 ;;*** Dired
 
-(setup (:pkg all-the-icons-dired))
+(setup (:pkg all-the-icons-dired :straight t))
 ;; You must run (all-the-icons-install-fonts) one time after
 ;; installing this package!
+
 (setup (:pkg dired-single :straight t))
 (setup (:pkg dired-ranger))
 (setup (:pkg dired-collapse))
 
 (setup dired
   (setq dired-listing-switches "-agho --group-directories-first"
-        dired-omit-files "^\\.[^.].*"
+        dired-omit-files "^.DS_Store\\'\\|^.project\\(?:ile\\)?\\'\\|^.\\(svn\\)\\'\\|^.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
         dired-omit-verbose nil
         dired-hide-details-hide-symlink-targets nil
-        delete-by-moving-to-trash t)
+        delete-by-moving-to-trash t
+        dired-dwim-target 'dired-dwim-target-recent)
 
   (autoload 'dired-omit-mode "dired-x")
 
@@ -389,8 +391,6 @@
                 '("pdf"))
                "zathura"
                '(file)))))
-
-;;*** World Clock
 
 (setq display-time-world-list
   '(("Etc/UTC" "UTC")

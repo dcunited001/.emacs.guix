@@ -30,21 +30,25 @@
 (add-to-list 'load-path dc/emacs-dw)
 (add-to-list 'load-path dc/emacs-modules)
 
+
+
 ;; Load pertinent modules
 (require 'dw-package)
-;; (require 'dw-settings) ;; TODO: per-system-settings
+(require 'dw-settings)
 
 ;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
 ;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
+(require 'dc-support)
 (require 'dw-core)
 
+(load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 (require 'dc-interface)
 ;; (require 'dc-auth)
 
 ;; (require 'dw-shell)
-;; (require 'dw-dev)
+(require 'dw-dev)
 ;; (require 'dw-dev-web)
 
 ;; (require 'dc-workflow)

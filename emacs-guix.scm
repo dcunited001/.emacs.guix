@@ -1,10 +1,26 @@
 (specifications->manifest
- '(;; fonts
+ '( ;; fonts
    "font-juliamono"
    "font-jetbrains-mono"
+   "font-iosevka"
+   "font-iosevka-aile"
+   "font-iosevka-slab"
+   "font-iosevka-term"
+   "font-iosevka-term-slab"
+   "font-iosevka-etoile"
+   "font-iosevka-curly"
+   "font-iosevka-curly-slab"
+   ;; "font-sarasa-gothic"
+
 
    ;; certs
    "nss-certs"
+
+   ;; packages
+   "emacs-ef-themes"
+   "emacs-burly"
+
+   ;; evil-tutor (not on guix)
 
    "emacs-next-pgtk"
 
@@ -223,6 +239,4 @@
    "emacs-docker-tramp"
    "emacs-dockerfile-mode"
 
-   "emacs-ef-themes"
-   "emacs-burly"
    ))

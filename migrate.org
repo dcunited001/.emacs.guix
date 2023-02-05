@@ -117,8 +117,170 @@ grep -e "tex" *-only.pkg | sed -e "s/:/\t/"
 | doom-only.pkg    | helm-bibtex        |
 | doom-only.pkg    | latex-preview-pane |
 
-* Modules
+* Features
 
+** General.el
+
+This is not well supported in the config. This is an incredibly useful package,
+but unfortunately, most subpackages need to support it as well.
+
+To run a command that documents all general-configured keybindings, run
+=general-describe-keybindings=. This outputs an org-file whose tables can be
+quickly decorated to produce a cheatsheet for each mode-map that that prints
+nicely.
+
+#+begin_example
+- ./dw-auth.el:14:  (dw/leader-key-def
+- ./dw-core.el:155:  (general-create-definer dw/leader-key-def
+- ./dw-core.el:385:  (dw/leader-key-def
+- ./dw-core.el:595:(dw/leader-key-def
+- ./dw-dev.el:113:  (dw/leader-key-def
+- ./dw-mail.el:113:  (dw/leader-key-def
+- ./dw-media.el:11:  (dw/leader-key-def
+- ./dw-shell.el:136:(dw/leader-key-def
+- ./dw-streaming.el:32:(dw/leader-key-def
+- ./dw-system.el:5:(dw/leader-key-def
+- ./dw-workflow.el:153:  (dw/leader-key-def
+
+#+end_example
+
+
+#+begin_example emacs-lisp
+(setup (:pkg general)
+  (general-evil-setup t)
+
+  (general-create-definer dw/leader-key-def
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (general-create-definer dw/ctrl-c-keys
+    :prefix "C-c"))
+
+(dw/ctrl-c-keys
+  "o"   '(:ignore t :which-key "org mode")
+
+  "oi"  '(:ignore t :which-key "insert")
+  "oil" '(org-insert-link :which-key "insert link")
+
+  "on"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
+
+  "os"  '(dw/counsel-rg-org-files :which-key "search notes")
+
+  "oa"  '(org-agenda :which-key "status")
+  "ot"  '(org-todo-list :which-key "todos")
+  "oc"  '(org-capture t :which-key "capture")
+  "ox"  '(org-export-dispatch t :which-key "export"))
+#+end_example
+
+Unfortunately, to support this behavior, the packages that establish keybindings
+either need to import general as a dependency (not necessary) or AFAIK all their
+keybindings need to be reimported ... which is one thing Doom does.
+
+** Keybindings
+
+*** Toggle Map
+
+My macro is imported to create toggleable booleans, but it still uses the old
+Doom =(map! ...)= syntax, so automatically specifying keybindings doesn't work.
+
+*** Keymaps
+
+**** Doom Config
+
+Leader key (defined in ~/.emacs.doom/lisp/doom-keybinds.el)
+
+#+begin_example emacs-lisp
+(defvar doom-leader-key "SPC"
+  "The leader prefix key for Evil users.")
+
+(defvar doom-leader-alt-key "M-SPC"
+  "An alternative leader prefix key, used for Insert and Emacs states, and for
+non-evil users.")
+
+(defvar doom-localleader-key "SPC m"
+  "The localleader prefix key, for major-mode specific commands.")
+
+(defvar doom-localleader-alt-key "M-SPC m"
+  "The localleader prefix key, for major-mode specific commands. Used for Insert
+and Emacs states, and for non-evil users.")
+#+end_example
+
+Keymaps are created with =(make-sparse-keymap)= and assigned to a map
+
+#+begin_example emacs-lisp
+(defvar doom-leader-map (make-sparse-keymap)
+  "An overriding keymap for <leader> keys.")
+
+;; usage (see emacs manual)
+(let ((map (make-sparse-keymap)))
+  (define-key map "n" #'next-line)
+  (define-key map "p" #'previous-line)
+  map)
+#+end_example
+
+
+*** Which Keys
+
+**** Doom Config
+
+#+begin_example emacs-lisp
+
+(define-key! help-map
+;;...
+
+
+  ;; make `describe-bindings' available under the b prefix which it previously
+  ;; occupied. Add more binding related commands under that prefix as well
+  "b"    nil
+  "bb"   #'describe-bindings
+  "bi"   #'which-key-show-minor-mode-keymap
+  "bm"   #'which-key-show-major-mode
+  "bt"   #'which-key-show-top-level
+  "bf"   #'which-key-show-full-keymap
+  "bk"   #'which-key-show-keymap
+
+  ;;...
+)
+
+
+(after! which-key
+  (let ((prefix-re (regexp-opt (list doom-leader-key doom-leader-alt-key))))
+    (cl-pushnew `((,(format "\\`\\(?:<\\(?:\\(?:f1\\|help\\)>\\)\\|C-h\\|%s h\\) d\\'" prefix-re))
+                  nil . "doom")
+                which-key-replacement-alist)
+    (cl-pushnew `((,(format "\\`\\(?:<\\(?:\\(?:f1\\|help\\)>\\)\\|C-h\\|%s h\\) r\\'" prefix-re))
+                  nil . "reload")
+                which-key-replacement-alist)
+    (cl-pushnew `((,(format "\\`\\(?:<\\(?:\\(?:f1\\|help\\)>\\)\\|C-h\\|%s h\\) b\\'" prefix-re))
+                  nil . "bindings")
+                which-key-replacement-alist)))
+
+
+#+end_example
+
+Evil config
+
+#+begin_example emacs-lisp
+
+(after! which-key
+  (let ((prefix-re (regexp-opt (list doom-leader-key doom-leader-alt-key))))
+    (cl-pushnew `((,(format "\\`\\(?:C-w\\|%s w\\) m\\'" prefix-re))
+                  nil . "maximize")
+                which-key-replacement-alist)))
+
+#+end_example
+
+** Popper
+
+Written by karthink, who actually uses hyperkey.
+
+** Hyperkey
+
+i haven't looked into that since like 2013. However, most window managers don't
+properly process it. Sway doesn't even interpret it.
+
+* Modules
 
 ** Daviwil
 I would like to import most of these as they are.
