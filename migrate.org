@@ -281,6 +281,74 @@ Written by karthink, who actually uses hyperkey.
 i haven't looked into that since like 2013. However, most window managers don't
 properly process it. Sway doesn't even interpret it.
 
+** Org
+
+It's an example bc guix paths are fairly dynamic
+
+*** Auto Discover
+
+To get to the org source, find an org symbol and =M-.= to jump to its
+definition. From there run =M-x find-grep= and enter the important stuff
+
+**** Org Modules
+
+References to org-modules -- doesn't include all default =org-modules= entries.
+In Emacs v29, these are processed in =org-loaddefs.el=
+
+#+begin_example
+find . -type f -exec grep --color=auto -nH --null -e org-module \{\} +
+./ol-bbdb.el:30:;; configure the variable `org-modules'.
+./ol-bibtex.el:106:;; configure the variable `org-modules'.
+./ol-docview.el:29:;; configure the variable `org-modules'.
+./ol-gnus.el:30:;; configure the variable `org-modules'.
+./ol-info.el:29:;; configure the variable `org-modules'.
+./ol-irc.el:27:;; configure the variable `org-modules'.
+./ol-irc.el:29:;; Please customize the variable `org-modules' to select
+./ol-mhe.el:29:;; configure the variable `org-modules'.
+./ol-rmail.el:29:;; want, configure the variable `org-modules'.
+./org-autoloads.el:467:Load all extensions listed in `org-modules'.
+grep: ./org-autoloads.elc: binary file matches
+./org-loaddefs.el:3436:Load all extensions listed in `org-modules'.
+./org.el:708:(defvar org-modules)  ; defined below
+./org.el:709:(defvar org-modules-loaded nil
+./org.el:714:  "Load all extensions listed in `org-modules'."
+./org.el:715:  (when (or force (not org-modules-loaded))
+./org.el:716:    (dolist (ext org-modules)
+./org.el:719:    (setq org-modules-loaded t)))
+./org.el:728:(defcustom org-modules '(ol-doi ol-w3m ol-bbdb ol-bibtex ol-docview ol-gnus ol-info ol-irc ol-mhe ol-rmail ol-eww)
+./org.el:816:Unlike to `org-modules', libraries in this list will not be
+#+end_example
+
+
+**** Org Links
+
+These are distinguished by =ol=
+
+#+begin_example
+./ob-tangle.el:36:(require 'ol)
+./ol-bbdb.el:102:(require 'ol)
+./ol-bibtex.el:117:(require 'ol)
+./ol-docview.el:49:(require 'ol)
+./ol-doi.el:32:(require 'ol)
+./ol-eshell.el:31:(require 'ol)
+./ol-eww.el:51:(require 'ol)
+./ol-gnus.el:42:(require 'ol)
+./ol-info.el:36:(require 'ol)
+./ol-irc.el:54:(require 'ol)
+./ol-man.el:30:(require 'ol)
+./ol-mhe.el:37:(require 'ol)
+./ol-rmail.el:36:(require 'ol)
+./ol-w3m.el:47:(require 'ol)
+./org-agenda.el:52:(require 'ol)
+./org-attach.el:42:(require 'ol)
+./org-element.el:67:(require 'ol)
+./org-id.el:78:(require 'ol)
+./org-lint.el:94:(require 'ol)
+./org-mobile.el:40:(require 'ol)
+./org-protocol.el:135:(require 'ol)
+./org.el:98:(require 'ol)
+./ox.el:81:(require 'ol)
+#+end_example
 
 * Modules
 

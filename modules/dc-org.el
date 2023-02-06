@@ -26,8 +26,6 @@
         org-cycle-separator-lines 2
         org-capture-bookmark nil)
 
-
-  ;; discover modules: find-grep on the ./emacs/lisp/org source for "(require 'ol)"
   (setq org-modules
         '(ol-info         ;links to info nodes (nice ,thought i couldn 't do it)
           ol-man          ;links to man pages
@@ -47,6 +45,7 @@
           ;; ol-w3m                        ;links to w3m browser
           ;; ol-docview                    ;open files in docview-mode
 
+          ol-gnus                       ;links to GNUS
           ;; ol-rmail                      ;links to rmail
           ;; ol-mhe                        ;links to MH-E messages
 
@@ -55,9 +54,6 @@
           ;; org-habit
           org-bookmark))
 
-  ;; other org modules:
-  ;; ol-eshell ol-man
-  ;; ol-doi ol-w3m ol-bbdb ol-bibtex ol-docview ol-gnus ol-info ol-irc ol-mhe ol-rmail ol-eww
   (setq org-refile-targets '((nil :maxlevel . 1)
                              (org-agenda-files :maxlevel . 1)))
 
