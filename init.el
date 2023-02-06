@@ -45,6 +45,8 @@
 (require 'dc-interface)
 ;; (require 'dc-auth)
 
+(require 'dw-org)
+
 ;; (require 'dw-shell)
 (require 'dc-dev)
 ;; (require 'dw-dev-web)

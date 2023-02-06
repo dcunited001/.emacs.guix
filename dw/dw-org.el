@@ -80,4 +80,17 @@
   (org-show-children 3)
   (org-narrow-to-subtree))
 
+(defun dw/org-path (path)
+  (expand-file-name path org-directory))
+
+;; Turn on indentation and auto-fill mode for Org files
+(defun dw/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq corfu-auto nil)
+  (setq evil-auto-indent nil))
+
+
 (provide 'dw-org)

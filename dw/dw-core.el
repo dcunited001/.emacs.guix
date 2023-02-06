@@ -217,7 +217,7 @@
         dired-omit-files "^.DS_Store\\'\\|^.project\\(?:ile\\)?\\'\\|^.\\(svn\\)\\'\\|^.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
         dired-omit-verbose nil
         dired-hide-details-hide-symlink-targets nil
-        delete-by-moving-to-trash t
+        delete-by-moving-to-trash nil
         dired-dwim-target 'dired-dwim-target-recent)
 
   (autoload 'dired-omit-mode "dired-x")
