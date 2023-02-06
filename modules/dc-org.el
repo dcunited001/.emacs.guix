@@ -6,7 +6,6 @@
 
 (straight-use-package '(org :type built-in))
 
-
    ;; (setq org-capture-templates
    ;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \
    ;;          In %:journal, %:pages.")))
@@ -69,7 +68,6 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)))
-                                        ;(ledger . t))) -- Not working right now
 
   (push '("conf-unix" . conf-unix) org-src-lang-modes))
 
