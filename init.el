@@ -48,7 +48,7 @@
 ;; (require 'dc-auth)
 
 ;; (require 'dw-shell)
-(require 'dw-dev)
+(require 'dc-dev)
 ;; (require 'dw-dev-web)
 
 (require 'dc-tools)
