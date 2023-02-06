@@ -21,7 +21,8 @@
 
 ;;; -- Setup.el -----
 
-(straight-use-package '(setup :type git :host nil :repo "https://git.sr.ht/~pkal/setup"))
+;; (straight-use-package '(setup :type git :host nil :repo "https://git.sr.ht/~pkal/setup"))
+;; (require 'setup)
 (require 'setup)
 
 ;; Uncomment this for debugging purposes

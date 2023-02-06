@@ -44,12 +44,6 @@
 
 ;;*** Core Key Bindings
 
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(global-set-key (kbd "C-M-u") 'universal-argument)
-
-;;*** Evil Mode
-
-
 (setup (:pkg general)
   (general-create-definer dw/leader-key-def
     :keymaps '(normal insert visual emacs)
@@ -115,9 +109,9 @@
    ((project-current) (call-interactively #'project-switch-to-buffer))
    (t (call-interactively #'consult-buffer))))
 
-(global-set-key (kbd "C-M-j") #'consult-buffer)
-(global-set-key (kbd "C-M-k") #'tab-bar-switch-to-tab)
-(global-set-key (kbd "C-M-n") #'tab-bar-switch-to-next-tab)
+(general-define-key "C-M-j" #'consult-buffer)
+(general-define-key "C-M-k" #'tab-bar-switch-to-tab)
+(general-define-key "C-M-n" #'tab-bar-switch-to-next-tab)
 
 (defun dw/set-tab-bar-faces ()
   (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
@@ -218,8 +212,8 @@
 ;; You must run (all-the-icons-install-fonts) one time after
 ;; installing this package!
 
-(setup (:pkg dired-single :straight t))
-(setup (:pkg dired-ranger))
+;; (setup (:pkg dired-single :straight t))
+;; (setup (:pkg dired-ranger))
 (setup (:pkg dired-collapse))
 
 (setup dired
@@ -326,14 +320,14 @@
 
 ;;*** Make Help More Helpful
 
-(setup (:pkg helpful)
-  (:option counsel-describe-function-function #'helpful-callable
-           counsel-describe-variable-function #'helpful-variable)
-  (:global [remap describe-function] helpful-function
-           [remap describe-symbol] helpful-symbol
-           [remap describe-variable] helpful-variable
-           [remap describe-command] helpful-command
-           [remap describe-key] helpful-key))
+;; (setup (:pkg helpful)
+;;   (:option counsel-describe-function-function #'helpful-callable
+;;            counsel-describe-variable-function #'helpful-variable)
+;;   (:global [remap describe-function] helpful-function
+;;            [remap describe-symbol] helpful-symbol
+;;            [remap describe-variable] helpful-variable
+;;            [remap describe-command] helpful-command
+;;            [remap describe-key] helpful-key))
 
 ;; Load the info system for info files
 (add-to-list 'auto-mode-alist '("\\.info\\'" . Info-on-current-buffer))

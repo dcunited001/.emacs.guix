@@ -16,6 +16,8 @@
    ;; certs
    "nss-certs"
 
+   "emacs-setup"
+
    ;; packages
    "emacs-ef-themes"
    "emacs-burly"
