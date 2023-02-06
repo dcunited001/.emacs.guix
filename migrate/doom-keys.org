@@ -1,0 +1,716 @@
+#+TITLE:     Doom Keys
+#+AUTHOR:    David Conner
+#+EMAIL:     noreply@te.xel.io
+#+DESCRIPTION: notes
+
+Output from =general-describe-keybindings=
+
+* Global Keybindings
+| key                                       | command                                              | previous                                             |
+|-------------------------------------------+------------------------------------------------------+------------------------------------------------------|
+| =<remap> <switch-to-buffer>=              | ~+ivy/switch-buffer~                                 | ~nil~                                                |
+| =<remap> <switch-to-buffer-other-window>= | ~+ivy/switch-buffer-other-window~                    | ~nil~                                                |
+| =<remap> <persp-switch-to-buffer>=        | ~+ivy/switch-workspace-buffer~                       | ~nil~                                                |
+| =<remap> <evil-show-jumps>=               | ~+ivy/jump-list~                                     | ~nil~                                                |
+| =<remap> <apropos>=                       | ~counsel-apropos~                                    | ~nil~                                                |
+| =<remap> <bookmark-jump>=                 | ~counsel-bookmark~                                   | ~nil~                                                |
+| =<remap> <compile>=                       | ~+ivy/compile~                                       | ~nil~                                                |
+| =<remap> <describe-bindings>=             | ~counsel-descbinds~                                  | ~nil~                                                |
+| =<remap> <describe-face>=                 | ~counsel-faces~                                      | ~nil~                                                |
+| =<remap> <describe-function>=             | ~counsel-describe-function~                          | ~helpful-callable~                                   |
+| =<remap> <describe-variable>=             | ~counsel-describe-variable~                          | ~helpful-variable~                                   |
+| =<remap> <describe-symbol>=               | ~counsel-describe-symbol~                            | ~helpful-symbol~                                     |
+| =<remap> <evil-show-registers>=           | ~counsel-evil-registers~                             | ~nil~                                                |
+| =<remap> <evil-show-marks>=               | ~counsel-mark-ring~                                  | ~nil~                                                |
+| =<remap> <execute-extended-command>=      | ~counsel-M-x~                                        | ~nil~                                                |
+| =<remap> <find-file>=                     | ~counsel-find-file~                                  | ~nil~                                                |
+| =<remap> <find-library>=                  | ~counsel-find-library~                               | ~nil~                                                |
+| =<remap> <imenu>=                         | ~counsel-imenu~                                      | ~nil~                                                |
+| =<remap> <info-lookup-symbol>=            | ~counsel-info-lookup-symbol~                         | ~nil~                                                |
+| =<remap> <load-theme>=                    | ~counsel-load-theme~                                 | ~nil~                                                |
+| =<remap> <locate>=                        | ~counsel-locate~                                     | ~nil~                                                |
+| =<remap> <org-goto>=                      | ~counsel-org-goto~                                   | ~nil~                                                |
+| =<remap> <org-set-tags-command>=          | ~counsel-org-tag~                                    | ~nil~                                                |
+| =<remap> <projectile-compile-project>=    | ~+ivy/project-compile~                               | ~nil~                                                |
+| =<remap> <recentf-open-files>=            | ~counsel-recentf~                                    | ~nil~                                                |
+| =<remap> <set-variable>=                  | ~counsel-set-variable~                               | ~nil~                                                |
+| =<remap> <swiper>=                        | ~counsel-grep-or-swiper~                             | ~nil~                                                |
+| =<remap> <insert-char>=                   | ~counsel-unicode-char~                               | ~nil~                                                |
+| =<remap> <yank-pop>=                      | ~counsel-yank-pop~                                   | ~nil~                                                |
+| =<remap> <projectile-find-file>=          | ~+ivy/projectile-find-file~                          | ~nil~                                                |
+| =<remap> <projectile-find-dir>=           | ~counsel-projectile-find-dir~                        | ~nil~                                                |
+| =<remap> <projectile-switch-to-buffer>=   | ~counsel-projectile-switch-to-buffer~                | ~nil~                                                |
+| =<remap> <projectile-grep>=               | ~counsel-projectile-grep~                            | ~nil~                                                |
+| =<remap> <projectile-ag>=                 | ~counsel-projectile-ag~                              | ~nil~                                                |
+| =<remap> <projectile-switch-project>=     | ~counsel-projectile-switch-project~                  | ~nil~                                                |
+| =M-<up>=                                  | ~drag-stuff-up~                                      | ~nil~                                                |
+| =M-<down>=                                | ~drag-stuff-down~                                    | ~nil~                                                |
+| =M-<left>=                                | ~drag-stuff-left~                                    | ~left-word~                                          |
+| =M-<right>=                               | ~drag-stuff-right~                                   | ~right-word~                                         |
+| =C-a=                                     | ~doom/backward-to-bol-or-indent~                     | ~move-beginning-of-line~                             |
+| =C-e=                                     | ~doom/forward-to-last-non-comment-or-eol~            | ~move-end-of-line~                                   |
+| =C-<down-mouse-2>=                        | ~(closure (t) (&rest _) (interactive) (text-scale-s~ | ~facemenu-menu~                                      |
+| =<remap> <newline>=                       | ~newline-and-indent~                                 | ~nil~                                                |
+| =C-RET=                                   | ~+default/newline-below~                             | ~nil~                                                |
+| =C-<return>=                              | ~+default/newline-below~                             | ~nil~                                                |
+| =C-S-RET=                                 | ~+default/newline-above~                             | ~nil~                                                |
+| =C-S-<return>=                            | ~+default/newline-above~                             | ~nil~                                                |
+| =C-'=                                     | ~imenu~                                              | ~nil~                                                |
+| =C-S-s=                                   | ~swiper~                                             | ~nil~                                                |
+| =C-S-r=                                   | ~ivy-resume~                                         | ~nil~                                                |
+| =C-x b=                                   | ~switch-to-buffer~                                   | ~switch-to-buffer~                                   |
+| =C-x 4 b=                                 | ~switch-to-buffer-other-window~                      | ~switch-to-buffer-other-window~                      |
+| =C-x C-b=                                 | ~ibuffer~                                            | ~list-buffers~                                       |
+| =C-x K=                                   | ~doom/kill-this-buffer-in-all-windows~               | ~nil~                                                |
+| =C-;=                                     | ~+company/complete~                                  | ~nil~                                                |
+| =C-==                                     | ~er/expand-region~                                   | ~nil~                                                |
+| =C-M-y=                                   | ~counsel-yank-pop~                                   | ~nil~                                                |
+| =C-x p=                                   | ~+popup/other~                                       | ~(keymap (109 . magit-project-status) (120 . projec~ |
+| =C-`=                                     | ~+popup/toggle~                                      | ~nil~                                                |
+| =C-~=                                     | ~+popup/raise~                                       | ~nil~                                                |
+| =<mouse-8>=                               | ~better-jumper-jump-backward~                        | ~nil~                                                |
+| =<mouse-9>=                               | ~better-jumper-jump-forward~                         | ~nil~                                                |
+| =S-<mouse-8>=                             | ~previous-buffer~                                    | ~nil~                                                |
+| =S-<mouse-9>=                             | ~er/contract-region~                                 | ~nil~                                                |
+| =C-S-<mouse-8>=                           | ~projectile-find-file~                               | ~nil~                                                |
+| =C-S-<mouse-9>=                           | ~projectile-grep~                                    | ~nil~                                                |
+| =<mouse-12>=                              | ~origami-toggle-node~                                | ~nil~                                                |
+| =C-<mouse-12>=                            | ~origami-open-node-recursively~                      | ~nil~                                                |
+| =C-S-<mouse-12>=                          | ~origami-close-node-recursively~                     | ~nil~                                                |
+| =M-<mouse-12>=                            | ~origami-forward-fold~                               | ~nil~                                                |
+| =S-<mouse-12>=                            | ~origami-backward-fold-same-level~                   | ~nil~                                                |
+| =M-S-<mouse-12>=                          | ~origami-forward-fold-same-level~                    | ~nil~                                                |
+| =C-M-<mouse-12>=                          | ~origami-close-all-nodes~                            | ~nil~                                                |
+| =C-M-S-<mouse-12>=                        | ~origami-open-all-nodes~                             | ~nil~                                                |
+| =M-<mouse-14>=                            | ~which-key-show-major-mode~                          | ~nil~                                                |
+| =C-:=                                     | ~company-box-doc-manually~                           | ~nil~                                                |
+| =C-<tab>=                                 | ~company-yasnippet~                                  | ~nil~                                                |
+| =C-M-;=                                   | ~company-yasnippet~                                  | ~nil~                                                |
+| =C-s=                                     | ~counsel-imenu~                                      | ~isearch-forward~                                    |
+| =M-<f10>=                                 | ~doom/window-enlargen~                               | ~toggle-frame-maximized~                             |
+| =M-s h A=                                 | ~dc/toggle-auto-highlight-symbol-mode~               | ~nil~                                                |
+| =M-g d=                                   | ~dogears-go~                                         | ~nil~                                                |
+| =M-g M-b=                                 | ~dogears-back~                                       | ~nil~                                                |
+| =M-g M-f=                                 | ~dogears-forward~                                    | ~nil~                                                |
+| =M-g M-d=                                 | ~dogears-list~                                       | ~nil~                                                |
+| =M-g M-D=                                 | ~dogears-sidebar~                                    | ~nil~                                                |
+| =C-c t N=                                 | ~dc/toggle-native-comp-async-report-warnings-errors~ | ~2~                                                  |
+| =C-<f8>=                                  | ~git-timemachine-toggle~                             | ~nil~                                                |
+| =<f9>=                                    | ~dc/toggle-lsp-ui-menu~                              | ~nil~                                                |
+| =M-<f8>=                                  | ~org-krita-insert-new-image~                         | ~nil~                                                |
+
+* Restclient-Mode-Map Keybindings
+| key       | command                            | previous |
+|-----------+------------------------------------+----------|
+| =C-c l e= | ~restclient-http-send-current~     | ~2~      |
+| =C-c l E= | ~restclient-http-send-current-raw~ | ~2~      |
+| =C-c l c= | ~restclient-copy-curl-command~     | ~2~      |
+
+* Helpful-Mode-Map Keybindings
+| key | command               | previous |
+|-----+-----------------------+----------|
+| =o= | ~link-hint-open-link~ | ~nil~    |
+
+* Cdlatex-Mode-Map Keybindings
+| key          | command | previous                  |
+|--------------+---------+---------------------------|
+| =$=          | ~nil~   | ~cdlatex-dollar~          |
+| =(=          | ~nil~   | ~cdlatex-pbb~             |
+| ={=          | ~nil~   | ~cdlatex-pbb~             |
+| =[=          | ~nil~   | ~cdlatex-pbb~             |
+| =¦=          | ~nil~   | ~cdlatex-pbb~             |
+| =<=          | ~nil~   | ~cdlatex-pbb~             |
+| =TAB=        | ~nil~   | ~cdlatex-tab~             |
+| =^=          | ~nil~   | ~cdlatex-sub-superscript~ |
+| =_=          | ~nil~   | ~cdlatex-sub-superscript~ |
+| =C-<return>= | ~nil~   | ~cdlatex-item~            |
+
+* Geiser-Repl-Mode-Map Keybindings
+| key         | command                       | previous |
+|-------------+-------------------------------+----------|
+| =C-c l '=   | ~switch-to-geiser~            | ~2~      |
+| =C-c l "=   | ~geiser-connect~              | ~2~      |
+| =C-c l [=   | ~geiser-squarify~             | ~2~      |
+| =C-c l \=   | ~geiser-insert-lambda~        | ~2~      |
+| =C-c l s=   | ~geiser-set-scheme~           | ~2~      |
+| =C-c l R=   | ~geiser-reload~               | ~2~      |
+| =C-c l h <= | ~geiser-xref-callers~         | ~3~      |
+| =C-c l h >= | ~geiser-xref-callees~         | ~3~      |
+| =C-c l h a= | ~geiser-autodoc-mode~         | ~3~      |
+| =C-c l h s= | ~geiser-autodoc-show~         | ~3~      |
+| =C-c l h m= | ~geiser-doc-look-up-manual~   | ~3~      |
+| =C-c l h .= | ~geiser-doc-symbol-at-point~  | ~3~      |
+| =C-c l r f= | ~geiser-load-file~            | ~3~      |
+| =C-c l r r= | ~geiser-restart-repl~         | ~3~      |
+| =C-c l c=   | ~geiser-repl-clear-buffer~    | ~nil~    |
+| =C-c l q=   | ~geiser-repl-exit~            | ~nil~    |
+| =C-c l m=   | ~macrostep-expand~            | ~nil~    |
+| =C-c l M=   | ~macrostep-geiser-expand-all~ | ~nil~    |
+
+* Scheme-Mode-Map Keybindings
+| key         | command                         | previous |
+|-------------+---------------------------------+----------|
+| =C-c l '=   | ~switch-to-geiser~              | ~nil~    |
+| =C-c l "=   | ~geiser-connect~                | ~nil~    |
+| =C-c l [=   | ~geiser-squarify~               | ~nil~    |
+| =C-c l \=   | ~geiser-insert-lambda~          | ~nil~    |
+| =C-c l s=   | ~geiser-set-scheme~             | ~nil~    |
+| =C-c l R=   | ~geiser-reload~                 | ~nil~    |
+| =C-c l h <= | ~geiser-xref-callers~           | ~3~      |
+| =C-c l h >= | ~geiser-xref-callees~           | ~3~      |
+| =C-c l h a= | ~geiser-autodoc-mode~           | ~3~      |
+| =C-c l h s= | ~geiser-autodoc-show~           | ~3~      |
+| =C-c l h m= | ~geiser-doc-look-up-manual~     | ~3~      |
+| =C-c l h .= | ~geiser-doc-symbol-at-point~    | ~3~      |
+| =C-c l r f= | ~geiser-load-file~              | ~3~      |
+| =C-c l r r= | ~geiser-restart-repl~           | ~3~      |
+| =C-c l e b= | ~geiser-eval-buffer~            | ~3~      |
+| =C-c l e B= | ~geiser-eval-buffer-and-go~     | ~3~      |
+| =C-c l e e= | ~geiser-eval-last-sexp~         | ~3~      |
+| =C-c l e d= | ~geiser-eval-definition~        | ~3~      |
+| =C-c l e D= | ~geiser-eval-definition-and-go~ | ~3~      |
+| =C-c l e r= | ~geiser-eval-region~            | ~3~      |
+| =C-c l e R= | ~geiser-eval-region-and-go~     | ~3~      |
+| =C-c l r b= | ~geiser-load-current-buffer~    | ~nil~    |
+| =C-c l m=   | ~macrostep-expand~              | ~nil~    |
+| =C-c l M=   | ~macrostep-geiser-expand-all~   | ~nil~    |
+
+* Counsel-Ag-Map Keybindings
+| key     | command                             | previous |
+|---------+-------------------------------------+----------|
+| =C-SPC= | ~ivy-call-and-recenter~             | ~nil~    |
+| =M-RET= | ~+ivy/git-grep-other-window-action~ | ~nil~    |
+
+* Ivy-Switch-Buffer-Map Keybindings
+| key   | command                      | previous |
+|-------+------------------------------+----------|
+| =C-s= | ~counsel-minibuffer-history~ | ~nil~    |
+
+* Ivy-Minibuffer-Map Keybindings
+| key                                   | command                      | previous                   |
+|---------------------------------------+------------------------------+----------------------------|
+| =C-s=                                 | ~counsel-minibuffer-history~ | ~nil~                      |
+| =<remap> <doom/delete-backward-word>= | ~ivy-backward-kill-word~     | ~nil~                      |
+| =C-c C-e=                             | ~+ivy/woccur~                | ~nil~                      |
+| =C-o=                                 | ~ivy-dispatching-done~       | ~hydra-ivy/body~           |
+| =M-o=                                 | ~hydra-ivy/body~             | ~ivy-dispatching-done~     |
+| =TAB=                                 | ~ivy-alt-done~               | ~ivy-partial-or-done~      |
+| =C-g=                                 | ~keyboard-escape-quit~       | ~minibuffer-keyboard-quit~ |
+
+* Flycheck-Error-List-Mode-Map Keybindings
+| key   | command                              | previous                         |
+|-------+--------------------------------------+----------------------------------|
+| =C-n= | ~flycheck-error-list-next-error~     | ~nil~                            |
+| =C-p= | ~flycheck-error-list-previous-error~ | ~nil~                            |
+| =RET= | ~flycheck-error-list-goto-error~     | ~flycheck-error-list-goto-error~ |
+
+* Org-Agenda-Mode-Map Keybindings
+| key         | command                           | previous |
+|-------------+-----------------------------------+----------|
+| =C-c l d d= | ~org-agenda-deadline~             | ~2~      |
+| =C-c l d s= | ~org-agenda-schedule~             | ~2~      |
+| =C-c l c c= | ~org-agenda-clock-cancel~         | ~3~      |
+| =C-c l c g= | ~org-agenda-clock-goto~           | ~3~      |
+| =C-c l c i= | ~org-agenda-clock-in~             | ~3~      |
+| =C-c l c o= | ~org-agenda-clock-out~            | ~3~      |
+| =C-c l c r= | ~org-agenda-clockreport-mode~     | ~3~      |
+| =C-c l c s= | ~org-agenda-show-clocking-issues~ | ~3~      |
+| =C-c l p d= | ~org-agenda-priority-down~        | ~3~      |
+| =C-c l p p= | ~org-agenda-priority~             | ~3~      |
+| =C-c l p u= | ~org-agenda-priority-up~          | ~3~      |
+| =C-c l q=   | ~org-agenda-set-tags~             | ~nil~    |
+| =C-c l r=   | ~org-agenda-refile~               | ~nil~    |
+| =C-c l t=   | ~org-agenda-todo~                 | ~nil~    |
+
+* Org-Mode-Map Keybindings
+| key                                                 | command                                              | previous                                  |
+|-----------------------------------------------------+------------------------------------------------------+-------------------------------------------|
+| =<tab>=                                             | ~org-cycle~                                          | ~nil~                                     |
+| =C-c C-S-l=                                         | ~+org/remove-link~                                   | ~nil~                                     |
+| =C-c TAB=                                           | ~org-toggle-inline-images~                           | ~org-ctrl-c-tab~                          |
+| =S-RET=                                             | ~+org/shift-return~                                  | ~org-table-copy-down~                     |
+| =C-RET=                                             | ~+org/insert-item-below~                             | ~nil~                                     |
+| =C-S-RET=                                           | ~+org/insert-item-above~                             | ~nil~                                     |
+| =C-M-RET=                                           | ~org-insert-subheading~                              | ~nil~                                     |
+| =C-<return>=                                        | ~+org/insert-item-below~                             | ~org-insert-heading-respect-content~      |
+| =C-S-<return>=                                      | ~+org/insert-item-above~                             | ~org-insert-todo-heading-respect-content~ |
+| =C-M-<return>=                                      | ~org-insert-subheading~                              | ~nil~                                     |
+| =<remap> <doom/backward-to-bol-or-indent>=          | ~org-beginning-of-line~                              | ~nil~                                     |
+| =<remap> <doom/forward-to-last-non-comment-or-eol>= | ~org-end-of-line~                                    | ~nil~                                     |
+| =C-c l #=                                           | ~org-update-statistics-cookies~                      | ~2~                                       |
+| =C-c l '=                                           | ~org-edit-special~                                   | ~2~                                       |
+| =C-c l *=                                           | ~org-ctrl-c-star~                                    | ~2~                                       |
+| =C-c l +=                                           | ~org-ctrl-c-minus~                                   | ~2~                                       |
+| =C-c l ,=                                           | ~org-switchb~                                        | ~2~                                       |
+| =C-c l @=                                           | ~org-cite-insert~                                    | ~2~                                       |
+| =C-c l .=                                           | ~counsel-org-goto~                                   | ~org-goto~                                |
+| =C-c l /=                                           | ~counsel-org-goto-all~                               | ~nil~                                     |
+| =C-c l A=                                           | ~org-archive-subtree~                                | ~nil~                                     |
+| =C-c l e=                                           | ~org-export-dispatch~                                | ~nil~                                     |
+| =C-c l f=                                           | ~org-footnote-action~                                | ~nil~                                     |
+| =C-c l h=                                           | ~org-toggle-heading~                                 | ~nil~                                     |
+| =C-c l i=                                           | ~org-toggle-item~                                    | ~nil~                                     |
+| =C-c l I=                                           | ~org-id-get-create~                                  | ~nil~                                     |
+| =C-c l k=                                           | ~org-babel-remove-result~                            | ~nil~                                     |
+| =C-c l K=                                           | ~+org/remove-result-blocks~                          | ~nil~                                     |
+| =C-c l n=                                           | ~org-store-link~                                     | ~nil~                                     |
+| =C-c l o=                                           | ~org-set-property~                                   | ~nil~                                     |
+| =C-c l q=                                           | ~org-set-tags-command~                               | ~nil~                                     |
+| =C-c l t=                                           | ~org-todo~                                           | ~nil~                                     |
+| =C-c l T=                                           | ~org-todo-list~                                      | ~nil~                                     |
+| =C-c l x=                                           | ~org-toggle-checkbox~                                | ~nil~                                     |
+| =C-c l a a=                                         | ~org-attach~                                         | ~3~                                       |
+| =C-c l a d=                                         | ~org-attach-delete-one~                              | ~3~                                       |
+| =C-c l a D=                                         | ~org-attach-delete-all~                              | ~3~                                       |
+| =C-c l a f=                                         | ~+org/find-file-in-attachments~                      | ~3~                                       |
+| =C-c l a l=                                         | ~+org/attach-file-and-insert-link~                   | ~3~                                       |
+| =C-c l a n=                                         | ~org-attach-new~                                     | ~3~                                       |
+| =C-c l a o=                                         | ~org-attach-open~                                    | ~3~                                       |
+| =C-c l a O=                                         | ~org-attach-open-in-emacs~                           | ~3~                                       |
+| =C-c l a r=                                         | ~org-attach-reveal~                                  | ~3~                                       |
+| =C-c l a R=                                         | ~org-attach-reveal-in-emacs~                         | ~3~                                       |
+| =C-c l a u=                                         | ~org-attach-url~                                     | ~3~                                       |
+| =C-c l a s=                                         | ~org-attach-set-directory~                           | ~3~                                       |
+| =C-c l a S=                                         | ~org-attach-sync~                                    | ~3~                                       |
+| =C-c l a c=                                         | ~org-download-screenshot~                            | ~nil~                                     |
+| =C-c l a p=                                         | ~org-download-clipboard~                             | ~nil~                                     |
+| =C-c l a P=                                         | ~org-download-yank~                                  | ~nil~                                     |
+| =C-c l b -=                                         | ~org-table-insert-hline~                             | ~3~                                       |
+| =C-c l b a=                                         | ~org-table-align~                                    | ~3~                                       |
+| =C-c l b b=                                         | ~org-table-blank-field~                              | ~3~                                       |
+| =C-c l b c=                                         | ~org-table-create-or-convert-from-region~            | ~3~                                       |
+| =C-c l b e=                                         | ~org-table-edit-field~                               | ~3~                                       |
+| =C-c l b f=                                         | ~org-table-edit-formulas~                            | ~3~                                       |
+| =C-c l b h=                                         | ~org-table-field-info~                               | ~3~                                       |
+| =C-c l b s=                                         | ~org-table-sort-lines~                               | ~3~                                       |
+| =C-c l b r=                                         | ~org-table-recalculate~                              | ~3~                                       |
+| =C-c l b R=                                         | ~org-table-recalculate-buffer-tables~                | ~3~                                       |
+| =C-c l b d c=                                       | ~org-table-delete-column~                            | ~4~                                       |
+| =C-c l b d r=                                       | ~org-table-kill-row~                                 | ~4~                                       |
+| =C-c l b i c=                                       | ~org-table-insert-column~                            | ~4~                                       |
+| =C-c l b i h=                                       | ~org-table-insert-hline~                             | ~4~                                       |
+| =C-c l b i r=                                       | ~org-table-insert-row~                               | ~4~                                       |
+| =C-c l b i H=                                       | ~org-table-hline-and-move~                           | ~4~                                       |
+| =C-c l b t f=                                       | ~org-table-toggle-formula-debugger~                  | ~4~                                       |
+| =C-c l b t o=                                       | ~org-table-toggle-coordinate-overlays~               | ~4~                                       |
+| =C-c l b p=                                         | ~org-plot/gnuplot~                                   | ~nil~                                     |
+| =C-c l c c=                                         | ~org-clock-cancel~                                   | ~3~                                       |
+| =C-c l c d=                                         | ~org-clock-mark-default-task~                        | ~3~                                       |
+| =C-c l c e=                                         | ~org-clock-modify-effort-estimate~                   | ~3~                                       |
+| =C-c l c E=                                         | ~org-set-effort~                                     | ~3~                                       |
+| =C-c l c g=                                         | ~org-clock-goto~                                     | ~3~                                       |
+| =C-c l c G=                                         | ~(closure (t) (&rest _) (interactive) (org-clock-go~ | ~3~                                       |
+| =C-c l c l=                                         | ~+org/toggle-last-clock~                             | ~3~                                       |
+| =C-c l c i=                                         | ~org-clock-in~                                       | ~3~                                       |
+| =C-c l c I=                                         | ~org-clock-in-last~                                  | ~3~                                       |
+| =C-c l c o=                                         | ~org-clock-out~                                      | ~3~                                       |
+| =C-c l c r=                                         | ~org-resolve-clocks~                                 | ~3~                                       |
+| =C-c l c R=                                         | ~org-clock-report~                                   | ~3~                                       |
+| =C-c l c t=                                         | ~org-evaluate-time-range~                            | ~3~                                       |
+| =C-c l c ==                                         | ~org-clock-timestamps-up~                            | ~3~                                       |
+| =C-c l c -=                                         | ~org-clock-timestamps-down~                          | ~3~                                       |
+| =C-c l d d=                                         | ~org-deadline~                                       | ~3~                                       |
+| =C-c l d s=                                         | ~org-schedule~                                       | ~3~                                       |
+| =C-c l d t=                                         | ~org-time-stamp~                                     | ~3~                                       |
+| =C-c l d T=                                         | ~org-time-stamp-inactive~                            | ~3~                                       |
+| =C-c l g g=                                         | ~counsel-org-goto~                                   | ~org-goto~                                |
+| =C-c l g G=                                         | ~counsel-org-goto-all~                               | ~nil~                                     |
+| =C-c l g c=                                         | ~org-clock-goto~                                     | ~nil~                                     |
+| =C-c l g C=                                         | ~(closure (t) (&rest _) (interactive) (org-clock-go~ | ~nil~                                     |
+| =C-c l g i=                                         | ~org-id-goto~                                        | ~nil~                                     |
+| =C-c l g r=                                         | ~org-refile-goto-last-stored~                        | ~nil~                                     |
+| =C-c l g v=                                         | ~+org/goto-visible~                                  | ~nil~                                     |
+| =C-c l g x=                                         | ~org-capture-goto-last-stored~                       | ~nil~                                     |
+| =C-c l l c=                                         | ~org-cliplink~                                       | ~3~                                       |
+| =C-c l l d=                                         | ~+org/remove-link~                                   | ~3~                                       |
+| =C-c l l i=                                         | ~org-id-store-link~                                  | ~3~                                       |
+| =C-c l l l=                                         | ~org-insert-link~                                    | ~3~                                       |
+| =C-c l l L=                                         | ~org-insert-all-links~                               | ~3~                                       |
+| =C-c l l s=                                         | ~org-store-link~                                     | ~3~                                       |
+| =C-c l l S=                                         | ~org-insert-last-stored-link~                        | ~3~                                       |
+| =C-c l l t=                                         | ~org-toggle-link-display~                            | ~3~                                       |
+| =C-c l P a=                                         | ~org-publish-all~                                    | ~3~                                       |
+| =C-c l P f=                                         | ~org-publish-current-file~                           | ~3~                                       |
+| =C-c l P p=                                         | ~org-publish~                                        | ~3~                                       |
+| =C-c l P P=                                         | ~org-publish-current-project~                        | ~3~                                       |
+| =C-c l P s=                                         | ~org-publish-sitemap~                                | ~3~                                       |
+| =C-c l r .=                                         | ~+org/refile-to-current-file~                        | ~3~                                       |
+| =C-c l r c=                                         | ~+org/refile-to-running-clock~                       | ~3~                                       |
+| =C-c l r l=                                         | ~+org/refile-to-last-location~                       | ~3~                                       |
+| =C-c l r f=                                         | ~+org/refile-to-file~                                | ~3~                                       |
+| =C-c l r o=                                         | ~+org/refile-to-other-window~                        | ~3~                                       |
+| =C-c l r O=                                         | ~+org/refile-to-other-buffer~                        | ~3~                                       |
+| =C-c l r v=                                         | ~+org/refile-to-visible~                             | ~3~                                       |
+| =C-c l r r=                                         | ~org-refile~                                         | ~3~                                       |
+| =C-c l r R=                                         | ~org-refile-reverse~                                 | ~3~                                       |
+| =C-c l s a=                                         | ~org-toggle-archive-tag~                             | ~3~                                       |
+| =C-c l s b=                                         | ~org-tree-to-indirect-buffer~                        | ~3~                                       |
+| =C-c l s c=                                         | ~org-clone-subtree-with-time-shift~                  | ~3~                                       |
+| =C-c l s d=                                         | ~org-cut-subtree~                                    | ~3~                                       |
+| =C-c l s h=                                         | ~org-promote-subtree~                                | ~3~                                       |
+| =C-c l s j=                                         | ~org-move-subtree-down~                              | ~3~                                       |
+| =C-c l s k=                                         | ~org-move-subtree-up~                                | ~3~                                       |
+| =C-c l s l=                                         | ~org-demote-subtree~                                 | ~3~                                       |
+| =C-c l s n=                                         | ~org-narrow-to-subtree~                              | ~3~                                       |
+| =C-c l s r=                                         | ~org-refile~                                         | ~3~                                       |
+| =C-c l s s=                                         | ~org-sparse-tree~                                    | ~3~                                       |
+| =C-c l s A=                                         | ~org-archive-subtree~                                | ~3~                                       |
+| =C-c l s N=                                         | ~widen~                                              | ~3~                                       |
+| =C-c l s S=                                         | ~org-sort~                                           | ~3~                                       |
+| =C-c l p d=                                         | ~org-priority-down~                                  | ~3~                                       |
+| =C-c l p p=                                         | ~org-priority~                                       | ~3~                                       |
+| =C-c l p u=                                         | ~org-priority-up~                                    | ~3~                                       |
+| =C-c l m f=                                         | ~org-roam-node-find~                                 | ~3~                                       |
+| =C-c l m F=                                         | ~org-roam-ref-find~                                  | ~3~                                       |
+| =C-c l m g=                                         | ~org-roam-graph~                                     | ~3~                                       |
+| =C-c l m n=                                         | ~org-roam-capture~                                   | ~3~                                       |
+| =C-c l m d b=                                       | ~org-roam-dailies-goto-previous-note~                | ~4~                                       |
+| =C-c l m d d=                                       | ~org-roam-dailies-goto-date~                         | ~4~                                       |
+| =C-c l m d D=                                       | ~org-roam-dailies-capture-date~                      | ~4~                                       |
+| =C-c l m d f=                                       | ~org-roam-dailies-goto-next-note~                    | ~4~                                       |
+| =C-c l m d m=                                       | ~org-roam-dailies-goto-tomorrow~                     | ~4~                                       |
+| =C-c l m d M=                                       | ~org-roam-dailies-capture-tomorrow~                  | ~4~                                       |
+| =C-c l m d n=                                       | ~org-roam-dailies-capture-today~                     | ~4~                                       |
+| =C-c l m d t=                                       | ~org-roam-dailies-goto-today~                        | ~4~                                       |
+| =C-c l m d T=                                       | ~org-roam-dailies-capture-today~                     | ~4~                                       |
+| =C-c l m d y=                                       | ~org-roam-dailies-goto-yesterday~                    | ~4~                                       |
+| =C-c l m d Y=                                       | ~org-roam-dailies-capture-yesterday~                 | ~4~                                       |
+| =C-c l m d -=                                       | ~org-roam-dailies-find-directory~                    | ~4~                                       |
+| =C-c l v=                                           | ~org-view-output-file~                               | ~nil~                                     |
+| =C-c l m T=                                         | ~dc/org-roam-toggle-open-buffer-on-find-file~        | ~nil~                                     |
+| =C-c l m a=                                         | ~org-roam-node-random~                               | ~nil~                                     |
+| =C-c l m D=                                         | ~org-roam-demote-entire-buffer~                      | ~3~                                       |
+| =C-c l m i=                                         | ~dw/org-roam-insert-immediate~                       | ~org-roam-node-insert~                    |
+| =C-c l m I=                                         | ~org-roam-insert-node~                               | ~org-id-get-create~                       |
+| =C-c l m #=                                         | ~org-id-get-create~                                  | ~nil~                                     |
+| =C-c l m 4=                                         | ~dc/org-roam-get-slug~                               | ~nil~                                     |
+| =C-c l m $=                                         | ~dc/org-roam-insert-slug~                            | ~nil~                                     |
+| =C-c l m r=                                         | ~org-roam-refile~                                    | ~3~                                       |
+| =C-c l m R=                                         | ~org-roam-link-replace-all~                          | ~3~                                       |
+| =C-c l m m=                                         | ~org-roam-buffer-toggle~                             | ~3~                                       |
+| =C-c l m M=                                         | ~org-roam-buffer-display-dedicated~                  | ~3~                                       |
+| =C-c l m o a=                                       | ~org-roam-alias-add~                                 | ~4~                                       |
+| =C-c l m o A=                                       | ~org-roam-alias-remove~                              | ~4~                                       |
+| =C-c l m o t=                                       | ~org-roam-tag-add~                                   | ~4~                                       |
+| =C-c l m o T=                                       | ~org-roam-tag-remove~                                | ~4~                                       |
+| =C-c l m o r=                                       | ~org-roam-ref-add~                                   | ~4~                                       |
+| =C-c l m o R=                                       | ~org-roam-ref-remove~                                | ~4~                                       |
+
+* Json-Mode-Map Keybindings
+| key       | command                          | previous |
+|-----------+----------------------------------+----------|
+| =C-c l p= | ~json-mode-show-path~            | ~2~      |
+| =C-c l t= | ~json-toggle-boolean~            | ~2~      |
+| =C-c l d= | ~json-mode-kill-path~            | ~2~      |
+| =C-c l x= | ~json-nullify-sexp~              | ~2~      |
+| =C-c l += | ~json-increment-number-at-point~ | ~2~      |
+| =C-c l -= | ~json-decrement-number-at-point~ | ~2~      |
+| =C-c l f= | ~json-mode-beautify~             | ~2~      |
+| =C-c l s= | ~counsel-jq~                     | ~nil~    |
+
+* Company-Search-Map Keybindings
+| key   | command                                              | previous                           |
+|-------+------------------------------------------------------+------------------------------------|
+| =C-n= | ~company-search-repeat-forward~                      | ~company-select-next-or-abort~     |
+| =C-p= | ~company-search-repeat-backward~                     | ~company-select-previous-or-abort~ |
+| =C-s= | ~(closure (t) (&rest _) (interactive) (company-sear~ | ~company-search-repeat-forward~    |
+
+* Company-Active-Map Keybindings
+| key          | command                            | previous                           |
+|--------------+------------------------------------+------------------------------------|
+| =C-o=        | ~company-search-kill-others~       | ~nil~                              |
+| =C-n=        | ~company-select-next~              | ~company-select-next-or-abort~     |
+| =C-p=        | ~company-select-previous~          | ~company-select-previous-or-abort~ |
+| =C-h=        | ~company-quickhelp-manual-begin~   | ~company-show-doc-buffer~          |
+| =C-S-h=      | ~company-show-doc-buffer~          | ~nil~                              |
+| =C-s=        | ~company-search-candidates~        | ~company-search-candidates~        |
+| =M-s=        | ~company-filter-candidates~        | ~nil~                              |
+| =C-<tab>=    | ~company-complete-common-or-cycle~ | ~nil~                              |
+| =<tab>=      | ~company-complete-common-or-cycle~ | ~company-complete-common~          |
+| =<backtab>=  | ~company-select-previous~          | ~nil~                              |
+| =C-RET=      | ~counsel-company~                  | ~nil~                              |
+| =C-<return>= | ~counsel-company~                  | ~nil~                              |
+
+* Apropos-Mode-Map Keybindings
+| key | command               | previous                  |
+|-----+-----------------------+---------------------------|
+| =o= | ~link-hint-open-link~ | ~nil~                     |
+| =n= | ~forward-button~      | ~apropos-next-symbol~     |
+| =p= | ~backward-button~     | ~apropos-previous-symbol~ |
+
+* Bug-Reference-Map Keybindings
+| key   | command                                              | previous |
+|-------+------------------------------------------------------+----------|
+| =RET= | ~(menu-item  nil :filter (lambda (&optional _) (let~ | ~nil~    |
+
+* Markdown-Mode-Map Keybindings
+| key         | command                                        | previous |
+|-------------+------------------------------------------------+----------|
+| =C-c l '=   | ~markdown-edit-code-block~                     | ~2~      |
+| =C-c l o=   | ~markdown-open~                                | ~2~      |
+| =C-c l p=   | ~markdown-preview~                             | ~2~      |
+| =C-c l e=   | ~markdown-export~                              | ~2~      |
+| =C-c l i T= | ~markdown-toc-generate-toc~                    | ~3~      |
+| =C-c l i l= | ~markdown-insert-link~                         | ~3~      |
+| =C-c l i -= | ~markdown-insert-hr~                           | ~3~      |
+| =C-c l i 1= | ~markdown-insert-header-atx-1~                 | ~3~      |
+| =C-c l i 2= | ~markdown-insert-header-atx-2~                 | ~3~      |
+| =C-c l i 3= | ~markdown-insert-header-atx-3~                 | ~3~      |
+| =C-c l i 4= | ~markdown-insert-header-atx-4~                 | ~3~      |
+| =C-c l i 5= | ~markdown-insert-header-atx-5~                 | ~3~      |
+| =C-c l i 6= | ~markdown-insert-header-atx-6~                 | ~3~      |
+| =C-c l i C= | ~markdown-insert-gfm-code-block~               | ~3~      |
+| =C-c l i P= | ~markdown-pre-region~                          | ~3~      |
+| =C-c l i Q= | ~markdown-blockquote-region~                   | ~3~      |
+| =C-c l i [= | ~markdown-insert-gfm-checkbox~                 | ~3~      |
+| =C-c l i b= | ~markdown-insert-bold~                         | ~3~      |
+| =C-c l i c= | ~markdown-insert-code~                         | ~3~      |
+| =C-c l i e= | ~markdown-insert-italic~                       | ~3~      |
+| =C-c l i f= | ~markdown-insert-footnote~                     | ~3~      |
+| =C-c l i h= | ~markdown-insert-header-dwim~                  | ~3~      |
+| =C-c l i i= | ~markdown-insert-italic~                       | ~3~      |
+| =C-c l i k= | ~markdown-insert-kbd~                          | ~3~      |
+| =C-c l i p= | ~markdown-insert-pre~                          | ~3~      |
+| =C-c l i q= | ~markdown-insert-blockquote~                   | ~3~      |
+| =C-c l i s= | ~markdown-insert-strike-through~               | ~3~      |
+| =C-c l i t= | ~markdown-insert-table~                        | ~3~      |
+| =C-c l i w= | ~markdown-insert-wiki-link~                    | ~3~      |
+| =C-c l t e= | ~markdown-toggle-math~                         | ~3~      |
+| =C-c l t f= | ~markdown-toggle-fontify-code-blocks-natively~ | ~3~      |
+| =C-c l t i= | ~markdown-toggle-inline-images~                | ~3~      |
+| =C-c l t l= | ~markdown-toggle-url-hiding~                   | ~3~      |
+| =C-c l t m= | ~markdown-toggle-markup-hiding~                | ~3~      |
+| =C-c l t w= | ~markdown-toggle-wiki-links~                   | ~3~      |
+| =C-c l t x= | ~markdown-toggle-gfm-checkbox~                 | ~3~      |
+
+* Smartparens-Mode-Map Keybindings
+| key               | command                | previous |
+|-------------------+------------------------+----------|
+| =C-M-a=           | ~sp-beginning-of-sexp~ | ~nil~    |
+| =C-M-e=           | ~sp-end-of-sexp~       | ~nil~    |
+| =C-M-f=           | ~sp-forward-sexp~      | ~nil~    |
+| =C-M-b=           | ~sp-backward-sexp~     | ~nil~    |
+| =C-M-n=           | ~sp-next-sexp~         | ~nil~    |
+| =C-M-p=           | ~sp-previous-sexp~     | ~nil~    |
+| =C-M-u=           | ~sp-up-sexp~           | ~nil~    |
+| =C-M-d=           | ~sp-down-sexp~         | ~nil~    |
+| =C-M-k=           | ~sp-kill-sexp~         | ~nil~    |
+| =C-M-t=           | ~sp-transpose-sexp~    | ~nil~    |
+| =C-M-<backspace>= | ~sp-splice-sexp~       | ~nil~    |
+
+* Dired-Mode-Map Keybindings
+| key       | command                        | previous          |
+|-----------+--------------------------------+-------------------|
+| =C-c C-r= | ~dired-rsync~                  | ~nil~             |
+| =q=       | ~+dired/quit-all~              | ~find-name-dired~ |
+| =C-c C-e= | ~wdired-change-to-wdired-mode~ | ~nil~             |
+| =)=       | ~dired-git-info-mode~          | ~nil~             |
+| =C-c l h= | ~dired-omit-mode~              | ~2~               |
+
+* Info-Mode-Map Keybindings
+| key | command               | previous |
+|-----+-----------------------+----------|
+| =o= | ~link-hint-open-link~ | ~nil~    |
+
+* Snippet-Mode-Map Keybindings
+| key       | command           | previous |
+|-----------+-------------------+----------|
+| =C-c C-k= | ~+snippet--abort~ | ~nil~    |
+
+* Yas-Minor-Mode-Map Keybindings
+| key                                | command          | previous |
+|------------------------------------+------------------+----------|
+| =<remap> <yas-new-snippet>=        | ~+snippets/new~  | ~nil~    |
+| =<remap> <yas-visit-snippet-file>= | ~+snippets/edit~ | ~nil~    |
+
+* Yas-Keymap Keybindings
+| key             | command                                  | previous |
+|-----------------+------------------------------------------+----------|
+| =C-e=           | ~+snippets/goto-end-of-field~            | ~nil~    |
+| =C-a=           | ~+snippets/goto-start-of-field~          | ~nil~    |
+| =M-<right>=     | ~+snippets/goto-end-of-field~            | ~nil~    |
+| =M-<left>=      | ~+snippets/goto-start-of-field~          | ~nil~    |
+| =M-<backspace>= | ~+snippets/delete-to-start-of-field~     | ~nil~    |
+| =<backspace>=   | ~+snippets/delete-backward-char~         | ~nil~    |
+| =<delete>=      | ~+snippets/delete-forward-char-or-field~ | ~nil~    |
+
+* Lisp-Interaction-Mode-Map Keybindings
+| key         | command                                   | previous |
+|-------------+-------------------------------------------+----------|
+| =C-c l m=   | ~macrostep-expand~                        | ~nil~    |
+| =C-c l d f= | ~+emacs-lisp/edebug-instrument-defun-on~  | ~3~      |
+| =C-c l d F= | ~+emacs-lisp/edebug-instrument-defun-off~ | ~3~      |
+| =C-c l e b= | ~eval-buffer~                             | ~3~      |
+| =C-c l e d= | ~eval-defun~                              | ~3~      |
+| =C-c l e e= | ~eval-last-sexp~                          | ~3~      |
+| =C-c l e r= | ~eval-region~                             | ~3~      |
+| =C-c l e l= | ~load-library~                            | ~3~      |
+| =C-c l g f= | ~find-function~                           | ~3~      |
+| =C-c l g v= | ~find-variable~                           | ~3~      |
+| =C-c l g l= | ~find-library~                            | ~3~      |
+
+* Emacs-Lisp-Mode-Map Keybindings
+| key         | command                                   | previous |
+|-------------+-------------------------------------------+----------|
+| =C-c l m=   | ~macrostep-expand~                        | ~nil~    |
+| =C-c l d f= | ~+emacs-lisp/edebug-instrument-defun-on~  | ~3~      |
+| =C-c l d F= | ~+emacs-lisp/edebug-instrument-defun-off~ | ~3~      |
+| =C-c l e b= | ~eval-buffer~                             | ~3~      |
+| =C-c l e d= | ~eval-defun~                              | ~3~      |
+| =C-c l e e= | ~eval-last-sexp~                          | ~3~      |
+| =C-c l e r= | ~eval-region~                             | ~3~      |
+| =C-c l e l= | ~load-library~                            | ~3~      |
+| =C-c l g f= | ~find-function~                           | ~3~      |
+| =C-c l g v= | ~find-variable~                           | ~3~      |
+| =C-c l g l= | ~find-library~                            | ~3~      |
+
+* Origami-Mode-Map Keybindings
+| key               | command                          | previous |
+|-------------------+----------------------------------+----------|
+| =C-c C-f C-f=     | ~origami-toggle-node~            | ~nil~    |
+| =C-c C-f C-u=     | ~origami-open-node-recursively~  | ~nil~    |
+| =C-c C-f C-c=     | ~origami-close-node-recursively~ | ~nil~    |
+| =C-c C-f C-a C-r= | ~origami-reset~                  | ~nil~    |
+| =C-c C-f C-a C-f= | ~origami-close-all-nodes~        | ~nil~    |
+| =C-c C-f C-a C-u= | ~origami-open-all-nodes~         | ~nil~    |
+
+* Ctl-X-Map Keybindings
+| key   | command       | previous  |
+|-------+---------------+-----------|
+| =C-b= | ~bufler-list~ | ~ibuffer~ |
+
+* Help-Mode-Map Keybindings
+| key | command               | previous              |
+|-----+-----------------------+-----------------------|
+| =o= | ~link-hint-open-link~ | ~nil~                 |
+| =>= | ~help-go-forward~     | ~end-of-buffer~       |
+| =<= | ~help-go-back~        | ~beginning-of-buffer~ |
+| =n= | ~forward-button~      | ~nil~                 |
+| =p= | ~backward-button~     | ~nil~                 |
+
+* Read-Expression-Map Keybindings
+| key   | command                      | previous                     |
+|-------+------------------------------+------------------------------|
+| =C-s= | ~counsel-minibuffer-history~ | ~counsel-minibuffer-history~ |
+
+* Minibuffer-Local-Isearch-Map Keybindings
+| key   | command                      | previous                          |
+|-------+------------------------------+-----------------------------------|
+| =C-s= | ~counsel-minibuffer-history~ | ~isearch-forward-exit-minibuffer~ |
+
+* Minibuffer-Local-Must-Match-Map Keybindings
+| key   | command                      | previous                     |
+|-------+------------------------------+------------------------------|
+| =C-s= | ~counsel-minibuffer-history~ | ~counsel-minibuffer-history~ |
+
+* Minibuffer-Local-Completion-Map Keybindings
+| key   | command                      | previous                     |
+|-------+------------------------------+------------------------------|
+| =C-s= | ~counsel-minibuffer-history~ | ~counsel-minibuffer-history~ |
+
+* Minibuffer-Local-Ns-Map Keybindings
+| key   | command                      | previous                     |
+|-------+------------------------------+------------------------------|
+| =C-s= | ~counsel-minibuffer-history~ | ~counsel-minibuffer-history~ |
+
+* Minibuffer-Local-Map Keybindings
+| key   | command                      | previous |
+|-------+------------------------------+----------|
+| =C-s= | ~counsel-minibuffer-history~ | ~nil~    |
+
+* General-Override-Mode-Map Keybindings
+| key   | command                    | previous |
+|-------+----------------------------+----------|
+| =M-x= | ~execute-extended-command~ | ~nil~    |
+| =A-x= | ~execute-extended-command~ | ~nil~    |
+
+* Help-Map Keybindings
+| key     | command                            | previous                       |
+|---------+------------------------------------+--------------------------------|
+| ='=     | ~describe-char~                    | ~nil~                          |
+| =u=     | ~doom/help-autodefs~               | ~nil~                          |
+| =E=     | ~doom/sandbox~                     | ~nil~                          |
+| =M=     | ~doom/describe-active-minor-mode~  | ~nil~                          |
+| =O=     | ~+lookup/online~                   | ~nil~                          |
+| =T=     | ~doom/toggle-profiler~             | ~nil~                          |
+| =V=     | ~doom/help-custom-variable~        | ~nil~                          |
+| =W=     | ~+default/man-or-woman~            | ~nil~                          |
+| =C-k=   | ~describe-key-briefly~             | ~nil~                          |
+| =C-l=   | ~describe-language-environment~    | ~nil~                          |
+| =RET=   | ~info-emacs-manual~                | ~view-order-manuals~           |
+| =C-h=   | ~nil~                              | ~help-for-help~                |
+| =r=     | ~nil~                              | ~info-emacs-manual~            |
+| =r r=   | ~doom/reload~                      | ~nil~                          |
+| =r t=   | ~doom/reload-theme~                | ~nil~                          |
+| =r p=   | ~doom/reload-packages~             | ~nil~                          |
+| =r f=   | ~doom/reload-font~                 | ~nil~                          |
+| =r e=   | ~doom/reload-env~                  | ~nil~                          |
+| =b=     | ~nil~                              | ~describe-bindings~            |
+| =b b=   | ~describe-bindings~                | ~nil~                          |
+| =b i=   | ~which-key-show-minor-mode-keymap~ | ~nil~                          |
+| =b m=   | ~which-key-show-major-mode~        | ~nil~                          |
+| =b t=   | ~which-key-show-top-level~         | ~nil~                          |
+| =b f=   | ~which-key-show-full-keymap~       | ~nil~                          |
+| =b k=   | ~which-key-show-keymap~            | ~nil~                          |
+| =d=     | ~nil~                              | ~apropos-documentation~        |
+| =d b=   | ~doom/report-bug~                  | ~nil~                          |
+| =d c=   | ~doom/goto-private-config-file~    | ~nil~                          |
+| =d C=   | ~doom/goto-private-init-file~      | ~nil~                          |
+| =d d=   | ~doom-debug-mode~                  | ~nil~                          |
+| =d f=   | ~doom/help-faq~                    | ~nil~                          |
+| =d h=   | ~doom/help~                        | ~nil~                          |
+| =d l=   | ~doom/help-search-load-path~       | ~nil~                          |
+| =d L=   | ~doom/help-search-loaded-files~    | ~nil~                          |
+| =d m=   | ~doom/help-modules~                | ~nil~                          |
+| =d n=   | ~doom/help-news~                   | ~nil~                          |
+| =d N=   | ~doom/help-search-news~            | ~nil~                          |
+| =d p c= | ~doom/help-package-config~         | ~nil~                          |
+| =d p d= | ~doom/goto-private-packages-file~  | ~nil~                          |
+| =d p h= | ~doom/help-package-homepage~       | ~nil~                          |
+| =d p p= | ~doom/help-packages~               | ~nil~                          |
+| =d s=   | ~doom/help-search-headings~        | ~nil~                          |
+| =d S=   | ~doom/help-search~                 | ~nil~                          |
+| =d t=   | ~doom/toggle-profiler~             | ~nil~                          |
+| =d u=   | ~doom/help-autodefs~               | ~nil~                          |
+| =d v=   | ~doom/version~                     | ~nil~                          |
+| =d x=   | ~doom/sandbox~                     | ~nil~                          |
+| =a=     | ~apropos~                          | ~apropos-command~              |
+| =A=     | ~apropos-documentation~            | ~nil~                          |
+| =C-c=   | ~describe-coding-system~           | ~describe-copying~             |
+| =F=     | ~describe-face~                    | ~Info-goto-emacs-command-node~ |
+| =h=     | ~nil~                              | ~view-hello-file~              |
+| =n=     | ~doom/help-news~                   | ~view-emacs-news~              |
+| =t=     | ~load-theme~                       | ~help-with-tutorial~           |
+| =p=     | ~doom/help-packages~               | ~finder-by-keyword~            |
+| =P=     | ~find-library~                     | ~describe-package~             |
+
+* +Doom-Dashboard-Mode-Map Keybindings
+| key                                   | command                           | previous |
+|---------------------------------------+-----------------------------------+----------|
+| =<left-margin> <mouse-1>=             | ~ignore~                          | ~nil~    |
+| =<remap> <forward-button>=            | ~+doom-dashboard/forward-button~  | ~nil~    |
+| =<remap> <backward-button>=           | ~+doom-dashboard/backward-button~ | ~nil~    |
+| =n=                                   | ~forward-button~                  | ~nil~    |
+| =p=                                   | ~backward-button~                 | ~nil~    |
+| =C-n=                                 | ~forward-button~                  | ~nil~    |
+| =C-p=                                 | ~backward-button~                 | ~nil~    |
+| =<down>=                              | ~forward-button~                  | ~nil~    |
+| =<up>=                                | ~backward-button~                 | ~nil~    |
+| =<tab>=                               | ~forward-button~                  | ~nil~    |
+| =<backtab>=                           | ~backward-button~                 | ~nil~    |
+| =<remap> <evil-next-line>=            | ~forward-button~                  | ~nil~    |
+| =<remap> <evil-previous-line>=        | ~backward-button~                 | ~nil~    |
+| =<remap> <evil-next-visual-line>=     | ~forward-button~                  | ~nil~    |
+| =<remap> <evil-previous-visual-line>= | ~backward-button~                 | ~nil~    |
+| =<remap> <evil-paste-pop-next>=       | ~forward-button~                  | ~nil~    |
+| =<remap> <evil-paste-pop>=            | ~backward-button~                 | ~nil~    |
+| =<remap> <evil-delete>=               | ~ignore~                          | ~nil~    |
+| =<remap> <evil-delete-line>=          | ~ignore~                          | ~nil~    |
+| =<remap> <evil-insert>=               | ~ignore~                          | ~nil~    |
+| =<remap> <evil-append>=               | ~ignore~                          | ~nil~    |
+| =<remap> <evil-replace>=              | ~ignore~                          | ~nil~    |
+| =<remap> <evil-replace-state>=        | ~ignore~                          | ~nil~    |
+| =<remap> <evil-change>=               | ~ignore~                          | ~nil~    |
+| =<remap> <evil-change-line>=          | ~ignore~                          | ~nil~    |
+| =<remap> <evil-visual-char>=          | ~ignore~                          | ~nil~    |
+| =<remap> <evil-visual-line>=          | ~ignore~                          | ~nil~    |

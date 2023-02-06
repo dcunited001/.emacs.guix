@@ -112,10 +112,6 @@
    ((project-current) (call-interactively #'project-switch-to-buffer))
    (t (call-interactively #'consult-buffer))))
 
-(general-define-key "C-M-j" #'consult-buffer)
-(general-define-key "C-M-k" #'tab-bar-switch-to-tab)
-(general-define-key "C-M-n" #'tab-bar-switch-to-next-tab)
-
 (defun dw/set-tab-bar-faces ()
   (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
     (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil :weight 'semi-bold :underline `(:color ,color) :inherit nil)
@@ -196,10 +192,7 @@
   (ace-window-display-mode 1))
 
 (setup winner
-  (winner-mode)
-  ;; (define-key evil-window-map "u" 'winner-undo)
-  ;; (define-key evil-window-map "U" 'winner-redo)
-  )
+  (winner-mode))
 
 ;; (setq display-buffer-base-action
 ;;       '(display-buffer-reuse-mode-window

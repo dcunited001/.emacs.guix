@@ -30,8 +30,6 @@
 (add-to-list 'load-path dc/emacs-dw)
 (add-to-list 'load-path dc/emacs-modules)
 
-
-
 ;; Load pertinent modules
 (require 'dw-package)
 (require 'dw-settings)
@@ -59,3 +57,4 @@
 ;; (require 'dw-media)
 ;; (require 'dw-system)
 
+(require 'dc-keys)

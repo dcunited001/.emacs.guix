@@ -177,10 +177,6 @@
 
 (setup (:pkg vertico)
   (vertico-mode)
-  (:with-map vertico-map
-    (:bind "C-j" vertico-next
-           "C-k" vertico-previous
-           "C-f" vertico-exit-input))
   (:with-map minibuffer-local-map
     (:bind "M-h" vertico-directory-up))
   (:option vertico-cycle t)
@@ -189,12 +185,6 @@
 ;;;*** Corfu
 
 (setup (:pkg corfu)
-  (:with-map corfu-map
-    (:bind "C-j" corfu-next
-           "C-k" corfu-previous
-           "TAB" corfu-insert
-           [tab] corfu-insert
-           "C-f" corfu-insert))
   (:option corfu-cycle t
            corfu-auto t
            corfu-preview-current nil
@@ -230,11 +220,6 @@
 (setup (:pkg consult)
   (require 'consult)
   (:also-load wgrep)
-  (:global "C-s" consult-line
-           "C-M-l" consult-imenu)
-
-  (:with-map minibuffer-local-map
-    (:bind "C-r" consult-history))
 
   (defun dw/get-project-root ()
     (when (fboundp 'projectile-project-root)
@@ -246,10 +231,6 @@
 ;;*** ConsultDir
 
 (setup (:pkg consult-dir)
-  (:global "C-x C-d" consult-dir)
-  (:with-map vertico-map
-    (:bind "C-x C-d" consult-dir
-           "C-x C-j" consult-dir-jump-file))
   (:option consult-dir-project-list-function nil))
 
 ;;*** Marginalia
@@ -264,9 +245,6 @@
 
 (setup (:pkg embark)
   (:also-load embark-consult)
-  (:global "C-M-." embark-act)
-  (:with-map minibuffer-local-map
-   (:bind "C-d" embark-act))
 
   ;; Use Embark to show command prefix help
   (setq prefix-help-command #'embark-prefix-help-command))
