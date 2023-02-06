@@ -12,7 +12,7 @@
 
 ;; (setup (:pkg password-store)
 ;;   (setq password-store-password-length 12)
-;;   (dw/leader-key-def
+;;   (leader-def
 ;;     "ap" '(:ignore t :which-key "pass")
 ;;     "app" 'password-store-copy
 ;;     "api" 'password-store-insert

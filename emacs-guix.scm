@@ -19,6 +19,7 @@
    "emacs-setup"
 
    ;; packages
+   "emacs-better-defaults"
    "emacs-ef-themes"
    "emacs-burly"
    ;; "emacs-firestarter"

@@ -110,7 +110,7 @@
 
 (setup (:pkg git-link)
   (setq git-link-open-in-browser t)
-  (dw/leader-key-def
+  (leader-def
     "gL"  'git-link))
 
 ;; (setup (:pkg git-gutter :straight git-gutter-fringe)

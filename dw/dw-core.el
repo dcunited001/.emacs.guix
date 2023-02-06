@@ -36,6 +36,9 @@
 
 ;;** Editor
 
+;;*** Better Defaults
+(setup (:pkg better-defaults))
+
 ;;** Keys
 
 (setup (:pkg undo-tree)
@@ -45,13 +48,13 @@
 ;;*** Core Key Bindings
 
 (setup (:pkg general)
-  (general-create-definer dw/leader-key-def
-    :keymaps '(normal insert visual emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
+  ;; dw/leader-key-def
+  (general-create-definer leader-def
+    :prefix "C-c")
 
-  (general-create-definer dw/ctrl-c-keys
-    :prefix "C-c"))
+  ;; dw/ctrl-c-key
+  (general-create-definer local-leader-def
+    :prefix "C-c l"))
 
 ;; Enable line numbers for some modes
 (dolist (mode '(text-mode-hook
@@ -177,7 +180,7 @@
   (:hook-into org-mode))
 
 (setup (:pkg avy)
-  (dw/leader-key-def
+  (leader-def
     "j"   '(:ignore t :which-key "jump")
     "jj"  '(avy-goto-char :which-key "jump to char")
     "jw"  '(avy-goto-word-0 :which-key "jump to word")
