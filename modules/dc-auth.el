@@ -1,6 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
-;;; -- Use Emacs for Pinentry -----
+;;* Auth
+
+;;** pinentry
 
 (setq dc/use-pinentry nil)
 
@@ -8,20 +10,12 @@
   (setq epa-pinentry-mode 'loopback)
   (pinentry-start))
 
-;;; -- Password Management -----
-
-;; (setup (:pkg password-store)
-;;   (setq password-store-password-length 12)
-;;   (leader-def
-;;     "ap" '(:ignore t :which-key "pass")
-;;     "app" 'password-store-copy
-;;     "api" 'password-store-insert
-;;     "apg" 'password-store-generate))
+;;** auth-source-pass
 
 (setup (:pkg auth-source-pass)
   (auth-source-pass-enable))
 
-;;; -- OAuth2 -----
+;;** oauth2
 
 (setup (:pkg oauth2 :straight t))
 

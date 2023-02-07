@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: temp-guix-pkg
+# key: <tgp
+# --
+(define guix-emacs-vhash
+  (vhash-consq
+   '${0:symbol}
+   (list->vlist ${1:guix packages})
+   guix-emacs-vhash))

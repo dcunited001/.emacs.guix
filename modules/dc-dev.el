@@ -98,81 +98,12 @@
 
 ;; (setup (:pkg magit-todos))
 
-(defhydra dw/smerge-panel ()
-  "smerge"
-  ("k" (smerge-prev) "prev change" )
-  ("j" (smerge-next) "next change")
-  ("u" (smerge-keep-upper) "keep upper")
-  ("l" (smerge-keep-lower) "keep lower")
-  ("q" nil "quit" :exit t))
-
 ;;*** Git
 
 (setup (:pkg git-link)
   (setq git-link-open-in-browser t)
   (leader-def
     "gL"  'git-link))
-
-;; (setup (:pkg git-gutter :straight git-gutter-fringe)
-;;   (:hook-into text-mode prog-mode)
-;;   (setq git-gutter:update-interval 2)
-;;   (unless dw/is-termux
-;;     (require 'git-gutter-fringe)
-;;     (set-face-foreground 'git-gutter-fr:added "LightGreen")
-;;     (fringe-helper-define 'git-gutter-fr:added nil
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       ".........."
-;;       ".........."
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       ".........."
-;;       ".........."
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX")
-
-;;     (set-face-foreground 'git-gutter-fr:modified "LightGoldenrod")
-;;     (fringe-helper-define 'git-gutter-fr:modified nil
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       ".........."
-;;       ".........."
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       ".........."
-;;       ".........."
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX")
-
-;;     (set-face-foreground 'git-gutter-fr:deleted "LightCoral")
-;;     (fringe-helper-define 'git-gutter-fr:deleted nil
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       ".........."
-;;       ".........."
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       ".........."
-;;       ".........."
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"
-;;       "XXXXXXXXXX"))
-
-;;   ;; These characters are used in terminal mode
-;;   (setq git-gutter:modified-sign "≡")
-;;   (setq git-gutter:added-sign "≡")
-;;   (setq git-gutter:deleted-sign "≡")
-;;   (set-face-foreground 'git-gutter:added "LightGreen")
-;;   (set-face-foreground 'git-gutter:modified "LightGoldenrod")
-;;   (set-face-foreground 'git-gutter:deleted "LightCoral"))
 
 ;;*** Code Formatting
 
@@ -181,13 +112,6 @@
 
 (setup (:pkg lispy)
   (:hook-into emacs-lisp-mode scheme-mode))
-
-(setup (:pkg lispyville)
-  (:hook-into lispy-mode)
-  (:when-loaded
-    (lispyville-set-key-theme '(operators c-w additional
-                                additional-movement slurp/barf-cp
-                                prettify))))
 
 ;;*** Emacs Lisp
 

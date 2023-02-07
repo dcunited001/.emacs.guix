@@ -138,7 +138,7 @@
              :repo "karthink/popper"
              :build (:not autoloads))
   (:option popper-window-height 20
-           ;; (popper-window-height
+           ;; popper-window-height
            ;; (lambda (window)
            ;;   (let ((buffer-mode (with-current-buffer (window-buffer window)
            ;;                        major-mode)))
@@ -147,14 +147,17 @@
            ;;       ('exwm-mode 40)
            ;;       ('helpful-mode 20)
            ;;       ('eshell-mode (progn (message "eshell!") 10))
-           ;;       (_ 15)))))
+           ;;       (_ 15))))
            popper-reference-buffers '(eshell-mode
                                       vterm-mode
                                       geiser-repl-mode
                                       help-mode
                                       grep-mode
                                       helpful-mode
-                                      compilation-mode))
+                                      compilation-mode
+                                      "^\\*lsp-ui-imenu"
+                                      "^\\*Bufler"
+                                      ))
   (require 'popper) ;; Needed because I disabled autoloads
   (popper-mode 1))
 
@@ -170,6 +173,14 @@
 ;;*** Hydra
 (setup (:pkg hydra)
   (require 'hydra))
+
+(defhydra dw/smerge-panel ()
+  "smerge"
+  ("k" (smerge-prev) "prev change" )
+  ("j" (smerge-next) "next change")
+  ("u" (smerge-keep-upper) "keep upper")
+  ("l" (smerge-keep-lower) "keep lower")
+  ("q" nil "quit" :exit t))
 
 ;;** Completion
 

@@ -6,20 +6,31 @@
 
 *** Collect list of packages required by doom emacs
 
-#+begin_src shell :results output file :file doom.pkg
-find ~/.emacs.doom/.local/straight/repos/ -maxdepth 1 -type d | sed -e "s/^.*\.local\/straight\/repos\///" | sort
+#+begin_src shell :results output file :file ./migrate/pkg/doom.list
+find ~/.emacs.doom/.local/straight/repos/ -maxdepth 1 -type d \
+    | sed -e "s/^.*\.local\/straight\/repos\///" \
+    | sort
 #+end_src
 
 #+name: pkg-doom
 #+RESULTS:
-[[file:doom.pkg]]
+[[file:migrate/pkg/doom.list]]
 
 ** Daviwil
 
+#+begin_src shell :eval no
+git clone https://github.com/daviwil/dotfiles ./migrate/daviwil
+cd ./migrate/daviwil
+git checkout -b guix-home origin/guix-home
+#+end_src
+
+#+RESULTS:
+: branch 'guix-home' set up to track 'origin/guix-home'.
+
 *** Collect list of packages required by daviwil emacs
 
-#+begin_src shell :results output file :file daviwil.pkg
-grep -re "^\s*(setup (:pkg" ~/.emacs.new/.emacs.daviwil/modules/ \
+#+begin_src shell :results output file :file ./migrate/pkg/daviwil.list
+grep -re "^\s*(setup (:pkg" ./migrate/daviwil/.emacs.d/modules/ \
     | sed -e "s/^.*:pkg//" \
     | sed -e "s/[):].*$//" \
     | sort
@@ -27,12 +38,12 @@ grep -re "^\s*(setup (:pkg" ~/.emacs.new/.emacs.daviwil/modules/ \
 
 #+name: pkg-daviwil
 #+RESULTS:
-[[file:daviwil.pkg]]
+[[file:migrate/pkg/daviwil.list]]
 
 *** Collect list of packages via straight
 
-#+begin_src shell :results output file :file daviwil-straight.pkg
-grep -re "^\s*(setup (:pkg.*:straight" ~/.emacs.new/.emacs.daviwil/modules/ \
+#+begin_src shell :results output file :file ./migrate/pkg/daviwil-straight.list
+grep -re "^\s*(setup (:pkg.*:straight" ./migrate/daviwil/.emacs.d/modules/ \
     | sed -e "s/^.*:pkg//" \
     | sed -e "s/[):].*$//" \
     | sort
@@ -40,82 +51,100 @@ grep -re "^\s*(setup (:pkg.*:straight" ~/.emacs.new/.emacs.daviwil/modules/ \
 
 #+name: pkg-daviwil-straight
 #+RESULTS:
-[[file:daviwil-straight.pkg]]
+[[file:migrate/pkg/daviwil-straight.list]]
 
 
 ** Packages
 
 *** All packages
 
-#+begin_src shell :results output file :file all-packages.pkg
-cat doom.pkg daviwil.pkg | sort
+#+begin_src shell :results output file :file ./migrate/pkg/all-packages.list
+cat ./migrate/pkg/doom.list ./migrate/pkg/daviwil.list \
+    | sort
 #+end_src
 
 #+RESULTS:
-[[file:all-packages.pkg]]
+[[file:migrate/pkg/all-packages.list]]
 
 *** Merge package lists
 
 **** Guix packages from daviwil
 
-#+begin_src shell :results output file :file daviwil-guix.pkg
-diff --ignore-all-space daviwil.pkg daviwil-straight.pkg | grep -e "^<" | sed -e 's/^<\s*//' | sort
+#+begin_src shell :results output file :file ./migrate/pkg/daviwil-guix.list
+diff --ignore-all-space ./migrate/pkg/daviwil.list ./migrate/pkg/daviwil-straight.list \
+    | grep -e "^<" \
+    | sed -e 's/^<\s*//' \
+    | sort
 #+end_src
 
 #+RESULTS:
-[[file:daviwil-guix.pkg]]
-
-***** emit the initial guix manifest
-
-This could be a scheme script that programmatically defines a manifest
-
-#+begin_src shell :results output file :file daviwil.scm
-echo "(specifications->manifest '("
-awk '{prif}'
-
-echo "     ))"
-#+end_src
+[[file:migrate/pkg/daviwil-guix.list]]
 
 **** Packages unique to doom
 
-#+begin_src shell :results output file :file doom-only.pkg
-diff --ignore-all-space doom.pkg daviwil.pkg | grep -e "^<" | sed -e 's/^<\s*//' | sort
+#+begin_src shell :results output file :file ./migrate/pkg/doom-only.list
+diff --ignore-all-space ./migrate/pkg/doom.list ./migrate/pkg/daviwil.list \
+    | grep -e "^<" \
+    | sed -e 's/^<\s*//' \
+    | sort
 #+end_src
 
 #+RESULTS:
-[[file:doom-only.pkg]]
+[[file:migrate/pkg/doom-only.list]]
 
 **** Packages unique to daviwil
 
-#+begin_src shell :results output file :file daviwil-only.pkg
-diff --ignore-all-space daviwil.pkg doom.pkg | grep -e "^<" | sed -e 's/^<\s*//' | sort
+#+begin_src shell :results output file :file ./migrate/pkg/daviwil-only.list
+diff --ignore-all-space ./migrate/pkg/daviwil.list ./migrate/pkg/doom.list \
+    | grep -e "^<" \
+    | sed -e 's/^<\s*//' \
+    | sort
 #+end_src
 
 #+RESULTS:
-[[file:daviwil-only.pkg]]
+[[file:migrate/pkg/daviwil-only.list]]
 
 *** Guix Graph
 
-#+begin_src shell :results output file :file ./daviwil-guix.png
+#+begin_src shell :results output file :file ./migrate/pkg/daviwil-guix.png
 
 #+end_src
 
-** Packages for Features
+*** Guix Packages
+
+**** Org Packages
+
+#+begin_src shell :results output file :file ./migrate/pkg/guix-emacs-org.list
+guix search emacs-org \
+    | recsel -p name \
+    | cut -d' ' -f2 \
+    | sort \
+    | uniq \
+    | sed -e 's/emacs-//'
+#+end_src
+
+#+RESULTS:
+[[file:migrate/pkg/guix-emacs-org.list]]
+
+
+
+*** Packages for Features
 
 *** For latex
 
 #+begin_src shell :results output table
-grep -e "tex" *-only.pkg | sed -e "s/:/\t/"
+grep -e "tex" ./migrate/pkg/*-only.list \
+    | sed -e "s/:/\t/"
 #+end_src
 
 #+RESULTS:
-| daviwil-only.pkg | default-text-scale |
-| doom-only.pkg    | auctex             |
-| doom-only.pkg    | cdlatex            |
-| doom-only.pkg    | company-auctex     |
-| doom-only.pkg    | company-reftex     |
-| doom-only.pkg    | helm-bibtex        |
-| doom-only.pkg    | latex-preview-pane |
+| ./migrate/pkg/daviwil-only.list | default-text-scale |
+| ./migrate/pkg/doom-only.list    | auctex             |
+| ./migrate/pkg/doom-only.list    | cdlatex            |
+| ./migrate/pkg/doom-only.list    | company-auctex     |
+| ./migrate/pkg/doom-only.list    | company-reftex     |
+| ./migrate/pkg/doom-only.list    | helm-bibtex        |
+| ./migrate/pkg/doom-only.list    | latex-preview-pane |
 
 * Features
 
@@ -275,6 +304,102 @@ Evil config
 ** Popper
 
 Written by karthink, who actually uses hyperkey.
+
+**** TODO: customize 'popper-display-function
+
+- as defun that uses pcase to select from a set buffers
+- limitation: one popup displays at a time AFAIK
+
+#+begin_src emacs-lisp :eval no
+(defun popper-display-popup-at-left (buffer &optional alist)
+  "Display popup-buffer BUFFER at the bottom of the screen."
+  (display-buffer-in-side-window
+   buffer
+   (append alist
+           `((window-height . ,popper-window-height)
+             (side . left)
+             (slot . 1)))))
+(defun popper-select-popup-at-left (buffer &optional alist)
+  "Display and switch to popup-buffer BUFFER at the bottom of the screen."
+  (let ((window (popper-display-popup-at-left buffer alist)))
+    (select-window window)))
+(setq popper-display-function #'popper-select-popup-at-left)
+#+end_src
+
+Then configure with:
+
+#+begin_src emacs-lisp :eval no
+(set-popup-rules!
+  '(("^\\*lsp-ui-imenu" :side left :width 60
+     :vslot -5 :slot 3
+     :modeline nil :select t :quit t)
+    ("^\\*Help" :side left :width 60
+     :vslot -5 :slot 1
+     :modeline nil :select t :quit t)
+    ("^\\*Bufler" :side right :width 80
+     :vslot -5 :slot -5
+     :modeline nil :select t :quit t)))
+
+;; doom defaults
+(set-popup-rules!
+  (when (modulep! +all)
+    '(("^\\*"  :slot 1 :vslot -1 :select t)
+      ("^ \\*" :slot 1 :vslot -1 :size +popup-shrink-to-fit)))
+    '(("^\\*Completions" :ignore t)
+      ("^\\*Local variables\\*$"
+       :vslot -1 :slot 1 :size +popup-shrink-to-fit)
+      ("^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\|Messages\\)"
+       :vslot -2 :size 0.3  :autosave t :quit t :ttl nil)
+      ("^\\*\\(?:doom \\|Pp E\\)"  ; transient buffers (no interaction required)
+       :vslot -3 :size +popup-shrink-to-fit :autosave t :select ignore :quit t :ttl 0)
+      ("^\\*doom:"  ; editing buffers (interaction required)
+       :vslot -4 :size 0.35 :autosave t :select t :modeline t :quit nil :ttl t)
+      ("^\\*doom:\\(?:v?term\\|e?shell\\)-popup"  ; editing buffers (interaction required)
+       :vslot -5 :size 0.35 :select t :modeline nil :quit nil :ttl nil)
+      ("^\\*\\(?:Wo\\)?Man "
+       :vslot -6 :size 0.45 :select t :quit t :ttl 0)
+      ("^\\*Calc"
+       :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0)
+      ("^\\*Customize"
+       :slot 2 :side right :size 0.5 :select t :quit nil)
+      ("^ \\*undo-tree\\*"
+       :slot 2 :side left :size 20 :select t :quit t)
+      ;; `help-mode', `helpful-mode'
+      ("^\\*\\([Hh]elp\\|Apropos\\)"
+       :slot 2 :vslot -8 :size 0.42 :select t)
+      ("^\\*eww\\*"  ; `eww' (and used by dash docsets)
+       :vslot -11 :size 0.35 :select t)
+      ("^\\*xwidget"
+       :vslot -11 :size 0.35 :select nil)
+      ("^\\*info\\*$"  ; `Info-mode'
+       :slot 2 :vslot 2 :size 0.45 :select t)))
+  '(("^\\*Warnings" :vslot 99 :size 0.25)
+    ("^\\*Backtrace" :vslot 99 :size 0.4 :quit nil)
+    ("^\\*CPU-Profiler-Report "    :side bottom :vslot 100 :slot 1 :height 0.4 :width 0.5 :quit nil)
+    ("^\\*Memory-Profiler-Report " :side bottom :vslot 100 :slot 2 :height 0.4 :width 0.5 :quit nil)
+    ("^\\*Process List\\*" :side bottom :vslot 101 :size 0.25 :select t :quit t)
+    ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\|Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t)))
+
+#+end_src
+
+**** TODO: customize 'popper-window-height
+
+How to get the window height to adjust per-buffer?
+
+Commented region from daviwil's original config:
+
+#+begin_src emacs-lisp :eval no
+(popper-window-height
+ (lambda (window)
+   (let ((buffer-mode (with-current-buffer (window-buffer window)
+                        major-mode)))
+     (message "BUFFER MODE: %s" buffer-mode)
+     (pcase buffer-mode
+       ('exwm-mode 40)
+       ('helpful-mode 20)
+       ('eshell-mode (progn (message "eshell!") 10))
+       (_ 15)))))
+#+end_src
 
 ** Hyperkey
 

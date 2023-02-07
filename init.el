@@ -32,6 +32,7 @@
 
 ;; Load pertinent modules
 (require 'dw-package)
+(require 'iso-transl)
 (require 'dw-settings)
 
 ;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
@@ -58,5 +59,7 @@
 ;; (require 'dw-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
+
+
 
 (require 'dc-keys)

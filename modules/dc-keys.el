@@ -2,24 +2,12 @@
 
 ;;* Keys
 
-;;** Emacs
-
-;;*** Toggles
-
-;; call without keybind for now
-(dc/toggleable-boolean native-comp-async-report-warnings-errors)
-(dc/toggleable-boolean custom-buffer-verbose-help)
-
-(general-define-key
- :keymaps 'leader-toggle-map
- "N" #'toggle-native-comp-async-report-warnings-errors)
-
-;;** Editor
-
-;;*** Lispy
-
 ;;** Interface
 
+;; ensure this loads after general
+;; (with-eval-after-load 'general
+
+;;*** Globals
 
 (general-define-key
  :keymaps 'global
@@ -31,6 +19,9 @@
  "C-x o" #'ace-window
  "C-x C-d" #'consult-dir
 
+ "C-c G" #'guix
+ "C-c T" #'tldr
+
  "C-c <left>" #'winner-undo
  "C-c <right>" #'winner-redo
 
@@ -40,10 +31,16 @@
  "C-M-j" #'consult-buffer
  "C-M-l" #'consult-imenu
  ;; "C-M-." #'embark-act
- )
+
+ "C-M-k" #'tab-bar-switch-to-tab
+ "C-<next>" #'tab-bar-switch-to-next-tab
+ "C-<prior>" #'tab-bar-switch-to-prev-tab)
+
+;;*** minibuffer-local-map
 
 (general-define-key
  :keymaps 'minibuffer-local-map
+
  "C-r" #'consult-history
  "C-;" #'embark-act
  "C-c C-;" #'embark-export
@@ -53,9 +50,12 @@
  "M-A" #'marginalia-cycle
  )
 
-(leader-def
-  :keymaps 'global
-  "a" #'embark-act)
+
+;; (leader-def
+;;   :keymaps 'global
+;;   "a" #'embark-act)
+
+;;*** vertico-map
 
 (general-define-key
  :keymaps 'vertico-map
@@ -68,6 +68,8 @@
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file
  )
+
+;;*** corfu-map
 
 (general-define-key
  :keymaps 'corfu-map
@@ -83,25 +85,45 @@
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file)
 
-;;*** Consult (Doom)
+;;*** Consult
 
-  ;; (define-key!
-  ;;   [remap apropos]                       #'consult-apropos
-  ;;   [remap bookmark-jump]                 #'consult-bookmark
-  ;;   [remap evil-show-marks]               #'consult-mark
-  ;;   [remap evil-show-jumps]               #'+vertico/jump-list
-  ;;   [remap evil-show-registers]           #'consult-register
-  ;;   [remap goto-line]                     #'consult-goto-line
-  ;;   [remap imenu]                         #'consult-imenu
-  ;;   [remap locate]                        #'consult-locate
-  ;;   [remap load-theme]                    #'consult-theme
-  ;;   [remap man]                           #'consult-man
-  ;;   [remap recentf-open-files]            #'consult-recent-file
-  ;;   [remap switch-to-buffer]              #'consult-buffer
-  ;;   [remap switch-to-buffer-other-window] #'consult-buffer-other-window
-  ;;   [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
-  ;;   [remap yank-pop]                      #'consult-yank-pop
-  ;;   [remap persp-switch-to-buffer]        #'+vertico/switch-workspace-buffer)
+(general-define-key
+ :keymaps 'global
+
+ [remap apropos] #'consult-apropos
+ [remap bookmark-jump]                 #'consult-bookmark
+ ;;   [remap evil-show-marks]               #'consult-mark
+ ;;   [remap evil-show-jumps]               #'+vertico/jump-list
+ ;;   [remap evil-show-registers]           #'consult-register
+ [remap goto-line]                     #'consult-goto-line
+ [remap imenu]                         #'consult-imenu
+ [remap locate]                        #'consult-locate
+ [remap load-theme]                    #'consult-theme
+ [remap man]                           #'consult-man
+ [remap recentf-open-files]            #'consult-recent-file
+ [remap switch-to-buffer]              #'consult-buffer
+ [remap switch-to-buffer-other-window] #'consult-buffer-other-window
+ [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
+ ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
+ [remap yank-pop]                      #'consult-yank-pop
+ )
+
+;;*** Toggles
+
+;; call without keybind for now
+(dc/toggleable-boolean native-comp-async-report-warnings-errors)
+(dc/toggleable-boolean custom-buffer-verbose-help)
+
+(general-define-key
+ :keymaps 'leader-toggle-map
+ "N" #'toggle-native-comp-async-report-warnings-errors)
+;;)
+
+;;** Editor
+
+;;*** Lispy
+
+(provide 'dc-keys)
 
 ;;*** Embark (Doom)
 ;; (  (embark-define-keymap +vertico/embark-doom-package-map
@@ -785,12 +807,3 @@
 ;;         "C-a C-f" #'+fold/close-all
 ;;         "C-u"     #'+fold/open
 ;;         "C-a C-u" #'+fold/open-all)))
-
-;;** UI
-
-;;*** Tabs
-
-(general-define-key "C-M-k" #'tab-bar-switch-to-tab)
-;; (general-define-key "C-M-n" #'tab-bar-switch-to-next-tab)
-(general-define-key "C-<next>" #'tab-bar-switch-to-next-tab)
-(general-define-key "C-<prior>" #'tab-bar-switch-to-prev-tab)
