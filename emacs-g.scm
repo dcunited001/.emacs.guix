@@ -398,10 +398,9 @@
   (vhash-consq
    'social
    (list->vlist '("emacs-elfeed"
-                  "emacs-elfeed-protocol"
-                  ))
+                  "emacs-elfeed-org"
+                  "emacs-elfeed-protocol"))
    guix-emacs-vhash))
-
 
 ;;*** Email
 

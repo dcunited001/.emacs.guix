@@ -108,6 +108,8 @@
  [remap yank-pop]                      #'consult-yank-pop
  )
 
+;;** Editor
+
 ;;*** Toggles
 
 ;; call without keybind for now
@@ -119,7 +121,13 @@
  "N" #'toggle-native-comp-async-report-warnings-errors)
 ;;)
 
-;;** Editor
+;;*** Shell
+
+;; TODO: map C-c M-! to :which-key and allow selecting shell scripts
+;; that paste output to buffer
+;;
+;; edit so output is more friendly to insertion
+;; guix search emacs-srv | recsel -p name,description
 
 ;;*** Lispy
 

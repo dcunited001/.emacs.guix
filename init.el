@@ -16,13 +16,13 @@
                              (setq gc-cons-threshold (* 20 1000 1000))))
 
 (setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
-      dc/emacs-d (expand-file-name "~/.emacs.guix/")
+      dc/emacs-d (expand-file-name "~/.emacs.g/")
       dc/emacs-cache (expand-file-name "~/.cache/emacs/")
       dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
       dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules"))
 
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
-      org-roam-directory (concat org-directory "roam")
+      org-roam-directory (file-name-as-directory (concat org-directory "roam"))
       org-roam-db-location (expand-file-name "~/.local/share/org-roam/org-roam.db")
       org-roam-file-extensions '("org"))
 
@@ -59,7 +59,5 @@
 ;; (require 'dw-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
-
-
 
 (require 'dc-keys)

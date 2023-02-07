@@ -157,9 +157,24 @@
                                       compilation-mode
                                       "^\\*lsp-ui-imenu"
                                       "^\\*Bufler"
+                                      "^\\*Guix"
                                       ))
   (require 'popper) ;; Needed because I disabled autoloads
   (popper-mode 1))
+
+(defun popper-display-popup-at-top (buffer &optional alist)
+  "Display popup-buffer BUFFER at the bottom of the screen."
+  (display-buffer-in-side-window
+   buffer
+   (append alist
+           `((window-height . ,popper-window-height)
+             (side . top)
+             (slot . 1)))))
+(defun popper-select-popup-at-top (buffer &optional alist)
+  "Display and switch to popup-buffer BUFFER at the bottom of the screen."
+  (let ((window (popper-display-popup-at-top buffer alist)))
+    (select-window window)))
+(setq popper-display-function #'popper-select-popup-at-top)
 
 ;; not sure how to get popups on the side
 ;; - oh well

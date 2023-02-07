@@ -24,4 +24,18 @@ along with KEYBIND, if present"
 
 ;;*** Toggle Variables
 
+;;** Libs
+
+;;*** SRV
+
+;; SRV implements RFC 2782 (SRV records).  It is used to look up hostname and port
+;; for a service at a specific domain.  There might be multiple results, and the
+;; caller is supposed to attempt to connect to each hostname+port in turn.
+;; (setup (:pkg srv))
+
+;;*** FSM
+;; This package provides Finite State Machine library to make asynchronous
+;; programming in Emacs Lisp easy and fun.
+;; (setup (:pkg fsm))
+
 (provide 'dc-support)

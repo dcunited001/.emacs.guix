@@ -1,0 +1,152 @@
+#+TITLE: Emacs Config
+#+DESCRIPTION: Sporked from daviwil/dotfiles
+
+Based on the =.emacs.d= config in the [[https://github.com/daviwil/dotfiles/tree/guix-home][guix-home branch of daviwil/dotfiles]]. His
+config allows you to easily combine dependencies pulled from straight or
+guix.
+
+* Setup
+
+Assumed file paths are found in =./init.el=
+
+Emacs paths & variables.
+
+|------------------+------------------------+-------------------------|
+| var              | value                  | description             |
+|------------------+------------------------+-------------------------|
+| dc/emacs-chemacs | $HOME/.emacs.d/        | now you haz backup plan |
+| dc/emacs-d       | $HOME/.emacs.g/        | well this is confusing  |
+| dc/emacs-cache   | $HOME/.cache/emacs/    |                         |
+| dc/emacs-dw      | $HOME/.emacs.g/dw      | added to load-path      |
+| dc/emacs-modules | $HOME/.emacs.g/modules | added to load-path      |
+|------------------+------------------------+-------------------------|
+
+Org paths & variables
+
+|----------------------+----------------------+-------------------------------------|
+| var                  | value                | description                         |
+|----------------------+----------------------+-------------------------------------|
+| org-directory        | $ORG_DIRECTORY       |                                     |
+| org-roam-directory   | $ORG_DIRECTORY/roam/ |                                     |
+| org-roam-db-location |                      | may exhibit problems with syncthing |
+|----------------------+----------------------+-------------------------------------|
+
+** Chemacs
+
+
+
+** Packages
+
+Dependencies are loaded from guix first by a manifest and straight dependencies
+are loaded on top.
+
+*** Straight Config
+
+*** Fonts Config
+
+** Config
+
+
+* Why
+
+*** Why Not Doom Emacs?
+
+Doom is a great way to explore features. The codebase is a fantastic showcase of
+=emacs-lisp= metaprogramming and Emacs config ideas. I don't use =evil-mode=,
+which isn't much of a problem in Doom, but it's still great. Basically it came
+down to whether Guix is more important to me than Doom Emacs.
+
+In Doom Emacs, mixxing Guix and Straight dependencies is a recipe for serious
+problems -- mostly where native comp encounters duplicate dependencies. See this
+[[id:][r/guix post]] for a description of issues with guile..
+
+But there are benefits to pulling deps from guix:
+
++ For one, on foreign distro's, your =GUILE_LOAD_PATH= will be simple to
+  set & control. This will be managed by the guix profile.
++ On foreign distro's, without =emacs-guix= and other guix dependencies, then
+  getting Guile configured properly while having access to the correct guix
+  binary. You may encounter stability issues down the road. If you run =guix
+  pull= using the incorrect binary -- i.e. you load your emacs profile
+  everywhere so you can start it with systemd -- then you'll eventually pull
+  updates to the wrong guix.
++ But if you mix both straight & guix packages in emacs, you'll invariably have
+  overlapping dependency trees. If you use native comp, then you'll need to
+  recompile everything if you update your Emacs binary or build deps. But, for
+  me, =doom clean= wasn't working to this end. The reddit post contains more
+  information.
++ Not having =emacs-guix= is a major impediment to a noob. I'm not a fan of
+  GUI's generally, but they are a great way to survey the functionality to seed
+  your initial sparse knowledge graph. It can help you ask questions and
+  priortize issues.
++ Not having =geiser= configured to interoperate at all with =emacs-guix= or
+  Guile Scheme kept me a noob for way too long.
+
+Don't take my word for it. I'm not sure on the correct answer for Guix System
+and Guix on foreign distro's. I'm still figuring this out. I will update this
+description with new information and correct opinions.
+
+The main benefits to mixxing =guix + setup.el + straight=
+
++ Most of your packages are getting some vetting. The dependencies are ideally
+  deterministic and you can visualize them with =guix graph=.
++ Critically, it seems that either =straight= or =setup.el + straight= can
+  determine whether dependencies exist locally ... AFAIK.
+
++ So if Guix is providing an Emacs package, then =setup= won't tell straight to
+  load it -- I have =setup.el= configured to only load from straight if
+  =:straight t= is set.
++ Regardless, wouldn't it be useful if =straight= decided it didn't need to pull
+  dependencies or compile? And it should be trivial to detect requireable
+  modules/namespaces. So it probably does because that would be the correct
+  answer to handle as many configuration scenarios as =straight.el= may
+  encounter.
+
+*** Why Guix?
+
+The dependencies are spec'd out and reproducible packages can be supplied. You
+can generate a =guix graph= of the dependency graph! If it's not enough that
+Guix packages offer inheritance, tools like =guix import= and =guix update= are
+available.
+
+The flexibility and low maintainence overhead for personal packages makes
+maintaining local channels dead simple. I tried RPM and didn't quite make it to
+the mock tools. It was fine, but it wasn't ideal. I didn't know what ideal was
+until I saw Guix. No other distributions or package managers offer =guix home=
+-- they will never have anything like it because they lack the efficiency. There
+is no purpose to a poor imitation of =guix home=, since it's still as
+complicated as the domain but bundling the packages and services in RPM/Deb and
+SystemD require about 10x the effort as similar tasks in Guix. Sadly, it takes a
+long time to develop the chops to get to =guix home=.
+
+You may need to grok about 2,500 pages of content to get there if you don't know
+Scheme ... but that's knowledge you can find in one place, thanks to the GNU
+documentation. If you don't care about scheme, then you'll need to study about
+250-500 pages, but it's easy reading.
+
+The scheme is hard. It's too hard for most people. That's fine. The difficulty
+barriers led ArchLinux to be the success that it became. Guix is actually
+easier, you just don't realize it.
+
+And why guix system? Because I've never learned about Linux this fast. When I
+wanted a RamFS only image of PXE booting, in one night, I went from:
+
++ A poor understanding of Grub and bootloaders
++ To grokking the basics of syslinux and pxelinux
++ To understanding u-boot by reading Guix bootloader configs.
++ To seeing configs for multiboot after reading
++ To /How do I adjust the post-boot mounting process init/mount disks to load
+  all filesystems into RamFS by mapping/remapping over initramfs/squashfs?/
++ To /Can Guix load via PXE/TFTP to pull a SquashFS image from HTTPS instead of
+  NFS?/ So that I can tell if gd macbook pro 2011 has RAM problems or HD
+  problems? Or so I can do something with Dells that don't have disks?
+
+And no, I can't answer these questions fully. Guix has some SquashFS
+functionality, but the bootloader code needs to be modified. Still, you can't
+really get around the TFTP limitation of ~100MB. There was a ton of googling
+there, more gentoo forums/wiki than archwiki... But when I need to confirm the
+logic of how builds/packages/systems are put together in various scenarios,
+nothing helps me understand the design of this better than Guix.
+
+So, yeh, I'd like to have a consistent experience with =emacs-guix= and
+=geiser=. And I'd like =guix-devel-mode= to work.
