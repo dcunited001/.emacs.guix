@@ -59,10 +59,10 @@
 (define guix-emacs-vhash
   (vhash-consq
    'config
-   (list->vlist ("emacs-better-defaults"
+   (list->vlist '("emacs-better-defaults"
 
 
-                 ))
+                  ))
    guix-emacs-vhash))
 
 ;;*** Input
@@ -227,7 +227,7 @@
 (define guix-emacs-vhash
   (vhash-consq
    'tools
-   (list->vlist (
+   (list->vlist '(
                  "emacs-ef-themes"
                  "emacs-burly"
                  "emacs-elf-mode"
@@ -352,7 +352,7 @@
 (define guix-emacs-vhash
   (vhash-consq
    'org
-   (list->vlist ("emacs-org"
+   (list->vlist '("emacs-org"
 
                  "emacs-org-pomodoro" ;; TODO: remove
                  "emacs-org-make-toc"
@@ -426,48 +426,52 @@
 ;;          '())
 
 (specifications->manifest
- '(
 
-   ;; n/a, unless improved tab behavior
-   ;; "emacs-perspective"
+ (append
+  (vlist->list
+   (assemble-pkg-vlist guix-emacs-vhash))
+  '(
 
-   "emacs-project"
-   "emacs-projectile"
-   "ripgrep"                      ; For counsel-projectile-rg (doom?) and others
+    ;; n/a, unless improved tab behavior
+    ;; "emacs-perspective"
 
-   "emacs-helpful"
+    "emacs-project"
+    "emacs-projectile"
+    "ripgrep"                     ; For counsel-projectile-rg (doom?) and others
 
-   "emacs-flycheck"
+    "emacs-helpful"
 
-   ;; n/a, evaluate against restclient
-   ;; "emacs-request"
+    "emacs-flycheck"
 
-   ;; "emacs-restclient"
-   ;; "emacs-ob-restclient" ; straight
+    ;; n/a, evaluate against restclient
+    ;; "emacs-request"
 
-   "emacs-xterm-color"
-   "emacs-exec-path-from-shell"
+    ;; "emacs-restclient"
+    ;; "emacs-ob-restclient" ; straight
 
-   "emacs-tracking"
+    "emacs-xterm-color"
+    "emacs-exec-path-from-shell"
 
-   ;; n/a (telegram)
-   ;; "emacs-telega"
+    "emacs-tracking"
 
-   ;; n/a: IRC
-   ;; "emacs-erc"
-   ;; "emacs-erc-image"
-   ;; "emacs-erc-hl-nicks"
+    ;; n/a (telegram)
+    ;; "emacs-telega"
 
-   "emacs-elfeed"
+    ;; n/a: IRC
+    ;; "emacs-erc"
+    ;; "emacs-erc-image"
+    ;; "emacs-erc-hl-nicks"
 
-   ;; gopher/gemini?
-   "emacs-elpher"
+    "emacs-elfeed"
 
-   ;; manage daemons/services
-   ;; - does it allow per-project definition of daemons?
-   ;; "emacs-daemons"
+    ;; gopher/gemini?
+    "emacs-elpher"
 
-   ))
+    ;; manage daemons/services
+    ;; - does it allow per-project definition of daemons?
+    ;; "emacs-daemons"
+
+    )))
 
 ;;** excluded
 ;; without external management of metadata (see org-roam's usage of sqlite),
