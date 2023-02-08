@@ -21,6 +21,22 @@
       dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
       dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules"))
 
+;; (setq desktop-dirname ;; (car desktop-path)
+;;       (file-name-as-directory (concat dc/emacs-d "var/desktop/")))
+
+;; TODO: rectify user-emacs-* variables:
+;; ... yeh, priceless are things like (kbd "C-u C-x e") to eval & insert
+;; ... it works with any "M-x eval-*" function to eval emacs-lisp
+;; ... using emacs for long, long time (since 2012 on/off).
+;; ... I seen it on the refcard. I just realized the convention.
+
+;; (setq user-emacs-directory "~/.local/share/emacs/"
+;;       user-emacs-data-directory "~/.local/share/emacs/"
+;;       user-emacs-lisp-directory "~/.local/share/emacs/lisp"
+;;       user-emacs-cache-directory "~/.cache/emacs/"
+;;       user-emacs-config-directory "~/.config/emacs/"
+;;       user-emacs-ensime-directory "~/.emacs.g/var/ensime/")
+
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
       org-roam-directory (file-name-as-directory (concat org-directory "roam"))
       org-roam-db-location (expand-file-name "~/.local/share/org-roam/org-roam.db")

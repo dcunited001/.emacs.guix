@@ -90,8 +90,9 @@ The main benefits to mixxing =guix + setup.el + straight=
 
 + Most of your packages are getting some vetting. The dependencies are ideally
   deterministic and you can visualize them with =guix graph=.
-+ Critically, it seems that either =straight= or =setup.el + straight= can
-  determine whether dependencies exist locally ... AFAIK.
+
+Critically, it seems that either =straight= or =setup.el + straight= can
+determine whether dependencies exist locally ... AFAIK.
 
 + So if Guix is providing an Emacs package, then =setup= won't tell straight to
   load it -- I have =setup.el= configured to only load from straight if
@@ -121,10 +122,11 @@ long time to develop the chops to get to =guix home=.
 
 You may need to grok about 2,500 pages of content to get there if you don't know
 Scheme ... but that's knowledge you can find in one place, thanks to the GNU
-documentation. If you don't care about scheme, then you'll need to study about
-250-500 pages, but it's easy reading.
+documentation. The documentation is good, but there's a bit of a bootstrapping
+problem if you don't have a mentor. If you don't care about scheme, then you'll
+need to study about 250-500 pages, but it's easy reading.
 
-The scheme is hard. It's too hard for most people. That's fine. The difficulty
+The scheme is hard. It's too hard for most people. That's fine.  The difficulty
 barriers led ArchLinux to be the success that it became. Guix is actually
 easier, you just don't realize it.
 

@@ -155,10 +155,10 @@
                                       grep-mode
                                       helpful-mode
                                       compilation-mode
+                                      elfeed-mode
                                       "^\\*lsp-ui-imenu"
                                       "^\\*Bufler"
-                                      "^\\*Guix"
-                                      ))
+                                      "^\\*Guix"))
   (require 'popper) ;; Needed because I disabled autoloads
   (popper-mode 1))
 
