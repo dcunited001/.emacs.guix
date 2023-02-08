@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: org-drill_nsided
+# uuid: org-drill_nsided
+# key: _<dn
+# condition: t
+# --
+** Card :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: multisided
+:END:
+
+*** ${1:side one}
+
+*** ${2:side two}
+
+*** ${2:side three}
+
+$0

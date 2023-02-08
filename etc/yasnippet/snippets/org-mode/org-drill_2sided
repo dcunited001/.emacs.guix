@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: org-drill_2sided
+# uuid: org-drill_2sided
+# key: _<d2
+# condition: t
+# --
+** Card :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twosided
+:END:
+
+*** ${1:side one}
+
+*** ${2:side two}
+
+$0

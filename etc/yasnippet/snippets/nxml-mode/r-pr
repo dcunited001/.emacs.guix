@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: repo project
+# key: //r-pr
+# uuid: //r-pr
+# --
+<project path="$1"
+         name="$2"
+         groups="$3" $0/>

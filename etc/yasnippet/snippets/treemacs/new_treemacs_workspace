@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: David Conner
+# name: reset-treemacs-workspaces
+# key: ___tree_r
+# condition: t
+# --
+
+* Perspective main
+
+** dc
+  - path :: ~/.config/dc
+** org
+  - path :: /data/org
+** emacs
+  - path :: /data/dev/emacs
+** repo
+  - path :: /data/dev/repo
+** x.files
+  - path :: /data/dev/x.files
+** edu
+  - path :: /data/edu
+** .emacs.doom
+  - path :: ~/.emacs.doom
+** .doom.d
+  - path :: ~/.doom.d
+** chemacs
+  - path :: ~/.emacs.d

@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: __org-drill_deck
+# uuid: __org-drill_deck
+# key: __<dn
+# condition: t
+# --
+# -*- mode: org; coding: utf-8; org-drill-maximum-items-per-session: 50; org-drill-spaced-repetition-algorithm: simple8 -*-
+:PROPERTIES:
+:ID:       `(org-id-new)`
+:END:
+#+TITLE:     Deck: ${1:org-drill deck name}
+#+AUTHOR:    ${2:`user-full-name`}
+#+EMAIL:     ${3:`user-mail-address`}
+#+DESCRIPTION:
+#+STARTUP: showall
+#+PROPERTY: DRILL_CARD_TYPE_ALL hide1close twosided multisided show1cloze hide2cloze show2cloze hide1_firstmore show1_firstless show1_lastmore
+#+OPTIONS: prop:("drill_card_type")
+#+FILETAGS: :orgdrill_deck:

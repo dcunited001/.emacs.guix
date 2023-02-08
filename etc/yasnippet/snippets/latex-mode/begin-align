@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: begin-align
+# uuid: <ba
+# key: <ba
+# condition: t
+# --
+\begin{align}
+`(if (region-active-p)
+     yas-selected-text
+   "{$1}")`
+\end{align}

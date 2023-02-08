@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: percent-error
+# uuid: <pcterr
+# key: <pcterr
+# condition: t
+# --
+\% Error=\left(\frac{\abs{${1} - ${2}}}{${1}}\right)\times 100

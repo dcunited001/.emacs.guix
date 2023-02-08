@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: repo remote
+# key: //r-re
+# uuid: //r-re
+# --
+<remote name="$1" fetch="$2" $0/>

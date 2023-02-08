@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: org-drill_list
+# uuid: org-drill_list
+# key: _<dli
+# condition: t
+# --
+** Card :drill:
+
+*** ${1:answer type}
+$0
+*** $1
+
+*** $1

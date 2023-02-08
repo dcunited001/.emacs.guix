@@ -6,9 +6,10 @@ var/**
 #var/desktop/*
 
 # emacs config 
-etc/**
-!etc/yasnippet/snippets/**
+# etc/**
+!etc/yasnippet/snippets
 
 # figure this out
+eln-cache/**
 straight/**
 elpa/**
