@@ -1,0 +1,61 @@
+#+TITLE:     Elfeed RSS
+#+AUTHOR:    David Conner
+#+EMAIL:     noreply@te.xel.io
+#+DESCRIPTION: RSS Config
+
++ Doom Emacs [[file:~/.emacs.doom/modules/app/rss/README.org::*Without +org][RSS Docs]]
+
+* Feeds :elfeed:
+** Programming :programming:
+
+** Meetup :meetup:
+
+** Linux :linux:
+*** https://www.phoronix.com/rss.php
+*** https://lwn.net/headlines/rss
+
+** Guix :guix:
+*** https://guix.gnu.org/blog.atom
+
+** Emacs :emacs:
+*** Sacha Chua :sacha:
+**** https://sachachua.com/blog/tag/emacs/feed/
+*** Irreal :irreal:
+**** https://irreal.org/blog/?feed=rss2
+*** Karthinks
+**** https://karthinks.com/index.xml
+*** Ruzkuku
+**** https://ruzkuku.com/
+*** Shombando
+**** https://shom.dev/index.xml
+*** Benoitj
+**** https://blog.benoitj.ca/posts/index.xml
+*** Protesilaos
+**** https://protesilaos.com/codelog.xml
+*** Null Program
+**** https://nullprogram.com/feed/
+*** Ambrevar
+**** https://ambrevar.xyz/atom.xml
+*** Halla
+**** https://valdyas.org/fading/feed/
+
+** Emacs Reddits :emacsreddits:
+*** Orgmode
+**** https://reddit.com/r/orgmode.rss
+*** Emacs
+**** https://reddit.com/r/emacs.rss
+*** Emacs NG
+**** https://reddit.com/r/eamcsng.rss
+*** Doom Emacs
+**** https://reddit.com/r/DoomEmacs.rss
+*** Org Roam
+**** https://reddit.com/r/OrgRoam.rss
+
+** Linux Reddits :linux:
+*** Guix :guix:
+**** https://reddit.com/r/GUIX.rss
+
+* To Add
+
+** [[https://tsdh.org/posts/2021-06-21-using-eldoc-with-magit.html][tsdh.org]] (magit article)
+** A list of [[https://gist.github.com/clemera/a9cdb383b6d09765369cbdd9b125653e][Emacs RSS Feeds]]

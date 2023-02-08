@@ -37,6 +37,8 @@
 ;;       user-emacs-config-directory "~/.config/emacs/"
 ;;       user-emacs-ensime-directory "~/.emacs.g/var/ensime/")
 
+;; (setq native-comp-eln-load-path "not ~/.emacs.g/eln-cache")
+
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
       org-roam-directory (file-name-as-directory (concat org-directory "roam"))
       org-roam-db-location (expand-file-name "~/.local/share/org-roam/org-roam.db")

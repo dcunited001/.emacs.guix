@@ -1,2 +1,14 @@
 migrate/pkg/*
 migrate/daviwil
+
+# emacs state
+var/**
+#var/desktop/*
+
+# emacs config 
+etc/**
+!etc/yasnippet/snippets/**
+
+# figure this out
+straight/**
+elpa/**
