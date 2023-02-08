@@ -5,6 +5,13 @@ Based on the =.emacs.d= config in the [[https://github.com/daviwil/dotfiles/tree
 config allows you to easily combine dependencies pulled from straight or
 guix.
 
+#+begin_quote
+Considering the guix packages just updated Emacs 29 -> 30 underneath me while
+I was migrating dotfiles and I only noticed in the `guix pull` output...
+
+... then I think that this system may work out alright.
+#+end_quote
+
 * Setup
 
 Assumed file paths are found in =./init.el=
