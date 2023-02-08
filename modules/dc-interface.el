@@ -62,7 +62,7 @@
 
 (setup (:pkg doom-modeline)
   (add-hook 'after-init-hook #'dw/start-doom-modeline)
-  (:option doom-modeline-height 15
+  (:option doom-modeline-height (dw/system-settings-get 'emacs/doom-modeline-height)
            doom-modeline-bar-width 6
            doom-modeline-lsp t
            doom-modeline-github nil
@@ -217,6 +217,11 @@
            corfu-quit-at-boundary t
            corfu-quit-no-match t)
   (global-corfu-mode 1))
+
+(setup (:pkg corfu-doc)
+  (:load-after corfu)
+  (:option corfu-doc-delay 0.25
+           corfu-doc-max-height 16))
 
 ;;;*** Kind Icon
 

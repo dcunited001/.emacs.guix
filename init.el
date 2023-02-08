@@ -72,7 +72,7 @@
 
 ;; (require 'dc-workflow)
 
-;; (require 'dw-social)
+(require 'dc-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
 

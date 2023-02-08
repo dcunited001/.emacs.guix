@@ -89,12 +89,16 @@
    'completion
    (list->vlist '("emacs-vertico"
                   "emacs-corfu"
+                  "emacs-corfu-doc"
                   "emacs-orderless"
                   "emacs-consult"
                   "emacs-wgrep"
                   "emacs-marginalia"
                   "emacs-embark"))
    guix-emacs-vhash))
+
+;; "emacs-corfu-terminal"
+;; "emacs-corfu-doc-terminal"
 
 ;;** UI
 (define guix-emacs-vhash
@@ -386,12 +390,12 @@
 (define guix-emacs-vhash
   (vhash-consq
    'app
-   (list->vlist '("emacs-elpher"))
+   (list->vlist '("emacs-elpher"
+                  "emacs-openwith"))
    guix-emacs-vhash))
 
 ;; guix package, but unsure
 ;; "emacs-app-launcher"
-;; "emacs-openwith"
 
 ;;*** Social
 (define guix-emacs-vhash

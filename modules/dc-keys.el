@@ -79,6 +79,10 @@
  [tab] #'corfu-insert
  "C-f" #'corfu-insert
 
+ "C-:" #'corfu-doc-toggle               ;suggested "M-d"
+ "M-p" #'corfu-doc-scroll-up
+ "M-n" #'corfu-doc-scroll-down
+
  "C-M-n" #'vertico-next-group
  "C-M-p" #'vertico-previous-group
 

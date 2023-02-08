@@ -31,21 +31,51 @@ Org paths & variables
 | org-roam-db-location |                      | may exhibit problems with syncthing |
 |----------------------+----------------------+-------------------------------------|
 
+Other files:
+
+|-----+-------+-------------|
+| var | value | description |
+|-----+-------+-------------|
+|     |       |             |
+|-----+-------+-------------|
+
+For a more complete list of =.emacs.d= file paths, see these lines in
+[[https://github.com/emacscollective/no-littering/blob/main/no-littering.el#L213-L494][emacscollective/no-littering]].
+
 ** Chemacs
-
-
 
 ** Packages
 
 Dependencies are loaded from guix first by a manifest and straight dependencies
 are loaded on top.
 
-*** Straight Config
+*** Straight
 
-*** Fonts Config
+Moving =~/.emacs.g= to a new location may require blowing away straight with =rm
+-rf ~/.emacs.g/straight= and reloading emacs to reinstall everything.
+
+*** Fonts
+
+If you want to use the font packages from Guix, you'll need to ensure that the
+font directories in =~/.guix-extra-profiles= is made available in fontconfig.
+
+*** =no-littering=
+
+
 
 ** Config
 
+*** Per-System Settings
+
+
+** Initial Run
+
+*** Install all-the-icons
+
+This package needs to be loaded by straight in order for the font to be
+installed properly. When it's not, dired won't function.
+
+Run =M-x all-the-icons-install-fonts=
 
 * Why
 

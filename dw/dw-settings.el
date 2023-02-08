@@ -10,5 +10,4 @@
 ;; Load settings for the first time
 (dw/load-system-settings)
 
-
 (provide 'dw-settings)
