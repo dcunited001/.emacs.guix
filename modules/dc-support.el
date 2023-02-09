@@ -9,7 +9,7 @@
 (defmacro dc/toggleable-boolean (name &optional keybind)
   "Define an interactive defun to toggle the variable NAME
 along with KEYBIND, if present"
-  (declare (intent defun))
+  (declare (indent defun))
   (let* ((symname (symbol-name (or (intern-soft name) (defvar name))))
          (toggle-name (format "dc/toggle-%s" symname))
          (toggle-docstring (format "Toggle variable: %s" symname))
