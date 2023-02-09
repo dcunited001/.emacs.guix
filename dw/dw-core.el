@@ -4,20 +4,22 @@
 
 ;;* Core
 
-;;** Basics
-;;*** System Identification
+;;** System Identification
 
 (defvar dw/is-guix-system (and (eq system-type 'gnu/linux)
                                (with-temp-buffer
                                  (insert-file-contents "/etc/os-release")
                                  (search-forward "ID=guix" nil t))
                                t))
+;;** Config Paths
 
-;;*** Configuration Paths
+;;*** No Littering
 
 ;; Use no-littering to automatically set common paths to the new user-emacs-directory
 (setup (:pkg no-littering)
   (require 'no-littering))
+
+;;*** Custom File
 
 ;; Keep customization settings in a temporary file (thanks Ambrevar!)
 (setq custom-file
@@ -25,6 +27,12 @@
           (expand-file-name "custom.el" server-socket-dir)
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
 (load custom-file t)
+
+;;*** Features
+
+(setq desktop-dirname (file-name-concat no-littering-var-directory "desktop/")
+      bookmark-default-file (file-name-concat no-littering-var-directory "bookmarks.el")
+      tabspaces-session-file (file-name-concat no-littering-var-directory "tabsession.el"))
 
 ;;*** Native Compilation
 
@@ -38,8 +46,6 @@
 
 ;;*** Better Defaults
 (setup (:pkg better-defaults))
-
-;;** Keys
 
 (setup (:pkg undo-tree)
   (setq undo-tree-auto-save-history nil)
@@ -328,7 +334,7 @@
 ;; Load the info system for info files
 (add-to-list 'auto-mode-alist '("\\.info\\'" . Info-on-current-buffer))
 
-;;*** Convenience Key Bindings ----
+;;*** Convenience Key Bindings
 
 (defun dw/org-file-jump-to-heading (org-file heading-title)
   (interactive)
@@ -344,7 +350,7 @@
   (interactive)
   (find-file (expand-file-name org-file))
   (counsel-org-goto)
- (org-overview)
+  (org-overview)
   (org-reveal)
   (org-show-subtree)
   (forward-line))
