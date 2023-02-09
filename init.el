@@ -21,9 +21,6 @@
       dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
       dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules"))
 
-;; (setq desktop-dirname ;; (car desktop-path)
-;;       (file-name-as-directory (concat dc/emacs-d "var/desktop/")))
-
 ;; TODO: rectify user-emacs-* variables:
 ;; ... yeh, priceless are things like (kbd "C-u C-x e") to eval & insert
 ;; ... it works with any "M-x eval-*" function to eval emacs-lisp
@@ -57,8 +54,11 @@
 ;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
-(require 'dc-support)
 (require 'dw-core)
+
+
+
+(require 'dc-support)
 
 (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 (require 'dc-interface)
@@ -79,3 +79,4 @@
 ;; (require 'dw-system)
 
 (require 'dc-keys)
+(require 'dc-mouse)

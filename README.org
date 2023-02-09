@@ -53,8 +53,20 @@ For a more complete list of =.emacs.d= file paths, see these lines in
 
 ** Packages
 
+*** Guix
+
 Dependencies are loaded from guix first by a manifest and straight dependencies
 are loaded on top.
+
+**** TODO Setup manifest
+
+**** TODO Activate profile
+
+
++ guix shell will redo this anyways if there are changes, but unless you've run
+  =guix pull -p $profile= this is unlikely
+
+**** TODO Guix Shell
 
 *** Straight
 
