@@ -150,10 +150,18 @@
   (require 'mesche))
 
 ;;*** Snippets
+(setup (:pkg emmet)
+  (:hook-into sgml-mode css-mode))
 
 (setup (:pkg yasnippet)
+  (:load-after emmet)
   (require 'yasnippet)
+  (require 'doom-snippets)
+  ;; doom-snippets-dir
+  ;; doom-snippets-enable-short-helpers t
   (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'org-mode-hook #'yas-minor-mode)
   (yas-reload-all))
+
 
 (provide 'dc-dev)

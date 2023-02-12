@@ -175,7 +175,10 @@
                   "emacs-undo-tree"
 
                   "emacs-yasnippet"
-                  "emacs-yasnippet-snippets"
+                  "emacs-doom-snippets"
+                  ;; "emacs-yasnippet-snippets"
+
+                  "emacs-emmet-mode"
 
                   "emacs-visual-fill-column"
                   ))

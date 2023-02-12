@@ -4,7 +4,7 @@
 ;; (general-)
 
 ;;** TTY
-(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+(add-hook 'tty-setup-hook #'xterm-mouse-mode) ;doom
 
 ;; Fix an issue where these two variables aren't defined in TTY Emacs on MacOS
 (defvar mouse-wheel-down-event nil)

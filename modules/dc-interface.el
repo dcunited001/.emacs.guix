@@ -120,6 +120,23 @@
                     :height (dw/system-settings-get 'emacs/variable-face-size)
                     :weight 'light)
 
+;;** Editor
+
+;;*** Clipbaord
+;; TODO: ensure this variable does not fucking change and if it does let me know
+;; - test with middle click
+;; - I don't care if it's toy, i'm using the clipboard quite a bit atm
+;; - https://www.emacswiki.org/emacs/CopyAndPaste#h5o-3
+(setq select-enable-primary nil)
+
+;; if necessary, setup a watch function https://www.gnu.org/software/emacs/manual/html_node/elisp/Watching-Variables.html
+
+;; select-enable-primary defun vterm--set-selection seems to be the only
+;; function with a direct reference to this variable but it fucking gets changed
+;; all the goddamn time and in doom also. FUCK!
+;; - i haven't had the chance to run vterm much, so it's not that.
+;; - it it is perhaps related to sleep/hibernate ... or something
+;; - vterm-enable-manipulate-selection-data-by-osc52 is nil and this shouldn't run
 
 
 ;;** Bookmarks
@@ -232,14 +249,35 @@
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
 ;;;*** Orderless
+;; TODO: determine whether to add orderless-affix-dispatch-alist
+;; adds a nice dynamic matching syntax, but package needs update?
+;; https://github.com/oantolin/orderless#component-matching-styles
+(defun dc/orderless-first-initialism (pattern index _total)
+  (if (= index 0) 'orderless-initialism))
+(defun dc/orderless-regexp (pattern index _total)
+  'orderless-regexp)
 
 (setup (:pkg orderless)
   (require 'orderless)
 
+  ;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
+  (:option orderless-matching-styles '(orderless-regexp
+                                       orderless-initialism)
+           ;; NOTE force myself to try initialism
+           orderless-style-dispatchers '(dc/orderless-first-initialism
+                                         dc/orderless-regexp)))
+
+  ;; is orderless-affix-style introduced after v1.0?
   (orderless-define-completion-style orderless+initialism
     (orderless-matching-styles '(orderless-initialism
                                  orderless-literal
-                                 orderless-regexp))))
+                                 orderless-regexp)))
+
+  ;; (setq completion-category-overrides
+  ;;       '((command (styles orderless+initialism))
+  ;;         (symbol (styles orderless+initialism))
+  ;;         (variable (styles orderless+initialism))))
+  )
 
 ;;;*** WGrep
 
@@ -251,6 +289,7 @@
 (setup (:pkg consult)
   (require 'consult)
   (:also-load wgrep)
+  (:load-after orderless)
 
   (defun dw/get-project-root ()
     (when (fboundp 'projectile-project-root)
