@@ -216,7 +216,7 @@
 
 ;;** Completion
 
-;;;*** Vertigo
+;;*** Vertigo
 
 (setup (:pkg vertico)
   (vertico-mode)
@@ -225,7 +225,7 @@
   (:option vertico-cycle t)
   (custom-set-faces '(vertico-current ((t (:background "#3a3f5a"))))))
 
-;;;*** Corfu
+;;*** Corfu
 
 (setup (:pkg corfu)
   (:option corfu-cycle t
@@ -240,7 +240,7 @@
   (:option corfu-doc-delay 0.25
            corfu-doc-max-height 16))
 
-;;;*** Kind Icon
+;;*** Kind Icon
 
 (setup (:pkg kind-icon)
   (:load-after corfu)
@@ -248,7 +248,8 @@
   (:when-loaded
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
 
-;;;*** Orderless
+;;*** Orderless
+
 ;; TODO: determine whether to add orderless-affix-dispatch-alist
 ;; adds a nice dynamic matching syntax, but package needs update?
 ;; https://github.com/oantolin/orderless#component-matching-styles
@@ -259,13 +260,12 @@
 
 (setup (:pkg orderless)
   (require 'orderless)
-
   ;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
   (:option orderless-matching-styles '(orderless-regexp
                                        orderless-initialism)
            ;; NOTE force myself to try initialism
            orderless-style-dispatchers '(dc/orderless-first-initialism
-                                         dc/orderless-regexp)))
+                                         dc/orderless-regexp))
 
   ;; is orderless-affix-style introduced after v1.0?
   (orderless-define-completion-style orderless+initialism
@@ -279,12 +279,13 @@
   ;;         (variable (styles orderless+initialism))))
   )
 
-;;;*** WGrep
+
+;;*** WGrep
 
 (setup (:pkg wgrep)
   (add-hook 'grep-mode-hook #'wgrep-setup))
 
-;;;*** Consult
+;;*** Consult
 
 (setup (:pkg consult)
   (require 'consult)

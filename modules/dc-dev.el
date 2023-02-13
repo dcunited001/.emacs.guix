@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+;;** Dev
+
 ;;*** Paren Matching
 
 (setup (:pkg smartparens)
@@ -101,7 +103,7 @@
 ;;*** Git
 
 (setup (:pkg git-link)
-  (setq git-link-open-in-browser t)
+  (:option git-link-open-in-browser t)
   (leader-def
     "gL"  'git-link))
 

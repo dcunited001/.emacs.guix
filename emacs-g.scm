@@ -92,6 +92,13 @@
                   "emacs-corfu-doc"
                   "emacs-orderless"
                   "emacs-consult"
+                  "emacs-consult-yasnippet"
+                  "emacs-consult-org-roam"
+                  "emacs-consult-xdg-recent-files"
+                  "emacs-consult-dir"
+                  "emacs-consult-lsp"
+                  "emacs-consult-eglot"
+                  "emacs-consult-bibtex"
                   "emacs-wgrep"
                   "emacs-marginalia"
                   "emacs-embark"))
@@ -135,7 +142,8 @@
 (define guix-emacs-vhash
   (vhash-consq
    'keys
-   (list->vlist '("emacs-general"))
+   (list->vlist '("emacs-general"
+                  "emacs-which-key"))
    guix-emacs-vhash))
 
 ;;** Themes

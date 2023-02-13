@@ -53,7 +53,14 @@
 
 ;;*** Core Key Bindings
 
+(setup (:pkg which-key)
+  (:option which-key-idle-delay 1.0
+           which-key-idle-secondary-delay 0.05)
+  (require 'which-key')
+  (which-key-setup-side-window-bottom))
+
 (setup (:pkg general)
+  ;; (:load-after which-key)
   ;; dw/leader-key-def
   (general-create-definer leader-def
     :prefix "C-c")
@@ -191,7 +198,6 @@
 ;;*** Window Management
 
 (setup (:pkg ace-window)
-  (:global "M-o" ace-window)
   (:option aw-scope 'frame
            aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
            aw-minibuffer-flag t)
@@ -241,16 +247,6 @@
               (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
                 (all-the-icons-dired-mode 1))
               (hl-line-mode 1)))
-
-  ;;  (global-set-key (kbd "s-e") #'dired-jump)
-
-  ;; (evil-collection-define-key 'normal 'dired-mode-map
-  ;;   "h" 'dired-single-up-directory
-  ;;   "H" 'dired-omit-mode
-  ;;   "l" 'dired-single-buffer
-  ;;   "y" 'dired-ranger-copy
-  ;;   "X" 'dired-ranger-move
-  ;;   "p" 'dired-ranger-paste)
   )
 
 (setup (:pkg dired-rainbow)

@@ -14,8 +14,6 @@
 
  ;; "g" '(:ignore t :wk ("g-key" . "git prefix"))
 
- "C-s" #'consult-line
-
  "C-x o" #'ace-window
  "C-x C-d" #'consult-dir
 
@@ -27,10 +25,6 @@
 
  ;; (define-key evil-window-map "u" 'winner-undo)
  ;; (define-key evil-window-map "U" 'winner-redo)
-
- "C-M-j" #'consult-buffer
- "C-M-l" #'consult-imenu
- ;; "C-M-." #'embark-act
 
  "C-M-k" #'tab-bar-switch-to-tab
  "C-<next>" #'tab-bar-switch-to-next-tab
@@ -51,9 +45,43 @@
  )
 
 
-;; (leader-def
-;;   :keymaps 'global
-;;   "a" #'embark-act)
+;;*** Consult
+
+(general-define-key
+ :keymaps 'global
+
+ [remap apropos-command] #'describe-symbol
+ [remap bookmark-jump]                 #'consult-bookmark
+ ;;   [remap evil-show-marks]               #'consult-mark
+ ;;   [remap evil-show-jumps]               #'+vertico/jump-list
+ ;;   [remap evil-show-registers]           #'consult-register
+ [remap goto-line]                     #'consult-goto-line
+ [remap imenu]                         #'consult-imenu
+ [remap locate]                        #'consult-locate
+ [remap load-theme]                    #'consult-theme
+ [remap man]                           #'consult-man
+ [remap recentf-open-files]            #'consult-recent-file
+ [remap switch-to-buffer]              #'consult-buffer
+ [remap switch-to-buffer-other-window] #'consult-buffer-other-window
+ [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
+ ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
+ [remap yank-pop]                      #'consult-yank-pop)
+
+
+(general-define-key
+ :keymaps 'global
+
+ "C-x C-d" #'consult-dir
+ "C-s" #'consult-line
+ "C-M-j" #'consult-buffer
+ "C-M-l" #'consult-imenu
+ ;; "C-M-." #'embark-act
+
+ )
+
+ ;; (leader-def
+ ;;   :keymaps 'global
+ ;;   "a" #'embark-act)
 
 ;;*** vertico-map
 
@@ -89,28 +117,10 @@
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file)
 
-;;*** Consult
+;;** Editor
 
-(general-define-key
- :keymaps 'global
+;;*** Window Management
 
- [remap apropos] #'consult-apropos
- [remap bookmark-jump]                 #'consult-bookmark
- ;;   [remap evil-show-marks]               #'consult-mark
- ;;   [remap evil-show-jumps]               #'+vertico/jump-list
- ;;   [remap evil-show-registers]           #'consult-register
- [remap goto-line]                     #'consult-goto-line
- [remap imenu]                         #'consult-imenu
- [remap locate]                        #'consult-locate
- [remap load-theme]                    #'consult-theme
- [remap man]                           #'consult-man
- [remap recentf-open-files]            #'consult-recent-file
- [remap switch-to-buffer]              #'consult-buffer
- [remap switch-to-buffer-other-window] #'consult-buffer-other-window
- [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
- ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
- [remap yank-pop]                      #'consult-yank-pop
- )
 
 ;;** Editor
 
