@@ -83,7 +83,6 @@
 (leader-def
   :wk-full-keys t
   "g" '(:ignore t :which-key "git"))
-
 ;; redirect F2 -> C-c (doesn't show everything on which-keys)
 ;; (general-define-key
 ;;  :keymaps 'global
@@ -230,12 +229,13 @@ minibuffer-local-map
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file)
 
-;;** Editor
+;;** UI
 
 ;;*** Window Management
 
 
 ;;** Editor
+
 
 ;;*** Toggles
 
@@ -258,7 +258,41 @@ minibuffer-local-map
 
 ;;*** Lispy
 
+
+;;** Lang
+
+;; The f5-f8 keys should be reserved for translation to prefixes on a
+;; per-major-mode basis. Hopefully, I can assume that no other key bindings will
+;; interfere
+
+;;*** comint-mode
+
+;; repls go here
+
+;;**** geiser-repl-mode
+
+;;*** lisp-mode
+
+;;**** Clojure
+
+;;**** Lisp
+
+;;**** Scheme/Geiser
+
+;;*** prog-mode
+
+;;**** js2-mode
+
+;;*** text-mode
+
+;;**** org-mode
+
+;;**** sgml-mode
+
+;;**** html-mode
+
 (provide 'dc-keys)
+
 
 ;;*** Embark (Doom)
 ;; (  (embark-define-keymap +vertico/embark-doom-package-map
