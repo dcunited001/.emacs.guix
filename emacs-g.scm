@@ -180,6 +180,7 @@
                   "emacs-parinfer-mode"
                   "emacs-smartparens"
                   "emacs-rainbow-delimiters"
+                  "emacs-highlight-symbol"
 
                   ;; direnv for buffer-local environments
                   "emacs-buffer-env"

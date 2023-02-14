@@ -81,8 +81,16 @@
  "<right>" #'winner-redo)
 
 (leader-def
-  :wk-full-keys t
-  "g" '(:ignore t :which-key "git"))
+  :wk-full-keys nil
+
+  "g" '(:ignore t :which-key "git")
+  "gL"  'git-link
+
+  "j"   '(:ignore t :which-key "jump")
+  "jj"  '(avy-goto-char :which-key "jump to char")
+  "jw"  '(avy-goto-word-0 :which-key "jump to word")
+  "jl"  '(avy-goto-line :which-key "jump to line"))
+
 ;; redirect F2 -> C-c (doesn't show everything on which-keys)
 ;; (general-define-key
 ;;  :keymaps 'global
@@ -291,8 +299,58 @@ minibuffer-local-map
 
 ;;**** html-mode
 
-(provide 'dc-keys)
+;;** Map leader-keys to all maps
 
+(general-translate-key
+  nil '(global)
+  "<f2>" "C-x"
+  "<f12>" "C-c")
+;; (dc/translated-keymaps-set
+;;  'global
+;;  "<f2>" "C-x"
+;;  "<f12>" "C-c")
+
+(defvar dc/translated-keypairs
+  '("<f2>" "C-x"
+    "<f12>" "C-c"))
+
+(defun dc/keymaps-list-collect ()
+  (cl-loop for s being the symbols if
+           (and (boundp s)
+                (keymapp (symbol-value s)))
+           collect s))
+
+(defun dc/keymaps-list-collect-atoms ()
+  (let (r)
+    (mapatoms
+     (lambda (s) (if (and (boundp s)
+                          (keymapp (symbol-value s)))
+                     (push s r)))) r))
+;; both 510
+;; (length (dc/keymaps-list-collect-atoms))
+
+
+;; causes errors like "void variable menu-function-18" if function-based keymaps
+;; are mixed-in. see easy-menu.el:
+;; https://web.mit.edu/Emacs/source/emacs/lisp/emacs-lisp/easymenu.el
+(defvar dc/keymaps-list
+  (dc/keymaps-list-collect))
+
+(defun dc/translated-keymaps-set (kms pairs)
+  "Fdsaasdf."
+  (apply #'general-translate-key nil kms pairs))
+
+(defun dc/ensure-translated-keymaps-set ()
+  "Fdsa."
+  (dc/translated-keymaps-set
+         dc/keymaps-list
+         dc/translated-keypairs))
+
+;; (dc/ensure-translated-keymaps-set)
+;; (symbol-function menu-function-18)
+;; (general-translate-key nil '(yas--minor-mode-menu) "<f2>" "C-x" "<f12>" "C-c")
+
+(provide 'dc-keys)
 
 ;;*** Embark (Doom)
 ;; (  (embark-define-keymap +vertico/embark-doom-package-map

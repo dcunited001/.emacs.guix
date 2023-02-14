@@ -103,9 +103,7 @@
 ;;*** Git
 
 (setup (:pkg git-link)
-  (:option git-link-open-in-browser t)
-  (leader-def
-    "gL"  'git-link))
+  (:option git-link-open-in-browser t))
 
 ;;*** Code Formatting
 

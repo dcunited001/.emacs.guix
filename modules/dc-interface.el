@@ -138,6 +138,10 @@
 ;; - it it is perhaps related to sleep/hibernate ... or something
 ;; - vterm-enable-manipulate-selection-data-by-osc52 is nil and this shouldn't run
 
+;;** Highlighting
+
+(setup (:pkg highlight-symbol)
+  (:hook-into prog-mode))
 
 ;;** Bookmarks
 
