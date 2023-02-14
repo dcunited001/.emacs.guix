@@ -62,14 +62,16 @@
 
 (setup (:pkg general)
   (general-create-definer leader-def
-    :prefix "C-c"
-    :prefix-command 'leader-prefix-command
-    :prefix-map 'leader-map)
+    :prefix "C-c")
+  (general-translate-key nil 'global "<f12>" "C-c")
+
+  ;; this will create a new keymap and bork the old ones
+  ;; :prefix-command 'leader-prefix-command
+  ;; :prefix-map 'leader-map
 
   (general-create-definer global-leader-def
-    :prefix "C-x"
-    :prefix-command 'global-leader-prefix-command
-    :prefix-map 'global-leader-map))
+    :prefix "C-x")
+  (general-translate-key nil 'global "<f2>" "C-x"))
 
 ;; Enable line numbers for some modes
 (dolist (mode '(text-mode-hook
