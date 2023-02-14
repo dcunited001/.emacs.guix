@@ -61,14 +61,15 @@
   (which-key-setup-side-window-bottom))
 
 (setup (:pkg general)
-  ;; (:load-after which-key)
-  ;; dw/leader-key-def
   (general-create-definer leader-def
-    :prefix "C-c")
+    :prefix "C-c"
+    :prefix-command 'leader-prefix-command
+    :prefix-map 'leader-map)
 
-  ;; dw/ctrl-c-key
-  (general-create-definer local-leader-def
-    :prefix "C-c l"))
+  (general-create-definer global-leader-def
+    :prefix "C-x"
+    :prefix-command 'global-leader-prefix-command
+    :prefix-map 'global-leader-map))
 
 ;; Enable line numbers for some modes
 (dolist (mode '(text-mode-hook

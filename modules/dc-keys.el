@@ -12,16 +12,8 @@
 (general-define-key
  :keymaps 'global
 
- ;; "g" '(:ignore t :wk ("g-key" . "git prefix"))
-
  "C-x o" #'ace-window
  "C-x C-d" #'consult-dir
-
- "C-c G" #'guix
- "C-c T" #'tldr
-
- "C-c <left>" #'winner-undo
- "C-c <right>" #'winner-redo
 
  ;; (define-key evil-window-map "u" 'winner-undo)
  ;; (define-key evil-window-map "U" 'winner-redo)
@@ -41,9 +33,67 @@
  "C-c C-l" #'embark-collect
  ;; "C-c C-e" #'+vertico/embark-export-write
 
- "M-A" #'marginalia-cycle
- )
+ "M-A" #'marginalia-cycle)
 
+;;*** unbind function keys
+;; or use the following (which may only work for general definitions)
+;; (general-auto-unbind-keys)
+
+;; the app doesn't need to tell i3 what to do
+;; OS/WM functions should use super-key
+(unbind-key "<f11>")
+
+;; unbind 2C-Mode
+;; i would probably actually use this
+(unbind-key "<f2> 2")
+(unbind-key "<f2> b")
+(unbind-key "<f2> s")
+(unbind-key "<f2> <f2>")
+
+;; i honestly don't know how to use these in workflow
+(unbind-key "<f3>")
+(unbind-key "<f4>")
+
+;; unbind menubar shortcuts
+;; TODO what to do about terminal compat
+(unbind-key "<f10>")                    ;menu-bar-open
+(unbind-key "S-<f10>")                  ;context-menu-open
+(unbind-key "C-<f10>")                  ;buffer-menu-open
+(unbind-key "M-<f10>")                  ;toggle-frame-maximized
+(unbind-key "ESC <f10>")                ;toggle-frame-maximized
+
+;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
+;; and if you buy right now, we'll double your function keys
+;; chromebooks and macbooks not applicable
+
+;;*** global-leader-key (C-x, f2)
+;; this helps balance keyboard usage, giving and gives your pinky a break
+
+;; this prefix should find itself associated with
+;; editor features, global state and outward-looking functions
+(global-leader-def
+ "G" #'guix
+ "T" #'tldr
+ "<left>" #'winner-undo
+ "<right>" #'winner-redo)
+
+(leader-def
+ "g" '(:ignore t :which-key "git"))
+
+;; redirect F2 -> C-c (doesn't show everything on which-keys)
+(general-define-key
+ :keymaps 'global
+ :wk-full-keys nil
+ "<f2>" '(:prefix-command global-leader-prefix-command))
+
+;;*** leader-key (C-c, f12)
+
+;; this prefix should find itself associated with
+;; project mgmt, minor mode features and inward-looking functions
+(general-define-key
+ :keymaps 'global
+ :wk-full-keys nil
+ "<f12>" '(:prefix-command leader-prefix-command))
 
 ;;*** Consult
 
