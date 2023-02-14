@@ -55,12 +55,22 @@
 
 ;;* Emacs
 
+;;** Support
+;; "emacs-a"
+;; "emacs-dash"
+;; "emacs-f"
+;; "emacs-ht"
+;; "emacs-s"
+;; "emacs-ts"
+;; "emacs-jq"
+;; "emacs-map"
+
 ;;** Config
 (define guix-emacs-vhash
   (vhash-consq
    'config
    (list->vlist '("emacs-better-defaults"
-
+                  ;; "emacs-gcmh" ;; hmmmmm
 
                   ))
    guix-emacs-vhash))
@@ -163,11 +173,10 @@
    'editor
    (list->vlist '("emacs-origami-el"
                   "emacs-drag-stuff"
-                  "emacs-a"
+                  ;; "emacs-a"
                   "emacs-tmr"
 
                   "emacs-lispy"
-                  ;; emacs-prism
                   "emacs-parinfer-mode"
                   "emacs-smartparens"
                   "emacs-rainbow-delimiters"
@@ -192,13 +201,18 @@
                   ))
    guix-emacs-vhash))
 
+;;*** Editor: Straight
+;; "emacs-prism"
+;; "emacs-origami-el"
+
 ;;** Term
 ;; (append! guix-emacs-packages
 ;;          '())
- (define guix-emacs-vhash
+(define guix-emacs-vhash
   (vhash-consq
    'term
    (list->vlist '("emacs-vterm"
+                  "emacs-bash-completion"
                   "emacs-esh-autosuggest"
                   "emacs-eshell-syntax-highlighting"
                   "emacs-eshell-toggle"
@@ -222,13 +236,13 @@
                   "emacs-gitpatch" ;; TODO: configure
                   "emacs-git-link" ;; TODO: configure
                   ;; "emacs-git-email" ;;TODO: consider
-
+                  "emacs-git-timemachine"
 
                   ;; "emacs-git-auto-commit-mode" ;; TODO: consider
 
                   "emacs-magit"
                   "emacs-magit-todos"
-
+                  ;; "emacs-ghub"
                   "emacs-forge"
                   ))
    guix-emacs-vhash))
@@ -243,12 +257,13 @@
   (vhash-consq
    'tools
    (list->vlist '(
-                 "emacs-ef-themes"
-                 "emacs-burly"
-                 "emacs-elf-mode"
-                 "emacs-ssh-config-mode"
-                 "emacs-tldr"
-                 "emacs-git-timemachine"))
+                  "emacs-ef-themes"
+                  "emacs-burly"
+                  "emacs-elf-mode"
+                  "emacs-ssh-config-mode"
+                  "emacs-tldr"
+                  "emacs-google-translate"
+                  "emacs-prodigy"))
    guix-emacs-vhash))
 
 ;;*** Firewall
@@ -260,6 +275,7 @@
 ;; "emacs-crontab-mode"
 ;; "emacs-magit-tbdiff"
 ;; "emacs-xdg-paths"
+;; "emacs-aurel"                       ;; browse AUR
 
 ;;*** Devops
 (define guix-emacs-vhash
@@ -278,8 +294,12 @@
    guix-emacs-vhash))
 
 ;;** OS
-;; (append! guix-emacs-packages
-;;          '())
+(define guix-emacs-vhash
+  (vhash-consq
+   'os
+   (list->vlist '(;; "emacs-xclip"
+                  ))
+   guix-emacs-vhash))
 
 
 ;;** Lang
@@ -293,21 +313,48 @@
    (list->vlist '("emacs-guix"
                   "emacs-geiser"
 
+                  ;; "emacs-elisp-refs"
+                  "emacs-elisp-demos"
+                  "emacs-eros"
+
+                  "emacs-clojure-mode"
+                  ;; "emacs-clojure-snippets"
+                  "emacs-cider"
+                  ;; "emacs-clj-deps-new"
+                  "emacs-clj-refactor"
+                  "emacs-parseedn"
+                  "emacs-parseclj"
+
                   "emacs-sly"
                   "emacs-sly-asdf"
+                  "emacs-sly-macrostep"
 
                   "emacs-js2-mode"
+                  ;; "emacs-js2-refactor"
                   "emacs-typescript-mode"
+                  ;; "emacs-rjsx-mode"
+                  ;; "tide"
 
                   "emacs-web-mode"
                   "emacs-skewer-mode"
 
+                  "emacs-csv-mode"
                   "emacs-yaml-mode"
+                  "emacs-json-mode"
+                  "emacs-json-snatcher"
+
+                  "emacs-graphviz-dot-mode"
+                  "emacs-gnuplot"
+
+                  "emacs-graphql"
+                  "emacs-graphql-mode"
 
                   "emacs-eglot"
                   "emacs-lsp-mode"
                   "emacs-lsp-ui"
                   "emacs-dap-mode"
+
+                  "emacs-arduino-mode"
 
                   "ccls"
                   "emacs-ccls"
@@ -318,8 +365,11 @@
                   ))
    guix-emacs-vhash))
 
-
+;;*** Lang: Straight
+;; "emacs-sass-mode"
+;; "emacs-arduino-cli-mode"
 ;;*** Clojure
+;; "emacs-clomacs" ?
 
 ;;*** Cider
 
@@ -349,9 +399,6 @@
 
 ;;*** GraphQL
 
-
-;;*** Latex
-
 ;;*** MathJAX
 
 ;;*** SMILES (end here)
@@ -362,35 +409,59 @@
 ;; (append! guix-emacs-packages
 ;;          '())
 
+;;** Latex
+(define guix-emacs-vhash
+  (vhash-consq
+   'latex
+   (list->vlist '("emacs-auctex"
+                  "emacs-pdf-tools"
+                  "emacs-latex-preview-pane"
+                  "emacs-cdlatex"
+                  "emacs-parsebib"
+                  "emacs-biblio"
+                  "emacs-math-symbol-lists"))
+  guix-emacs-vhash))
 
 ;;** Org
 (define guix-emacs-vhash
   (vhash-consq
    'org
    (list->vlist '("emacs-org"
+                  "emacs-toc-org"
 
-                 "emacs-org-pomodoro" ;; TODO: remove
-                 "emacs-org-make-toc"
-                 "emacs-org-caldav"
-                 "emacs-org-present"
-                 "emacs-org-appear"
+                  "emacs-org-pomodoro" ;; TODO: remove
+                  "emacs-org-make-toc"
+                  "emacs-org-caldav"
+                  "emacs-org-present"
+                  "emacs-org-appear"
 
-                 ;; org-agenda
-                 "emacs-org-ql"
-                 "emacs-org-superstar"
+                  ;; org-agenda
+                  "emacs-org-ql"
+                  "emacs-org-superstar"
 
-                 ;; org-roam
-                 "emacs-org-roam"
-                 "emacs-org-roam-ui"
+                  ;; org-roam
+                  "emacs-org-roam"
+                  "emacs-org-roam-ui"
 
-                 ;; org-capture
-                 ;; TODO: capture templates from web
+                  ;; org-capture
+                  ;; TODO: capture templates from web
 
-                 ;; calendar
-                 ;; "emacs-org-caldav"
-                 ))
+                  ;; calendar
+                  "emacs-org-caldav"
+
+                  ;; ox
+                  "emacs-ox-pandoc"
+                  "emacs-ox-reveal"
+                  "emacs-org-re-reveal"
+
+                  ;; babel
+                  "emacs-restclient"
+                  "emacs-ob-restclient"))
    guix-emacs-vhash))
-
+;;*** Org: Straight
+;; "smiles"
+;; "ob-smiles"
+;; "ob-"
 ;;*** Org Babel
 ;;*** Org Capture
 ;;*** Org Export
@@ -414,8 +485,12 @@
    'social
    (list->vlist '("emacs-elfeed"
                   "emacs-elfeed-org"
+                  ;; "emacs-elfeed-score"
                   "emacs-elfeed-protocol"))
    guix-emacs-vhash))
+
+;; Social: Straight
+;; "emacs-0x0"
 
 ;;*** Email
 
@@ -431,14 +506,6 @@
 ;; ;; "hledger"
 ;; "emacs-ledger-mode"
 
-;;** Config
-
-
-
-;;**
-;; (append! guix-emacs-packages
-;;          '())
-
 (specifications->manifest
 
  (append
@@ -453,9 +520,13 @@
     "emacs-projectile"
     "ripgrep"                     ; For counsel-projectile-rg (doom?) and others
 
-    "emacs-helpful"
+    ;; "emacs-helpful"
 
     "emacs-flycheck"
+    "emacs-flycheck-guile"
+    "emacs-flycheck-package"
+    ;; "emacs-flycheck-plantuml" ;straight
+    ;; "emacs-flycheck-haskell"
 
     ;; n/a, evaluate against restclient
     ;; "emacs-request"
@@ -475,8 +546,6 @@
     ;; "emacs-erc"
     ;; "emacs-erc-image"
     ;; "emacs-erc-hl-nicks"
-
-    "emacs-elfeed"
 
     ;; gopher/gemini?
     "emacs-elpher"
@@ -508,3 +577,6 @@
 ;; "emacs-emms"
 ;; "emacs-pulseaudio-control"
 ;; "emacs-obs-websocket-el"
+
+;;*** unsure
+;; "emacs-inheritenv" :: doom dependency

@@ -56,7 +56,8 @@
 (setup (:pkg which-key)
   (:option which-key-idle-delay 1.0
            which-key-idle-secondary-delay 0.05)
-  (require 'which-key')
+  (require 'which-key)
+  (which-key-mode)
   (which-key-setup-side-window-bottom))
 
 (setup (:pkg general)

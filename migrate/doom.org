@@ -1,0 +1,491 @@
+#+TITLE: Doom
+
+* Packages
+
+** To Config
+
+*** TODO check new packages
+
++ [ ] google-translate (add ob-translate)
++ [ ] elisp-demos
++ [ ] json-mode
++ [ ] json-snatcher
++ [ ] graphviz-dot-mode
++ [ ] graphql.el
++ [ ] graphql-mode
++ [ ] gnuplot
++ [ ] arduino-cli-mode
++ [ ] restclient
++ [ ] ob-restclient
++ [ ] flycheck
++ [ ] plantuml-mode
++ [ ] yaml-mode
++ [ ] emmet-mode
++ [ ] emacs-bash-completion
++ [ ] ansible-doc
++ [ ] emacs-eros :: show eval results in buffer (elisp)
++ [ ] ht :: hex editor
++ [ ] volatile-highlights.el :: visual feedback for operations
+
+*** TODO check vcs tools
+
++ [ ] ghub
++ [ ] forge
++ [ ] code-review **
++ [ ] orgit :: org-mode links to magit buffers
++ [ ] orgit-forge ** ::
+
+*** TODO check lisp tools
+
+
+macrostep
+macrostep-geiser
++ [ ] package-lint
++ [ ] flycheck-guile
++ [ ] sesman :: associate REPL buffers to project contexts
+
+*** TODO counsel/etc pkgs
+
++ [ ] math-symbol-lists
+
+*** TODO check latex pkgs
+
++ [ ] auctex
++ [ ] pdf-tools
++ [ ] cdlatex
++ [ ] latex-preview-pane
++ [ ] biblio
+parsebib
+
+*** TODO check org packages
+
++ [ ] org-ql
++ [ ] org-super-agenda
+ox-pandoc
+org-roam-ui
+org-super-agenda
+toc-org
++ [ ] emacs-org-re-reveal
++ [ ] org-treeusage ** :: cyclomatic complexity for org-elements
+
+*** TODO check clojure pkgs
+
++ [ ] clojure
++ [ ] cider
++ [ ] clj-refactor
++ [ ] parseedn
+
+*** TODO check javascript pkgs
+
++ [ ]
++ [ ] xref (should be included; is configured?)
++ rjsx-mode
++ xref-js2
++ typescript.el
++ [ ] tide :: typescript ide (large pkg, not yet added)
+
+*** TODO check editor pkgs
+
++ [ ] xclip
++ [ ] swiper :: search interface for regexps (compat with consult?)
+dogears.el
+
+*** TODO check app pkgs
+
+elfeed-goodies
+
+*** TODO check docs pkgs
+
++ [ ]
++ [ ] dash-docs
+
+*** TODO check tools packages
+
++ [ ] ssh-config-mode-el
+
+*** TODO check misc lang packages
+
++ [ ] haskell-mode
++ [ ] lua-mode
++ cuda-mode
++ glsl-mode
++ csv-mode
++ csv
++ sly-macrostep**
++ sly-repl-ansi-color
++ qml-mode
++ qt-pro-mode **
+
+** To Add
+
+*** TODO build/debug support pkgs
+
++ realgud
++ realgud-trepan-ni
++ pkg-config
++ emacs-epl (emacs lisp pkg tools from cask)
+
+
+*** TODO test pkgs
+
++ overseer.el ** :: ert test runner for elisp
++ emacs-buttercup (bdd)
+
+*** TODO lsp pkgs
+
+lsp-docker
+lsp-haskell
+lsp-ivy
+lsp-julia
+lsp-mode
+lsp-treemacs
+lsp-ui
+dap-mode
+
+*** TODO fly pkgs
+
+flycheck
+flycheck-cask
+flycheck-clj-kondo
+flycheck-guile
+flycheck-package
+flycheck-plantuml
+flycheck-popup-tip
+flycheck-posframe
+
+*** TODO app pkgs
+
+anki-editor
+
+*** TODO Python
+
++ pydoc
++ pyvenv
++ py-isort :: autosort python imports
++ pipenv.el **
++ anaconda-mode **
++ pip-requirements.el **
++ pythonic ** :: run python on local/remote hosts (using elisp)
++ pyimport ** :: doesn't seem compatible with pipenv/pyenv
+
+*** Lang
+
+docker.el
+dockerfile-mode
+docker-tramp.el
+elisp-depmap.el
+npm-mode
+org-noter
+org-pdftools
+smiles-mode
+
+**** HAML-like
+
+jade-mode
+pug-mode **
+jinja2-mode
+
+
+*** Tools
+
+pcap-mode
+emacs-libvterm?
++ iedit :: toggle editing all references of symbol in buffer
+archive-rp
++ emacs-demangle-mode ** :: show decompiled symbols
+
+*** Org
+
+ob-translate
+ob-smiles
+org-krita
+
+**** Editor
+
++ origami.el :: code folding
++ centered-window-mode
++ centered-cursor-mode.el
++ auto-highlight-symbol
++ auto-minor-mode
++ auto-yasnippet
++ highlight-doxygen
++ highlight-numbers
++ highlight-quoted
+
+**** UI
+
++ all-the-icons.el
+
+**** Maybe
+
++ adaptive-wrap
++ better-jumper
++ bufler.el (perhaps too much meta)
+citeproc-el
+dired-git-info
+dired-rsync
+org-re-reveal
++ reveal.js **
++ org-lms **
++ closql :: store emacs EIEIO pkgs as EmacsQL
+
+** Not Needed
+
+*** Emacs
+
+font-utils
+frame-local
+
+*** Lang
+
++ cmake-mode (emacs 29 has cmake-ts-mode)
+
+*** Support
+
++ a.el :: alists
++ dash.el :: (run -> '(fdsa fdsafdsa) asdf)
++ f.el :: file support
++ s.el
++ ts.el :: timetamps
++ map
++ bui.el (guix/aurel)
++ compat (only for older emacs)
++ ov :: framework for managing overlay buffers
++ emacs-aio :: like python's asyncio for emacs
++ emacs-treepy :: tree traversal based on clojure.walk/zip
+
+*** Company/Counsel/Ivy/Helm
+
++ company-anaconda
++ company-ansible
++ company-auctex
++ company-box
++ company-glsl
++ company-lua
++ company-math
++ company-mode
++ company-reftex
++ company-restclient
++ company-shell
++ company-web
+counsel-dash
+counsel-jq
+counsel-projectile
+ivy-rich
+ivy-taskrunner
+ivy-xref
+
+*** Org
+
+org-drill
+
+*** Too Likely to Disrupt
+
++ amx
+
+*** N/A
+
++ all-the-icons-ivy
++ dimmer.el
++ diminish.el
+
+
+browse-at-remote
+
+diredfl
+disaster
+drag-stuff.el
+dtrt-indent
+dumb-jump
+dynamic-graphs
+edit-indirect
+
+emacs-ansible
+emacs-async
+emacs-ccls
+emacs-company-dict
+emacs-counsel-css
+emacs-deferred
+emacs-fish-completion
+emacs-format-all-the-code
+emacs-hide-mode-line
+emacs-htmlize
+emacs-load-env-vars
+emacs-load-relative
+emacs-loc-changes
+emacs-python-pytest
+emacsql
+emacs-request
+emacs-slim
+emacs-solaire-mode
+emacs-taskrunner
+emacs-test-simple
+emacs-web-server
+emacs-websocket
+Emacs-wgrep
+
+envrc
+
+eshell-did-you-mean
+eshell-up
+esh-help
+evil-terminal-cursor-changer
+expand-region.el
+explain-pause-mode
+fd-dired
+
+hl-todo
+
+
+
+inheritenv
+
+julia-emacs
+julia-repl
+julia-vterm.el
+jump.el
+know-your-http-well
+kurecolor
+latex-preview-pane
+link-hint.el
+list-utils
+log4e
+major-mode-hydra.el
+makefile-executor.el
+
+markdown-toc
+
+modern-cpp-font-lock
+
+nodejs-repl.el
+
+ob-async
+ob-clojure-literate.el
+ob-graphql
+ob-julia-vterm.el
+
+openapi-yaml-mode
+opencl-mode
+org-cliplink
+org-download
+org-ref
+org-sidebar
+org-tree-slide
+org-yt
+
+ox-clip
+paredit
+parent-mode
+
+pcache
+pcre2el
+peg
+persist
+persistent-soft
+pfuture
+powerline
+
+queue
+quickrun
+restart-emacs
+salt-mode
+sass-mode
+saveplace-pdf-view
+
+shrink-path.el
+shut-up
+
+spinner
+
+straight.el
+string-inflection
+tablist
+themes
+
+ucs-utils
+unicode-fonts
+
+uuidgen-el
+
+web-completion-data
+with-editor
+
+zoutline
+zprint-mode.el
+
+
+* Org Contrib
+
+- org-annotate-file.el :: Annotate a file with org syntax
+- org-bibtex-extras.el :: Extras for working with org-bibtex entries
+- org-checklist.el :: org functions for checklist handling
+- org-choose.el :: Use TODO keywords to mark decision states
+- org-collector.el :: Collect properties into tables
+- org-contribdir.el :: Dummy file to mark the org contrib Lisp directory
+- org-depend.el :: TODO dependencies for Org-mode
+- org-effectiveness.el :: Measuring your personal effectiveness
+- org-eldoc.el :: Eldoc documentation for SRC blocks
+- org-eval.el :: The <lisp> tag, adapted from Muse
+- org-eval-light.el :: Evaluate in-buffer code on demand
+- org-expiry.el :: Expiry mechanism for Org entries
+- org-git-link.el :: Provide org links to specific file version
+- org-interactive-query.el :: Interactive modification of tags query
+- org-invoice.el :: Help manage client invoices in OrgMode
+- org-learn.el :: SuperMemo's incremental learning algorithm
+- org-license.el :: Insert free licenses to your org documents
+- org-mac-iCal.el :: Imports events from iCal.app to the Emacs diary
+- org-mairix.el :: Hook mairix search into Org for different MUAs
+- org-panel.el :: Simple routines for us with bad memory
+- org-registry.el :: A registry for Org links
+- org-screen.el :: Visit screen sessions through Org-mode links
+- org-screenshot.el :: Take and manage screenshots in Org-mode files
+- org-secretary.el :: Team management with org-mode
+- org-static-mathjax.el :: Muse-like tags in Org-mode
+- org-sudoku.el :: Create and solve SUDOKU puzzles in Org tables
+- org-toc.el :: Table of contents for Org-mode buffer
+- org-track.el :: Keep up with Org development
+- org-wikinodes.el :: CamelCase wiki-like links for Org
+
+** Org exporters
+
+- ox-bibtex.el :: Export bibtex fragments
+- ox-confluence.el :: Confluence Wiki exporter
+- ox-deck.el :: deck.js presentations exporter
+- ox-extra.el :: Convenience functions for org export
+- ox-freemind.el :: Freemind exporter
+- ox-groff.el :: Groff exporter
+- ox-s5.el :: S5 presentations exporter
+- ox-taskjuggler.el :: TaskJuggler exporter
+
+** Org link
+
+- ol-bookmark.el :: Links to bookmarks
+- ol-elisp-symbol.el :: Links to Emacs-lisp symbols
+- ol-git-link.el :: Links to specific file version
+- ol-mew.el :: Links to Mew messages
+- ol-vm.el :: Support for links to VM messages
+- ol-wl.el :: Support for links to Wanderlust messages
+
+** Org Babel languages
+
+- ob-abc.el :: Org-mode Babel Functions for ABC
+- ob-asymptote.el :: Org-mode Babel Functions for Asymptote
+- ob-coq.el :: Org-mode Babel Functions for Coq
+- ob-csharp.el :: Org-mode Babel Functions for csharp evaluation
+- ob-ebnf.el :: Org-mode Babel Functions for EBNF
+- ob-eukleides.el :: Org-mode Babel Functions for eukleides evaluation
+- ob-fomus.el :: Org-mode Babel Functions for fomus evaluation
+- ob-hledger.el :: Org-mode Babel Functions for hledger
+- ob-io.el :: Org-mode Babel Functions for Io
+- ob-J.el :: Org-mode Babel Functions for J
+- ob-ledger.el :: Org-mode Babel Functions for Ledger
+- ob-mathomatic.el :: Org-mode Babel Functions for mathomatic evaluation
+- ob-mscgen.el :: Org-mode Babel Functions for Mscgen
+- ob-oz.el :: Org-mode Babel Functions for Oz evaluation
+- ob-picolisp.el :: Org-mode Babel Functions for Picolisp
+- ob-shen.el :: Org-mode Babel Functions for Shen
+- ob-stan.el :: Babel Functions for Stan
+- ob-stata.el :: Org-mode Babel Functions for Stata evaluation
+- ob-tcl.el :: Org-mode Babel Functions for tcl evaluation
+- ob-vala.el :: Org-mode Babel Functions for Vala
+- ob-vbnet.el :: Org-mode Babel Functions for VB.Net evaluation
