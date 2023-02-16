@@ -31,6 +31,7 @@
 
  "C-r" #'consult-history
  "C-;" #'embark-act
+ "C-l" #'dc/match-components-literally
  "C-c C-;" #'embark-export
  "C-c C-l" #'embark-collect
  ;; "C-c C-e" #'+vertico/embark-export-write

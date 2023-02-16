@@ -269,25 +269,33 @@
 ;; - email eglot buffer unicode-name project-file
 ;; - xref-location info-menu symbol-help
 
-(defun dc/orderless-first-initialism (pattern index _total)
-  (if (= index 0) 'orderless-initialism))
-(defun dc/orderless-regexp (pattern index _total)
-  'orderless-regexp)
+;; NOTE force myself to try initialism)
+;; orderless-style-dispatchers '(dc/orderless-first-initialism
+;; dc/orderless-regexp)
+;; (defun dc/orderless-first-initialism (pattern index _total)
+;;   (if (= index 0) 'orderless-initialism))
+;; (defun dc/orderless-regexp (pattern index _total)
+;;   'orderless-regexp)
+;;
+
+(defun dc/match-components-literally ()
+  "Components match literally for the rest of the session."
+  (interactive)
+  (setq-local orderless-matching-styles '(orderless-literal)
+              orderless-style-dispatchers nil))
 
 (setup (:pkg orderless)
   (require 'orderless)
   ;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
   (:option completion-styles '(orderless basic)
-           orderless-matching-styles '(orderless-regexp
-                                       orderless-initialism)
-
+           orderless-matching-styles '(orderless-prefixes
+                                       ;; orderless-initialism
+                                       orderless-regexp)
+           ;; orderless-style-dispatchers '(orderless-prefixes orderless-regexp)
+           ;; these need to be functions
            completion-ignore-case nil
            read-file-name-completion-ignore-case nil
-           read-buffer-completion-ignore-case t
-
-           ;; NOTE force myself to try initialism
-           orderless-style-dispatchers '(dc/orderless-first-initialism
-                                         dc/orderless-regexp))
+           read-buffer-completion-ignore-case t)
 
   (orderless-define-completion-style orderless+initialism
     (orderless-matching-styles '(orderless-initialism
