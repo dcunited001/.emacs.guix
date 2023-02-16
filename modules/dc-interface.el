@@ -254,9 +254,21 @@
 
 ;;*** Orderless
 
-;; TODO: determine whether to add orderless-affix-dispatch-alist
-;; adds a nice dynamic matching syntax, but package needs update?
-;; https://github.com/oantolin/orderless#component-matching-styles
+;; NOTE: see variable docs:
+;; - completion-styles
+;; - completion-styles-alist
+;; - completion-cat
+;; - completion-category-overrides (email, eglot
+
+;; completion-styles-alist keys:
+;; - external orderless+initialism orderless
+;; - emacs21 emacs22 basic partial-completion
+;; - substring flex initials shorthand
+
+;; completion-category-defaults keys:
+;; - email eglot buffer unicode-name project-file
+;; - xref-location info-menu symbol-help
+
 (defun dc/orderless-first-initialism (pattern index _total)
   (if (= index 0) 'orderless-initialism))
 (defun dc/orderless-regexp (pattern index _total)
@@ -265,24 +277,33 @@
 (setup (:pkg orderless)
   (require 'orderless)
   ;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
-  (:option orderless-matching-styles '(orderless-regexp
+  (:option completion-styles '(orderless basic)
+           orderless-matching-styles '(orderless-regexp
                                        orderless-initialism)
+
+           completion-ignore-case nil
+           read-file-name-completion-ignore-case nil
+           read-buffer-completion-ignore-case t
+
            ;; NOTE force myself to try initialism
            orderless-style-dispatchers '(dc/orderless-first-initialism
                                          dc/orderless-regexp))
 
-  ;; is orderless-affix-style introduced after v1.0?
   (orderless-define-completion-style orderless+initialism
     (orderless-matching-styles '(orderless-initialism
                                  orderless-literal
                                  orderless-regexp)))
 
-  ;; (setq completion-category-overrides
-  ;;       '((command (styles orderless+initialism))
-  ;;         (symbol (styles orderless+initialism))
-  ;;         (variable (styles orderless+initialism))))
-  )
+  (setq completion-category-overrides
+        '((command (styles orderless+initialism))
+          (function (styles orderless+initialism))
+          (symbol (styles orderless+initialism))
+          (variable (styles orderless+initialism)))))
 
+;; TODO: enumerating possible keys for completion-category-overrides?
+;; TODO: determine whether to add orderless-affix-dispatch-alist
+;; adds a nice dynamic matching syntax, but package needs update?
+;; https://github.com/oantolin/orderless#component-matching-styles
 
 ;;*** WGrep
 
