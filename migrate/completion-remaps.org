@@ -1,0 +1,254 @@
+#+TITLE: doom completion remaps
+
+So yeh, i'm trying to figure out why i was so terrible with using the
+helm/ivy/etc completion functionality if it's so easy to get consult/vertico to
+do what it does.
+
+
+Search doom ~/.emacs.doom/modules directory with:
+
+=find ~/.emacs.doom/modules -type f -exec grep --color=auto -nH --null -e "\[remap" \{\} +=
+
+And do some manual processing
+
+* completion remaps
+
+** By Framework
+
+** Helm
+
+#+begin_example grep
+./completion/helm/config.el:27:  (map! [remap apropos]                   #'helm-apropos
+./completion/helm/config.el:28:        [remap find-library]              #'helm-locate-library
+./completion/helm/config.el:29:        [remap bookmark-jump]             #'helm-bookmarks
+./completion/helm/config.el:30:        [remap execute-extended-command]  #'helm-M-x
+./completion/helm/config.el:31:        [remap find-file]                 #'helm-find-files
+./completion/helm/config.el:32:        [remap locate]                    #'helm-locate
+./completion/helm/config.el:33:        [remap imenu]                     #'helm-semantic-or-imenu
+./completion/helm/config.el:34:        [remap noop-show-kill-ring]       #'helm-show-kill-ring
+./completion/helm/config.el:35:        [remap persp-switch-to-buffer]    #'+helm/workspace-mini
+./completion/helm/config.el:36:        [remap switch-to-buffer]          #'helm-buffers-list
+./completion/helm/config.el:37:        [remap projectile-find-file]      #'+helm/projectile-find-file
+./completion/helm/config.el:38:        [remap projectile-recentf]        #'helm-projectile-recentf
+./completion/helm/config.el:39:        [remap projectile-switch-project] #'helm-projectile-switch-project
+./completion/helm/config.el:40:        [remap projectile-switch-to-buffer] #'helm-projectile-switch-to-buffer
+./completion/helm/config.el:41:        [remap recentf-open-files]        #'helm-recentf
+./completion/helm/config.el:42:        [remap yank-pop]                  #'helm-show-kill-ring)
+./completion/helm/config.el:181:  (global-set-key [remap swiper] #'swiper-helm)
+#+end_example
+
+
+** Ivy
+
+#+begin_example grep
+
+./completion/ivy/config.el:44:    [remap switch-to-buffer]              #'+ivy/switch-buffer
+./completion/ivy/config.el:45:    [remap switch-to-buffer-other-window] #'+ivy/switch-buffer-other-window
+./completion/ivy/config.el:46:    [remap persp-switch-to-buffer]        #'+ivy/switch-workspace-buffer
+./completion/ivy/config.el:47:    [remap evil-show-jumps]               #'+ivy/jump-list)
+./completion/ivy/config.el:108:    [remap doom/delete-backward-word] #'ivy-backward-kill-word
+./completion/ivy/config.el:183:    [remap apropos]                  #'counsel-apropos
+./completion/ivy/config.el:184:    [remap bookmark-jump]            #'counsel-bookmark
+./completion/ivy/config.el:185:    [remap compile]                  #'+ivy/compile
+./completion/ivy/config.el:186:    [remap describe-bindings]        #'counsel-descbinds
+./completion/ivy/config.el:187:    [remap describe-face]            #'counsel-faces
+./completion/ivy/config.el:188:    [remap describe-function]        #'counsel-describe-function
+./completion/ivy/config.el:189:    [remap describe-variable]        #'counsel-describe-variable
+./completion/ivy/config.el:190:    [remap describe-symbol]          #'counsel-describe-symbol
+./completion/ivy/config.el:191:    [remap evil-show-registers]      #'counsel-evil-registers
+./completion/ivy/config.el:192:    [remap evil-show-marks]          #'counsel-mark-ring
+./completion/ivy/config.el:193:    [remap execute-extended-command] #'counsel-M-x
+./completion/ivy/config.el:194:    [remap find-file]                #'counsel-find-file
+./completion/ivy/config.el:195:    [remap find-library]             #'counsel-find-library
+./completion/ivy/config.el:196:    [remap imenu]                    #'counsel-imenu
+./completion/ivy/config.el:197:    [remap info-lookup-symbol]       #'counsel-info-lookup-symbol
+./completion/ivy/config.el:198:    [remap load-theme]               #'counsel-load-theme
+./completion/ivy/config.el:199:    [remap locate]                   #'counsel-locate
+./completion/ivy/config.el:200:    [remap org-goto]                 #'counsel-org-goto
+./completion/ivy/config.el:201:    [remap org-set-tags-command]     #'counsel-org-tag
+./completion/ivy/config.el:202:    [remap projectile-compile-project] #'+ivy/project-compile
+./completion/ivy/config.el:203:    [remap recentf-open-files]       #'counsel-recentf
+./completion/ivy/config.el:204:    [remap set-variable]             #'counsel-set-variable
+./completion/ivy/config.el:205:    [remap swiper]                   #'counsel-grep-or-swiper
+./completion/ivy/config.el:206:    [remap insert-char]              #'counsel-unicode-char
+./completion/ivy/config.el:207:    [remap yank-pop]                 #'counsel-yank-pop)
+./completion/ivy/config.el:321:    [remap projectile-find-file]        #'+ivy/projectile-find-file
+./completion/ivy/config.el:322:    [remap projectile-find-dir]         #'counsel-projectile-find-dir
+./completion/ivy/config.el:323:    [remap projectile-switch-to-buffer] #'counsel-projectile-switch-to-buffer
+./completion/ivy/config.el:324:    [remap projectile-grep]             #'counsel-projectile-grep
+./completion/ivy/config.el:325:    [remap projectile-ag]               #'counsel-projectile-ag
+./completion/ivy/config.el:326:    [remap projectile-switch-project]   #'counsel-projectile-switch-project)
+#+end_example
+
+** Vertico
+
+#+begin_example grep
+./completion/vertico/config.el:104:    [remap apropos]                       #'consult-apropos
+./completion/vertico/config.el:105:    [remap bookmark-jump]                 #'consult-bookmark
+./completion/vertico/config.el:106:    [remap evil-show-marks]               #'consult-mark
+./completion/vertico/config.el:107:    [remap evil-show-jumps]               #'+vertico/jump-list
+./completion/vertico/config.el:108:    [remap evil-show-registers]           #'consult-register
+./completion/vertico/config.el:109:    [remap goto-line]                     #'consult-goto-line
+./completion/vertico/config.el:110:    [remap imenu]                         #'consult-imenu
+./completion/vertico/config.el:111:    [remap locate]                        #'consult-locate
+./completion/vertico/config.el:112:    [remap load-theme]                    #'consult-theme
+./completion/vertico/config.el:113:    [remap man]                           #'consult-man
+./completion/vertico/config.el:114:    [remap recentf-open-files]            #'consult-recent-file
+./completion/vertico/config.el:115:    [remap switch-to-buffer]              #'consult-buffer
+./completion/vertico/config.el:116:    [remap switch-to-buffer-other-window] #'consult-buffer-other-window
+./completion/vertico/config.el:117:    [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
+./completion/vertico/config.el:118:    [remap yank-pop]                      #'consult-yank-pop
+./completion/vertico/config.el:119:    [remap persp-switch-to-buffer]        #'+vertico/switch-workspace-buffer)
+./completion/vertico/config.el:182:  :bind (([remap list-directory] . consult-dir)
+./completion/vertico/config.el:224:  (map! [remap describe-bindings] #'embark-bindings
+
+#+end_example
+
+** By function
+
+#+begin_example emacs-lisp
+  [remap apropos]                       #'consult-apropos
+  [remap apropos]                   #'helm-apropos
+  [remap apropos]                  #'counsel-apropos
+
+  [remap bookmark-jump]                 #'consult-bookmark
+  [remap bookmark-jump]             #'helm-bookmarks
+  [remap bookmark-jump]            #'counsel-bookmark
+
+  [remap compile]                  #'+ivy/compile
+
+  [remap describe-bindings]        #'counsel-descbinds
+  [remap describe-bindings] #'embark-bindings
+
+  [remap describe-face]            #'counsel-faces
+  [remap describe-function]        #'counsel-describe-function
+  [remap describe-symbol]          #'counsel-describe-symbol
+  [remap describe-variable]        #'counsel-describe-variable
+  [remap doom/delete-backward-word] #'ivy-backward-kill-word
+
+  [remap evil-show-jumps]               #'+ivy/jump-list
+  [remap evil-show-jumps]               #'+vertico/jump-list
+  [remap evil-show-marks]               #'consult-mark
+  [remap evil-show-marks]          #'counsel-mark-ring
+  [remap evil-show-registers]           #'consult-register
+  [remap evil-show-registers]      #'counsel-evil-registers
+
+  [remap execute-extended-command]  #'helm-M-x
+  [remap execute-extended-command] #'counsel-M-x
+
+  [remap find-file]                 #'helm-find-files
+  [remap find-file]                #'counsel-find-file
+
+  [remap find-library]              #'helm-locate-library
+  [remap find-library]             #'counsel-find-library
+
+  [remap goto-line]                     #'consult-goto-line
+
+  [remap imenu]                         #'consult-imenu
+  [remap imenu]                     #'helm-semantic-or-imenu
+  [remap imenu]                    #'counsel-imenu
+
+  [remap info-lookup-symbol]       #'counsel-info-lookup-symbol
+
+  [remap insert-char]              #'counsel-unicode-char
+
+  [remap list-directory] . consult-dir
+
+  [remap load-theme]                    #'consult-theme
+  [remap load-theme]               #'counsel-load-theme
+
+  [remap locate]                        #'consult-locate
+  [remap locate]                    #'helm-locate
+  [remap locate]                   #'counsel-locate
+
+  [remap man]                           #'consult-man
+
+  [remap noop-show-kill-ring]       #'helm-show-kill-ring
+
+  [remap org-goto]                 #'counsel-org-goto
+  [remap org-set-tags-command]     #'counsel-org-tag
+
+  [remap persp-switch-to-buffer]        #'+ivy/switch-workspace-buffer
+  [remap persp-switch-to-buffer]        #'+vertico/switch-workspace-buffer
+  [remap persp-switch-to-buffer]    #'+helm/workspace-mini
+
+  [remap projectile-ag]               #'counsel-projectile-ag
+  [remap projectile-compile-project] #'+ivy/project-compile
+  [remap projectile-find-dir]         #'counsel-projectile-find-dir
+  [remap projectile-find-file]        #'+ivy/projectile-find-file
+  [remap projectile-find-file]      #'+helm/projectile-find-file
+  [remap projectile-grep]             #'counsel-projectile-grep
+  [remap projectile-recentf]        #'helm-projectile-recentf
+  [remap projectile-switch-project]   #'counsel-projectile-switch-project
+  [remap projectile-switch-project] #'helm-projectile-switch-project
+  [remap projectile-switch-to-buffer] #'counsel-projectile-switch-to-buffer
+  [remap projectile-switch-to-buffer] #'helm-projectile-switch-to-buffer
+
+  [remap recentf-open-files]            #'consult-recent-file
+  [remap recentf-open-files]        #'helm-recentf
+  [remap recentf-open-files]       #'counsel-recentf
+
+  [remap set-variable]             #'counsel-set-variable
+
+  [remap swiper]                   #'counsel-grep-or-swiper
+  [remap swiper] #'swiper-helm
+
+  [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
+  [remap switch-to-buffer-other-window] #'+ivy/switch-buffer-other-window
+  [remap switch-to-buffer-other-window] #'consult-buffer-other-window
+
+  [remap switch-to-buffer]              #'+ivy/switch-buffer
+  [remap switch-to-buffer]              #'consult-buffer
+  [remap switch-to-buffer]          #'helm-buffers-list
+
+  [remap yank-pop]                      #'consult-yank-pop
+  [remap yank-pop]                  #'helm-show-kill-ring
+  [remap yank-pop]                 #'counsel-yank-pop
+#+end_example
+
+* Misc remaps
+
+Non-evil remaps (not complete)
+
+
+** Snippets
+
+#+begin_example grep
+./editor/snippets/config.el:83:         [remap yas-new-snippet]        #'+snippets/new
+./editor/snippets/config.el:84:         [remap yas-visit-snippet-file] #'+snippets/edit)
+#+end_example
+
+** e/shell
+
+#+begin_example grep
+./term/eshell/config.el:146:        [remap split-window-below]  #'+eshell/split-below
+./term/eshell/config.el:147:        [remap split-window-right]  #'+eshell/split-right
+./term/eshell/config.el:148:        [remap doom/backward-to-bol-or-indent] #'eshell-bol
+./term/eshell/config.el:149:        [remap doom/backward-kill-to-bol-and-indent] #'eshell-kill-input
+
+#+end_example
+
+** Other
+
+
+#+begin_example grep
+
+./config/default/config.el:472:        :gi [remap newline] #'newline-and-indent
+./emacs/dired/config.el:218:  (global-set-key [remap find-dired] #'fd-dired)
+./emacs/ibuffer/config.el:49:    (define-key ibuffer-mode-map [remap ibuffer-visit-buffer] #'+ibuffer/visit-workspace-buffer))
+./emacs/undo/config.el:15:              (define-key map [remap undo] #'undo-fu-only-undo)
+./emacs/undo/config.el:16:              (define-key map [remap redo] #'undo-fu-only-redo)
+./emacs/vc/config.el:38:  (define-key vc-annotate-mode-map [remap quit-window] #'kill-current-buffer))
+./lang/cc/config.el:225:  (define-key! (c-mode-map c++-mode-map) [remap imenu] #'+cc/imenu)
+./lang/coq/config.el:75:      (define-key coq-mode-map [remap company-complete-common]
+./lang/haskell/config.el:36:         [remap haskell-mode-jump-to-def-or-tag] #'+lookup/definition))
+./lang/org/config.el:940:        [remap doom/backward-to-bol-or-indent]          #'org-beginning-of-line
+./lang/org/config.el:941:        [remap doom/forward-to-last-non-comment-or-eol] #'org-end-of-line
+./lang/racket/config.el:46:         [remap racket-doc]              #'racket-xp-documentation
+./lang/racket/config.el:47:         [remap racket-visit-definition] #'racket-xp-visit-definition
+./lang/racket/config.el:48:         [remap next-error]              #'racket-xp-next-error
+./lang/racket/config.el:49:         [remap previous-error]          #'racket-xp-previous-error)
+
+#+end_example
+
+
