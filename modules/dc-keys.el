@@ -1,6 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
 ;;* Keys
+;; see ./emacs/$version/lisp/bindings.el for defaults
+
 
 ;;** Interface
 
@@ -42,28 +44,39 @@
 ;; or use the following (which may only work for general definitions)
 ;; (general-auto-unbind-keys)
 
-;; the app doesn't need to tell i3 what to do
-;; OS/WM functions should use super-key
-(unbind-key "<f11>")
+(defvar dc/keys-unbound-at-init
+  ;; the app doesn't need to tell i3 what to do
+  ;; OS/WM functions should use super-key
+  '("<f11>"
 
-;; unbind 2C-Mode
-;; i would probably actually use this
-(unbind-key "<f2> 2")
-(unbind-key "<f2> b")
-(unbind-key "<f2> s")
-(unbind-key "<f2> <f2>")
+    ;; unbind 2C-Mode
+    ;; i would probably actually use this
+    "<f2> 2"
+    "<f2> b"
+    "<f2> s"
+    "<f2> <f2>"
 
-;; i honestly don't know how to use these in workflow
-(unbind-key "<f3>")
-(unbind-key "<f4>")
+    ;; i honestly don't know how to use these in workflow
+    "<f3>"
+    "<f4>"
 
-;; unbind menubar shortcuts
-;; TODO what to do about terminal compat
-(unbind-key "<f10>")                    ;menu-bar-open
-(unbind-key "S-<f10>")                  ;context-menu-open
-(unbind-key "C-<f10>")                  ;buffer-menu-open
-(unbind-key "M-<f10>")                  ;toggle-frame-maximized
-(unbind-key "ESC <f10>")                ;toggle-frame-maximized
+    ;; tab prev-next
+    "C-<tab>"
+    "C-S-<tab>"
+
+    ;; unbind menubar shortcuts
+    ;; TODO what to do about terminal compat
+    "<f10>"                             ;menu-bar-open
+    "S-<f10>"                           ;context-menu-open
+    "C-<f10>"                           ;buffer-menu-open
+    "M-<f10>"                           ;toggle-frame-maximized
+    "ESC <f10>"))                ;toggle-frame-maximized
+
+;;**** trying to pack a lambda into a symbol
+;; (fset 'dc/unbind-key (macroexpand-all '(unbind-key k)))
+;; (seq-do (symbol-function 'dc/unbind-key) dc/keys-unbound-at-init)
+
+(seq-do (lambda (key) (unbind-key key)) dc/keys-unbound-at-init)
 
 ;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
 ;; and if you buy right now, we'll double your function keys
@@ -75,18 +88,18 @@
 ;; this prefix should find itself associated with
 ;; editor features, global state and outward-looking functions
 (global-leader-def
- "G" #'guix
- "T" #'tldr
- "<left>" #'winner-undo
- "<right>" #'winner-redo)
+  "G" #'guix
+  "T" #'tldr
+  "<left>" #'winner-undo
+  "<right>" #'winner-redo)
 
 (leader-def
   :wk-full-keys nil
 
-  "g" '(:ignore t :which-key "git")
+  "g" '(:ignore t :which-key "GIT")
   "gL"  'git-link
 
-  "j"   '(:ignore t :which-key "jump")
+  "j"   '(:ignore t :which-key "JUMP")
   "jj"  '(avy-goto-char :which-key "jump to char")
   "jw"  '(avy-goto-word-0 :which-key "jump to word")
   "jl"  '(avy-goto-line :which-key "jump to line"))
@@ -111,7 +124,7 @@
 (general-define-key
  :keymaps 'global
 
- [remap apropos-command] #'describe-symbol
+ ;; [remap apropos-command] #'describe-symbol
  [remap bookmark-jump]                 #'consult-bookmark
  ;;   [remap evil-show-marks]               #'consult-mark
  ;;   [remap evil-show-jumps]               #'+vertico/jump-list
@@ -121,13 +134,13 @@
  [remap locate]                        #'consult-locate
  [remap load-theme]                    #'consult-theme
  [remap man]                           #'consult-man
+ [remap Info-search]                   #'consult-info
  [remap recentf-open-files]            #'consult-recent-file
  [remap switch-to-buffer]              #'consult-buffer
  [remap switch-to-buffer-other-window] #'consult-buffer-other-window
  [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
  ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
  [remap yank-pop]                      #'consult-yank-pop)
-
 
 (general-define-key
  :keymaps 'global
@@ -140,10 +153,6 @@
 
  "C-c M-x" #'consult-mode-command
  "C-c h" #'consult-history
- "C-c k" #'consult-kmacro
- "C-c m" #'consult-man
- "C-c i" #'consult-info
- [remap Info-search] #'consult-info
 
  ;; C-x bindings (ctl-x-map
  "C-x M-:" #'consult-complex-command     ;; orig. repeat-complex-command
@@ -160,31 +169,39 @@
 
  ;; Other custom bindings
  "M-y" #'consult-yank-pop ;; orig. yank-pop
+ )
 
- ;; M-g bindings (goto-map)
- "M-g e" #'consult-compile-error
- "M-g f" #'consult-flymake     ;; Alternative: consult-flycheck
- "M-g g" #'consult-goto-line   ;; orig. goto-line
- "M-g M-g" #'consult-goto-line ;; orig. goto-line
- "M-g o" #'consult-outline     ;; Alternative: consult-org-heading
- "M-g m" #'consult-mark
- "M-g k" #'consult-global-mark
- "M-g i" #'consult-imenu
- "M-g I" #'consult-imenu-multi
+;;**** goto-map (consult)
+;; M-g bindings
+(general-define-key
+ :keymaps 'goto
+ "e" #'consult-compile-error
+ "f" #'consult-flymake     ;; Alternative: consult-flycheck
+ "g" #'consult-goto-line   ;; orig. goto-line
+ "M-g" #'consult-goto-line ;; orig. goto-line
+ "o" #'consult-outline     ;; Alternative: consult-org-heading
+ "m" #'consult-mark
+ "k" #'consult-global-mark
+ "i" #'consult-imenu
+ "I" #'consult-imenu-multi
+ )
 
- ;; M-s bindings (search-map
- "M-s d" #'consult-find
- "M-s D" #'consult-locate
- "M-s g" #'consult-grep
- "M-s G" #'consult-git-grep
- "M-s r" #'consult-ripgrep
- "M-s l" #'consult-line
- "M-s L" #'consult-line-multi
- "M-s k" #'consult-keep-lines
- "M-s u" #'consult-focus-lines
+;;**** goto-map (consult)
+ ;; M-s bindings
+(general-define-key
+ :keymaps 'search
+ "d" #'consult-find
+ "D" #'consult-locate
+ "g" #'consult-grep
+ "G" #'consult-git-grep
+ "r" #'consult-ripgrep
+ "l" #'consult-line
+ "L" #'consult-line-multi
+ "k" #'consult-keep-lines
+ "u" #'consult-focus-lines
 
  ;; Isearch integration
- "M-s e" #'consult-isearch-history
+ "e" #'consult-isearch-history
  )
 
 (general-define-key
@@ -194,10 +211,7 @@
  "M-s e" #'consult-isearch-history ;; orig. isearch-edit-string
  "M-s l" #'consult-line            ;; needed by consult-line to detect isearch
  "M-s L" #'consult-line-multi      ;; needed by consult-line to detect isearch
-)
-
- ;; Minibuffer history
-minibuffer-local-map
+ )
 
 ;; (leader-def
 ;;   :keymaps 'global
@@ -266,186 +280,57 @@ minibuffer-local-map
 
 ;;*** Lispy
 
+;;** Doom
 
-;;** Lang
+;;*** Prefixes (C-c)
 
-;; The f5-f8 keys should be reserved for translation to prefixes on a
-;; per-major-mode basis. Hopefully, I can assume that no other key bindings will
-;; interfere
+(leader-def
+  :keymaps 'global
+  :wk-full-keys nil
+  "c" '(:ignore t :wk "CODE")
+  "e" '(:ignore t :wk "EVAL")
+  "f" '(:ignore t :wk "FILE")
+  "i" '(:ignore t :wk "INSERT")
+  "l" '(:ignore t :wk "LOCAL")
+  "m" '(:ignore t :wk "CURSORS")
+  "n" '(:ignore t :wk "NOTES")
+  "o" '(:ignore t :wk "OPEN")
+  "p" '(:ignore t :wk "PROJECTILE")
+  "q" '(:ignore t :wk "QUIT")
+  "r" '(:ignore t :wk "REMOTE")
+  "s" '(:ignore t :wk "SEARCH")
+  "t" '(:ignore t :wk "TOGGLE")
+  "v" '(:ignore t :wk "VCS")
 
-;;*** comint-mode
+  "&" '(:ignore t :wk "SNIPPET")
 
-;; repls go here
+  ;; "C-f" '(:ignore t :wk "FOLD") ;; imenu > folding
+  )
 
-;;**** geiser-repl-mode
+;;*** c CODE
 
-;;*** lisp-mode
+(leader-def
+  :keymaps 'global
+  :wk-full-keys nil
+  "cc" #'compile
+  "cC" #'recompile
+  ;; "d" #'+lookup/definition
+  ;; "D" #'+lookup/references
+  ;; "e" #'+eval/buffer-or-region
+  ;; "E" #'+eval/region-and-replace
+  ;; "f" #'+format/region-or-buffer
+  ;; "i" #'+lookup/implementations
+  ;; "k" #'+lookup/documentation
+  ;; "s" #'+eval/send-region-to-repl
+  ;; "t" #'+lookup/type-definition
+  "cw" #'delete-trailing-whitespace
+  ;; "W" #'doom/deletr-trailing-newlines
+  ;; "x" #'+default/diagnostics
+  )
 
-;;**** Clojure
+;;**** LSP
+;;**** EGLOT
 
-;;**** Lisp
-
-;;**** Scheme/Geiser
-
-;;*** prog-mode
-
-;;**** js2-mode
-
-;;*** text-mode
-
-;;**** org-mode
-
-;;**** sgml-mode
-
-;;**** html-mode
-
-;;** Map leader-keys to all maps
-
-(general-translate-key
-  nil '(global)
-  "<f2>" "C-x"
-  "<f12>" "C-c")
-;; (dc/translated-keymaps-set
-;;  'global
-;;  "<f2>" "C-x"
-;;  "<f12>" "C-c")
-
-(defvar dc/translated-keypairs
-  '("<f2>" "C-x"
-    "<f12>" "C-c"))
-
-(defun dc/keymaps-list-collect ()
-  (cl-loop for s being the symbols if
-           (and (boundp s)
-                (keymapp (symbol-value s)))
-           collect s))
-
-(defun dc/keymaps-list-collect-atoms ()
-  (let (r)
-    (mapatoms
-     (lambda (s) (if (and (boundp s)
-                          (keymapp (symbol-value s)))
-                     (push s r)))) r))
-;; both 510
-;; (length (dc/keymaps-list-collect-atoms))
-
-
-;; causes errors like "void variable menu-function-18" if function-based keymaps
-;; are mixed-in. see easy-menu.el:
-;; https://web.mit.edu/Emacs/source/emacs/lisp/emacs-lisp/easymenu.el
-(defvar dc/keymaps-list
-  (dc/keymaps-list-collect))
-
-(defun dc/translated-keymaps-set (kms pairs)
-  "Fdsaasdf."
-  (apply #'general-translate-key nil kms pairs))
-
-(defun dc/ensure-translated-keymaps-set ()
-  "Fdsa."
-  (dc/translated-keymaps-set
-         dc/keymaps-list
-         dc/translated-keypairs))
-
-;; (dc/ensure-translated-keymaps-set)
-;; (symbol-function menu-function-18)
-;; (general-translate-key nil '(yas--minor-mode-menu) "<f2>" "C-x" "<f12>" "C-c")
-
-(provide 'dc-keys)
-
-;;*** Embark (Doom)
-;; (  (embark-define-keymap +vertico/embark-doom-package-map
-;;     "Keymap for Embark package actions for packages installed by Doom."
-;;     ("h" doom/help-packages)
-;;     ("b" doom/bump-package)
-;;     ("c" doom/help-package-config)
-;;     ("u" doom/help-package-homepage))
-;;   (setf (alist-get 'package embark-keymap-alist) #'+vertico/embark-doom-package-map)
-;;   (map! (:map embark-file-map
-;;          :desc "Open target with sudo"        "s"   #'doom/sudo-find-file
-;;          (:when (modulep! :tools magit)
-;;           :desc "Open magit-status of target" "g"   #'+vertico/embark-magit-status)
-;;          (:when (modulep! :ui workspaces)
-;;                 :desc "Open in new workspace"       "TAB" #'+vertico/embark-open-in-new-workspace))))
-
-
-;; *** General.el Examples
-
-;; (general-define-key
-;;  :prefix "SPC"
-;;  :keymaps 'normal
-;;  ;; unbind SPC and give it a title for which-key (see echo area)
-;;  "" '(nil :which-key "my lieutenant general prefix")
-;;  ;; bind nothing but give SPC f a description for which-key
-;;  "f" '(:ignore t :which-key "file prefix")
-;;  ;; use a cons as a replacement
-;;  "g" '(:ignore t :wk ("g-key" . "git prefix"))
-;;  ;; toggle lispy; use a function as a replacement to show if currently on
-;;  "l" '(lispy-mode :wk my-lispy-which-key-display)
-;;  ;; for a keymap, only the keys will be matched;
-;;  ;; :no-match-binding is not necessary
-;;  "p" '(:keymap projectile-command-map :wk "projectile prefix")
-;;  ;; don't display this keybinding at all
-;;  "z" '(hidden-command :wk t)
-;;  ...)
-
-;; (general-define-key
-;;  :keymaps 'help-map
-;;  ;; allow keys before bound keys in match
-;;  ;; since binding in a prefix map
-;;  :wk-full-keys nil
-;;  ;; make a prefix-command and add description
-;;  "A" '(:prefix-command apropos-prefix-map :which-key "apropos"))
-
-;; an equivalent of the above
-;; (general-define-key :keymaps 'help-map
-;;   :wk-full-keys nil
-;;   :prefix "A"
-;;   :prefix-command 'apropos-prefix-map
-;;   ;; make a prefix-command and add description
-;;   "" '(:ignore t :which-key "apropos"))
-
-;; :major-modes
-;; (general-define-key
-;;  :keymaps 'emacs-lisp-mode-map
-;;  :major-modes t
-;;  ...)
-
-;; (general-define-key
-;;  :keymaps '(no-follow-convention-mode-keymap1
-;;             org-mode-map)
-;;  :major-modes '(no-follow-convention-mode t)
-;;  ...)
-
-
-
-;; (map! "C-:" #'company-box-doc-manually
-;;       "C-<tab>" #'company-yasnippet
-;;       "C-M-;" #'company-yasnippet)
-
-;;*** ./.emacs.doom/modules/config/default/+emacs-bindings.el
-
-;; (map! :leader
-;;       :desc "Evaluate line/region"        "e"   #'+eval/line-or-region
-
-;;       (:prefix ("l" . "<localleader>")) ; bound locally
-;;       (:prefix ("!" . "checkers"))      ; bound by flycheck
-
-;;       ;;; <leader> c --- code
-;;       (:prefix-map ("c" . "code")
-;;        :desc "Compile"                               "c"   #'compile
-;;        :desc "Recompile"                             "C"   #'recompile
-;;        :desc "Jump to definition"                    "d"   #'+lookup/definition
-;;        :desc "Jump to references"                    "D"   #'+lookup/references
-;;        :desc "Evaluate buffer/region"                "e"   #'+eval/buffer-or-region
-;;        :desc "Evaluate & replace region"             "E"   #'+eval/region-and-replace
-;;        :desc "Format buffer/region"                  "f"   #'+format/region-or-buffer
-;;        :desc "Find implementations"                  "i"   #'+lookup/implementations
-;;        :desc "Jump to documentation"                 "k"   #'+lookup/documentation
-;;        :desc "Send to repl"                          "s"   #'+eval/send-region-to-repl
-;;        :desc "Find type definition"                  "t"   #'+lookup/type-definition
-;;        :desc "Delete trailing whitespace"            "w"   #'delete-trailing-whitespace
-;;        :desc "Delete trailing newlines"              "W"   #'doom/delete-trailing-newlines
-;;        :desc "List errors"                           "x"   #'+default/diagnostics
 ;;        (:when (and (modulep! :tools lsp) (not (modulep! :tools lsp +eglot)))
 ;;         :desc "LSP Code actions"                      "a"   #'lsp-execute-code-action
 ;;         :desc "LSP Organize imports"                  "o"   #'lsp-organize-imports
@@ -472,6 +357,166 @@ minibuffer-local-map
 ;;         :desc "LSP Find declaration"                 "j" #'eglot-find-declaration
 ;;         (:when (modulep! :completion vertico)
 ;;          :desc "Jump to symbol in current workspace" "j" #'consult-eglot-symbols)))
+
+;;*** e EVAL
+
+;;*** f FILE
+(leader-def
+  :keymaps 'global
+  :wk-full-keys nil
+  )
+
+;;*** i INSERT
+
+(leader-def
+  :keymaps 'global
+  :wk-full-keys nil
+  "i" '(:ignore t :wk "INSERT")
+  "ie" #'emojify-insert-emoji
+  ;; "if" #'+default/insert-file-path
+  ;; "iF" (cmd!! #'+default/insert-file-path t)
+  "is" #'yas-insert-snippet
+  ;; "iy" #'+default/yank-pop
+  "iu" #'insert-char)
+
+;;*** l LOCAL
+;;*** m CURSORS
+;;*** n NOTES
+;;*** o OPEN
+;;*** p PROJECTILE
+;;*** q QUIT
+;;*** r REMOTE
+;;*** s SEARCH
+;;*** t TOGGLE
+;;*** v VCS
+
+;;** Lang
+
+;; The f5-f8 keys should be reserved for translation to prefixes on a
+;; per-major-mode basis. Hopefully, I can assume that no other key bindings will
+;; interfere
+
+;;*** comint-mode
+;; repls go here
+
+;;**** geiser-repl-mode
+
+;;*** lisp-mode
+
+;;**** clojure-mode
+
+;;**** emacs-lisp-mode
+
+;;**** scheme-mode
+
+;;**** geiser-mode
+
+;;*** prog-mode
+
+;;**** js2-mode
+
+;;*** text-mode
+
+;;**** org-mode
+
+;;**** sgml-mode
+
+;;**** html-mode
+
+;;** Map leader-keys to all maps
+
+(general-translate-key
+  nil '(global)
+  "<f2>" "C-x"
+  "<f12>" "C-c")
+;; (dc/translated-keymaps-set-keys
+;;  'global
+;;  "<f2>" "C-x"
+;;  "<f12>" "C-c")
+
+(defvar dc/translated-keypairs
+  '("<f2>" "C-x"
+    "<f12>" "C-c"))
+
+(defun dc/keymaps-list-collect ()
+  (cl-loop for s being the symbols if
+           (and (boundp s)
+                (keymapp (symbol-value s)))
+           collect s))
+
+(defun dc/keymaps-list-collect-atoms ()
+  (let (r)
+    (mapatoms
+     (lambda (s) (if (and (boundp s)
+                          (keymapp (symbol-value s)))
+                     (push s r)))) r))
+
+;; causes errors like "void variable menu-function-18" if function-based keymaps
+;; are mixed-in. see easy-menu.el:
+;; https://web.mit.edu/Emacs/source/emacs/lisp/emacs-lisp/easymenu.el
+(defvar dc/keymaps-list
+  (dc/keymaps-list-collect))
+
+(defun dc/translated-keymaps-set-keys (kms pairs)
+  "Set PAIRS to be translated on KMS keymaps."
+  (apply #'general-translate-key nil kms pairs))
+
+(defun dc/ensure-translated-keymap-variables-set ()
+  "Ensure desired pairs of key combinations are translated on keymaps."
+  (dc/translated-keymaps-set-keys
+   (seq-filter (lambda (km) (not (fboundp km)))
+               dc/keymaps-list)
+   dc/translated-keypairs))
+
+;; (mapc (lambda (km) (fboundp km)) (take (length dc/keymaps-list) dc/keymaps-list))
+;; (length (seq-filter (lambda (km) (fboundp km)) (take (length dc/keymaps-list) dc/keymaps-list)))
+;; (length (seq-filter (lambda (km) (boundp km)) (take (length dc/keymaps-list) dc/keymaps-list)))
+;; (length (seq-filter (lambda (km) (not (fboundp km))) (take (length dc/keymaps-list) dc/keymaps-list)))
+
+(dc/ensure-translated-keymap-variables-set)
+
+(provide 'dc-keys)
+
+;;*** Embark (Doom)
+;; (  (embark-define-keymap +vertico/embark-doom-package-map
+;;     "Keymap for Embark package actions for packages installed by Doom."
+;;     ("h" doom/help-packages)
+;;     ("b" doom/bump-package)
+;;     ("c" doom/help-package-config)
+;;     ("u" doom/help-package-homepage))
+;;   (setf (alist-get 'package embark-keymap-alist) #'+vertico/embark-doom-package-map)
+;;   (map! (:map embark-file-map
+;;          :desc "Open target with sudo"        "s"   #'doom/sudo-find-file
+;;          (:when (modulep! :tools magit)
+;;           :desc "Open magit-status of target" "g"   #'+vertico/embark-magit-status)
+;;          (:when (modulep! :ui workspaces)
+;;                 :desc "Open in new workspace"       "TAB" #'+vertico/embark-open-in-new-workspace))))
+
+;; *** General.el Examples
+
+;; :major-modes
+;; (general-define-key
+;;  :keymaps 'emacs-lisp-mode-map
+;;  :major-modes t
+;;  ...)
+
+;; (general-define-key
+;;  :keymaps '(no-follow-convention-mode-keymap1
+;;             org-mode-map)
+;;  :major-modes '(no-follow-convention-mode t)
+;;  ...)
+
+;; (map! "C-:" #'company-box-doc-manually
+;;       "C-<tab>" #'company-yasnippet
+;;       "C-M-;" #'company-yasnippet)
+
+;;*** ./.emacs.doom/modules/config/default/+emacs-bindings.el
+
+;; (map! :leader
+;;       :desc "Evaluate line/region"        "e"   #'+eval/line-or-region
+
+;;       (:prefix ("l" . "<localleader>")) ; bound locally
+;;       (:prefix ("!" . "checkers"))      ; bound by flycheck
 
 ;;       ;;; <leader> f --- file
 ;;       (:prefix-map ("f" . "file")
@@ -547,15 +592,6 @@ minibuffer-local-map
 ;;              ((modulep! :completion helm)      #'swiper-isearch-thing-at-point))
 ;;        :desc "Dictionary"                   "t" #'+lookup/dictionary-definition
 ;;        :desc "Thesaurus"                    "T" #'+lookup/synonyms)
-
-;;       ;;; <leader> i --- insert
-;;       (:prefix-map ("i" . "insert")
-;;        :desc "Emoji"                         "e"   #'emojify-insert-emoji
-;;        :desc "Current file name"             "f"   #'+default/insert-file-path
-;;        :desc "Current file path"             "F"   (cmd!! #'+default/insert-file-path t)
-;;        :desc "Snippet"                       "s"   #'yas-insert-snippet
-;;        :desc "Unicode"                       "u"   #'insert-char
-;;        :desc "From clipboard"                "y"   #'+default/yank-pop)
 
 ;;       ;;; <leader> n --- notes
 ;;       (:prefix-map ("n" . "notes")

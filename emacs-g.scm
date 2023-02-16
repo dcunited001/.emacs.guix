@@ -99,7 +99,9 @@
    'completion
    (list->vlist '("emacs-vertico"
                   "emacs-corfu"
+                  "emacs-corfu-terminal"
                   "emacs-corfu-doc"
+                  "emacs-corfu-doc-terminal"
                   "emacs-orderless"
                   "emacs-consult"
                   "emacs-consult-yasnippet"
@@ -173,7 +175,6 @@
    'editor
    (list->vlist '("emacs-origami-el"
                   "emacs-drag-stuff"
-                  ;; "emacs-a"
                   "emacs-tmr"
 
                   "emacs-lispy"

@@ -77,7 +77,6 @@
                 conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
-
 ;;*** Timers
 
 (setup (:pkg tmr))
@@ -129,8 +128,8 @@
 
 (defun dw/set-tab-bar-faces ()
   (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
-    (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil :weight 'semi-bold :underline `(:color ,color) :inherit nil)
-    (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground nil :inherit 'mode-line)))
+    (set-face-attribute 'tab-bar-tab nil :foreground 'unspecified :background 'unspecified :weight 'semi-bold :underline `(:color ,color) :inherit nil)
+    (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground 'unspecified :inherit 'mode-line)))
 
 (setq tab-bar-close-button-show nil
       tab-bar-format '(tab-bar-format-history

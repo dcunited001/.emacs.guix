@@ -111,7 +111,17 @@
   (apheleia-global-mode +1))
 
 (setup (:pkg lispy)
-  (:hook-into emacs-lisp-mode scheme-mode))
+  (:hook #'turn-off-smartparens-mode)
+  (:hook-into emacs-lisp-mode
+              scheme-mode
+              ielm-mode
+              scheme-mode
+              ;; racket-mode
+              ;; hy-mode
+              ;; lfe-mode
+              ;; dune-mode
+              ;; fennel-mode
+              clojure-mode))
 
 ;;*** Emacs Lisp
 
