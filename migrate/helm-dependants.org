@@ -1,0 +1,17 @@
+#+TITLE: Helm-Dependent Packages
+
+The following packages pull in =emacs-helm=:
+
++ emacs-company-restcclient
++ emacs-consult-bibtex
++ emacs-f3
++ emacs-flyspell-correct
++ emacs-ob-restclient
++ emacs-org-books
++ emacs-org-ql
++ emacs-org-recent-headings
++ emacs-org-ref
++ emacs-org-roam-bibtex
++ emacs-org-sidebar
++ emacs-org-trello
++ emacs-restclient
