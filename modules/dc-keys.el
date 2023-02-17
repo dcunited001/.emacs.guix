@@ -1,4 +1,27 @@
 ;; -*- lexical-binding: t; -*-
+;;
+;; Copyright © 2023 David Conner
+;; Copyright © 2021 David Wilson
+;; Copyright © 2014-2022 Henrik Lissner.
+;;
+;; Permission is hereby granted, free of charge, to any person obtaining a copy
+;; of this software and associated documentation files (the “Software”), to deal
+;; in the Software without restriction, including without limitation the rights
+;; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+;; copies of the Software, and to permit persons to whom the Software is
+;; furnished to do so, subject to the following conditions:
+;;
+;; The above copyright notice and this permission notice shall be included in
+;; all copies or substantial portions of the Software.
+;;
+;; THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+;; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+;; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+;; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+;; SOFTWARE.
+
 
 ;;* Keys
 ;; see ./emacs/$version/lisp/bindings.el for defaults
@@ -429,11 +452,95 @@
 
 ;;**** Toggle keybinds
 (leader-def
- :keymaps 'global
- "tl" #'display-line-numbers-mode
- "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
+  :keymaps 'global
+  "tC" #'global-display-fill-column-indicator-mode
+  "tf" #'flymake-mode
+  ;; "tf" #'flycheck-mode
+  "t M-f" #'toggle-frame-fullscreen
+  ;; "ti" #'highlight-indent-guides-mode
+  ;; "tI" #'doom/toggle-indent-style"
+  "tl" #'display-line-numbers-mode
+  ;; "tp" #'org-tree-slide-mode
+  "tr" #'read-only-mode
+  "tv" #'visible-mode
+  ;; "tw" #'visual-line-mode
+  ;; "tw" #'+word-wrap-mode
+
+  "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
+
+;;**** Toggles: org
+(leader-def
+  :keymaps 'org
+  "tf" #'org-table-toggle-formula-debugger
+  "to" #'org-table-toggle-coordinate-overlays)
+
+;;**** Toggles: markdown
+(leader-def
+  :keymaps 'org
+  "te" #'markdown-toggle-math
+  "tf" #'markdown-toggle-fontify-code-blocks-natively
+  "ti" #'markdown-toggle-inline-images
+  "tl" #'markdown-toggle-url-hiding
+  "tm" #'markdown-toggle-markup-hiding
+  "tw" #'markdown-toggle-wiki-links
+  "tx" #'markdown-toggle-gfm-checkbox
+  )
 
 ;;*** v VCS
+;; (:prefix-map ("v" . "versioning")
+;;        :desc "Git revert file"             "R"   #'vc-revert
+;;        :desc "Kill link to remote"         "y"   #'+vc/browse-at-remote-kill
+;;        :desc "Kill link to homepage"       "Y"   #'+vc/browse-at-remote-kill-homepage
+;;        (:when (modulep! :ui vc-gutter)
+;;         :desc "Git revert hunk"            "r"   #'+vc-gutter/revert-hunk
+;;         :desc "Git stage hunk"             "s"   #'+vc-gutter/stage-hunk
+;;         :desc "Git time machine"           "t"   #'git-timemachine-toggle
+;;         :desc "Jump to next hunk"          "n"   #'+vc-gutter/next-hunk
+;;         :desc "Jump to previous hunk"      "p"   #'+vc-gutter/previous-hunk)
+;;        (:when (modulep! :tools magit)
+;;         :desc "Magit dispatch"             "/"   #'magit-dispatch
+;;         :desc "Magit file dispatch"        "."   #'magit-file-dispatch
+;;         :desc "Forge dispatch"             "'"   #'forge-dispatch
+;;         :desc "Magit status"               "g"   #'magit-status
+;;         :desc "Magit status here"          "G"   #'magit-status-here
+;;         :desc "Magit file delete"          "x"   #'magit-file-delete
+;;         :desc "Magit blame"                "B"   #'magit-blame-addition
+;;         :desc "Magit clone"                "C"   #'magit-clone
+;;         :desc "Magit fetch"                "F"   #'magit-fetch
+;;         :desc "Magit buffer log"           "L"   #'magit-log-buffer-file
+;;         :desc "Git stage file"             "S"   #'magit-stage-file
+;;         :desc "Git unstage file"           "U"   #'magit-unstage-file
+;;         (:prefix ("f" . "find")
+;;          :desc "Find file"                 "f"   #'magit-find-file
+;;          :desc "Find gitconfig file"       "g"   #'magit-find-git-config-file
+;;          :desc "Find commit"               "c"   #'magit-show-commit
+;;          :desc "Find issue"                "i"   #'forge-visit-issue
+;;          :desc "Find pull request"         "p"   #'forge-visit-pullreq)
+;;         (:prefix ("o" . "open in browser")
+;;          :desc "Browse file or region"     "."   #'+vc/browse-at-remote
+;;          :desc "Browse homepage"           "h"   #'+vc/browse-at-remote-homepage
+;;          :desc "Browse remote"             "r"   #'forge-browse-remote
+;;          :desc "Browse commit"             "c"   #'forge-browse-commit
+;;          :desc "Browse an issue"           "i"   #'forge-browse-issue
+;;          :desc "Browse a pull request"     "p"   #'forge-browse-pullreq
+;;          :desc "Browse issues"             "I"   #'forge-browse-issues
+;;          :desc "Browse pull requests"      "P"   #'forge-browse-pullreqs)
+;;         (:prefix ("l" . "list")
+;;          (:when (modulep! :tools gist)
+;;           :desc "List gists"               "g"   #'gist-list)
+;;          :desc "List repositories"         "r"   #'magit-list-repositories
+;;          :desc "List submodules"           "s"   #'magit-list-submodules
+;;          :desc "List issues"               "i"   #'forge-list-issues
+;;          :desc "List pull requests"        "p"   #'forge-list-pullreqs
+;;          :desc "List notifications"        "n"   #'forge-list-notifications)
+;;         (:prefix ("c" . "create")
+;;          :desc "Initialize repo"           "r"   #'magit-init
+;;          :desc "Clone repo"                "R"   #'magit-clone
+;;          :desc "Commit"                    "c"   #'magit-commit-create
+;;          :desc "Fixup"                     "f"   #'magit-commit-fixup
+;;          :desc "Issue"                     "i"   #'forge-create-issue
+;;          :desc "Pull request"              "p"   #'forge-create-pullreq)))
+
 
 ;;** Lang
 
@@ -459,6 +566,24 @@
 ;;*** prog-mode
 
 ;;**** js2-mode
+
+;;**** :js2-refactor
+;; '(:prefix ("r" . "refactor")
+;;           (:prefix ("a" . "add/arguments"))
+;;           (:prefix ("b" . "barf"))
+;;           (:prefix ("c" . "contract"))
+;;           (:prefix ("d" . "debug"))
+;;           (:prefix ("e" . "expand/extract"))
+;;           (:prefix ("i" . "inject/inline/introduce"))
+;;           (:prefix ("l" . "localize/log"))
+;;           (:prefix ("o" . "organize"))
+;;           (:prefix ("r" . "rename"))
+;;           (:prefix ("s" . "slurp/split/string"))
+;;           (:prefix ("t" . "toggle"))
+;;           (:prefix ("u" . "unwrap"))
+;;           (:prefix ("v" . "var"))
+;;           (:prefix ("w" . "wrap"))
+;;           (:prefix ("3" . "ternary")))
 
 ;;*** text-mode
 
