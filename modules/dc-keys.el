@@ -24,6 +24,8 @@
  :keymaps '(global help)
  :prefix "C-h"
 
+ ;; can insert values with embark
+ "M-v" #'getenv
  "B" #'embark-bindings
  "M-b" #'embark-bindings-in-keymap)
 
