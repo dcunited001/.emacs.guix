@@ -71,12 +71,6 @@
   (general-create-definer global-leader-def
     :prefix "C-x"))
 
-;; Enable line numbers for some modes
-(dolist (mode '(text-mode-hook
-                prog-mode-hook
-                conf-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 1))))
-
 ;;*** Timers
 
 (setup (:pkg tmr))

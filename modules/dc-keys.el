@@ -187,7 +187,7 @@
  "I" #'consult-imenu-multi
  )
 
-;;**** goto-map (consult)
+;;**** search-map (consult)
  ;; M-s bindings
 (general-define-key
  :keymaps 'search
@@ -259,17 +259,6 @@
 
 ;;** Editor
 
-
-;;*** Toggles
-
-;; call without keybind for now
-(dc/toggleable-boolean native-comp-async-report-warnings-errors)
-(dc/toggleable-boolean custom-buffer-verbose-help)
-
-(general-define-key
- :keymaps 'leader-toggle-map
- "N" #'toggle-native-comp-async-report-warnings-errors)
-;;)
 
 ;;*** Shell
 
@@ -389,6 +378,27 @@
 ;;*** r REMOTE
 ;;*** s SEARCH
 ;;*** t TOGGLE
+
+;;**** Toggle Variables
+;; call without keybind for now
+(dc/toggleable-boolean native-comp-async-report-warnings-errors)
+(dc/toggleable-boolean custom-buffer-verbose-help)
+
+;;**** Toggle Modes
+;; -: centered cursor
+;; _: centered cursor
+;; b: big-mode
+;; c: fill-column indicator
+;; D: desc
+;; f: flycheck
+;;
+
+;;**** Toggle keybinds
+(leader-def
+ :keymaps 'global
+ "tl" #'display-line-numbers-mode
+ "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
+
 ;;*** v VCS
 
 ;;** Lang

@@ -512,8 +512,4 @@ capture was not aborted."
          :clock-in :clock-resume
          :empty-lines 1)))
 
-;; Override some modes which derive from the above
-(dolist (mode '(org-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
 (provide 'dc-workflow)

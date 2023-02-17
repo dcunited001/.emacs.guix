@@ -24,6 +24,59 @@ along with KEYBIND, if present"
 
 ;;*** Toggle Variables
 
+;;** Extract Data
+
+;; TODO: add (... &key value)
+(defun dc/find-symbols-like (regexp)
+  (let (vars output)
+    (cl-do-symbols (sym)
+      (when (and
+             (boundp sym)
+             (not (fboundp sym))
+             (s-matches? regexp (symbol-name sym)))
+        (push (symbol-name sym) vars)))
+
+    ;; how to use (with-temp-buffer) to accumulate?
+    ;; (cl-loop for (sym) in (seq-filter (lambda (s) (s-matches? regexp (symbol-name s))) vars)
+    ;;          ;; collect (concat (symbol-name sym) " \"" (symbol-value sym) "\"")
+    ;;          collect (symbol-name sym)
+    ;;          )
+    vars))
+
+(defun dc/eval-length-toggle-truncation ()
+  (interactive)
+  ;; monoid
+  (if (not (boundp 'eval-length-toggle-truncation))
+      (setq-local eval-length-toggle-truncation 'off
+                  eval-expression-print-length-default eval-expression-print-length
+                  print-length-default print-length))
+
+  (cond ((eq eval-length-toggle-truncation 'on)
+         (setq-local eval-length-toggle-truncation 'off
+                     eval-expression-print-length eval-expression-print-length-default
+                     print-length print-length-default))
+        ((eq eval-length-toggle-truncation 'off)
+         (setq-local eval-length-toggle-truncation 'on
+                     eval-expression-print-length nil
+                     print-length nil))))
+
+(defun dc/eval-level-toggle-truncation ()
+  (interactive)
+  ;; monoid
+  (if (not (boundp 'eval-level-toggle-truncation))
+      (setq-local eval-level-toggle-truncation 'off
+                  eval-expression-print-level-default eval-expression-print-level
+                  print-level-default print-level))
+
+  (cond ((eq eval-level-toggle-truncation 'on)
+         (setq-local eval-level-toggle-truncation 'off
+                     eval-expression-print-level eval-expression-print-level-default
+                     print-level print-level-default))
+        ((eq eval-level-toggle-truncation 'off)
+         (setq-local eval-level-toggle-truncation 'on
+                     eval-expression-print-level nil
+                     print-level nil))))
+
 ;;** Libs
 
 ;;*** SRV
