@@ -33,6 +33,7 @@
 ;; flycheck-global-modes: the modes in which to enable flycheck
 
 ;;**** Flycheck RC's
+;; ... or just M-x customize-group flycheck... SMH y u no ask greybeard?
 ;; C-u M-: dc/find-symbols-like "^flycheck-.*rc$"
 ;; then, comment and add space at end of each line
 ;;   with M-% '" "' -> ' \n;; ' (newline with C-q C-j)

@@ -81,17 +81,6 @@
 (setup (:pkg ef-themes))
 (ef-themes-load-random)
 
-;; (setup (:pkg doom-themes))
-;; (unless dw/is-termux
-;;   ;; TODO: Move this to a system setting
-;;   (load-theme
-;;    (pcase system-name
-;;      ("acidburn" 'doom-ayu-dark)
-;;      ("phantom" 'doom-molokai)
-;;      (_ 'doom-palenight))
-;;    t)
-;;   (doom-themes-visual-bell-config))
-
 ;;*** Font
 
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14)
