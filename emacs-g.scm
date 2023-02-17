@@ -99,7 +99,6 @@
    'completion
    (list->vlist '("emacs-vertico"
                   "emacs-corfu"
-                  "emacs-corfu-terminal"
                   "emacs-orderless"
 
                   "emacs-consult"

@@ -30,7 +30,8 @@
  :keymaps 'minibuffer-local-map
 
  "C-r" #'consult-history
- "C-;" #'embark-act
+ "C-." #'embark-act
+ "C-;" #'embark-dwim
  "C-l" #'dc/match-components-literally
  "C-c C-;" #'embark-export
  "C-c C-l" #'embark-collect
@@ -206,7 +207,7 @@
  )
 
 (general-define-key
- :keymaps 'isearch
+ :keymaps 'isearch-mode-map
 
  "M-e" #'consult-isearch-history   ;; orig. isearch-edit-string
  "M-s e" #'consult-isearch-history ;; orig. isearch-edit-string
@@ -234,23 +235,53 @@
 
 ;;*** corfu-map
 
+;; https://github.com/minad/corfu#key-bindings
+;; corfu includes key remaps for common emacs functions
+;; but lispy remaps things like C-a and C-e
+
 (general-define-key
  :keymaps 'corfu-map
  "C-n" #'corfu-next
  "C-p" #'corfu-previous
  "TAB" #'corfu-insert
  [tab] #'corfu-insert
- "C-f" #'corfu-insert
 
- "C-:" #'corfu-doc-toggle               ;suggested "M-d"
- "M-p" #'corfu-doc-scroll-up
- "M-n" #'corfu-doc-scroll-down
+ ;; for orderless queries, maintain completion with spaces
+ "C-f" #'corfu-insert-separator
+
+ ;; to access embark actions
+ "M-m" #'corfu-move-to-minibuffer
+
+ ;; very useful
+ ;; "M-g" #'corfu-info-location
+ ;; "M-h" #'corfu-info-documentation
+
+ ;; should be in corfu@main
+ ;; "C-a" #'corfu-prompt-beginning
+ ;; "C-e" #'corfu-prompt-end
+
+ ;; "M-d" #'corfu-popupinfo-toggle
+ ;; "M-p" #'corfu-popinfo-scroll-up
+ ;; "M-n" #'corfu-popinfo-scroll-down
 
  "C-M-n" #'vertico-next-group
  "C-M-p" #'vertico-previous-group
 
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file)
+
+;;**** corfu-popupinfo-map
+
+;; see corfu-popupinfo-map
+;; (defvar-keymap corfu-popupinfo-map
+;;   :doc "Additional keymap activated in popupinfo mode."
+;;   "M-t" #'corfu-popupinfo-toggle
+;;   "<remap> <corfu-info-documentation>" #'corfu-popupinfo-documentation
+;;   "<remap> <corfu-info-location>" #'corfu-popupinfo-location
+;;   "<remap> <scroll-other-window>" #'corfu-popupinfo-scroll-up
+;;   "<remap> <scroll-other-window-down>" #'corfu-popupinfo-scroll-down
+;;   "<remap> <end-of-buffer-other-window>" #'corfu-popupinfo-end
+;;   "<remap> <beginning-of-buffer-other-window>" #'corfu-popupinfo-beginning)
 
 ;;** UI
 

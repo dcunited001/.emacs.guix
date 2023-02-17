@@ -220,18 +220,33 @@
 
 ;;*** Corfu
 
+;; corfu@0.34 doesn't include most of the corfu-popupinfo changes
 (setup (:pkg corfu)
   (:option corfu-cycle t
            corfu-auto t
-           corfu-preview-current nil
-           corfu-quit-at-boundary t
-           corfu-quit-no-match t)
+           corfu-quit-no-match 'separator
+           corfu-quit-at-boundary 'separator
+           ;; corfu-popupinfo-min-height 15
+           ;; corfu-popupinfo-min-height 5
+           corfu-preview-current nil)
+  ;; (require 'corfu-popupinfo)
   (global-corfu-mode 1))
 
-(setup (:pkg corfu-doc)
-  (:load-after corfu)
-  (:option corfu-doc-delay 0.25
-           corfu-doc-max-height 16))
+;; the functions that the popup provides are available via corfu
+;; - (see dc-keys#corfu-popupinfo-map)
+;; - without the popup, the info will be displayed in a temporary buffer
+;; - without popupinfo, maintaining terminal-compatibly config is easier
+
+;; corfu-terminal advises functions in corfu-doc which is deprecated
+;; (setup (:pkg corfu-terminal :straight t)
+;;   (unless (display-graphic-p)
+;;     (corfu-terminal-mode +1)))
+
+(defun corfu-move-to-minibuffer ()
+  (interactive)
+  (let ((completion-extra-properties corfu--extra)
+        completion-cycle-threshold completion-cycling)
+    (apply #'consult-completion-in-region completion-in-region--data)))
 
 ;;*** Kind Icon
 
@@ -318,6 +333,14 @@
     (when (fboundp 'projectile-project-root)
       (projectile-project-root)))
 
+  ;; TODO: tune consult-preview settings
+  ;; see https://github.com/minad/consult#live-previews
+  ;; consult-preview-key 'any ;useful when calling inside (let ((...)) ...)
+  ;; consult-preview-max-size 10485760
+  ;; consult-preview-raw-size 524288
+  ;; consult-preview-max-count 10
+  ;; consult-preview-excluded-files '(regexp list...)
+
   (:option consult-project-root-function #'dw/get-project-root
            completion-in-region-function #'consult-completion-in-region))
 
@@ -334,10 +357,14 @@
                                    nil))
   (marginalia-mode))
 
+;; TODO: dc/marginalia-annotators-reset
+;; reset marginalia annotators to their default values
+
 ;;*** Embark
 
 (setup (:pkg embark)
-  (:also-load embark-consult)
+
+  ;; embark-consult included and loaded with embark
 
   ;; Use Embark to show command prefix help
   (setq prefix-help-command #'embark-prefix-help-command))
