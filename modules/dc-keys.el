@@ -4,12 +4,8 @@
 ;; see ./emacs/$version/lisp/bindings.el for defaults
 
 
-;;** Interface
 
-;; ensure this loads after general
-;; (with-eval-after-load 'general
-
-;;*** Globals
+;;** Globals
 
 (general-define-key
  :keymaps 'global
@@ -24,23 +20,12 @@
  "C-<next>" #'tab-bar-switch-to-next-tab
  "C-<prior>" #'tab-bar-switch-to-prev-tab)
 
-;;*** minibuffer-local-map
-
 (general-define-key
- :keymaps 'minibuffer-local-map
+ :keymaps '(global help)
+ :prefix "C-h"
 
- "C-r" #'consult-history
- "C-." #'embark-act
- "C-;" #'embark-dwim
- "C-l" #'dc/match-components-literally
- "C-c C-;" #'embark-export
- "C-c C-l" #'embark-collect
- ;; "C-c C-e" #'+vertico/embark-export-write
-
- "M-s" #'consult-history ;; orig. next-matching-history-element
- "M-r" #'consult-history
-
- "M-A" #'marginalia-cycle)
+ "B" #'embark-bindings
+ "M-b" #'embark-bindings-in-keymap)
 
 ;;*** unbind function keys
 ;; or use the following (which may only work for general definitions)
@@ -95,6 +80,11 @@
   "<left>" #'winner-undo
   "<right>" #'winner-redo)
 
+;;*** leader-key (C-c, f12)
+
+;; this prefix should find itself associated with
+;; project mgmt, minor mode features and inward-looking functions
+
 (leader-def
   :wk-full-keys nil
 
@@ -112,14 +102,25 @@
 ;;  :wk-full-keys nil
 ;;  "<f2>" '(:prefix-command global-leader-prefix-command))
 
-;;*** leader-key (C-c, f12)
+;;** Interface
 
-;; this prefix should find itself associated with
-;; project mgmt, minor mode features and inward-looking functions
-;; (general-define-key
-;;  :keymaps 'global
-;;  :wk-full-keys nil
-;;  "<f12>" '(:prefix-command leader-prefix-command))
+;;*** minibuffer-local-map
+
+(general-define-key
+ :keymaps 'minibuffer-local-map
+
+ "C-r" #'consult-history
+ "C-." #'embark-act
+ "C-;" #'embark-dwim
+ "C-l" #'dc/match-components-literally
+ "C-c C-;" #'embark-export
+ "C-c C-l" #'embark-collect
+ ;; "C-c C-e" #'+vertico/embark-export-write
+
+ "M-s" #'consult-history ;; orig. next-matching-history-element
+ "M-r" #'consult-history
+
+ "M-A" #'marginalia-cycle)
 
 ;;*** Consult
 

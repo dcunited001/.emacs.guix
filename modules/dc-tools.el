@@ -6,13 +6,45 @@
 ;;** Misc
 
 ;;*** TLDR
-(setup (:pkg tldr)
-  )
+(setup (:pkg tldr))
 
 ;;** Emacs
 
 ;;*** Info Colors
 (setup (:pkg info-colors :straight t))
+
+;;** Guix
+;; TODO how to handle geiser/guile when sourced from straight?
+(setup (:pkg guix))
+
+;; TODO configuring a call to consult-guix-packages
+;;
+;; look at trace of guix-packages-by-name for calls to consult--
+;; - this uses cl-letf* to rebind the closure
+;; - (completion-extra-properties ... ) sets up data for marginalia
+;; - consult-completion-in-region handles previewing region-based completion
+;;
+;; look at consult-yasnippet source for examples
+;; - consult-yasnippet--annotate
+;; - consult-yasnippet--read-template, calls to consult--read
+;;
+;; guix uses bui to assemble tables (same as aurel)
+;; - guix-ui-package.el: calls to (guix-ui-define-interface package info/list...)
+;;   - these defines getters for synopsis/description
+;; - guix-read.el#read-package-name calls guix-read-package-name-function
+;;   - guix-read.el specifies readers for repl interaction
+;; - guix-package.el contains the package "struct"
+;;   - contains direct calls to (guix-eval-in-repl...)
+;; - guix-ui-package.el#guix-read-package-entry-by-name passes entries to...
+;; - guix-ui-package.el#...package-name-from-entries
+;;   - runs --map (bui-entry-value it 'name) before (completing-read ...)
+;;
+;; either:
+;; - (add-advice guix-package-name-from-entries ...)
+;; - or wrap calls within a consult- closure transformation which
+;;   can make calls to bui-x given the right context
+;; - or use the (interactive) code from guix-packages-by-name
+;;   to write a consult-guix--read-package function
 
 ;;** Unix
 

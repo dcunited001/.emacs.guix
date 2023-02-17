@@ -341,7 +341,8 @@
   ;; consult-preview-max-count 10
   ;; consult-preview-excluded-files '(regexp list...)
 
-  (:option consult-project-root-function #'dw/get-project-root
+  (:option consult-narrow-key "C-+"
+           consult-project-root-function #'dw/get-project-root
            completion-in-region-function #'consult-completion-in-region))
 
 ;;*** ConsultDir
