@@ -15,6 +15,9 @@
                              ;; (setq gc-cons-threshold (* 2 1000 1000))
                              (setq gc-cons-threshold (* 20 1000 1000))))
 
+(setq user-full-name "David Conner"
+      user-mail-address "noreply@te.xel.io")
+
 (setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
       dc/emacs-d (expand-file-name "~/.emacs.g/")
       dc/emacs-cache (expand-file-name "~/.cache/emacs/")
@@ -80,3 +83,6 @@
 
 (require 'dc-keys)
 (require 'dc-mouse)
+
+(when (featurep 'ido)
+  (ido-mode nil))

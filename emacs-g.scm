@@ -100,9 +100,8 @@
    (list->vlist '("emacs-vertico"
                   "emacs-corfu"
                   "emacs-corfu-terminal"
-                  "emacs-corfu-doc"
-                  "emacs-corfu-doc-terminal"
                   "emacs-orderless"
+
                   "emacs-consult"
                   "emacs-consult-yasnippet"
                   "emacs-consult-org-roam"
@@ -111,6 +110,7 @@
                   "emacs-consult-lsp"
                   "emacs-consult-eglot"
                   "emacs-consult-bibtex"
+
                   "emacs-wgrep"
                   "emacs-marginalia"
                   "emacs-embark"))
@@ -525,6 +525,7 @@
     ;; "emacs-helpful"
 
     "emacs-flycheck"
+    ;; "emacs-flycheck-cpplint"
     "emacs-flycheck-guile"
     "emacs-flycheck-package"
     ;; "emacs-flycheck-plantuml" ;straight
