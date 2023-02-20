@@ -189,7 +189,8 @@
   (:global "C-M-;" magit-status)
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;; (setup (:pkg magit-todos))
+(setup (:pkg magit-todos)
+  (magit-todos-mode))
 
 ;;*** Git
 
@@ -204,6 +205,7 @@
 ;;** Lisps
 
 (setup (:pkg lispy)
+  (:option lispy-compat '(cider edebug))
   (:hook #'turn-off-smartparens-mode)
   (:hook-into emacs-lisp-mode
               scheme-mode
@@ -250,6 +252,18 @@
   (:with-mode mesche-mode
     (:file-match "\\.msc\\'"))
   (require 'mesche))
+
+;;*** Clojure
+;(setup (:pkg clojure-mode))
+;(setup (:pkg cider))
+;(setup (:pkg clj-refactor))
+;(setup (:pkg parseedn))
+;(setup (:pkg parseclj))
+
+;;** Lang
+
+;;*** Haskell
+
 
 ;;** Snippets
 

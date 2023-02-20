@@ -211,27 +211,7 @@
 
 ;;*** org-mode keys
 
-(setup (:pkg evil-org)
-       (:hook-into org-mode org-agenda-mode)
-       (require 'evil-org)
-       (require 'evil-org-agenda)
-       (evil-org-set-key-theme '(navigation todo insert textobjects additional))
-       (evil-org-agenda-set-keys))
 
-(dw/ctrl-c-keys
-  "o"   '(:ignore t :which-key "org mode")
-
-  "oi"  '(:ignore t :which-key "insert")
-  "oil" '(org-insert-link :which-key "insert link")
-
-  "on"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
-
-  "os"  '(dw/counsel-rg-org-files :which-key "search notes")
-
-  "oa"  '(org-agenda :which-key "status")
-  "ot"  '(org-todo-list :which-key "todos")
-  "oc"  '(org-capture t :which-key "capture")
-  "ox"  '(org-export-dispatch t :which-key "export"))
 
 
 ;; TODO org-roam

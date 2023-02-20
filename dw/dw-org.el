@@ -109,8 +109,6 @@
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (setq corfu-auto nil)
-  (setq evil-auto-indent nil))
-
+  (setq corfu-auto nil))
 
 (provide 'dw-org)

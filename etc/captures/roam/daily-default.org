@@ -1,0 +1,56 @@
+#+TITLE:     %<%Y-%m-%d>
+#+AUTHOR:    David Conner
+#+EMAIL:     noreply@te.xel.io
+#+DESCRIPTION: Roam Daily %<%Y-%m-%d>
+
+[[http://doc.norang.ca/org-mode.html][Organize your life in plain text]]
+
+* Tasks
+** When
+*** Deadline :DL:
+*** Schedule :SCH:
+
+** Why
+*** Visibility :VIS:
+*** Issues :IS:
+*** Goals :GO:
+*** Finance :FIN:
+
+** How
+*** Automation :AUTO:
+*** Network :NET:
+*** Files :FS:
+*** Devops :DO:
+*** Auth :AU:
+*** Identity :ID:
+*** Dotfiles :DF:
+
+** What
+*** Code Index :CODEX:
+*** 3D :3D:
+*** Design :CAD:
+*** Workshop :WS:
+*** Art :ART:
+*** Music :MUS:
+*** Learn :LEARN:
+*** Edu :EDU:
+*** Home :HOME:
+*** Fablab :FAB:
+
+** Who
+*** Meetups :MEET:
+*** Msg :MSG:
+*** Events :EV:
+*** Contacts :CON:
+To contact
+
+* Notes
+
+** Which
+
+** Wherefore
+*** Existential
+*** Philosophy
+*** Deep Thoughts
+
+** Whence

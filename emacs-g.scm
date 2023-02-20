@@ -331,7 +331,7 @@
                   "emacs-sly-macrostep"
 
                   "emacs-js2-mode"
-                  ;; "emacs-js2-refactor"
+                  "emacs-js2-refactor"
                   "emacs-typescript-mode"
                   ;; "emacs-rjsx-mode"
                   ;; "tide"

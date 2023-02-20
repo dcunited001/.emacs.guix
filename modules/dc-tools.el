@@ -137,12 +137,11 @@
 ;;*** x509 Mode
 ;; Inspect details on Certificates, CA's and CSR's
 (setup (:pkg x509-mode :straight t)
-  (setq auto-mode-alist (append
-                         '(("\\.pem$" . x509-mode)
-                           ("\\.cer$" . x509-mode)
-                           ("\\.der$" . x509-mode)
-                           ("\\.crt$" . x509-mode)
-                           ("\\.crl$" . x509-mode))
-                         auto-mode-alist)))
+  (cl-dolist (modespec '(("\\.pem$" . x509-mode)
+                         ("\\.cer$" . x509-mode)
+                         ("\\.der$" . x509-mode)
+                         ("\\.crt$" . x509-mode)
+                         ("\\.crl$" . x509-mode)))
+    (add-to-list 'auto-mode-alist modespec)))
 
 (provide 'dc-tools)

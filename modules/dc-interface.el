@@ -163,7 +163,17 @@
 
 ;;** UI
 
-;;*** Popper
+;;*** Confirmations
+
+(setq dired-deletion-confirmer 'y-or-n-p
+      ;; dired-no-confirm '()
+      url-confirmation-func 'y-or-n-p
+      ;; url-cookie-confirmation nil
+
+      ;; smerge-mode is lazy loaded, default: t
+      smerge-change-buffer-confirm t)
+
+;;*** Popups
 
 (setup (:pkg popper
              :straight t
