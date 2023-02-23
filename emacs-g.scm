@@ -141,7 +141,8 @@
 (define guix-emacs-vhash
   (vhash-consq
    'prettify
-   (list->vlist '("emacs-alert"
+   (list->vlist '("emacs-info-plus"
+                  "emacs-alert"
                   "emacs-emojify"
                   "emacs-all-the-icons"
                   "emacs-all-the-icons-dired"
@@ -245,6 +246,9 @@
                   "emacs-magit-todos"
                   ;; "emacs-ghub"
                   "emacs-forge"
+
+                  "emacs-repo"
+                  "emacs-repology"
                   ))
    guix-emacs-vhash))
 
@@ -428,6 +432,7 @@
   (vhash-consq
    'org
    (list->vlist '("emacs-org"
+                  "emacs-org-contrib"
                   "emacs-toc-org"
 
                   "emacs-org-pomodoro" ;; TODO: remove

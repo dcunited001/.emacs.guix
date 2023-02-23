@@ -32,6 +32,16 @@
     (:option rmh-elfeed-org-files (list (concat dc/emacs-d "elfeed.org")))
     (elfeed-org)))
 
+;;** GNUS
+;; - stores messages in gnus-directory, ~/News
+;; - fetches from NNTPSERVER or /etc/nntpserver
+;; - caches state in ~/.newsrc
+;; - gnus-home-directory
+;;   - gnus-startup-file
+;;   - gnus-init-file
+;;   - gnus-directory (set to SAVEDIR if defined)
+(setup (:pkg gnus))
+
 ;;** IRC
 
 ;; post files/images to 0x0, intended for sharing in ERC

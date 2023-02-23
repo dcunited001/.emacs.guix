@@ -38,12 +38,18 @@
               typescript-mode
               js2-mode))
 
-;;*** Buffer Environments
+;;*** Environments
 
 (setup (:pkg buffer-env)
   (:option buffer-env-script-name "manifest.scm")
   (add-hook 'comint-mode-hook #'hack-dir-local-variables-non-file-buffer)
   (add-hook 'hack-local-variables-hook #'buffer-env-update))
+
+(defun dc/enable-lispy-in-dir-locals ()
+  (if (string-match "\.dir-locals\.el$" (file-relative-name (or (buffer-file-name) "")))
+      (lispy-mode +1)))
+
+(add-hook 'lisp-data-mode-hook #'dc/enable-lispy-in-dir-locals)
 
 ;;** Checking
 
@@ -155,12 +161,13 @@
       (tab-bar-close-tab (1+ tab-index)))))
 
 (setup (:pkg project)
-  (:global "C-M-p" project-find-file)
-  (:with-map project-prefix-map
-    (:bind "k" dw/close-project-tab)
-    (:bind "F" consult-ripgrep))
-
   (setq project-switch-commands #'magit-status))
+
+;; TODO finish setting up projectile
+(setq projectile-project-search-path '(("/data/repo/" . 1)
+                                       ("/data/ecto/" . 3)))
+;; projectile-auto-discover is nil
+;; trigger project auto-discovery with projectile-discover-projects-in-search-path
 
 ;;** LSP/Eglot
 
@@ -222,6 +229,19 @@
 
 (setup emacs-lisp-mode)
 
+;; exhibits the same problem as helpful-mode:
+;; - https://github.com/doomemacs/doomemacs/issues/6127
+;;    - workaround removed https://github.com/doomemacs/doomemacs/commit/b57d4c8d710e39c70c2fc9fa61cf0e85159ef0bb
+;; - read-symbol-positions-list void in emacs29
+;;   - https://github.com/Wilfred/elisp-refs/issues/35
+;; (setup (:pkg elisp-depmap :straight t :host gitlab :repo "mtekman/elisp-depmap.el")
+;;   (:option elisp-depmap-exec-file (getenv "GRAPHVIZ_DOT"))
+;;   (:bind
+;;    ("C-c M-d" . elisp-depmap-graphviz-digraph)
+;;    ("C-c M-g" . elisp-depmap-graphviz)
+;;    ("C-c M-s" . elisp-depmap-makesummarytable))
+;;   (defvar read-symbol-positions-list nil))
+
 ;;*** Common Lisp
 
 (setup (:pkg sly)
@@ -233,6 +253,8 @@
 ;; Include .sld library definition files
 (setup (:pkg scheme-mode)
   (:file-match "\\.sld\\'"))
+
+;;**** GEISER
 
 (setup (:pkg geiser)
   ;; (setq geiser-default-implementation 'gambit)
@@ -280,5 +302,10 @@
   (add-hook 'prog-mode-hook #'yas-minor-mode)
   (add-hook 'org-mode-hook #'yas-minor-mode)
   (yas-reload-all))
+
+;;** Shell
+
+;;*** VTerm
+
 
 (provide 'dc-dev)

@@ -23,15 +23,17 @@
 ;;* Tools
 
 
-;;** Misc
+;;** Docs
 
 ;;*** TLDR
 (setup (:pkg tldr))
 
-;;** Emacs
+;;*** Info
 
-;;*** Info Colors
-(setup (:pkg info-colors :straight t))
+;; (setup (:pkg info-colors :straight t))
+(with-eval-after-load 'info
+  (require 'info+))
+
 
 ;;** Guix
 ;; TODO how to handle geiser/guile when sourced from straight?
@@ -91,8 +93,14 @@
 ;;** VCS
 
 ;;*** Repo
-;; For Google Repo, but doesn't really do anything
-;;(setup (:pkg repo :straight t))
+;; For Google Repo
+(setup (:pkg repo))
+;; TODO: repo interactives/customs: repo-status, repo-init...
+
+;;*** Repology
+(setup (:pkg repology))
+;; TODO: repology interactives/customs:
+;; https://github.com/emacs-straight/repology/blob/master/repology.el
 
 ;;*** Git Timemachine
 ;; control-f8, like facebook's conference
@@ -125,6 +133,9 @@
 ;;           "~/.guix-profile/sbin"
 ;;           "/run/current-system/profile/bin"
 ;;           )))
+(setup (:pkg tramp)
+  (:option tramp-default-method "ssh"))
+
 (with-eval-after-load 'tramp
   (add-to-list 'tramp-remote-path
                '("~/.guix-profile/bin"
@@ -143,5 +154,55 @@
                          ("\\.crt$" . x509-mode)
                          ("\\.crl$" . x509-mode)))
     (add-to-list 'auto-mode-alist modespec)))
+
+;;** Database
+
+;;** API
+
+;;*** Restclient
+;; TODO: configure restclient
+;; (setup (:pkg restclient))
+;; (setup (:pkg ob-restclient))
+
+;;*** OpenAPI
+;; TODO configure openapi-yaml-mode
+
+;;*** GraphQL
+;; TODO configure graphql & ob-graphql
+;; (setup (:pkg graphql))
+;; (setup (:pkg graphql-mode))
+;;
+;; (with-eval-after-load ... (in org)...
+;; (setup (:pkg ob-graphql))
+;;
+;; TODO: package: dynamic-graphs?
+;; TODO: package: ob-dot
+
+;;** Visualization
+
+;;*** GNU Plot
+
+;;*** Graphviz/Dot
+
+;;*** PlantUML
+
+;;** Misc
+
+;;*** Translation
+(setup (:pkg google-translate)
+  (:option google-translate-backend-method 'curl)
+  ;; (:bind "C-T" #'my-google-translate-at-point)
+  (defun google-translate--search-tkk ()
+    (list 430675 2721866130))
+  (defun my-google-translate-at-point ()
+    "reverse translate if prefix"
+    (interactive)
+    (if current-prefix-arg
+        (google-translate-at-point)
+      (google-translate-at-point-reverse))))
+
+;; TODO: ....ob-translate wants to clone org with straight...
+;; (setup (:pkg ob-translate :straight t)
+;;   (:load-after 'google-translate))
 
 (provide 'dc-tools)

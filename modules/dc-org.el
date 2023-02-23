@@ -31,22 +31,55 @@
    ;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \
    ;;          In %:journal, %:pages.")))
 
-;;* Org
-
 ;; hmmm... well that could work... a little too well
 ;; (defun gv-qset (pairs)
 ;;   (macroexpand-1 `(setf ,@pairs)))
 ;; (macroexpand-1 '(setf foo "f1" bar "b2"))
 
-;;** Org Appearance
+
+;;** Org Hooks
+;; these run on org-mode-hook
+
+;; (add-hook! 'org-mode-hook
+;;              ;; `show-paren-mode' causes flickering with indent overlays made by
+;;              ;; `org-indent-mode', so we turn off show-paren-mode altogether
+;;              #'doom-disable-show-paren-mode-h
+;;              ;; disable `show-trailing-whitespace'; shows a lot of false positives
+;;              #'doom-disable-show-trailing-whitespace-h
+;;              #'+org-enable-auto-reformat-tables-h
+;;              #'+org-enable-auto-update-cookies-h
+;;              #'+org-make-last-point-visible-h)
+
+(defun dc/org-mode-setup ()
+  ;; Turn on indentation and auto-fill mode for Org files
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq corfu-auto nil))
+
+;;** Org Load Hooks
+;; these run when org first loads
+
+(defun dc/org-init-org-directory-h ()
+  (unless org-directory
+    (setq-default org-directory (or (getenv "ORG_DIRECTORY")
+                                    (file-name-as-directory "~/org"))))
+  (unless org-id-locations-file
+    (setq org-id-locations-file (expand-file-name ".orgids" org-directory)))
+
+  (setq org-calendars-directory
+        (file-name-as-directory (file-name-concat org-directory "calendars"))))
+
 (defun dc/org-init-appearance-h ()
   (setq org-indirect-buffer-display 'current-window
         ;; turned off by org-indent-mode when the following is set (default)
         ;; org-adapt-indentation nil
         ;; org-indent-mode-turns-off-org-adapt-indentation t
+
         org-capture-bookmark nil
         org-cycle-separator-lines 2
-        org-edit-src-content-indentation 2
+        org-edit-src-content-indentation 0 ; no effect when org-src-preserve-indentation
         org-eldoc-breadcrumb-separator " → "
         org-ellipsis " ▾"
         org-enforce-todo-dependencies t
@@ -84,6 +117,7 @@
     (custom-declare-face '+org-todo-cancel  '((t (:inherit (bold error org-todo)))) ""))
 
   ;;*** Latex display
+  (require 'ox-latex)
   (plist-put org-format-latex-options :scale 1.5)
 
   ;;** Refile
@@ -129,13 +163,40 @@
           ("KILL" . +org-todo-cancel))))
 
 
-  (setq org-confirm-babel-evaluate t
-        org-src-preserve-indentation t
-        org-src-tab-acts-natively t
+(defun dc/org-init-agenda-h ()
+  (setq-default
+   ;; Different colors for different priority levels
+   org-agenda-deadline-faces
+   '((1.001 . error)
+     (1.0 . org-warning)
+     (0.5 . org-upcoming-deadline)
+     (0.0 . org-upcoming-distant-deadline))
+   ;; Don't monopolize the whole frame just for the agenda
+   org-agenda-window-setup 'current-window
+   org-agenda-skip-unavailable-files t
+   ;; Shift the agenda to show the previous 3 days and the next 7 days for
+   ;; better context on your week. The past is less important than the future.
+   org-agenda-span 10
+   org-agenda-start-on-weekday nil
+   org-agenda-start-day "-3d"
+   ;; Optimize `org-agenda' by inhibiting extra work while opening agenda
+   ;; buffers in the background. They'll be "restarted" if the user switches to
+   ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
+   org-agenda-inhibit-startup t
 
-        ;; org-confirm-babel-evaluate nil
-        org-link-elisp-confirm-function 'y-or-n-p
-        org-link-shell-confirm-function 'y-or-n-p)
+   org-log-done 'time)
+
+  ;; start with empty org-agenda-files
+  (setq org-agenda-files '())
+  )
+
+
+(defun dc/org-init-roam-h ()
+  )
+
+
+(defun dc/org-init-attachments-h ()
+  )
 
 (defun dc/org-init-babel-h ()
   ;; org-confirm-babel-evaluate: set to a function later
@@ -146,73 +207,95 @@
         org-src-preserve-indentation t
         org-src-tab-acts-natively t
 
+        ;; default, works pretty well, may obviate the defadvice! below
+        org-src-window-setup 'reorganize-frame
+
         ;; org-confirm-babel-evaluate nil
         org-link-elisp-confirm-function 'y-or-n-p
         org-link-shell-confirm-function 'y-or-n-p)
 
-  (cl-dolist
-      (advised '(org-indent-region org-indent-line))
-    (advice-add advised :around
-
-
-     +org-fix-window-excursions-a (fn &rest args)
-     "Suppress changes to the window config anywhere
-`org-babel-do-in-edit-buffer' is used."
-     ;; :around #'evil-org-open-below
-     ;; :around #'evil-org-open-above
-     :around #'org-indent-region
-     :around #'org-indent-line
-     (save-window-excursion (apply fn args))))
-
-  ;; (defadvice! +org-fix-newline-and-indent-in-src-blocks-a (&optional indent _arg _interactive)
-  ;;  "Mimic `newline-and-indent' in src blocks w/ lang-appropriate indentation."
-  ;;  :after #'org-return ...)
-
-  ;; (defadvice! +org-inhibit-mode-hooks-a (fn datum name &optional initialize &rest args)
-  ;;   "Prevent potentially expensive mode hooks in `org-babel-do-in-edit-buffer' ops."
-  ;;   :around #'org-src--edit-element ...)
-
+  ;; TODO org-babel's default async (no session) behavior may cause problems with
+  ;; org-exports (if latex/html exports with evaluation doesn't work, this may be the cause)
   ;; (after! ob
   ;;         (add-to-list 'org-babel-default-lob-header-args '(:sync)))
-
-  ;; NOTE: ob will not auto-update images after updates
-  ;; - this wasn't working for me AFAIK. i usually needed to hit C-TAB twice
-  ;; (add-hook! 'org-babel-after-execute-hook
-  ;;            (defun +org-redisplay-inline-images-in-babel-result-h () ...))
   )
 
+;; NOTE: the advice-add here needs to properly bind the closure
+;; - follow defadvice! down to subr.el
+;; (cl-dolist
+;;     (advised '(org-indent-region org-indent-line))
+;;   (advice-add advised :around
+;;               +org-fix-window-excursions-a (fn &rest args)
+;;               "Suppress changes to the window config anywhere
+;; `org-babel-do-in-edit-buffer' is used."
+;;               ;; :around #'evil-org-open-below
+;;               ;; :around #'evil-org-open-above
+;;               :around #'org-indent-region
+;;               :around #'org-indent-line
+;;               (save-window-excursion (apply fn args))))
+
+;; (defadvice! +org-fix-newline-and-indent-in-src-blocks-a (&optional indent _arg _interactive)
+;;  "Mimic `newline-and-indent' in src blocks w/ lang-appropriate indentation."
+;;  :after #'org-return ...)
+
+;; (defadvice! +org-inhibit-mode-hooks-a (fn datum name &optional initialize &rest args)
+;;   "Prevent potentially expensive mode hooks in `org-babel-do-in-edit-buffer' ops."
+;;   :around #'org-src--edit-element ...)
 
 
-;; (add-hook! 'org-mode-hook
-;;              ;; `show-paren-mode' causes flickering with indent overlays made by
-;;              ;; `org-indent-mode', so we turn off show-paren-mode altogether
-;;              #'doom-disable-show-paren-mode-h
-;;              ;; disable `show-trailing-whitespace'; shows a lot of false positives
-;;              #'doom-disable-show-trailing-whitespace-h
-;;              #'+org-enable-auto-reformat-tables-h
-;;              #'+org-enable-auto-update-cookies-h
-;;              #'+org-make-last-point-visible-h)
+;; NOTE: ob will not auto-update images after updates
+;; - this wasn't working for me AFAIK. i usually needed to hit C-TAB twice
+;; (add-hook! 'org-babel-after-execute-hook
+;;            (defun +org-redisplay-inline-images-in-babel-result-h () ...))
 
+
+
+
+;; NOTE: use (with-eval-after-load ...) instead of (after! ...)
 ;; (add-hook! 'org-load-hook
-;;              #'+org-init-org-directory-h
-;;              #'+org-init-appearance-h
-;;              #'+org-init-agenda-h
-;;              #'+org-init-attachments-h
-;;              #'+org-init-babel-h
-;;              #'+org-init-babel-lazy-loader-h
-;;              #'+org-init-capture-defaults-h
-;;              #'+org-init-capture-frame-h
-;;              #'+org-init-custom-links-h
-;;              #'+org-init-export-h
-;;              #'+org-init-habit-h
-;;              #'+org-init-hacks-h
-;;              #'+org-init-keybinds-h
-;;              #'+org-init-popup-rules-h
-;;              #'+org-init-smartparens-h)
 
+
+(defun dc/org-init-babel-lazy-loader-h ()
+  )
+(defun dc/org-init-capture-defaults-h ()
+  (setq org-default-notes-file (expand-file-name "inbox.org" org-directory))
+
+  ;; TODO doom/personal capture templates
+  (add-hook 'org-after-refile-insert-hook #'save-buffer))
+(defun dc/org-init-capture-frame-h ()
+
+  )
+(defun dc/org-init-custom-links-h ()
+
+  )
+(defun dc/org-init-export-h ()
+  (setq org-export-headline-levels 5)
+
+  ;; TODO ox-extra: enable :ignore: headlines (in addition to :noexport:)
+  ;; (require 'ox-extra)
+  ;; (ox-extras-activate '(ignore-headlines))
+  )
+(defun dc/org-init-habit-h ()
+
+  )
+(defun dc/org-init-hacks-h ()
+
+  )
+(defun dc/org-init-keybinds-h ()
+
+  )
+(defun dc/org-init-popup-rules-h ()
+
+  )
+(defun dc/org-init-smartparens-h ()
+
+  )
+
+;;** Org Setup
 (setup (:pkg org)
-  (:also-load org-tempo)
-  (:hook dw/org-mode-setup)
+  (:also-load org-tempo
+              org-eldoc)
+  (:hook dc/org-mode-setup)
 
   ;;** Modules
   ;; For descriptions, M-x customize-variable org-modules
@@ -250,7 +333,22 @@
   ;; org-toc: table of contents
   ;; org-track: keep up with org development
 
-  ;;** Babel
+  (dc/org-init-org-directory-h)
+  (dc/org-init-appearance-h)
+  (dc/org-init-agenda-h)
+  (dc/org-init-roam-h)
+  (dc/org-init-attachments-h)
+  (dc/org-init-babel-h)
+  (dc/org-init-babel-lazy-loader-h)
+  (dc/org-init-capture-defaults-h)
+  (dc/org-init-capture-frame-h)
+  (dc/org-init-custom-links-h)
+  (dc/org-init-export-h)
+  (dc/org-init-habit-h)
+  (dc/org-init-hacks-h)
+  (dc/org-init-keybinds-h)
+  (dc/org-init-popup-rules-h)
+  ;; (dc/org-init-smartparens-h)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)))
@@ -261,26 +359,39 @@
   ;;** Agenda
 
   ;;*** Options
-  (setq-default
-   ;; Different colors for different priority levels
-   org-agenda-deadline-faces
-   '((1.001 . error)
-     (1.0 . org-warning)
-     (0.5 . org-upcoming-deadline)
-     (0.0 . org-upcoming-distant-deadline))
-   ;; Don't monopolize the whole frame just for the agenda
-   org-agenda-window-setup 'current-window
-   org-agenda-skip-unavailable-files t
-   ;; Shift the agenda to show the previous 3 days and the next 7 days for
-   ;; better context on your week. The past is less important than the future.
-   org-agenda-span 10
-   org-agenda-start-on-weekday nil
-   org-agenda-start-day "-3d"
-   ;; Optimize `org-agenda' by inhibiting extra work while opening agenda
-   ;; buffers in the background. They'll be "restarted" if the user switches to
-   ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
-   org-agenda-inhibit-startup t))
 
+
+  (setq org-tag-persistent-alist
+        '((:startgroup . nil)
+          ("VIS" . ?v)
+          ("ISH" . ?!)
+          ("GO" . ?G)
+          ("FIN" . ?$) (:newline . nil)
+          (:endgroup . nil) (:startgroup . nil)
+          ("AUTO" . ?a)
+          ("NET" . ?n)
+          ("FS" . ?f)
+          ("DO" . ?d)
+          ("AU" . ?@)
+          ("ID" . ?#)
+          ("DF" . ?.) (:newline . nil)
+          (:endgroup . nil) (:startgroup . nil)
+          ("CODEX" . ?%)
+          ("3D" . ?3)
+          ("CAD" . ?C)
+          ("WS" . ?w)
+          ("ART" . ?A)
+          ("MUS" . ?M)
+          ("LEARN" . ?L)
+          ("EDU" . ?E)
+          ("HOME" . ?H)
+          ("FAB" . ?F) (:newline . nil)
+          (:endgroup . nil) (:startgroup . nil)
+          ("MEET" . ?M)
+          ("MSG" . ?m)
+          ("EV" . ?V)
+          ("CON" . ?c) (:newline . nil)
+          (:endgroup . nil))))
 
 
 (provide 'dc-org)

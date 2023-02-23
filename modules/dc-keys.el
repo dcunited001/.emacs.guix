@@ -314,10 +314,21 @@
 
 ;;** UI
 
+;;*** Bookmarks, Registers
+
+(global-leader-def
+  :keymaps '(global)
+  :wk-full-keys nil
+  "rB" '(:ignore t :wk "BURLY")
+  "rBo" #'burly-open-bookmark
+  "rBO" #'burly-open-url
+  "rBw" #'burly-bookmark-windows
+  "rBf" #'burly-bookmark-frames
+  "rBB" #'burly-kill-buffer-url
+  "rBF" #'burly-kill-frames-url
+  "rBW" #'burly-kill-windows-url)
+
 ;;*** Window Management
-
-
-;;** Editor
 
 
 ;;*** Shell
@@ -602,6 +613,18 @@
 ;;         :desc "notmuch" "m" #'=notmuch)
 
 ;;*** p PROJECTILE
+
+;; TODO: rebind C-x C-f to #'project-find-file, C-u C-x C-f to #'find-file
+
+(general-define-key
+ :keymaps 'global
+
+ "C-M-p" #'project-find-file)
+
+(general-define-key
+ :keymaps 'project-prefix-map
+ "k" #'dw/close-project-tab
+ "F" #'consult-ripgrep)
 
 ;;       (:prefix ("p" . "project")
 ;;        :desc "Search project for symbol"   "." #'+default/search-project-for-symbol-at-point

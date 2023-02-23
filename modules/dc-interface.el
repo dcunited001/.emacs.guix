@@ -26,22 +26,30 @@
 
 ;;** Basics
 
-(menu-bar-mode +1)            ; Enable the menu bar
-
 ;; Thanks, but no thanks
 (setq inhibit-startup-message t
       visible-bell t)
 
 (setq-default fill-column 80)
 
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tool-bar-mode -1)          ; Disable the toolbar
-(tooltip-mode -1)           ; Disable tooltips
+(scroll-bar-mode -1)       ; Disable visible scrollbar
+(tool-bar-mode -1)         ; Disable the toolbar
 (set-fringe-mode 10)       ; Give some breathing room
 
+
+;; there are realgud/dap integrations for inspecting vars/etc with tooltip
+(tooltip-mode +1)
+(setq tooltip-delay 0.7                 ;2.0
+      tooltip-short-delay 0.1)          ;0.5
+
+;; menu-bar-mode gets a bad rap from tool-bar-mode
+(menu-bar-mode +1)            ; Enable the menu bar
+
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;; one line at a time
+      ;; mouse-wheel-scroll-amount '(8)
       mouse-wheel-progressive-speed nil ;; don't accelerate scrolling
-      mouse-wheel-follow-mouse 't ;; scroll window under mouse
+      mouse-wheel-follow-mouse t        ;; scroll window under mouse
+      mouse-drag-and-drop-region t
       scroll-step 1 ;; keyboard scroll one line at a time
       use-dialog-box nil ;; Disable dialog boxes since they weren't working in Mac OSX
       )
@@ -98,6 +106,13 @@
                     '(mode-line-inactive ((t (:height 0.85))))))
 
 
+
+;;*** Cursor
+
+
+;;*** Pulse
+;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
+
 ;;*** Themes
 
 (setup (:pkg ef-themes))
@@ -131,14 +146,26 @@
                     :height (dw/system-settings-get 'emacs/variable-face-size)
                     :weight 'light)
 
+;;*** Window Dividers
+;; - requires window-divider-mode being on
+;;   - window-divider-default-places t sets to both 'bottom and 'right
+;; - M-x customize-face on window-divider to change fgcolor
+;;   - any change req. reloading the mode
+;;   - changing vertical-border does not req. reload
+;; (window-divider-mode +1)
+(setq window-divider-default-right-width 3
+      window-divider-default-bottom-width 3)
+
 ;;** Editor
 
 ;;*** Clipbaord
-;; TODO: ensure this variable does not fucking change and if it does let me know
-;; - test with middle click
-;; - I don't care if it's toy, i'm using the clipboard quite a bit atm
+;; TODO: ensure these variables do not change
+;; - can be tested with middle click
 ;; - https://www.emacswiki.org/emacs/CopyAndPaste#h5o-3
-(setq select-enable-primary nil)
+(setq select-enable-primary nil
+      select-enable-clipboard t
+      x-select-enable-primary nil
+      x-select-enable-clipboard t)
 
 ;; if necessary, setup a watch function https://www.gnu.org/software/emacs/manual/html_node/elisp/Watching-Variables.html
 
@@ -148,6 +175,7 @@
 ;; - i haven't had the chance to run vterm much, so it's not that.
 ;; - it it is perhaps related to sleep/hibernate ... or something
 ;; - vterm-enable-manipulate-selection-data-by-osc52 is nil and this shouldn't run
+;; seriously, this is the worst
 
 ;;** Highlighting
 
@@ -374,7 +402,7 @@
   ;; consult-preview-max-count 10
   ;; consult-preview-excluded-files '(regexp list...)
 
-  (:option consult-narrow-key "C-+"
+  (:option consult-narrow-key "C-="
            consult-project-root-function #'dw/get-project-root
            completion-in-region-function #'consult-completion-in-region))
 
