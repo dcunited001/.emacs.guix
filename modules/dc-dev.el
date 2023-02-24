@@ -300,9 +300,13 @@
   (setq geiser-default-implementation 'guile)
   (setq geiser-active-implementations '(guile))
   (setq geiser-repl-default-port 44555) ; For Gambit Scheme
-  (setq geiser-implementations-alist '(((regexp "\\.scm$") guile))))
+  (setq geiser-implementations-alist '(((regexp "\\.scm$") guile)))
 
-;;*** Mesche
+  ;; TODO determine whether autodoc still crashes REPL's
+  ;; (setq geiser-repl-autodoc-p nil)
+  )
+
+;;**** Mesche
 
 (setup mesche
   (:load-path "~/Projects/Code/mesche/mesche-emacs")
@@ -317,6 +321,16 @@
 ;(setup (:pkg parseedn))
 ;(setup (:pkg parseclj))
 
+;; TODO: zprint-mode?
+;; (add-hook 'clojure-mode-hook 'zprint-mode)
+;; (add-hook 'clojurescript-mode-hook 'zprint-mode)
+
+;;**** LSP (clojure)
+
+;;**** CIDER
+;; (add-hook 'cider-mode-hook #'clj-refactor-mode)
+;; (setq org-babel-clojure-backend 'cider)
+
 ;;** Lang
 
 ;;*** Haskell
@@ -326,7 +340,7 @@
 
 ;;*** Snippets
 (setup (:pkg emmet)
-  (:hook-into sgml-mode css-mode))
+  (:hook-into sgml-mode css-mode nxml-mode html-mode))
 
 (setup (:pkg yasnippet)
   (:load-after emmet)

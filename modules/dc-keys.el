@@ -50,7 +50,8 @@
  ;; can insert values with embark
  "M-v" #'getenv
  "B" #'embark-bindings
- "M-b" #'embark-bindings-in-keymap)
+ "M-b" #'embark-bindings-in-keymap
+ "M-f" #'list-faces-display)
 
 ;;*** unbind function keys
 ;; or use the following (which may only work for general definitions)
@@ -501,6 +502,22 @@
 
 ;;*** n NOTES
 
+;; (dw/ctrl-c-keys
+;;   "o"   '(:ignore t :which-key "org mode")
+
+;;   "oi"  '(:ignore t :which-key "insert")
+;;   "oil" '(org-insert-link :which-key "insert link")
+
+;;   "on"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
+
+;;   "os"  '(dw/counsel-rg-org-files :which-key "search notes")
+
+;;   "oa"  '(org-agenda :which-key "status")
+;;   "ot"  '(org-todo-list :which-key "todos")
+;;   "oc"  '(org-capture t :which-key "capture")
+;;   "ox"  '(org-export-dispatch t :which-key "export"))
+
+;;****
 
 ;;       (:prefix-map ("n" . "notes")
 ;;        :desc "Search notes for symbol"        "." #'+default/search-notes-for-symbol-at-point

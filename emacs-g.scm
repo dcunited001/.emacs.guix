@@ -348,6 +348,9 @@
                   "emacs-json-mode"
                   "emacs-json-snatcher"
 
+                  "emacs-emacsql"
+                  "emacs-emacsql-sqlite3"
+
                   "emacs-graphviz-dot-mode"
                   "emacs-gnuplot"
 
@@ -432,6 +435,7 @@
   (vhash-consq
    'org
    (list->vlist '("emacs-org"
+                  "emacs-org-modern"
                   "emacs-org-contrib"
                   "emacs-toc-org"
 

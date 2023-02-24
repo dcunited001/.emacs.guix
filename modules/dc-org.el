@@ -201,6 +201,13 @@
           ("NO"   . +org-todo-cancel)
           ("KILL" . +org-todo-cancel))))
 
+(defun dw/org-derived-disable-line-numbers ()
+  ;; linums are already off unless toggled, but it was a bit tough to find out
+  ;; how to handle derived modes. can exclude the parent mode by casing the
+  ;; name. must run after derived modes defined (in guix they should already be
+  ;; loaded)
+  (dolist (mode '(org-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0)))))
 
 (defun dc/org-init-agenda-h ()
   (setq-default
@@ -223,7 +230,9 @@
    ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
    org-agenda-inhibit-startup t
 
-   org-log-done 'time)
+   org-log-done 'time
+   ;; org-log-into-drawer t
+   )
 
   ;; start with empty org-agenda-files
   (setq org-agenda-files '())
@@ -231,32 +240,50 @@
 
 
 (defun dc/org-init-roam-h ()
-  )
 
+  (setup (:pkg org-roam)
+    (:option))
+
+  (setup (:pkg org-roam-ui)
+    (:load-after org-roam)
+    (defun org-roam-ui-open ()
+      "Ensure the server is active, then open the roam graph."
+      (interactive)
+      (unless org-roam-ui-mode (org-roam-ui-mode 1))
+      (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port)))))
 
 (defun dc/org-init-attachments-h ()
   )
 
 (defun dc/org-init-babel-h ()
-  ;; org-confirm-babel-evaluate: set to a function later
-  ;; org-src-preserve-indentation:
-  ;; - daviwil set to nil, t in .emacs.network
-  ;; - see notes on org-adapt-indentation above
-  (setq org-confirm-babel-evaluate t
-        org-src-preserve-indentation t
-        org-src-tab-acts-natively t
+  (setup ob
+    (require 'ob-dot)
 
-        ;; default, works pretty well, may obviate the defadvice! below
-        org-src-window-setup 'reorganize-frame
+    ;; org-confirm-babel-evaluate: set to a function later
+    ;; org-src-preserve-indentation:
+    ;; - daviwil set to nil, t in .emacs.network
+    ;; - see notes on org-adapt-indentation above
 
-        ;; org-confirm-babel-evaluate nil
-        org-link-elisp-confirm-function 'y-or-n-p
-        org-link-shell-confirm-function 'y-or-n-p)
+    (:option org-confirm-babel-evaluate t
+             org-src-preserve-indentation t
+             org-src-tab-acts-natively t
+
+             ;; default, works pretty well, may obviate the defadvice! below
+             org-src-window-setup 'reorganize-frame
+
+             ;; org-confirm-babel-evaluate nil
+             org-link-elisp-confirm-function 'y-or-n-p
+             org-link-shell-confirm-function 'y-or-n-p))
+
+
+
 
   ;; TODO org-babel's default async (no session) behavior may cause problems with
   ;; org-exports (if latex/html exports with evaluation doesn't work, this may be the cause)
   ;; (after! ob
   ;;         (add-to-list 'org-babel-default-lob-header-args '(:sync)))
+  (setup (:pkg ob-smiles :straight t))
+
   )
 
 ;; NOTE: the advice-add here needs to properly bind the closure
@@ -307,6 +334,11 @@
 (defun dc/org-init-custom-links-h ()
 
   )
+
+(defun dc/org-init-formatting-h ()
+  (setup (:pkg org-make-toc)
+    (:option org-toc-default-depth 1)
+    (:hook-into org-mode)))
 (defun dc/org-init-export-h ()
   (setq org-export-headline-levels 5)
 
@@ -326,9 +358,23 @@
 (defun dc/org-init-popup-rules-h ()
 
   )
-(defun dc/org-init-smartparens-h ()
 
-  )
+;; (defun dc/org-init-smartparens-h ())
+
+(require 'org-eldoc)
+
+(setup (:pkg org-tempo)
+  (:load-after org)
+  (:when-loaded
+    (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
+    (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+    (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python"))
+    (add-to-list 'org-structure-template-alist '("go" . "src go"))
+    (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+    (add-to-list 'org-structure-template-alist '("json" . "src json"))))
 
 ;;** Org Setup
 (setup (:pkg org)

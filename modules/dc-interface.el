@@ -36,6 +36,8 @@
 (tool-bar-mode -1)         ; Disable the toolbar
 (set-fringe-mode 10)       ; Give some breathing room
 
+;; TODO: determine whether there are possible issues with pgtk/wayland?
+;; (tooltip-mode -1)       ; Disable tooltips
 
 ;; there are realgud/dap integrations for inspecting vars/etc with tooltip
 (tooltip-mode +1)
