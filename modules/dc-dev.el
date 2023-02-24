@@ -192,18 +192,53 @@
 ;;*** Magit
 
 (setup (:pkg magit)
-  (:also-load magit-todos)
   (:global "C-M-;" magit-status)
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (setup (:pkg magit-todos)
+  (:load-after magit)
   (magit-todos-mode))
+
+;; interface to git-tbdiff, gives better control over git ranges
+(setup (:pkg magit-tbdiff :straight t)
+  (:load-after magit))
+
+;; TODO: interactive: magit-tbdiff-ranges
+;; TODO: interactive: magit-tbdiff-revs
+;; TODO: interactive: magit-tbdiff-with-base
+;; TODO: interactive: magit-tbdiff-save
 
 ;;*** Git
 
 (setup (:pkg git-link)
   (:option git-link-open-in-browser t))
 
+;; control-f8, like facebook's conference
+(setup (:pkg git-timemachine))
+
+;; TODO: DOOM: defadvice! +vc-support-git-timemachine-a (fn)
+;; TODO: DOOM: defadvice! +vc-update-header-line-a (revision)
+;; TODO: DOOM: keybindings
+  ;; (map! :map git-timemachine-mode-map
+  ;;       :n "C-p" #'git-timemachine-show-previous-revision
+  ;;       :n "C-n" #'git-timemachine-show-next-revision
+  ;;       :n "gb"  #'git-timemachine-blame
+  ;;       :n "gtc" #'git-timemachine-show-commit)
+
+;;*** Forge
+(setup (:pkg forge))
+
+(setup (:pkg repology))
+;; TODO: repology interactives/customs:
+;; https://github.com/emacs-straight/repology/blob/master/repology.el
+
+;;*** Repo
+;; For Google Repo
+(setup (:pkg repo))
+;; TODO: repo interactives/customs: repo-status, repo-init...
+
+
+;;*** Git Timemachine
 ;;** Formatting
 
 (setup (:pkg apheleia)

@@ -72,6 +72,45 @@
         (file-name-as-directory (file-name-concat org-directory "calendars"))))
 
 (defun dc/org-init-appearance-h ()
+  ;; TODO try org-modern. it is unlikely to conflict but other packages that
+  ;; customize faces will no longer be hooked in ...
+
+  ;; ... and i didn't know that (append ... ) supports thee whenlets. it's great
+  ;; when evil is not half/dis/advised and features like xref just work (sorry
+  ;; doom). i'm sure it works for 99% of the emacs users who use avim. just not
+  ;; me.
+
+  ;; (setup (:pkg org-modern)
+  ;;   (global-org-modern-mode))
+  ;; customs:
+  ;; -label-border 'auto
+  ;; -star '( stars...)
+  ;; -hide-stars 'leading
+  ;; -timestamp t
+  ;; -table t
+  ;; -priority t
+  ;; -list '((a . list))
+  ;; -checkbox '((a . list))
+  ;; -horizontal-rule t
+  ;; -todo t
+  ;; -todo-faces nil; '((a . list))
+  ;; -priority-faces nil; '((a . list))
+  ;; -tag t
+  ;; -block-name t
+  ;; -block-fringe 0
+  ;; -keyword t
+  ;; -footnote '('defs 'refs)
+  ;; -internal-target t
+  ;; -radio-target choice
+  ;; -statitistics t
+  ;; -progress list
+  ;;
+  ;; org-modern-faces:
+
+
+  (setup (:pkg org-appear)
+    (:hook-into org-mode))
+
   (setq org-indirect-buffer-display 'current-window
         ;; turned off by org-indent-mode when the following is set (default)
         ;; org-adapt-indentation nil

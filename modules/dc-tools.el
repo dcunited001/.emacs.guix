@@ -183,10 +183,18 @@
 ;;*** GNU Plot
 
 ;;*** Graphviz/Dot
+(setup (:pkg graphviz-dot-mode)
+  ;; TODO setup graphviz
+  )
+
+;; (setup (:pkg dynamic-graphs :straight t))
 
 ;;*** PlantUML
 
 ;;** Misc
+
+;;*** Science
+(setup (:pkg smiles-mode :straight t))
 
 ;;*** Translation
 (setup (:pkg google-translate)
