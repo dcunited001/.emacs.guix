@@ -201,6 +201,28 @@
           ("NO"   . +org-todo-cancel)
           ("KILL" . +org-todo-cancel))))
 
+;; TODO: see if-let, when-let and doom add-hook! (building func-forms)
+;; (defmacro dc/hook-in-derived-modes (mode &rest keyd)
+;;   (let (except)
+;;     (while (keywordp (car keyd))
+;;       (pcase (pop keyd)
+;;         (:except (push except (pop keyd)))))
+;;     (if-let* ((body (ensure-list keyd))
+;;               (keysym? (symbolp (car body))))
+;;         (if (fboundp (car body))
+;;             ;; TODO bind this-mode
+;;             `(dolist (k body)
+;;                (if-not (memq this-mode except)
+;;                        (add-hook mode #',k)))
+;;           `(dolist (mode (,mode))
+;;              (if-not (memq this-mode except)
+;;                        (add-hook mode )))))
+;;     ;; (when-let ((fnsym ((and (fboundp (car body)) (car body)))))
+;;     ;;   (dolist (mode)))
+;;     ;; (let (body keyd)
+;;     ;;   (when symbol))
+;;     ))
+
 (defun dw/org-derived-disable-line-numbers ()
   ;; linums are already off unless toggled, but it was a bit tough to find out
   ;; how to handle derived modes. can exclude the parent mode by casing the
