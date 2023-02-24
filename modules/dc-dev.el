@@ -191,13 +191,13 @@
 
 ;;*** Magit
 
-(setup (:pkg magit)
-  (:global "C-M-;" magit-status)
-  (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
 (setup (:pkg magit-todos)
   (:load-after magit)
   (magit-todos-mode))
+
+(setup (:pkg magit)
+  (:global "C-M-;" magit-status)
+  (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 ;; interface to git-tbdiff, gives better control over git ranges
 (setup (:pkg magit-tbdiff :straight t)

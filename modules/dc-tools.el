@@ -90,43 +90,13 @@
 ;;*** XDG Paths
 (setup (:pkg xdg-paths :straight t))
 
-;;** VCS
-
-;;*** Repo
-;; For Google Repo
-(setup (:pkg repo))
-;; TODO: repo interactives/customs: repo-status, repo-init...
-
-;;*** Repology
-(setup (:pkg repology))
-;; TODO: repology interactives/customs:
-;; https://github.com/emacs-straight/repology/blob/master/repology.el
-
-;;*** Git Timemachine
-;; control-f8, like facebook's conference
-(setup (:pkg git-timemachine))
-
-;; TODO: DOOM: defadvice! +vc-support-git-timemachine-a (fn)
-;; TODO: DOOM: defadvice! +vc-update-header-line-a (revision)
-;; TODO: DOOM: keybindings
-  ;; (map! :map git-timemachine-mode-map
-  ;;       :n "C-p" #'git-timemachine-show-previous-revision
-  ;;       :n "C-n" #'git-timemachine-show-next-revision
-  ;;       :n "gb"  #'git-timemachine-blame
-  ;;       :n "gtc" #'git-timemachine-show-commit)
-
-;;*** Magit tbdiff
-;; interface to git-tbdiff, gives better control over git ranges
-(setup (:pkg magit-tbdiff :straight t))
-
-;; TODO: interactive: magit-tbdiff-ranges
-;; TODO: interactive: magit-tbdiff-revs
-;; TODO: interactive: magit-tbdiff-with-base
-;; TODO: interactive: magit-tbdiff-save
-
 ;;** SSH
 
 ;;*** Tramp
+;; TODO: look into Tramp "nc" method for busybox. will it exec babel scripts on DDWRT?
+;; - can it connect to ddwrt with /bin/ash?
+;; TODO: tramp: configure tramp-remote-path and basic tramp-connection properties
+
 ;; (unless (bound-and-true-p tramp-remote-path)
 ;;   (setq tramp-remote-path
 ;;         '("~/.guix-profile/bin"
