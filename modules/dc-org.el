@@ -241,8 +241,8 @@
 
 (defun dc/org-init-roam-h ()
 
-  (setup (:pkg org-roam)
-    (:option))
+  ;; (setup (:pkg org-roam)
+  ;;   (:option))
 
   (setup (:pkg org-roam-ui)
     (:load-after org-roam)
