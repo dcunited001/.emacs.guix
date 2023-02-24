@@ -428,6 +428,7 @@
   (dc/org-init-capture-defaults-h)
   (dc/org-init-capture-frame-h)
   (dc/org-init-custom-links-h)
+  (dc/org-init-formatting-h)
   (dc/org-init-export-h)
   (dc/org-init-habit-h)
   (dc/org-init-hacks-h)

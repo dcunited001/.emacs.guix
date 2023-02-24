@@ -258,7 +258,12 @@
               ;; lfe-mode
               ;; dune-mode
               ;; fennel-mode
-              clojure-mode))
+              clojure-mode)
+
+  ;; TODO if overriding doesn't work, catch the error and switch
+  ;; (defun dc/lispy-catch-goto-symbol ())
+
+  (advice-add 'lispy-goto-symbol-elisp :override #'xref-find-definitions '(name "dc/nanon")))
 
 ;;*** Emacs Lisp
 
