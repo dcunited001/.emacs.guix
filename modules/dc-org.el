@@ -56,8 +56,7 @@
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (setq-local corfu-auto nil
-              ef-themes-mixed-fonts t))
+  (setq-local corfu-auto nil))
 
 ;;** Org Load Hooks
 ;; these run when org first loads

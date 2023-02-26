@@ -117,7 +117,8 @@
 
 ;;*** Themes
 
-(setup (:pkg ef-themes))
+(setup (:pkg ef-themes)
+  (:option ef-themes-mixed-fonts t))
 (ef-themes-load-random)
 
 ;;*** Font
