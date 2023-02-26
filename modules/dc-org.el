@@ -56,7 +56,8 @@
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (setq corfu-auto nil))
+  (setq-local corfu-auto nil
+              ef-themes-mixed-fonts t))
 
 ;;** Org Load Hooks
 ;; these run when org first loads
@@ -280,7 +281,7 @@
                (:name "Overdue" :deadline past)
                (:name "Due soon" :deadline future)
                (:name "Important" :priority "A")
-               (:priority<= "B":order 1)))
+               (:priority<= "B" :order 1)))
 
     (org-super-agenda-mode +1)))
 

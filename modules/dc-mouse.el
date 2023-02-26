@@ -98,8 +98,6 @@
 
 ;; hmmm how to refactor?
 (defun dc/mousemaps-rebind-mouse-split ()
-  (unbind-key "<mode-line> <mouse-2>")  ;mouse-delete-other-windows
-  (unbind-key "<mode-line> <mouse-3>")  ;mouse-delete-window
   (let* ((mouse-contexts
           '(("<right-divider>" . "mouse-split-window-vertically")
             ("<vertical-line>" . "mouse-split-window-vertically")
@@ -125,6 +123,8 @@
 
     (macroexpand-all (general-unbind ,@mouse-unbinds))
     (apply #'general-define-key :keymaps 'global mouse-rebinds)))
+(unbind-key "<mode-line> <mouse-2>")  ;mouse-delete-other-windows
+(unbind-key "<mode-line> <mouse-3>")  ;mouse-delete-window
 
 ;; TODO: get the code below to work with two-finger gestures on laptop
 ;; '((#'select-frame-by-name . ("s-<mouse-9>" "s-<wheel-right>")))
