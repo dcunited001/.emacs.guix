@@ -49,6 +49,7 @@
 
  ;; can insert values with embark
  "M-v" #'getenv
+ "M-k" #'describe-keymap
  "B" #'embark-bindings
  "M-b" #'embark-bindings-in-keymap
  "M-f" #'list-faces-display)
@@ -57,7 +58,7 @@
 ;; or use the following (which may only work for general definitions)
 ;; (general-auto-unbind-keys)
 
-(defvar dc/keys-unbound-at-init
+(defvar dc/keymaps-unbound-at-init
   ;; the app doesn't need to tell i3 what to do
   ;; OS/WM functions should use super-key
   '("<f11>"
@@ -73,9 +74,12 @@
     "<f3>"
     "<f4>"
 
-    ;; tab prev-next
+    ;; tab prev/next
     "C-<tab>"
     "C-S-<tab>"
+
+    ;; org-agenda
+    "C-x 1"                   ;delete-other-windows (if i want it ,i 'll M-x it)
 
     ;; unbind menubar shortcuts
     ;; TODO what to do about terminal compat
@@ -89,7 +93,7 @@
 ;; (fset 'dc/unbind-key (macroexpand-all '(unbind-key k)))
 ;; (seq-do (symbol-function 'dc/unbind-key) dc/keys-unbound-at-init)
 
-(seq-do (lambda (key) (unbind-key key)) dc/keys-unbound-at-init)
+(seq-do (lambda (key) (unbind-key key)) dc/keymaps-unbound-at-init)
 
 ;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
 ;; and if you buy right now, we'll double your function keys
@@ -331,6 +335,13 @@
 
 ;;*** Window Management
 
+;;*** Jump
+
+(leader-def
+    "j"   '(:ignore t :which-key "jump")
+    "jj"  '(avy-goto-char :which-key "jump to char")
+    "jw"  '(avy-goto-word-0 :which-key "jump to word")
+    "jl"  '(avy-goto-line :which-key "jump to line"))
 
 ;;*** Shell
 
@@ -501,6 +512,28 @@
 ;;         :desc "Add cursor w/mouse" "<mouse-1>" #'mc/add-cursor-on-click))
 
 ;;*** n NOTES
+
+(global-leader-def
+  :keymaps 'global
+  :wk-full-keys nil
+  "1" '(:ignore t :wk "AGENDA")
+  "1 C-x" #'org-agenda
+  "1 1" #'org-agenda)
+
+(global-leader-def
+  :keymaps 'org-mode-map
+  :wk-full-keys nil
+  "1 s" #'org-schedule)
+
+(leader-def
+  :keymaps 'org-mode-map
+  :wk-full-keys nil
+  "4" 'org-archive-subtree)
+
+(global-leader-def
+  :keymaps 'org-agenda-mode-map
+  :wk-full-keys nil
+  "1 s" #'org-agenda-schedule)
 
 ;; (dw/ctrl-c-keys
 ;;   "o"   '(:ignore t :which-key "org mode")
@@ -735,13 +768,16 @@
   "t1" #'flycheck-mode
   "t!" #'flymake-mode
   "t M-f" #'toggle-frame-fullscreen
+  "tG" #'gud-tooltip-mode
   ;; "ti" #'highlight-indent-guides-mode
   ;; "tI" #'doom/toggle-indent-style"
   "tl" #'display-line-numbers-mode
   ;; "tp" #'org-tree-slide-mode
   ;; "tr" #'read-only-mode
   "ts" #'flyspell-mode
-  "tv" #'visible-mode
+  "tv" #'visual-line-mode
+  "tV" #'visual-fill-column-mode
+  "t M-v" #'visible-mode
   ;; "tw" #'visual-line-mode
   ;; "tw" #'+word-wrap-mode
   "tN" #'dc/toggle-native-comp-async-report-warnings-errors)

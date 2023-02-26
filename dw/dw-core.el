@@ -201,16 +201,11 @@
   (show-paren-mode 1))
 
 (setup (:pkg visual-fill-column)
+  ;; (:hook-into org-mode)
   (setq visual-fill-column-width 110
-        visual-fill-column-center-text t)
-  (:hook-into org-mode))
+        visual-fill-column-center-text t))
 
-(setup (:pkg avy)
-  (leader-def
-    "j"   '(:ignore t :which-key "jump")
-    "jj"  '(avy-goto-char :which-key "jump to char")
-    "jw"  '(avy-goto-word-0 :which-key "jump to word")
-    "jl"  '(avy-goto-line :which-key "jump to line")))
+(setup (:pkg avy))
 
 ;;*** Window Management
 

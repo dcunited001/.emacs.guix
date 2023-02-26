@@ -148,6 +148,12 @@
                     :height (dw/system-settings-get 'emacs/variable-face-size)
                     :weight 'light)
 
+;; TODO: interactive: set a specific frame's font
+;; (set-frame-font)
+;; (defun dc/set-frame-font (&rest keys)
+;;  (while-let ((next)))
+;;  (let ((face ()))))
+
 ;;*** Window Dividers
 ;; - requires window-divider-mode being on
 ;;   - window-divider-default-places t sets to both 'bottom and 'right
@@ -229,8 +235,6 @@
                                       helpful-mode
                                       compilation-mode
                                       elfeed-mode
-                                      "^\\*lsp-ui-imenu"
-                                      "^\\*Bufler"
                                       "^\\*Guix"))
   (require 'popper) ;; Needed because I disabled autoloads
   (popper-mode 1))
@@ -403,6 +407,11 @@
   ;; consult-preview-raw-size 524288
   ;; consult-preview-max-count 10
   ;; consult-preview-excluded-files '(regexp list...)
+
+
+  ;; TODO: Optionally make narrowing help available in the minibuffer.
+  ;; You may want to use `embark-prefix-help-command' or which-key instead.
+  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
   (:option consult-narrow-key "C-="
            consult-project-root-function #'dw/get-project-root

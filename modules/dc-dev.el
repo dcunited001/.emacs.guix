@@ -268,6 +268,8 @@
 ;;*** Emacs Lisp
 
 (setup emacs-lisp-mode)
+;; NOTE: doesn't work (separate debugging system, hoped to get lucky)
+;; (add-to-list 'gud-tooltip-modes 'emacs-lisp-mode)
 
 ;; exhibits the same problem as helpful-mode:
 ;; - https://github.com/doomemacs/doomemacs/issues/6127

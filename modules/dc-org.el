@@ -232,34 +232,57 @@
     (add-hook mode (lambda () (display-line-numbers-mode 0)))))
 
 (defun dc/org-init-agenda-h ()
-  (setq-default
-   ;; Different colors for different priority levels
-   org-agenda-deadline-faces
-   '((1.001 . error)
-     (1.0 . org-warning)
-     (0.5 . org-upcoming-deadline)
-     (0.0 . org-upcoming-distant-deadline))
-   ;; Don't monopolize the whole frame just for the agenda
-   org-agenda-window-setup 'current-window
-   org-agenda-skip-unavailable-files t
-   ;; Shift the agenda to show the previous 3 days and the next 7 days for
-   ;; better context on your week. The past is less important than the future.
-   org-agenda-span 10
-   org-agenda-start-on-weekday nil
-   org-agenda-start-day "-3d"
-   ;; Optimize `org-agenda' by inhibiting extra work while opening agenda
-   ;; buffers in the background. They'll be "restarted" if the user switches to
-   ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
-   org-agenda-inhibit-startup t
+  (setup org-agenda
+    (:option
+     ;; start with empty org-agenda-files
+     org-agenda-files '()
+     org-clock-auto-clockout-timer 300)
 
-   org-log-done 'time
-   ;; org-log-into-drawer t
-   )
+    (setq-default
+     ;; Different colors for different priority levels
+     org-agenda-deadline-faces
+     '((1.001 . error)
+       (1.0 . org-warning)
+       (0.5 . org-upcoming-deadline)
+       (0.0 . org-upcoming-distant-deadline))
+     ;; Don't monopolize the whole frame just for the agenda
+     org-agenda-window-setup 'current-window
+     org-agenda-skip-unavailable-files t
+     ;; Shift the agenda to show the previous 3 days and the next 7 days for
+     ;; better context on your week. The past is less important than the future.
+     org-agenda-span 10
+     org-agenda-start-on-weekday nil
+     org-agenda-start-day "-3d"
+     ;; Optimize `org-agenda' by inhibiting extra work while opening agenda
+     ;; buffers in the background. They'll be "restarted" if the user switches to
+     ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
+     org-agenda-inhibit-startup t
 
-  ;; start with empty org-agenda-files
-  (setq org-agenda-files '())
+     org-log-done 'time
+     ;; org-log-into-drawer t
+     )
+
+    (org-clock-auto-clockout-insinuate))
+
   )
 
+(defun dc/org-init-agenda-h ()
+  (setup (:pkg org-ql))
+
+  (setup (:pkg org-super-agenda)
+    (:load-after org-ql)
+    (:option org-super-agenda-header-separator ""
+
+             org-super-agenda-groups
+             '((:name "Today" :time-grid t :todo "Today")
+               (:habit t)
+               (:name "Due today" :deadline today)
+               (:name "Overdue" :deadline past)
+               (:name "Due soon" :deadline future)
+               (:name "Important" :priority "A")
+               (:priority<= "B":order 1)))
+
+    (org-super-agenda-mode +1)))
 
 (defun dc/org-init-roam-h ()
 
@@ -296,8 +319,6 @@
              ;; org-confirm-babel-evaluate nil
              org-link-elisp-confirm-function 'y-or-n-p
              org-link-shell-confirm-function 'y-or-n-p))
-
-
 
 
   ;; TODO org-babel's default async (no session) behavior may cause problems with
@@ -443,6 +464,7 @@
   (dc/org-init-org-directory-h)
   (dc/org-init-appearance-h)
   (dc/org-init-agenda-h)
+  (dc/org-init-super-agenda-h)
   (dc/org-init-roam-h)
   (dc/org-init-attachments-h)
   (dc/org-init-babel-h)
@@ -457,6 +479,8 @@
   (dc/org-init-keybinds-h)
   (dc/org-init-popup-rules-h)
   ;; (dc/org-init-smartparens-h)
+
+  ;; TODO: doom ignores org-babel-do-load-languages and lazy loads
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)))

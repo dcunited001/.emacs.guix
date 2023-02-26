@@ -107,6 +107,7 @@
   (:option tramp-default-method "ssh"))
 
 (with-eval-after-load 'tramp
+  (require 'tramp-container)
   (add-to-list 'tramp-remote-path
                '("~/.guix-profile/bin"
                  "~/.guix-profile/sbin"

@@ -70,6 +70,8 @@
 ;;
 ;;; Code:
 
+(setup (:pkg a))
+
 ;; shamelessly copy
 (defun +popup-shink-to-fit (&optional window)
   "Shrinks WINDOW to fit the buffer contents, if the buffer isn't empty."
@@ -193,7 +195,7 @@
          (("^\\*Ledger Report" :size 0.5 :quit 'other :ttl 0)
           ("^\\*Ledger Error"  :quit t :ttl 0)))))
 
-(setq dc/popup-rules
+(setq dc/doom-popup-custom-rules
       '((lsp
          (("^\\*lsp-ui-imenu" :side left :width 60
            :vslot -5 :slot 3

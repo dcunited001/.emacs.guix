@@ -287,7 +287,6 @@
   (vhash-consq
    'devops
    (list->vlist '("emacs-docker"
-                  "emacs-docker-tramp"
                   "emacs-dockerfile-mode"))
    guix-emacs-vhash))
 
