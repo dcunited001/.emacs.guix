@@ -464,7 +464,6 @@
   (dc/org-init-org-directory-h)
   (dc/org-init-appearance-h)
   (dc/org-init-agenda-h)
-  (dc/org-init-super-agenda-h)
   (dc/org-init-roam-h)
   (dc/org-init-attachments-h)
   (dc/org-init-babel-h)

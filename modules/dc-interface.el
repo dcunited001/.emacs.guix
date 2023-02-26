@@ -154,6 +154,9 @@
 ;;  (while-let ((next)))
 ;;  (let ((face ()))))
 
+;; -JB-JetBrains Mono-regular-normal-normal-*-12-*-*-*-d-0-iso10646-1
+;; -JB-JetBrains Mono-regular-normal-normal-*-14-*-*-*-d-0-iso10646-1
+
 ;;*** Window Dividers
 ;; - requires window-divider-mode being on
 ;;   - window-divider-default-places t sets to both 'bottom and 'right
@@ -413,9 +416,11 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
-  (:option consult-narrow-key "C-="
-           consult-project-root-function #'dw/get-project-root
-           completion-in-region-function #'consult-completion-in-region))
+  ;; consult-narrow-key "C-=" ; doesn't work
+  ;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
+  (:option consult-narrow-key "<f12> ="
+   consult-project-root-function #'dw/get-project-root
+   completion-in-region-function #'consult-completion-in-region))
 
 ;;*** ConsultDir
 
