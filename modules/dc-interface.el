@@ -118,8 +118,8 @@
 ;;*** Themes
 
 (setup (:pkg ef-themes)
-  (:option ef-themes-mixed-fonts t))
-(ef-themes-load-random)
+  (:option ef-themes-mixed-fonts t)
+  (add-hook 'desktop-after-read-hook (ef-themes-select 'ef-bio)))
 
 ;;*** Font
 

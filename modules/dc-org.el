@@ -291,6 +291,15 @@
 
   (setup (:pkg org-roam-ui)
     (:load-after org-roam)
+    (:option org-roam-dailies-directory "dailies/"
+             dc/org-roam-dailies-dir
+             (file-name-as-directory (concat org-roam-directory
+                                             org-roam-dailies-directory))
+             dc/most-recent-roam-dailies-take-last 5
+             dc/most-recent-roam-dailies
+             (-> (directory-files dc/org-roam-dailies-dir nil ".org$")
+                 (sort #'string<)
+                 (last 5)))
     (defun org-roam-ui-open ()
       "Ensure the server is active, then open the roam graph."
       (interactive)

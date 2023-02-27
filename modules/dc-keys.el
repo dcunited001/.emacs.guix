@@ -23,36 +23,10 @@
 ;; SOFTWARE.
 
 
-;;* Keys
+;;* Keys Pre
 ;; see ./emacs/$version/lisp/bindings.el for defaults
 
-
-
-;;** Globals
-
-(general-define-key
- :keymaps 'global
-
- "C-x o" #'ace-window
- "C-x C-d" #'consult-dir
-
- ;; (define-key evil-window-map "u" 'winner-undo)
- ;; (define-key evil-window-map "U" 'winner-redo)
-
- "C-M-k" #'tab-bar-switch-to-tab
- "C-<next>" #'tab-bar-switch-to-next-tab
- "C-<prior>" #'tab-bar-switch-to-prev-tab)
-
-(general-define-key
- :keymaps '(global help)
- :prefix "C-h"
-
- ;; can insert values with embark
- "M-v" #'getenv
- "M-k" #'describe-keymap
- "B" #'embark-bindings
- "M-b" #'embark-bindings-in-keymap
- "M-f" #'list-faces-display)
+;;** Setup
 
 ;;*** unbind function keys
 ;; or use the following (which may only work for general definitions)
@@ -87,7 +61,14 @@
     "S-<f10>"                           ;context-menu-open
     "C-<f10>"                           ;buffer-menu-open
     "M-<f10>"                           ;toggle-frame-maximized
-    "ESC <f10>"))                ;toggle-frame-maximized
+    "ESC <f10>"                         ;toggle-frame-maximized
+
+    ;; unbinding from global will yield quick help for which-key
+    "<f1> <f1>"                         ;help-for-help (dup keybind)
+
+    ;; bind to quick functions (loading/themes/etc) a la doom
+    "<f1> <f2>"                         ;no standard binding
+    ))
 
 ;;**** trying to pack a lambda into a symbol
 ;; (fset 'dc/unbind-key (macroexpand-all '(unbind-key k)))
@@ -98,6 +79,55 @@
 ;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
 ;; and if you buy right now, we'll double your function keys
 ;; chromebooks and macbooks not applicable
+
+;;* Keys
+
+;;** Help
+
+;; NOTE: need to specify both global & help so f1 will substitute as C-h
+;;
+;; when general new prefixes maps on C-h help, which-key descriptions are not
+;; set on <f1> prefixs
+;;
+;; general.el suggests managing which-key alists directly in some cases
+(cl-dolist (pfx '("C-h" "<f1>"))
+  (general-define-key
+   :keymaps '(global help)
+   :wk-full-keys nil
+   :prefix pfx
+   "<f2>" '(:ignore t :which-key "QUICK")
+   "<f2> r" '(:ignore t :which-key "RELOAD")
+   "<f2> t" '(:ignore t :which-key "THEME")
+   "<f2> tr" #'ef-themes-load-random
+   "<f2> ts" #'ef-themes-select
+   "<f2> tt" #'ef-themes-toggle))
+
+;;** Globals
+
+(general-define-key
+ :keymaps 'global
+
+ "C-x o" #'ace-window
+ "C-x C-d" #'consult-dir
+
+ ;; (define-key evil-window-map "u" 'winner-undo)
+ ;; (define-key evil-window-map "U" 'winner-redo)
+
+ "C-M-k" #'tab-bar-switch-to-tab
+ "C-<next>" #'tab-bar-switch-to-next-tab
+ "C-<prior>" #'tab-bar-switch-to-prev-tab)
+
+(cl-dolist (pfx '("C-h" "<f1>"))
+  (general-define-key
+   :keymaps '(global help)
+   :prefix pdf
+
+   ;; can insert values with embark
+   "M-v" #'getenv
+   "M-k" #'describe-keymap
+   "B" #'embark-bindings
+   "M-b" #'embark-bindings-in-keymap
+   "M-f" #'list-faces-display))
 
 ;;*** global-leader-key (C-x, f2)
 ;; this helps balance keyboard usage, giving and gives your pinky a break
@@ -161,6 +191,7 @@
 
 ;;*** Consult
 
+;;**** remaps (consult)
 (general-define-key
  :keymaps 'global
 
@@ -182,6 +213,7 @@
  ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
  [remap yank-pop]                      #'consult-yank-pop)
 
+;;**** globals (consult)
 (general-define-key
  :keymaps 'global
 
@@ -934,6 +966,8 @@
 ;;**** sgml-mode
 
 ;;**** html-mode
+
+;;* Keys Post
 
 ;;** Map leader-keys to all maps
 
