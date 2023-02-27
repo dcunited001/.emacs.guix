@@ -90,17 +90,23 @@
 ;; set on <f1> prefixs
 ;;
 ;; general.el suggests managing which-key alists directly in some cases
-(cl-dolist (pfx '("C-h" "<f1>"))
-  (general-define-key
-   :keymaps '(global help)
-   :wk-full-keys nil
-   :prefix pfx
-   "<f2>" '(:ignore t :which-key "QUICK")
-   "<f2> r" '(:ignore t :which-key "RELOAD")
-   "<f2> t" '(:ignore t :which-key "THEME")
-   "<f2> tr" #'ef-themes-load-random
-   "<f2> ts" #'ef-themes-select
-   "<f2> tt" #'ef-themes-toggle))
+(defun dc/init-keybinds-quick ()
+  (dolist (pfx '("C-h" "<f1>"))
+    (message pfx)
+    (general-define-key
+     :keymaps '(global help)
+     :wk-full-keys nil
+     :prefix pfx
+     "<f2>" '(:ignore t :which-key "QUICK")
+     "<f2> d" '(:ignore t :which-key "DESKTOP")
+     "<f2> ds" #'desktop-save-in-desktop-dir
+     "<f2> dS" #'desktop-save
+     "<f2> dr" #'desktop-read
+     "<f2> r" '(:ignore t :which-key "RELOAD")
+     "<f2> t" '(:ignore t :which-key "THEME")
+     "<f2> tr" #'ef-themes-load-random
+     "<f2> ts" #'ef-themes-select
+     "<f2> tt" #'ef-themes-toggle)))
 
 ;;** Globals
 
@@ -117,17 +123,18 @@
  "C-<next>" #'tab-bar-switch-to-next-tab
  "C-<prior>" #'tab-bar-switch-to-prev-tab)
 
-(cl-dolist (pfx '("C-h" "<f1>"))
-  (general-define-key
-   :keymaps '(global help)
-   :prefix pdf
+(defun dc/init-keybinds-help ()
+  (dolist (pfx '("C-h" "<f1>"))
+    (general-define-key
+     :keymaps '(global help)
+     :prefix pfx
 
-   ;; can insert values with embark
-   "M-v" #'getenv
-   "M-k" #'describe-keymap
-   "B" #'embark-bindings
-   "M-b" #'embark-bindings-in-keymap
-   "M-f" #'list-faces-display))
+     ;; can insert values with embark
+     "M-v" #'getenv
+     "M-k" #'describe-keymap
+     "B" #'embark-bindings
+     "M-b" #'embark-bindings-in-keymap
+     "M-f" #'list-faces-display)))
 
 ;;*** global-leader-key (C-x, f2)
 ;; this helps balance keyboard usage, giving and gives your pinky a break
@@ -422,20 +429,25 @@
 
 ;;*** &/7 SNIPPETS
 
-(cl-dolist (pfx '("&" "7"))
-  (leader-def
-    :keymaps 'global
-    :wk-full-keys nil
-    ;; doesn't generate :wk
-    ;; :prefix (concat "C-c " pfx)
+(defun dc/init-keybinds-yasnippet ()
+  (dolist (pfx '("&" "7"))
+    (leader-def
+      :keymaps '(yas-minor-mode-map)
+      :wk-full-keys nil
+      ;; doesn't generate :wk
+      ;; :prefix (concat "C-c " pfx)
 
-    pfx '(:ignore t :wk "SNIPPETS")
-    (concat pfx "n") #'yas-new-snippet
-    (concat pfx "i") #'yas-insert-snippet
-    (concat pfx "/") #'yas-visit-snippet-file
-    (concat pfx "r") #'yas-reload-all))
-    ;; "c" #'aya-create
-    ;; "e" #'aya-expand
+      pfx '(:ignore t :wk "SNIPPETS")
+      (concat pfx "n") #'yas-new-snippet
+      (concat pfx "i") #'yas-insert-snippet
+      (concat pfx "/") #'yas-visit-snippet-file
+      (concat pfx "r") #'yas-reload-all
+      ;; "c" #'aya-create
+      ;; "e" #'aya-expand
+      )))
+
+;; this looped setup runs fine
+(dc/init-keybinds-yasnippet)
 
 ;;*** c CODE
 
@@ -968,6 +980,13 @@
 ;;**** html-mode
 
 ;;* Keys Post
+
+;;** Run Looped Keybinds
+;; TODO there must be something affecting how help bindings are setup
+;; this must run after emacs sets up
+;; the f1 bindings aren't translated from C-h. must be happening in emacs
+(add-hook 'emacs-startup-hook #'dc/init-keybinds-quick)
+(add-hook 'emacs-startup-hook #'dc/init-keybinds-help)
 
 ;;** Map leader-keys to all maps
 
