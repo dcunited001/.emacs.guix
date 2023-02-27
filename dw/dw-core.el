@@ -200,27 +200,6 @@
   (setq visual-fill-column-width 110
         visual-fill-column-center-text t))
 
-(setup (:pkg avy))
-
-;;*** Window Management
-
-(setup (:pkg ace-window)
-  (:option aw-scope 'frame
-           aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-           aw-minibuffer-flag t)
-  (ace-window-display-mode 1))
-
-(setup winner
-  (winner-mode))
-
-;; (setq display-buffer-base-action
-;;       '(display-buffer-reuse-mode-window
-;;         display-buffer-reuse-window
-;;         display-buffer-same-window))
-
-;; If a popup does happen, don't resize windows to be equal-sized
-(setq even-window-sizes nil)
-
 ;;*** Dired
 
 (setup (:pkg all-the-icons-dired :straight t))

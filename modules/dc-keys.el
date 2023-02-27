@@ -68,6 +68,16 @@
 
     ;; bind to quick functions (loading/themes/etc) a la doom
     "<f1> <f2>"                         ;no standard binding
+
+    ;; shouldn't be using arrows
+    "C-S-<up>"                          ;left/right-word
+    "C-S-<down>"
+
+    ;; globally, bound to the same function
+    "M-S-<left>"                        ;translate to M/C-<left/right>
+    "M-S-<right>"
+    "C-S-<left>"
+    "C-S-<right>"
     ))
 
 ;;**** trying to pack a lambda into a symbol
@@ -102,27 +112,13 @@
      "<f2> ds" #'desktop-save-in-desktop-dir
      "<f2> dS" #'desktop-save
      "<f2> dr" #'desktop-read
+     "<f2> O" #'aw-show-dispatch-help
      "<f2> P" #'pomm
      "<f2> r" '(:ignore t :which-key "RELOAD")
      "<f2> t" '(:ignore t :which-key "THEME")
      "<f2> tr" #'ef-themes-load-random
      "<f2> ts" #'ef-themes-select
      "<f2> tt" #'ef-themes-toggle)))
-
-;;** Globals
-
-(general-define-key
- :keymaps 'global
-
- "C-x o" #'ace-window
- "C-x C-d" #'consult-dir
-
- ;; (define-key evil-window-map "u" 'winner-undo)
- ;; (define-key evil-window-map "U" 'winner-redo)
-
- "C-M-k" #'tab-bar-switch-to-tab
- "C-<next>" #'tab-bar-switch-to-next-tab
- "C-<prior>" #'tab-bar-switch-to-prev-tab)
 
 (defun dc/init-keybinds-help ()
   (dolist (pfx '("C-h" "<f1>"))
@@ -136,6 +132,28 @@
      "B" #'embark-bindings
      "M-b" #'embark-bindings-in-keymap
      "M-f" #'list-faces-display)))
+
+;;** Globals
+
+;;*** UI
+
+(general-define-key
+ :keymaps 'global
+
+ "C-x o" #'ace-window
+ "C-x C-d" #'consult-dir
+
+ ;; (define-key evil-window-map "u" 'winner-undo)
+ ;; (define-key evil-window-map "U" 'winner-redo)
+
+ "C-M-k" #'tab-bar-switch-to-tab
+ "C-<next>" #'tab-bar-switch-to-next-tab
+ "C-<prior>" #'tab-bar-switch-to-prev-tab
+
+ "<C-S-up>" #'buf-move-up
+ "<C-S-down>" #'buf-move-down
+ "<C-S-left>" #'buf-move-left
+ "<C-S-right>" #'buf-move-right)
 
 ;;*** global-leader-key (C-x, f2)
 ;; this helps balance keyboard usage, giving and gives your pinky a break

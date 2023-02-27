@@ -128,6 +128,7 @@
 
                   "emacs-avy"
                   "emacs-ace-window"
+                  "emacs-buffer-move"
 
                   "emacs-default-text-scale"
 
