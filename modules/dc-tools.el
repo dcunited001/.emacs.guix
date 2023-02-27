@@ -34,6 +34,9 @@
 (with-eval-after-load 'info
   (require 'info+))
 
+;;** Guix
+(setup (:pkg esup)
+  (:option esup-depth 0))
 
 ;;** Guix
 ;; TODO how to handle geiser/guile when sourced from straight?

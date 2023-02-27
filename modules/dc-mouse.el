@@ -121,10 +121,12 @@
            ;;                      (symbol-function (intern fn-str))))
            nil mouse-contexts)))
 
-    (macroexpand-all (general-unbind ,@mouse-unbinds))
+    (cl-dolist (kbd mouse-unbinds) (unbind-key kbd))
     (apply #'general-define-key :keymaps 'global mouse-rebinds)))
+
 (unbind-key "<mode-line> <mouse-2>")  ;mouse-delete-other-windows
 (unbind-key "<mode-line> <mouse-3>")  ;mouse-delete-window
+(dc/mousemaps-rebind-mouse-split)
 
 ;; TODO: get the code below to work with two-finger gestures on laptop
 ;; '((#'select-frame-by-name . ("s-<mouse-9>" "s-<wheel-right>")))

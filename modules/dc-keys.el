@@ -105,11 +105,17 @@
 ;; this prefix should find itself associated with
 ;; editor features, global state and outward-looking functions
 (global-leader-def
+  :wk-full-keys nil
   "g" #'guix
-  "G" #'guix
+  "G" '(:ignore t :which-key "DEBBUGS")
+  "Gb" #'debbugs-gnu-bugs
+  "Gg" #'debbugs-gnu-guix-search
+  "Gs" #'debbugs-gnu-search
+  "Gp" #'debbugs-gnu-package
   "T" #'tldr
   "<left>" #'winner-undo
-  "<right>" #'winner-redo)
+  "<right>" #'winner-redo
+  "X M-e" #'esup)
 
 ;;*** leader-key (C-c, f12)
 

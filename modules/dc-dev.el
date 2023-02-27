@@ -213,6 +213,7 @@
 (setup (:pkg git-link)
   (:option git-link-open-in-browser t))
 
+;;*** Git Timemachine
 ;; control-f8, like facebook's conference
 (setup (:pkg git-timemachine))
 
@@ -237,8 +238,6 @@
 (setup (:pkg repo))
 ;; TODO: repo interactives/customs: repo-status, repo-init...
 
-
-;;*** Git Timemachine
 ;;** Formatting
 
 (setup (:pkg apheleia)

@@ -412,7 +412,6 @@
   ;; consult-preview-max-count 10
   ;; consult-preview-excluded-files '(regexp list...)
 
-
   ;; TODO: Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)

@@ -162,9 +162,10 @@
 (define guix-emacs-vhash
   (vhash-consq
    'themes
-   (list->vlist '("emacs-doom-themes"
-                  "emacs-spacegray-theme"
-                  "emacs-ef-themes"
+   (list->vlist '("emacs-ef-themes"
+                  ;; TODO keep doom-themes?
+                  ;; "emacs-spacegray-theme"
+                  ;; "emacs-doom-themes"
                   ))
    guix-emacs-vhash))
 
@@ -261,14 +262,14 @@
 (define guix-emacs-vhash
   (vhash-consq
    'tools
-   (list->vlist '(
-                  "emacs-ef-themes"
+   (list->vlist '("emacs-debbugs"
                   "emacs-burly"
                   "emacs-elf-mode"
                   "emacs-ssh-config-mode"
                   "emacs-tldr"
                   "emacs-google-translate"
-                  "emacs-prodigy"))
+                  "emacs-prodigy"
+                  "emacs-esup"))
    guix-emacs-vhash))
 
 ;;*** Firewall

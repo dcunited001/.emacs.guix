@@ -40,7 +40,23 @@
 ;;   - gnus-startup-file
 ;;   - gnus-init-file
 ;;   - gnus-directory (set to SAVEDIR if defined)
-(setup (:pkg gnus))
+(require 'bug-reference)
+(setup (:pkg gnus)
+  (add-hook 'gnus-summary-mode-hook 'bug-reference-mode)
+  (add-hook 'gnus-article-mode-hook 'bug-reference-mode))
+
+;;** Debbugs
+;; see debbugs.el manual for:
+;; - integrating with GNUS to apply patches to a worktree
+;;   https://elpa.gnu.org/packages/doc/debbugs-ug.html#Applying-Patches
+;; - other version-control-based workflows are described
+(setup (:pkg debbugs)
+  (:option debbugs-gnu-default-packages '("guix-patches" "guix"))
+  (add-hook 'bug-reference-mode-hook 'debbugs-browse-mode)
+  (add-hook 'bug-reference-prog-mode-hook 'debbugs-browse-mode))
+
+;; TODO: interactives: prefixed with debbugs-(gnu/org):
+;; -package,-bugs,-tagged,-patches,-my-open-bugs,-search,-guix-search
 
 ;;** IRC
 
