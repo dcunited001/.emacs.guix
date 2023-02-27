@@ -170,11 +170,6 @@
   (tab-bar-mode 1)
   (tab-bar-rename-tab "Main"))
 
-;;*** Notifications
-
-(setup (:pkg alert)
-  (:option alert-default-style 'notifications))
-
 ;;*** Editing Configuration
 
 (setq-default tab-width 2)

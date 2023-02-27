@@ -102,6 +102,7 @@
      "<f2> ds" #'desktop-save-in-desktop-dir
      "<f2> dS" #'desktop-save
      "<f2> dr" #'desktop-read
+     "<f2> P" #'pomm
      "<f2> r" '(:ignore t :which-key "RELOAD")
      "<f2> t" '(:ignore t :which-key "THEME")
      "<f2> tr" #'ef-themes-load-random

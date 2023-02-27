@@ -86,6 +86,22 @@ font directories in =~/.guix-extra-profiles= is made available in fontconfig.
 
 *** Per-System Settings
 
+*** External Tools
+
+This is tangled in my dotfiles configured
+
+#+begin_src shell
+if ps -e | grep emacs >> /dev/null; then
+    emacsclient --eval "(if (boundp 'pomm-current-mode-line-string) pomm-current-mode-line-string \"\") " | xargs echo -e
+fi
+#+end_src
+
+#+begin_src conf
+[module/pomm]
+type = custom/script
+exec = /home/pavel/bin/polybar/pomm.sh
+interval = 1
+#+end_src
 
 ** Initial Run
 
@@ -95,6 +111,16 @@ This package needs to be loaded by straight in order for the font to be
 installed properly. When it's not, dired won't function.
 
 Run =M-x all-the-icons-install-fonts=
+
+** TODO Emacs Server
+
+*** Shepherd
+
+*** SystemD
+
+*** Guix Home
+
+** TODO Describe CPU Pinning
 
 * Why
 

@@ -62,6 +62,8 @@
 (require 'dc-support)
 
 (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
+
+(require 'dc-alert)
 (require 'dc-interface)
 ;; (require 'dc-auth)
 

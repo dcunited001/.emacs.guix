@@ -107,7 +107,24 @@
   (custom-set-faces '(mode-line ((t (:height 0.85))))
                     '(mode-line-inactive ((t (:height 0.85))))))
 
+;;*** Pomodoro's
+;; from https://github.com/BonfaceKilz/emacs.d
+;; pomm integrates with libnotify/polybar, so there's a chance i might use it
+;; https://github.com/SqrtMinusOne/pomm.el
+(setup (:pkg pomm :straight t)
+  (:option pomm-state-file-location
+           (expand-file-name "pomm" no-littering-var-directory)
+           pomm-third-time-state-file-location
+           (expand-file-name "pomm-third-time" no-littering-var-directory)))
 
+;; Other options
+;; pomm-csv-history-file ;only creates history CSV when this is set
+;; (expand-file-name "pomm.csv" no-littering-var-directory)
+;; needs to call "$toolcmd --options " with path/to/audio.wav
+;; pomm-audio-executable "toolcmd"
+;; pomm-audio-files '(...)
+;; pomm-audio-enabled t
+;; pomm-audio-tick-enabled t
 
 ;;*** Cursor
 
