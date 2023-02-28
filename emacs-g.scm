@@ -123,7 +123,7 @@
 (define guix-emacs-vhash
   (vhash-consq
    'ui
-   (list->vlist '("emacs-doom-modeline" ;modelline
+   (list->vlist '("emacs-doom-modeline" ;modeline
                   "emacs-minions"       ;minor mode mgmt: toggle/info
                   "emacs-hydra"
 
@@ -165,7 +165,7 @@
   (vhash-consq
    'themes
    (list->vlist '("emacs-ef-themes"
-                  ;; TODO keep doom-themes?
+                  ;; NOTE maybe dependencies b/w doom-themes/modeline
                   ;; "emacs-spacegray-theme"
                   ;; "emacs-doom-themes"
                   ))

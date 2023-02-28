@@ -76,7 +76,6 @@
 
 (require 'dw-org)
 (require 'dc-org)
-;; TODO: migrate to 'dc-org
 
 ;; (require 'dw-shell)
 (require 'dc-dev)

@@ -146,6 +146,7 @@
    (t (call-interactively #'consult-buffer))))
 
 (defun dw/set-tab-bar-faces ()
+  ;; TODO setting :background nil warns to set to 'unspecified, but that throws error
   (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
     (set-face-attribute 'tab-bar-tab nil :foreground 'unspecified :background 'unspecified :weight 'semi-bold :underline `(:color ,color) :inherit nil)
     (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground 'unspecified :inherit 'mode-line)))
@@ -260,27 +261,6 @@
    (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
    (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
-
-(setup (:pkg openwith)
-  (require 'openwith)
-  (setq openwith-associations
-        (list
-         (list (openwith-make-extension-regexp
-                '("mpg" "mpeg" "mp3" "mp4"
-                  "avi" "wmv" "wav" "mov" "flv"
-                  "ogm" "ogg" "mkv"))
-               "mpv"
-               '(file))
-         (list (openwith-make-extension-regexp
-                '("xbm" "pbm" "pgm" "ppm" "pnm"
-                  "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
-               ;; causing feh to be opened...
-               "feh"
-               '(file))
-         (list (openwith-make-extension-regexp
-                '("pdf"))
-               "zathura"
-               '(file)))))
 
 (setq display-time-world-list
   '(("Etc/UTC" "UTC")
