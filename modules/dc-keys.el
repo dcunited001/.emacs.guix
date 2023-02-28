@@ -997,6 +997,13 @@
 
 ;;**** html-mode
 
+;;** Mode-Specific
+
+;; ahhhh ok, so the x509 "e" key shows you the params for the command
+(local-leader-def
+  :keymaps '(x509-mode-map)
+  "d" #'x509-dwim)
+
 ;;* Keys Post
 
 ;;** Run Looped Keybinds

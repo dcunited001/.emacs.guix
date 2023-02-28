@@ -91,7 +91,10 @@
     :prefix "C-c")
 
   (general-create-definer global-leader-def
-    :prefix "C-x"))
+    :prefix "C-x")
+
+  (general-create-definer local-leader-def
+    :prefix "C-c l"))
 
 ;;*** Timers
 

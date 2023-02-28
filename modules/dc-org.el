@@ -55,7 +55,7 @@
   (org-indent-mode)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
-  (visual-line-mode 1)
+  ;; (visual-line-mode 1)
   (setq-local corfu-auto nil))
 
 ;;** Org Load Hooks

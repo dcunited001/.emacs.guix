@@ -76,9 +76,9 @@
 ;;*** Firestarter
 ;; Interact with -*- vars: t; -*-
 (setup (:pkg firestarter :straight t)
+  (:option firestarter-default-type t)
   (require 'firestarter)
-  (firestarter-mode)
-  (setq firestarter-default-type t))
+  (firestarter-mode))
 
 ;;*** Elf Mode
 ;; Interact with ELF binaries
@@ -128,6 +128,9 @@
                          ("\\.crt$" . x509-mode)
                          ("\\.crl$" . x509-mode)))
     (add-to-list 'auto-mode-alist modespec)))
+
+;; (with-eval-after-load 'x509-mode
+;;   (add-hook 'x509-mode-hook #'(lambda () (call-interactively 'x509-dwim))))
 
 ;;** Database
 

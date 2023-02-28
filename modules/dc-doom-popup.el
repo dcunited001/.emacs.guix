@@ -193,10 +193,8 @@
           ("^\\*TeX \\(?:Help\\|errors\\)" :size 0.3 :select t :ttl nil)))
         (ledger
          (("^\\*Ledger Report" :size 0.5 :quit 'other :ttl 0)
-          ("^\\*Ledger Error"  :quit t :ttl 0)))))
-
-(setq dc/doom-popup-custom-rules
-      '((lsp
+          ("^\\*Ledger Error"  :quit t :ttl 0)))
+        (lsp
          (("^\\*lsp-ui-imenu" :side left :width 60
            :vslot -5 :slot 3
            :modeline nil :select t :quit t)))
