@@ -231,6 +231,31 @@
   (dolist (mode '(org-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0)))))
 
+
+;; TODO: script more behavior with (org-notify notification &optional pay-sound)
+;; - calls (org-clock-play-sound play-sound)
+;; - requires aplay. extremely loud noise when aplay plays .oga files
+(defun dc/org-clock-play-sound (&optional clock-sound)
+  (let ((org-clock-sound (or clock-sound org-clock-sound)))
+    (cond
+     ((not org-clock-sound))
+     ((eq org-clock-sound t) (beep t) (beep t))
+     ((stringp org-clock-sound)
+      (let ((file (expand-file-name org-clock-sound)))
+	      (if (file-exists-p file)
+	          (if (executable-find "playsound")
+		            (start-process "org-clock-play-notification" nil
+			                         "playsound" file)
+	            (condition-case nil
+		              (play-sound-file file)
+		            (error (beep t) (beep t))))))))))
+
+;; hmmmm is it possible to (cl-flet (( #'function-by-symbol)) ... )?
+(if (executable-find "playsound")
+    (advice-add 'org-clock-play-sound :override #'dc/org-clock-play-sound)
+  (warn "org-clock-sound: Can't find `playsound`. Not overriding org-clock-play-sound")
+  (setq org-clock-sound nil))
+
 (defun dc/org-init-agenda-h ()
   (setup org-agenda
     (:option

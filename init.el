@@ -28,7 +28,7 @@
       dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules")
       dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
                                (dc/guix-profile-get-default-path))
-      dc/emacs-sound-theme-path (file-name-as-directory (expand-file-name "share/sounds/freedesktop" dc/guix-profile-path)))
+      dc/emacs-sound-theme-path (file-name-as-directory (expand-file-name "share/sounds/freedesktop/stereo" dc/guix-profile-path)))
 
 ;; TODO: rectify user-emacs-* variables:
 ;; ... yeh, priceless are things like (kbd "C-u C-x e") to eval & insert
