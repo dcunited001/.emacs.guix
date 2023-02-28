@@ -26,11 +26,10 @@
 ;;** Elfeed
 
 (setup (:pkg elfeed))
-
 (setup (:pkg elfeed-org)
-  (:load-after elfeed
-    (:option rmh-elfeed-org-files (list (concat dc/emacs-d "elfeed.org")))
-    (elfeed-org)))
+  (:option rmh-elfeed-org-files (list (concat dc/emacs-d "elfeed.org")))
+  (require 'elfeed-org)
+  (elfeed-org))
 
 ;;** GNUS
 ;; - stores messages in gnus-directory, ~/News

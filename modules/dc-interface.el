@@ -36,13 +36,13 @@
 (tool-bar-mode -1)         ; Disable the toolbar
 (set-fringe-mode 10)       ; Give some breathing room
 
-;; TODO: determine whether there are possible issues with pgtk/wayland?
-;; (tooltip-mode -1)       ; Disable tooltips
-
 ;; there are realgud/dap integrations for inspecting vars/etc with tooltip
-(tooltip-mode +1)
 (setq tooltip-delay 0.7                 ;2.0
       tooltip-short-delay 0.1)          ;0.5
+
+;; TODO: determine whether there are possible issues with pgtk/wayland?
+;; (tooltip-mode -1)       ; Disable tooltips
+(tooltip-mode +1)
 
 ;; menu-bar-mode gets a bad rap from tool-bar-mode
 (menu-bar-mode +1)            ; Enable the menu bar
@@ -67,11 +67,6 @@
 ;;(setq large-file-warning-threshold nil)
 (setq vc-follow-symlinks t)
 (setq ad-redefinition-action 'accept)
-
-;;*** Date & Time
-
-(setq display-time-format "%l:%M %p %b %d W%U"
-      display-time-load-average-threshold 0.0)
 
 ;;*** Modeline
 
@@ -189,6 +184,25 @@
 
 ;;*** Pulse
 ;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
+;; https://protesilaos.com/emacs/pulsar
+(setup (:pkg pulsar)
+  (:option pulsar-pulse t
+           pulsar-delay 0.055
+           pulsar-iterations 10
+           pulsar-face 'pulsar-magenta
+           pulsar-highlight-face 'pulsar-yellow)
+  ;; runs on most preview actions
+  (:with-hook consult-after-jump-hook
+    (:hook pulsar-recenter-middle)
+    (:hook pulsar-reveal-entry))
+  ;; runs on imenu selection
+  (:with-hook imenu-after-jump-hook
+    (:hook pulsar-recenter-middle)
+    (:hook pulsar-reveal-entry))
+
+  (require 'pulsar)
+  (pulsar-global-mode 1))
+
 
 ;;*** Font
 

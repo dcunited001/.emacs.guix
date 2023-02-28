@@ -191,17 +191,16 @@
 
 ;;*** Magit
 
-(setup (:pkg magit-todos)
-  (:load-after magit)
-  (magit-todos-mode))
-
 (setup (:pkg magit)
   (:global "C-M-;" magit-status)
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+(setup (:pkg magit-todos)
+  (:with-hook after-init-hook
+    (:hook magit-todos-mode)))
+
 ;; interface to git-tbdiff, gives better control over git ranges
-(setup (:pkg magit-tbdiff :straight t)
-  (:load-after magit))
+(setup (:pkg magit-tbdiff :straight t))
 
 ;; TODO: interactive: magit-tbdiff-ranges
 ;; TODO: interactive: magit-tbdiff-revs
@@ -349,18 +348,20 @@
   (:hook-into sgml-mode css-mode nxml-mode html-mode))
 
 (setup (:pkg yasnippet)
-  (:load-after emmet)
   (require 'yasnippet)
   (require 'doom-snippets)
+  (:with-hook org-mode-hook prog-mode-hook
+              (:hook yas-minor mode))
   ;; doom-snippets-dir
   ;; doom-snippets-enable-short-helpers t
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
-  (add-hook 'org-mode-hook #'yas-minor-mode)
+
+  ;; (:load-after (yas-reload-all))
   (yas-reload-all))
 
 ;;** Shell
 
 ;;*** VTerm
-
+(setup (:pkg vterm)
+  (:option vterm-max-scrollback 1000))
 
 (provide 'dc-dev)

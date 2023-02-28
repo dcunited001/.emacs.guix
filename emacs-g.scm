@@ -125,6 +125,7 @@
    'ui
    (list->vlist '("emacs-doom-modeline" ;modeline
                   "emacs-minions"       ;minor mode mgmt: toggle/info
+                  "emacs-pulsar"
                   "emacs-hydra"
 
                   "emacs-avy"

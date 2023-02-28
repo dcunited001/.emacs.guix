@@ -231,10 +231,12 @@
   (dolist (mode '(org-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0)))))
 
-
 ;; TODO: script more behavior with (org-notify notification &optional pay-sound)
 ;; - calls (org-clock-play-sound play-sound)
 ;; - requires aplay. extremely loud noise when aplay plays .oga files
+;; There are two actions in the org source which result in org-notify calls:
+;; - via setting effort: org-clock-notify-once-if-expired
+;; - via setting timers: org-timer-pause-or-continue/org-timer-set-timer
 (defun dc/org-clock-play-sound (&optional clock-sound)
   (let ((org-clock-sound (or clock-sound org-clock-sound)))
     (cond
@@ -302,7 +304,7 @@
   (setup (:pkg org-ql))
 
   (setup (:pkg org-super-agenda)
-    (:load-after org-ql)
+
     (:option org-super-agenda-header-separator ""
 
              org-super-agenda-groups
@@ -322,7 +324,6 @@
   ;;   (:option))
 
   (setup (:pkg org-roam-ui)
-    (:load-after org-roam)
     (:option org-roam-dailies-directory "dailies/"
              dc/org-roam-dailies-dir
              (file-name-as-directory (concat org-roam-directory

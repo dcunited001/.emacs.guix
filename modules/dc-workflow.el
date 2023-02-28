@@ -95,7 +95,11 @@
 
 ;; TODO: Pull from Guix
 (setup (:pkg org-modern :straight t)
-       (global-org-modern-mode))
+  ;; setup.el docs mention to keep this to a minimum, but for simple actions,
+  ;; the `macroexp-progn` call should be okay. i wouldn't know when it wasn't
+  ;; though
+  (:when-loaded
+    (global-org-modern-mode)))
 
 ;; (unless dw/is-termux
 ;;   (setup (:pkg org-superstar)
