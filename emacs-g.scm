@@ -13,7 +13,8 @@
                   "emacs-next-pgtk"
                   "emacs-setup"
                   "git"
-                  "git:send-email"))
+                  "git:send-email"
+                  "sound-theme-freedesktop"))
    vlist-null))
 
 ;; TODO: define method to assemble a recursive alist into a package list

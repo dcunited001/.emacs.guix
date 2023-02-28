@@ -236,7 +236,17 @@
     (:option
      ;; start with empty org-agenda-files
      org-agenda-files '()
-     org-clock-auto-clockout-timer 300)
+     org-clock-auto-clockout-timer 300
+     org-clock-history-length 25
+
+     org-clock-in-switch-to-state "STRT"
+     org-clock-out-switch-to-state "HOLD"
+     org-clock-out-remove-zero-time-clocks t
+
+     org-log-done 'time
+     ;; org-log-into-drawer t
+
+     )
 
     (setq-default
      ;; Different colors for different priority levels
@@ -257,16 +267,10 @@
      ;; buffers in the background. They'll be "restarted" if the user switches to
      ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
      org-agenda-inhibit-startup t
-
-     org-log-done 'time
-     ;; org-log-into-drawer t
      )
 
     (org-clock-auto-clockout-insinuate))
 
-  )
-
-(defun dc/org-init-agenda-h ()
   (setup (:pkg org-ql))
 
   (setup (:pkg org-super-agenda)
