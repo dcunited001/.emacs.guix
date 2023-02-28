@@ -270,10 +270,16 @@
 
 ;;**** goto-map (consult)
 ;; M-g bindings
+(unbind-key "M-g c")
 (general-define-key
- :keymaps 'goto
+ :keymaps 'goto-map
+ :wk-full-keys nil
+ "C" #'goto-char
  "e" #'consult-compile-error
- "f" #'consult-flymake     ;; Alternative: consult-flycheck
+ "f" '(:ignore t :which-key "FLY")
+ "fc" #'consult-flycheck
+ "fm" #'consult-flymake
+
  "g" #'consult-goto-line   ;; orig. goto-line
  "M-g" #'consult-goto-line ;; orig. goto-line
  "o" #'consult-outline     ;; Alternative: consult-org-heading
@@ -281,25 +287,36 @@
  "k" #'consult-global-mark
  "i" #'consult-imenu
  "I" #'consult-imenu-multi
+
+ "a" #'consult-org-agenda
+
+ "r" '(:ignore t :which-key "ROAM")
+ "rr" #'consult-org-roam-mode
+ "rb" #'consult-org-roam-backlinks
+ "rf" #'consult-org-roam-file-find
+ "rl" #'consult-org-roam-forward-links
  )
 
 ;;**** search-map (consult)
  ;; M-s bindings
 (general-define-key
- :keymaps 'search
+ :keymaps 'search-map
  "d" #'consult-find
  "D" #'consult-locate
+ ;; "M-d" #'consult-dir-jump-file
  "g" #'consult-grep
  "G" #'consult-git-grep
+ "i" #'consult-info
  "r" #'consult-ripgrep
- "l" #'consult-line
- "L" #'consult-line-multi
  "k" #'consult-keep-lines
+ "m" #'consult-man
+ "s" #'consult-line-multi               ; "L"
+ "M-s" #'consult-yasnippet
+ "M-S" #'consult-yasnippet-visit-snippet-file
  "u" #'consult-focus-lines
 
  ;; Isearch integration
- "e" #'consult-isearch-history
- )
+ "e" #'consult-isearch-history)
 
 (general-define-key
  :keymaps 'isearch-mode-map
@@ -441,11 +458,13 @@
 
   "&" '(:ignore t :wk "SNIPPET")
   "7" '(:ignore t :wk "SNIPPET")
+  "!" '(:ignore t :wk "FLYCHECK")
+  "1" '(:ignore t :wk "FLYCHECK")
 
   ;; "C-f" '(:ignore t :wk "FOLD") ;; imenu > folding
   )
 
-;;*** &/7 SNIPPETS
+;;*** & 7 SNIPPETS
 
 (defun dc/init-keybinds-yasnippet ()
   (dolist (pfx '("&" "7"))
@@ -466,6 +485,15 @@
 
 ;; this looped setup runs fine
 (dc/init-keybinds-yasnippet)
+
+;;*** ! 1 Flycheck
+;; flycheck-mode-map requires having invoked the mode
+(with-eval-after-load 'flycheck
+  (general-translate-key
+    nil '(flycheck-mode-map)
+    "C-c 1" "C-c !"
+    "<f12> 1" "C-c !"
+    "<f12> 1" "C-c !"))
 
 ;;*** c CODE
 
@@ -489,7 +517,7 @@
   )
 
 ;;**** LSP
-;;**** EGLOT
+;; TODO: LSP UI bindings?
 
 ;;        (:when (and (modulep! :tools lsp) (not (modulep! :tools lsp +eglot)))
 ;;         :desc "LSP Code actions"                      "a"   #'lsp-execute-code-action
@@ -511,6 +539,47 @@
 ;;          :desc "Outgoing call hierarchy"             "Y"   (cmd!! #'lsp-treemacs-call-hierarchy t)
 ;;          :desc "References tree"                     "R"   (cmd!! #'lsp-treemacs-references t)
 ;;          :desc "Symbols"                             "S"   #'lsp-treemacs-symbols))
+
+;;**** EGLOT
+
+;; [client-request] (id:5) Tue Feb 28 12:34:01 2023:
+;; (:jsonrpc "2.0" :id 5 :method "textDocument/signatureHelp" :params
+;;           (:textDocument
+;;            (:uri "file:///data/ecto/sway/core/sway/sway/ipc-server.c")
+;;            :position
+;;            (:line 113 :character 62)))
+;; [client-request] (id:6) Tue Feb 28 12:34:01 2023:
+;; (:jsonrpc "2.0" :id 6 :method "textDocument/hover" :params
+;;           (:textDocument
+;;            (:uri "file:///data/ecto/sway/core/sway/sway/ipc-server.c")
+;;            :position
+;;            (:line 113 :character 62)))
+;; [client-request] (id:7) Tue Feb 28 12:34:01 2023:
+;; (:jsonrpc "2.0" :id 7 :method "textDocument/documentHighlight" :params
+;;           (:textDocument
+;;            (:uri "file:///data/ecto/sway/core/sway/sway/ipc-server.c")
+;;            :position
+;;            (:line 113 :character 62)))
+;; [stderr] I[12:34:01.630] <-- textDocument/signatureHelp(5)
+;; [stderr] I[12:34:01.630] --> reply:textDocument/signatureHelp(5) 0 ms, error: -32602: trying to get preamble for non-added document
+;; [stderr] I[12:34:01.630] <-- textDocument/hover(6)
+;; [stderr] I[12:34:01.630] --> reply:textDocument/hover(6) 0 ms, error: -32602: trying to get AST for non-added document
+;; [stderr] I[12:34:01.630] <-- textDocument/documentHighlight(7)
+;; [stderr] I[12:34:01.630] --> reply:textDocument/documentHighlight(7) 0 ms, error: -32602: trying to get AST for non-added document
+;; [server-reply] (id:5) ERROR Tue Feb 28 12:34:01 2023:
+;; (:error
+;;  (:code -32602 :message "trying to get preamble for non-added document")
+;;  :id 5 :jsonrpc "2.0")
+;; [internal] (id:5) ERROR Tue Feb 28 12:34:01 2023:
+;; (:message "error ignored, status set (trying to get preamble for non-added document)" :
+
+(general-define-key
+ :keymaps 'eglot-mode-map
+ :prefix "M-g"
+ :wk-full-keys nil
+ "c" '(:ignore t :which-keys "CODE")
+ "cs" #'consult-eglot-symbols)
+
 ;;        (:when (modulep! :tools lsp +eglot)
 ;;         :desc "LSP Execute code action"              "a" #'eglot-code-actions
 ;;         :desc "LSP Rename"                           "r" #'eglot-rename
@@ -778,10 +847,8 @@
 ;;        :desc "Search other directory"       "D" #'+default/search-other-cwd
 ;;        :desc "Search .emacs.d"              "e" #'+default/search-emacsd
 ;;        :desc "Locate file"                  "f" #'+lookup/file
-;;        :desc "Jump to symbol"               "i" #'imenu
 ;;        :desc "Jump to visible link"         "l" #'link-hint-open-link
 ;;        :desc "Jump to link"                 "L" #'ffap-menu
-;;        :desc "Jump to bookmark"             "m" #'bookmark-jump
 ;;        :desc "Look up online"               "o" #'+lookup/online
 ;;        :desc "Look up online (w/ prompt)"   "O" #'+lookup/online-select
 ;;        :desc "Look up in local docsets"     "k" #'+lookup/in-docsets
@@ -824,7 +891,6 @@
   ;; "tI" #'doom/toggle-indent-style"
   "tl" #'display-line-numbers-mode
   ;; "tp" #'org-tree-slide-mode
-  ;; "tr" #'read-only-mode
   "ts" #'flyspell-mode
   "tv" #'visual-line-mode
   "tV" #'visual-fill-column-mode

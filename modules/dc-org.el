@@ -446,25 +446,27 @@
 
 ;; (defun dc/org-init-smartparens-h ())
 
-(require 'org-eldoc)
+(with-eval-after-load 'org
+  (setup (:pkg org-contrib))
 
-(setup (:pkg org-tempo)
-  (:load-after org)
-  (:when-loaded
-    (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-    (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
-    (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
-    (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
-    (add-to-list 'org-structure-template-alist '("py" . "src python"))
-    (add-to-list 'org-structure-template-alist '("go" . "src go"))
-    (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
-    (add-to-list 'org-structure-template-alist '("json" . "src json"))))
+  ;; TODO org-eldoc doesn't seem to document thing
+  (require 'org-eldoc)
+
+  ;; TODO configure org-tempo
+  (setup (:pkg org-tempo)
+    (:when-loaded
+      (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+      (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+      (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
+      (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+      (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+      (add-to-list 'org-structure-template-alist '("py" . "src python"))
+      (add-to-list 'org-structure-template-alist '("go" . "src go"))
+      (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+      (add-to-list 'org-structure-template-alist '("json" . "src json")))))
 
 ;;** Org Setup
 (setup (:pkg org)
-  (:also-load org-tempo
-              org-eldoc)
   (:hook dc/org-mode-setup)
 
   ;;** Modules
@@ -482,7 +484,7 @@
           ol-bookmark
           ;; ol-notmuch
           org-protocol
-          ))
+          org-notify))
 
   ;;*** other org-modules
   ;; org-mouse

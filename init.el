@@ -10,11 +10,6 @@
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
-(add-hook 'after-init-hook (lambda ()
-                             ;; Make gc pauses faster by decreasing the threshold.
-                             ;; (setq gc-cons-threshold (* 2 1000 1000))
-                             (setq gc-cons-threshold (* 20 1000 1000))))
-
 (defun dc/guix-profile-get-default-path ()
   (expand-file-name "~/.guix-extra-profiles/emacs-g/emacs-g/"))
 

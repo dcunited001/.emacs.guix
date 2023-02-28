@@ -54,41 +54,28 @@
 ;;** Checking
 
 ;;*** Flycheck
-;; enable on per-buffer basis only
-(setq flycheck-highlighting-mode 'columns
-      flycheck-global-modes nil)
-;; flycheck-global-modes: the modes in which to enable flycheck
+;; This is a quick survey of flycheck and org-babel functionality
+;; https://github.com/jkitchin/scimax/commit/9a039cfc5fcdf0114a72d23d34b78a8b3d4349c9
+(setup (:pkg flycheck)
+  (:option flycheck-emacs-lisp-load-path 'inherit
+           flycheck-highlighting-mode 'columns
 
-;;**** Flycheck RC's
-;; ... or just M-x customize-group flycheck... SMH y u no ask greybeard?
-;; ... or just C-h describe-variables "^flycheck-.*rc$" and C-; embark-dwim
-;; ... goddamn i needed to explore these packages earlier.
-;; C-u M-: dc/find-symbols-like "^flycheck-.*rc$"
-;; then, comment and add space at end of each line
-;;   with M-% '" "' -> ' \n;; ' (newline with C-q C-j)
-;; then, C-u C-x C-e to eval and insert string
+           ;; enable most on per-buffer/per-project basis only
+           flycheck-global-modes '(emacs-lisp))
+  (:also-load flycheck-guile)
+  (:also-load flycheck-package))
 
-;; flycheck-chktexrc ".chktexrc"
-;; flycheck-coffeelintrc ".coffeelint.json"
-;; flycheck-ember-template-lintrc ".template-lintrc.js"
-;; flycheck-flake8rc ".flake8rc"
-;; flycheck-hlintrc "HLint.hs"
-;; flycheck-jshintrc ".jshintrc"
-;; flycheck-luacheckrc ".luacheckrc"
-;; flycheck-perlcriticrc ".perlcriticrc"
-;; flycheck-puppet-lint-rc ".puppet-lint.rc"
-;; flycheck-pylintrc ".pylintrc"
-;; flycheck-reekrc nil
-;; flycheck-rubocoprc ".rubocop.yml"
-;; flycheck-ruby-standardrc ".standard.yml"
-;; flycheck-rubylintrc nil
-;; flycheck-ruumbarc ".ruumba.yml"
-;; flycheck-sass-lintrc ".sass-lint.yml"
-;; flycheck-scalastylerc nil
-;; flycheck-scss-lintrc ".scss-lint.yml"
-;; flycheck-stylelintrc nil
-;; flycheck-tidyrc ".tidyrc"
-;; flycheck-yamllintrc ".yamllint"
+;; see .emacs.doom/modules/checkers/javascript/config.el
+;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+;; (flycheck-add-mode 'javascript-eslint 'typescript-mode)
+;; (flycheck-add-mode 'javascript-eslint 'typescript-tsx-mode)
+;; (flycheck-add-mode 'typescript-tslint 'typescript-tsx-mode)
+;; tide not completely compatible with LSP
+
+(with-eval-after-load 'flycheck
+  (setup (:pkg consult-flycheck :straight t))
+  (global-flycheck-mode))
+
 
 ;;**** flycheck-emacs-lisp
 ;; (setq flycheck-emacs-lisp-check-declare nil
@@ -174,18 +161,22 @@
 ;;*** Eglot
 
 (setup (:pkg eglot)
+  (:option eglot-autoshutdown t
+        eglot-confirm-server-initiated-edits nil)
   ;; TODO: Don't load until needed
   (require 'eglot)
   (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename)
-  (setq eglot-autoshutdown t
-        eglot-confirm-server-initiated-edits nil)
+
   ;; TODO: Is this needed now?
   (add-to-list 'eglot-server-programs
-               '((js2-mode typescript-mode) . ("typescript-language-server" "--stdio"))))
+               '((js2-mode typescript-mode) . ("typescript-language-server" "--stdio")))
+  ;; TODO: c-mode-hook is hooked in c-mode-hook?
+  (:with-hook c-mode-hook
+    (:hook eglot-ensure)))
 
 (with-eval-after-load 'eglot
-  (add-hook 'c-mode-hook 'eglot-ensure))
+  (setup (:pkg consult-eglot)))
 
 ;;** VCS
 
@@ -351,7 +342,7 @@
   (require 'yasnippet)
   (require 'doom-snippets)
   (:with-hook org-mode-hook prog-mode-hook
-              (:hook yas-minor mode))
+              (:hook yas-minor-mode))
   ;; doom-snippets-dir
   ;; doom-snippets-enable-short-helpers t
 

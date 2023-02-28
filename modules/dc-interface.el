@@ -505,7 +505,6 @@
 (setup (:pkg consult)
   (require 'consult)
   (:also-load wgrep)
-  (:load-after orderless)
 
   (defun dw/get-project-root ()
     (when (fboundp 'projectile-project-root)
