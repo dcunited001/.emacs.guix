@@ -553,7 +553,6 @@
 (leader-def
   :keymaps 'global
   :wk-full-keys nil
-  "i" '(:ignore t :wk "INSERT")
   "ie" #'emojify-insert-emoji
   ;; "if" #'+default/insert-file-path
   ;; "iF" (cmd!! #'+default/insert-file-path t)
@@ -564,20 +563,20 @@
 ;;*** l LOCAL
 ;;*** m M/CURSOR
 
-;;       (:when (modulep! :editor multiple-cursors)
-;;        (:prefix-map ("m" . "multiple-cursors")
-;;         :desc "Edit lines"         "l"         #'mc/edit-lines
-;;         :desc "Mark next"          "n"         #'mc/mark-next-like-this
-;;         :desc "Unmark next"        "N"         #'mc/unmark-next-like-this
-;;         :desc "Mark previous"      "p"         #'mc/mark-previous-like-this
-;;         :desc "Unmark previous"    "P"         #'mc/unmark-previous-like-this
-;;         :desc "Mark all"           "t"         #'mc/mark-all-like-this
-;;         :desc "Mark all DWIM"      "m"         #'mc/mark-all-like-this-dwim
-;;         :desc "Edit line endings"  "e"         #'mc/edit-ends-of-lines
-;;         :desc "Edit line starts"   "a"         #'mc/edit-beginnings-of-lines
-;;         :desc "Mark tag"           "s"         #'mc/mark-sgml-tag-pair
-;;         :desc "Mark in defun"      "d"         #'mc/mark-all-like-this-in-defun
-;;         :desc "Add cursor w/mouse" "<mouse-1>" #'mc/add-cursor-on-click))
+(leader-def
+  :keymaps 'global
+  "ml" #'mc/edit-lines
+  "mn" #'mc/mark-next-like-this
+  "mN" #'mc/unmark-next-like-this
+  "mp" #'mc/mark-previous-like-this
+  "mP" #'mc/unmark-previous-like-this
+  "mt" #'mc/mark-all-like-this
+  "mm" #'mc/mark-all-like-this-dwim
+  "me" #'mc/edit-ends-of-lines
+  "ma" #'mc/edit-beginnings-of-lines
+  "ms" #'mc/mark-sgml-tag-pair
+  "md" #'mc/mark-all-like-this-in-defun
+  "m <mouse-1>" #'mc/add-cursor-on-click)
 
 ;;*** n NOTES
 
@@ -677,24 +676,6 @@
 
 ;;*** o OPEN
 
-;; (leader-def
-;;   :keymaps '(global)
-;;   :wk-full-keys
-
-;;   "o"   '(:ignore t :which-key "org mode")
-
-;;   "oi"  '(:ignore t :which-key "insert")
-;;   "oil" '(org-insert-link :which-key "insert link")
-
-;;   "on"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
-
-;;   "os"  '(dw/counsel-rg-org-files :which-key "search notes")
-
-;;   "oa"  '(org-agenda :which-key "status")
-;;   "ot"  '(org-todo-list :which-key "todos")
-;;   "oc"  '(org-capture t :which-key "capture")
-;;   "ox"  '(org-export-dispatch t :which-key "export"))
-
 ;;       "o" nil ; we need to unbind it first as Org claims this prefix
 ;;       (:prefix-map ("o" . "open")
 ;;        :desc "Browser"            "b"  #'browse-url-of-file
@@ -737,12 +718,14 @@
 (general-define-key
  :keymaps 'global
 
- "C-M-p" #'project-find-file)
+ "C-M-p" #'project-find-file
+ "C-x p F" #'project-find-file)
 
 (general-define-key
  :keymaps 'project-prefix-map
  "k" #'dw/close-project-tab
- "F" #'consult-ripgrep)
+ "f" #'consult-ripgrep
+ "F" #'project-find-file)
 
 ;;       (:prefix ("p" . "project")
 ;;        :desc "Search project for symbol"   "." #'+default/search-project-for-symbol-at-point

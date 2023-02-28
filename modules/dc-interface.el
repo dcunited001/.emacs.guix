@@ -160,11 +160,11 @@
       (cond
        ((eq (a-get* pomm--state 'current 'kind) 'work)
         ;; (ef-themes-select (dc/current-theme) 'dark)
-        (ef-themes--load-theme (first ef-themes-to-toggle)))
+        (ef-themes--load-theme (car ef-themes-to-toggle)))
        ((eq (a-get* pomm--state 'current 'kind) 'long-break)
-        (ef-themes--load-theme (last ef-themes-to-toggle)))
+        (ef-themes--load-theme (cadr ef-themes-to-toggle)))
        ((eq (a-get* pomm--state 'current 'kind) 'short-break)
-        (ef-themes--load-theme (last ef-themes-to-toggle))))))
+        (ef-themes--load-theme (cadr ef-themes-to-toggle))))))
 
 (setup (:pkg pomm :straight t)
   (:option pomm-state-file-location
