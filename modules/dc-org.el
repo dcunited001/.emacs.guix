@@ -248,6 +248,9 @@
 
      )
 
+    (and (file-exists-p dc/emacs-sound-theme-path)
+         (setq org-clock-sound (expand-file-name "complete.oga" dc/emacs-sound-theme-path)))
+
     (setq-default
      ;; Different colors for different priority levels
      org-agenda-deadline-faces

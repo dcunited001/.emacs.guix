@@ -15,6 +15,9 @@
                              ;; (setq gc-cons-threshold (* 2 1000 1000))
                              (setq gc-cons-threshold (* 20 1000 1000))))
 
+(defun dc/guix-profile-get-default-path ()
+  (expand-file-name "~/.guix-extra-profiles/emacs-g/emacs-g/"))
+
 (setq user-full-name "David Conner"
       user-mail-address "noreply@te.xel.io")
 
@@ -22,7 +25,10 @@
       dc/emacs-d (expand-file-name "~/.emacs.g/")
       dc/emacs-cache (expand-file-name "~/.cache/emacs/")
       dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
-      dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules"))
+      dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules")
+      dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
+                               (dc/guix-profile-get-default-path))
+      dc/emacs-sound-theme-path (file-name-as-directory (expand-file-name "share/sounds/freedesktop" dc/guix-profile-path)))
 
 ;; TODO: rectify user-emacs-* variables:
 ;; ... yeh, priceless are things like (kbd "C-u C-x e") to eval & insert
@@ -63,6 +69,7 @@
 
 (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 
+(require 'dc-desktop)
 (require 'dc-alert)
 (require 'dc-interface)
 ;; (require 'dc-auth)
