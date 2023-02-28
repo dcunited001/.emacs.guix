@@ -34,7 +34,9 @@
 (with-eval-after-load 'info
   (require 'info+))
 
-;;** Guix
+;;* Systems
+
+;;** Emacs Guix
 (setup (:pkg esup)
   (:option esup-depth 0))
 
@@ -87,12 +89,31 @@
 ;;*** Crontab Mode
 (setup (:pkg crontab-mode :straight t))
 
+;;** Linux
+
 ;;*** Journalctl Mode
 (setup (:pkg journalctl-mode :straight t))
 
 ;;*** XDG Paths
 (setup (:pkg xdg-paths :straight t))
 
+;;** Red Hat
+;; an emacs package that integrates a mock workflow would help quite a bit
+
+;; nbarrientos/archive-rpm: simple and it helps.
+;; I don't have enough exp to be sure of workflow support, but it helped a lot
+(setup (:pkg archive-rpm :straight t
+             :type git :flavor melpa
+             :host github :repo "nbarrientos/archive-rpm"))
+
+;; Other straight packages
+;; emacsattic/rpm: last updated 14 years ago, probably good but probably not current
+;; (rpm :type git :host github :repo "wemacsattic/rpm")
+
+;; stigbjorlykke/rpm-spec-mode: tough to validate, but updated fairly recently
+;; (rpm-spec-mode :type git :flavor melpa :host github :repo "stigbjorlykke/rpm-spec-mode")
+
+;;* Network
 ;;** SSH
 
 ;;*** Tramp
@@ -132,6 +153,13 @@
 ;; (with-eval-after-load 'x509-mode
 ;;   (add-hook 'x509-mode-hook #'(lambda () (call-interactively 'x509-dwim))))
 
+;;* Services
+
+;;** Configuration Management
+
+;;*** SALTSTACK
+;; (use-package! salt-mode)
+
 ;;** Database
 
 ;;** API
@@ -168,7 +196,7 @@
 
 ;;*** PlantUML
 
-;;** Misc
+;;* Misc
 
 ;;*** Science
 (setup (:pkg smiles-mode :straight t))
