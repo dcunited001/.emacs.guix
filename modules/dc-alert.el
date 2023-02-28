@@ -31,3 +31,5 @@
 ;; 'custom: use (alert-define-style ...)
 (setup (:pkg alert)
   (:option alert-default-style 'libnotify))
+
+(provide 'dc-alert)

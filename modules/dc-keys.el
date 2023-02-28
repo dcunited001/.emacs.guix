@@ -102,7 +102,6 @@
 ;; general.el suggests managing which-key alists directly in some cases
 (defun dc/init-keybinds-quick ()
   (dolist (pfx '("C-h" "<f1>"))
-    (message pfx)
     (general-define-key
      :keymaps '(global help)
      :wk-full-keys nil

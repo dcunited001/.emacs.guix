@@ -107,15 +107,73 @@
   (custom-set-faces '(mode-line ((t (:height 0.85))))
                     '(mode-line-inactive ((t (:height 0.85))))))
 
+;;*** Themes
+(setup (:pkg ef-themes)
+  (:option ef-themes-mixed-fonts t
+           ef-themes-to-toggle '(ef-bio ef-cherie))
+  ;; i open other emacs windows quite often and i like theme to look distinct so
+  ;; buffers don't start munching each other's files (apparently tramp handles
+  ;; this well...  so maybe not a problem))
+  (add-hook 'emacs-startup-hook
+            #'(lambda () (ef-themes-load-random)))
+  (add-hook 'desktop-after-read-hook
+            #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))))
+
+(with-eval-after-load 'ef-themes
+  ;; the index of the theme in each list doesn't really correspond to its complement
+  ;; - but this would perhaps break in the future anyways.
+  (defun dc/ef-themes-get-index-for-alternate (theme-sym variant)
+    (if-let* ((themes-name (concat "ef-themes-" (symbol-name variant) "-themes"))
+              (themes-sym (intern themes-name))
+              (themes-list (and (boundp themes-sym)
+                                (symbol-value themes-sym))))
+        (cl-position theme-sym themes-list)
+      (error "dc/ef-themes-get-index: some thing happen.")))
+
+  (defun dc/ef-themes-get-current-index (theme-sym)
+    (let ((all-themes (-interleave ef-themes-dark-themes
+                                   ef-themes-light-themes)))
+      (/ (cl-position theme-sym all-themes) 2)))
+
+  (defun dc/current-theme ()
+    ;; (car (reverse custom-enabled-themes))
+    ;; nevermind, it's a stack
+    (car custom-enabled-themes))
+
+  (defun dc/current-theme-is-ef-theme ()
+    (equal "ef-" (substring (symbol-name (dc/current-theme)) 0 3)))
+
+  (defun dc/current-theme-is-toggled-ef-theme ()
+    (and (dc/current-theme-is-ef-theme)
+         (memq (car custom-enabled-themes) ef-themes-to-toggle))))
+
 ;;*** Pomodoro's
 ;; from https://github.com/BonfaceKilz/emacs.d
 ;; pomm integrates with libnotify/polybar, so there's a chance i might use it
 ;; https://github.com/SqrtMinusOne/pomm.el
+
+;; TODO test to make sure the pomm theme toggling works
+;; ... which is EXACTLY why you need TDD/BDD
+(defun dc/pomm-toggle-update-theme ()
+  ;; don't do anything if it's not my main session
+  (if (dc/current-theme-is-toggled-ef-theme)
+      (cond
+       ((eq (a-get* pomm--state 'current 'kind) 'work)
+        ;; (ef-themes-select (dc/current-theme) 'dark)
+        (ef-themes--load-theme (first ef-themes-to-toggle)))
+       ((eq (a-get* pomm--state 'current 'kind) 'long-break)
+        (ef-themes--load-theme (last ef-themes-to-toggle)))
+       ((eq (a-get* pomm--state 'current 'kind) 'short-break)
+        (ef-themes--load-theme (last ef-themes-to-toggle))))))
+
 (setup (:pkg pomm :straight t)
   (:option pomm-state-file-location
            (expand-file-name "pomm" no-littering-var-directory)
            pomm-third-time-state-file-location
-           (expand-file-name "pomm-third-time" no-littering-var-directory)))
+           (expand-file-name "pomm-third-time" no-littering-var-directory))
+  ;; (add-hook 'pomm-on-tick-hook 'pomm-update-mode-line-string)
+  (add-hook 'pomm-on-status-changed-hook #'dc/pomm-toggle-update-theme)
+  (add-hook 'pomm-on-status-changed-hook #'pomm-update-mode-line-string))
 
 ;; Other options
 ;; pomm-csv-history-file ;only creates history CSV when this is set
@@ -131,12 +189,6 @@
 
 ;;*** Pulse
 ;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
-
-;;*** Themes
-
-(setup (:pkg ef-themes)
-  (:option ef-themes-mixed-fonts t)
-  (add-hook 'desktop-after-read-hook (ef-themes-select 'ef-bio)))
 
 ;;*** Font
 
