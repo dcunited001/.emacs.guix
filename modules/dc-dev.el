@@ -196,7 +196,7 @@
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (setup (:pkg magit-todos)
-  (:with-hook after-init-hook
+  (:with-hook emacs-startup-hook
     (:hook magit-todos-mode)))
 
 ;; interface to git-tbdiff, gives better control over git ranges

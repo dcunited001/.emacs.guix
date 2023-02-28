@@ -326,7 +326,6 @@
   (forward-line))
 
 ;;*** Start the Daemon
-
-(server-start)
+;; (server-start)
 
 (provide 'dw-core)

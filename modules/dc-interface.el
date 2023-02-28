@@ -26,10 +26,6 @@
 
 ;;** Basics
 
-;; Thanks, but no thanks
-(setq inhibit-startup-message t
-      visible-bell t)
-
 (setq-default fill-column 80)
 
 (scroll-bar-mode -1)       ; Disable visible scrollbar
@@ -54,7 +50,8 @@
       mouse-drag-and-drop-region t
       scroll-step 1 ;; keyboard scroll one line at a time
       use-dialog-box nil ;; Disable dialog boxes since they weren't working in Mac OSX
-      )
+      ;; inhibit-startup-message t
+      visible-bell t)
       
 ;; (set-frame-parameter (selected-frame) 'alpha-background 90)
 ;; (add-to-list 'default-frame-alist '(alpha-background 90))
@@ -88,7 +85,11 @@
   (doom-modeline-set-modeline 'default t))
 
 (setup (:pkg doom-modeline)
-  (add-hook 'after-init-hook #'dw/start-doom-modeline)
+  ;; somehow doom modeline was interfering with after-init-hook's from completing without
+  ;; throwing an error. this was inherited properties on faces to be unspecified/undefined
+  (:with-hook emacs-startup-hook
+    (:hook dw/start-doom-modeline))
+
   (:option doom-modeline-height (dw/system-settings-get 'emacs/doom-modeline-height)
            doom-modeline-bar-width 6
            doom-modeline-lsp t
@@ -106,13 +107,13 @@
 (setup (:pkg ef-themes)
   (:option ef-themes-mixed-fonts t
            ef-themes-to-toggle '(ef-bio ef-cherie))
-  ;; i open other emacs windows quite often and i like theme to look distinct so
+  ;; i open other emacs windows often and i like theme to look distinct so
   ;; buffers don't start munching each other's files (apparently tramp handles
   ;; this well...  so maybe not a problem))
-  (add-hook 'emacs-startup-hook
-            #'(lambda () (ef-themes-load-random)))
-  (add-hook 'desktop-after-read-hook
-            #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))))
+  (:with-hook emacs-startup-hook (:hook ef-themes-load-random))
+  (:with-hook desktop-after-read-hook
+    (:hook ;; #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))
+     (lambda () (ef-themes-select (car ef-themes-to-toggle))))))
 
 (with-eval-after-load 'ef-themes
   ;; the index of the theme in each list doesn't really correspond to its complement

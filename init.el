@@ -94,3 +94,8 @@
 
 (when (featurep 'ido)
   (ido-mode nil))
+
+;;*** Start the Daemon
+(server-start)
+
+(setq gc-cons-threshold (* 20 1000 1000))
