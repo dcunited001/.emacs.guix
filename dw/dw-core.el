@@ -216,29 +216,36 @@
 (setup (:pkg dired-collapse))
 
 (setup dired
-  (setq dired-listing-switches "-agho --group-directories-first"
-        dired-omit-files "^.DS_Store\\'\\|^.project\\(?:ile\\)?\\'\\|^.\\(svn\\)\\'\\|^.ccls-cache\\'\\|\\(?:\\.js\\)?\\.meta\\'\\|\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'"
-        dired-omit-verbose nil
-        dired-hide-details-hide-symlink-targets nil
-        delete-by-moving-to-trash nil
-        dired-dwim-target 'dired-dwim-target-recent)
+  (:option dired-listing-switches "-agho --group-directories-first"
+           dired-omit-verbose nil
+           dired-hide-details-hide-symlink-targets nil
+           delete-by-moving-to-trash nil
+           dired-dwim-target 'dired-dwim-target-recent)
+  dired-omit-files (string-join
+                    '("^.DS_Store\\'"
+                      "^.project\\(?:ile\\)?\\'"
+                      "^.\\(svn\\)\\'"
+                      "^.ccls-cache\\'"
+                      "\\(?:\\.js\\)?\\.meta\\'"
+                      "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
+                    "\\|")
 
   (autoload 'dired-omit-mode "dired-x")
 
-  (add-hook 'dired-load-hook
-            (lambda ()
-              (interactive)
-              (dired-collapse)))
+  (:hook (lambda ()
+           (interactive)
+           ;; (dired-omit-mode 1)
+           ;; (dired-hide-details-mode 1)
+           (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
+             (all-the-icons-dired-mode 1))
+           (hl-line-mode 1)))
 
-  (add-hook 'dired-mode-hook
-            (lambda ()
-              (interactive)
-              (dired-omit-mode 1)
-              (dired-hide-details-mode 1)
-              (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
-                (all-the-icons-dired-mode 1))
-              (hl-line-mode 1)))
-  )
+  ;; https://www.gnu.org/software/emacs/manual/html_node/gnus/Other-modes.html#Dired
+  ;; (:hook #'turn-on-gnus-dired-mode)
+  (:with-hook dired-load-hook
+    (:hook (lambda ()
+             (interactive)
+             (dired-collapse)))))
 
 (setup (:pkg dired-rainbow)
   (:load-after dired

@@ -361,9 +361,9 @@
                   "emacs-graphql-mode"
 
                   "emacs-eglot"
-                  "emacs-lsp-mode"
-                  "emacs-lsp-ui"
-                  "emacs-dap-mode"
+                  ;; "emacs-lsp-mode"
+                  ;; "emacs-lsp-ui"
+                  ;; "emacs-dap-mode"
 
                   "emacs-arduino-mode"
 

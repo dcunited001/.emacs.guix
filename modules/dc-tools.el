@@ -1,5 +1,5 @@
 ;; -*- lexical-binding: t; -*-
-;;
+
 ;; Copyright © 2023 David Conner
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -365,8 +365,11 @@
  "TAB" #'corfu-insert
  [tab] #'corfu-insert
 
+ "'" #'corfu-quick-complete
+
  ;; for orderless queries, maintain completion with spaces
  "C-f" #'corfu-insert-separator
+ "M-SPC" #'corfu-insert-separator
 
  ;; to access embark actions
  "M-m" #'corfu-move-to-minibuffer
@@ -875,7 +878,6 @@
 (dc/toggleable-boolean native-comp-async-report-warnings-errors)
 (dc/toggleable-boolean custom-buffer-verbose-help)
 
-;;**** Toggle Modes
 ;; -: centered cursor
 ;; _: centered cursor
 ;; b: big-mode
@@ -884,7 +886,6 @@
 ;; f: flycheck
 ;;
 
-;;**** Toggle keybinds
 (leader-def
   :keymaps 'global
   "tC" #'global-display-fill-column-indicator-mode
@@ -904,13 +905,29 @@
   ;; "tw" #'+word-wrap-mode
   "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
 
-;;**** Toggles: org
+;;**** dired toggles
+(leader-def
+  :keymaps '(dired-mode-map)
+  :wk-full-keys nil
+  "td" '(:ignore t :wk "DIRED")
+  "tda" #'dired-async-mode
+  "tdA" #'all-the-icons-dired-mode
+  "tdc" #'dired-collapse-mode
+  "tdf" #'dired-filter-mode
+  "tdg" #'turn-on-gnus-dired-mode
+  "tdh" #'dired-hide-details-mode
+  "tdi" #'dired-utils-format-information-line-mode
+  "tdo" #'dired-omit-mode
+  "tdv" #'dired-virtual-mode
+  "tdc" #'dired-collapse-mode)
+
+;;**** org toggles
 (leader-def
   :keymaps '(org-mode-map)
   "tf" #'org-table-toggle-formula-debugger
   "to" #'org-table-toggle-coordinate-overlays)
 
-;;**** Toggles: markdown
+;;**** markdown toggles
 (leader-def
   :keymaps '(markdown-mode-map)
   "te" #'markdown-toggle-math

@@ -81,7 +81,8 @@
   ;; Customize the default modeline
   (doom-modeline-def-modeline 'default
     '(bar window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(objed-state grip debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
+    ;; lsp
+    '(objed-state grip debug repl minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
   (doom-modeline-set-modeline 'default t))
 
 (setup (:pkg doom-modeline)
@@ -92,7 +93,7 @@
 
   (:option doom-modeline-height (dw/system-settings-get 'emacs/doom-modeline-height)
            doom-modeline-bar-width 6
-           doom-modeline-lsp t
+           ;; doom-modeline-lsp t
            doom-modeline-github nil
            doom-modeline-mu4e nil
            doom-modeline-irc nil
@@ -413,6 +414,8 @@
   ;; (require 'corfu-popupinfo)
   (global-corfu-mode 1))
 
+(setup (:pkg corfu-quick)
+  (:option corfu-quick1 "asdfghjkl;"))
 ;; the functions that the popup provides are available via corfu
 ;; - (see dc-keys#corfu-popupinfo-map)
 ;; - without the popup, the info will be displayed in a temporary buffer

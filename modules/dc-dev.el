@@ -162,8 +162,18 @@
 
 (setup (:pkg eglot)
   (:option eglot-autoshutdown t
+           eglot-sync-connect 1
+           eglot-connect-timeout 15
+           eglot-send-changes-idle-time 0.5
+           ;; other common options: xref, imenu, eldoc
+           ;; also see (eglot--setq-saving...)
+           eglot-stay-out-of '(flymake)
+
+           ;; see note about popups/point in
+           ;; .emacs.doom/modules/tools/lsp/+eglot.el
+           ;; eglot-auto-display-help-buffer nil
            eglot-confirm-server-initiated-edits nil)
-  ;; TODO: Don't load until needed
+
   (require 'eglot)
   (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)
   (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename)
