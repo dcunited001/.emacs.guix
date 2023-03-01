@@ -254,6 +254,9 @@
 
 ;;** Editor
 
+;;*** Text
+(delete-selection-mode +1)
+
 ;;*** Clipbaord
 ;; TODO: ensure these variables do not change
 ;; - can be tested with middle click

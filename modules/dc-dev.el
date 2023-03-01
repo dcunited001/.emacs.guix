@@ -162,7 +162,7 @@
 
 (setup (:pkg eglot)
   (:option eglot-autoshutdown t
-        eglot-confirm-server-initiated-edits nil)
+           eglot-confirm-server-initiated-edits nil)
   ;; TODO: Don't load until needed
   (require 'eglot)
   (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)

@@ -212,6 +212,9 @@
  "M-s" #'consult-history ;; orig. next-matching-history-element
  "M-r" #'consult-history
 
+ ;; can't quite figure this one out
+ "C-x C-j" #'consult-dir-jump-file
+
  "M-A" #'marginalia-cycle)
 
 ;;*** Consult
@@ -236,6 +239,7 @@
  [remap switch-to-buffer-other-window] #'consult-buffer-other-window
  [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
  ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
+ [remap yank]                          #'consult-yank-replace ;
  [remap yank-pop]                      #'consult-yank-pop)
 
 ;;**** globals (consult)
@@ -265,7 +269,8 @@
  "C-M-#" #'consult-register
 
  ;; Other custom bindings
- "M-y" #'consult-yank-pop ;; orig. yank-pop
+ "C-x M-y" #'consult-yank-from-kill-ring
+
  )
 
 ;;**** goto-map (consult)
