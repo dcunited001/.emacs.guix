@@ -78,6 +78,8 @@
     "M-S-<right>"
     "C-S-<left>"
     "C-S-<right>"
+
+    "C-x f"                             ;set-fill-column
     ))
 
 ;;**** trying to pack a lambda into a symbol
@@ -130,6 +132,7 @@
      "M-k" #'describe-keymap
      "B" #'embark-bindings
      "M-b" #'embark-bindings-in-keymap
+     "M-m" #'consult-minor-mode-menu
      "M-f" #'list-faces-display)))
 
 ;;** Globals
@@ -138,9 +141,12 @@
 
 (general-define-key
  :keymaps 'global
+ :wk-full-keys nil
 
  "C-x o" #'ace-window
  "C-x C-d" #'consult-dir
+
+ ;; "C-x M-f" #'set-fill-column
 
  ;; (define-key evil-window-map "u" 'winner-undo)
  ;; (define-key evil-window-map "U" 'winner-redo)
@@ -161,6 +167,22 @@
 ;; editor features, global state and outward-looking functions
 (global-leader-def
   :wk-full-keys nil
+  "M-f" #'find-file-at-point
+  "f" '(:ignore t :wk "FIND/FILE")
+  "ff" #'consult-recent-file
+  "fl" #'find-library
+  "fL" #'find-library-name
+  "fs" #'find-sibling-file
+  "fS" #'find-sibling-file-search
+  ;; "f" #'
+  ;; "f" #'
+  ;; "f" #'
+  ;; "f" #'
+
+  "fF" '(:ignore t :wk "FILL")
+  "fFc" #'set-fill-column
+  "fFp" #'set-fill-prefix
+
   "g" #'guix
   "G" '(:ignore t :which-key "DEBBUGS")
   "Gb" #'debbugs-gnu-bugs
@@ -271,6 +293,21 @@
  ;; Other custom bindings
  "C-x M-y" #'consult-yank-from-kill-ring
 
+ ;; nav
+ ;; #'consult-org-heading
+ ;; #'consult-recent-file
+
+ ;; misc
+ ;; #'consult-bibtex-embark-map
+ ;; #'consult-isearch-forward
+
+ ;; completion
+ ;; #'consult-preview-at-point
+ ;; #'consult-lsp-symbols
+ ;; #'consult-lsp-diagnostics
+ ;; #'consult-file-symbols
+ ;; #'consult-lsp-diagnostics
+ ;; #'consult-eglot-symbols
  )
 
 ;;**** goto-map (consult)
@@ -454,7 +491,7 @@
   "i" '(:ignore t :wk "INSERT")
   "l" '(:ignore t :wk "LOCAL")
   "m" '(:ignore t :wk "M/CURSOR")
-  "n" '(:ignore t :wk "NOTES")
+  "n" '(:ignore t :wk "ORG/NOTES")
   "o" '(:ignore t :wk "OPEN")
   "p" '(:ignore t :wk "PROJECT")
   "q" '(:ignore t :wk "QUIT")
@@ -598,32 +635,18 @@
 ;;*** e EVAL
 
 ;;*** f FILE
-(leader-def
-  :keymaps 'global
-  :wk-full-keys nil
-  )
 
-;;        (:when (modulep! :tools editorconfig)
-;;         :desc "Open project editorconfig"  "c"   #'editorconfig-find-current-editorconfig)
-;;        :desc "Copy this file"              "C"   #'doom/copy-this-file
-;;        :desc "Find directory"              "d"   #'dired
-;;        :desc "Delete this file"            "D"   #'doom/delete-this-file
-;;        :desc "Find file in emacs.d"        "e"   #'doom/find-file-in-emacsd
-;;        :desc "Browse emacs.d"              "E"   #'doom/browse-in-emacsd
-;;        :desc "Find file"                   "f"   #'find-file
-;;        :desc "Find file from here"         "F"   #'+default/find-file-under-here
-;;        :desc "Locate file"                 "l"   #'locate
-;;        :desc "Rename/move this file"       "m"   #'doom/move-this-file
-;;        :desc "Find file in private config" "p"   #'doom/find-file-in-private-config
-;;        :desc "Browse private config"       "P"   #'doom/open-private-config
-;;        :desc "Recent files"                "r"   #'recentf-open-files
-;;        :desc "Recent project files"        "R"   #'projectile-recentf
-;;        :desc "Sudo this file"              "u"   #'doom/sudo-this-file
-;;        :desc "Sudo find file"              "U"   #'doom/sudo-find-file
-;;        :desc "Yank file path"              "y"   #'+default/yank-buffer-path
-;;        :desc "Yank file path from project" "Y"   #'+default/yank-buffer-path-relative-to-project
-;;        :desc "Open scratch buffer"         "x"   #'doom/open-scratch-buffer
-;;        :desc "Switch to scratch buffer"    "X"   #'doom/switch-to-scratch-buffer)
+;; "c"   #'editorconfig-find-current-editorconfig)
+;; "e"   #'doom/find-file-in-emacsd
+;; "E"   #'doom/browse-in-emacsd
+;; "F"   #'+default/find-file-under-here
+;; "p"   #'doom/find-file-in-private-config
+;; "P"   #'doom/open-private-config
+
+;; "y"   #'+default/yank-buffer-path
+;; "Y"   #'+default/yank-buffer-path-relative-to-project
+;; "x"   #'doom/open-scratch-buffer
+;; "X"   #'doom/switch-to-scratch-buffer)
 
 ;;*** i INSERT
 
@@ -655,19 +678,100 @@
   "md" #'mc/mark-all-like-this-in-defun
   "m <mouse-1>" #'mc/add-cursor-on-click)
 
-;;*** n NOTES
+;;*** n ORG
 
 (global-leader-def
-  :keymaps 'global
+  :keymaps '(org-mode-map)
   :wk-full-keys nil
+
   "1" '(:ignore t :wk "AGENDA")
-  "1 C-x" #'org-agenda
-  "1 1" #'org-agenda)
+  "1s" #'org-schedule
+  "1d" #'org-deadline
+  "1c" #'org-ctrl-c-ctrl-c
+
+  ;; wut control characters
+  "1 <tab>" #'dc/org-clock-in-recent    ; 4 select from recent
+  "12 <tab>" #'dc/org-clock-in-recent   ; 16 mark default
+  "123 <tab>" #'dc/org-clock-in-recent  ; 64 continuously
+
+  ;; "12a" #'org-archive-subtree-default
+  ;; "12b" #'org-toggle-checkbox
+  "12c" #'org-columns
+  "12e" #'org-clock-modify-effort-estimate
+  "12f" #'org-emphasize
+  "12j" #'org-clock-goto
+  "12l" #'org-latex-preview
+  "12n" #'org-next-link
+  "12o" #'org-clock-out
+  "12p" #'org-previous-link
+  "12q" #'org-clock-cancel
+  ;; "12r" #'org-toggle-radio-button
+  ;; "12s" #'org-archive-subtree
+  "12t" #'org-toggle-time-stamp-overlays
+  ;; "12u" #'org-dblock-update
+  "12v" #'org-toggle-inline-images
+  ;; "12w" #'org-cut-special
+  "12x" #'org-clock-in-last
+  ;; "12y" #'org-paste-special
+  "12z" #'org-resolve-clocks)
+
+
 
 (global-leader-def
-  :keymaps 'org-mode-map
+  :keymaps '(global org-mode-map)
   :wk-full-keys nil
-  "1 s" #'org-schedule)
+
+  "1o" #'org-clock-out
+  "1 M-c" #'org-clock-cancel            ; and remove start time
+  ;; "1C" #'+org/toggle-last-clock
+  "1g" #'org-clock-goto
+
+  "1z" #'org-resolve-clocks
+  "1q" #'org-clock-cancel
+  "1j" #'org-clock-goto
+  "1d" #'org-clock-display
+  "1x" #'org-clock-in-last
+  "1e" #'org-clock-modify-effort-estimate
+  )
+
+
+(global-leader-def
+  :keymaps '(global org-mode-map)
+  :wk-full-keys nil
+
+  "1 C-c "
+
+  (setf (nthcdr -1 '(0 1 2 3)) foo)
+  org-clock-cancel
+  org-clock-display
+  org-clock-in-last
+
+  org-resolve-clocks
+  org-clock-timestamps-up
+  org-clock-remove-overlays
+  org-clock-timestamps-down
+  org-clock-mark-default-task
+  org-clock-update-time-maybe
+  org-clock-toggle-auto-clockout
+  org-clock-modify-effort-estimate
+
+  
+  ;; "." #'+default/search-notes-for-symbol-at-point
+  ;; "b" #'citar-open-notes
+
+  ;; "l" #'org-store-link
+  ;; "m" #'org-tags-view
+  ;; "n" #'org-capture
+  ;; "N" #'org-capture-goto-target
+  ;; "t" #'org-todo-list
+
+  ;; "s" #'+default/org-notes-search
+  ;; "S" #'+default/org-notes-headlines
+
+  ;; "v" #'org-search-view
+  ;; "y" #'+org/export-to-clipboard
+  ;; "Y" #'+org/export-to-clipboard-as-rich-text
+  )
 
 (leader-def
   :keymaps 'org-mode-map
@@ -677,7 +781,80 @@
 (global-leader-def
   :keymaps 'org-agenda-mode-map
   :wk-full-keys nil
-  "1 s" #'org-agenda-schedule)
+  ;; .... nevermind org-clock-report
+
+  org-agenda-clock-in
+  org-agenda-clock-out
+  org-agenda-clock-goto
+  org-agenda-clock-cancel
+  org-agenda-clockreport-mode
+  org-agenda-show-clocking-issues
+  ;; "1s" #'org-agenda-schedule
+  ;; clock in
+  ;; clock out
+  ;; clock goto
+  ;; clock cancel
+
+  )
+
+(leader-def
+  :keymaps 'global
+  :wk-full-keys nil
+  "n" '(:ignore t :wk "ORG/NOTES")
+  "na" #'org-agenda
+  ;; "ns" #'org-schedule
+  ;; "nd" #'org-deadline
+
+  ;; "nC" #'+org/toggle-last-clock
+  "n M-C" #'org-clock-cancel            ; and remove start time
+  "ng" #'org-clock-goto
+  ;; "nc" #'org-clock-goto
+
+  ;; "." #'+default/search-notes-for-symbol-at-point
+  ;; "b" #'citar-open-notes
+
+  ;; "l" #'org-store-link
+  ;; "m" #'org-tags-view
+  ;; "n" #'org-capture
+  ;; "N" #'org-capture-goto-target
+  ;; "t" #'org-todo-list
+
+  ;; "s" #'+default/org-notes-search
+  ;; "S" #'+default/org-notes-headlines
+
+  ;; "v" #'org-search-view
+  ;; "y" #'+org/export-to-clipboard
+  ;; "Y" #'+org/export-to-clipboard-as-rich-text
+
+  "nr" '(:ignore t :wk "ROAM")
+
+  "nra" #'org-roam-node-random
+  "nrf" #'org-roam-node-find
+  "nrF" #'org-roam-ref-find
+  "nrg" #'org-roam-graph
+  "nri" #'org-roam-node-insert
+  "nrn" #'org-roam-capture
+  "nrr" #'org-roam-buffer-toggle
+  "nrR" #'org-roam-buffer-display-dedicated
+  "nrs" #'org-roam-db-sync
+  "nrt" #'org-roam-tag-add
+  "nrT" #'org-roam-tag-remove
+
+  "nrd" '(:ignore t :wk "DAILY)"
+  "nrd-" #'org-roam-dailies-find-directory
+  "nrdb" #'org-roam-dailies-goto-previous-note
+  "nrdd" #'org-roam-dailies-goto-date
+  "nrdD" #'org-roam-dailies-capture-date
+  "nrdf" #'org-roam-dailies-goto-next-note
+  "nrdm" #'org-roam-dailies-goto-tomorrow
+  "nrdM" #'org-roam-dailies-capture-tomorrow
+  "nrdn" #'org-roam-dailies-capture-today
+  "nrdt" #'org-roam-dailies-goto-today
+  "nrdT" #'org-roam-dailies-capture-today
+  "nrdy" #'org-roam-dailies-goto-yesterday
+  "nrdY" #'org-roam-dailies-capture-yesterday
+  )                    ; nan
+
 
 ;; (dw/ctrl-c-keys
 ;;   "o"   '(:ignore t :which-key "org mode")
@@ -689,67 +866,13 @@
 
 ;;   "os"  '(dw/counsel-rg-org-files :which-key "search notes")
 
-;;   "oa"  '(org-agenda :which-key "status")
 ;;   "ot"  '(org-todo-list :which-key "todos")
 ;;   "oc"  '(org-capture t :which-key "capture")
 ;;   "ox"  '(org-export-dispatch t :which-key "export"))
 
 ;;****
 
-;;       (:prefix-map ("n" . "notes")
-;;        :desc "Search notes for symbol"        "." #'+default/search-notes-for-symbol-at-point
-;;        :desc "Org agenda"                     "a" #'org-agenda
 
-;;        (:when (modulep! :tools biblio)
-;;         :desc "Bibliographic notes"        "b"
-;;         (cond ((modulep! :completion vertico)   #'citar-open-notes)
-;;               ((modulep! :completion ivy)       #'ivy-bibtex)
-;;               ((modulep! :completion helm)      #'helm-bibtex)))
-
-;;        :desc "Toggle last org-clock"          "c" #'+org/toggle-last-clock
-;;        :desc "Cancel current org-clock"       "C" #'org-clock-cancel
-
-;;        :desc "Org store link"                 "l" #'org-store-link
-;;        :desc "Tags search"                    "m" #'org-tags-view
-;;        :desc "Org capture"                    "n" #'org-capture
-;;        :desc "Goto capture"                   "N" #'org-capture-goto-target
-;;        :desc "Active org-clock"               "o" #'org-clock-goto
-;;        :desc "Todo list"                      "t" #'org-todo-list
-
-;;        :desc "Search notes"                   "s" #'+default/org-notes-search
-;;        :desc "Search org agenda headlines"    "S" #'+default/org-notes-headlines
-
-;;        :desc "View search"                    "v" #'org-search-view
-;;        :desc "Org export to clipboard"        "y" #'+org/export-to-clipboard
-;;        :desc "Org export to clipboard as RTF" "Y" #'+org/export-to-clipboard-as-rich-text
-
-;;        (:when (modulep! :lang org +roam2)
-;;         (:prefix ("r" . "roam")
-;;          :desc "Open random node"           "a" #'org-roam-node-random
-;;          :desc "Find node"                  "f" #'org-roam-node-find
-;;          :desc "Find ref"                   "F" #'org-roam-ref-find
-;;          :desc "Show graph"                 "g" #'org-roam-graph
-;;          :desc "Insert node"                "i" #'org-roam-node-insert
-;;          :desc "Capture to node"            "n" #'org-roam-capture
-;;          :desc "Toggle roam buffer"         "r" #'org-roam-buffer-toggle
-;;          :desc "Launch roam buffer"         "R" #'org-roam-buffer-display-dedicated
-;;          :desc "Sync database"              "s" #'org-roam-db-sync
-;;          :desc "Tag"                        "t" #'org-roam-tag-add
-;;          :desc "Un-tag"                     "T" #'org-roam-tag-remove
-
-;;          (:prefix ("d" . "by date")
-;;           :desc "Goto previous note"        "b" #'org-roam-dailies-goto-previous-note
-;;           :desc "Goto date"                 "d" #'org-roam-dailies-goto-date
-;;           :desc "Capture date"              "D" #'org-roam-dailies-capture-date
-;;           :desc "Goto next note"            "f" #'org-roam-dailies-goto-next-note
-;;           :desc "Goto tomorrow"             "m" #'org-roam-dailies-goto-tomorrow
-;;           :desc "Capture tomorrow"          "M" #'org-roam-dailies-capture-tomorrow
-;;           :desc "Capture today"             "n" #'org-roam-dailies-capture-today
-;;           :desc "Goto today"                "t" #'org-roam-dailies-goto-today
-;;           :desc "Capture today"             "T" #'org-roam-dailies-capture-today
-;;           :desc "Goto yesterday"            "y" #'org-roam-dailies-goto-yesterday
-;;           :desc "Capture yesterday"         "Y" #'org-roam-dailies-capture-yesterday
-;;           :desc "Find directory"            "-" #'org-roam-dailies-find-directory))))
 
 ;;*** o OPEN
 
@@ -757,7 +880,6 @@
 ;;       (:prefix-map ("o" . "open")
 ;;        :desc "Browser"            "b"  #'browse-url-of-file
 ;;        :desc "Debugger"           "d"  #'+debugger/start
-;;        :desc "New frame"          "f"  #'make-frame
 ;;        :desc "REPL"               "r"  #'+eval/open-repl-other-window
 ;;        :desc "REPL (same window)" "R"  #'+eval/open-repl-same-window
 ;;        :desc "Dired"              "-"  #'dired-jump
@@ -904,6 +1026,11 @@
   ;; "tw" #'visual-line-mode
   ;; "tw" #'+word-wrap-mode
   "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
+
+;; the toggle-map overwrites the keybind
+(leader-def
+  :keymaps 'org-mode-map
+  "tt" #'org-todo)
 
 ;;**** dired toggles
 (leader-def

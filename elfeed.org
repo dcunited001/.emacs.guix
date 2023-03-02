@@ -55,6 +55,28 @@
 *** Guix :guix:
 **** https://reddit.com/r/GUIX.rss
 
+** Hacker News                                                   :hackernews:
+*** HN Who Is Hiring                                                    :jOb:
+**** https://hnrss.org/whoishiring
+*** HN Clojure                                                          :jOb:
+**** https://hnrss.org/whoishiring?q=clojure
+*** HN Jobs                                                             :jOb:
+**** https://hnrss.org/jobs
+*** HN Best Comments
+**** https://hnrss.org/bestcomments
+*** HN Ask
+**** https://hnrss.org/ask
+*** HN Show
+**** https://hnrss.org/show
+*** HN Poll
+**** https://hnrss.org/poll
+*** HN Classic
+**** https://hnrss.org/classic
+*** HN Invited
+**** https://hnrss.org/invited
+*** HN Pool
+**** https://hnrss.org/pool
+
 * To Add
 
 ** [[https://tsdh.org/posts/2021-06-21-using-eldoc-with-magit.html][tsdh.org]] (magit article)

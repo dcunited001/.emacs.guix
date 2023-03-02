@@ -23,8 +23,6 @@
 ;; SOFTWARE.
 ;;* Org
 
-(setq org-default-notes-file (dw/org-path "notes.org"))
-
 (straight-use-package '(org :type built-in))
 
    ;; (setq org-capture-templates
@@ -160,8 +158,9 @@
   (plist-put org-format-latex-options :scale 1.5)
 
   ;;** Refile
-  (setq org-refile-targets '((nil :maxlevel . 1)
-                             (org-agenda-files :maxlevel . 1))
+  (setq org-refile-targets `((nil :maxlevel . 3)
+                             (org-agenda-files :maxlevel . 2)
+                             (org-default-notes-file :maxlevel . 2))
         org-outline-path-complete-in-steps nil
         org-refile-use-outline-path 'file)
 

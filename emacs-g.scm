@@ -14,7 +14,16 @@
                   "emacs-setup"
                   "git"
                   "git:send-email"
-                  "sound-theme-freedesktop"))
+                  "sound-theme-freedesktop"
+                  "aspell"
+                  "aspell-dict-en"
+                  "aspell-dict-la"
+                  "aspell-dict-grc"
+                  "aspell-dict-es"
+                  "aspell-dict-fr"
+                  "aspell-dict-it"
+                  "aspell-dict-de"
+                  "aspell-dict-ia"))
    vlist-null))
 
 ;; TODO: define method to assemble a recursive alist into a package list
@@ -310,6 +319,44 @@
    guix-emacs-vhash))
 
 
+;;** Tree-sitter
+(define guix-emacs-vhash
+  (vhash-consq
+   'tree-sitter
+   (list->vlist '("tree-sitter"
+                  ;; "tree-sitter-cli"
+                  "tree-sitter-c"
+                  ;; "tree-sitter-r"
+                  "tree-sitter-go"
+                  ;; "tree-sitter-cl"
+                  "tree-sitter-cpp"
+                  "tree-sitter-css"
+                  ;; "tree-sitter-elm"
+                  ;; "tree-sitter-org"
+                  ;; "tree-sitter-php"
+                  "tree-sitter-bash"
+                  ;; "tree-sitter-html"
+                  ;; "tree-sitter-java"
+                  "tree-sitter-json"
+                  "tree-sitter-ruby"
+                  "tree-sitter-rust"
+                  "tree-sitter-julia"
+                  ;; "tree-sitter-ocaml"
+                  ;; "tree-sitter-elixir"
+                  "tree-sitter-python"
+                  ;; "tree-sitter-racket"
+                  "tree-sitter-scheme"
+                  ;; "tree-sitter-c-sharp"
+                  "tree-sitter-clojure"
+                  ;; "tree-sitter-haskell"
+                  ;; "tree-sitter-markdown"
+                  "tree-sitter-javascript"
+                  "tree-sitter-typescript"
+                  ;; "tree-sitter-markdown-gfm"
+                  ))
+   guix-emacs-vhash))
+
+
 ;;** Lang
 ;; (append! guix-emacs-packages
 ;;          '())
@@ -480,6 +527,17 @@
 ;;*** Org Export
 ;;*** Org Agenda
 ;;*** Org Roam
+
+;;** Natlang
+(define guix-emacs-vhash
+  (vhash-consq
+   'natlang
+   (list->vlist '("emacs-spell-fu"
+                  ;; "emacs-wordgen" ;very cool, but too dynamic
+
+                  ;; pulls in wordnet as propagated input
+                  "emacs-synosaurus"))
+   guix-emacs-vhash))
 
 ;;** App
 (define guix-emacs-vhash

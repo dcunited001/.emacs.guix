@@ -40,9 +40,32 @@
 ;;   - gnus-init-file
 ;;   - gnus-directory (set to SAVEDIR if defined)
 (require 'bug-reference)
+
 (setup (:pkg gnus)
-  (add-hook 'gnus-summary-mode-hook 'bug-reference-mode)
-  (add-hook 'gnus-article-mode-hook 'bug-reference-mode))
+  (:option gnus-read-newsrc-file nil
+           gnus-save-newsrc-file t)
+  ;; god bless your soul embark actions ... holy shit lmao
+  ;; gnus-newsrc-alist
+  ;; gnus-newsrc-hashtb
+  ;; gnus-newsrc-options
+  ;; gnus-newsrc-options-n
+  ;; gnus-save-newsrc-hook
+  ;; gnus-newsrc-file-version
+  ;; gnus-read-newsrc-el-hook
+  ;; gnus-save-quick-newsrc-hook
+  ;; gnus-newsrc-last-checked-date
+  ;; gnus-save-standard-newsrc-hook
+  ;; gnus-save-newsrc-file-last-timestamp
+  (:with-hook '(gnus-summary-mode-hook
+                gnus-article-mode-hook)
+    (:hook bug-reference-mode)))
+
+;; TODO reappropriate locking from desktop.el
+;; - also: https://www.emacswiki.org/emacs/PreventingMultipleGnus
+(defvar gnus-lock-filename)
+;; gnus--load-locked-desktop-p
+;; gnus-claim-lock
+;; gnus-release-lock
 
 ;;** Debbugs
 ;; see debbugs.el manual for:

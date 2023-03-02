@@ -218,21 +218,21 @@
   ('gnu/linux
    (set-face-attribute 'default nil
                        :font "JetBrains Mono"
-                       :weight 'light
+                       :weight 'regular
                        :height (dw/system-settings-get 'emacs/default-face-size))))
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil
                     :font "JetBrains Mono"
-                    :weight 'light
+                    :weight 'regular
                     :height (dw/system-settings-get 'emacs/fixed-face-size))
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil
                     ;; :font "Cantarell"
                     :font "Overpass"
-                    :height (dw/system-settings-get 'emacs/variable-face-size)
-                    :weight 'light)
+                    :weight 'light
+                    :height (dw/system-settings-get 'emacs/variable-face-size))
 
 ;; TODO: interactive: set a specific frame's font
 ;; (set-frame-font)

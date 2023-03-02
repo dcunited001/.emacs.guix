@@ -156,6 +156,10 @@
 ;; projectile-auto-discover is nil
 ;; trigger project auto-discovery with projectile-discover-projects-in-search-path
 
+;;** Treesitter
+
+(require 'treesit)
+
 ;;** LSP/Eglot
 
 ;;*** Eglot
