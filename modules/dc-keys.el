@@ -680,6 +680,34 @@
 
 ;;*** n ORG
 
+;;  ... wellll that is unfortunate
+;; (nthcdr 0 '(lambda (foo bar) '(1 2 3 )))
+;; (nthcdr 1 #'(lambda (foo bar) '(1 2 3 )))
+;; (nthcdr -2 #'(lambda (foo bar) '(1 2 3 )))
+;; (eql t 1)
+;; (declare-function org-clock-in-complex-plane)
+;; (apply-partially #'org-clock-in (lsh 1 2)) ;req setf then push
+;;
+;; it makes a lot more sense after seeing it evaluated,
+;; the names/terminology were confusing.
+;; it does exactly what you're told that lisp does
+
+(defun dc/org-clock-in-recent (&optional select start-time)
+  "SELECT from a list of recent TODO's to clock the user in."
+  (interactive "P")
+  (org-clock-in (list (ash #x1 2)) start-time))
+
+(defun dc/org-clock-in-and-mark-default (&optional select start-time)
+  "SELECT from a list of recent TODO's to clock the user in."
+  (interactive "P")
+  (org-clock-in (list (ash 1 4)) start-time))
+
+(defun dc/org-clock-in-continue-from-last-timestamp (&optional
+ select start-time)
+  "SELECT from a list of recent TODO's to clock the user in."
+  (interactive "P")
+  (org-clock-in (list (ash 1 6)) start-time))
+
 (global-leader-def
   :keymaps '(org-mode-map)
   :wk-full-keys nil
