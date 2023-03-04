@@ -116,7 +116,7 @@
                   "emacs-consult-org-roam"
                   "emacs-consult-xdg-recent-files"
                   "emacs-consult-dir"
-                  "emacs-consult-lsp"
+                  ;; "emacs-consult-lsp"
                   "emacs-consult-eglot"
                   "emacs-consult-bibtex"
 

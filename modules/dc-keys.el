@@ -305,9 +305,8 @@
  ;; #'consult-preview-at-point
  ;; #'consult-lsp-symbols
  ;; #'consult-lsp-diagnostics
- ;; #'consult-file-symbols
+ ;; #'consult-lsp-file-symbols
  ;; #'consult-lsp-diagnostics
- ;; #'consult-eglot-symbols
  )
 
 ;;**** goto-map (consult)
@@ -408,12 +407,9 @@
  "C-f" #'corfu-insert-separator
  "M-SPC" #'corfu-insert-separator
 
- ;; to access embark actions
- "M-m" #'corfu-move-to-minibuffer
-
- ;; very useful
- ;; "M-g" #'corfu-info-location
- ;; "M-h" #'corfu-info-documentation
+ "M-m" #'corfu-move-to-minibuffer  ;; to access embark actions
+ "M-g" #'corfu-info-location
+ "M-h" #'corfu-info-documentation
 
  ;; should be in corfu@main
  ;; "C-a" #'corfu-prompt-beginning
@@ -587,50 +583,22 @@
 
 ;;**** EGLOT
 
-;; [client-request] (id:5) Tue Feb 28 12:34:01 2023:
-;; (:jsonrpc "2.0" :id 5 :method "textDocument/signatureHelp" :params
-;;           (:textDocument
-;;            (:uri "file:///data/ecto/sway/core/sway/sway/ipc-server.c")
-;;            :position
-;;            (:line 113 :character 62)))
-;; [client-request] (id:6) Tue Feb 28 12:34:01 2023:
-;; (:jsonrpc "2.0" :id 6 :method "textDocument/hover" :params
-;;           (:textDocument
-;;            (:uri "file:///data/ecto/sway/core/sway/sway/ipc-server.c")
-;;            :position
-;;            (:line 113 :character 62)))
-;; [client-request] (id:7) Tue Feb 28 12:34:01 2023:
-;; (:jsonrpc "2.0" :id 7 :method "textDocument/documentHighlight" :params
-;;           (:textDocument
-;;            (:uri "file:///data/ecto/sway/core/sway/sway/ipc-server.c")
-;;            :position
-;;            (:line 113 :character 62)))
-;; [stderr] I[12:34:01.630] <-- textDocument/signatureHelp(5)
-;; [stderr] I[12:34:01.630] --> reply:textDocument/signatureHelp(5) 0 ms, error: -32602: trying to get preamble for non-added document
-;; [stderr] I[12:34:01.630] <-- textDocument/hover(6)
-;; [stderr] I[12:34:01.630] --> reply:textDocument/hover(6) 0 ms, error: -32602: trying to get AST for non-added document
-;; [stderr] I[12:34:01.630] <-- textDocument/documentHighlight(7)
-;; [stderr] I[12:34:01.630] --> reply:textDocument/documentHighlight(7) 0 ms, error: -32602: trying to get AST for non-added document
-;; [server-reply] (id:5) ERROR Tue Feb 28 12:34:01 2023:
-;; (:error
-;;  (:code -32602 :message "trying to get preamble for non-added document")
-;;  :id 5 :jsonrpc "2.0")
-;; [internal] (id:5) ERROR Tue Feb 28 12:34:01 2023:
-;; (:message "error ignored, status set (trying to get preamble for non-added document)" :
-
 (general-define-key
  :keymaps 'eglot-mode-map
  :prefix "M-g"
  :wk-full-keys nil
  "c" '(:ignore t :which-keys "CODE")
- "cs" #'consult-eglot-symbols)
+ "cs" #'consult-eglot-symbols
+ "ca" #'eglot-code-actions
+ ;; "cai" #'eglot-code-action-inline
 
-;;        (:when (modulep! :tools lsp +eglot)
-;;         :desc "LSP Execute code action"              "a" #'eglot-code-actions
-;;         :desc "LSP Rename"                           "r" #'eglot-rename
-;;         :desc "LSP Find declaration"                 "j" #'eglot-find-declaration
-;;         (:when (modulep! :completion vertico)
-;;          :desc "Jump to symbol in current workspace" "j" #'consult-eglot-symbols)))
+ "cf" '(:ignore t :which-keys "FIND")
+ "cfd" #'eglot-find-declaration
+ "cfi" #'eglot-find-implementation
+ "cft" #'eglot-find-typeDefinition
+
+ "cr" #'eglot-rename
+ "cj" #'consult-eglot-symbols)
 
 ;;*** e EVAL
 
@@ -713,14 +681,16 @@
   :wk-full-keys nil
 
   "1" '(:ignore t :wk "AGENDA")
+  "12" '(:ignore t :wk "ORG")
+
   "1s" #'org-schedule
   "1d" #'org-deadline
   "1c" #'org-ctrl-c-ctrl-c
 
   ;; wut control characters
   "1 <tab>" #'dc/org-clock-in-recent    ; 4 select from recent
-  "12 <tab>" #'dc/org-clock-in-recent   ; 16 mark default
-  "123 <tab>" #'dc/org-clock-in-recent  ; 64 continuously
+  "12 <tab>" #'dc/org-clock-in-continue-from-last-timestamp  ; 64 continuously
+  "123 <tab>" #'dc/org-clock-in-and-mark-default   ; 16 mark default
 
   ;; "12a" #'org-archive-subtree-default
   ;; "12b" #'org-toggle-checkbox
@@ -743,8 +713,6 @@
   ;; "12y" #'org-paste-special
   "12z" #'org-resolve-clocks)
 
-
-
 (global-leader-def
   :keymaps '(global org-mode-map)
   :wk-full-keys nil
@@ -759,71 +727,12 @@
   "1j" #'org-clock-goto
   "1d" #'org-clock-display
   "1x" #'org-clock-in-last
-  "1e" #'org-clock-modify-effort-estimate
-  )
-
-
-(global-leader-def
-  :keymaps '(global org-mode-map)
-  :wk-full-keys nil
-
-  "1 C-c "
-
-  (setf (nthcdr -1 '(0 1 2 3)) foo)
-  org-clock-cancel
-  org-clock-display
-  org-clock-in-last
-
-  org-resolve-clocks
-  org-clock-timestamps-up
-  org-clock-remove-overlays
-  org-clock-timestamps-down
-  org-clock-mark-default-task
-  org-clock-update-time-maybe
-  org-clock-toggle-auto-clockout
-  org-clock-modify-effort-estimate
-
-  
-  ;; "." #'+default/search-notes-for-symbol-at-point
-  ;; "b" #'citar-open-notes
-
-  ;; "l" #'org-store-link
-  ;; "m" #'org-tags-view
-  ;; "n" #'org-capture
-  ;; "N" #'org-capture-goto-target
-  ;; "t" #'org-todo-list
-
-  ;; "s" #'+default/org-notes-search
-  ;; "S" #'+default/org-notes-headlines
-
-  ;; "v" #'org-search-view
-  ;; "y" #'+org/export-to-clipboard
-  ;; "Y" #'+org/export-to-clipboard-as-rich-text
-  )
+  "1e" #'org-clock-modify-effort-estimate)
 
 (leader-def
   :keymaps 'org-mode-map
   :wk-full-keys nil
   "4" 'org-archive-subtree)
-
-(global-leader-def
-  :keymaps 'org-agenda-mode-map
-  :wk-full-keys nil
-  ;; .... nevermind org-clock-report
-
-  org-agenda-clock-in
-  org-agenda-clock-out
-  org-agenda-clock-goto
-  org-agenda-clock-cancel
-  org-agenda-clockreport-mode
-  org-agenda-show-clocking-issues
-  ;; "1s" #'org-agenda-schedule
-  ;; clock in
-  ;; clock out
-  ;; clock goto
-  ;; clock cancel
-
-  )
 
 (leader-def
   :keymaps 'global
@@ -836,23 +745,23 @@
   ;; "nC" #'+org/toggle-last-clock
   "n M-C" #'org-clock-cancel            ; and remove start time
   "ng" #'org-clock-goto
-  ;; "nc" #'org-clock-goto
+  "no" #'org-clock-goto
 
-  ;; "." #'+default/search-notes-for-symbol-at-point
-  ;; "b" #'citar-open-notes
+  ;; "n." #'+default/search-notes-for-symbol-at-point
+  ;; "nb" #'citar-open-notes
 
-  ;; "l" #'org-store-link
-  ;; "m" #'org-tags-view
-  ;; "n" #'org-capture
-  ;; "N" #'org-capture-goto-target
-  ;; "t" #'org-todo-list
+  "nl" #'org-store-link
+  "nm" #'org-tags-view
+  "nn" #'org-capture
+  "nN" #'org-capture-goto-target
+  "nt" #'org-todo-list
 
-  ;; "s" #'+default/org-notes-search
-  ;; "S" #'+default/org-notes-headlines
+  ;; "ns" #'+default/org-notes-search
+  ;; "nS" #'+default/org-notes-headlines
 
-  ;; "v" #'org-search-view
-  ;; "y" #'+org/export-to-clipboard
-  ;; "Y" #'+org/export-to-clipboard-as-rich-text
+  "nv" #'org-search-view
+  ;; "ny" #'+org/export-to-clipboard
+  ;; "nY" #'+org/export-to-clipboard-as-rich-text
 
   "nr" '(:ignore t :wk "ROAM")
 
@@ -904,39 +813,29 @@
 
 ;;*** o OPEN
 
-;;       "o" nil ; we need to unbind it first as Org claims this prefix
-;;       (:prefix-map ("o" . "open")
-;;        :desc "Browser"            "b"  #'browse-url-of-file
-;;        :desc "Debugger"           "d"  #'+debugger/start
-;;        :desc "REPL"               "r"  #'+eval/open-repl-other-window
-;;        :desc "REPL (same window)" "R"  #'+eval/open-repl-same-window
+;; "o" nil ; we need to unbind it first as Org claims this prefix
+;; "o" . "open")
+;; "b"  #'browse-url-of-file
+;; "d"  #'+debugger/start
+;; "r"  #'+eval/open-repl-other-window
+;; "R"  #'+eval/open-repl-same-window
 ;;        :desc "Dired"              "-"  #'dired-jump
 
 ;;        (:when (modulep! :term vterm)
-;;         :desc "Toggle vterm popup"            "t" #'+vterm/toggle
-;;         :desc "Open vterm here"               "T" #'+vterm/here)
+;; "t" #'+vterm/toggle
+;; "T" #'+vterm/here)
 ;;        (:when (modulep! :term eshell)
-;;         :desc "Toggle eshell popup"           "e" #'+eshell/toggle
-;;         :desc "Open eshell here"              "E" #'+eshell/here)
-
-;;        (:when (modulep! :os macos)
-;;         :desc "Reveal in Finder"           "o" #'+macos/reveal-in-finder
-;;         :desc "Reveal project in Finder"   "O" #'+macos/reveal-project-in-finder
-;;         :desc "Send to Transmit"           "u" #'+macos/send-to-transmit
-;;         :desc "Send project to Transmit"   "U" #'+macos/send-project-to-transmit
-;;         :desc "Send to Launchbar"          "l" #'+macos/send-to-launchbar
-;;         :desc "Send project to Launchbar"  "L" #'+macos/send-project-to-launchbar
-;;         :desc "Open in iTerm"              "i" #'+macos/open-in-iterm
-;;         :desc "Open in new iTerm window"   "I" #'+macos/open-in-iterm-new-window)
+;; "e" #'+eshell/toggle
+;; "E" #'+eshell/here)
 
 ;;        (:when (modulep! :tools docker)
-;;         :desc "Docker" "D" #'docker)
+;; "D" #'docker)
 
 ;;        (:when (modulep! :email mu4e)
-;;         :desc "mu4e" "m" #'=mu4e)
+;; "m" #'=mu4e)
 
 ;;        (:when (modulep! :email notmuch)
-;;         :desc "notmuch" "m" #'=notmuch)
+;; "m" #'=notmuch)
 
 ;;*** p PROJECTILE
 
@@ -954,20 +853,20 @@
  "f" #'consult-ripgrep
  "F" #'project-find-file)
 
-;;       (:prefix ("p" . "project")
+;; "p" . "project")
 ;;        :desc "Search project for symbol"   "." #'+default/search-project-for-symbol-at-point
-;;        :desc "Find file in other project"  "F" #'doom/find-file-in-other-project
-;;        :desc "Search project"              "s" #'+default/search-project
-;;        :desc "List project todos"          "t" #'magit-todos-list
-;;        :desc "Open project scratch buffer" "x" #'doom/open-project-scratch-buffer
-;;        :desc "Switch to project scratch buffer" "X" #'doom/switch-to-project-scratch-buffer
+;; "F" #'doom/find-file-in-other-project
+;; "s" #'+default/search-project
+;; "t" #'magit-todos-list
+;; "x" #'doom/open-project-scratch-buffer
+;; "X" #'doom/switch-to-project-scratch-buffer
 ;;        (:when (and (modulep! :tools taskrunner)
 ;;                    (or (modulep! :completion ivy)
 ;;                        (modulep! :completion helm)))
-;;         :desc "List project tasks"         "z" #'+taskrunner/project-tasks)
+;; "z" #'+taskrunner/project-tasks)
 ;;        ;; later expanded by projectile
-;;        (:prefix ("4" . "in other window"))
-;;        (:prefix ("5" . "in other frame")))
+;; "4" . "in other window"))
+;; "5" . "in other frame")))
 
 ;;*** q QUIT
 ;;*** r REMOTE
@@ -991,18 +890,20 @@
 
 ;;*** s SEARCH
 
-;;       (:prefix-map ("s" . "search")
+;; "s" . "search")
 ;;        :desc "Search project for symbol"    "." #'+default/search-project-for-symbol-at-point
-;;        :desc "Search buffer"                "b"
+;; "b"
 ;;        (cond ((modulep! :completion vertico)   #'consult-line)
 ;;              ((modulep! :completion ivy)       #'swiper)
 ;;              ((modulep! :completion helm)      #'swiper))
-;;        :desc "Search all open buffers"      "B"
+;; "B"
 ;;        (cond ((modulep! :completion vertico)   (cmd!! #'consult-line-multi 'all-buffers))
 ;;              ((modulep! :completion ivy)       #'swiper-all)
 ;;              ((modulep! :completion helm)      #'swiper-all))
-;;        :desc "Search current directory"     "d" #'+default/search-cwd
-;;        :desc "Search other directory"       "D" #'+default/search-other-cwd
+
+;; "d" #'+default/search-cwd
+;; "D" #'+default/search-other-cwd
+
 ;;        :desc "Search .emacs.d"              "e" #'+default/search-emacsd
 ;;        :desc "Locate file"                  "f" #'+lookup/file
 ;;        :desc "Jump to visible link"         "l" #'link-hint-open-link
