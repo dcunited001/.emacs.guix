@@ -51,6 +51,18 @@
 
 (add-hook 'lisp-data-mode-hook #'dc/enable-lispy-in-dir-locals)
 
+;;** Docs
+
+(setup xref
+  (:option xref-show-definitions-function #'xref-show-definitions-completing-read
+           xref-show-xrefs-function #'xref-show-definitions-buffer
+           xref-file-name-display 'project-relative
+           xref-search-program
+           (cond
+            ((executable-find "ugrep") 'ugrep)
+            ((or (executable-find "ripgrep") (executable-find "rg")) 'ripgrep)
+            (t 'grep))))
+
 ;;** Checking
 
 ;;*** Flycheck

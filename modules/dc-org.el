@@ -126,7 +126,8 @@
         org-fontify-quote-and-verse-blocks t
         ;; org-fontify-whole-heading-line t
         org-hide-block-startup nil
-        org-hide-emphasis-markers t
+        org-hide-emphasis-markers nil
+        org-hide-macro-markers nil
         ;; org-hide-leading-stars t
         org-image-actual-width nil
         org-imenu-depth 6
@@ -437,7 +438,9 @@
 
   )
 (defun dc/org-init-keybinds-h ()
-
+  (setq org-special-ctrl-a/e t
+        org-special-ctrl-k t
+        org-M-RET-may-split-line '((default . nil)))
   )
 (defun dc/org-init-popup-rules-h ()
 
