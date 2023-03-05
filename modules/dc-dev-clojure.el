@@ -47,7 +47,29 @@
 
 ;; TODO jarchive-setup (karthink)
 
-(setup (:pkg clj-refactor))
+(setup (:pkg clj-refactor)
+  (:option
+
+   ;; ns
+   cljr-favor-prefix-notation nil
+   cljr-favor-private-functions nil
+
+   ;; formatting
+   cljr-insert-newline-after-require nil
+   ;; cljr-assume-language-context "clj"
+
+   ;; tests
+   ;; cljr-clojure-test-declaration "[clojure.test :refer [deftest is testing]]"
+   ;; cljr-expectations-test-declaration "[expectations :refer :all]"
+   ;; tests (NOTE: requires option* ...)
+   ;; cljr-cljs-clojure-test-declaration cljr-clojure-test-declaration
+   ;; cljr-cljc-clojure-test-declaration cljr-clojure-test-declaration
+
+   ;; eval
+   ;; cljr-warn-on-eval nil
+   ))
+
+
 (setup (:pkg parseedn))
 (setup (:pkg parseclj))
 
@@ -65,14 +87,39 @@
 
 (setup (:pkg cider)
   (:option cider-use-overlays t
-           cider-save-file-on-load nil
+           cider-save-file-on-load nil  ; t(magnars)
            cider-prompt-for-symbol nil
-           cider-font-lock-dynamically nil
+
+           ;; appearance
+           cider-font-lock-dynamically nil ;nilkoa ;abo-abo
            cider-font-lock-reader-conditionals nil
+           cider-repl-use-pretty-printing t
+
+           cider-print-options '(("length" 80)
+                                 ("level" 20)
+                                 ("right-margin" 80))
+
+           ;; connection
+           cider-jack-in-default 'clojure-cli ;abo-abo
            cider-repl-pop-to-buffer-on-connect nil
            cider-repl-display-in-current-window nil
            cider-eval-spinner-type 'half-circle
+           ;; cider-mode-line-show-connection nil  ;abo-abo
+           cider-repl-pop-to-buffer-on-connect nil
+
+           ;; clojure-cli
+           ;; cider-clojure-cli-aliases nil      ;abo-abo
+
+           ;; history
            cider-merge-sessions 'project
+           cider-history-file (expand-file-name nrepl-history dc/emacs-d)
+
+           ;; debug/errors
+           cider-repl-popup-stacktraces t
+           cider-auto-select-error-buffer t
+
+           ;; help
+           ;; cider-repl-display-help-banner nil ;abo-abo
 
            ;; Automatically download all available .jars with Java sources and
            ;; javadocs, allowing you to navigate to Java sources and javadocs
@@ -84,22 +131,22 @@
            ;; nrepl-sync-request-timeout nil
            ;; nrepl-use-ssh-fallback-for-remote-hosts t
 
-           ;; cider-mode-line-show-connection nil  ;abo-abo
-           ;; cider-font-lock-dynamically nilkoa ;abo-abo
-           cider-jack-in-default 'clojure-cli ;abo-abo
-           ;; cider-clojure-cli-aliases nil      ;abo-abo
-           ;; cider-repl-display-help-banner nil ;abo-abo
+           ;; misc
+
+           ;; cljs
+           ;; shadow
+           cider-default-cljs-repl 'shadow
 
            ;; figwheel
            ;; cider-default-cljs-repl 'figwheel-main
            cider-figwheel-main-default-options ":dev"
-
-           ;; shadow
-           cider-default-cljs-repl 'shadow
-
+           ;; cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))"
            )
   (:hook eldoc-mode)
   (require 'ob-clojure)
   (:option org-babel-clojure-backend 'cider))
 
 (provide 'dc-dev-clojure)
+
+
+;; cider-print-options ...
