@@ -29,11 +29,18 @@
 ;;
 ;;; Code:
 
+;; abo-abo/csetq, shorter than phundrak/csetq
+;; (defmacro csetq (variable value)
+;;   `(funcall (or (get ',variable 'custom-set) 'set-default) ',variable ,value))
+
 ;;*** Clojure
 (setup (:pkg clojure-mode)
   (:option clojure-toplevel-inside-comment-form t
+           clojure-thread-all-but-last t
 
-           )
+           ;; always-align, always-indent, align-arguments
+           clojure-indent-style 'always-align
+           clojure-align-forms-automatically t)
 
   ;; (:hook eglot-ensure)
   )
@@ -69,12 +76,12 @@
 
            ;; Automatically download all available .jars with Java sources and
            ;; javadocs, allowing you to navigate to Java sources and javadocs
-           ;; in your Clojure projects.
+           ;; in your Clojure projects. (magnars)
            cider-enrich-classpath t
 
            ;; nrepl
            ;; nrepl-hide-special-buffers t
-           nrepl-sync-request-timeout nil
+           ;; nrepl-sync-request-timeout nil
            ;; nrepl-use-ssh-fallback-for-remote-hosts t
 
            ;; cider-mode-line-show-connection nil  ;abo-abo
@@ -96,5 +103,3 @@
   (:option org-babel-clojure-backend 'cider))
 
 (provide 'dc-dev-clojure)
-
-;;
