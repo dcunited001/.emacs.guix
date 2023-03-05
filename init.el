@@ -75,6 +75,7 @@
 ;; (require 'dw-shell)
 (require 'dc-dev)
 ;; (require 'dw-dev-web)
+(require 'dc-dev-clojure)
 
 (require 'dc-tools)
 
