@@ -320,23 +320,6 @@
     (:file-match "\\.msc\\'"))
   (require 'mesche))
 
-;;*** Clojure
-;(setup (:pkg clojure-mode))
-;(setup (:pkg cider))
-;(setup (:pkg clj-refactor))
-;(setup (:pkg parseedn))
-;(setup (:pkg parseclj))
-
-;; TODO: zprint-mode?
-;; (add-hook 'clojure-mode-hook 'zprint-mode)
-;; (add-hook 'clojurescript-mode-hook 'zprint-mode)
-
-;;**** LSP (clojure)
-
-;;**** CIDER
-;; (add-hook 'cider-mode-hook #'clj-refactor-mode)
-;; (setq org-babel-clojure-backend 'cider)
-
 ;;** Lang
 
 ;;*** Haskell

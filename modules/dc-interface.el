@@ -203,6 +203,10 @@
     (:hook pulsar-reveal-entry))
   (:with-hook next-error-hook
     (:hook #'pulsar-pulse-line-red))
+  ;; TODO pulse on ace-window jump
+  (:with-hook window-configuration-change-hook
+    (:hook pulsar-reveal-entry))
+  ;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
   (require 'pulsar)
   (pulsar-global-mode 1))
 

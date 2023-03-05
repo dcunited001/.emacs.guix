@@ -79,6 +79,56 @@
   (unless (= (- (point-max) (point-min)) 0)
     (shrink-window-if-larger-than-buffer window)))
 
+(defvar +popup--display-buffer-alist nil)
+
+(defvar +popup-defaults
+  (list :side 'bottom
+        :height 0.16
+        :width 40
+        :quit t
+        :select #'ignore
+        :ttl 5))
+
+(defun +popup-make-rule (predicate plist)
+  (if (plist-get plist :ignore)
+      (list predicate nil)
+    (let* ((plist (append plist +popup-defaults))
+           (alist
+            `((actions . ,(plist-get plist :actions))
+              (side . ,(plist-get plist :side))
+              (size . ,(plist-get plist :size))
+              (window-width . ,(plist-get :width))
+              (window-height . ,(plist-get :height))
+              (slot . ,(plist-get :slot))
+              (vslot . ,(plist-get :vslot))))
+           (params
+            `((ttl . ,(plist-get plist :ttl))
+              (quit . ,(plist-get plist :quit))
+              (select . ,(plist-get plist :select))
+              (modeline . ,(plist-get plist :modeline))
+              (autosave . ,(plist-get plist :autosave))
+              ,@(plist-get plist :parameters))))
+      `(,predicate (+popup-buffer)
+                   ,@alist
+                   (window-parameters ,@params)))))
+
+;; TODO +popup-default-display-buffer-actions
+;; TODO +popup--normalize-alist
+;; TODO +popup--maybe-select-window
+;; TODO +popup--init
+
+(defun +popup-parameter (parameter &optional window)
+  "Fetch the window PARAMETER (symbol) of WINDOW"
+  (window-paramter (or window (selected-window)) parameter))
+
+(defun +popup-parameter-fn (parameter &optional window &rest args)
+  "Fetch the window PARAMETER (symbol) of WINDOW. If it is a
+function, run it with ARGS to get its return value."
+  (let ((val (+popup-parameter parameter window)))
+    (if (functionp val)
+        (apply val args)
+      val)))
+
 (setq dc/doom-popup-rules
       ;; handles all special buffers
       '((all
@@ -132,7 +182,7 @@
         (backtrace ("^\\*Backtrace" :vslot 99 :size 0.4 :quit nil))
         (profiler-reports
          ("^\\*CPU-Profiler-Report "
-           :side bottom :vslot 100 :slot 1 :height 0.4 :width 0.5 :quit nil)
+          :side bottom :vslot 100 :slot 1 :height 0.4 :width 0.5 :quit nil)
          ("^\\*Memory-Profiler-Report "
           :side bottom :vslot 100 :slot 2 :height 0.4 :width 0.5 :quit nil))
         (process-list
