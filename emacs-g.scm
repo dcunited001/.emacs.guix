@@ -17,13 +17,13 @@
                   "sound-theme-freedesktop"
                   "aspell"
                   "aspell-dict-en"
-                  "aspell-dict-la"
+                  ;; "aspell-dict-la"
                   "aspell-dict-grc"
                   "aspell-dict-es"
                   "aspell-dict-fr"
                   "aspell-dict-it"
-                  "aspell-dict-de"
-                  "aspell-dict-ia"))
+                  ;; "aspell-dict-ia"
+                  "aspell-dict-de"))
    vlist-null))
 
 ;; TODO: define method to assemble a recursive alist into a package list
