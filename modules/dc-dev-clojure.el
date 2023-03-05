@@ -69,7 +69,6 @@
    ;; cljr-warn-on-eval nil
    ))
 
-
 (setup (:pkg parseedn))
 (setup (:pkg parseclj))
 
@@ -112,7 +111,7 @@
 
            ;; history
            cider-merge-sessions 'project
-           cider-history-file (expand-file-name nrepl-history dc/emacs-d)
+           cider-history-file (expand-file-name "nrepl-history" dc/emacs-d)
 
            ;; debug/errors
            cider-repl-popup-stacktraces t
@@ -147,6 +146,3 @@
   (:option org-babel-clojure-backend 'cider))
 
 (provide 'dc-dev-clojure)
-
-
-;; cider-print-options ...
