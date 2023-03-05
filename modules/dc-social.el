@@ -56,8 +56,11 @@
   ;; gnus-newsrc-last-checked-date
   ;; gnus-save-standard-newsrc-hook
   ;; gnus-save-newsrc-file-last-timestamp
-  (:with-hook '(gnus-summary-mode-hook
-                gnus-article-mode-hook)
+  (:with-hook gnus-summary-mode-hook
+    (:hook bug-reference-mode)))
+
+(setup gnus-art
+  (:with-hook gnus-article-mode-hook
     (:hook bug-reference-mode)))
 
 ;; TODO reappropriate locking from desktop.el

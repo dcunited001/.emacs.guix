@@ -104,8 +104,8 @@
            doom-modeline-persp-name nil
            doom-modeline-buffer-file-name-style 'truncate-except-project
            doom-modeline-major-mode-icon nil)
-  (custom-set-faces '(mode-line ((t (:height 0.85))))
-                    '(mode-line-inactive ((t (:height 0.85))))))
+  (custom-set-faces '(mode-line ((t (:height 1.00))))
+                    '(mode-line-inactive ((t (:height 1.00))))))
 
 ;;*** Themes
 (setup (:pkg ef-themes)
@@ -190,6 +190,7 @@
 ;;*** Pulse
 ;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
 ;; https://protesilaos.com/emacs/pulsar
+(require 'imenu)
 (setup (:pkg pulsar)
   (:option pulsar-pulse t
            pulsar-delay 0.055

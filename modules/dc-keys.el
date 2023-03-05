@@ -782,7 +782,7 @@
   "nrt" #'org-roam-tag-add
   "nrT" #'org-roam-tag-remove
 
-  "nrd" '(:ignore t :wk "DAILY)"
+  "nrd" '(:ignore t :wk "DAILY")
   "nrd-" #'org-roam-dailies-find-directory
   "nrdb" #'org-roam-dailies-goto-previous-note
   "nrdd" #'org-roam-dailies-goto-date
@@ -797,7 +797,6 @@
   "nrdY" #'org-roam-dailies-capture-yesterday
   )                    ; nan
 
-
 ;; (dw/ctrl-c-keys
 ;;   "o"   '(:ignore t :which-key "org mode")
 
@@ -811,10 +810,6 @@
 ;;   "ot"  '(org-todo-list :which-key "todos")
 ;;   "oc"  '(org-capture t :which-key "capture")
 ;;   "ox"  '(org-export-dispatch t :which-key "export"))
-
-;;****
-
-
 
 ;;*** o OPEN
 

@@ -149,8 +149,12 @@
 ;; trigger project auto-discovery with projectile-discover-projects-in-search-path
 
 ;;** Treesitter
-
-(require 'treesit)
+;; TODO setup treesit-extra-load-path
+;; TODO setup major-mode-remap-alist
+;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
+(setup treesit
+  (:option treesit-extra-load-path (file-name-as-directory
+                                    (expand-file-name "tree-sitter" dc/emacs-d))))
 
 ;;** LSP/Eglot
 
