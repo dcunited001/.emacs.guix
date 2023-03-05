@@ -197,6 +197,7 @@
 (global-auto-revert-mode 1)
 
 (setup (:require paren)
+  (:option show-paren-style 'mixed)
   (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
   (show-paren-mode 1))
 

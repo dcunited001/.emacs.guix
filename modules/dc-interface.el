@@ -62,7 +62,10 @@
 (set-default-coding-systems 'utf-8)
 
 ;;(setq large-file-warning-threshold nil)
-(setq vc-follow-symlinks t)
+(setq vc-follow-symlinks t
+      ;; "Disable all version control. makes startup and opening files much
+      ;; faster except git and svn which I actually use" - jkitchin
+      vc-handled-backends '(Git SVN))
 (setq ad-redefinition-action 'accept)
 
 ;;*** Modeline
@@ -193,15 +196,12 @@
            pulsar-iterations 10
            pulsar-face 'pulsar-magenta
            pulsar-highlight-face 'pulsar-yellow)
-  ;; runs on most preview actions
-  (:with-hook consult-after-jump-hook
+  (:with-hook consult-after-jump-hook   ; runs on most preview actions
+    imenu-after-jump-hook               ; runs on imenu selection
     (:hook pulsar-recenter-middle)
     (:hook pulsar-reveal-entry))
-  ;; runs on imenu selection
-  (:with-hook imenu-after-jump-hook
-    (:hook pulsar-recenter-middle)
-    (:hook pulsar-reveal-entry))
-
+  (:with-hook next-error-hook
+    (:hook #'pulsar-pulse-line-red))
   (require 'pulsar)
   (pulsar-global-mode 1))
 

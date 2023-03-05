@@ -21,7 +21,7 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-;;** Dev
+;;* Dev
 
 ;;*** Paren Matching
 
@@ -87,26 +87,6 @@
 (with-eval-after-load 'flycheck
   (setup (:pkg consult-flycheck :straight t))
   (global-flycheck-mode))
-
-
-;;**** flycheck-emacs-lisp
-;; (setq flycheck-emacs-lisp-check-declare nil
-;;       flycheck-emacs-lisp-initialize-packages 'auto
-;;       flycheck-emacs-lisp-load-path nil
-;;       flycheck-emacs-lisp-package-user-dir nil)
-
-;; flycheck-emacs-lisp-load-path nil
-;; flycheck-emacs-lisp-executable nil
-;; flycheck-emacs-lisp-check-declare nil
-;; flycheck-emacs-lisp-initialize-packages auto
-;; flycheck-emacs-lisp-package-user-dir nil
-;; flycheck-emacs-lisp-checkdoc-executable nil
-
-;; contain lists
-;; flycheck-emacs-lisp-checkdoc-variables
-;; flycheck-emacs-lisp-check-form
-;; flycheck-emacs-lisp-checkdoc-form
-;; flycheck-emacs-lisp-package-initialize-form
 
 ;;*** Flymake
 

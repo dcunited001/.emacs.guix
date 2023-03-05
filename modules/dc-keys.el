@@ -143,6 +143,7 @@
  :keymaps 'global
  :wk-full-keys nil
 
+ ;; C-u commands very useful!
  "C-x o" #'ace-window
  "C-x C-d" #'consult-dir
 
@@ -189,6 +190,10 @@
   "Gg" #'debbugs-gnu-guix-search
   "Gs" #'debbugs-gnu-search
   "Gp" #'debbugs-gnu-package
+
+  "l" #'pulsar-pulse-line
+  "L" #'pulsar-highlight-dwim
+
   "T" #'tldr
   "<left>" #'winner-undo
   "<right>" #'winner-redo
