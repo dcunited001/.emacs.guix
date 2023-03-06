@@ -244,6 +244,18 @@
  "<C-S-left>" #'buf-move-left
  "<C-S-right>" #'buf-move-right)
 
+;;**** popper
+
+(general-def popper-mode-map
+  :prefix "M-`"
+  "`" 'popper-toggle-latest
+  "~" 'popper-cycle
+  ;; raise/lower popups
+  "M-`" 'popper-toggle-type)
+
+;;**** Ace Jump
+;; TODO change popper from M-`
+
 (leader-def
   :wk-full-keys nil
 
