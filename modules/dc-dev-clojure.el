@@ -33,6 +33,32 @@
 ;; (defmacro csetq (variable value)
 ;;   `(funcall (or (get ',variable 'custom-set) 'set-default) ',variable ,value))
 
+(require 'dash)
+(require 'a)
+
+(setq dc/major-mode-clojure
+      '(("\\(?:build\\|profile\\)\\.boot\\'" . clojure-mode)
+        ("\\.cljs\\'" . clojurescript-mode)
+        ("\\.cljc\\'" . clojurec-mode)
+        ("\\.\\(clj\\|cljd\\|dtm\\|edn\\)\\'" . clojure-mode)))
+
+(defun dc/toggle-clojure-ts-remaps ()
+  "Toggle clojurelike modes from handling being handled by tree-sitter."
+  (interactive)
+  (if (memq 'clojure-ts-mode (a-vals major-mode-remap-alist))
+      (let ((major-mode-remaps-to-remove
+             (map-filter
+              (lambda (k v) (equal 'clojure-ts-mode v))
+              major-mode-remap-alist)))
+        (cl-dolist (m major-mode-remaps-to-remove)
+          ;; it won't delete the last entry?
+          (setq major-mode-remap-alist
+                (delete m major-mode-remap-alist)))))
+  (progn
+    (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
+    (add-to-list 'major-mode-remap-alist '(clojurescript-mode . clojure-ts-mode))
+    (add-to-list 'major-mode-remap-alist '(clojurec-mode . clojure-ts-mode))))
+
 ;;*** Clojure
 (setup (:pkg clojure-mode)
   (:option clojure-toplevel-inside-comment-form t
