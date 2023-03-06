@@ -69,15 +69,10 @@
     ;; bind to quick functions (loading/themes/etc) a la doom
     "<f1> <f2>"                         ;no standard binding
 
-    ;; shouldn't be using arrows
-    "C-S-<up>"                          ;left/right-word
-    "C-S-<down>"
 
     ;; globally, bound to the same function
     "M-S-<left>"                        ;translate to M/C-<left/right>
     "M-S-<right>"
-    "C-S-<left>"
-    "C-S-<right>"
 
     "C-x f"                             ;set-fill-column
     ))
@@ -86,7 +81,15 @@
 ;; (fset 'dc/unbind-key (macroexpand-all '(unbind-key k)))
 ;; (seq-do (symbol-function 'dc/unbind-key) dc/keys-unbound-at-init)
 
-(seq-do (lambda (key) (unbind-key key)) dc/keymaps-unbound-at-init)
+
+(defun dc/unbind-keys (key-names &optional keymap)
+  (seq-do (lambda (key)
+            (if keymap
+                (unbind-key key keymap)
+              (unbind-key key)))
+          key-names))
+
+(unbind-keys dc/keymaps-unbound-at-init)
 
 ;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
 ;; and if you buy right now, we'll double your function keys
@@ -137,37 +140,21 @@
 
 ;;** Globals
 
-;;*** UI
-
-(general-define-key
- :keymaps 'global
- :wk-full-keys nil
-
- ;; C-u commands very useful!
- "C-x o" #'ace-window
- "C-x C-d" #'consult-dir
-
- ;; "C-x M-f" #'set-fill-column
-
- ;; (define-key evil-window-map "u" 'winner-undo)
- ;; (define-key evil-window-map "U" 'winner-redo)
-
- "C-M-k" #'tab-bar-switch-to-tab
- "C-<next>" #'tab-bar-switch-to-next-tab
- "C-<prior>" #'tab-bar-switch-to-prev-tab
-
- "<C-S-up>" #'buf-move-up
- "<C-S-down>" #'buf-move-down
- "<C-S-left>" #'buf-move-left
- "<C-S-right>" #'buf-move-right)
-
 ;;*** global-leader-key (C-x, f2)
 ;; this helps balance keyboard usage, giving and gives your pinky a break
 
 ;; this prefix should find itself associated with
 ;; editor features, global state and outward-looking functions
 (global-leader-def
+  :keymaps '(global)
   :wk-full-keys nil
+
+  ;; C-u commands very useful!
+  "o" #'ace-window
+  "C-d" #'consult-dir
+
+  ;; "C-x M-f" #'set-fill-column
+
   "M-f" #'find-file-at-point
   "f" '(:ignore t :wk "FIND/FILE")
   "ff" #'consult-recent-file
@@ -199,10 +186,63 @@
   "<right>" #'winner-redo
   "X M-e" #'esup)
 
+;;**** kmacro and
+
+(dc/unbind-keys '("C-x ("                            ;kmacro-start-macro
+                  "C-x )"                            ;kmacro-end-macro
+                  "C-x e"))                          ;kmacro-end-and-call-macro
+
+(global-leader-def
+  :keymaps '(global)
+  :wk-full-keys nil
+
+  "(" #'ignore
+  ")" #'ignore
+
+  ;; TODO maybe rebind eval here
+  "e" '(:ignore t :wk "EVAL"))
+
+;; but e is a very common character, so it's
+;; valuable as a future mnemonic
+;;
+;; eval-last-sexp is covered by lispy
+
 ;;*** leader-key (C-c, f12)
 
 ;; this prefix should find itself associated with
 ;; project mgmt, minor mode features and inward-looking functions
+
+;;*** UI
+
+;;**** tab-bar
+
+(general-define-key
+ :keymaps 'global
+ :wk-full-keys nil
+
+ "C-M-k" #'tab-bar-switch-to-tab
+ "C-<next>" #'tab-bar-switch-to-next-tab
+ "C-<prior>" #'tab-bar-switch-to-prev-tab)
+
+;;**** buffer-move
+
+;; shouldn't be using arrows
+(dc/unbind-keys
+ ;; left/right-word
+ '("C-S-<left>"
+   "C-S-<right>"
+   ;; globally, bound to the same function
+   "C-S-<up>"
+   "C-S-<down>"))
+
+(general-define-key
+ :keymaps 'global
+ :wk-full-keys nil
+
+ "<C-S-up>" #'buf-move-up
+ "<C-S-down>" #'buf-move-down
+ "<C-S-left>" #'buf-move-left
+ "<C-S-right>" #'buf-move-right)
 
 (leader-def
   :wk-full-keys nil
