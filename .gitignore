@@ -14,3 +14,6 @@ eln-cache/**
 straight/**
 elpa/**
 scratch/**
+
+.cache/**
+log/**
