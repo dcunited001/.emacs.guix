@@ -358,12 +358,18 @@
 (setup (:pkg corfu)
   (:option corfu-cycle t
            corfu-auto t
+           corfu-auto-delay 0.25
            corfu-quit-no-match 'separator
            corfu-quit-at-boundary 'separator
-           ;; corfu-popupinfo-min-height 15
-           ;; corfu-popupinfo-min-height 5
+           corfu-excluded-modes '(org-mode markdown-mode)
+           corfu-count 15
+           corfu-min-width 15
+           corfu-popupinfo-max-height 15
+           corfu-popupinfo-min-height 5
+           corfu-popupinfo-direction 'right
+           corfu-popupinfo-delay '(1.0 . 0.0)
+           corfu-popupinfo-hide nil     ;don't hide in between transitions
            corfu-preview-current nil)
-  ;; (require 'corfu-popupinfo)
   (global-corfu-mode 1))
 
 (setup (:pkg corfu-quick)

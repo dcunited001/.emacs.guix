@@ -992,6 +992,8 @@
 (leader-def
   :keymaps 'global
   "tC" #'global-display-fill-column-indicator-mode
+  "t M-C" #'corfu-mode
+  "t M-c" #'corfu-popupinfo-mode
   "t1" #'flycheck-mode
   "t!" #'flymake-mode
   "t M-f" #'toggle-frame-fullscreen
