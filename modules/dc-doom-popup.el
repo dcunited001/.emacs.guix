@@ -70,6 +70,7 @@
 ;;
 ;;; Code:
 
+(require 'dc-doom-popup-rules)
 (setup (:pkg a))
 
 ;;* Popups
