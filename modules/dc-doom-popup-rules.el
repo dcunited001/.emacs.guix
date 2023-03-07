@@ -78,10 +78,13 @@
 
     (customize
      ("^\\*Customize"
-      :slot 2 :side right :size 0.5 :select t :quit nil))
+      :side left :vslot -2 :slot 2 :size 0.35 :select t :quit nil))
     (undo-tree
      ("^ \\*undo-tree\\*"
-      :slot 2 :side left :size 20 :select t :quit t))
+      :side left :vslot -4 :slot 2 :size 20 :select t :quit t))
+    (embark
+     ("^ \\*Embark Live"
+      :side Bottom :vslot -4 :size 0.4 :select t :quit t))
 
     ;; help
 
