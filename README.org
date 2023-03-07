@@ -80,13 +80,90 @@ font directories in =~/.guix-extra-profiles= is made available in fontconfig.
 
 *** =no-littering=
 
+** Emacs Config
 
+*** Mixing Popper.el with Doom's Popups
 
-** Config
+*Popper is simple and works great with almost zero config. It can:*
+
+- promote buffers to popups
+- narrow popup selection/manipulation to a context (project/etc)
+
+Extending Popper's behavior requires more understanding of emacs windows, frames
+and tabs. So, techniques like like surrounding function calls with let or using
+setf or creating functions to dispatch on context may be required.
+
+*Doom has more comprehensive configuration:*
+
+- the buffers you're likely to encounter are already spec'd out.
+- handles window/frame customizations.
+
+**** How Doom's code is loaded
+
+I just imported the extant =+popup= module code with minimal tweaks.
+
+While the Doom Emacs modeline and snippets packages are simple to utilize, there
+isn't a good way to cherry-pick packages/scripts from Doom Emacs.
+
++ use-package, quelpa and straight do include features like =:files=,
+  =:includes= and =:build=, but Doom isn't a package AFAIK. Even if I could use
+  these, I don't want to risk building/running Doom's code unless I specify that
+  file/package.
++ I don't have submodules and it's likely this will end up being a submodule.
+
+**** Some caveats
+
+#+begin_quote
+I really wouldn't have set out expecting to end up with a mixed config like
+this. I wouldn't try this in your init.el ... but for now, it should allow me to
+experiment with both popup systems.
+#+end_quote
+
+- As long as poppers config is at the end of display-buffer-alist (ACL?) then it
+  shouldn't affect buffer mgmt.
+- Doom's popup config should be mutually exclusive with popper's config --
+  i.e. each buffer potentially treated as a popup =default-buffer-alist=, should
+  only ever be handled by one system or the other.
+- Deactivating popper-mode will cl-remove =popper-display-control-h= from
+  display-buffer-alist. Popper won't run its dispatch, but its other
+  functionality will still be in tact.
+- Popper uses buffer-local variables to determine whether buffers are popups it
+  should manage. Using the keybinds from =popper-map= will cause it to adopt the
+  popups dispatched by doom's =+popup-display-buffer-stacked-side-window-fn=. If
+  =display-buffer-alist= ends with =popper-display-control-h=, Doom's dispatch
+  should pick it up.
+
+So (fingers crossed...) this config should work alright for now.  Besides the
+obvious overlapping regexp, there are two areas where unexpected state could
+arise:
+
+- Entries in =popper-reference-buffers= are specified by regexp or major mode.
+- Users can raise arbitrary buffers to be treated as popups.
+
+**** Notes on popups
+
+If you've never actually worked beside someone whose popups just work and you
+can't ask them about it, it's potentially a large source of friction. It makes
+sense for the kind of data or UI/UX interactions, but it's not your average
+window system. The semantics of window and frame are simple to get past.
+
+I just need the popups to work.  If my emacs session is fragile or if I can't
+depend on something being somewhere at a particular point, that's going to slow
+me down.  I need for the interface to feel familiar. With REPL-driven
+development, i need the popups/buffers under control.
+
++ CIDER has lots of modes/buffers.
++ LSP throws in another dozen or so buffer and window types.
++ It's really nice when xref popups don't clutter your space.
+
+** System Config
 
 *** Per-System Settings
 
+
 *** External Tools
+
+**** Integrate Pomm with Notifications
 
 This is tangled in my dotfiles configured
 
@@ -227,3 +304,42 @@ nothing helps me understand the design of this better than Guix.
 
 So, yeh, I'd like to have a consistent experience with =emacs-guix= and
 =geiser=. And I'd like =guix-devel-mode= to work.
+
+*** Why Not Guix Home?
+
+I've been pushing forward where I could, trying to minimize moving parts.  I
+hope I haven't pre-emptively obselesced some future =guix-home= configuration
+for Emacs. I think I've already obviated any simple means of building Emacs as a
+set of Guix Home packages/services...
+
+Guix Home elsewhere? Definitely, but I need a realistic migration path. For
+Emacs, I am also hesitant on trans-lisp configuration DSL's outside of simple
+home services -- but I need more experience with emacs-lisp before that could be
+a reasonable problem to deal with. It's mainly separating concerns in emacs
+configs while being able to quickly edit the config. The benefits and drawbacks
+to the process and potentiallys are probably similar to Literate dotfiles --
+they can provide a standard experience or make projects like ESS/Scimacs/Doom
+more consistent or replicable.
+
+Here I was also skeptical of how Guix itself would handle edge cases for system
+config -- the immutability, the need to write packages for small things, the
+service dependencies, the lack of SystemD, lack of nonfree software by default, etc.
+
+However, these turn out to be great limitations:
+
++ immutability: I don't have to care really. I just reinstall. Eventually, I may
+  use =guix time-machine= or be concerned with the specifics of reproducibility.
++ packages for small things: I should've been doing this for a decade or longer.
++ services for small things: ... ditto.
++ on SystemD: now I appreciate/understand SystemD a bit more and the
+  kind of tools/commands that services or SystemD components utilize.
++ on lack of nonfree software in the ISO: this is complicated. If my Macbook Pro
+  2011 didn't run the ISO, I may have assumed Guix was broken. But now I
+  understand, what non-free software runs on my hardware and where it is. I'm a
+  pragmatist, so while I prefer FOSS, but usually end up running a lot of
+  non-free software. But I am a lot more capable of knowing and deciding now.
+
+  So, my perspective/depth on this would be limited or misleading.
+
+Without boundaries, the free energy in a particle simulation disperses quickly
+-- i.e. some limitations can be essential to shape your creativity.
