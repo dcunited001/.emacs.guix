@@ -30,9 +30,24 @@
 ;;* Popups
 
 (require 'a)
-(require 'doom-popup)
+(require 'doom-popup-config)
 (require 'dc-doom-popup-rules)
 
+(defun dc/load-doom-popup ()
+  ;; popup code is mostly self-contained
+  ;; popup/config.el can't be included bc it calls (load! "hacks.el")
+  ;; popup/autoloads/settings.el:
+  ;; - 3 defuns and 2 defvar
+  ;; - needed for +popup-defaults
+  ;; - no external deps (refereces to +symbols)
+  ;; popup/autoloads/popup.el:
+  ;; - all defuns, except +popup--internal
+  ;; - many functions needed
+  ;; - no external deps (refereces to +symbols)
+  (let ((popup-files '("popup/autoloads/settings.el"
+                       "popup/autoloads/popup.el")))
+    (dolist (doom-file popup-files)
+      (load-file (expand-file-name doom-file dc/emacs-doom-modules)))))
 
 ;;** Popper
 
