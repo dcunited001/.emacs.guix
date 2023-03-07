@@ -315,11 +315,11 @@ set of Guix Home packages/services...
 Guix Home elsewhere? Definitely, but I need a realistic migration path. For
 Emacs, I am also hesitant on trans-lisp configuration DSL's outside of simple
 home services -- but I need more experience with emacs-lisp before that could be
-a reasonable problem to deal with. It's mainly separating concerns in emacs
-configs while being able to quickly edit the config. The benefits and drawbacks
-to the process and potentiallys are probably similar to Literate dotfiles --
-they can provide a standard experience or make projects like ESS/Scimacs/Doom
-more consistent or replicable.
+a reasonable problem to deal with. Separating concerns in emacs configs while
+being able to quickly edit the config is too much for now. The benefits and
+drawbacks to the process and potentiallys are probably similar to Literate
+dotfiles -- they can provide a standard experience or make projects like
+ESS/Scimacs/Doom more consistent or replicable.
 
 Here I was also skeptical of how Guix itself would handle edge cases for system
 config -- the immutability, the need to write packages for small things, the
