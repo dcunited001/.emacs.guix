@@ -89,7 +89,7 @@
               (unbind-key key)))
           key-names))
 
-(unbind-keys dc/keymaps-unbound-at-init)
+(dc/unbind-keys dc/keymaps-unbound-at-init)
 
 ;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
 ;; and if you buy right now, we'll double your function keys
@@ -373,7 +373,8 @@
 
 ;;**** goto-map (consult)
 ;; M-g bindings
-(unbind-key "M-g c")
+
+(dc/unbind-keys '("M-g c"))
 (general-define-key
  :keymaps 'goto-map
  :wk-full-keys nil
@@ -402,6 +403,7 @@
 
 ;;**** search-map (consult)
  ;; M-s bindings
+
 (general-define-key
  :keymaps 'search-map
  "d" #'consult-find
