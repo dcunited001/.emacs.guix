@@ -58,4 +58,24 @@ adjustment.")
 (defvar +popup--last nil)
 (defvar-local +popup--timer nil)
 
+(define-minor-mode +popup-buffer-mode
+  "Minor mode for individual popup windows.
+
+It is enabled when a buffer is displayed in a popup window and disabled when
+that window has been changed or closed."
+  :init-value nil
+  ;; :keymap +popup-buffer-mode-map
+  (if (not +popup-buffer-mode)
+      (remove-hook 'after-change-major-mode-hook #'+popup-set-modeline-on-enable-h t)
+    (add-hook 'after-change-major-mode-hook #'+popup-set-modeline-on-enable-h
+              nil 'local)
+    (when (timerp +popup--timer)
+      (remove-hook 'kill-buffer-hook #'+popup-kill-buffer-hook-h t)
+      (cancel-timer +popup--timer)
+      (setq +popup--timer nil))))
+
+(put '+popup-buffer-mode 'permanent-local t)
+(put '+popup-buffer-mode 'permanent-local-hook t)
+(put '+popup-set-modeline-on-enable-h 'permanent-local-hook t)
+
 (provide 'doom-popup-config)

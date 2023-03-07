@@ -30,8 +30,6 @@
 ;;* Popups
 
 (require 'a)
-(require 'doom-popup-config)
-(require 'dc-doom-popup-rules)
 
 ;; popup code is mostly self-contained
 ;; popup/config.el can't be included bc it calls (load! "hacks.el")
@@ -48,6 +46,12 @@
                        "ui/popup/autoload/popup.el")))
     (dolist (doom-file popup-files)
       (load-file (expand-file-name doom-file dc/emacs-doom-modules)))))
+
+(dc/load-doom-popup)
+
+;; doom loads autoload definitions before ./modules/ui/popup/config.el
+(require 'doom-popup-config)
+(require 'dc-doom-popup-rules)
 
 ;;** Popper
 
@@ -96,8 +100,9 @@
 
 (defun dc/+set-popup-rule (predicate &rest plist)
   (push (+popup-make-rule predicate plist) +popup--display-buffer-alist)
-  (when (not popper-display-control) ;; (bound-and-true-p +popup-mode)
-    (setq display-buffer-alist +popup--display-buffer-alist))
+  ;; (when (not popper-display-control) ;; (bound-and-true-p +popup-mode)
+  ;;   (setq display-buffer-alist +popup--display-buffer-alist))
+  (setq display-buffer-alist +popup--display-buffer-alist)
   +popup--display-buffer-alist)
 
 (defun dc/+set-popup-rules (&rest rulesets)
@@ -105,8 +110,9 @@
     (dolist (rule rules)
       (push (+popup-make-rule (car rule) (cdr rule))
             +popup--display-buffer-alist)))
-  (when (not popper-display-control) ;; (bound-and-true-p +popup-mode)
-    (setq display-buffer-alist +popup--display-buffer-alist))
+  ;; (when (not popper-display-control) ;; (bound-and-true-p +popup-mode)
+  ;;   (setq display-buffer-alist +popup--display-buffer-alist))
+  (setq display-buffer-alist +popup--display-buffer-alist)
   +popup--display-buffer-alist)
 
 ;;** Popup Configuration Management
@@ -115,6 +121,7 @@
   '((popper-display-control-p (popper-select-popup-at-bottom))))
 
 (defun dc/popup-rules-clear ()
+  (interactive)
   (setq display-buffer-alist dc/popper-display-buffer-alist-defaults
         +popup--display-buffer-alist dc/popper-display-buffer-alist-defaults))
 

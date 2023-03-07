@@ -117,6 +117,11 @@
      "<f2> dS" #'desktop-save
      "<f2> dr" #'desktop-read
      "<f2> O" #'aw-show-dispatch-help
+     "<f2> p"  '(:ignore t :wk "POPUP")
+     "<f2> pr" #'dc/popup-rules-reset
+     "<f2> ps" #'dc/popup-rules-set
+     "<f2> pc" #'dc/popup-rules-clear
+     "<f2> pP" #'dc/popup-use-popper
      "<f2> P" #'pomm
      "<f2> r" '(:ignore t :which-key "RELOAD")
      "<f2> t" '(:ignore t :which-key "THEME")
