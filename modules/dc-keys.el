@@ -1001,6 +1001,7 @@
   "t M-c" #'corfu-popupinfo-mode
   "t1" #'flycheck-mode
   "t!" #'flymake-mode
+  "t D" #'toggle-debug-on-error
   "t M-f" #'toggle-frame-fullscreen
   "tG" #'gud-tooltip-mode
   ;; "ti" #'highlight-indent-guides-mode

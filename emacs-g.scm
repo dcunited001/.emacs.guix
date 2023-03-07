@@ -66,14 +66,19 @@
 ;;* Emacs
 
 ;;** Support
-;; "emacs-a"
-;; "emacs-dash"
 ;; "emacs-f"
 ;; "emacs-ht"
 ;; "emacs-s"
 ;; "emacs-ts"
 ;; "emacs-jq"
 ;; "emacs-map"
+
+(define guix-emacs-vhash
+  (vhash-consq
+   'support
+   (list->vlist '("emacs-a"
+                  "emacs-dash"))
+   guix-emacs-vhash))
 
 ;;** Config
 (define guix-emacs-vhash
@@ -248,13 +253,10 @@
   (vhash-consq
    'vcs
    (list->vlist '("emacs-git-modes"
-                  "emacs-gitpatch" ;; TODO: configure
-                  "emacs-git-link" ;; TODO: configure
-                  ;; "emacs-git-email" ;;TODO: consider
+                  "emacs-gitpatch"
+                  "emacs-git-link"
+                  ;; "emacs-git-email"
                   "emacs-git-timemachine"
-
-                  ;; "emacs-git-auto-commit-mode" ;; TODO: consider
-
                   "emacs-magit"
                   "emacs-magit-todos"
                   ;; "emacs-ghub"
@@ -426,6 +428,7 @@
 ;;*** Lang: Straight
 ;; "emacs-sass-mode"
 ;; "emacs-arduino-cli-mode"
+
 ;;*** Clojure
 ;; "emacs-clomacs" ?
 
@@ -478,7 +481,7 @@
                   "emacs-parsebib"
                   "emacs-biblio"
                   "emacs-math-symbol-lists"))
-  guix-emacs-vhash))
+   guix-emacs-vhash))
 
 ;;** Org
 (define guix-emacs-vhash
@@ -489,7 +492,6 @@
                   "emacs-org-contrib"
                   "emacs-toc-org"
 
-                  "emacs-org-pomodoro" ;; TODO: remove
                   "emacs-org-make-toc"
                   "emacs-org-caldav"
                   "emacs-org-present"
@@ -518,6 +520,7 @@
                   "emacs-restclient"
                   "emacs-ob-restclient"))
    guix-emacs-vhash))
+
 ;;*** Org: Straight
 ;; "smiles"
 ;; "ob-smiles"
