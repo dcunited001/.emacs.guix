@@ -19,8 +19,9 @@
 (setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
       dc/emacs-d (expand-file-name "~/.emacs.g/")
       dc/emacs-cache (expand-file-name "~/.cache/emacs/")
-      dc/emacs-dw (concat (file-name-as-directory dc/emacs-d) "dw")
-      dc/emacs-modules (concat (file-name-as-directory dc/emacs-d) "modules")
+      dc/emacs-dw (expand-file-name "dw" dc/emacs-d)
+      dc/emacs-modules (expand-file-name "modules" dc/emacs-d )
+      dc/emacs-doom-modules (expand-file-name "doom/modules" dc/emacs-d)
       dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
                                (dc/guix-profile-get-default-path))
       dc/emacs-sound-theme-path (file-name-as-directory (expand-file-name "share/sounds/freedesktop/stereo" dc/guix-profile-path)))
@@ -48,6 +49,7 @@
 ;; Add configuration modules to load path
 (add-to-list 'load-path dc/emacs-dw)
 (add-to-list 'load-path dc/emacs-modules)
+(add-to-list 'load-path (expand-file-name "popup" dc/emacs-doom-modules))
 
 ;; Load pertinent modules
 (require 'dw-package)
