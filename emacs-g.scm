@@ -138,6 +138,7 @@
   (vhash-consq
    'ui
    (list->vlist '("emacs-doom-modeline" ;modeline
+                  "emacs-hide-mode-line"
                   "emacs-minions"       ;minor mode mgmt: toggle/info
                   "emacs-pulsar"
                   "emacs-hydra"
