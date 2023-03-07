@@ -55,6 +55,14 @@
 
 ;;** Popper
 
+;; (setq display-buffer-base-action
+;;       '(display-buffer-reuse-mode-window
+;;         display-buffer-reuse-window
+;;         display-buffer-same-window))
+
+;; If a popup does happen, don't resize windows to be equal-sized
+(setq even-window-sizes nil)
+
 (setup (:pkg popper
              :straight t
              :host github
@@ -62,15 +70,14 @@
              :build (:not autoloads))
 
   (:option popper-display-control t
-           popper-window-height 25
-           popper-reference-buffers '(eshell-mode
+           popper-window-height 33
+           popper-reference-buffers '(
+                                      eshell-mode
                                       vterm-mode
                                       geiser-repl-mode
-                                      help-mode
-                                      grep-mode
-                                      helpful-mode
+                                      ;; grep-mode
                                       compilation-mode
-                                      elfeed-mode
+                                      elfeed-show-mode
                                       "^\\*Guix"))
 
   ;; popper-display-function matches display-buffer's action interface
@@ -133,9 +140,6 @@ popper-display-control-p default."
   ;; (setq popper-display-control t)
   (dc/popup-rulesets-clear))
 
-(defvar dc/doom-popup-rules-selected-rulesets
-  (a-keys dc/doom-popup-rules))
-
 (defun dc/popup-rulesets-reset (&optional selected)
   "Reset popups to a determinate state. Clears rules from
 display-buffer-alist. Then, sets display-buffer-alist to the
@@ -151,7 +155,7 @@ list of keys"
   (interactive)
 
   (let* ((rulesets (or rulesets dc/doom-popup-rules))
-         (default-keys dc/doom-popup-rules-selected-rulesets)
+         (default-keys (dc/doom-popup-rulesets))
          (selected-keys (or selected default-keys))
          (selected-rules (list (dc/popup-rulesets-select rulesets selected-keys))))
     (apply #'dc/+set-popup-rules selected-rules)))
@@ -164,5 +168,19 @@ interactive methods will default to selecting all keys."
                (a-merge acc (a-get rulesets k)))
              selected
              :initial-value (a-list)))
+
+(defvar dc/doom-popup-selected-rulesets
+  (a-keys dc/doom-popup-rules))
+
+(defvar dc/doom-popup-removed-rulesets
+  '(vterm eshell geiser starred))
+
+(defun dc/doom-popup-rulesets ()
+  (let* ((to-remove dc/doom-popup-removed-rulesets))
+    (->> (a-keys dc/doom-popup-rules)
+         (seq-filter (lambda (k) (not (memq k to-remove)))))))
+
+(setq dc/doom-popup-selected-rulesets (dc/doom-popup-rulesets))
+(dc/popup-rulesets-reset)
 
 (provide 'dc-popup)

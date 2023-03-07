@@ -70,6 +70,7 @@
 (require 'dc-desktop)
 (require 'dc-alert)
 (require 'dc-interface)
+(require 'dc-popup)
 ;; (require 'dc-auth)
 
 (require 'dw-org)

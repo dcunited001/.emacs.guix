@@ -32,7 +32,7 @@
 (require 'a)
 (defvar dc/doom-popup-rules-defaults
   ;; handles all special buffers
-  '((all
+  '((starred
      ("^\\*"  :slot 1 :vslot -1 :select t)
      ("^ \\*" :slot 1 :vslot -1 :size +popup-shrink-to-fit))
     (compilation
@@ -100,7 +100,7 @@
      ("^\\*Outline*" :side right :size 40 :select nil)
      ("^\\*Edit Annotation " :quit nil)
      ("\\(?:^\\*Contents\\|'s annots\\*$\\)" :ignore t))
-    (scheme
+    (geiser
      ("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
      ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size 0.35)
      ("^\\* [A-Za-z0-9_-]+ REPL \\*" :size 0.3 :quit nil :ttl nil))
@@ -156,7 +156,7 @@
       :select t :modeline nil :quit nil :ttl nil))
     (lsp-ui-menu
      ("^\\*lsp-ui-imenu"
-      :side top :vslot -5 :slot 3 :width 60
+      :side left :vslot -5 :slot 3 :width 60
       :modeline nil :select t :quit t))
     (bufler
      ("^\\*Bufler"

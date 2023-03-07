@@ -46,7 +46,9 @@
   (add-hook 'hack-local-variables-hook #'buffer-env-update))
 
 (defun dc/enable-lispy-in-dir-locals ()
-  (if (string-match "\.dir-locals\.el$" (file-relative-name (or (buffer-file-name) "")))
+  (if (string-match
+       "\.dir-locals\.el$"
+       (file-relative-name (or (buffer-file-name) "")))
       (lispy-mode +1)))
 
 (add-hook 'lisp-data-mode-hook #'dc/enable-lispy-in-dir-locals)
