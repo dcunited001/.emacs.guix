@@ -289,6 +289,7 @@
  "C-." #'embark-act
  "C-;" #'embark-dwim
  "C-l" #'dc/match-components-literally
+ "C-y" #'yank
  "C-c C-;" #'embark-export
  "C-c C-l" #'embark-collect
  ;; "C-c C-e" #'+vertico/embark-export-write
@@ -323,7 +324,10 @@
  [remap switch-to-buffer-other-window] #'consult-buffer-other-window
  [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
  ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
- [remap yank]                          #'consult-yank-replace ;
+
+ ;; doesn't work in minibuffer
+ ;; [remap yank]                            #'consult-yank-replace
+ "C-y"                                 #'consult-yank-replace
  [remap yank-pop]                      #'consult-yank-pop)
 
 ;;**** globals (consult)

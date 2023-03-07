@@ -71,6 +71,13 @@
   ;; (:hook eglot-ensure)
   )
 
+
+(setup (:pkg clojure-ts-mode
+             :straight t
+             :host github
+             :repo "clojure-emacs/clojure-ts-mode"
+             :build (:not autoloads)))
+
 ;; TODO jarchive-setup (karthink)
 
 (setup (:pkg clj-refactor)
