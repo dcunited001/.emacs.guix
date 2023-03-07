@@ -61,7 +61,7 @@
              :repo "karthink/popper"
              :build (:not autoloads))
 
-  (:option popper-display-control nil   ;t or 'user
+  (:option popper-display-control t
            popper-window-height 25
            popper-reference-buffers '(eshell-mode
                                       vterm-mode
@@ -94,7 +94,7 @@
   (let ((window (popper-display-popup-at-top buffer alist)))
     (select-window window)))
 
-(setq popper-display-function #'popper-select-popup-at-top)
+;; (setq popper-display-function #'popper-select-popup-at-top)
 
 ;;** Config
 
@@ -120,7 +120,9 @@
 (defconst dc/popper-display-buffer-alist-defaults
   '((popper-display-control-p (popper-select-popup-at-bottom))))
 
-(defun dc/popup-rules-clear ()
+(defun dc/popup-rulesets-clear ()
+  "Clear `display-buffer-alist' to contain only the
+popper-display-control-p default."
   (interactive)
   (setq display-buffer-alist dc/popper-display-buffer-alist-defaults
         +popup--display-buffer-alist dc/popper-display-buffer-alist-defaults))
@@ -129,19 +131,19 @@
   "Clear popup rules and use popper's config to manage popups."
   (interactive)
   ;; (setq popper-display-control t)
-  (dc/popup-rules-clear))
+  (dc/popup-rulesets-clear))
 
 (defvar dc/doom-popup-rules-selected-rulesets
   (a-keys dc/doom-popup-rules))
 
-(defun dc/popup-rules-reset (&optional selected)
+(defun dc/popup-rulesets-reset (&optional selected)
   "Reset popups to a determinate state. Clears rules from
 display-buffer-alist. Then, sets display-buffer-alist to the
 selected rulesets. SELECTED is a list of keys"
   (interactive)
-  (dc/popup-rules-clear)
+  (dc/popup-rulesets-clear)
   ;; (setq popper-display-control nil)
-  (dc/popup-rules-set dc/doom-popup-rules))
+  (dc/popup-rulesets-set dc/doom-popup-rules))
 
 (defun dc/popup-rulesets-set (&optional rulesets selected)
   "Sets display-buffer-alist to the selected rulesets. SELECTED is a
@@ -162,9 +164,5 @@ interactive methods will default to selecting all keys."
                (a-merge acc (a-get rulesets k)))
              selected
              :initial-value (a-list)))
-
-;; (dc/popup-rulesets-select dc/doom-popup-rules '(all clojure))
-;; (dc/popup-rulesets-set dc/doom-popup-rules '(customize))
-;; (dc/popup-rulesets-set)
 
 (provide 'dc-popup)

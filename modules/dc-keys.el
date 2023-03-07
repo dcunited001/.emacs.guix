@@ -118,9 +118,9 @@
      "<f2> dr" #'desktop-read
      "<f2> O" #'aw-show-dispatch-help
      "<f2> p"  '(:ignore t :wk "POPUP")
-     "<f2> pr" #'dc/popup-rules-reset
-     "<f2> ps" #'dc/popup-rules-set
-     "<f2> pc" #'dc/popup-rules-clear
+     "<f2> pr" #'dc/popup-rulesets-reset
+     "<f2> ps" #'dc/popup-rulesets-set
+     "<f2> pc" #'dc/popup-rulesets-clear
      "<f2> pP" #'dc/popup-use-popper
      "<f2> P" #'pomm
      "<f2> r" '(:ignore t :which-key "RELOAD")
