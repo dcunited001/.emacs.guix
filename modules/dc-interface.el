@@ -311,14 +311,6 @@
 ;; options including moving buffer without moving pointer
 (setup (:pkg buffer-move))
 
-;; (setq display-buffer-base-action
-;;       '(display-buffer-reuse-mode-window
-;;         display-buffer-reuse-window
-;;         display-buffer-same-window))
-
-;; If a popup does happen, don't resize windows to be equal-sized
-(setq even-window-sizes nil)
-
 ;;*** Confirmations
 
 (setq dired-deletion-confirmer 'y-or-n-p

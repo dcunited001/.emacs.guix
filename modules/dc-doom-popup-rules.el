@@ -41,6 +41,9 @@
     (messages
      ("^\\*\\(?:Messages\\)"
       :vslot -2 :size 0.3  :autosave t :quit t :ttl nil))
+
+    ;; doom buffers
+
     ;; transient buffers (no interaction required)
     (doom-buffers-no-interaction
      ("^\\*\\(?:doom \\|Pp E\\)"
@@ -49,25 +52,39 @@
     ;; editing buffers (interaction-required
     (doom-buffers-with-interaction
      ("^\\*doom:.*-popup"
-      :vslot -5 :size 0.35 :select t :modeline nil :quit nil :ttl nil))
+      :vslot -4 :size 0.35 :select t :modeline nil :quit nil :ttl nil))
+
+    ;; shell
+
     (vterm
      ("^\\*\\(?:vterm\\)"
-      :vslot -5 :size 0.35 :select t :modeline nil :quit nil :ttl nil))
+      :vslot -4 :size 0.35 :select t :modeline nil :quit nil :ttl nil))
     (eshell
      ("^\\*\\(?:eshell\\)"
       :vslot -5 :size 0.35 :select t :modeline nil :quit nil :ttl nil))
+    (direnv
+     ("^\\*envrc\\*" :quit t :ttl 0))
+
+    ;; misc
+
     (woman
      ("^\\*\\(?:Wo\\)?Man "
       :vslot -6 :size 0.45 :select t :quit t :ttl 0))
     (calc
      ("^\\*Calc"
       :vslot -7 :side bottom :size 0.4 :select t :quit nil :ttl 0))
+
+    ;; UI
+
     (customize
      ("^\\*Customize"
       :slot 2 :side right :size 0.5 :select t :quit nil))
     (undo-tree
      ("^ \\*undo-tree\\*"
       :slot 2 :side left :size 20 :select t :quit t))
+
+    ;; help
+
     ;; `help-mode', `helpful-mode'
     (help
      ("^\\*\\([Hh]elp\\|Apropos\\)"
@@ -77,6 +94,9 @@
     (xwidget ("^\\*xwidget" :vslot -11 :size 0.35 :select nil))
     ;; Info-mode
     (info ("^\\*info\\*$" :slot 2 :vslot 2 :size 0.45 :select t))
+
+    ;; system (vslot 99-101)
+
     (warnings ("^\\*Warnings" :vslot 99 :size 0.25))
     (backtrace ("^\\*Backtrace" :vslot 99 :size 0.4 :quit nil))
     (profiler-reports
@@ -90,6 +110,9 @@
     (ignore
      ("^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\)\\*" :ignore t)
      ("^\\*\\(?:Occur\\|unsent mail.*?\\|message\\)\\*" :ignore t))
+
+    ;; tools (flycheck/vc/pdf, no slots)
+
     (flycheck
      ("^\\*Flycheck error messages\\*" :select nil)
      ("^\\*Flycheck errors\\*" :size 0.25))
@@ -100,6 +123,9 @@
      ("^\\*Outline*" :side right :size 40 :select nil)
      ("^\\*Edit Annotation " :quit nil)
      ("\\(?:^\\*Contents\\|'s annots\\*$\\)" :ignore t))
+
+    ;; repls
+
     (geiser
      ("^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$" :slot 1 :vslot -1)
      ("^\\*Geiser documentation\\*$" :slot 2 :vslot 2 :select t :size 0.35)
@@ -117,6 +143,9 @@
      ("^\\*cider-error*" :ignore t)
      ("^\\*cider-repl" :quit nil :ttl nil)
      ("^\\*cider-repl-history" :vslot 2 :ttl nil))
+
+    ;; documents
+
     (org
      ("^\\*Org Links" :slot -1 :vslot -1 :size 2 :ttl 0)
      ("^ ?\\*\\(?:Agenda Com\\|Calendar\\|Org Export Dispatcher\\)"
@@ -145,29 +174,30 @@
 (defvar dc/doom-popup-rules-custom
   '((xref
      ("^\\*xref\\*"
-      :side top :vslot -10 :size 0.20 :select t :quit t))
-    (vterm
-     ("^\\*\\(?:vterm\\)"
-      :side top :vslot -15 :slot 1 :size 0.25
-      :select t :modeline nil :quit nil :ttl nil))
-    (eshell
-     ("^\\*\\(?:eshell\\)"
-      :side top :vslot -15 :slot 2 :size 0.25
-      :select t :modeline nil :quit nil :ttl nil))
+      :side top :vslot -1 :vslot 3 :size 0.20 :select t :quit t))
+    (help
+     ("^\\*\\([Hh]elp\\|Apropos\\)"
+      :side top :vslot -1 :slot 2 :size 0.42 :select t))
+    (flycheck
+     ("^\\*Flycheck error messages\\*" :select nil)
+     ("^\\*Flycheck errors\\*"
+      :side top :vslot -2 :slot 1 :size 0.25))
+
+    ;; lsp-ui-menui shows up on the right when set to left
+    ;; here and in doom emacs
+
     (lsp-ui-menu
      ("^\\*lsp-ui-imenu"
-      :side left :vslot -5 :slot 3 :width 60
-      :modeline nil :select t :quit t))
+      :side right :vslot -5 :width 60 :select t :quit t))
     (bufler
      ("^\\*Bufler"
-      :vslot -5 :slot -5 :side right :width 80
+      :side right :vslot -5 :slot -5 :width 80 :select t :quit t))
+
+    ;; elfeed doesn't seem to work
+    (elfeed
+     ("^\\*elfeed-entry" ;; :actions '(display-buffer-below-selected)
       :modeline nil :select t :quit t))))
 
-;; NOTE: see dc/popup-rules-re/set
-;;
-;; - this is a bit repetitive for now and potentially violates separation of
-;;   concerns. still, this should allow me to move popup configs into modules
-;;   later.
 (defun dc/doom-popup-rules-init ()
   (setq dc/doom-popup-rules
         (a-merge dc/doom-popup-rules-defaults dc/doom-popup-rules-custom)))
@@ -175,3 +205,10 @@
 
 (provide 'dc-doom-popup-rules)
 ;;; dc-doom-popup-rules.el ends here
+
+;; (with-popup-rules! dc/doom-popup-rules)
+
+;; (let ((rules (list (a-get dc/doom-popup-rules-custom 'help))))
+;;   (with-popup-rules!
+;;     rules
+;;     (apropos-command "display")))

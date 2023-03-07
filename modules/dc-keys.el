@@ -1002,11 +1002,11 @@
 
 (leader-def
   :keymaps 'global
+  "t1" #'flycheck-mode
+  "t!" #'flymake-mode
   "tC" #'global-display-fill-column-indicator-mode
   "t M-C" #'corfu-mode
   "t M-c" #'corfu-popupinfo-mode
-  "t1" #'flycheck-mode
-  "t!" #'flymake-mode
   "t D" #'toggle-debug-on-error
   "t M-f" #'toggle-frame-fullscreen
   "tG" #'gud-tooltip-mode

@@ -78,4 +78,16 @@ that window has been changed or closed."
 (put '+popup-buffer-mode 'permanent-local-hook t)
 (put '+popup-set-modeline-on-enable-h 'permanent-local-hook t)
 
+(defmacro with-popup-rules! (rules &rest body)
+  "Evaluate BODY with popup RULES. RULES is a list of popup rules. Each rule
+should match the arguments of `+popup-define' or the :popup setting."
+  (declare (indent defun))
+  `(let ((+popup--display-buffer-alist +popup--old-display-buffer-alist)
+         display-buffer-alist)
+     (set-popup-rules! ,rules)
+     ;; (when (bound-and-true-p +popup-mode)
+     ;;   (setq display-buffer-alist +popup--display-buffer-alist))
+     (setq display-buffer-alist +popup--display-buffer-alist)
+     ,@body))
+
 (provide 'doom-popup-config)

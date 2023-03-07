@@ -140,6 +140,12 @@ arise:
 - Entries in =popper-reference-buffers= are specified by regexp or major mode.
 - Users can raise arbitrary buffers to be treated as popups.
 
+**** Problems
+
++ Running =+set-popup-rules= updates =display-buffer-alist= but doesn't actually
+  change window placement. It initializes alright, but can't be changed
+  mid-session. =with-popup-rules= indicates that the state doesn't change.
+
 **** Notes on popups
 
 If you've never actually worked beside someone whose popups just work and you

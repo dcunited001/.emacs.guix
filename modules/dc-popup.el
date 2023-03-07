@@ -71,13 +71,11 @@
 
   (:option popper-display-control t
            popper-window-height 33
-           popper-reference-buffers '(
-                                      eshell-mode
+           popper-reference-buffers '(eshell-mode
                                       vterm-mode
-                                      geiser-repl-mode
+                                      ;; geiser-repl-mode
                                       ;; grep-mode
                                       compilation-mode
-                                      elfeed-show-mode
                                       "^\\*Guix"))
 
   ;; popper-display-function matches display-buffer's action interface
@@ -173,7 +171,7 @@ interactive methods will default to selecting all keys."
   (a-keys dc/doom-popup-rules))
 
 (defvar dc/doom-popup-removed-rulesets
-  '(vterm eshell geiser starred))
+  '(starred vterm eshell doom-buffers-with-interaction))
 
 (defun dc/doom-popup-rulesets ()
   (let* ((to-remove dc/doom-popup-removed-rulesets))
@@ -184,3 +182,6 @@ interactive methods will default to selecting all keys."
 (dc/popup-rulesets-reset)
 
 (provide 'dc-popup)
+
+;; (a-get display-buffer-alist "^\\*\\([Hh]elp\\|Apropos\\)")
+;; (a-get display-buffer-alist "^\\*xref\\*")
