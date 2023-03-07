@@ -154,8 +154,8 @@
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
 (defvar major-mode-remap-alist '())
 (setup treesit
-  (:option treesit-extra-load-path (file-name-as-directory
-                                    (expand-file-name "tree-sitter" dc/emacs-d))))
+  (:option treesit-extra-load-path
+           (list (file-name-as-directory (expand-file-name "tree-sitter" dc/emacs-d)))))
 
 ;;** LSP/Eglot
 

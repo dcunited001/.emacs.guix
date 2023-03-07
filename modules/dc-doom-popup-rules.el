@@ -170,7 +170,7 @@
 ;;   later.
 (defun dc/doom-popup-rules-init ()
   (setq dc/doom-popup-rules
-        (a-merge dc/doom-popup-rules dc/doom-popup-rules-custom)))
+        (a-merge dc/doom-popup-rules-defaults dc/doom-popup-rules-custom)))
 (dc/doom-popup-rules-init)
 
 (provide 'dc-doom-popup-rules)
