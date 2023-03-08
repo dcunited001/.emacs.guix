@@ -177,7 +177,7 @@
 (defvar dc/doom-popup-rules-custom
   '((xref
      ("^\\*xref\\*"
-      :side top :vslot -1 :vslot 3 :size 0.20 :select t :quit t))
+      :side top :vslot -1 :slot 3 :size 0.20 :select t :quit t))
     (help
      ("^\\*\\([Hh]elp\\|Apropos\\)"
       :side top :vslot -1 :slot 2 :size 0.42 :select t))
@@ -202,14 +202,14 @@
       :modeline nil :select t :quit t))))
 
 (defun dc/doom-popup-rules-init ()
-  (setq dc/doom-popup-rules
+  (setq dc/popup-rules
         (a-merge dc/doom-popup-rules-defaults dc/doom-popup-rules-custom)))
 (dc/doom-popup-rules-init)
 
 (provide 'dc-doom-popup-rules)
 ;;; dc-doom-popup-rules.el ends here
 
-;; (with-popup-rules! dc/doom-popup-rules)
+;; (with-popup-rules! dc/popup-rules)
 
 ;; (let ((rules (list (a-get dc/doom-popup-rules-custom 'help))))
 ;;   (with-popup-rules!

@@ -62,7 +62,6 @@ are loaded on top.
 
 **** TODO Activate profile
 
-
 + guix shell will redo this anyways if there are changes, but unless you've run
   =guix pull -p $profile= this is unlikely
 
@@ -83,6 +82,9 @@ font directories in =~/.guix-extra-profiles= is made available in fontconfig.
 ** Emacs Config
 
 *** Mixing Popper.el with Doom's Popups
+
++ [[https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Zen-of-Buffer-Display.html][Zen of the Buffer Display]]
++ [[https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Zen-of-Buffer-Display.html][Displaying Buffers]]
 
 *Popper is simple and works great with almost zero config. It can:*
 
@@ -145,6 +147,25 @@ arise:
 + Running =+set-popup-rules= updates =display-buffer-alist= but doesn't actually
   change window placement. It initializes alright, but can't be changed
   mid-session. =with-popup-rules= indicates that the state doesn't change.
++ The =*Flycheck errors*= and =*Help*= buffers are configured to occupy the same
+  side. Opening the second popup buffer causes an invalid window configuration
+  that can't be closed.
+  + see [[https://github.com/emacs-mirror/emacs/blob/5ff018524c740c77215ddb5d5983dbfcadb05599/lisp/window.el#L1327-L1348][window.el#L1327-L1348]].
+    - The error is "Window %s has same side as window %s but no common parent"
+    - Workaround 2: just use =winner-undo= and then kill one of the buffers
+    - Workaround 2: run =window-toggle-side-windows= with =C-x w s= or =<f2> w s=
+      to unpop the window.
+      - However, killing one of the buffers still only allows interacting with
+        the window configuration via toggling the side windows. The error
+        persists.
+  + The problem doesn't originate with popper.el since =popper-popup-status=
+    is nil.
+    - My Doom =+popup.el= configuration is held together with duct tape and
+      popsicle sticks.
+  + What should happen: flycheck will generally stay open, then =*xref*=
+    buffers should become co-resident with it's window =:side= while flycheck
+    stays docked to leftmost side.
+    - what happens: nothing you do will close the windows.
 
 **** Notes on popups
 

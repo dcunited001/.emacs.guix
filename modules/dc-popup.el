@@ -30,6 +30,22 @@
 ;;* Popups
 
 (require 'a)
+(require 'fsm)
+
+;;** Define Popup System
+
+(defvar dc/popup-system 'popper)
+(defvar dc/popup-rules nil)
+
+;; If a popup does happen, don't resize windows to be equal-sized
+(setq even-window-sizes nil)
+
+
+
+
+
+
+;;** Load Popup Implementation
 
 ;; popup code is mostly self-contained
 ;; popup/config.el can't be included bc it calls (load! "hacks.el")
@@ -42,64 +58,47 @@
 ;; - many functions needed
 ;; - no external deps (refereces to +symbols)
 (defun dc/load-doom-popup ()
+  ;; doom loads autoload definitions before ./modules/ui/popup/config.el
   (let ((popup-files '("ui/popup/autoload/settings.el"
                        "ui/popup/autoload/popup.el")))
     (dolist (doom-file popup-files)
-      (load-file (expand-file-name doom-file dc/emacs-doom-modules)))))
+      (load-file (expand-file-name doom-file dc/emacs-doom-modules))))
+  (require 'doom-popup-config)
+  (require 'dc-doom-popup-rules))
 
-(dc/load-doom-popup)
+(defun dc/load-popper ()
+  (setup (:pkg popper
+               :straight t
+               :host github
+               :repo "karthink/popper"
+               :build (:not autoloads))
 
-;; doom loads autoload definitions before ./modules/ui/popup/config.el
-(require 'doom-popup-config)
-(require 'dc-doom-popup-rules)
+    (:option popper-display-control t
+             ;; popper-mode-line " POP" ;TODO set popper modeline
+             popper-window-height 33
+             popper-reference-buffers '(eshell-mode
+                                        vterm-mode
+                                        ;; geiser-repl-mode
+                                        ;; grep-mode
+                                        compilation-mode
+                                        "^\\*Guix"))
 
-;;** Popper
+    ;; popper-display-function matches display-buffer's action interface
+    ;; - only affects popups where matching display-buffer-alist
+    ;; - only called when popper-display-control is non-nil
+    (:option popper-display-function #'popper-display-popup-at-bottom)
+    (require 'popper)
+    (popper-mode 1))
+  (require 'dc-popper-popup-rules))
 
-;; (setq display-buffer-base-action
-;;       '(display-buffer-reuse-mode-window
-;;         display-buffer-reuse-window
-;;         display-buffer-same-window))
+;;** Load Popup System
 
-;; If a popup does happen, don't resize windows to be equal-sized
-(setq even-window-sizes nil)
+(cond dc/popup-system
+  ('doom
+   (dc/load-doom-popup))
+  ('popper
+   (dc/load-popper)))
 
-(setup (:pkg popper
-             :straight t
-             :host github
-             :repo "karthink/popper"
-             :build (:not autoloads))
-
-  (:option popper-display-control t
-           popper-window-height 33
-           popper-reference-buffers '(eshell-mode
-                                      vterm-mode
-                                      ;; geiser-repl-mode
-                                      ;; grep-mode
-                                      compilation-mode
-                                      "^\\*Guix"))
-
-  ;; popper-display-function matches display-buffer's action interface
-  ;; - only affects popups where matching display-buffer-alist
-  ;; - only called when popper-display-control is non-nil
-  (:option popper-display-function #'popper-display-popup-at-bottom)
-  (require 'popper)
-  (popper-mode 1))
-
-(defun popper-display-popup-at-top (buffer &optional alist)
-  "Display popup-buffer BUFFER at the bottom of the screen."
-  (display-buffer-in-side-window
-   buffer
-   (append alist
-           `((window-height . ,popper-window-height)
-             (side . top)
-             (slot . 1)))))
-
-(defun popper-select-popup-at-top (buffer &optional alist)
-  "Display and switch to popup-buffer BUFFER at the bottom of the screen."
-  (let ((window (popper-display-popup-at-top buffer alist)))
-    (select-window window)))
-
-;; (setq popper-display-function #'popper-select-popup-at-top)
 
 ;;** Config
 
@@ -132,12 +131,6 @@ popper-display-control-p default."
   (setq display-buffer-alist dc/popper-display-buffer-alist-defaults
         +popup--display-buffer-alist dc/popper-display-buffer-alist-defaults))
 
-(defun dc/popup-use-popper ()
-  "Clear popup rules and use popper's config to manage popups."
-  (interactive)
-  ;; (setq popper-display-control t)
-  (dc/popup-rulesets-clear))
-
 (defun dc/popup-rulesets-reset (&optional selected)
   "Reset popups to a determinate state. Clears rules from
 display-buffer-alist. Then, sets display-buffer-alist to the
@@ -145,21 +138,21 @@ selected rulesets. SELECTED is a list of keys"
   (interactive)
   (dc/popup-rulesets-clear)
   ;; (setq popper-display-control nil)
-  (dc/popup-rulesets-set dc/doom-popup-rules))
+  (dc/popup-rulesets-set dc/popup-rules))
 
 (defun dc/popup-rulesets-set (&optional rulesets selected)
   "Sets display-buffer-alist to the selected rulesets. SELECTED is a
 list of keys"
   (interactive)
 
-  (let* ((rulesets (or rulesets dc/doom-popup-rules))
+  (let* ((rulesets (or rulesets dc/popup-rules))
          (default-keys (dc/doom-popup-rulesets))
          (selected-keys (or selected default-keys))
          (selected-rules (list (dc/popup-rulesets-select rulesets selected-keys))))
     (apply #'dc/+set-popup-rules selected-rules)))
 
 (defun dc/popup-rulesets-select (rulesets &optional selected)
-  "Collect dc/doom-popup-rules into a list of alists. If SELECTED is
+  "Collect dc/popup-rules into a list of alists. If SELECTED is
 a list of keys, limit the selection to those keys. Only the
 interactive methods will default to selecting all keys."
   (cl-reduce (lambda (acc k)
@@ -168,18 +161,21 @@ interactive methods will default to selecting all keys."
              :initial-value (a-list)))
 
 (defvar dc/doom-popup-selected-rulesets
-  (a-keys dc/doom-popup-rules))
+  (a-keys dc/popup-rules))
 
 (defvar dc/doom-popup-removed-rulesets
-  '(starred vterm eshell doom-buffers-with-interaction))
+  '(starred
+    vterm
+    eshell
+    doom-buffers-with-interaction))
 
 (defun dc/doom-popup-rulesets ()
   (let* ((to-remove dc/doom-popup-removed-rulesets))
-    (->> (a-keys dc/doom-popup-rules)
+    (->> (a-keys dc/popup-rules)
          (seq-filter (lambda (k) (not (memq k to-remove)))))))
 
-(setq dc/doom-popup-selected-rulesets (dc/doom-popup-rulesets))
-(dc/popup-rulesets-reset)
+;(setq dc/doom-popup-selected-rulesets (dc/doom-popup-rulesets))
+;(dc/popup-rulesets-reset)
 
 (provide 'dc-popup)
 

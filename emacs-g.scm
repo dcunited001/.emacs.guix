@@ -77,7 +77,8 @@
   (vhash-consq
    'support
    (list->vlist '("emacs-a"
-                  "emacs-dash"))
+                  "emacs-dash"
+                  "emacs-fsm"))
    guix-emacs-vhash))
 
 ;;** Config
