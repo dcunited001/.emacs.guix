@@ -226,6 +226,35 @@ Run =M-x all-the-icons-install-fonts=
 
 ** TODO Describe CPU Pinning
 
+TL;DR: Emacs is single threaded: cache hits nice; any cache misses :( long gc
+
++ emacs server should be pinned to a CPU
+  - clients should perhaps be pinned nearby (IPC?)
+  - Other tasks should avoid that CPU
++ NUMA should be configured in bios and on system
+
+It probably won't help a ton, but it probably would make GC less noticeable,
+especially if you can guarantee that other processes don't compete for the pinned CPU core
+
++ with [[https://www.amd.com/en/products/cpu/amd-ryzen-9-5950x][AMD 5950x]] (32 core, 8MB L2 and 64MB L3, it's probably somewhat
+  significant (esp. during GC, so thresholds could be higher)
++ It's actually pretty nice that you can guarantee your IDE doesn't consume all
+  your resources.
+
+See [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Garbage-Collection.html][Garbage Collection]] for info
+  - #'garbage-collect :: runs GC and returns information about memory usage
+  - garbage-collection-messages :: indicates gc start/stop in messages buffer
+
+** TODO Other performance concerns
+
+How do bytecode/native compilation affect symbol names and memory footprint?
+
++ Can these features reduce the time-to-GC?
+  - Yes, probably. The symbol representations/names /probably/ go away in
+    bytecode/nativecomp, but they are at least accessible when emacs-lisp
+    bytecode is made readable.
++ Could other similar features/configs extend the life of single-threaded Emacs?
+
 * Why
 
 *** Why Not Doom Emacs?
