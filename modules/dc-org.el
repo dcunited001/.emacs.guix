@@ -323,6 +323,11 @@
 ;; the default gives titles that are too narrow (12)
 ;; org-roam-node--* sends the width of the then-current buffer
 ;; and the completing-read functionality is adjusted for ~80 chars
+;;
+;; requires defining org-roam-node-doom-hierarchy
+;; (format "${doom-hierarchy:36} %s %s"
+;;         (propertize "${doom-type:*}" 'face 'font-lock-keyword-face)
+;;         (propertize "${doom-tags:18}" 'face 'org-tag))
 
 ;; org-roam-extract-new-file-path
 ;;
@@ -344,9 +349,6 @@
     (:option
      org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
      org-roam-node-display-template
-     (format "${doom-hierarchy:36} %s %s"
-             (propertize "${doom-type:*}" 'face 'font-lock-keyword-face)
-             (propertize "${doom-tags:18}" 'face 'org-tag))
 
      org-roam-list-files-commands '(fd fdfind rg find)
      org-roam-db-gc-threshold most-positive-fixnum
