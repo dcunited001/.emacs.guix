@@ -318,10 +318,45 @@
 
     (org-super-agenda-mode +1)))
 
-(defun dc/org-init-roam-h ()
+;; org-roam-node-display-template:
+;;
+;; the default gives titles that are too narrow (12)
+;; org-roam-node--* sends the width of the then-current buffer
+;; and the completing-read functionality is adjusted for ~80 chars
 
-  ;; (setup (:pkg org-roam)
-  ;;   (:option))
+;; org-roam-extract-new-file-path
+;;
+;; doesn't work with a "slips/" path prepended to it
+
+  ;; (doom-load-packages-incrementally
+  ;;  '(ansi-color dash f rx seq magit-section emacsql emacsql-sqlite))
+
+(defun dc/org-init-roam-h ()
+  (setup (:pkg org-roam)
+    (:option
+     org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
+     org-roam-node-display-template
+     (format "${doom-hierarchy:36} %s %s"
+             (propertize "${doom-type:*}" 'face 'font-lock-keyword-face)
+             (propertize "${doom-tags:18}" 'face 'org-tag))
+
+
+     org-roam-mode-section-functions #'(org-roam-backlinks-section
+                                        org-roam-reflinks-section)
+     org-roam-completion-everywhere nil)
+
+    ;; this should work, but seems unimplemented in org-roam
+    ;; (file "./relative/path/from/roam/template.org")
+    (setq org-roam-dailies-capture-templates
+          `(("d" "default" entry
+             "%?"
+             :target
+             (file+head "%<%Y-%m-%d>.org"
+                        ,(dc/org-read-template-from-file
+                          dc/org-roam-dailies-template)))))
+
+    (:with-hook desktop-after-read-hook
+      (:hook #'org-roam-db-autosync-enable)))
 
   (setup (:pkg org-roam-ui)
     (:option org-roam-dailies-directory "dailies/"

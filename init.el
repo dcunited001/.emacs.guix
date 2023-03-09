@@ -42,9 +42,17 @@
 ;; (setq native-comp-eln-load-path "not ~/.emacs.g/eln-cache")
 
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
-      org-roam-directory (file-name-as-directory (concat org-directory "roam"))
-      org-roam-db-location (expand-file-name "~/.local/share/org-roam/org-roam.db")
-      org-roam-file-extensions '("org"))
+      org-roam-file-extensions '("org")
+      org-roam-directory (expand-file-name "roam" org-directory)
+      org-roam-db-location (file-name-concat (getenv "HOME")
+                                             ".local/share"
+                                             "org-roam"
+                                             "org-roam.db")
+
+      dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
+                                                   dc/emacs-d)
+      dc/org-roam-dailies-template (expand-file-name "daily-default.org"
+                                                     dc/org-roam-templates-path))
 
 ;; Add configuration modules to load path
 (add-to-list 'load-path dc/emacs-dw)
