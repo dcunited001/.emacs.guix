@@ -791,22 +791,16 @@
   "1g" #'org-clock-goto
 
   "1z" #'org-resolve-clocks
-  "1q" #'org-clock-cancel
-  "1j" #'org-clock-goto
+  "1q" #'org-clock-cancel "1j" #'org-clock-goto
   "1d" #'org-clock-display
   "1x" #'org-clock-in-last
   "1e" #'org-clock-modify-effort-estimate)
 
 (leader-def
-  :keymaps 'org-mode-map
-  :wk-full-keys nil
-  "4" 'org-archive-subtree)
-
-(leader-def
   :keymaps 'global
   :wk-full-keys nil
   "n" '(:ignore t :wk "ORG/NOTES")
-  "na" #'org-agenda
+  "na" #'org-agenda                     ; nan
   ;; "ns" #'org-schedule
   ;; "nd" #'org-deadline
 
@@ -819,9 +813,13 @@
   ;; "nb" #'citar-open-notes
 
   "nl" #'org-store-link
+  "n M-l" #'org-insert-link
   "nm" #'org-tags-view
+
+  ;; TODO: "oc"  '(org-capture t :which-key "capture"); universal arg?
   "nn" #'org-capture
   "nN" #'org-capture-goto-target
+  ;; "n M-n"  #'org-toggle-narrow-to-subtree
   "nt" #'org-todo-list
 
   ;; "ns" #'+default/org-notes-search
@@ -838,12 +836,18 @@
   "nrF" #'org-roam-ref-find
   "nrg" #'org-roam-graph
   "nri" #'org-roam-node-insert
+  "nrL" #'org-roam-link-replace-all
   "nrn" #'org-roam-capture
   "nrr" #'org-roam-buffer-toggle
-  "nrR" #'org-roam-buffer-display-dedicated
   "nrs" #'org-roam-db-sync
   "nrt" #'org-roam-tag-add
   "nrT" #'org-roam-tag-remove
+
+  ;; in terms of paredit commands
+  "nr M-}" #'org-roam-extract-subtree       ; barf
+  "nr M-)" #'org-roam-refile                ; slurp
+  "nr M-r" #'org-roam-promote-entire-buffer ; raise (or M-u, up)
+  "nr M-?" #'org-roam-demote-entire-buffer  ; convolute (or M-d, down)
 
   "nrd" '(:ignore t :wk "DAILY")
   "nrd-" #'org-roam-dailies-find-directory
@@ -857,22 +861,34 @@
   "nrdt" #'org-roam-dailies-goto-today
   "nrdT" #'org-roam-dailies-capture-today
   "nrdy" #'org-roam-dailies-goto-yesterday
-  "nrdY" #'org-roam-dailies-capture-yesterday
-  )                    ; nan
+  "nrdY" #'org-roam-dailies-capture-yesterday)
 
-;; (dw/ctrl-c-keys
-;;   "o"   '(:ignore t :which-key "org mode")
+;; (general-define-key
+;;  :keymaps 'search-map
+;;  "M-r" #'dw-counsel-rg-org-files)
 
-;;   "oi"  '(:ignore t :which-key "insert")
-;;   "oil" '(org-insert-link :which-key "insert link")
+(leader-def
+  :keymaps 'org-mode-map
+  :wk-full-keys nil
+  "4" 'org-archive-subtree
 
-;;   "on"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
+  "n" '(:ignore t :wk "ORG/NOTES")
+  "nr" '(:ignore t :wk "ROAM")
+  "nrR" #'org-roam-buffer-display-dedicated
+  "nr M-r" #'org-roam-link-replace-all
 
-;;   "os"  '(dw/counsel-rg-org-files :which-key "search notes")
+  "nx" '(org-export-dispatch t)
+  ;; TODO: "nx" '(org-export-dispatch t) ; universal arg?
+  )
 
-;;   "ot"  '(org-todo-list :which-key "todos")
-;;   "oc"  '(org-capture t :which-key "capture")
-;;   "ox"  '(org-export-dispatch t :which-key "export"))
+(local-leader-def
+  :keymaps 'org-mode-map
+  "a" #'org-roam-alias-add
+  "A" #'org-roam-alias-remove
+  "t" #'org-roam-tag-add
+  "T" #'org-roam-tag-remove
+  "r" #'org-roam-ref-add
+  "R" #'org-roam-ref-remove)
 
 ;;*** o OPEN
 

@@ -158,6 +158,11 @@
      ("^\\*Org Src" :size 0.42 :quit nil :select t :autosave t :modeline t :ttl nil)
      ("^\\*Org-Babel")
      ("^\\*Capture\\*$\\|CAPTURE-.*$" :size 0.42 :quit nil :select t :autosave ignore))
+    (org-roam
+     `((,(regexp-quote org-roam-buffer) ; persistent org-roam buffer
+        :side right :width 0.33 :height 0.5 :ttl nil :modeline nil :quit nil :slot 1)
+       ("^\\*org-roam: "                ; node dedicated org-roam buffer
+        :side right :width 0.33 :height 0.5 :ttl nil :modeline nil :quit nil :slot 2)))
     (ipython
      ("\\*ob-ipython.*"
       :slot 2 :side right :size 100 :height 0.2

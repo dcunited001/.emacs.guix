@@ -328,10 +328,18 @@
 ;;
 ;; doesn't work with a "slips/" path prepended to it
 
-  ;; (doom-load-packages-incrementally
-  ;;  '(ansi-color dash f rx seq magit-section emacsql emacsql-sqlite))
+;; (doom-load-packages-incrementally
+;;  '(ansi-color dash f rx seq magit-section emacsql emacsql-sqlite))
+
+;; org-roam-node-display-template
+
+(defun dc/org-read-template-from-file (file)
+  (if (file-exists-p file) (org-file-contents file)
+    (error "* Template file %s not found" file)))
 
 (defun dc/org-init-roam-h ()
+  (require 'doom-org-roam2)
+
   (setup (:pkg org-roam)
     (:option
      org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
@@ -340,23 +348,35 @@
              (propertize "${doom-type:*}" 'face 'font-lock-keyword-face)
              (propertize "${doom-tags:18}" 'face 'org-tag))
 
-
+     org-roam-list-files-commands '(fd fdfind rg find)
+     org-roam-db-gc-threshold most-positive-fixnum
      org-roam-mode-section-functions #'(org-roam-backlinks-section
                                         org-roam-reflinks-section)
      org-roam-completion-everywhere nil)
 
+    ;; (add-to-list 'org-roam-node-template-prefixes '("doom-tags" . "#"))
+    ;; (add-to-list 'org-roam-node-template-prefixes '("doom-type" . "@"))
+    ;; (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode)
+
     ;; this should work, but seems unimplemented in org-roam
     ;; (file "./relative/path/from/roam/template.org")
     (setq org-roam-dailies-capture-templates
-          `(("d" "default" entry
-             "%?"
-             :target
+          `(("d" "default" entry "%?" :target
              (file+head "%<%Y-%m-%d>.org"
                         ,(dc/org-read-template-from-file
                           dc/org-roam-dailies-template)))))
 
+    ;; (setq-hook! 'org-roam-find-file-hook
+    ;;             org-id-link-to-org-use-id
+    ;;             +org-roam-link-to-org-use-id)
+    ;; (:hook turn-on-visual-line-mode)
     (:with-hook desktop-after-read-hook
-      (:hook #'org-roam-db-autosync-enable)))
+      (:hook #'org-roam-db-autosync-enable))
+
+    (advice-add #'org-roam-link-replace-at-point :override
+                #'org-roam-link-replace-at-point-a))
+
+  ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
 
   (setup (:pkg org-roam-ui)
     (:option org-roam-dailies-directory "dailies/"

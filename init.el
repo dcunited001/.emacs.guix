@@ -1,4 +1,6 @@
 ;; -*- lexical-binding: t; -*-
+(require 'subr-x)
+(require 'a)
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
@@ -43,11 +45,14 @@
 
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
       org-roam-file-extensions '("org")
-      org-roam-directory (expand-file-name "roam" org-directory)
-      org-roam-db-location (file-name-concat (getenv "HOME")
-                                             ".local/share"
-                                             "org-roam"
-                                             "org-roam.db")
+      org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
+      org-roam-directory (thread-first org-roam-directory
+                                       (expand-file-name org-directory)
+                                       (file-truename)
+                                       (file-name-as-directory))
+
+      ;; gets set by no-littering anyways
+      org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
 
       dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
                                                    dc/emacs-d)
