@@ -52,7 +52,7 @@
                                        (file-name-as-directory))
 
       ;; gets set by no-littering anyways
-      org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
+      ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
 
       dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
                                                    dc/emacs-d)
