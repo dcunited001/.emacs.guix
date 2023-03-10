@@ -348,7 +348,7 @@
   (setup (:pkg org-roam)
     (:option
      org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
-     org-roam-node-display-template
+     ;; org-roam-node-display-template
 
      org-roam-list-files-commands '(fd fdfind rg find)
      org-roam-db-gc-threshold most-positive-fixnum
@@ -358,7 +358,7 @@
 
     ;; (add-to-list 'org-roam-node-template-prefixes '("doom-tags" . "#"))
     ;; (add-to-list 'org-roam-node-template-prefixes '("doom-type" . "@"))
-    ;; (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode)
+    ;; (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode
 
     ;; this should work, but seems unimplemented in org-roam
     ;; (file "./relative/path/from/roam/template.org")
@@ -373,12 +373,7 @@
     ;;             +org-roam-link-to-org-use-id)
     ;; (:hook turn-on-visual-line-mode)
     (:with-hook desktop-after-read-hook
-      (:hook #'org-roam-db-autosync-enable))
-
-    (advice-add #'org-roam-link-replace-at-point :override
-                #'org-roam-link-replace-at-point-a))
-
-  ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
+      (:hook org-roam-db-autosync-enable)))
 
   (setup (:pkg org-roam-ui)
     (:option org-roam-dailies-directory "dailies/"
@@ -394,7 +389,11 @@
       "Ensure the server is active, then open the roam graph."
       (interactive)
       (unless org-roam-ui-mode (org-roam-ui-mode 1))
-      (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port)))))
+      (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port))))
+
+  ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
+  (advice-add #'org-roam-link-replace-at-point :override #'org-roam-link-replace-at-point-a))
+
 
 (defun dc/org-init-attachments-h ()
   )
