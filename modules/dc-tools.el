@@ -36,9 +36,15 @@
 
 ;;* Systems
 
-;;** Emacs Guix
+;;** Emacs
+
+;; benchmarking init
 (setup (:pkg esup)
   (:option esup-depth 0))
+
+;;*** Testing
+
+(setup (:pkg buttercup))
 
 ;;** Guix
 ;; TODO how to handle geiser/guile when sourced from straight?

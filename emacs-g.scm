@@ -281,10 +281,12 @@
    (list->vlist '("emacs-debbugs"
                   "emacs-burly"
                   "emacs-elf-mode"
+                  "emacs-syslog-mode"
                   "emacs-ssh-config-mode"
                   "emacs-tldr"
                   "emacs-google-translate"
                   "emacs-prodigy"
+                  "emacs-buttercup"
                   "emacs-esup"))
    guix-emacs-vhash))
 
