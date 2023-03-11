@@ -80,6 +80,7 @@
 
 (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 
+(require 'dc-terminal)
 (require 'dc-desktop)
 (require 'dc-alert)
 (require 'dc-interface)
