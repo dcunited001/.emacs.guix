@@ -74,7 +74,6 @@
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
 (require 'dw-core)
-(require 'dc-doom-popup-rules)       ; load this early so other code can hook in
 
 (require 'dc-support)
 
