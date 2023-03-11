@@ -101,7 +101,7 @@
 ;; sure you want to thin them out a bit first ...
 (setup (:pkg syslog-mode)
   ;; automatically run hook to add-to-list 'auto-mode-alist
-  (:option syslog-setup-on-load))
+  (:option syslog-setup-on-load t))
 
 ;; I'm not sure whether to keep messages, since it's pretty massive.
 ;;
