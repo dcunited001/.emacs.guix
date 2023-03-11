@@ -95,6 +95,41 @@
 ;;*** Crontab Mode
 (setup (:pkg crontab-mode :straight t))
 
+;;*** Syslog Mode
+
+;; this enables one to fontify (and parse?) syslog and strace files, but I'm
+;; sure you want to thin them out a bit first ...
+(setup (:pkg syslog-mode)
+  ;; automatically run hook to add-to-list 'auto-mode-alist
+  (:options syslog-setup-on-load))
+
+;; I'm not sure whether to keep messages, since it's pretty massive.
+;;
+;; "\\(messages\\(\\.[0-9]\\)?\\|SYSLOG\\|\\.s?trace\\)\\'" => syslog-mode
+
+;; calling a setq-local for syslog-notes & strace-notes will help.
+;;
+;; this could be in .dir-locals.el or preferably by loading a file after loading
+;; the log.
+
+
+;; a syslog-mode-map is provided and the mode is probably manually activated
+;;
+;; for interactive commands see https://github.com/vapniks/syslog-mode
+
+;; options:
+
+;; `syslog-mode-hook’ : *Hook to setup `syslog-mode’. (default = nil)
+;; `syslog-views’ : A list of views. (default = nil)
+;; `syslog-datetime-regexp’ A regular expression matching the date-time at the beginning of each line in the log file.
+;; `syslog-log-file-directory’ : The directory in which log files are stored. (default = ”var/log”)
+;; `syslog-large-file-size’ : When `syslog-show-file-note’ tries to load a file larger than this it prompts the user.
+;; `syslog-hi-face-defaults’ : Alist of face sets to use for automatic highlighting.
+;; `syslog-notes-files’ : An alist used by `syslog-load-notes’ for choosing a notes file to load.
+;; `syslog-manpage-wait’ : Amount of time to wait for manpage to finish rendering, when processing manpages.
+;; `syslog-note-things’ : An alist of (REGEX . SYMB) pairs for choosing `syslog-note-thing’.
+;; `syslog-notes-default’ : List of `syslog-notes’ items that are always available.
+
 ;;** Linux
 
 ;;*** Journalctl Mode
