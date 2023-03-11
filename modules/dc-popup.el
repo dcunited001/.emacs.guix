@@ -31,9 +31,8 @@
 
 (require 'a)
 
+;; (require 'dc-popper-popup-rules)
 (setup (:pkg popper)
-
-  (require 'dc-popper-popup-rules)
 
   )
 

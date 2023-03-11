@@ -112,7 +112,6 @@
 ;; this could be in .dir-locals.el or preferably by loading a file after loading
 ;; the log.
 
-
 ;; a syslog-mode-map is provided and the mode is probably manually activated
 ;;
 ;; for interactive commands see https://github.com/vapniks/syslog-mode
