@@ -35,6 +35,8 @@
 ;; gmp: GNU multiple precision
 ;; mpfr: multiple-precision floating-point reliable lib
 
+;; TODO: load this from an eld file
+
 ;; things i have a working knowledge of
 ;; (by which i mean namedrop-level familiarity...)
 ;;
@@ -119,10 +121,14 @@
 ;; TODO: find out which info-manuals arent contained in the uniqued keys
 
 ;; TODO: convert to string
-(setq dc/Info-apropos-manuals
-      (thread-last '(emacs guix shell disk boot org magit emacs-ui emacs-completion make)
-                   (seq-mapcat (lambda (k) (a-get dc/Info-manuals-by-category k)))
-                   (seq-uniq)))
+(setq dc/Info-manual-default-categories
+      '(emacs guile guix shell disk boot org magit emacs-ui emacs-completion make))
+(defun dc/Info-manuals (&optional categories)
+  (let ((categories (or categories dc/Info-manual-default-categories)))
+    (thread-last categories
+                 (seq-mapcat (lambda (k) (a-get dc/Info-manuals-by-category k)))
+                 (seq-uniq)
+                 (seq-map #'prin1-to-string))))
 
 ;; (prin1-to-string 'emacs)
 (setup (:pkg info+ :straight t :type git :host github :repo "emacsmirror/info-plus")
@@ -130,7 +136,8 @@
            Info-breadcrumbs-depth-internal 6
            Info-breadcrumbs-in-header-flag t
            Info-saved-history-file (expand-file-name "info-history"
-                                                     no-littering-var-directory))
+                                                     no-littering-var-directory)
+           Info-apropos-manuals (dc/Info-manuals))
 
 
   ;; TODO: (setq Info-apropos-manuals)
