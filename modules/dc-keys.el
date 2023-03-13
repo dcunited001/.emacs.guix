@@ -143,6 +143,10 @@
      "M-m" #'consult-minor-mode-menu
      "M-f" #'list-faces-display)))
 
+(general-define-key
+ :keymaps '(Info-mode-map)
+ "a" #'info-apropos)
+
 ;;** Globals
 
 ;;*** global-leader-key (C-x, f2)
