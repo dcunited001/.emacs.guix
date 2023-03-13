@@ -58,6 +58,8 @@
     "<drag-mouse-3>"                    ;mouse-secondary-yank
     "<mode-line> <mouse-3>"             ;mouse-delete-window
 
+    "S-<wheel-up>"                       ;mwheel-scroll
+    "S-<wheel-down>"                     ;mwheel-scroll
 
     ))
 
@@ -150,6 +152,8 @@
  ;; NOTE: if i set this, i will blow my xref-stack
  ;; "<mouse-8>" #'previous-buffer
 
- )
+ ;; scrolling to things registered in imenu would be better
+ "S-<wheel-down>" #'forward-paragraph
+ "S-<wheel-up>" #'backward-paragraph)
 
 (provide 'dc-mouse)
