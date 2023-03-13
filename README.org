@@ -255,6 +255,164 @@ How do bytecode/native compilation affect symbol names and memory footprint?
     bytecode is made readable.
 + Could other similar features/configs extend the life of single-threaded Emacs?
 
+* Notes
+
+** Org Agenda
+
+*** Capturing
+
+I attempt to capture as close to the context as possible, which is usually the
+project. I've imported some of the Doom Emacs capture templates, but I've borrowed
+
+**** TODO ensure the above notes on org-capture have been properly implemented
+
+*** Refiling
+
+
+
+**** TODO more robust control over refile targets (prefix args/etc)
+
+*** Agenda Files
+This will be initially set to none. This clears everything out. I've learned that =todo.org=
+
+**** TODO default to agenda-files being set to the last 3 org-roam-dailies
+
+only after I load the main desktop file
+
+*** Priorities
+I have 5 priorities configured.
+
+
+*** TODO finish org agenda configuration overview
+
+
+
+
+** Learning Org Agenda
+
+For an overview from an experienced org-agenda user, see [[http://doc.norang.ca/org-mode.html][Organize Your Life In
+Plain Text]]. It's pretty much the definitive guide on the subject. There are
+also these videos from [[https://www.youtube.com/@koenighaunstetten][Rainer König]], which are by far the best videos for
+explaining the "why" behind using org-agenda's features in addition to the
+how. And it's the why that's very difficult to figure out on your own without
+being able to simply immitate someone else's patterns.
+
+There are features of org-agenda which if you don't use, then you're not really
+using org-agenda -- in which case you're likely generating large volumes of text
+to manage. Ask any writer or editor: writing is easy, editing takes forever.
+
+That said, org-mode itself is already too large to learn quickly, especially if
+you're attempting to use org-babel or other features like that. So you have to
+focus on categories of features and think a ton about your own process. Org
+Agenda and Org Roam and are, for now, very personal information management
+systems. They are much more personal than other similar PIMS.
+
+There's some magic to using for GTD, which isn't necessarily obvious.
+
+*** Typical GTD traps include:
+
+***** Tagging, scoring, filtering and categorizing
+
+***** The cyclomatic complexity of tasks
+
+in plain english: the size/scope of your agile "stories" along with the number
+of subitems in a TODO list. The decisions a project manager makes can have
+_multiplicative effects_ on how their team interacts with the system.
+
+This is your own system, but how you decide to structure tasks in the future
+will determine how valuable some features will be or how "stickable" your habits
+will be. The =org-clock= features are a good example of something that will be
+extremely valuable if you can structure your tasks properly. The smaller a
+parent task, the more limited its time-tracking history.
+
+*** Org-agenda challenges include:
+
+***** Learning org-capture templates and engraining them into your workflow.
+
+***** Learning about target files for org-capture and org-refile.
+
+If you don't configure this properly, emacs may sputter out when dealing with
+too many headlines. It will be tough for you to quickly navigate the chaos.
+
+***** The schema of headlines
+
+This is critical for org-agenda and org-roam.
+
++ You should approach the design of the schema like a search optimizaton
+  specialist thinks about a site's map & content or like a webapp developer
+  thinks about desigining a site's URL's to be future proof, discoverable and
+  meaningful.
++ You should be designing a relatively future-proof system (at least one that is
+  find-and-replaceable) where you think of both files _and_ headlines as being
+  URL's.
+
+***** The cyclomatic complexity of your org-roam and org-agenda source files.
+
+You have files, you have headlines. Your files can have properties, but so can
+ headlines. What's the difference between an org file and a headline? It's
+ /almost/ arbitrary. You should not think as though there are clear file-like
+ boundaries between things in your org files: all the files can be thought of as
+ headlines and all headlines can be thought of as files.
+
+Notice how the IEEE refs for web domains, web URLs and the DOM tree basically
+create a similar *space* -- and you should think of these as not existing in
+separate spaces, but in separate dimensions of a shared space. In practice,
+however, it's impractical and, really, just overstimulating to do so. There are
+many exceptions. But it's useful to understand:
+
+<p style="font-size: 4">*There is no spoon!*</p>
+
+Now your problem is a quite a bit more like deciding what URL's should be on a
+website and what your tags should be if some small combination of them were to
+make your content more discoverable (where it markdown) and _more functional_ if
+it is org. Since org is a PIMS (and since it's your PIMS), you at least don't
+have the "change management" problem. This makes it a good means of
+experimenting with different systems.
+
+However, the more content you make, the more you'd have to edit -- this should
+be considered whether your are /making changes to your system/ or whether you
+are /not making changes/.
+
+***** TODO finish enumerating the gotchas
+
+*** On Ontology
+
+Your decisions in maintaining consistency in content synergize with the emacs
+tools you use to query or interact with the data. This kind of thinking is (or
+should be) called "ontological thinking" ... but that term is a bit ambiguous,
+
+#+begin_quote
+This ambiguity may be why people in the West are so fucked up in the head. The
+smarter people among them who didn't make it far enough in philosophy may not
+properly dillienate the "study of being" from the term's usage in categorizing
+the metaphysical into [hopefully] mutually exclusive sets of nameable categories
+-- e.g. the four elements from alchemy. And this is the source of almost every
+problem in conceptualization or epistemology: trees eventually must become
+graphs or networks to adequately describe things. When a system of
+categorization can maintain its partitioned categories, then trees can always
+neatly branch into completely separate things.
+
+A different schism regarding conceptualization (of a different nature) occurs in
+Math where one begins to need Category Cheory instead of relying on Set Theory
+as a comprehensive foundation.
+#+end_quote
+
+So think back to when people actually browsed the internet, instead of
+Facebook. People had personal blogs and they typically need two features to help
+make their content discoverable: categories and features. The categories and
+subcategories are the tree-like system of mutually exclusive groups mentioned
+above. The tags feature are a many-to-many system of classifying content to make
+it more discoverable. But, for the old-school blogger -- what should be a
+category and what should be a tag? It's unclear. Maybe tags should also be
+categories? Or maybe you should only use tags. Fortunately, every website
+implicitly uses a system almost identical to that of sub/categories: the
+URL/URI. Every branch point in the categories corresponds to a foreslash in the
+URL.
+
+Problem solved (or sidestepped) -- categories are an unnecessary
+abstraction. The best part? You don't have to rack your brain on some O(N^N)
+ontological problem -- that's just a generous estimation on the complexity.
+
 * Why
 
 *** Why Not Doom Emacs?
