@@ -131,9 +131,14 @@
         ;; org-hide-leading-stars t
         org-image-actual-width nil
         org-imenu-depth 6
+        org-priority-default ?A
+        org-priority-highest ?A
+        org-priority-lowest ?E
         org-priority-faces '((?A . error)
-                             (?B . warning)
-                             (?C . success))
+                             (?B . error)
+                             (?C . warning)
+                             (?D . warning)
+                             (?E . success))
         org-src-fontify-natively t
         ;; `showeverything' is org's default, but it doesn't respect
         ;; `org-hide-block-startup' (#+startup: hideblocks), archive trees,
@@ -169,28 +174,11 @@
   ;; (add-to-list 'doom-detect-indentation-excluded-modes 'org-mode)
 
   (setq org-todo-keywords
-        '((sequence
-           "TODO(t)"             ; A task that needs doing & is ready to do
-           "PROJ(p)"             ; A project, which usually contains other tasks
-           "LOOP(r)"             ; A recurring task
-           "STRT(s)"             ; A task that is in progress
-           "WAIT(w)"             ; Something external is holding up this task
-           "HOLD(h)"             ; This task is paused/on hold because of me
-           "IDEA(i)"             ; An unconfirmed and unapproved task or notion
-           "|"
-           "DONE(d)"    ; Task successfully completed
-           "KILL(k)")   ; Task was cancelled, aborted or is no longer applicable
-          (sequence
-           "[ ](T)"                     ; A task that needs doing
-           "[-](S)"                     ; Task is in progress
-           "[?](W)"                     ; Task is being held up or paused
-           "|"
-           "[X](D)")                    ; Task was completed
-          (sequence
-           "|"
-           "OKAY(o)"
-           "YES(y)"
-           "NO(n)"))
+        '((sequence "TODO(t)" "PROJ(p)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
+                    "|" "DONE(d)" "KILL(k)")
+          (sequence "[ ](T)" "[-](S)" "[?](W)"
+                    "|" "[X](D)")
+          (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))
         org-todo-keyword-faces
         '(("[-]"  . +org-todo-active)
           ("STRT" . +org-todo-active)
@@ -313,8 +301,9 @@
                (:name "Due today" :deadline today)
                (:name "Overdue" :deadline past)
                (:name "Due soon" :deadline future)
-               (:name "Important" :priority "A")
-               (:priority<= "B" :order 1)))
+               (:name "Urgent" :priority "A")
+               (:name "Crit" :priority "B")
+               (:priority<= "C" :order 1)))
 
     (org-super-agenda-mode +1)))
 
