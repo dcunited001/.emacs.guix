@@ -28,12 +28,6 @@
 ;;*** TLDR
 (setup (:pkg tldr))
 
-;;*** Info
-
-;; (setup (:pkg info-colors :straight t))
-(with-eval-after-load 'info
-  (require 'info+))
-
 ;;* Systems
 
 ;;** Emacs

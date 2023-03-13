@@ -22,6 +22,13 @@
 
 ;;* Support
 
+;;** ELD
+
+;; projectile already has unserialize/deserialize to/from ELD
+(require 'projectile)
+(defalias 'dc/eld-serialize 'projectile-serialize)
+(defalias 'dc/eld-unserialize 'projectile-unserialize)
+
 ;;** Macros
 
 ;; NOTE: if parsing the body to extract bindings is necessary,
@@ -110,5 +117,6 @@ along with KEYBIND, if present"
 ;; This package provides Finite State Machine library to make asynchronous
 ;; programming in Emacs Lisp easy and fun.
 ;; (setup (:pkg fsm))
+(require 'fsm)
 
 (provide 'dc-support)

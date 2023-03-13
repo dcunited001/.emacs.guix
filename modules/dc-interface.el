@@ -305,11 +305,54 @@
            aw-minibuffer-flag t)
   (ace-window-display-mode 1))
 
+(defun dc/ace-frame-jump ()
+  (interactive "P"))
+
 (setup winner
   (winner-mode))
 
 ;; options including moving buffer without moving pointer
 (setup (:pkg buffer-move))
+
+;;*** Tab Management
+
+;; interactive tab/bar commands must be called interactively
+
+;; ((tabs-on-frame (seq-remove (lambda (tab)
+;;    (eq (car tab) 'current-tab))
+;;    (funcall tab-bar-tabs-function))))
+
+;; (tab-names (mapcar (lambda (tab) (alist-get 'name (cdr tab))) tabs-on-frame))
+;; (tab-name (alist-get 'name (nth arg tab-names)))
+;; (tab-switch tab-name)
+
+;; this is definitely "doing it wrong". firefox finally figured out the tabs
+;; interface, but we've inculcated bad usage habits into our society -- and
+;; these never really change. When there are more than a dozen of tabs in an
+;; application's UI, it's time for a new UI
+(defun dc/tab-next (&optional arg)
+  "Switch to tab by tab number."
+  (interactive "P")
+  (let* ((tabs-on-frame (funcall tab-bar-tabs-function))
+         (num-tabs (length tabs-on-frame)))
+    (if (and arg
+             (< 3 num-tabs))
+        ;; briefly tasing you for forgetting the number of tabs you have open
+        (tab-bar-select-tab (mod arg num-tabs))
+      (tab-next))))
+
+;; browsers should've made use of shift-tab-n for a long time now, perhaps in
+;; some other way.
+(defun dc/tab-previous (&optional arg)
+  "Switch to tab by tab number."
+  (interactive "P")
+  (let* ((tabs-on-frame (funcall tab-bar-tabs-function))
+         (num-tabs (length tabs-on-frame)))
+    (if (and arg
+             (< 3 num-tabs))
+
+        (tab-bar-select-tab (+ 1 (mod (- arg) num-tabs)))
+      (tab-previous))))
 
 ;;*** Confirmations
 

@@ -231,7 +231,9 @@
 
  "C-M-k" #'tab-bar-switch-to-tab
  "C-<next>" #'tab-bar-switch-to-next-tab
- "C-<prior>" #'tab-bar-switch-to-prev-tab)
+ "C-<prior>" #'tab-bar-switch-to-prev-tab
+ [remap tab-next] #'dc/tab-next
+ [remap tab-previous] #'dc/tab-previous)
 
 ;;**** buffer-move
 

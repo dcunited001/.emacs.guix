@@ -54,7 +54,9 @@
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   ;; (visual-line-mode 1)
-  (setq-local corfu-auto nil))
+  (setq-local corfu-auto nil
+              help-at-pt-display-when-idle t
+              help-at-pt-timer-delay 0.5))
 
 ;;** Org Load Hooks
 ;; these run when org first loads
