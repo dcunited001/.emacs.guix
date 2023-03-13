@@ -360,7 +360,9 @@ separate spaces, but in separate dimensions of a shared space. In practice,
 however, it's impractical and, really, just overstimulating to do so. There are
 many exceptions. But it's useful to understand:
 
+#+begin_export html
 <p style="font-size: 4">*There is no spoon!*</p>
+#+end_export
 
 Now your problem is a quite a bit more like deciding what URL's should be on a
 website and what your tags should be if some small combination of them were to
@@ -424,7 +426,7 @@ down to whether Guix is more important to me than Doom Emacs.
 
 In Doom Emacs, mixxing Guix and Straight dependencies is a recipe for serious
 problems -- mostly where native comp encounters duplicate dependencies. See this
-[[id:][r/guix post]] for a description of issues with guile..
+[[https://www.reddit.com/r/GUIX/comments/lgxkrb/guix_profile_confusion/][r/guix post]] for a description of issues with guile..
 
 But there are benefits to pulling deps from guix:
 
