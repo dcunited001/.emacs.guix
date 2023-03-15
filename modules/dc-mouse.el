@@ -153,6 +153,9 @@
  ;; "<mouse-8>" #'previous-buffer
 
  ;; scrolling to things registered in imenu would be better
+ ;; TODO: get this to use treesitter if it's available in a mode
+ ;; - the combination of touchpad drivers and <triple-wheel-up/down>
+ ;;   would be a little crazy
  "S-<wheel-down>" #'forward-paragraph
  "S-<wheel-up>" #'backward-paragraph)
 

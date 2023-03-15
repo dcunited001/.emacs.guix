@@ -106,28 +106,77 @@
 ;;
 ;; general.el suggests managing which-key alists directly in some cases
 (defun dc/init-keybinds-quick ()
-  (dolist (pfx '("C-h" "<f1>"))
-    (general-define-key
-     :keymaps '(global help)
-     :wk-full-keys nil
-     :prefix pfx
-     "<f2>" '(:ignore t :which-key "QUICK")
-     "<f2> d" '(:ignore t :which-key "DESKTOP")
-     "<f2> ds" #'desktop-save-in-desktop-dir
-     "<f2> dS" #'desktop-save
-     "<f2> dr" #'desktop-read
-     "<f2> O" #'aw-show-dispatch-help
-     "<f2> p"  '(:ignore t :wk "POPUP")
-     "<f2> pr" #'dc/popup-rulesets-reset
-     "<f2> ps" #'dc/popup-rulesets-set
-     "<f2> pc" #'dc/popup-rulesets-clear
-     "<f2> pP" #'dc/popup-use-popper
-     "<f2> P" #'pomm
-     "<f2> r" '(:ignore t :which-key "RELOAD")
-     "<f2> t" '(:ignore t :which-key "THEME")
-     "<f2> tr" #'ef-themes-load-random
-     "<f2> ts" #'ef-themes-select
-     "<f2> tt" #'ef-themes-toggle)))
+  ;; (dolist (pfx '("C-h" "<f1>")))
+
+  (general-define-key
+   :keymaps '(global help)
+   :wk-full-keys nil
+   :prefix "<f1>"
+   "<f2>" '(:ignore t :which-key "QUICK")
+   "<f2> d" '(:ignore t :which-key "DESKTOP")
+   "<f2> ds" #'desktop-save-in-desktop-dir
+   "<f2> dS" #'desktop-save
+   "<f2> dr" #'desktop-read
+   "<f2> O" #'aw-show-dispatch-help
+   "<f2> p"  '(:ignore t :wk "POPUP")
+   "<f2> pr" #'dc/popup-rulesets-reset
+   "<f2> ps" #'dc/popup-rulesets-set
+   "<f2> pc" #'dc/popup-rulesets-clear
+   "<f2> pP" #'dc/popup-use-popper
+   "<f2> P" #'pomm
+
+   "<f2> $" '(:ignore t :which-key "STRAIGHT")
+
+   ;; straight -* utils
+   "<f2> $4" #'straight-get-recipe
+   "<f2> $$" #'straight-pull-recipe-repositories
+   "<f2> $v" #'straight-visit-package
+   "<f2> $V" #'straight-visit-website
+   "<f2> $d" #'straight-dependencies
+   "<f2> $D" #'straight-dependents
+   ;; "<f2> $" #'straight-use-package
+
+   ;; straight -package
+   "<f2> $F" #'straight-pull-package
+   "<f2> $ M-F" #'straight-fetch-package
+   "<f2> $P" #'straight-push-package
+   "<f2> $C" #'straight-check-package
+   "<f2> $R" #'straight-rebuild-package
+   "<f2> $M" #'straight-merge-package
+   "<f2> $N" #'straight-normalize-package
+
+   ;; straight -and-deps
+   "<f2> $&" '(:ignore t :which-key "AND DEPS")
+   "<f2> $& M-f" #'straight-fetch-package-and-deps
+   "<f2> $&F" #'straight-pull-package-and-deps
+   "<f2> $&m" #'straight-merge-package-and-deps
+
+   ;; straight -all
+   "<f2> $f" #'straight-pull-all
+   "<f2> $ M-f" #'straight-fetch-all
+   "<f2> $p" #'straight-push-all
+   "<f2> $c" #'straight-check-all
+   "<f2> $r" #'straight-rebuild-all
+   "<f2> $M" #'straight-merge-all       ;oh boy!
+   "<f2> $N" #'straight-normalize-all
+
+   ;; vcs ops: merge, normalize
+   ;; pull/fetch/merge-package-and-deps
+   ;; freeze/thaw-versions
+   ;; use-package-mode
+   ;; watcher-start/stop
+   "<f2> 0" '(:ignore t :which-key "0x0")
+   "<f2> 0-" #'0x0-dwim
+   "<f2> 0t" #'0x0-upload-text
+   "<f2> 0f" #'0x0-upload-file
+   "<f2> 0k" #'0x0-upload-kill-ring
+   "<f2> 0p" #'0x0-popup
+   "<f2> 0u" #'0x0-shorten-uri
+   "<f2> r" '(:ignore t :which-key "RELOAD")
+   "<f2> t" '(:ignore t :which-key "THEME")
+   "<f2> tr" #'ef-themes-load-random
+   "<f2> ts" #'ef-themes-select
+   "<f2> tt" #'ef-themes-toggle))
 
 (defun dc/init-keybinds-help ()
   (dolist (pfx '("C-h" "<f1>"))
@@ -405,7 +454,7 @@
  "a" #'consult-org-agenda
 
  "r" '(:ignore t :which-key "ROAM")
- "rr" #'consult-org-roam-mode
+ "rr" #'consult-org-roam-search
  "rb" #'consult-org-roam-backlinks
  "rf" #'consult-org-roam-file-find
  "rl" #'consult-org-roam-forward-links

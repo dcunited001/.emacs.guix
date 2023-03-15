@@ -84,8 +84,9 @@
 ;; -package,-bugs,-tagged,-patches,-my-open-bugs,-search,-guix-search
 
 ;;** IRC
-
 ;; post files/images to 0x0, intended for sharing in ERC
-;; (setup (:pkg 0x0 :host gitlab :repo "willvaughn/emacs-0x0" :straight t))
+
+;; retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
+(setup (:pkg 0x0 :host gitlab :repo "willvaughn/emacs-0x0" :straight t))
 
 (provide 'dc-social)

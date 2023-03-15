@@ -86,6 +86,8 @@
 (require 'dc-popup)
 ;; (require 'dc-auth)
 
+(require 'dc-info)
+
 (require 'dw-org)
 (require 'dc-org)
 

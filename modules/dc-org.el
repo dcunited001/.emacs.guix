@@ -298,13 +298,15 @@
     (:option org-super-agenda-header-separator ""
 
              org-super-agenda-groups
-             '((:name "Today" :time-grid t :todo "Today")
-               (:habit t)
+             '((:name "Today" :time-grid t :todo "TODO")
+               ;; (:habit t)
                (:name "Due today" :deadline today)
                (:name "Overdue" :deadline past)
                (:name "Due soon" :deadline future)
                (:name "Urgent" :priority "A")
                (:name "Crit" :priority "B")
+               (:name "No Estimate" :scheduled t)
+               (:name "No Deadline" :scheduled t)
                (:priority<= "C" :order 1)))
 
     (org-super-agenda-mode +1)))
@@ -385,6 +387,18 @@
   ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
   (advice-add #'org-roam-link-replace-at-point :override #'org-roam-link-replace-at-point-a))
 
+(with-eval-after-load 'org-roam
+  (setup (:pkg consult-org-roam :straight t :type git :flavor melpa
+               :host github :repo "jgru/consult-org-roam")
+    (:option consult-org-roam-grep-func #'consult-ripgrep
+             consult-org-roam-buffer-narrow-key consult-narrow-key
+             consult-org-roam-buffer-after-buffers t)
+
+    (require 'consult-org-roam)
+    (consult-customize
+     consult-org-roam-forward-links
+     :preview-key (kbd "M-."))
+    (consult-org-roam-mode 1)))
 
 (defun dc/org-init-attachments-h ()
   )
