@@ -524,10 +524,16 @@
   ;; consult-narrow-key "C-=" ; doesn't work
   ;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
   (:option consult-narrow-key "<f12> ="
-   consult-project-root-function #'dw/get-project-root
-   completion-in-region-function #'consult-completion-in-region))
+           consult-project-root-function #'dw/get-project-root
+           completion-in-region-function #'consult-completion-in-region)
 
-;;*** ConsultDir
+  (require 'consult-xref)
+
+  ;;  may need to be set per-mode
+  (:option xref-show-xrefs-function 'consult-xref
+           xref-show-definitions-function 'consult-xref))
+
+;;*** Consult Dir
 
 (setup (:pkg consult-dir)
   (:option consult-dir-project-list-function nil))
