@@ -42,7 +42,11 @@
 
 ;;** Guix
 ;; TODO how to handle geiser/guile when sourced from straight?
-(setup (:pkg guix))
+(setup (:pkg guix)
+  (:option guix-load-path dc/guix-source-path))
+
+;; NOTE not needed when .scm and .go are in the same directory
+;; guix-load-compiled-path dc/guix-source-path
 
 ;; TODO configuring a call to consult-guix-packages
 ;;

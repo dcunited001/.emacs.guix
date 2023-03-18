@@ -293,7 +293,10 @@
 
   (setup (:pkg org-ql))
 
-  (setup (:pkg org-super-agenda)
+  ;; needs 1.3-pre for :take selector, guix @ 1.2
+  (setup (:pkg org-super-agenda :straight t :type git :flavor melpa
+               :host github :repo "alphapapa/org-super-agenda")
+
 
     (:option org-super-agenda-header-separator ""
 

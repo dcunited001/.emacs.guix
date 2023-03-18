@@ -395,7 +395,13 @@
                                           (consult-grep buffer)
                                           (minor-mode reverse)
                                           (imenu buffer)
-                                          (t)))
+                                          (t))
+           vertico-multiform-commands  '(("flyspell-correct-*" grid reverse)
+                                         (org-refile grid reverse indexed)
+                                         (consult-yank-pop indexed)
+                                         (consult-flycheck)
+                                         ;; (consult-lsp-diagnostics)
+                                         ))
   (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
 
   (:with-hook emacs-startup-hook
