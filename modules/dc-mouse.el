@@ -38,6 +38,16 @@
 (defvar mouse-wheel-down-event nil)
 (defvar mouse-wheel-up-event nil)
 
+;;** Dired
+
+;; feature only available in X11 (non-pgtk?), haiku, nextstep (macOS/GNUstep)
+;; control: copy the file
+;; meta: link the file
+;; shift: move the file
+(setq dired-mouse-drag-files 'move)
+
+;;** Mousemaps
+
 (defvar mousemaps-unbound-at-init
   ;; mouse-1
   '("C-M-<mouse-1>"  ;mouse-set-point

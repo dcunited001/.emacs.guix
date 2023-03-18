@@ -352,6 +352,8 @@
  "M-s" #'consult-history ;; orig. next-matching-history-element
  "M-r" #'consult-history
 
+ "M-h" #'vertico-directory-up
+
  ;; can't quite figure this one out
  "C-x C-j" #'consult-dir-jump-file
 
@@ -506,6 +508,11 @@
 
  "C-M-n" #'vertico-next-group
  "C-M-p" #'vertico-previous-group
+
+ "C-'" #'vertico-quick-jump
+ "C-\"" #'vertico-quick-embark
+ "C-c '" #'vertico-quick-insert
+ "C-c \"" #'vertico-quick-exit
 
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file

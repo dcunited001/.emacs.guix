@@ -296,6 +296,10 @@
 
 ;;** UI
 
+;;*** Dired
+
+
+
 ;;*** Window Management
 
 (setup (:pkg avy))
@@ -382,10 +386,29 @@
 
 (setup (:pkg vertico)
   (vertico-mode)
-  (:with-map minibuffer-local-map
-    (:bind "M-h" vertico-directory-up))
-  (:option vertico-cycle t)
-  (custom-set-faces '(vertico-current ((t (:background "#3a3f5a"))))))
+
+  (:option vertico-cycle t
+           vertico-multiform-categories '((file grid)
+                                          (consult-location buffer)
+                                          (consult-grep buffer)
+                                          (minor-mode reverse)
+                                          (imenu buffer)
+                                          (t)))
+  (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
+
+  (:with-hook emacs-startup-hook
+    ;; different actions for left/right click
+    (:hook vertico-mouse-mode)
+
+    ;; numbers for prefix-based completion,
+    ;; handy when toggling vertico-grid-mode
+    (:hook vertico-indexed-mode)))
+
+(defun vertico-quick-embark (&optional arg)
+  "Embark on candidate using quick keys."
+  (interactive)
+  (when (vertico-quick-jump)
+    (embark-act arg)))
 
 ;;*** Corfu
 
