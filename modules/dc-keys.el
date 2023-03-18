@@ -1069,6 +1069,9 @@
 ;; call without keybind for now
 (dc/toggleable-boolean native-comp-async-report-warnings-errors)
 (dc/toggleable-boolean custom-buffer-verbose-help)
+(dc/toggleable-boolean completion-ignore-case)
+(dc/toggleable-boolean read-buffer-completion-ignore-case)
+(dc/toggleable-boolean read-file-name-completion-ignore-case)
 
 ;; -: centered cursor
 ;; _: centered cursor
@@ -1080,8 +1083,13 @@
 
 (leader-def
   :keymaps 'global
+  :wk-full-keys nil
   "t1" #'flycheck-mode
   "t!" #'flymake-mode
+  "tc" '(:ignore t :wk "COMPLTION")
+  "tcc" #'dc/toggle-completion-ignore-case
+  "tcb" #'dc/toggle-read-buffer-completion-ignore-case
+  "tcf" #'dc/toggle-read-file-name-completion-ignore-case
   "tC" #'global-display-fill-column-indicator-mode
   "t M-C" #'corfu-mode
   "t M-c" #'corfu-popupinfo-mode

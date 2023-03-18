@@ -388,6 +388,8 @@
   (vertico-mode)
 
   (:option vertico-cycle t
+           ;; this seems to be the default for me
+           ;; enable-recursive-minibuffers t
            vertico-multiform-categories '((file grid)
                                           (consult-location buffer)
                                           (consult-grep buffer)
@@ -403,6 +405,12 @@
     ;; numbers for prefix-based completion,
     ;; handy when toggling vertico-grid-mode
     (:hook vertico-indexed-mode)))
+
+
+;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+;; Vertico commands are hidden in normal buffers.
+;; (setq read-extended-command-predicate
+;;       #'command-completion-default-include-p)
 
 (defun vertico-quick-embark (&optional arg)
   "Embark on candidate using quick keys."
