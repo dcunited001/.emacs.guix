@@ -566,8 +566,20 @@
 
 ;;*** Consult Dir
 
-(setup (:pkg consult-dir)
-  (:option consult-dir-project-list-function nil))
+(with-eval-after-load 'consult
+  (setup (:pkg consult-dir)
+    (:option consult-dir-project-list-function nil)))
+
+(with-eval-after-load 'flyspell
+  (setup (:pkg consult-flyspell :straight t :type git :flavor melpa
+               :host gitlab :repo "OlMon/consult-flyspell")))
+
+(with-eval-after-load 'yasnippet
+  (setup (:pkg consult-yasnippet)
+    ;; (:option consult-yasnippet-use-thing-at-point t
+    ;;          consult-yasnippet-always-overwrite-thing-at-point t)
+    )
+  (consult-customize consult-yasnippet :preview-key '(:debounce 0.25)))
 
 ;;*** Marginalia
 

@@ -354,6 +354,13 @@
 
  "M-h" #'vertico-directory-up
 
+ ;; bound in multiform map
+ ;;   M-V -> `vertico-multiform-vertical'
+ ;;   M-G -> `vertico-multiform-grid'
+ ;;   M-F -> `vertico-multiform-flat'
+ ;;   M-R -> `vertico-multiform-reverse'
+ ;;   M-U -> `vertico-multiform-unobtrusive'
+
  ;; can't quite figure this one out
  "C-x C-j" #'consult-dir-jump-file
 
@@ -381,6 +388,9 @@
  [remap switch-to-buffer-other-window] #'consult-buffer-other-window
  [remap switch-to-buffer-other-frame]  #'consult-buffer-other-frame
  ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
+
+ [remap yas-insert-snippet] #'consult-yasnippet
+ [remap yas-insert-snippet] #'consult-yasnippet-visit-snippet-file
 
  ;; doesn't work in minibuffer
  ;; [remap yank]                            #'consult-yank-replace
@@ -727,8 +737,8 @@
  "cfi" #'eglot-find-implementation
  "cft" #'eglot-find-typeDefinition
 
- "cr" #'eglot-rename
- "cj" #'consult-eglot-symbols)
+ ;; "cj" #'consult-eglot-symbols
+ "cr" #'eglot-rename)
 
 ;;*** e EVAL
 
