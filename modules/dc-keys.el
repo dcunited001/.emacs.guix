@@ -131,6 +131,8 @@
    "<f2> TC" #'tramp-cleanup-all-buffers
    "<f2> T M-c" #'tramp-cleanup-all-connections
    "<f2> TM" #'tramp-compat-set-file-modes
+
+   ;; TODO check tramp-completion-use-auth-sources
    "<f2> Tg" #'tramp-crypt-add-directory
 
    ;; needs tramp-default-rename-alist
@@ -1363,6 +1365,10 @@ translated on keymaps."
    (seq-filter (lambda (km) (not (fboundp km)))
                dc/keymaps-list)
    dc/translated-keypairs))
+
+;; an approach using (define-key ...) seems to require reading the prefix from
+;; each keymap, even if using (defvar-keymap)
+;; (defvar dc/translated-keypairs '(("<f2>" "C-x") ("<f12>" "C-c")))
 
 ;; (mapc (lambda (km) (fboundp km)) (take (length dc/keymaps-list) dc/keymaps-list))
 ;; (length (seq-filter (lambda (km) (fboundp km)) (take (length dc/keymaps-list) dc/keymaps-list)))
