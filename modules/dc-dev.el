@@ -264,10 +264,11 @@ preferring the value of sym if present"
        (if-let* ((formatter-loc (dc/formatter-check ,formatter-cmd
                                                     remote?
                                                     ,formatter-sym)))
-           (progn
-             (warn "%s found" formatter-loc)
-             ,@body)
-         (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
+           ;; (progn
+           ;;   (warn "%s found" formatter-loc)
+           ;;   ,@body)
+           ,@body
+           (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
 
 ;; xmllint is typically included with libxml2
 (defvar xml-format-xmllint-executable)
