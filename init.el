@@ -80,6 +80,10 @@
 
 (require 'dw-core)
 
+(setq dc/eld-path (thread-last no-littering-etc-directory
+                               (expand-file-name "dc")
+                               (file-name-as-directory)))
+
 (require 'dc-support)
 
 (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))

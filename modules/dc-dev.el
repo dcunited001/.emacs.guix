@@ -246,6 +246,41 @@
 (setup (:pkg apheleia)
   (apheleia-global-mode +1))
 
+;; TODO maybe load from eld file, check/warn on init
+;; - but probably just set executables in .dir-locals.el for project
+;; (defvar dc/formatters (thread-first dc/eld-path
+;;                                     (expand-file-name "formatters.eld")
+;;                                     (dc/eld-unserialize)))
+
+(defun dc/formatter-check (cmd &optional remote sym)
+  "Check for the presence of formatter command using exectable-find,
+preferring the value of sym if present"
+  (let ((cmd (or (bound-and-true-p sym) cmd)))
+    (executable-find cmd remote)))
+
+(defmacro dc/formatter-check-for (formatter-cmd &optional formatter-sym &rest body)
+  `(lambda ()
+     (let ((remote? (file-remote-p default-directory)))
+       (if-let* ((formatter-loc (dc/formatter-check ,formatter-cmd
+                                                    remote?
+                                                    ,formatter-sym)))
+           (progn
+             (warn "%s found" formatter-loc)
+             ,@body)
+         (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
+
+;; xmllint is typically included with libxml2
+(defvar xml-format-xmllint-executable)
+(setq dc/formatter-check-xml (dc/formatter-check-for "xmllint"
+                                                     'xml-format-xmllint-executable
+                                                     (xml-format-on-save-mode +1)))
+(setup (:pkg xml-format :straight t :type git :flavor melpa
+             :host github :repo "wbolster/emacs-xml-format")
+  (:with-hook nxml-mode-hook
+    (:hook (dc/formatter-check-for "xmllint"
+                                   'xml-format-xmllint-executable
+                                   (xml-format-on-save-mode +1)))))
+
 ;;** Lisps
 
 (setup (:pkg lispy)

@@ -125,6 +125,20 @@
    "<f2> pP" #'dc/popup-use-popper
    "<f2> P" #'pomm
 
+   ;; "<f2> #" '(:ignore t :which-key "TRAMP")
+   "<f2> T" '(:ignore t :which-key "TRAMP")
+   "<f2> Tc" #'tramp-cleanup-connection
+   "<f2> TC" #'tramp-cleanup-all-buffers
+   "<f2> T M-c" #'tramp-cleanup-all-connections
+   "<f2> TM" #'tramp-compat-set-file-modes
+   "<f2> Tg" #'tramp-crypt-add-directory
+
+   ;; needs tramp-default-rename-alist
+   ;; "<f2> Tr" #'tramp-rename-these-files
+   ;; "<f2> TR" #'tramp-rename-files
+   ;; "<f2> Td" #'tramp-setup-debug-buffer
+   ;; #'tramp-change-syntax ;; default/simplified/separate
+
    "<f2> $" '(:ignore t :which-key "STRAIGHT")
 
    ;; straight -* utils
@@ -278,9 +292,11 @@
  :keymaps 'global
  :wk-full-keys nil
 
- "C-M-k" #'tab-bar-switch-to-tab
  "C-<next>" #'tab-bar-switch-to-next-tab
  "C-<prior>" #'tab-bar-switch-to-prev-tab
+ "C-<tab>" #'tab-bar-switch-to-tab
+ "C-S-<tab>" #'tab-prev
+
  [remap tab-next] #'dc/tab-next
  [remap tab-previous] #'dc/tab-previous)
 
@@ -1341,7 +1357,8 @@
   (apply #'general-translate-key nil kms pairs))
 
 (defun dc/ensure-translated-keymap-variables-set ()
-  "Ensure desired pairs of key combinations are translated on keymaps."
+  "Using General.el, ensure desired pairs of key combinations are
+translated on keymaps."
   (dc/translated-keymaps-set-keys
    (seq-filter (lambda (km) (not (fboundp km)))
                dc/keymaps-list)
