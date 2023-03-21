@@ -243,6 +243,10 @@
 
 ;;** Formatting
 
+;; default whitespace-style
+;; (face tabs spaces trailing lines space-before-tab newline indentation
+;; empty space-after-tab space-mark tab-mark newline-mark missing-newline-at-eof)
+
 (setup (:pkg apheleia)
   (apheleia-global-mode +1))
 
@@ -250,6 +254,30 @@
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
+
+;; TODO: make it work starting from the beginning
+;; TODO: make mode-specific
+(defun dc/flush-blank-lines ()
+  (interactive)
+  (let ((to-replace "^
+\\{2,\\}")
+        (replace-with "
+"))
+    (while (re-search-forward to-replace nil t)
+      (replace-match replace-with nil nil))
+    ))
+
+(define-minor-mode format-other-mode
+  "Mode for formatting source buffers not covered by reformatter.el"
+  :lighter nil
+  (cond
+   (format-other-mode
+    (add-hook 'before-save-hook 'dc/flush-blank-lines nil t)
+    (add-hook 'before-save-hook 'whitespace-cleanup nil t))
+
+   (t
+    (remove-hook 'before-save-hook 'dc/flush-blank-lines t)
+    (remove-hook 'before-save-hook 'whitespace-cleanup t))))
 
 ;; TODO maybe load from eld file, check/warn on init
 ;; - but probably just set executables in .dir-locals.el for project
@@ -367,7 +395,6 @@ preferring the value of sym if present"
 ;;** Lang
 
 ;;*** Haskell
-
 
 ;;** Snippets
 

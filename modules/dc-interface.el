@@ -210,7 +210,6 @@
   (require 'pulsar)
   (pulsar-global-mode 1))
 
-
 ;;*** Font
 
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14)
