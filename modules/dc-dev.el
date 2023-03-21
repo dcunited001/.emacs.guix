@@ -246,6 +246,11 @@
 (setup (:pkg apheleia)
   (apheleia-global-mode +1))
 
+(defun dc/indent-buffer ()
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+
 ;; TODO maybe load from eld file, check/warn on init
 ;; - but probably just set executables in .dir-locals.el for project
 ;; (defvar dc/formatters (thread-first dc/eld-path
@@ -268,7 +273,7 @@ preferring the value of sym if present"
            ;;   (warn "%s found" formatter-loc)
            ;;   ,@body)
            ,@body
-           (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
+         (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
 
 ;; xmllint is typically included with libxml2
 (defvar xml-format-xmllint-executable)

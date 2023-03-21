@@ -113,6 +113,11 @@
    :wk-full-keys nil
    :prefix "<f1>"
    "<f2>" '(:ignore t :which-key "QUICK")
+   "<f2> b" '(:ignore t :which-key "BUFFER ENV")
+   "<f2> bd" #'buffer-env-describe
+   "<f2> bu" #'buffer-env-update
+   "<f2> br" #'buffer-env-reset
+
    "<f2> d" '(:ignore t :which-key "DESKTOP")
    "<f2> ds" #'desktop-save-in-desktop-dir
    "<f2> dS" #'desktop-save
@@ -213,6 +218,11 @@
  "a" #'info-apropos)
 
 ;;** Globals
+
+(general-define-key
+ :keymaps '(global)
+
+ "C-M-|" #'dc/indent-buffer)
 
 ;;*** global-leader-key (C-x, f2)
 ;; this helps balance keyboard usage, giving and gives your pinky a break
@@ -408,7 +418,7 @@
  ;; [remap persp-switch-to-buffer] #'+vertico/switch-workspace-buffer
 
  [remap yas-insert-snippet] #'consult-yasnippet
- [remap yas-insert-snippet] #'consult-yasnippet-visit-snippet-file
+ [remap yas-visit-snippet-file] #'consult-yasnippet-visit-snippet-file
 
  ;; doesn't work in minibuffer
  ;; [remap yank]                            #'consult-yank-replace

@@ -41,9 +41,17 @@
 (setup (:pkg buttercup))
 
 ;;** Guix
-;; TODO how to handle geiser/guile when sourced from straight?
-(setup (:pkg guix)
-  (:option guix-load-path dc/guix-source-path))
+
+(setup (:pkg guix))
+
+;; NOTE: setting these requires killing & restarting the Guix/Geiser REPL
+(defun dc/guix-set-paths-to-repo ()
+  (setq guix-load-path dc/guix-source-path
+        guix-load-compiled-path dc/guix-source-path))
+
+(defun dc/guix-reset-paths ()
+  (setq guix-load-path (expand-file-name ".guix-profile" (getenv "HOME"))
+        guix-load-compiled-path (expand-file-name ".guix-profile" (getenv "HOME"))))
 
 ;; NOTE not needed when .scm and .go are in the same directory
 ;; guix-load-compiled-path dc/guix-source-path
@@ -76,7 +84,6 @@
 ;;   can make calls to bui-x given the right context
 ;; - or use the (interactive) code from guix-packages-by-name
 ;;   to write a consult-guix--read-package function
-
 ;;** Unix
 
 ;;*** Firestarter
