@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: projspec
+# key: <pspec
+# --
+(specifications->manifest
+ '(
+  "${1:pkgs}"
+ ))

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: projspec
+# key: <pspec
+# --
+(define project-package
+        (load "guix.scm"))
+
+;; (native-inputs project-package)
+
+(concatenate-manifests
+ '(
+  "${1:manifests}"
+ ))

@@ -169,6 +169,7 @@
            ;; other common options: xref, imenu, eldoc
            ;; also see (eglot--setq-saving...)
            eglot-stay-out-of '(flymake)
+           eglot-extend-to-xref t       ;TODO: assess eglot-extend-to-xref
 
            ;; see note about popups/point in
            ;; .emacs.doom/modules/tools/lsp/+eglot.el
@@ -400,15 +401,22 @@ preferring the value of sym if present"
 (setup (:pkg emmet)
   (:hook-into sgml-mode css-mode nxml-mode html-mode))
 
+;; yas-snippet-dirs:
+;;
+;; (doom-snippets-dir
+;; "~/.emacs.g/etc/yasnippet/snippets/")
+
 (setup (:pkg yasnippet)
+  (:option doom-snippets-enable-short-helpers)
   (require 'yasnippet)
   (require 'doom-snippets)
-  (:with-hook org-mode-hook prog-mode-hook
-              (:hook yas-minor-mode))
-  ;; doom-snippets-dir
-  ;; doom-snippets-enable-short-helpers t
 
-  ;; (:load-after (yas-reload-all))
+  ;; This should work with multiple hooks, but doesn't seem to add them
+  (:with-hook org-mode-hook
+    (:hook yas-minor-mode))
+  (:with-hook prog-mode-hook
+    (:hook yas-minor-mode))
+
   (yas-reload-all))
 
 ;;** Shell
