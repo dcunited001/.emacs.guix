@@ -305,7 +305,7 @@
 (define guix-emacs-vhash
   (vhash-consq
    'devops
-   (list->vlist '("emacs-docker"
+   (list->vlist '("emacs-docker@2.2.0"
                   "emacs-dockerfile-mode"))
    guix-emacs-vhash))
 
@@ -323,7 +323,6 @@
    (list->vlist '(;; "emacs-xclip"
                   ))
    guix-emacs-vhash))
-
 
 ;;** Tree-sitter
 (define guix-emacs-vhash
@@ -362,11 +361,9 @@
                   ))
    guix-emacs-vhash))
 
-
 ;;** Lang
 ;; (append! guix-emacs-packages
 ;;          '())
-
 
 (define guix-emacs-vhash
   (vhash-consq
