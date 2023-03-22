@@ -92,8 +92,6 @@
 
 ;;*** Flymake
 
-
-
 ;;** Compiling
 
 ;;*** M-x compile

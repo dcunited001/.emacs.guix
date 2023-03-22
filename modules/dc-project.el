@@ -23,6 +23,4 @@
 
 ;;* Project
 
-
-
 (provide 'dc-project)

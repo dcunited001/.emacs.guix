@@ -21,6 +21,7 @@
 ;; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
+
 ;;* Org
 
 (straight-use-package '(org :type built-in))
@@ -33,7 +34,6 @@
 ;; (defun gv-qset (pairs)
 ;;   (macroexpand-1 `(setf ,@pairs)))
 ;; (macroexpand-1 '(setf foo "f1" bar "b2"))
-
 
 ;;** Org Hooks
 ;; these run on org-mode-hook
@@ -106,7 +106,6 @@
   ;; -progress list
   ;;
   ;; org-modern-faces:
-
 
   (setup (:pkg org-appear)
     (:hook-into org-mode))
@@ -297,7 +296,6 @@
   (setup (:pkg org-super-agenda :straight t :type git :flavor melpa
                :host github :repo "alphapapa/org-super-agenda")
 
-
     (:option org-super-agenda-header-separator ""
 
              org-super-agenda-groups
@@ -426,7 +424,6 @@
              org-link-elisp-confirm-function 'y-or-n-p
              org-link-shell-confirm-function 'y-or-n-p))
 
-
   ;; TODO org-babel's default async (no session) behavior may cause problems with
   ;; org-exports (if latex/html exports with evaluation doesn't work, this may be the cause)
   ;; (after! ob
@@ -457,23 +454,16 @@
 ;;   "Prevent potentially expensive mode hooks in `org-babel-do-in-edit-buffer' ops."
 ;;   :around #'org-src--edit-element ...)
 
-
 ;; NOTE: ob will not auto-update images after updates
 ;; - this wasn't working for me AFAIK. i usually needed to hit C-TAB twice
 ;; (add-hook! 'org-babel-after-execute-hook
 ;;            (defun +org-redisplay-inline-images-in-babel-result-h () ...))
 
-
-
-
 ;; NOTE: use (with-eval-after-load ...) instead of (after! ...)
 ;; (add-hook! 'org-load-hook
 
-
 (defun dc/org-init-babel-lazy-loader-h ()
   )
-
-
 
 (defun dc/org-init-capture-defaults-h ()
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
@@ -647,7 +637,6 @@
 
   ;;*** Options
 
-
   (setq org-tag-persistent-alist
         '((:startgroup . nil)
           ("VIS" . ?v)
@@ -679,7 +668,6 @@
           ("EV" . ?V)
           ("CON" . ?c) (:newline . nil)
           (:endgroup . nil))))
-
 
 (provide 'dc-org)
 

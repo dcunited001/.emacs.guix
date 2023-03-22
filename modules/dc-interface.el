@@ -52,7 +52,7 @@
       use-dialog-box nil ;; Disable dialog boxes since they weren't working in Mac OSX
       ;; inhibit-startup-message t
       visible-bell t)
-      
+
 ;; (set-frame-parameter (selected-frame) 'alpha-background 90)
 ;; (add-to-list 'default-frame-alist '(alpha-background 90))
 ;; (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
@@ -297,8 +297,6 @@
 
 ;;*** Dired
 
-
-
 ;;*** Window Management
 
 (setup (:pkg avy))
@@ -410,7 +408,6 @@
     ;; numbers for prefix-based completion,
     ;; handy when toggling vertico-grid-mode
     (:hook vertico-indexed-mode)))
-
 
 ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
 ;; Vertico commands are hidden in normal buffers.

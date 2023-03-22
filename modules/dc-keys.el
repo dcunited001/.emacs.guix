@@ -22,7 +22,6 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-
 ;;* Keys Pre
 ;; see ./emacs/$version/lisp/bindings.el for defaults
 
@@ -69,7 +68,6 @@
     ;; bind to quick functions (loading/themes/etc) a la doom
     "<f1> <f2>"                         ;no standard binding
 
-
     ;; globally, bound to the same function
     "M-S-<left>"                        ;translate to M/C-<left/right>
     "M-S-<right>"
@@ -80,7 +78,6 @@
 ;;**** trying to pack a lambda into a symbol
 ;; (fset 'dc/unbind-key (macroexpand-all '(unbind-key k)))
 ;; (seq-do (symbol-function 'dc/unbind-key) dc/keys-unbound-at-init)
-
 
 (defun dc/unbind-keys (key-names &optional keymap)
   (seq-do (lambda (key)
