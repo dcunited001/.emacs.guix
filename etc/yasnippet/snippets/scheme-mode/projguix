@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: projguix
+# key: <pguix
+# --
+(use-modules (guix gexp)
+             (guix packages)
+             (guix download)
+             (guix git-download)
+             (guix build-system trivial)
+             (guix build-system copy)
+             ((guix licenses #:prefix license:))
+
+             (gnu packages base)
+             (gnu packages tcl)
+             (gnu packages maths)
+             (gnu packages emacs-xyz))
+
+(package
+  (name "${1:name}")
+  (version "0.0.1")
+  (source (local-file "."))
+  (build-system trivial-build-system)
+  (inputs ${2:inputs})
+  (propagated-inputs ${3:inputs})
+  (home-page "")
+  (synopsis "")
+  (description "")
+  (license #f))
