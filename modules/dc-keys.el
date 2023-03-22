@@ -1132,6 +1132,7 @@
   "t M-C" #'corfu-mode
   "t M-c" #'corfu-popupinfo-mode
   "t D" #'toggle-debug-on-error
+  "tF" #'format-other-mode
   "t M-f" #'toggle-frame-fullscreen
   "tG" #'gud-tooltip-mode
   ;; "ti" #'highlight-indent-guides-mode

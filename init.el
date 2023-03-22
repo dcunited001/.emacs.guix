@@ -26,12 +26,19 @@
       dc/emacs-doom-modules (expand-file-name "doom/modules" dc/emacs-d)
       dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
                                (dc/guix-profile-get-default-path))
-      ;; used to set guix-load-path and guix-load-compiled-path
-      dc/guix-source-path (file-name-as-directory
-                           (or (getenv "GUIX_SOURCE")
-                               (and (getenv "_ECTO")
-                                    (expand-file-name "guix/guix" (getenv "_ECTO")))))
       dc/emacs-sound-theme-path (file-name-as-directory (expand-file-name "share/sounds/freedesktop/stereo" dc/guix-profile-path)))
+
+;; guix source: used to set guix-load-path and guix-load-compiled-path
+(if-let ((guix-source-path (or (getenv "GUIX_SOURCE")
+                               (and (getenv "_ECTO")
+                                    (expand-file-name "guix/guix" (getenv "_ECTO"))))))
+    (setq dc/guix-source-path (file-name-as-directory guix-source-path)))
+
+;; emacs source (not the build source though)
+(if-let ((emacs-source-path (or (getenv "EMACS_SOURCE")
+                                (and (getenv "_ECTO")
+                                     (expand-file-name "emacs/emacs/src" (getenv "_ECTO"))))))
+    (setq source-directory (file-name-as-directory emacs-source-path)))
 
 ;; TODO: rectify user-emacs-* variables:
 ;; ... yeh, priceless are things like (kbd "C-u C-x e") to eval & insert
