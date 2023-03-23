@@ -407,7 +407,7 @@ preferring the value of sym if present"
 ;; "~/.emacs.g/etc/yasnippet/snippets/")
 
 (setup (:pkg yasnippet)
-  (:option doom-snippets-enable-short-helpers)
+  (:option doom-snippets-enable-short-helpers t)
   (require 'yasnippet)
   (require 'doom-snippets)
 
