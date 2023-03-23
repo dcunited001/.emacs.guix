@@ -149,13 +149,9 @@
 ;; trigger project auto-discovery with projectile-discover-projects-in-search-path
 
 ;;** Treesitter
-;; TODO setup treesit-extra-load-path
 ;; TODO setup major-mode-remap-alist
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
-(defvar major-mode-remap-alist '())
-(setup treesit
-  (:option treesit-extra-load-path
-           (list (file-name-as-directory (expand-file-name "tree-sitter" dc/emacs-d)))))
+(setup treesit)
 
 ;;** LSP/Eglot
 
@@ -287,8 +283,8 @@
                              ".c")))))
 
 ;; (a-get apheleia-formatters 'html-tidy)
-(a-get apheleia-mode-alist 'html-mode)
-(a-get apheleia-mode-alist 'json-mode)
+;; (a-get apheleia-mode-alist 'html-mode)
+;; (a-get apheleia-mode-alist 'json-mode)
 
 (with-eval-after-load 'apheleia
   ;; setup formatters
