@@ -69,7 +69,8 @@
            clojure-align-forms-automatically t)
 
   ;; (:hook eglot-ensure)
-  (:hook format-other-mode))
+  ;; (:hook format-other-mode)
+  )
 
 (setup (:pkg clojure-ts-mode
              :straight t

@@ -184,8 +184,9 @@
   (add-to-list 'eglot-server-programs
                '((js2-mode typescript-mode) . ("typescript-language-server" "--stdio")))
   ;; TODO: c-mode-hook is hooked in c-mode-hook?
-  (:with-hook c-mode-hook
-    (:hook eglot-ensure)))
+  ;; (:with-hook c-mode-hook
+  ;;   (:hook eglot-ensure))
+  )
 
 (with-eval-after-load 'eglot
   (setup (:pkg consult-eglot)))
@@ -242,12 +243,69 @@
 
 ;;** Formatting
 
-;; default whitespace-style
-;; (face tabs spaces trailing lines space-before-tab newline indentation
-;; empty space-after-tab space-mark tab-mark newline-mark missing-newline-at-eof)
+;;*** Aphelia
+
+;; html tidy's usage of exit-status-codes doesn't jive with apheleia ... but i
+;; reallllly don't want to install node _where it should be unnecessary_
+;;
+;; (html-tidy . ("tidy" "-q" "--tidy-mark" "no" "-indent"))
+;; (xml-tidy . ("tidy" "-q" "--tidy-mark" "no" "-indent" "-xml"))
+;; (add-to-list 'apheleia-mode-alist '(html-mode . html-tidy))
+;; (add-to-list 'apheleia-mode-alist '(nxml-mode . xml-tidy))
+
+;; incompatible interface
+;;
+;; (json-mode-beautify . json-mode-beautify)
+;; (add-to-list 'apheleia-mode-alist '(json-mode . json-mode-beautify))
+;; (add-to-list 'apheleia-mode-alist '(json-ts-mode . json-mode-beautify))
+
+;; clang-format: .c,.cs,.cpp,.cu,.proto,.glsl,.java,.js,.ts,.m
+(setq dc/apheleia-clang-modes
+      '((c-mode          . ".c")
+        (cc-mode         . ".c")
+        (c-ts-mode       . ".c")
+        (c++-mode        . ".cpp")
+        (c++-ts-mode     . ".cpp")
+        (cuda-mode       . ".cu")
+        (glsl-mode       . ".cu")
+        (protobuf-mode   . ".proto")
+        (java-mode       . ".java")
+        (java-ts-mode    . ".java")
+        (js-mode         . ".js")
+        ;; (js2-mode        . ".js")
+        (js3-mode         . ".js")
+        (js-ts-mode      . ".js")
+        (typescript-mode . ".ts")))
+
+(setq dc/apheleia-formatters
+      '((yapf . ("yapf"))
+        (clang-format . ("clang-format"
+                         "-assume-filename"
+                         (or (buffer-file-name)
+                             (cdr (assoc major-mode
+                                         dc/apheleia-clang-modes))
+                             ".c")))))
+
+;; (a-get apheleia-formatters 'html-tidy)
+(a-get apheleia-mode-alist 'html-mode)
+(a-get apheleia-mode-alist 'json-mode)
+
+(with-eval-after-load 'apheleia
+  ;; setup formatters
+  (setq apheleia-formatters (a-merge apheleia-formatters
+                                     dc/apheleia-formatters))
+
+  ;; setup formatters per mode
+  (add-to-list 'apheleia-mode-alist '(python-mode . yapf))
+  ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
+  (add-to-list 'apheleia-mode-alist '(lisp-data-mode . lisp-indent))
+  (cl-dolist (aclang-mode dc/apheleia-clang-modes)
+    (add-to-list 'apheleia-mode-alist `(,(car aclang-mode) . clang-format))))
 
 (setup (:pkg apheleia)
   (apheleia-global-mode +1))
+
+;;*** Indentation
 
 (defun dc/indent-buffer ()
   (interactive)
@@ -265,6 +323,10 @@
     (while (re-search-forward to-replace nil t)
       (replace-match replace-with nil nil))
     ))
+
+;;*** format-other-mode
+
+;; NOTE: unused, need to rewrite to move point to top & back. apheleia is better
 
 (define-minor-mode format-other-mode
   "Mode for formatting source buffers not covered by reformatter.el"
@@ -284,6 +346,8 @@
 ;;                                     (expand-file-name "formatters.eld")
 ;;                                     (dc/eld-unserialize)))
 
+;;*** formatter-check
+
 (defun dc/formatter-check (cmd &optional remote sym)
   "Check for the presence of formatter command using exectable-find,
 preferring the value of sym if present"
@@ -301,6 +365,8 @@ preferring the value of sym if present"
            ;;   ,@body)
            ,@body
          (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
+
+;;*** xml-format
 
 ;; xmllint is typically included with libxml2
 (defvar xml-format-xmllint-executable)

@@ -628,7 +628,9 @@
   ;; TODO: doom ignores org-babel-do-load-languages and lazy loads
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((emacs-lisp . t)))
+   '((emacs-lisp . t)
+     (shell . t)
+     (python . t)))
 
   ;;*** org-src-lang-modes
   (push '("conf-unix" . conf-unix) org-src-lang-modes)

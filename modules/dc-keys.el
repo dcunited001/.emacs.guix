@@ -1121,7 +1121,7 @@
   :wk-full-keys nil
   "t1" #'flycheck-mode
   "t!" #'flymake-mode
-  "tc" '(:ignore t :wk "COMPLTION")
+  "tc" '(:ignore t :wk "COMPLETION")
   "tcc" #'dc/toggle-completion-ignore-case
   "tcb" #'dc/toggle-read-buffer-completion-ignore-case
   "tcf" #'dc/toggle-read-file-name-completion-ignore-case
@@ -1131,7 +1131,8 @@
   "t D" #'toggle-debug-on-error
   "tF" #'format-other-mode
   "t M-f" #'toggle-frame-fullscreen
-  "tG" #'gud-tooltip-mode
+  "tG" #'git-timemachine-toggle
+  "t M-g" #'gud-tooltip-mode
   ;; "ti" #'highlight-indent-guides-mode
   ;; "tI" #'doom/toggle-indent-style"
   "tl" #'display-line-numbers-mode

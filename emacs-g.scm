@@ -15,6 +15,7 @@
                   "git"
                   "git:send-email"
                   "sound-theme-freedesktop"
+                  "tidy-html"
                   "aspell"
                   "aspell-dict-en"
                   ;; "aspell-dict-la"
@@ -188,7 +189,6 @@
                   ))
    guix-emacs-vhash))
 
-
 ;;** Editor
 (define guix-emacs-vhash
   (vhash-consq
@@ -210,6 +210,7 @@
                   "emacs-keycast"
                   "emacs-super-save"    ;auto-save on activity
                   "emacs-ws-butler"     ;trim
+                  ;; "emacs-reformatter"
                   "emacs-apheleia"      ;autoformat without jumping
                   "emacs-undo-tree"
 
@@ -242,8 +243,6 @@
                   "emacs-pcmpl-args"    ;shell completion
                   "emacs-spacegray-theme"))
    guix-emacs-vhash))
-
-
 
 ;;** Checkers
 ;; (append! guix-emacs-packages
@@ -400,6 +399,7 @@
                   "emacs-yaml-mode"
                   "emacs-json-mode"
                   "emacs-json-snatcher"
+                  "emacs-json-reformat"
 
                   "emacs-emacsql"
                   "emacs-emacsql-sqlite3"

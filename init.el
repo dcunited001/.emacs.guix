@@ -109,6 +109,7 @@
 
 ;; (require 'dw-shell)
 (require 'dc-dev)
+(require 'dc-dev-web)
 (require 'dw-swagger)
 ;; (require 'dw-dev-web)
 (require 'dc-dev-clojure)
