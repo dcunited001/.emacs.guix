@@ -498,7 +498,7 @@
  )
 
 ;;**** search-map (consult)
- ;; M-s bindings
+;; M-s bindings
 
 (general-define-key
  :keymaps 'search-map
@@ -836,7 +836,7 @@
   (org-clock-in (list (ash 1 4)) start-time))
 
 (defun dc/org-clock-in-continue-from-last-timestamp (&optional
- select start-time)
+                                                     select start-time)
   "SELECT from a list of recent TODO's to clock the user in."
   (interactive "P")
   (org-clock-in (list (ash 1 6)) start-time))
@@ -1144,6 +1144,11 @@
   ;; "tw" #'visual-line-mode
   ;; "tw" #'+word-wrap-mode
   "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
+
+;; TODO map this to a list of *-ts-modes
+(leader-def
+  :keymaps '(prog-mode)
+  "tt" #'treesit-explore-mode)
 
 ;; the toggle-map overwrites the keybind
 (leader-def
