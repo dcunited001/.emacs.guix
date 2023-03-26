@@ -368,7 +368,7 @@
   (vhash-consq
    'lang
    (list->vlist '("emacs-guix"
-                  "emacs-geiser"
+                  "emacs-geiser@0.28.2"
 
                   ;; "emacs-elisp-refs"
                   "emacs-elisp-demos"

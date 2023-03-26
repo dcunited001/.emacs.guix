@@ -86,7 +86,13 @@
 ;;** IRC
 ;; post files/images to 0x0, intended for sharing in ERC
 
+;;** 0x0
 ;; retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
 (setup (:pkg 0x0 :host gitlab :repo "willvaughn/emacs-0x0" :straight t))
+
+;;** Elpher
+
+;; gopher/gemini client
+(setup (:pkg elpher))
 
 (provide 'dc-social)
