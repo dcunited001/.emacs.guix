@@ -55,13 +55,16 @@
 *** Guix :guix:
 **** https://reddit.com/r/GUIX.rss
 
-** Hacker News                                                   :hackernews:
-*** HN Who Is Hiring                                                    :jOb:
+** Upwork
+
+** Jobs                                                                :job:
+*** HN Who Is Hiring
 **** https://hnrss.org/whoishiring
-*** HN Clojure                                                          :jOb:
+*** HN Clojure
 **** https://hnrss.org/whoishiring?q=clojure
-*** HN Jobs                                                             :jOb:
+*** HN Jobs
 **** https://hnrss.org/jobs
+** Hacker News                                                  :hackernews:
 *** HN Best Comments
 **** https://hnrss.org/bestcomments
 *** HN Ask
@@ -76,6 +79,7 @@
 **** https://hnrss.org/invited
 *** HN Pool
 **** https://hnrss.org/pool
+
 
 * To Add
 

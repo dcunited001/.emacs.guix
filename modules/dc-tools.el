@@ -44,13 +44,15 @@
 (setup (:pkg guix))
 
 ;; NOTE: setting these requires killing & restarting the Guix/Geiser REPL
+;; ... but is now(?) unnecessary to enter guix modules (on arch and guix system)
+;; ... or am i conflating this with the need to add a channel root to %load-path?
 (defun dc/guix-set-paths-to-repo ()
   (setq guix-load-path dc/guix-source-path
         guix-load-compiled-path dc/guix-source-path))
 
 (defun dc/guix-reset-paths ()
-  (setq guix-load-path (expand-file-name ".guix-profile" (getenv "HOME"))
-        guix-load-compiled-path (expand-file-name ".guix-profile" (getenv "HOME"))))
+  (setq guix-load-path (expand-file-name ".config/guix/current" (getenv "HOME"))
+        guix-load-compiled-path (expand-file-name ".config/guix/current" (getenv "HOME"))))
 
 ;; NOTE not needed when .scm and .go are in the same directory
 ;; guix-load-compiled-path dc/guix-source-path
