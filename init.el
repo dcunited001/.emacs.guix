@@ -113,6 +113,7 @@
 (require 'dw-swagger)
 ;; (require 'dw-dev-web)
 (require 'dc-dev-clojure)
+(require 'dc-dev-python)
 
 (require 'dc-tools)
 
