@@ -465,57 +465,82 @@
 (defun dc/org-init-babel-lazy-loader-h ()
   )
 
+;; the logic here is copied from doom-emacs
+(defvar dc/org-capture-todo-file "todo.org")
+(defvar dc/org-capture-notes-file "notes.org")
+(defvar dc/org-capture-journal-file "journal.org")
+(defvar dc/org-capture-changelog-file "changelog.org")
+(defvar dc/org-capture-projects-file "projects.org")
+
+(defun dc/org-capture-local-root (path)
+  (let ((filename (file-name-nondirectory path)))
+    (expand-file-name
+     filename
+     (or ;; (locate-dominating-file (file-truename default-directory)
+      ;;                         filename)
+      (and (project-current) (cdr (project-current)))
+      (user-error "Couldn't detect a project")))))
+
+(defun dc/org-capture-project-todo-file ()
+  (dc/org-capture-local-root dc/org-capture-todo-file))
+(defun dc/org-capture-project-notes-file ()
+  (dc/org-capture-local-root dc/org-capture-notes-file))
+(defun dc/org-capture-project-changelog-file ()
+  (dc/org-capture-local-root dc/org-capture-changelog-file))
+
 (defun dc/org-init-capture-defaults-h ()
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
         org-capture-templates
         '(("t" "Personal todo" entry
-           (file+headline +org-capture-todo-file "Inbox")
+           (file+headline dc/org-capture-todo-file "Inbox")
            "* [ ] %?\n%i\n%a" :prepend t)
 
           ("n" "Personal notes" entry
-           (file+headline +org-capture-notes-file "Inbox")
+           (file+headline dc/org-capture-notes-file "Inbox")
            "* %u %?\n%i\n%a" :prepend t)
 
           ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
           ;; {todo,notes,changelog}.org file is found in a parent directory.
-          ;; Uses the basename from `+org-capture-todo-file',
-          ;; `+org-capture-changelog-file' and `+org-capture-notes-file'.
+          ;; Uses the basename from `dc/org-capture-todo-file',
+          ;; `dc/org-capture-changelog-file' and `dc/org-capture-notes-file'.
           ("p" "Templates for projects")
           ("pt" "Project-local todo" entry ; {project-root}/todo.org
-           (file+headline +org-capture-project-todo-file "Inbox")
+           (file+headline dc/org-capture-project-todo-file "Inbox")
            "* TODO %?\n%i\n%a" :prepend t)
           ("pn" "Project-local notes" entry ; {project-root}/notes.org
-           (file+headline +org-capture-project-notes-file "Inbox")
+           (file+headline dc/org-capture-project-notes-file "Inbox")
            "* %U %?\n%i\n%a" :prepend t)
           ("pc" "Project-local changelog" entry ; {project-root}/changelog.org
-           (file+headline +org-capture-project-changelog-file "Unreleased")
+           (file+headline dc/org-capture-project-changelog-file "Unreleased")
            "* %U %?\n%i\n%a" :prepend t)
 
-          ;; Will use {org-directory}/{+org-capture-projects-file} and store
+          ;; Will use {org-directory}/{dc/org-capture-projects-file} and store
           ;; these under {ProjectName}/{Tasks,Notes,Changelog} headings. They
           ;; support `:parents' to specify what headings to put them under, e.g.
           ;; :parents ("Projects")
           ("o" "Centralized templates for projects")
           ("ot" "Project todo" entry
-           (function +org-capture-central-project-todo-file)
+           (function dc/org-capture-central-project-todo-file)
            "* TODO %?\n %i\n %a"
            :heading "Tasks"
            :prepend nil)
           ("on" "Project notes" entry
-           (function +org-capture-central-project-notes-file)
+           (function dc/org-capture-central-project-notes-file)
            "* %U %?\n %i\n %a"
            :heading "Notes"
            :prepend t)
           ("oc" "Project changelog" entry
-           (function +org-capture-central-project-changelog-file)
+           (function dc/org-capture-central-project-changelog-file)
            "* %U %?\n %i\n %a"
            :heading "Changelog"
            :prepend t)))
   ;; TODO doom/personal capture templates
   (add-hook 'org-after-refile-insert-hook #'save-buffer))
+
 (defun dc/org-init-capture-frame-h ()
 
   )
+
 (defun dc/org-init-custom-links-h ()
 
   )

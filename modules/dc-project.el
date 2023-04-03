@@ -22,5 +22,12 @@
 ;; SOFTWARE.
 
 ;;* Project
+(require 'project)
+
+;;** Project.el
+
+(setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo"))
+
+;;** Project functions
 
 (provide 'dc-project)
