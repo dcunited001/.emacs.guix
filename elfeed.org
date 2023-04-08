@@ -79,7 +79,11 @@
 **** https://hnrss.org/invited
 *** HN Pool
 **** https://hnrss.org/pool
-
+** APIs.guru                                                      :apisguru:
+*** Added to APIs.guru
+**** https://api.apis.guru/v2/added.rss
+*** Updated on APIs.guru
+**** https://api.apis.guru/v2/updated.rss
 
 * To Add
 

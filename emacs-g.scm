@@ -204,7 +204,9 @@
                   "emacs-highlight-symbol"
 
                   ;; direnv for buffer-local environments
-                  "emacs-buffer-env"
+                  ;; "emacs-buffer-env"
+                  "emacs-envrc"
+
                   "emacs-no-littering"
                   "emacs-posframe"
                   "emacs-keycast"
@@ -369,6 +371,8 @@
    'lang
    (list->vlist '("emacs-guix"
                   "emacs-geiser@0.28.2"
+
+                  "emacs-nix-mode"
 
                   ;; "emacs-elisp-refs"
                   "emacs-elisp-demos"

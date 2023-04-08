@@ -38,20 +38,23 @@
               typescript-mode
               js2-mode))
 
-;;*** Environments
+;;*** Direnv
 
-(setup (:pkg buffer-env)
-  (:option buffer-env-script-name "manifest.scm")
-  (add-hook 'comint-mode-hook #'hack-dir-local-variables-non-file-buffer)
-  (add-hook 'hack-local-variables-hook #'buffer-env-update))
+(setup (:pkg envrc))
 
-(defun dc/enable-lispy-in-dir-locals ()
-  (if (string-match
-       "\.dir-locals\.el$"
-       (file-relative-name (or (buffer-file-name) "")))
-      (lispy-mode +1)))
+;; (setup (:pkg buffer-env)
 
-(add-hook 'lisp-data-mode-hook #'dc/enable-lispy-in-dir-locals)
+;;   (:option buffer-env-script-name "manifest.scm")
+;;   (add-hook 'comint-mode-hook #'hack-dir-local-variables-non-file-buffer)
+;;   (add-hook 'hack-local-variables-hook #'buffer-env-update))
+
+;; (defun dc/enable-lispy-in-dir-locals ()
+;;   (if (string-match
+;;        "\.dir-locals\.el$"
+;;        (file-relative-name (or (buffer-file-name) "")))
+;;       (lispy-mode +1)))
+
+;; (add-hook 'lisp-data-mode-hook #'dc/enable-lispy-in-dir-locals)
 
 ;;** Docs
 
@@ -382,6 +385,7 @@ preferring the value of sym if present"
   (:option lispy-compat '(cider edebug))
   (:hook #'turn-off-smartparens-mode)
   (:hook-into emacs-lisp-mode
+              lisp-data-mode
               scheme-mode
               ielm-mode
               scheme-mode

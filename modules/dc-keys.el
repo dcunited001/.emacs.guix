@@ -624,10 +624,10 @@
 ;;*** Jump
 
 (leader-def
-    "j"   '(:ignore t :which-key "jump")
-    "jj"  '(avy-goto-char :which-key "jump to char")
-    "jw"  '(avy-goto-word-0 :which-key "jump to word")
-    "jl"  '(avy-goto-line :which-key "jump to line"))
+  "j"   '(:ignore t :which-key "jump")
+  "jj"  '(avy-goto-char :which-key "jump to char")
+  "jw"  '(avy-goto-word-0 :which-key "jump to word")
+  "jl"  '(avy-goto-line :which-key "jump to line"))
 
 ;;*** Shell
 

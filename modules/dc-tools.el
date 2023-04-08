@@ -85,6 +85,12 @@
 ;;   can make calls to bui-x given the right context
 ;; - or use the (interactive) code from guix-packages-by-name
 ;;   to write a consult-guix--read-package function
+
+;;** Nix
+
+(setup (:pkg nix-mode)
+  (:file-match "\\.nix\\'"))
+
 ;;** Unix
 
 ;;*** Firestarter
