@@ -39,6 +39,8 @@
 
 (setup (:pkg buttercup))
 
+;;** Arch
+(setup (:pkg aurel :straight t :type git :flavor melpa :host github :repo "alezost/aurel"))
 ;;** Guix
 
 (setup (:pkg guix))

@@ -115,11 +115,20 @@
    "<f2> bu" #'buffer-env-update
    "<f2> br" #'buffer-env-reset
 
-   "<f2> d" '(:ignore t :which-key "DESKTOP")
-   "<f2> ds" #'desktop-save-in-desktop-dir
-   "<f2> dS" #'desktop-save
-   "<f2> dr" #'desktop-read
+   "<f2> e" #'envrc-command-map
+   "<f2> E" '(:ignore t :which-key "ENVRC")
+   "<f2> Er" #'envrc-reload-all
+   "<f2> Eg" #'envrc-global-mode
+
+   "<f2> d" #'docker
+
+   "<f2> D" '(:ignore t :which-key "DESKTOP")
+   "<f2> Ds" #'desktop-save-in-desktop-dir
+   "<f2> DS" #'desktop-save
+   "<f2> Dr" #'desktop-read
+
    "<f2> O" #'aw-show-dispatch-help
+
    "<f2> p"  '(:ignore t :wk "POPUP")
    "<f2> pr" #'dc/popup-rulesets-reset
    "<f2> ps" #'dc/popup-rulesets-set

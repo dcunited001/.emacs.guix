@@ -40,7 +40,8 @@
 
 ;;*** Direnv
 
-(setup (:pkg envrc))
+(setup (:pkg envrc)
+  (add-hook 'emacs-startup-hook #'envrc-global-mode))
 
 ;; (setup (:pkg buffer-env)
 

@@ -306,7 +306,7 @@
 (define guix-emacs-vhash
   (vhash-consq
    'devops
-   (list->vlist '("emacs-docker@2.2.0"
+   (list->vlist '("emacs-docker"
                   "emacs-dockerfile-mode"))
    guix-emacs-vhash))
 
@@ -421,6 +421,9 @@
 
                   "emacs-arduino-mode"
 
+                  "emacs-bazel"
+
+                  ;; TODO decide on whether to include CCLS
                   "ccls"
                   "emacs-ccls"
                   "emacs-go-mode"
