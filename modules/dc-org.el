@@ -574,12 +574,13 @@ This is a variadic `cl-pushnew'."
             '("duckduckgo"  . "https://duckduckgo.com/?q=%s")
             '("wikipedia"   . "https://en.wikipedia.org/wiki/%s")
             '("wolfram"     . "https://wolframalpha.com/input/?i=%s")
-            '("doom-repo"   . "https://github.com/doomemacs/doomemacs/%s")
-            `("emacsdir"    . (file-name-concat dc/emacs-d "%s")))
+            '("doom-repo"   . "https://github.com/doomemacs/doomemacs/%s"))
 
   ;; TODO: DOOM org: giant letf for doc links, http/img previews,
   ;; TODO: DOOM org: +org--follow-search-string
-  )
+
+  (pushnew! org-link-abbrev-alist
+            `("emacsdir"    . (file-name-concat dc/emacs-d "%s"))))
 
 (defun dc/org-init-formatting-h ()
   (setup (:pkg org-make-toc)

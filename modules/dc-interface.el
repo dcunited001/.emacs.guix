@@ -88,7 +88,9 @@
     '(objed-state grip debug repl minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
   (doom-modeline-set-modeline 'default t))
 
-(setup (:pkg doom-modeline)
+;; guix version does not include the eglot--spinner bugfix
+(setup (:pkg doom-modeline :straight t :type git :flavor melpa
+             :host github :repo "seagle0128/doom-modeline")
   ;; somehow doom modeline was interfering with after-init-hook's from completing without
   ;; throwing an error. this was inherited properties on faces to be unspecified/undefined
   (:with-hook emacs-startup-hook
