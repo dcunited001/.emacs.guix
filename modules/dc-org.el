@@ -541,8 +541,44 @@
 
   )
 
+;; DOOM: ./lisp/core/doom-lib.el
+(defmacro pushnew! (place &rest values)
+  "Push VALUES sequentially into PLACE, if they aren't already present.
+This is a variadic `cl-pushnew'."
+  (let ((var (make-symbol "result")))
+    `(dolist (,var (list ,@values) (with-no-warnings ,place))
+       (cl-pushnew ,var ,place :test #'equal))))
+
 (defun dc/org-init-custom-links-h ()
 
+  ;; DOOM: ./modules/lang/org/config.el
+  ;; Modify default file: links to colorize broken file links
+  (org-link-set-parameters
+   "file" :face (lambda (path)
+                  (if (or (file-remote-p path)
+                          ;; filter out network shares on windows (slow)
+                          (if IS-WINDOWS (string-prefix-p "\\\\" path))
+                          (file-exists-p path))
+                      'org-link
+                    '(warning org-link))))
+
+  ;; TODO: DOOM org: see +org-define-basic-link
+
+  ;; DOOM: ./modules/lang/org/config.el
+  (pushnew! org-link-abbrev-alist
+            '("github"      . "https://github.com/%s")
+            '("youtube"     . "https://youtube.com/watch?v=%s")
+            '("google"      . "https://google.com/search?q=")
+            '("gimages"     . "https://google.com/images?q=%s")
+            '("gmap"        . "https://maps.google.com/maps?q=%s")
+            '("duckduckgo"  . "https://duckduckgo.com/?q=%s")
+            '("wikipedia"   . "https://en.wikipedia.org/wiki/%s")
+            '("wolfram"     . "https://wolframalpha.com/input/?i=%s")
+            '("doom-repo"   . "https://github.com/doomemacs/doomemacs/%s")
+            `("emacsdir"    . (file-name-concat dc/emacs-d "%s")))
+
+  ;; TODO: DOOM org: giant letf for doc links, http/img previews,
+  ;; TODO: DOOM org: +org--follow-search-string
   )
 
 (defun dc/org-init-formatting-h ()
