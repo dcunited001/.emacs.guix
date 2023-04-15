@@ -189,7 +189,9 @@
   )
 
 (with-eval-after-load 'eglot
-  (setup (:pkg consult-eglot)))
+  ;; "emacs-consult-eglot" ;; 0.2.0 on guix does not include fix to #14
+  (setup (:pkg consult-eglot :straight t :type git :flavor melpa
+               :host github :repo "mohkale/consult-eglot")))
 
 ;;** VCS
 

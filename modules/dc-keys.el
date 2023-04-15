@@ -515,7 +515,8 @@
  "D" #'consult-locate
  ;; "M-d" #'consult-dir-jump-file
  "g" #'consult-grep
- "G" #'consult-git-grep
+ "G" #'consult-git-log-grep
+ "M-g" #'consult-git-grep
  "i" #'consult-info
  "r" #'consult-ripgrep
  "k" #'consult-keep-lines

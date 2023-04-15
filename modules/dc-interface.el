@@ -585,6 +585,11 @@
     )
   (consult-customize consult-yasnippet :preview-key '(:debounce 0.25)))
 
+(with-eval-after-load 'magit
+  (setup (:pkg consult-git-log-grep :straight t :type git :flavor melpa
+               :host github :repo "ghosty141/consult-git-log-grep")
+    (:option consult-git-log-grep-open-function #'magit-show-commit)))
+
 ;;*** Marginalia
 
 (setup (:pkg marginalia)

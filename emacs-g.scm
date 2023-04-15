@@ -124,7 +124,7 @@
                   "emacs-consult-xdg-recent-files"
                   "emacs-consult-dir"
                   ;; "emacs-consult-lsp"
-                  "emacs-consult-eglot"
+                  ;; "emacs-consult-eglot" ;; 0.2.0 does not include fix to #14
                   "emacs-consult-bibtex"
 
                   "emacs-wgrep"
