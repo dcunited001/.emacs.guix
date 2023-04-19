@@ -24,20 +24,16 @@
 ;;* Auth
 
 ;;** pinentry
-
-(setq dc/use-pinentry nil)
-
-(when dc/use-pinentry
-  (setq epa-pinentry-mode 'loopback)
-  (pinentry-start))
+(require 'epg)
+(setq epg-pinentry-mode 'cancel)
+;; (setq epg-pinentry-mode 'loopback)
+;; (setq epg-pinentry-mode 'cancel)
 
 ;;** auth-source-pass
-
-(setup (:pkg auth-source-pass)
-  (auth-source-pass-enable))
+;; (setup (:pkg auth-source-pass)
+;;   (auth-source-pass-enable))
 
 ;;** oauth2
-
-(setup (:pkg oauth2 :straight t))
+;; (setup (:pkg oauth2 :straight t))
 
 (provide 'dc-auth)

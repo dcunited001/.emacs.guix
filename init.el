@@ -100,7 +100,7 @@
 (require 'dc-alert)
 (require 'dc-interface)
 (require 'dc-popup)
-;; (require 'dc-auth)
+(require 'dc-auth)
 (require 'dc-project)
 
 (require 'dc-info)
