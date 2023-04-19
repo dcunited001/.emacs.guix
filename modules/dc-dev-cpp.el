@@ -1,7 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 ;;
-;; Copyright © 2021 David Wilson
-;; Copyright © 2014-2022 Henrik Lissner.
+;; Copyright © 2023 David Conner
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
 ;; of this software and associated documentation files (the “Software”), to deal
@@ -21,11 +20,19 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-;;* Dev Python
+;; Dev CPP
 
-;; (setq ')
+;; ** Clang Projects
 
-(setup (:pkg ein :straight t :type git :flavor melpa
-             :host github :repo "millejoh/emacs-ipython-notebook"))
+;; ** Bazel Projects
 
-(provide 'dc-dev-python)
+;; The hedronvision projects simply allow for the extraction of
+;; compile_commands.json, which can then be used for eglot via clangd
+
+;; for cpp
+;; https://github.com/hedronvision/bazel-compile-commands-extractor
+
+;; for c
+;; https://github.com/hedronvision/bazel-make-cc-https-easy
+
+(provide 'dc-dev-cpp)

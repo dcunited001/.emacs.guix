@@ -93,6 +93,17 @@
 (setup (:pkg nix-mode)
   (:file-match "\\.nix\\'"))
 
+(setup (:pkg ob-nix :type git :flavor melpa
+             :host codeberg :repo "theesm/ob-nix"))
+
+;;** Containerd
+
+(setup (:pkg docker))
+
+;; (add-to-list
+;; 'docker-image-run-custom-args
+;; `("^postgres" ("-e POSTGRES_PASSWORD=postgres" . ,docker-image-run-default-args)))
+
 ;;** Unix
 
 ;;*** Firestarter

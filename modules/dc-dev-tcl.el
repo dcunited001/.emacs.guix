@@ -21,11 +21,32 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-;;* Dev Python
+;;* Dev TCL
 
-;; (setq ')
+(provide 'dc-dev-tcl)
 
-(setup (:pkg ein :straight t :type git :flavor melpa
-             :host github :repo "millejoh/emacs-ipython-notebook"))
+;;** TCL Mode
 
-(provide 'dc-dev-python)
+(setup (:pkg tcl-mode)     ; derived from prog-mode
+  ;; defaults for defcustoms
+  ;; (:option tcl-help-directory-list nil
+  ;;          tcl-use-smart-word-finder t
+  ;;          tcl-application "wish"
+  ;;          tcl-command-switches nil
+  ;;          tcl-command-prompt "^\\(% \\|\\)"
+  ;;          inferior-tcl-source-command "source %s\n"
+  ;;          tcl-escaped-newline)
+  )
+
+;;** TCL Repl
+;; (inferior-tcl-mode)  ; derived from comint-mode
+
+;;** TCL LSP
+
+;; Java-based LSP server for TCL
+;; https://github.com/Dufgui/lsp-jtcl
+;; https://github.com/Dufgui/com.mds.lsp.tcl (perhaps missing)
+
+;; Soar language (tcl derivative?)
+;; https://github.com/soartech/soar-language-server
+;; TCL integration script in: ./integrations/emacs/lsp-soar.el
