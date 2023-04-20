@@ -312,6 +312,9 @@
 
     (org-super-agenda-mode +1)))
 
+;; (defun dc/org-super-agenda-queries ()
+;;     )
+
 ;; org-roam-node-display-template:
 ;;
 ;; the default gives titles that are too narrow (12)
@@ -335,6 +338,15 @@
 (defun dc/org-read-template-from-file (file)
   (if (file-exists-p file) (org-file-contents file)
     (error "* Template file %s not found" file)))
+
+
+(defun dc/org-roam-insert-slug ()
+  (interactive)
+  (insert (org-roam-node-slug (org-roam-node-at-point))))
+
+(defun dc/org-roam-get-slug ()
+  (interactive)
+  (org-roam-node-slug (org-roam-node-at-point)))
 
 (defun dc/org-init-roam-h ()
   (require 'doom-org-roam2)
@@ -361,6 +373,38 @@
              (file+head "%<%Y-%m-%d>.org"
                         ,(dc/org-read-template-from-file
                           dc/org-roam-dailies-template)))))
+    (setq org-roam-capture-templates
+          (append
+           '(("d" "default"
+              plain "%?" :unnarrowed t
+              :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n"))
+             ("p" "projects"
+              plain "%?" :unnarrowed t
+              :target (file+head
+                       "projects/${slug}.org"
+                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n"))
+             ("t" "topics"
+              plain "%?" :unnarrowed t
+              :target (file+head+olp
+                       "topics/${slug}.org"
+                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n"
+                       ("Roam" "Docs" "Resources" "Topics" "Issues")))
+             ("c" "code"
+              plain "%?" :unnarrowed t
+              :target (file+head+olp
+                       "code/${slug}.org"
+                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n"
+                       ("Roam" "Docs" "Resources" "Issues" "Projects"))))
+           `(("s" "slips"
+              plain "%?" :unnarrowed t
+              :target (file+head+olp
+                       "slips/%<%Y%m%d%H%M%S>-${slug}.org"
+                       ,(string-join '("#+TITLE: ${title}"
+                                       "#+CATEGORY: slips"
+                                       "#+TAGS: ") "\n")
+                       ("Roam" "Docs" "Resources" "Issues" "Projects"))))))
+
+
 
     ;; (setq-hook! 'org-roam-find-file-hook
     ;;             org-id-link-to-org-use-id
@@ -563,6 +607,8 @@ This is a variadic `cl-pushnew'."
                     '(warning org-link))))
 
   ;; TODO: DOOM org: see +org-define-basic-link
+
+  ;; TODO: potentially load with org-link-abbrev-alist.eld
 
   ;; DOOM: ./modules/lang/org/config.el
   (pushnew! org-link-abbrev-alist
