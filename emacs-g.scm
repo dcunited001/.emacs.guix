@@ -264,6 +264,7 @@
                   "emacs-magit-todos"
                   ;; "emacs-ghub"
                   "emacs-forge"
+                  "emacs-srht"
 
                   "emacs-repo"
                   "emacs-repology"

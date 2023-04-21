@@ -238,6 +238,10 @@
 ;; TODO: repology interactives/customs:
 ;; https://github.com/emacs-straight/repology/blob/master/repology.el
 
+;;*** Sr.ht
+(setup (:pkg srht)
+  (:option srht-username user-mail-address))
+
 ;;*** Repo
 ;; For Google Repo
 (setup (:pkg repo))
