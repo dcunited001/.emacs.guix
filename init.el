@@ -16,7 +16,7 @@
   (expand-file-name "~/.guix-extra-profiles/emacs-g/emacs-g/"))
 
 (setq user-full-name "David Conner"
-      user-mail-address (or (getenv "USER_MAIL_ADDRESS") "noreply@te.xel.io"))
+      user-mail-address (or (getenv "EMAIL") "noreply@te.xel.io"))
 
 
 (setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
