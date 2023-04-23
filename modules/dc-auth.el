@@ -23,6 +23,9 @@
 
 ;;* Auth
 
+;;** epa
+(setq epa-armor t)
+
 ;;** pinentry
 (require 'epg)
 (setq epg-pinentry-mode 'cancel)
