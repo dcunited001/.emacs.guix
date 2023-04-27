@@ -230,6 +230,13 @@
   ;;       :n "C-n" #'git-timemachine-show-next-revision
   ;;       :n "gb"  #'git-timemachine-blame
   ;;       :n "gtc" #'git-timemachine-show-commit)
+;;*** Ghub
+(setup (:pkg ghub))
+
+(with-eval-after-load 'ghub
+  (require 'ghub-graphql)
+  (require 'glab)
+  (require 'gtea))
 
 ;;*** Forge
 (setup (:pkg forge))
@@ -241,6 +248,8 @@
 ;;*** Sr.ht
 (setup (:pkg srht)
   (:option srht-username user-mail-address))
+
+;; (srht :type git :host github :repo "emacs-straight/srht" :files ("*" (:exclude ".git")))
 
 ;;*** Repo
 ;; For Google Repo

@@ -301,14 +301,14 @@
 
 ;;*** Save Minibuffer History
 
+;; TODO: review savehist-file: .emacs.g/var/savehist.el
 (setup savehist
-  (setq history-length 25)
-  (savehist-mode 1))
+  (setq history-length 50)
+  (savehist-mode 1)
 
-;; Individual history elements can be configured separately
-;;(put 'minibuffer-history 'history-length 25)
-;;(put 'evil-ex-history 'history-length 50)
-;;(put 'kill-ring 'history-length 25))
+  ;; Individual history elements can be configured separately
+  (put 'minibuffer-history 'history-length 25)
+  (put 'kill-ring 'history-length 25))
 
 ;;*** Make Help More Helpful
 

@@ -273,6 +273,8 @@
       x-select-enable-primary nil
       x-select-enable-clipboard t)
 
+;; TODO: (setq kill-ring-max 25)
+
 ;; if necessary, setup a watch function https://www.gnu.org/software/emacs/manual/html_node/elisp/Watching-Variables.html
 
 ;; select-enable-primary defun vterm--set-selection seems to be the only

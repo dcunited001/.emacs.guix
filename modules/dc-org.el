@@ -448,6 +448,11 @@
 (defun dc/org-init-attachments-h ()
   )
 
+;; set with (setq org-confirm-evaluate #'dc/org-babel-dont-confirm-shell-elisp)
+(defun dc/org-babel-dont-confirm-shell-elisp (lang body)
+  (not (or (string= lang "emacs-lisp")
+           (string= lang "shell"))))
+
 (defun dc/org-init-babel-h ()
   (setup ob
     (require 'ob-dot)

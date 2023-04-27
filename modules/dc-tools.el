@@ -244,8 +244,8 @@
 
 ;;*** GraphQL
 ;; TODO configure graphql & ob-graphql
-;; (setup (:pkg graphql))
-;; (setup (:pkg graphql-mode))
+(setup (:pkg graphql))
+(setup (:pkg graphql-mode))
 ;;
 ;; (with-eval-after-load ... (in org)...
 ;; (setup (:pkg ob-graphql))
