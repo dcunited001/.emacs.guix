@@ -246,10 +246,11 @@
 ;; TODO configure graphql & ob-graphql
 (setup (:pkg graphql))
 (setup (:pkg graphql-mode))
-;;
+
+(setup (:pkg ob-graphql :straight t :type git :flavor melpa
+             :host github :repo "jdormit/ob-graphql"))
+
 ;; (with-eval-after-load ... (in org)...
-;; (setup (:pkg ob-graphql))
-;;
 ;; TODO: package: dynamic-graphs?
 ;; TODO: package: ob-dot
 

@@ -231,15 +231,20 @@
   ;;       :n "gb"  #'git-timemachine-blame
   ;;       :n "gtc" #'git-timemachine-show-commit)
 ;;*** Ghub
-(setup (:pkg ghub))
 
-(with-eval-after-load 'ghub
+(defun dc/ensure-ghub-graphql ()
+  "Emacs really did not want to load this code"
   (require 'ghub-graphql)
   (require 'glab)
   (require 'gtea))
 
+(setup (:pkg ghub)
+  (:with-hook emacs-startup-hook
+    (:hook #'dc/ensure-ghub-graphql)))
+
 ;;*** Forge
-(setup (:pkg forge))
+(setup (:pkg forge)
+  (:option forge-pull-notifications t))
 
 (setup (:pkg repology))
 ;; TODO: repology interactives/customs:
