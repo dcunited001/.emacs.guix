@@ -100,8 +100,51 @@
 
 ;;*** M-x compile
 
+(defun dc/project-local-root ()
+  (and (project-current) (cdr (project-current))))
+
+(defun dc/compilation-start-alert (proc)
+  ;; file-name-???
+  (let* ((project-dir (nth 1 (reverse (file-name-split
+                                       (dc/project-local-root)))))
+         (project-name (or project-dir "Emacs"))
+         (alert-body (format "(%s) compilation-start: %s"
+                             project-name
+                             (string-join (process-command proc) " ")))
+         (alert-title (process-name proc)))
+    (alert alert-body :title alert-title)))
+
+;; Emacs 39: Processes
+;;
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Processes.html
+;;
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Process-Information.html
+;;
+;; (comint-exec outbuf (downcase mode-name) shell-file-name nil
+;;              `(,shell-command-switch ,command))
+;; (start-file-process-shell-command (downcase mode-name) outbuf command)
+
+(defun dc/compilation-start-hook (proc)
+  "Function called after starting a compilation. It gets passed PROC the
+result of either `comint-exec' or
+`start-file-process-shell-command' depending on whether the
+compilation was initiated from compile-mode."
+
+  ;; process-{name,command,environment}
+  (dc/compilation-start-alert proc))
+
+
 (setup compile
-  (:option compilation-scroll-output t))
+  (:option compilation-scroll-output t
+           compilation-start-hook #'dc/compilation-start-hook))
+
+;; TODO: compile-mode-hook
+
+;; TODO: use (process-contact ...) with (alert ... ) to log specific commands?
+;;
+;; e.g. ssh/tramp
+;;
+;; (process-contact process &optional key no-block)
 
 (setq compilation-environment '("TERM=xterm-256color"))
 

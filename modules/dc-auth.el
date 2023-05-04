@@ -25,6 +25,10 @@
 
 ;;** epa
 (setq epa-armor t)
+;; (setq epa-file-auto-mode-alist-entry
+;;  '("\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'" nil epa-file))
+;; (setq epa-file-name-regexp
+;;  "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'")
 
 ;;** pinentry
 (require 'epg)
