@@ -28,4 +28,12 @@
 (setup (:pkg ein :straight t :type git :flavor melpa
              :host github :repo "millejoh/emacs-ipython-notebook"))
 
+
+
+;; (defun dc/ein-get-token (url)
+;;   (gethash (ein:query-divine-authorization-tokens-key url) ein:query-authorization-tokens))
+;; (maphash (lambda (k v) (list k v)) ein:query-authorization-tokens)
+;; (ein:query-divine-authorization-tokens-key "http://127.0.0.1:8888")
+;; (ein:$kernel-session-id "python3")
+
 (provide 'dc-dev-python)

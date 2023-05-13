@@ -224,8 +224,13 @@ compilation was initiated from compile-mode."
   (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename)
 
   ;; TODO: Is this needed now?
-  (add-to-list 'eglot-server-programs
-               '((js2-mode typescript-mode) . ("typescript-language-server" "--stdio")))
+  (add-to-list
+   'eglot-server-programs
+   '((js2-mode typescript-mode) .
+     ("typescript-language-server" "--stdio")))
+  (add-to-list
+   'eglot-server-programs
+   '(python-mode . ("pylsp")))
   ;; TODO: c-mode-hook is hooked in c-mode-hook?
   ;; (:with-hook c-mode-hook
   ;;   (:hook eglot-ensure))
