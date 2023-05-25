@@ -129,11 +129,7 @@
 
    "<f2> O" #'aw-show-dispatch-help
 
-   "<f2> p"  '(:ignore t :wk "POPUP")
-   "<f2> pr" #'dc/popup-rulesets-reset
-   "<f2> ps" #'dc/popup-rulesets-set
-   "<f2> pc" #'dc/popup-rulesets-clear
-   "<f2> pP" #'dc/popup-use-popper
+   ;; "<f2> p"  '(:ignore t :wk "POPUP")
    "<f2> P" #'pomm
 
    ;; "<f2> #" '(:ignore t :which-key "TRAMP")
@@ -340,12 +336,13 @@
 
 ;;**** popper
 
-(general-def popper-mode-map
-  :prefix "M-`"
-  "`" 'popper-toggle-latest
-  "~" 'popper-cycle
-  ;; raise/lower popups
-  "M-`" 'popper-toggle-type)
+;; M-` conflicts with geiser-capf
+;; H-` and s-` conflict with KDE's switch-frame
+(general-define-key
+ :keymaps 'popper-mode-map
+ "C-~" #'popper-cycle                 ; M-`
+ "C-`" #'popper-toggle-latest           ; C-`
+ "C-M-`" #'popper-toggle-type)          ; C-M-`
 
 ;;**** Ace Jump
 ;; TODO change popper from M-`

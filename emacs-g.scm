@@ -219,8 +219,7 @@
 
                   "emacs-yasnippet"
                   ;; "emacs-doom-snippets"
-                  ;; "emacs-yasnippet-snippets"
-
+                  "emacs-yasnippet-snippets"
                   "emacs-emmet-mode"
 
                   "emacs-visual-fill-column"

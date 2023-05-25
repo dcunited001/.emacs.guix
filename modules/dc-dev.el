@@ -530,6 +530,14 @@ preferring the value of sym if present"
 
 ;;*** Haskell
 
+;;** Shell
+
+;;*** VTerm
+(setup (:pkg vterm)
+  (:option vterm-max-scrollback 1000))
+
+
+
 ;;** Snippets
 
 ;;*** Snippets
@@ -541,30 +549,38 @@ preferring the value of sym if present"
 ;; (doom-snippets-dir
 ;; "~/.emacs.g/etc/yasnippet/snippets/")
 
-(with-eval-after-load 'doom-snippets
-  (setup (:pkg yasnippet)
-    ;; This should work with multiple hooks, but doesn't seem to add them
-    ;; also doesn't seem to add prog-mode-hooks either
-    ;; (:with-hook org-mode-hook
-    ;;   (:hook yas-minor-mode))
-    ;; (:with-hook prog-mode-hook
-    ;;   (:hook yas-minor-mode))
-    (require 'yasnippet)
-    (doom-snippets-initialize)
-    (yas-reload-all)))
+;;*** Yasnippet Snippets
 
-(with-eval-after-load 'yasnippet
-  (add-hook 'org-mode-hook #'yas-minor-mode)
-  (add-hook 'prog-mode-hook #'yas-minor-mode))
+(setup (:pkg yasnippet)
+  (:with-hook org-mode-hook
+    (:hook yas-minor-mode))
+  (:with-hook prog-mode-hook
+    (:hook yas-minor-mode)))
 
-(setup (:pkg doom-snippets :straight t :type git :host github
-             :repo "dcunited001/snippets" :files ("*.el" "*"))
-  (:option doom-snippets-enable-short-helpers t))
+(setup (:pkg yasnippet-snippets))
 
-;;** Shell
+;;*** Doom Snippets
 
-;;*** VTerm
-(setup (:pkg vterm)
-  (:option vterm-max-scrollback 1000))
+;; (with-eval-after-load 'doom-snippets
+;;   (setup (:pkg yasnippet)
+;;     ;; This should work with multiple hooks, but doesn't seem to add them
+;;     ;; also doesn't seem to add prog-mode-hooks either
+;;     ;; (:with-hook org-mode-hook
+;;     ;;   (:hook yas-minor-mode))
+;;     ;; (:with-hook prog-mode-hook
+;;     ;;   (:hook yas-minor-mode))
+;;     (require 'yasnippet)
+;;     (doom-snippets-initialize)
+;;     (yas-reload-all)))
+
+;; (with-eval-after-load 'yasnippet
+;;   (add-hook 'org-mode-hook #'yas-minor-mode)
+;;   (add-hook 'prog-mode-hook #'yas-minor-mode))
+
+;; (setup (:pkg doom-snippets :straight t :type git :host github
+;;              :repo "dcunited001/snippets" :files ("*.el" "*"))
+;;   (:option doom-snippets-enable-short-helpers t))
+
+
 
 (provide 'dc-dev)

@@ -93,6 +93,7 @@
 ;; (require 'dc-popper-popup-rules)
 (setup (:pkg popper)
   (:option popper-group-function #'popper-group-by-project
-           popper-display-control t))
+           popper-display-control t)
+  (popper-mode))
 
 (provide 'dc-popup)
