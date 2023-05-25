@@ -31,9 +31,68 @@
 
 (require 'a)
 
+;; TODO: setup shackle and set popper-display-control nil
+
+(defun popper-shell-output-empty-p (buf)
+  (and (string-match-p "\\*Async Shell Command\\*" (buffer-name buf))
+       (= (buffer-size buf) 0)))
+
+(setq popper-reference-buffers
+      '(("Output\\*$" . hide)
+        ;; ("\\*Messages\\*" . hide)
+        "\\*Messages\\*"
+        "^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\)"
+        "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
+        "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
+        "^\\*term.*\\*$"   term-mode   ;term as a popup
+        "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
+        "^\\*envrc\\*"
+        "^\\*Customize"
+        "^ \\*undo-tree\\*"
+        "^\\*\\([Hh]elp\\|Apropos\\)"
+        "^\\*Warnings"
+        "^\\*Backtrace"
+        "^\\*Process List\\*"
+        "^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\)\\*"
+        "^\\*\\(?:Occur\\|unsent mail.*?\\|message\\)\\*"
+        "^\\*Flycheck errors\\*"
+        "^\\*Flycheck errors\\*"
+        "^\\*vc-diff"
+        ;; NOTE: what are outline, annotation.el? can't get outline to work.
+        ;; i've used outline as minor mode (org inherits from it, lispy uses it)
+        "^\\*Outline*"
+        "^\\*Edit Annotation "
+        "\\(?:^\\*Contents\\|'s annots\\*$\\)"
+        "^\\*[gG]eiser \\(dbg\\|xref\\|messages\\)\\*$"
+        "^\\*Geiser documentation\\*$"
+        "^\\* [A-Za-z0-9_-]+ REPL \\*"
+        "^\\*sly-mrepl"
+        "^\\*sly-traces"
+        "^\\*sly-description"
+        "^\\*sly-\\(?:db\\|inspector\\)"
+        "^\\*cider-error*"
+        "^\\*cider-repl"
+        "^\\*cider-repl-history"
+        "^\\*Org Links"
+        "^ ?\\*\\(?:Agenda Com\\|Calendar\\|Org Export Dispatcher\\)"
+        "^\\*Org Agenda"
+        "^\\*Org Src"
+        "^\\*Org-Babel"
+        "^\\*Capture\\*$\\|CAPTURE-.*$"
+        "\\*ob-ipython.*"
+        "^ \\*Python"
+        " output\\*$"
+        "^\\*TeX \\(?:Help\\|errors\\)"
+        "^\\*Ledger Report"
+        "^\\*Ledger Error"
+        ))
+
+(add-to-list 'popper-reference-buffers
+             '(popper-shell-output-empty-p . hide))
+
 ;; (require 'dc-popper-popup-rules)
 (setup (:pkg popper)
-
-  )
+  (:option popper-group-function #'popper-group-by-project
+           popper-display-control t))
 
 (provide 'dc-popup)

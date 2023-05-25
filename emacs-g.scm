@@ -141,7 +141,7 @@
    'ui
    (list->vlist '("emacs-hide-mode-line"
                   ;; "emacs-doom-modeline" ; 3.3.2 does not include eglot--spinner fix
-                  "emacs-minions" ;minor mode mgmt: toggle/info
+                  "emacs-minions"       ;minor mode mgmt: toggle/info
                   "emacs-pulsar"
                   "emacs-hydra"
 
@@ -154,6 +154,7 @@
                   "emacs-dired-hacks"
                   ;; "emacs-dired-single" ; n/a
 
+                  "emacs-popper"
                   ))
    guix-emacs-vhash))
 
