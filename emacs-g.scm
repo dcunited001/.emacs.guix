@@ -217,7 +217,7 @@
                   "emacs-undo-tree"
 
                   "emacs-yasnippet"
-                  "emacs-doom-snippets"
+                  ;; "emacs-doom-snippets"
                   ;; "emacs-yasnippet-snippets"
 
                   "emacs-emmet-mode"

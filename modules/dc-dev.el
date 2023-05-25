@@ -541,18 +541,25 @@ preferring the value of sym if present"
 ;; (doom-snippets-dir
 ;; "~/.emacs.g/etc/yasnippet/snippets/")
 
-(setup (:pkg yasnippet)
-  (:option doom-snippets-enable-short-helpers t)
-  (require 'yasnippet)
-  (require 'doom-snippets)
+(with-eval-after-load 'doom-snippets
+  (setup (:pkg yasnippet)
+    ;; This should work with multiple hooks, but doesn't seem to add them
+    ;; also doesn't seem to add prog-mode-hooks either
+    ;; (:with-hook org-mode-hook
+    ;;   (:hook yas-minor-mode))
+    ;; (:with-hook prog-mode-hook
+    ;;   (:hook yas-minor-mode))
+    (require 'yasnippet)
+    (doom-snippets-initialize)
+    (yas-reload-all)))
 
-  ;; This should work with multiple hooks, but doesn't seem to add them
-  (:with-hook org-mode-hook
-    (:hook yas-minor-mode))
-  (:with-hook prog-mode-hook
-    (:hook yas-minor-mode))
+(with-eval-after-load 'yasnippet
+  (add-hook 'org-mode-hook #'yas-minor-mode)
+  (add-hook 'prog-mode-hook #'yas-minor-mode))
 
-  (yas-reload-all))
+(setup (:pkg doom-snippets :straight t :type git :host github
+             :repo "dcunited001/snippets" :files ("*.el" "*"))
+  (:option doom-snippets-enable-short-helpers t))
 
 ;;** Shell
 
