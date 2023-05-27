@@ -41,9 +41,36 @@
 ;;   - gnus-directory (set to SAVEDIR if defined)
 (require 'bug-reference)
 
+;; see video for information https://www.youtube.com/watch?v=hbCXqDT1iNI
+;;
+;; if you have auth-sources set up for imap.gmail.com, /when gnus starts/
+;;
+;; then it should pull your gmail:
+
+;;      301: INBOX
+;;      302: [Gmail]/All Mail
+;;      101: [Gmail]/Important
+;;      317: [Gmail]/Spam
+;;        0: [Gmail]/Starred
+
+;; and pressing ^ will get you to the groups:
+
+;; {nnfolder:archive} (opened)
+;; {nndraft:} (opened)
+;; {nntp:news.gmane.io} (opened)
+;; {nnimap:imap.gmail.com} (opened)
+
 (setup (:pkg gnus)
   (:option gnus-read-newsrc-file nil
-           gnus-save-newsrc-file t)
+           gnus-save-newsrc-file t
+           gnus-select-method '(nnimap "imap.gmail.com")
+           gnus-secondary-select-methods '((nntp "news.gmane.io"))
+           message-send-mail-hook #'smtpmail-send-it
+           gnus-message-archive-group "\"Gmail]/Sent Mail\""
+           ;; gnus-interactive-exit nil
+           ;; gnus-novice-user nil
+           ;; gnus-expert-user t
+           )
   ;; god bless your soul embark actions ... holy shit lmao
   ;; gnus-newsrc-alist
   ;; gnus-newsrc-hashtb
