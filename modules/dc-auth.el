@@ -24,17 +24,30 @@
 ;;* Auth
 
 ;;** epa
-(setq epa-armor t)
+
+;; epa-armor changes extensions to .asc, then encrypt/decrypt isn't transparent
+
+;; (setq epa-armor t)
 ;; (setq epa-file-auto-mode-alist-entry
 ;;  '("\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'" nil epa-file))
 ;; (setq epa-file-name-regexp
 ;;  "\\.gpg\\(~\\|\\.~[0-9]+~\\)?\\'")
 
 ;;** pinentry
+
+;; epg-X-program must be set with customize (see epg-find-configuration in
+;; epg-config.el). or alias gpg2 => gpg on arch.
+
+;; run `gpgconf --listdirs bindir` to get the actual gpg. this must at least be
+;; the same version as the gpg-agent
+
 (require 'epg)
-(setq epg-pinentry-mode 'cancel)
-;; (setq epg-pinentry-mode 'loopback)
 ;; (setq epg-pinentry-mode 'cancel)
+(setq epg-pinentry-mode 'loopback)
+;; (setq epg-pinentry-mode 'ask)
+
+(setq epg-user-id user-mail-address)
+;; (setq epg-debug t)
 
 ;;** auth-source-pass
 ;; (setup (:pkg auth-source-pass)

@@ -33,6 +33,7 @@
 
 ;;** GNUS
 ;; - stores messages in gnus-directory, ~/News
+;; - stores mail (archive/drafts) in gnus-..., ~/Mail
 ;; - fetches from NNTPSERVER or /etc/nntpserver
 ;; - caches state in ~/.newsrc
 ;; - gnus-home-directory
@@ -60,17 +61,60 @@
 ;; {nntp:news.gmane.io} (opened)
 ;; {nnimap:imap.gmail.com} (opened)
 
+;;*** GNUS Startup Files
+
+;; don't read the newsrc file, but write to it
+(setq gnus-read-newsrc-file nil
+      gnus-save-newsrc-file t
+      gnus-use-dribble-file t
+      gnus-always-read-dribble-file t)
+
+;;*** GNUS Group
+
+
+;;*** GNUS Async
+(setq gnus-asynchronous t
+      gnus-use-article-prefetch 20)
+
+;;*** GNUS Agent
+
+;;*** GNUS Article
+(setq gnus-article-over-scroll nil
+      gnus-article-show-cursor t
+      gnus-html-frame-width 80
+      gnus-html-image-automatic-caching t
+      ;; gnus-inhibit-images t
+      gnus-max-image-proportion 0.7
+      ;; gnus-treat-display-smileys nil
+      ;; gnus-article-mode-line-format "%G %S %m"
+
+      ;; all images in headers are outright annoying---disabled!
+      gnus-article-x-face-too-ugly ".*"
+      )
+
+;; (setq gnus-visible-headers
+;;       '("^From:" "^To:" "^Cc:" "^Subject:" "^Newsgroups:" "^Date:"
+;;         "Followup-To:" "Reply-To:" "^Organization:" "^X-Newsreader:"
+;;         "^X-Mailer:"))
+;; (setq gnus-sorted-header-list gnus-visible-headers)
+
+;;*** GNUS Group
+
+;;*** GNUS Summary
+
 (setup (:pkg gnus)
-  (:option gnus-read-newsrc-file nil
-           gnus-save-newsrc-file t
-           gnus-select-method '(nnimap "imap.gmail.com")
-           gnus-secondary-select-methods '((nntp "news.gmane.io"))
-           message-send-mail-hook #'smtpmail-send-it
-           gnus-message-archive-group "\"Gmail]/Sent Mail\""
+  ;; https://www.gnu.org/software/emacs/manual/html_mono/gnus.html#Changing-Servers
+  ;; .newsrc breaks when your 'gnus-select-method changes
+  (:option gnus-select-method '(nnnil)
+           gnus-large-newsgroup 4000
+           gnus-secondary-select-methods '((nntp "news.gmane.io")
+                                           (nnimap "imap.gmail.com"))
+           gnus-message-archive-group "\"[Gmail]/Sent Mail\""
            ;; gnus-interactive-exit nil
            ;; gnus-novice-user nil
            ;; gnus-expert-user t
            )
+
   ;; god bless your soul embark actions ... holy shit lmao
   ;; gnus-newsrc-alist
   ;; gnus-newsrc-hashtb
@@ -90,12 +134,43 @@
   (:with-hook gnus-article-mode-hook
     (:hook bug-reference-mode)))
 
+;; TODO (all-the-icons-gnus :type git :flavor melpa
+;;                          :host github :repo "nlamirault/all-the-icons-gnus")
+
 ;; TODO reappropriate locking from desktop.el
 ;; - also: https://www.emacswiki.org/emacs/PreventingMultipleGnus
 (defvar gnus-lock-filename)
 ;; gnus--load-locked-desktop-p
 ;; gnus-claim-lock
 ;; gnus-release-lock
+
+;;** Mail
+
+(with-eval-after-load 'gnus
+  (setq mail-user-agent 'message-user-agent ;default
+
+        message-send-mail-function #'smtpmail-send-it
+        message-mail-user-agent t
+
+        mail-signature "David Conner\n"
+        message-signature "David Conner\n"
+
+        message-citation-line-function #'message-insert-formatted-citation-line
+        message-citation-line-format (concat "> From: %f\n"
+                                             "> Date: %a, %e %b %Y %T %z\n"
+                                             ">")
+        message-ignored-cited-headers ""
+        ;; message-confirm-send nil
+        ;; message-kill-buffer-on-exit t
+        message-wide-reply-confirm-recipients t)
+
+  (add-hook 'message-setup-hook #'message-sort-headers)
+
+  ;; `gnus-dired' (does not require `gnus')
+  (add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode)
+
+  ;; send-mail-function is in the sendmail package
+  (setq send-mail-function 'smtpmail-send-it))
 
 ;;** Debbugs
 ;; see debbugs.el manual for:
