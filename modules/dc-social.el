@@ -105,28 +105,17 @@
 (setup (:pkg gnus)
   ;; https://www.gnu.org/software/emacs/manual/html_mono/gnus.html#Changing-Servers
   ;; .newsrc breaks when your 'gnus-select-method changes
-  (:option gnus-select-method '(nnnil)
+  ;; gnus-select-method '(nnnil)
+  (:option gnus-select-method '(nnimap "imap.gmail.com")
            gnus-large-newsgroup 4000
-           gnus-secondary-select-methods '((nntp "news.gmane.io")
-                                           (nnimap "imap.gmail.com"))
+           gnus-secondary-select-methods '(;; (nnimap "imap.gmail.com")
+                                           (nntp "news.gmane.io"))
            gnus-message-archive-group "\"[Gmail]/Sent Mail\""
            ;; gnus-interactive-exit nil
            ;; gnus-novice-user nil
            ;; gnus-expert-user t
            )
 
-  ;; god bless your soul embark actions ... holy shit lmao
-  ;; gnus-newsrc-alist
-  ;; gnus-newsrc-hashtb
-  ;; gnus-newsrc-options
-  ;; gnus-newsrc-options-n
-  ;; gnus-save-newsrc-hook
-  ;; gnus-newsrc-file-version
-  ;; gnus-read-newsrc-el-hook
-  ;; gnus-save-quick-newsrc-hook
-  ;; gnus-newsrc-last-checked-date
-  ;; gnus-save-standard-newsrc-hook
-  ;; gnus-save-newsrc-file-last-timestamp
   (:with-hook gnus-summary-mode-hook
     (:hook bug-reference-mode)))
 
@@ -143,6 +132,10 @@
 ;; gnus--load-locked-desktop-p
 ;; gnus-claim-lock
 ;; gnus-release-lock
+
+(with-eval-after-load 'gnus
+  (dolist (mode '(gnus-group-mode-hook gnus-summary-mode-hook gnus-browse-mode-hook))
+    (add-hook mode #'hl-line-mode)))
 
 ;;** Mail
 
