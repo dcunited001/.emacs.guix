@@ -25,6 +25,15 @@
 
 ;;*** Paren Matching
 
+;; seems to screw with geiser and wayland pgtk
+;; (require 'hideshow)
+;; (add-hook 'prog-mode-hook #'hs-minor-mode)
+
+;; (setup (:pkg hideshow)
+;;   (:hook-into prog-mode))
+
+;;*** Paren Matching
+
 (setup (:pkg smartparens)
   (:hook-into prog-mode))
 
@@ -511,19 +520,51 @@ preferring the value of sym if present"
 ;;**** GEISER
 
 (setup (:pkg geiser)
-  ;; (setq geiser-default-implementation 'gambit)
-  ;; (setq geiser-active-implementations '(gambit guile))
-  ;; (setq geiser-implementations-alist '(((regexp "\\.scm$") gambit)
-  ;;                                      ((regexp "\\.sld") gambit)))
-  ;; (setq geiser-repl-default-port 44555) ; For Gambit Scheme
-  (setq geiser-default-implementation 'guile)
-  (setq geiser-active-implementations '(guile))
-  (setq geiser-repl-default-port 44555) ; For Gambit Scheme
-  (setq geiser-implementations-alist '(((regexp "\\.scm$") guile)))
+  (:option geiser-default-implementation 'guile
+           geiser-active-implementations '(guile)
+           geiser-implementations-alist '(((regexp "\\.scm$") guile))
 
-  ;; TODO determine whether autodoc still crashes REPL's
-  ;; (setq geiser-repl-autodoc-p nil)
-  )
+           ;; these need to be correct
+           geiser-repl-per-project-p t
+           geiser-repl-add-project-paths nil
+
+           geiser-debug-always-display-sexp-after t
+           ;; geiser-debug-long-sexp-lines 6
+
+           ;; requires guile-colorized (ice-9 colorized)
+           geiser-debug-treat-ansi-colors 'colors
+
+           geiser-repl-highlight-output-p t
+           ))
+
+;;***** Guile prompt regex
+
+;; These don't exactly support unicode chars
+;; (how to keep track of multiple project repls)
+
+;; geiser-guile--prompt-regexp
+;; "^[^@(
+;; ]+@([^)]*)>"
+
+;; geiser-guile--debugger-prompt-regexp "^[^@(
+;; ]+@([^)]*?) \\[\\([0-9]+\\)\\]> "
+
+;;***** Guile init files
+
+;; geiser will load ~/.guile-geiser and not ~/.guile (defaults)
+;; (setq geiser-guile-init-file "~/.guile-geiser")
+;; (setq geiser-guile-load-init-file nil)
+
+;; NOTE autodoc does not seem to be crashing REPLs anymore
+;; (setq geiser-repl-autodoc-p nil)
+
+;;*****  Gambit Scheme
+
+;; (setq geiser-default-implementation 'gambit)
+;; (setq geiser-active-implementations '(gambit guile)))
+;; (setq geiser-repl-default-port 44555) ; For Gambit Scheme
+;; (setq geiser-implementations-alist '(((regexp "\\.scm$") gambit)
+;;                                      ((regexp "\\.sld") gambit))
 
 ;;**** Mesche
 
