@@ -29,7 +29,7 @@
   (:hook-into prog-mode))
 
 (setup (:pkg rainbow-delimiters)
-  (:hook-into prog-mode))
+  (:hook-into prog-mode geiser-repl-mode))
 
 (setup (:pkg rainbow-mode)
   (:hook-into org-mode
@@ -450,7 +450,13 @@ preferring the value of sym if present"
 
 ;;** Lisps
 
-(setup (:pkg lispy)
+(setup (:pkg lispy :straight t :type git :flavor melpa
+             :host github :repo "abo-abo/lispy"
+             :files (:defaults "lispy-clojure.clj"
+                               "lispy-clojure.cljs"
+                               "lispy-python.py"
+                               "lispy-pkg.el"))
+
   (:option lispy-compat '(cider edebug))
   (:hook #'turn-off-smartparens-mode)
   (:hook-into emacs-lisp-mode
@@ -458,6 +464,7 @@ preferring the value of sym if present"
               scheme-mode
               ielm-mode
               scheme-mode
+              geiser-repl-mode
               ;; racket-mode
               ;; hy-mode
               ;; lfe-mode

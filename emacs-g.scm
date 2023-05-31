@@ -198,7 +198,7 @@
                   "emacs-drag-stuff"
                   "emacs-tmr"
 
-                  "emacs-lispy"
+                  ;; "emacs-lispy" ; straight has a much more recent version
                   "emacs-parinfer-mode"
                   "emacs-smartparens"
                   "emacs-rainbow-delimiters"

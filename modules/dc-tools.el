@@ -43,7 +43,20 @@
 (setup (:pkg aurel :straight t :type git :flavor melpa :host github :repo "alezost/aurel"))
 ;;** Guix
 
-(setup (:pkg guix))
+(setup (:pkg guix)
+  (:option guix-read-package-name-function #'guix-read-package-name-at-point))
+
+
+;;*** Guix Geiser Configuration
+
+;;*** Guix graph configuration
+
+;; https://emacs-guix.gitlab.io/website/manual/latest/emacs-guix.html#Graph-Configuration
+
+;; to open a guix graph in an external application
+;; (setq guix-find-file-function 'org-open-file)
+;; (add-to-list 'org-file-apps '("\\.png\\'" . "sxiv %s"))
+
 
 ;; NOTE: setting these requires killing & restarting the Guix/Geiser REPL
 ;; ... but is now(?) unnecessary to enter guix modules (on arch and guix system)

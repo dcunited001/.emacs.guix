@@ -258,6 +258,12 @@
   "fFp" #'set-fill-prefix
 
   "g" #'guix
+  ;; "M-g" '(:ignore t :which-key "GUIX")
+  ;; "M-g x" #'guix-extended-command
+  ;; "M-g M-h" #'guix-hash
+  ;; "M-g M-b" #'guix-switch-to-buffer
+  ;; "M-g M-r" #'guix-switch-to-repl
+
   "G" '(:ignore t :which-key "DEBBUGS")
   "Gb" #'debbugs-gnu-bugs
   "Gg" #'debbugs-gnu-guix-search
