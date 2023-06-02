@@ -650,11 +650,41 @@ This is a variadic `cl-pushnew'."
 (defun dc/org-init-hacks-h ()
 
   )
+
+(defun dc/catch-org-shiftselect-error (newfun oldfun &rest args)
+  (condition-case err
+      (funcall oldfun args)
+    ;; on error, run handler (funcall ...)
+    (error (funcall newfun))))
+
+(defun dc/org-fix-buf-move ()
+  (advice-add 'org-shiftcontrolright
+              :around (apply-partially
+                       #'dc/catch-org-shiftselect-error
+                       #'buf-move-right)
+              '(name "dc/catch-org-shiftcontrolright"))
+  (advice-add 'org-shiftcontrolleft
+              :around (apply-partially
+                       #'dc/catch-org-shiftselect-error
+                       #'buf-move-left)
+              '(name "dc/catch-org-shiftcontrolright"))
+  (advice-add 'org-shiftcontrolup
+              :around (apply-partially
+                       #'dc/catch-org-shiftselect-error
+                       #'buf-move-up)
+              '(name "dc/catch-org-shiftcontrolright"))
+  (advice-add 'org-shiftcontroldown
+              :around (apply-partially
+                       #'dc/catch-org-shiftselect-error
+                       #'buf-move-down)
+              '(name "dc/catch-org-shiftcontrolright")))
+
 (defun dc/org-init-keybinds-h ()
   (setq org-special-ctrl-a/e t
         org-special-ctrl-k t
         org-M-RET-may-split-line '((default . nil)))
-  )
+  (dc/org-fix-buf-move))
+
 (defun dc/org-init-popup-rules-h ()
 
   )
