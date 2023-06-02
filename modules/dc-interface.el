@@ -213,6 +213,10 @@
   (pulsar-global-mode 1))
 
 ;;*** Font
+;;
+(setq emojify-display-style 'unicode
+      emojify-emoji-styles '(unicode)   ; default '(ascii unicode github)
+      )
 
 ;;(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14)
 ;;      doom-variable-pitch-font (font-spec :family "Overpass" :size 14)
@@ -223,20 +227,20 @@
 (pcase system-type
   ('gnu/linux
    (set-face-attribute 'default nil
-                       :font "JetBrains Mono"
+                       :font "Noto Sans Mono"
                        :weight 'regular
                        :height (dw/system-settings-get 'emacs/default-face-size))))
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil
-                    :font "JetBrains Mono"
+                    :font "Noto Sans Mono"
                     :weight 'regular
                     :height (dw/system-settings-get 'emacs/fixed-face-size))
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil
                     ;; :font "Cantarell"
-                    :font "Overpass"
+                    :font "Noto Sans"
                     :weight 'light
                     :height (dw/system-settings-get 'emacs/variable-face-size))
 
