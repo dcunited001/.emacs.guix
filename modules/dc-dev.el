@@ -532,7 +532,7 @@ preferring the value of sym if present"
 
            ;; these need to be correct
            geiser-repl-per-project-p t
-           geiser-repl-add-project-paths nil
+           geiser-repl-add-project-paths t
 
            geiser-debug-always-display-sexp-after t
            ;; geiser-debug-long-sexp-lines 6
@@ -540,8 +540,7 @@ preferring the value of sym if present"
            ;; requires guile-colorized (ice-9 colorized)
            geiser-debug-treat-ansi-colors 'colors
 
-           geiser-repl-highlight-output-p t
-           ))
+           geiser-repl-highlight-output-p t))
 
 ;;***** Guile prompt regex
 
