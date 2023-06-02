@@ -257,9 +257,8 @@
 
 ;;*** GraphQL
 ;; TODO configure graphql & ob-graphql
-(setup (:pkg graphql))
+;; ob-graphql requires graphql-mode, which does not depend on graphql
 (setup (:pkg graphql-mode))
-
 (setup (:pkg ob-graphql :straight t :type git :flavor melpa
              :host github :repo "jdormit/ob-graphql"))
 

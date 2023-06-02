@@ -291,6 +291,9 @@ compilation was initiated from compile-mode."
 
 (defun dc/ensure-ghub-graphql ()
   "Emacs really did not want to load this code"
+  ;; can't load this, but there are examples of ghub/graphql
+  ;; (require 'graphql-examples)
+  (require 'graphql)
   (require 'ghub-graphql)
   (require 'glab)
   (require 'gtea))
@@ -298,6 +301,9 @@ compilation was initiated from compile-mode."
 (setup (:pkg ghub)
   (:with-hook emacs-startup-hook
     (:hook #'dc/ensure-ghub-graphql)))
+
+;; graphql propagates ghub input, but only for 'graphql-examples
+(setup (:pkg graphql))
 
 ;;*** Forge
 (setup (:pkg forge)
