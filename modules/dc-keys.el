@@ -1037,7 +1037,7 @@
 
 (defun dc/instead-use-M-g ()
   (interactive)
-  (dc/forcing-function "use M-g instead of C-x p f for #'consult-ripgrep"))
+  (dc/forcing-function "use M-s instead of C-x p f for #'consult-ripgrep"))
 
 (general-define-key
  :keymaps 'project-prefix-map

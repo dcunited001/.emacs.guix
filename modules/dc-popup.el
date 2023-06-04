@@ -44,15 +44,20 @@
    (floor (frame-height) 5)             ; min-height (default divisor: 6)
    ))
 
+;; TODO: handle other popups for docker? popper-reference-buffers req restart?'
+(setq dc/popper-rx-docker
+      (rx (and line-start "*docker-" (or "containers" "images" "networks" "volumes") "*")))
+
 (setq popper-reference-buffers
       '(("Output\\*$" . hide)
         ;; ("\\*Messages\\*" . hide)
         "\\*Messages\\*"
         "^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\)"
-        "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
-        "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
-        "^\\*term.*\\*$"   term-mode   ;term as a popup
-        "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
+        "^\\*eshell.*\\*$" eshell-mode  ;eshell as a popup
+        "^\\*shell.*\\*$"  shell-mode   ;shell as a popup
+        "^\\*term.*\\*$"   term-mode    ;term as a popup
+        "^\\*vterm.*\\*$"  vterm-mode   ;vterm as a popup
+        dc/popper-rx-docker
         "^\\*envrc\\*"
         "^\\*Customize"
         "^ \\*undo-tree\\*"

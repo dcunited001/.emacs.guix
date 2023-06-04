@@ -220,25 +220,30 @@
 
 
 ;; Set the font face based on platform
-(pcase system-type
-  ('gnu/linux
-   (set-face-attribute 'default nil
-                       :font "Noto Sans Mono"
-                       :weight 'regular
-                       :height (dw/system-settings-get 'emacs/default-face-size))))
 
-;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil
-                    :font "Noto Sans Mono"
-                    :weight 'regular
-                    :height (dw/system-settings-get 'emacs/fixed-face-size))
+(defun dc/reset-fonts ()
+  (interactive)
+  (pcase system-type
+    ('gnu/linux
+     (set-face-attribute 'default nil
+                         :font "Noto Sans Mono"
+                         :weight 'regular
+                         :height (dw/system-settings-get 'emacs/default-face-size))))
 
-;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil
-                    ;; :font "Cantarell"
-                    :font "Noto Sans"
-                    :weight 'light
-                    :height (dw/system-settings-get 'emacs/variable-face-size))
+  ;; Set the fixed pitch face
+  (set-face-attribute 'fixed-pitch nil
+                      :font "Noto Sans Mono"
+                      :weight 'regular
+                      :height (dw/system-settings-get 'emacs/fixed-face-size))
+
+  ;; Set the variable pitch face
+  (set-face-attribute 'variable-pitch nil
+                      ;; :font "Cantarell"
+                      :font "Noto Sans"
+                      :weight 'light
+                      :height (dw/system-settings-get 'emacs/variable-face-size)))
+
+(add-hook 'emacs-startup-hook #'dc/reset-fonts)
 
 ;; TODO: interactive: set a specific frame's font
 ;; (set-frame-font)
