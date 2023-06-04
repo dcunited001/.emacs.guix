@@ -299,7 +299,22 @@
 
 ;;** UI
 
+(defun dc/forcing-function (msg)
+  (interactive)
+  (user-error msg))
+
+;; TODO: make interactive (apply-partially #'dc/forcing-function "use M-g instead of C-x pf for #'consult-ripgrep")
+
 ;;*** Dired
+(setup recentf
+  (:option recentf-max-saved-items 200
+           recentf-max-menu-items 13
+           recentf-menu-filter #'recentf-filter-changer))
+
+(with-eval-after-load 'recentf
+  (recentf-mode)
+  (add-to-list 'recentf-exclude (rx (and line-start "/gnu/store"))))
+
 
 ;;*** Window Management
 

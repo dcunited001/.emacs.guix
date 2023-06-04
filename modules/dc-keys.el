@@ -1033,13 +1033,17 @@
 (general-define-key
  :keymaps 'global
 
- "C-M-p" #'project-find-file
- "C-x p F" #'project-find-file)
+ "C-x p f" #'project-find-file)
+
+(defun dc/instead-use-M-g ()
+  (interactive)
+  (dc/forcing-function "use M-g instead of C-x p f for #'consult-ripgrep"))
 
 (general-define-key
  :keymaps 'project-prefix-map
  "k" #'dw/close-project-tab
- "f" #'consult-ripgrep
+ ;; "f" #'consult-ripgrep
+ "f" #'dc/instead-use-M-g
  "F" #'project-find-file)
 
 ;; "p" . "project")
