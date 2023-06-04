@@ -44,9 +44,10 @@
    (floor (frame-height) 5)             ; min-height (default divisor: 6)
    ))
 
-;; TODO: handle other popups for docker? popper-reference-buffers req restart?'
+;; TODO: handle other popups for docker?
 (setq dc/popper-rx-docker
-      (rx (and line-start "*docker-" (or "containers" "images" "networks" "volumes") "*")))
+      (rx (and line-start "*docker-"
+               (or "containers" "images" "networks" "volumes") "*")))
 
 (setq popper-reference-buffers
       '(("Output\\*$" . hide)
@@ -58,6 +59,10 @@
         "^\\*term.*\\*$"   term-mode    ;term as a popup
         "^\\*vterm.*\\*$"  vterm-mode   ;vterm as a popup
         dc/popper-rx-docker
+        docker-image-mode
+        docker-container-mode
+        docker-volume-mode
+        docker-network-mode
         "^\\*envrc\\*"
         "^\\*Customize"
         "^ \\*undo-tree\\*"
@@ -96,8 +101,7 @@
         " output\\*$"
         "^\\*TeX \\(?:Help\\|errors\\)"
         "^\\*Ledger Report"
-        "^\\*Ledger Error"
-        ))
+        "^\\*Ledger Error"))
 
 (add-to-list 'popper-reference-buffers
              '(dc/popper-shell-output-empty-p . hide))

@@ -586,7 +586,7 @@
 
   (require 'consult-xref)
 
-  ;;  may need to be set per-mode
+  ;;  may need to be set per-mode if lsp/lispy/cider/geiser cause problems
   (:option xref-show-xrefs-function 'consult-xref
            xref-show-definitions-function 'consult-xref))
 
