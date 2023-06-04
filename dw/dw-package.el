@@ -28,6 +28,8 @@
 (unless (featurep 'straight)
   ;; Bootstrap straight.el
   (defvar bootstrap-version)
+  ;; TODO remove straight-repository-branch when stable
+  (setq straight-repository-branch "develop")
   (let ((bootstrap-file
          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
         (bootstrap-version 6))
