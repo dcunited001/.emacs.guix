@@ -213,15 +213,11 @@
   (pulsar-global-mode 1))
 
 ;;*** Font
-;;
-(setq emojify-display-style 'unicode
-      emojify-emoji-styles '(unicode)   ; default '(ascii unicode github)
-      )
 
-;;(setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14)
-;;      doom-variable-pitch-font (font-spec :family "Overpass" :size 14)
-;;      doom-unicode-font (font-spec :family "JuliaMono" :size 14)
-;;      doom-font-increment 2)
+(setq emojify-display-style 'unicode
+      ;; default '(ascii unicode github)
+      emojify-emoji-styles '(unicode github))
+
 
 ;; Set the font face based on platform
 (pcase system-type

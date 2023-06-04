@@ -33,9 +33,16 @@
 
 ;; TODO: setup shackle and set popper-display-control nil
 
-(defun popper-shell-output-empty-p (buf)
+(defun dc/popper-shell-output-empty-p (buf)
   (and (string-match-p "\\*Async Shell Command\\*" (buffer-name buf))
        (= (buffer-size buf) 0)))
+
+(defun dc/popper-fit-window-height (win)
+  (fit-window-to-buffer
+   win
+   (floor (frame-height) 3)             ; max-height (default divisor: 3)
+   (floor (frame-height) 5)             ; min-height (default divisor: 6)
+   ))
 
 (setq popper-reference-buffers
       '(("Output\\*$" . hide)
@@ -88,12 +95,13 @@
         ))
 
 (add-to-list 'popper-reference-buffers
-             '(popper-shell-output-empty-p . hide))
+             '(dc/popper-shell-output-empty-p . hide))
 
 ;; (require 'dc-popper-popup-rules)
 (setup (:pkg popper)
   (:option popper-group-function #'popper-group-by-project
-           popper-display-control t)
+           popper-display-control t
+           popper-window-height #'dc/popper-fit-window-height)
   (popper-mode))
 
 (provide 'dc-popup)
