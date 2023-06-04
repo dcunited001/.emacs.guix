@@ -197,6 +197,14 @@
 ;; - equivalent to doom's (+make/run)
 
 ;;* Network
+
+;;** Ansible
+
+;; either .dir-locals.el or k1LoW/emacs-ansible: required to distinguish ansible
+;; buffers from yml buffers
+(setup (:pkg ansible :straight t :type git :host github :repo "k1LoW/emacs-ansible"
+             :flavor melpa :files ("*.el" "snippets" "dict" "ansible-pkg.el")))
+
 ;;** SSH
 
 ;;*** Tramp
