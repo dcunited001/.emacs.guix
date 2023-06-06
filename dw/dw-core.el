@@ -79,7 +79,8 @@
 ;;** Editor
 
 ;;*** Better Defaults
-(setup (:pkg better-defaults))
+(setup (:pkg better-defaults)
+  (:option confirm-kill-emacs t))
 
 (setup (:pkg undo-tree)
   (setq undo-tree-auto-save-history nil)
