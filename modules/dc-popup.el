@@ -38,16 +38,18 @@
        (= (buffer-size buf) 0)))
 
 (defun dc/popper-fit-window-height (win)
-  (fit-window-to-buffer
-   win
-   (floor (frame-height) 3)             ; max-height (default divisor: 3)
-   (floor (frame-height) 5)             ; min-height (default divisor: 6)
-   ))
+  (let* ((fh (frame-height))
+         (hmax (or (and (> 30 fh) (floor (* 0.6 fh))) 30))
+         (hmin (or (and (> 30 hmax) (floor (* 0.75 ))) 25)))
+    (fit-window-to-buffer win hmax hmin)))
+
 
 ;; TODO: handle other popups for docker?
 (setq dc/popper-rx-docker
       (rx (and line-start "*docker-"
                (or "containers" "images" "networks" "volumes") "*")))
+
+;; TODO advise popper to close/reopen poppup on tab-switch (eats the frame, winner-undo)
 
 (setq popper-reference-buffers
       '(("Output\\*$" . hide)

@@ -199,7 +199,10 @@
    "<f2> t" '(:ignore t :which-key "THEME")
    "<f2> tr" #'ef-themes-load-random
    "<f2> ts" #'ef-themes-select
-   "<f2> tt" #'ef-themes-toggle))
+   "<f2> tt" #'ef-themes-toggle
+
+   ;; vterm
+   "<f2> M-v" #'vterm))
 
 (defun dc/init-keybinds-help ()
   (dolist (pfx '("C-h" "<f1>"))

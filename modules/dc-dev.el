@@ -588,10 +588,13 @@ preferring the value of sym if present"
 ;;** Shell
 
 ;;*** VTerm
+
+;; TODO: per-project vterm
+;; https://github.com/doomemacs/doomemacs/blob/master/modules/term/vterm/autoload.el
+
 (setup (:pkg vterm)
-  (:option vterm-max-scrollback 1000))
-
-
+  (:option vterm-max-scrollback 1000
+           vterm-set-bold-hightbright t))
 
 ;;** Snippets
 
