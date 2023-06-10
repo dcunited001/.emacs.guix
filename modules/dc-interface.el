@@ -607,7 +607,7 @@
     ;; (:option consult-yasnippet-use-thing-at-point t
     ;;          consult-yasnippet-always-overwrite-thing-at-point t)
     )
-  (consult-customize consult-yasnippet :preview-key '(:debounce 0.25)))
+  (consult-customize consult-yasnippet :preview-key '(:debounce 0.25 any)))
 
 (with-eval-after-load 'magit
   (setup (:pkg consult-git-log-grep :straight t :type git :flavor melpa
