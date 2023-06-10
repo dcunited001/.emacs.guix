@@ -80,7 +80,7 @@
 
 ;;*** Better Defaults
 (setup (:pkg better-defaults)
-  (:option confirm-kill-emacs t))
+  (:option confirm-kill-emacs 'yes-or-no-p))
 
 (setup (:pkg undo-tree)
   (setq undo-tree-auto-save-history nil)
