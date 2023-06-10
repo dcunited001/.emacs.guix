@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.acme_account
+# group: community.crypto
+# name: Create, modify or delete ACME accounts
+# --
+- name: ${1:Create, modify or delete ACME accounts}
+  community.crypto.acme_account:
+    state: ${2:# The state of the account, to be identified by its account key}
+    allow_creation: ${3:# Whether account creation is allowed (when state is C(present))}
+    contact: ${4:# A list of contact URLs}
+    terms_agreed: ${5:# Boolean indicating whether you agree to the terms of service document}
+    new_account_key_src: ${6:# Path to a file containing the ACME account RSA or Elliptic Curve key to change to}
+    new_account_key_content: ${7:# Content of the ACME account RSA or Elliptic Curve key to change to}
+    new_account_key_passphrase: ${8:# Phassphrase to use to decode the new account key}
+    external_account_binding: ${9:# Allows to provide external account binding data during account creation}
+    account_key_src: ${10:# Path to a file containing the ACME account RSA or Elliptic Curve key}
+    account_key_content: ${11:# Content of the ACME account RSA or Elliptic Curve key}
+    account_key_passphrase: ${12:# Phassphrase to use to decode the account key}
+    account_uri: ${13:# If specified, assumes that the account URI is as given}
+    acme_version: ${14:# The ACME version of the endpoint}
+    acme_directory: ${15:# The ACME directory to use}
+    validate_certs: ${16:# Whether calls to the ACME directory will validate TLS certificates}
+    select_crypto_backend: ${17:# Determines which crypto backend to use}
+    request_timeout: ${18:# The time Ansible should wait for a response from the ACME API}
+  tags:
+    - community
+    - crypto
+    - acme_account

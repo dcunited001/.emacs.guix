@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.include_tasks
+# group: ansible.builtin
+# name: Dynamically include a task list
+# --
+- name: ${1:Dynamically include a task list}
+  ansible.builtin.include_tasks:
+    file: ${2:# Specifies the name of the file that lists tasks to add to the current playbook}
+    apply: ${3:# Accepts a hash of task keywords (e}
+    free-form: ${4:# Specifies the name of the imported file directly without any other option C(- include_tasks: file}
+  tags:
+    - include_tasks

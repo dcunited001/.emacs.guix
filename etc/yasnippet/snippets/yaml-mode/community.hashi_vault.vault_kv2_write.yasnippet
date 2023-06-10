@@ -1,0 +1,48 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.hashi_vault.vault_kv2_write
+# group: community.hashi_vault
+# name: Perform a write operation against a KVv2 secret in HashiCorp Vault
+# --
+- name: ${1:Perform a write operation against a KVv2 secret in HashiCorp Vault}
+  community.hashi_vault.vault_kv2_write:
+    engine_mount_point: ${2:# The path where the secret backend is mounted}
+    path: ${3:# Vault KVv2 path to be written to}
+    data: ${4:# KVv2 secret data to write}
+    cas: ${5:# Perform a check-and-set operation}
+    read_before_write: ${6:# Read the secret first and write only when I(data) differs from the read data}
+    url: ${7:# URL to the Vault service}
+    proxies: ${8:# URL(s) to the proxies used to access the Vault service}
+    ca_cert: ${9:# Path to certificate to use for authentication}
+    validate_certs: ${10:# Controls verification and validation of SSL certificates, mostly you only want to turn off with self signed ones}
+    namespace: ${11:# Vault namespace where secrets reside}
+    timeout: ${12:# Sets the connection timeout in seconds}
+    retries: ${13:# Allows for retrying on errors, based on the L(Retry class in the urllib3 library,https://urllib3}
+    retry_action: ${14:# Controls whether and how to show messages on I(retries)}
+    auth_method: ${15:# Authentication method to be used}
+    mount_point: ${16:# Vault mount point}
+    token: ${17:# Vault token}
+    token_path: ${18:# If no token is specified, will try to read the I(token_file) from this path}
+    token_file: ${19:# If no token is specified, will try to read the token from this file in I(token_path)}
+    token_validate: ${20:# For token auth, will perform a C(lookup-self) operation to determine the token's validity before using it}
+    username: ${21:# Authentication user name}
+    password: ${22:# Authentication password}
+    role_id: ${23:# Vault Role ID or name}
+    secret_id: ${24:# Secret ID to be used for Vault AppRole authentication}
+    jwt: ${25:# The JSON Web Token (JWT) to use for JWT authentication to Vault}
+    aws_profile: ${26:# The AWS profile}
+    aws_access_key: ${27:# The AWS access key to use}
+    aws_secret_key: ${28:# The AWS secret key that corresponds to the access key}
+    aws_security_token: ${29:# The AWS security token if using temporary access and secret keys}
+    region: ${30:# The AWS region for which to create the connection}
+    aws_iam_server_id: ${31:# If specified, sets the value to use for the C(X-Vault-AWS-IAM-Server-ID) header as part of C(GetCallerIdentity) request}
+    azure_tenant_id: ${32:# The Azure Active Directory Tenant ID (also known as the Directory ID) of the service principal}
+    azure_client_id: ${33:# The client ID (also known as application ID) of the Azure AD service principal or managed identity}
+    azure_client_secret: ${34:# The client secret of the Azure AD service principal}
+    azure_resource: ${35:# The resource URL for the application registered in Azure Active Directory}
+    cert_auth_public_key: ${36:# For C(cert) auth, path to the certificate file to authenticate with, in PEM format}
+    cert_auth_private_key: ${37:# For C(cert) auth, path to the private key file to authenticate with, in PEM format}
+  tags:
+    - community
+    - hashi_vault
+    - vault_kv2_write

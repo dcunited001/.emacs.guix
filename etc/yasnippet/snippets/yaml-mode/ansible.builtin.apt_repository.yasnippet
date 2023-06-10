@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.apt_repository
+# group: ansible.builtin
+# name: Add and remove APT repositories
+# --
+- name: ${1:Add and remove APT repositories}
+  ansible.builtin.apt_repository:
+    repo: ${2:# A source string for the repository}
+    state: ${3:# A source string state}
+    mode: ${4:# The octal mode for newly created files in sources}
+    update_cache: ${5:# Run the equivalent of C(apt-get update) when a change occurs}
+    update_cache_retries: ${6:# Amount of retries if the cache update fails}
+    update_cache_retry_max_delay: ${7:# Use an exponential backoff delay for each retry (see I(update_cache_retries)) up to this max delay in seconds}
+    validate_certs: ${8:# If C(false), SSL certificates for the target repo will not be validated}
+    filename: ${9:# Sets the name of the source list file in sources}
+    codename: ${10:# Override the distribution codename to use for PPA repositories}
+    install_python_apt: ${11:# Whether to automatically try to install the Python apt library or not, if it is not already installed}
+  tags:
+    - apt_repository

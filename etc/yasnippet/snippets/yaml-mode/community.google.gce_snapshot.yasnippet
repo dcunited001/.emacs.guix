@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_snapshot
+# group: community.google
+# name: Create or destroy snapshots for GCE storage volumes
+# --
+- name: ${1:Create or destroy snapshots for GCE storage volumes}
+  community.google.gce_snapshot:
+    instance_name: ${2:# The GCE instance to snapshot}
+    snapshot_name: ${3:# The name of the snapshot to manage}
+    disks: ${4:# A list of disks to create snapshots for}
+    state: ${5:# Whether a snapshot should be C(present) or C(absent)}
+    service_account_email: ${6:# GCP service account email for the project where the instance resides}
+    credentials_file: ${7:# The path to the credentials file associated with the service account}
+    project_id: ${8:# The GCP project ID to use}
+  tags:
+    - community
+    - google
+    - gce_snapshot

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssl_csr_info
+# group: community.crypto
+# name: Provide information of OpenSSL Certificate Signing Requests (CSR)
+# --
+- name: ${1:Provide information of OpenSSL Certificate Signing Requests (CSR)}
+  community.crypto.openssl_csr_info:
+    path: ${2:# Remote absolute path where the CSR file is loaded from}
+    content: ${3:# Content of the CSR file}
+    select_crypto_backend: ${4:# Determines which crypto backend to use}
+    name_encoding: ${5:# How to encode names (DNS names, URIs, email addresses) in return values}
+  tags:
+    - community
+    - crypto
+    - openssl_csr_info

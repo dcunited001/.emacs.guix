@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.certificate_complete_chain
+# group: community.crypto
+# name: Complete certificate chain given a set of untrusted and root certificates
+# --
+- name: ${1:Complete certificate chain given a set of untrusted and root certificates}
+  community.crypto.certificate_complete_chain:
+    input_chain: ${2:# A concatenated set of certificates in PEM format forming a chain}
+    root_certificates: ${3:# A list of filenames or directories}
+    intermediate_certificates: ${4:# A list of filenames or directories}
+  tags:
+    - community
+    - crypto
+    - certificate_complete_chain

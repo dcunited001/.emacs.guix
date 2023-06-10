@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.pip
+# group: ansible.builtin
+# name: Manages Python library dependencies
+# --
+- name: ${1:Manages Python library dependencies}
+  ansible.builtin.pip:
+    name: ${2:# The name of a Python library to install or the url(bzr+,hg+,git+,svn+) of the remote package}
+    version: ${3:# The version number to install of the Python library specified in the I(name) parameter}
+    requirements: ${4:# The path to a pip requirements file, which should be local to the remote system}
+    virtualenv: ${5:# An optional path to a I(virtualenv) directory to install into}
+    virtualenv_site_packages: ${6:# Whether the virtual environment will inherit packages from the global site-packages directory}
+    virtualenv_command: ${7:# The command or a pathname to the command to create the virtual environment with}
+    virtualenv_python: ${8:# The Python executable used for creating the virtual environment}
+    state: ${9:# The state of module}
+    extra_args: ${10:# Extra arguments passed to pip}
+    editable: ${11:# Pass the editable flag}
+    chdir: ${12:# cd into this directory before running the command}
+    executable: ${13:# The explicit executable or pathname for the pip executable, if different from the Ansible Python interpreter}
+    umask: ${14:# The system umask to apply before installing the pip package}
+  tags:
+    - pip

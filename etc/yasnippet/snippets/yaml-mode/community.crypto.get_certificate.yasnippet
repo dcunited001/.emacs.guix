@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.get_certificate
+# group: community.crypto
+# name: Get a certificate from a host:port
+# --
+- name: ${1:Get a certificate from a host:port}
+  community.crypto.get_certificate:
+    host: ${2:# The host to get the cert for (IP is fine)}
+    ca_cert: ${3:# A PEM file containing one or more root certificates; if present, the cert will be validated against these root certs}
+    port: ${4:# The port to connect to}
+    server_name: ${5:# Server name used for SNI (L(Server Name Indication,https://en}
+    proxy_host: ${6:# Proxy host used when get a certificate}
+    proxy_port: ${7:# Proxy port used when get a certificate}
+    starttls: ${8:# Requests a secure connection for protocols which require clients to initiate encryption}
+    timeout: ${9:# The timeout in seconds}
+    select_crypto_backend: ${10:# Determines which crypto backend to use}
+    ciphers: ${11:# SSL/TLS Ciphers to use for the request}
+    asn1_base64: ${12:# Whether to encode the ASN}
+  tags:
+    - community
+    - crypto
+    - get_certificate

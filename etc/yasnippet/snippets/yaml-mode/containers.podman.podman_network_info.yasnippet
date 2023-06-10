@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_network_info
+# group: containers.podman
+# name: Gather info about podman networks
+# --
+- name: ${1:Gather info about podman networks}
+  containers.podman.podman_network_info:
+    name: ${2:# Name of the network}
+    executable: ${3:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+  tags:
+    - containers
+    - podman
+    - podman_network_info

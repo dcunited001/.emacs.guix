@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_export
+# group: containers.podman
+# name: Export a podman container
+# --
+- name: ${1:Export a podman container}
+  containers.podman.podman_export:
+    dest: ${2:# Path to export container to}
+    container: ${3:# Container to export}
+    force: ${4:# Force saving to file even if it exists}
+    executable: ${5:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+  tags:
+    - containers
+    - podman
+    - podman_export

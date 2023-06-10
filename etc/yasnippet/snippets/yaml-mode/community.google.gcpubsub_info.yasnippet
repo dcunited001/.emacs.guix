@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gcpubsub_info
+# group: community.google
+# name: List Topics/Subscriptions and Messages from Google PubSub
+# --
+- name: ${1:List Topics/Subscriptions and Messages from Google PubSub}
+  community.google.gcpubsub_info:
+    topic: ${2:# GCP pubsub topic name}
+    view: ${3:# Choices are 'topics' or 'subscriptions'}
+    state: ${4:# list is the only valid option}
+    project_id: ${5:# your GCE project ID}
+    credentials_file: ${6:# path to the JSON file associated with the service account email}
+    service_account_email: ${7:# service account email}
+  tags:
+    - community
+    - google
+    - gcpubsub_info

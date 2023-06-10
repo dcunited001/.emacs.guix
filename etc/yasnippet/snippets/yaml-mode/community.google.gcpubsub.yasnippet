@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gcpubsub
+# group: community.google
+# name: Create and Delete Topics/Subscriptions, Publish and pull messages on PubSub
+# --
+- name: ${1:Create and Delete Topics/Subscriptions, Publish and pull messages on PubSub}
+  community.google.gcpubsub:
+    topic: ${2:# GCP pubsub topic name}
+    subscription: ${3:# Dictionary containing a subscription name associated with a topic (required), along with optional ack_deadline, push_endpoint and pull}
+    publish: ${4:# List of dictionaries describing messages and attributes to be published}
+    state: ${5:# State of the topic or queue}
+    project_id: ${6:# your GCE project ID}
+    credentials_file: ${7:# path to the JSON file associated with the service account email}
+    service_account_email: ${8:# service account email}
+  tags:
+    - community
+    - google
+    - gcpubsub

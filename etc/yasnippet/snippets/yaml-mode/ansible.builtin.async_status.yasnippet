@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.async_status
+# group: ansible.builtin
+# name: Obtain status of asynchronous task
+# --
+- name: ${1:Obtain status of asynchronous task}
+  ansible.builtin.async_status:
+    jid: ${2:# Job or task identifier}
+    mode: ${3:# If C(status), obtain the status}
+  tags:
+    - async_status

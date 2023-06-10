@@ -1,0 +1,41 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_region_backend_service
+# group: google.cloud
+# name: Creates a GCP RegionBackendService
+# --
+- name: ${1:Creates a GCP RegionBackendService}
+  google.cloud.gcp_compute_region_backend_service:
+    state: ${2:# Whether the given object should exist in GCP}
+    affinity_cookie_ttl_sec: ${3:# Lifetime of cookies in seconds if session_affinity is GENERATED_COOKIE}
+    backends: ${4:# The set of backends that serve this RegionBackendService}
+    circuit_breakers: ${5:# Settings controlling the volume of connections to a backend service}
+    consistent_hash: ${6:# Consistent Hash-based load balancing can be used to provide soft session affinity based on HTTP headers, cookies or other properties}
+    cdn_policy: ${7:# Cloud CDN configuration for this BackendService}
+    connection_draining: ${8:# Settings for connection draining }
+    description: ${9:# An optional description of this resource}
+    failover_policy: ${10:# Policy for failovers}
+    enable_cdn: ${11:# If true, enable Cloud CDN for this RegionBackendService}
+    health_checks: ${12:# The set of URLs to HealthCheck resources for health checking this RegionBackendService}
+    load_balancing_scheme: ${13:# Indicates what kind of load balancing this regional backend service will be used for}
+    locality_lb_policy: ${14:# The load balancing algorithm used within the scope of the locality}
+    name: ${15:# Name of the resource}
+    outlier_detection: ${16:# Settings controlling eviction of unhealthy hosts from the load balancing pool}
+    port_name: ${17:# A named port on a backend instance group representing the port for communication to the backend VMs in that group}
+    protocol: ${18:# The protocol this RegionBackendService uses to communicate with backends}
+    session_affinity: ${19:# Type of session affinity to use}
+    timeout_sec: ${20:# How many seconds to wait for the backend before considering it a failed request}
+    log_config: ${21:# This field denotes the logging options for the load balancer traffic served by this backend service}
+    network: ${22:# The URL of the network to which this backend service belongs}
+    region: ${23:# A reference to the region where the regional backend service resides}
+    project: ${24:# The Google Cloud Platform project to use}
+    auth_kind: ${25:# The type of credential used}
+    service_account_contents: ${26:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${27:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${28:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${29:# Array of scopes to be used}
+    env_type: ${30:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_region_backend_service

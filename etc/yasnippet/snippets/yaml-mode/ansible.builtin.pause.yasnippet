@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.pause
+# group: ansible.builtin
+# name: Pause playbook execution
+# --
+- name: ${1:Pause playbook execution}
+  ansible.builtin.pause:
+    minutes: ${2:# A positive number of minutes to pause for}
+    seconds: ${3:# A positive number of seconds to pause for}
+    prompt: ${4:# Optional text to use for the prompt message}
+    echo: ${5:# Controls whether or not keyboard input is shown when typing}
+  tags:
+    - pause

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.dpkg_selections
+# group: ansible.builtin
+# name: Dpkg package selection selections
+# --
+- name: ${1:Dpkg package selection selections}
+  ansible.builtin.dpkg_selections:
+    name: ${2:# Name of the package}
+    selection: ${3:# The selection state to set the package to}
+  tags:
+    - dpkg_selections

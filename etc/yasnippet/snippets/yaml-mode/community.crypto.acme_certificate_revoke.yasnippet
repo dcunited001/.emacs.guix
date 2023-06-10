@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.acme_certificate_revoke
+# group: community.crypto
+# name: Revoke certificates with the ACME protocol
+# --
+- name: ${1:Revoke certificates with the ACME protocol}
+  community.crypto.acme_certificate_revoke:
+    certificate: ${2:# Path to the certificate to revoke}
+    account_key_src: ${3:# Path to a file containing the ACME account RSA or Elliptic Curve key}
+    account_key_content: ${4:# Content of the ACME account RSA or Elliptic Curve key}
+    private_key_src: ${5:# Path to the certificate's private key}
+    private_key_content: ${6:# Content of the certificate's private key}
+    private_key_passphrase: ${7:# Phassphrase to use to decode the certificate's private key}
+    revoke_reason: ${8:# One of the revocation reasonCodes defined in L(Section 5}
+    account_key_passphrase: ${9:# Phassphrase to use to decode the account key}
+    account_uri: ${10:# If specified, assumes that the account URI is as given}
+    acme_version: ${11:# The ACME version of the endpoint}
+    acme_directory: ${12:# The ACME directory to use}
+    validate_certs: ${13:# Whether calls to the ACME directory will validate TLS certificates}
+    select_crypto_backend: ${14:# Determines which crypto backend to use}
+    request_timeout: ${15:# The time Ansible should wait for a response from the ACME API}
+  tags:
+    - community
+    - crypto
+    - acme_certificate_revoke

@@ -1,0 +1,37 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.acme_certificate
+# group: community.crypto
+# name: Create SSL/TLS certificates with the ACME protocol
+# --
+- name: ${1:Create SSL/TLS certificates with the ACME protocol}
+  community.crypto.acme_certificate:
+    account_email: ${2:# The email address associated with this account}
+    agreement: ${3:# URI to a terms of service document you agree to when using the ACME v1 service at C(acme_directory)}
+    terms_agreed: ${4:# Boolean indicating whether you agree to the terms of service document}
+    modify_account: ${5:# Boolean indicating whether the module should create the account if necessary, and update its contact data}
+    challenge: ${6:# The challenge to be performed}
+    csr: ${7:# File containing the CSR for the new certificate}
+    csr_content: ${8:# Content of the CSR for the new certificate}
+    data: ${9:# The data to validate ongoing challenges}
+    dest: ${10:# The destination file for the certificate}
+    fullchain_dest: ${11:# The destination file for the full chain (that is, a certificate followed by chain of intermediate certificates)}
+    chain_dest: ${12:# If specified, the intermediate certificate will be written to this file}
+    remaining_days: ${13:# The number of days the certificate must have left being valid}
+    deactivate_authzs: ${14:# Deactivate authentication objects (authz) after issuing a certificate, or when issuing the certificate failed}
+    force: ${15:# Enforces the execution of the challenge and validation, even if an existing certificate is still valid for more than C(remaining_days)}
+    retrieve_all_alternates: ${16:# When set to C(true), will retrieve all alternate trust chains offered by the ACME CA}
+    select_chain: ${17:# Allows to specify criteria by which an (alternate) trust chain can be selected}
+    account_key_src: ${18:# Path to a file containing the ACME account RSA or Elliptic Curve key}
+    account_key_content: ${19:# Content of the ACME account RSA or Elliptic Curve key}
+    account_key_passphrase: ${20:# Phassphrase to use to decode the account key}
+    account_uri: ${21:# If specified, assumes that the account URI is as given}
+    acme_version: ${22:# The ACME version of the endpoint}
+    acme_directory: ${23:# The ACME directory to use}
+    validate_certs: ${24:# Whether calls to the ACME directory will validate TLS certificates}
+    select_crypto_backend: ${25:# Determines which crypto backend to use}
+    request_timeout: ${26:# The time Ansible should wait for a response from the ACME API}
+  tags:
+    - community
+    - crypto
+    - acme_certificate

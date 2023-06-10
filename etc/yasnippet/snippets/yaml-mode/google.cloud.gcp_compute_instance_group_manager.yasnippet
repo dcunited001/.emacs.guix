@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_instance_group_manager
+# group: google.cloud
+# name: Creates a GCP InstanceGroupManager
+# --
+- name: ${1:Creates a GCP InstanceGroupManager}
+  google.cloud.gcp_compute_instance_group_manager:
+    state: ${2:# Whether the given object should exist in GCP}
+    base_instance_name: ${3:# The base instance name to use for instances in this group}
+    description: ${4:# An optional description of this resource}
+    instance_template: ${5:# The instance template that is specified for this managed instance group}
+    name: ${6:# The name of the managed instance group}
+    named_ports: ${7:# Named ports configured for the Instance Groups complementary to this Instance Group Manager}
+    target_pools: ${8:# TargetPool resources to which instances in the instanceGroup field are added}
+    target_size: ${9:# The target number of running instances for this managed instance group}
+    zone: ${10:# The zone the managed instance group resides}
+    project: ${11:# The Google Cloud Platform project to use}
+    auth_kind: ${12:# The type of credential used}
+    service_account_contents: ${13:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${14:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${15:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${16:# Array of scopes to be used}
+    env_type: ${17:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_instance_group_manager

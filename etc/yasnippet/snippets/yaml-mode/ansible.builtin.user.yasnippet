@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.user
+# group: ansible.builtin
+# name: Manage user accounts
+# --
+- name: ${1:Manage user accounts}
+  ansible.builtin.user:
+    name: ${2:# Name of the user to create, remove or modify}
+    uid: ${3:# Optionally sets the I(UID) of the user}
+    comment: ${4:# Optionally sets the description (aka I(GECOS)) of user account}
+    hidden: ${5:# macOS only, optionally hide the user from the login window and system preferences}
+    non_unique: ${6:# Optionally when used with the -u option, this option allows to change the user ID to a non-unique value}
+    seuser: ${7:# Optionally sets the seuser type (user_u) on selinux enabled systems}
+    group: ${8:# Optionally sets the user's primary group (takes a group name)}
+    groups: ${9:# List of groups user will be added to}
+    append: ${10:# If C(true), add the user to the groups specified in C(groups)}
+    shell: ${11:# Optionally set the user's shell}
+    home: ${12:# Optionally set the user's home directory}
+    skeleton: ${13:# Optionally set a home skeleton directory}
+    password: ${14:# If provided, set the user's password to the provided encrypted hash (Linux) or plain text password (macOS)}
+    state: ${15:# Whether the account should exist or not, taking action if the state is different from what is stated}
+    create_home: ${16:# Unless set to C(false), a home directory will be made for the user when the account is created or if the home directory does not exist}
+    move_home: ${17:# If set to C(true) when used with C(home: ), attempt to move the user's old home directory to the specified directory if it isn't there already and the old home exists}
+    system: ${18:# When creating an account C(state=present), setting this to C(true) makes the user a system account}
+    force: ${19:# This only affects C(state=absent), it forces removal of the user and associated directories on supported platforms}
+    remove: ${20:# This only affects C(state=absent), it attempts to remove directories associated with the user}
+    login_class: ${21:# Optionally sets the user's login class, a feature of most BSD OSs}
+    generate_ssh_key: ${22:# Whether to generate a SSH key for the user in question}
+    ssh_key_bits: ${23:# Optionally specify number of bits in SSH key to create}
+    ssh_key_type: ${24:# Optionally specify the type of SSH key to generate}
+    ssh_key_file: ${25:# Optionally specify the SSH key filename}
+    ssh_key_comment: ${26:# Optionally define the comment for the SSH key}
+    ssh_key_passphrase: ${27:# Set a passphrase for the SSH key}
+    update_password: ${28:# C(always) will update passwords if they differ}
+    expires: ${29:# An expiry time for the user in epoch, it will be ignored on platforms that do not support this}
+    password_lock: ${30:# Lock the password (C(usermod -L), C(usermod -U), C(pw lock))}
+    local: ${31:# Forces the use of 'local' command alternatives on platforms that implement it}
+    profile: ${32:# Sets the profile of the user}
+    authorization: ${33:# Sets the authorization of the user}
+    role: ${34:# Sets the role of the user}
+    password_expire_max: ${35:# Maximum number of days between password change}
+    password_expire_min: ${36:# Minimum number of days between password change}
+    umask: ${37:# Sets the umask of the user}
+  tags:
+    - user

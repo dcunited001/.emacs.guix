@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.sysvinit
+# group: ansible.builtin
+# name: Manage SysV services
+# --
+- name: ${1:Manage SysV services}
+  ansible.builtin.sysvinit:
+    name: ${2:# Name of the service}
+    state: ${3:# C(started)/C(stopped) are idempotent actions that will not run commands unless necessary}
+    enabled: ${4:# Whether the service should start on boot}
+    sleep: ${5:# If the service is being C(restarted) or C(reloaded) then sleep this many seconds between the stop and start command}
+    pattern: ${6:# A substring to look for as would be found in the output of the I(ps) command as a stand-in for a status result}
+    runlevels: ${7:# The runlevels this script should be enabled/disabled from}
+    arguments: ${8:# Additional arguments provided on the command line that some init scripts accept}
+    daemonize: ${9:# Have the module daemonize as the service itself might not do so properly}
+  tags:
+    - sysvinit

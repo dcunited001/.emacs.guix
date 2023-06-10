@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_alias
+# group: pfsensible.core
+# name: Manage pfSense aliases
+# --
+- name: ${1:Manage pfSense aliases}
+  pfsensible.core.pfsense_alias:
+    name: ${2:# The name of the alias}
+    state: ${3:# State in which to leave the alias}
+    type: ${4:# The type of the alias}
+    address: ${5:# The address of the alias}
+    descr: ${6:# The description of the alias}
+    detail: ${7:# The descriptions of the items}
+    updatefreq: ${8:# Update frequency in days for urltable}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_alias

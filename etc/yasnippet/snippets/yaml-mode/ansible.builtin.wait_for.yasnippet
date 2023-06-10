@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.wait_for
+# group: ansible.builtin
+# name: Waits for a condition before continuing
+# --
+- name: ${1:Waits for a condition before continuing}
+  ansible.builtin.wait_for:
+    host: ${2:# A resolvable hostname or IP address to wait for}
+    timeout: ${3:# Maximum number of seconds to wait for, when used with another condition it will force an error}
+    connect_timeout: ${4:# Maximum number of seconds to wait for a connection to happen before closing and retrying}
+    delay: ${5:# Number of seconds to wait before starting to poll}
+    port: ${6:# Port number to poll}
+    active_connection_states: ${7:# The list of TCP connection states which are counted as active connections}
+    state: ${8:# Either C(present), C(started), or C(stopped), C(absent), or C(drained)}
+    path: ${9:# Path to a file on the filesystem that must exist before continuing}
+    search_regex: ${10:# Can be used to match a string in either a file or a socket connection}
+    exclude_hosts: ${11:# List of hosts or IPs to ignore when looking for active TCP connections for C(drained) state}
+    sleep: ${12:# Number of seconds to sleep between checks}
+    msg: ${13:# This overrides the normal error message from a failure to meet the required conditions}
+  tags:
+    - wait_for

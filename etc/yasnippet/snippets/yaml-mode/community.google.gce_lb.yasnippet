@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_lb
+# group: community.google
+# name: create/destroy GCE load-balancer resources
+# --
+- name: ${1:create/destroy GCE load-balancer resources}
+  community.google.gce_lb:
+    httphealthcheck_name: ${2:# the name identifier for the HTTP health check}
+    httphealthcheck_port: ${3:# the TCP port to use for HTTP health checking}
+    httphealthcheck_path: ${4:# the url path to use for HTTP health checking}
+    httphealthcheck_interval: ${5:# the duration in seconds between each health check request}
+    httphealthcheck_timeout: ${6:# the timeout in seconds before a request is considered a failed check}
+    httphealthcheck_unhealthy_count: ${7:# number of consecutive failed checks before marking a node unhealthy}
+    httphealthcheck_healthy_count: ${8:# number of consecutive successful checks before marking a node healthy}
+    httphealthcheck_host: ${9:# host header to pass through on HTTP check requests}
+    name: ${10:# name of the load-balancer resource}
+    protocol: ${11:# the protocol used for the load-balancer packet forwarding, tcp or udp}
+    region: ${12:# the GCE region where the load-balancer is defined}
+    external_ip: ${13:# the external static IPv4 (or auto-assigned) address for the LB}
+    port_range: ${14:# the port (range) to forward, e}
+    members: ${15:# a list of zone/nodename pairs, e}
+    state: ${16:# desired state of the LB}
+    service_account_email: ${17:# service account email}
+    pem_file: ${18:# path to the pem file associated with the service account email This option is deprecated}
+    credentials_file: ${19:# path to the JSON file associated with the service account email}
+    project_id: ${20:# your GCE project ID}
+  tags:
+    - community
+    - google
+    - gce_lb

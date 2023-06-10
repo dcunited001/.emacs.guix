@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.stat
+# group: ansible.builtin
+# name: Retrieve file or file system status
+# --
+- name: ${1:Retrieve file or file system status}
+  ansible.builtin.stat:
+    path: ${2:# The full path of the file/object to get the facts of}
+    follow: ${3:# Whether to follow symlinks}
+    get_checksum: ${4:# Whether to return a checksum of the file}
+    checksum_algorithm: ${5:# Algorithm to determine checksum of file}
+    get_mime: ${6:# Use file magic and return data about the nature of the file}
+    get_attributes: ${7:# Get file attributes using lsattr tool if present}
+  tags:
+    - stat

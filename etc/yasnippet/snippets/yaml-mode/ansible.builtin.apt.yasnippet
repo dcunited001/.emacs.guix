@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.apt
+# group: ansible.builtin
+# name: Manages apt-packages
+# --
+- name: ${1:Manages apt-packages}
+  ansible.builtin.apt:
+    name: ${2:# A list of package names, like C(foo), or package specifier with version, like C(foo=1}
+    state: ${3:# Indicates the desired package state}
+    update_cache: ${4:# Run the equivalent of C(apt-get update) before the operation}
+    update_cache_retries: ${5:# Amount of retries if the cache update fails}
+    update_cache_retry_max_delay: ${6:# Use an exponential backoff delay for each retry (see I(update_cache_retries)) up to this max delay in seconds}
+    cache_valid_time: ${7:# Update the apt cache if it is older than the I(cache_valid_time)}
+    purge: ${8:# Will force purging of configuration files if the module state is set to I(absent)}
+    default_release: ${9:# Corresponds to the C(-t) option for I(apt) and sets pin priorities}
+    install_recommends: ${10:# Corresponds to the C(--no-install-recommends) option for I(apt)}
+    force: ${11:# Corresponds to the C(--force-yes) to I(apt-get) and implies C(allow_unauthenticated: yes) and C(allow_downgrade: yes)}
+    clean: ${12:# Run the equivalent of C(apt-get clean) to clear out the local repository of retrieved package files}
+    allow_unauthenticated: ${13:# Ignore if packages cannot be authenticated}
+    allow_downgrade: ${14:# Corresponds to the C(--allow-downgrades) option for I(apt)}
+    allow_change_held_packages: ${15:# Allows changing the version of a package which is on the apt hold list}
+    upgrade: ${16:# If yes or safe, performs an aptitude safe-upgrade}
+    dpkg_options: ${17:# Add dpkg options to apt command}
+    deb: ${18:# Path to a }
+    autoremove: ${19:# If C(true), remove unused dependency packages for all module states except I(build-dep)}
+    autoclean: ${20:# If C(true), cleans the local repository of retrieved package files that can no longer be downloaded}
+    policy_rc_d: ${21:# Force the exit code of /usr/sbin/policy-rc}
+    only_upgrade: ${22:# Only upgrade a package if it is already installed}
+    fail_on_autoremove: ${23:# Corresponds to the C(--no-remove) option for C(apt)}
+    force_apt_get: ${24:# Force usage of apt-get instead of aptitude}
+    lock_timeout: ${25:# How many seconds will this action wait to acquire a lock on the apt db}
+  tags:
+    - apt

@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_play
+# group: containers.podman
+# name: Play kubernetes YAML file using podman
+# --
+- name: ${1:Play kubernetes YAML file using podman}
+  containers.podman.podman_play:
+    executable: ${2:# Name of executable to run, by default 'podman'}
+    kube_file: ${3:# Path to file with YAML configuration for a Pod}
+    authfile: ${4:# Path of the authentication file}
+    cert_dir: ${5:# Use certificates at path (*}
+    configmap: ${6:# Use Kubernetes configmap YAML at path to provide a source for environment variable values within the containers of the pod}
+    seccomp_profile_root: ${7:# Directory path for seccomp profiles (default is '/var/lib/kubelet/seccomp')}
+    username: ${8:# The username and password to use to authenticate with the registry if required}
+    password: ${9:# The username and password to use to authenticate with the registry if required}
+    log_driver: ${10:# Set logging driver for all created containers}
+    log_level: ${11:# Set logging level for podman calls}
+    network: ${12:# List of the names of CNI networks the pod should join}
+    state: ${13:# Start the pod after creating it, or to leave it created only}
+    tls_verify: ${14:# Require HTTPS and verify certificates when contacting registries (default is true)}
+    debug: ${15:# Enable debug for the module}
+    recreate: ${16:# If pod already exists, delete it and run the new one}
+    quiet: ${17:# Hide image pulls logs from output}
+  tags:
+    - containers
+    - podman
+    - podman_play

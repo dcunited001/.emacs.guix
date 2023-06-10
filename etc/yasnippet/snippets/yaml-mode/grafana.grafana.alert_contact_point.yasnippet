@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: grafana.grafana.alert_contact_point
+# group: grafana.grafana
+# name: Manage Alerting Contact points in Grafana Cloud
+# --
+- name: ${1:Manage Alerting Contact points in Grafana Cloud}
+  grafana.grafana.alert_contact_point:
+    name: ${2:# Sets the name of the contact point}
+    uid: ${3:# Sets the UID of the Contact point}
+    type: ${4:# Sets Contact point type}
+    settings: ${5:# Sets Contact point settings}
+    disableResolveMessage: ${6:# When set to C(true), Disables the resolve message [OK] that is sent when alerting state returns to C(false)}
+    grafana_api_key: ${7:# Grafana API Key used to authenticate with Grafana}
+    stack_slug: ${8:# Name of the Grafana Cloud stack to which the contact points will be added}
+    state: ${9:# State for the Grafana Cloud stack}
+  tags:
+    - grafana
+    - grafana
+    - alert_contact_point

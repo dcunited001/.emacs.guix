@@ -1,0 +1,49 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.uri
+# group: ansible.builtin
+# name: Interacts with webservices
+# --
+- name: ${1:Interacts with webservices}
+  ansible.builtin.uri:
+    ciphers: ${2:# SSL/TLS Ciphers to use for the request}
+    decompress: ${3:# Whether to attempt to decompress gzip content-encoded responses}
+    url: ${4:# HTTP or HTTPS URL in the form (http|https)://host}
+    dest: ${5:# A path of where to download the file to (if desired)}
+    url_username: ${6:# A username for the module to use for Digest, Basic or WSSE authentication}
+    url_password: ${7:# A password for the module to use for Digest, Basic or WSSE authentication}
+    body: ${8:# The body of the http request/response to the web service}
+    body_format: ${9:# The serialization format of the body}
+    method: ${10:# The HTTP method of the request or response}
+    return_content: ${11:# Whether or not to return the body of the response as a 'content' key in the dictionary result no matter it succeeded or failed}
+    force_basic_auth: ${12:# Force the sending of the Basic authentication header upon initial request}
+    follow_redirects: ${13:# Whether or not the URI module should follow redirects}
+    creates: ${14:# A filename, when it already exists, this step will not be run}
+    removes: ${15:# A filename, when it does not exist, this step will not be run}
+    status_code: ${16:# A list of valid, numeric, HTTP status codes that signifies success of the request}
+    timeout: ${17:# The socket level timeout in seconds}
+    headers: ${18:# Add custom HTTP headers to a request in the format of a YAML hash}
+    validate_certs: ${19:# If C(false), SSL certificates will not be validated}
+    client_cert: ${20:# PEM formatted certificate chain file to be used for SSL client authentication}
+    client_key: ${21:# PEM formatted file that contains your private key to be used for SSL client authentication}
+    ca_path: ${22:# PEM formatted file that contains a CA certificate to be used for validation}
+    src: ${23:# Path to file to be submitted to the remote server}
+    remote_src: ${24:# If C(false), the module will search for the C(src) on the controller node}
+    force: ${25:# If C(true) do not get a cached copy}
+    use_proxy: ${26:# If C(false), it will not use a proxy, even if one is defined in an environment variable on the target hosts}
+    unix_socket: ${27:# Path to Unix domain socket to use for connection}
+    http_agent: ${28:# Header to identify as, generally appears in web server logs}
+    unredirected_headers: ${29:# A list of header names that will not be sent on subsequent redirected requests}
+    use_gssapi: ${30:# Use GSSAPI to perform the authentication, typically this is for Kerberos or Kerberos through Negotiate authentication}
+    use_netrc: ${31:# Determining whether to use credentials from ``~/}
+    mode: ${32:# The permissions the resulting filesystem object should have}
+    owner: ${33:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${34:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${35:# The user part of the SELinux filesystem object context}
+    serole: ${36:# The role part of the SELinux filesystem object context}
+    setype: ${37:# The type part of the SELinux filesystem object context}
+    selevel: ${38:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${39:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${40:# The attributes the resulting filesystem object should have}
+  tags:
+    - uri

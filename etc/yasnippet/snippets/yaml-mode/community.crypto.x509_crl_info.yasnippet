@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.x509_crl_info
+# group: community.crypto
+# name: Retrieve information on Certificate Revocation Lists (CRLs)
+# --
+- name: ${1:Retrieve information on Certificate Revocation Lists (CRLs)}
+  community.crypto.x509_crl_info:
+    path: ${2:# Remote absolute path where the generated CRL file should be created or is already located}
+    content: ${3:# Content of the X}
+    list_revoked_certificates: ${4:# If set to C(false), the list of revoked certificates is not included in the result}
+    name_encoding: ${5:# How to encode names (DNS names, URIs, email addresses) in return values}
+  tags:
+    - community
+    - crypto
+    - x509_crl_info

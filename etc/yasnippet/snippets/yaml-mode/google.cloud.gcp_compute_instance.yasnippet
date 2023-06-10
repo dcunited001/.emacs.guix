@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_instance
+# group: google.cloud
+# name: Creates a GCP Instance
+# --
+- name: ${1:Creates a GCP Instance}
+  google.cloud.gcp_compute_instance:
+    state: ${2:# Whether the given object should exist in GCP}
+    can_ip_forward: ${3:# Allows this instance to send and receive packets with non-matching destination or source IPs}
+    deletion_protection: ${4:# Whether the resource should be protected against deletion}
+    disks: ${5:# An array of disks that are associated with the instances that are created from this template}
+    guest_accelerators: ${6:# List of the type and count of accelerator cards attached to the instance }
+    hostname: ${7:# The hostname of the instance to be created}
+    labels: ${8:# Labels to apply to this instance}
+    metadata: ${9:# The metadata key/value pairs to assign to instances that are created from this template}
+    machine_type: ${10:# A reference to a machine type which defines VM kind}
+    min_cpu_platform: ${11:# Specifies a minimum CPU platform for the VM instance}
+    name: ${12:# The name of the resource, provided by the client when initially creating the resource}
+    network_interfaces: ${13:# An array of configurations for this interface}
+    scheduling: ${14:# Sets the scheduling options for this instance}
+    service_accounts: ${15:# A list of service accounts, with their specified scopes, authorized for this instance}
+    shielded_instance_config: ${16:# Configuration for various parameters related to shielded instances}
+    confidential_instance_config: ${17:# Configuration for confidential computing (requires setting the machine type to any of the n2d-* types and a boot disk of type pd-ssd)}
+    status: ${18:# The status of the instance}
+    tags: ${19:# A list of tags to apply to this instance}
+    zone: ${20:# A reference to the zone where the machine resides}
+    project: ${21:# The Google Cloud Platform project to use}
+    auth_kind: ${22:# The type of credential used}
+    service_account_contents: ${23:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${24:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${25:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${26:# Array of scopes to be used}
+    env_type: ${27:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_instance

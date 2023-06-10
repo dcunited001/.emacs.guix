@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_group
+# group: pfsensible.core
+# name: Manage pfSense user groups
+# --
+- name: ${1:Manage pfSense user groups}
+  pfsensible.core.pfsense_group:
+    name: ${2:# The name of the group}
+    state: ${3:# State in which to leave the group}
+    descr: ${4:# Description of the group}
+    scope: ${5:# Scope of the group}
+    gid: ${6:# GID of the group}
+    priv: ${7:# A list of privileges to assign}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_group

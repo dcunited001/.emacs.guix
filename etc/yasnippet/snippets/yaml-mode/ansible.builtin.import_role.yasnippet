@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.import_role
+# group: ansible.builtin
+# name: Import a role into a play
+# --
+- name: ${1:Import a role into a play}
+  ansible.builtin.import_role:
+    name: ${2:# The name of the role to be executed}
+    tasks_from: ${3:# File to load from a role's C(tasks/) directory}
+    vars_from: ${4:# File to load from a role's C(vars/) directory}
+    defaults_from: ${5:# File to load from a role's C(defaults/) directory}
+    allow_duplicates: ${6:# Overrides the role's metadata setting to allow using a role more than once with the same parameters}
+    handlers_from: ${7:# File to load from a role's C(handlers/) directory}
+    rolespec_validate: ${8:# Perform role argument spec validation if an argument spec is defined}
+  tags:
+    - import_role

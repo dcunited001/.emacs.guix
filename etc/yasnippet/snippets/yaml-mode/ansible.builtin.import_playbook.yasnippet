@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.import_playbook
+# group: ansible.builtin
+# name: Import a playbook
+# --
+- name: ${1:Import a playbook}
+  ansible.builtin.import_playbook:
+    free-form: ${2:# The name of the imported playbook is specified directly without any other option}
+  tags:
+    - import_playbook

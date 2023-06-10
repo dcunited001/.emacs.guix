@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_mlengine_version
+# group: google.cloud
+# name: Creates a GCP Version
+# --
+- name: ${1:Creates a GCP Version}
+  google.cloud.gcp_mlengine_version:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# The name specified for the version when it was created}
+    description: ${4:# The description specified for the version when it was created}
+    deployment_uri: ${5:# The Cloud Storage location of the trained model used to create the version}
+    runtime_version: ${6:# The AI Platform runtime version to use for this deployment}
+    machine_type: ${7:# The type of machine on which to serve the model}
+    labels: ${8:# One or more labels that you can add, to organize your model versions}
+    framework: ${9:# The machine learning framework AI Platform uses to train this version of the model}
+    python_version: ${10:# The version of Python used in prediction}
+    service_account: ${11:# Specifies the service account for resource access control}
+    auto_scaling: ${12:# Automatically scale the number of nodes used to serve the model in response to increases and decreases in traffic}
+    manual_scaling: ${13:# Manually select the number of nodes to use for serving the model}
+    prediction_class: ${14:# The fully qualified name (module_name}
+    model: ${15:# The model that this version belongs to}
+    is_default: ${16:# If true, this version will be used to handle prediction requests that do not specify a version}
+    project: ${17:# The Google Cloud Platform project to use}
+    auth_kind: ${18:# The type of credential used}
+    service_account_contents: ${19:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${20:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${21:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${22:# Array of scopes to be used}
+    env_type: ${23:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_mlengine_version

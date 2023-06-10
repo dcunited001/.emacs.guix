@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_network_endpoint_group
+# group: google.cloud
+# name: Creates a GCP NetworkEndpointGroup
+# --
+- name: ${1:Creates a GCP NetworkEndpointGroup}
+  google.cloud.gcp_compute_network_endpoint_group:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# Name of the resource; provided by the client when the resource is created}
+    description: ${4:# An optional description of this resource}
+    network_endpoint_type: ${5:# Type of network endpoints in this network endpoint group}
+    network: ${6:# The network to which all network endpoints in the NEG belong}
+    subnetwork: ${7:# Optional subnetwork to which all network endpoints in the NEG belong}
+    default_port: ${8:# The default port used if the port number is not specified in the network endpoint}
+    zone: ${9:# Zone where the network endpoint group is located}
+    project: ${10:# The Google Cloud Platform project to use}
+    auth_kind: ${11:# The type of credential used}
+    service_account_contents: ${12:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${13:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${14:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${15:# Array of scopes to be used}
+    env_type: ${16:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_network_endpoint_group

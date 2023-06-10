@@ -1,0 +1,44 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_dhcp_static
+# group: pfsensible.core
+# name: Manage pfSense DHCP static mapping
+# --
+- name: ${1:Manage pfSense DHCP static mapping}
+  pfsensible.core.pfsense_dhcp_static:
+    name: ${2:# The client name identifier}
+    netif: ${3:# The network interface}
+    macaddr: ${4:# The mac address}
+    ipaddr: ${5:# The IP address}
+    hostname: ${6:# The hostname}
+    descr: ${7:# The description}
+    filename: ${8:# The filename}
+    rootpath: ${9:# The roothpath}
+    defaultleasetime: ${10:# the default lease time}
+    maxleasetime: ${11:# The max lease time}
+    gateway: ${12:# The gateway}
+    domain: ${13:# The domain}
+    winsserver: ${14:# The WINS server}
+    dnsserver: ${15:# The dns server}
+    ntpserver: ${16:# The ntpserver}
+    domainsearchlist: ${17:# The domain search list servers}
+    ddnsdomain: ${18:# The ddns domain}
+    ddnsdomainprimary: ${19:# The ddns primary domain}
+    ddnsdomainsecondary: ${20:# The ddns secondary domain}
+    ddnsdomainkeyname: ${21:# The ddns domain key name}
+    ddnsdomainkeyalgorithm: ${22:# The ddns key algorithm}
+    ddnsdomainkey: ${23:# The ddns domain key}
+    tftp: ${24:# The TFTP server}
+    ldap: ${25:# The ldap server}
+    nextserver: ${26:# The next server}
+    filename32: ${27:# The filename for 32bits}
+    filename64: ${28:# The filename for 64bits}
+    filename32arm: ${29:# The filename for 32arm}
+    filename64arm: ${30:# The filename for 64arm}
+    uefihttpboot: ${31:# UEFI HTTPBoot URL}
+    numberoptions: ${32:# The number options}
+    state: ${33:# State in which to leave the configuration}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_dhcp_static

@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_generate_systemd
+# group: containers.podman
+# name: Generate systemd unit from a pod or a container
+# --
+- name: ${1:Generate systemd unit from a pod or a container}
+  containers.podman.podman_generate_systemd:
+    name: ${2:# Name of the pod or container to export}
+    dest: ${3:# Destination of the generated systemd unit file(s)}
+    new: ${4:# Generate unit files that create containers and pods, not only start them}
+    restart_policy: ${5:# Restart policy of the service}
+    restart_sec: ${6:# Configures the time to sleep before restarting a service (as configured with restart-policy)}
+    start_timeout: ${7:# Override the default start timeout for the container with the given value in seconds}
+    stop_timeout: ${8:# Override the default stop timeout for the container with the given value in seconds}
+    env: ${9:# Set environment variables to the systemd unit files}
+    use_names: ${10:# Use name of the containers for the start, stop, and description in the unit file}
+    container_prefix: ${11:# Set the systemd unit name prefix for containers}
+    pod_prefix: ${12:# Set the systemd unit name prefix for pods}
+    separator: ${13:# Systemd unit name separator between the name/id of a container/pod and the prefix}
+    no_header: ${14:# Do not generate the header including meta data such as the Podman version and the timestamp}
+    after: ${15:# Add the systemd unit after (C(After=)) option, that ordering dependencies between the list of dependencies and this service}
+    wants: ${16:# Add the systemd unit wants (C(Wants=)) option, that this service is (weak) dependent on}
+    requires: ${17:# Set the systemd unit requires (Requires=) option}
+    executable: ${18:# C(Podman) executable name or full path}
+  tags:
+    - containers
+    - podman
+    - podman_generate_systemd

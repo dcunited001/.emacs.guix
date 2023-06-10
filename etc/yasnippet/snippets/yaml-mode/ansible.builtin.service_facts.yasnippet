@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.service_facts
+# group: ansible.builtin
+# name: Return service state information as fact data
+# --
+- name: ${1:Return service state information as fact data}
+  ansible.builtin.service_facts:
+  tags:
+    - service_facts

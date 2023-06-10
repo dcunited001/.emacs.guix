@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_mig
+# group: community.google
+# name: Create, Update or Destroy a Managed Instance Group (MIG)
+# --
+- name: ${1:Create, Update or Destroy a Managed Instance Group (MIG)}
+  community.google.gce_mig:
+    name: ${2:# Name of the Managed Instance Group}
+    template: ${3:# Instance Template to be used in creating the VMs}
+    size: ${4:# Size of Managed Instance Group}
+    service_account_email: ${5:# service account email}
+    service_account_permissions: ${6:# service account permissions}
+    pem_file: ${7:# path to the pem file associated with the service account email This option is deprecated}
+    credentials_file: ${8:# Path to the JSON file associated with the service account email}
+    project_id: ${9:# GCE project ID}
+    state: ${10:# desired state of the resource}
+    zone: ${11:# The GCE zone to use for this Managed Instance Group}
+    autoscaling: ${12:# A dictionary of configuration for the autoscaler}
+    named_ports: ${13:# Define named ports that backend services can forward data to}
+    recreate_instances: ${14:# Recreate MIG instances}
+  tags:
+    - community
+    - google
+    - gce_mig

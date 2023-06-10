@@ -1,0 +1,40 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_setup
+# group: pfsensible.core
+# name: Manage pfSense general setup
+# --
+- name: ${1:Manage pfSense general setup}
+  pfsensible.core.pfsense_setup:
+    hostname: ${2:# Hostname of the firewall host, without domain part}
+    domain: ${3:# Domain name of the firewall host}
+    dns_addresses: ${4:# DNS IP addresses, separated by space}
+    dns_hostnames: ${5:# DNS hostnames, separated by space}
+    dns_gateways: ${6:# DNS gateways, separated by space}
+    dnsallowoverride: ${7:# Allow DNS server list to be overridden by DHCP/PPP on WAN}
+    dnslocalhost: ${8:# Do not use the DNS Forwarder/DNS Resolver as a DNS server for the firewall}
+    timezone: ${9:# Select a geographic region name (Continent/Location) to determine the timezone for the firewall}
+    timeservers: ${10:# Time servers, separated by space}
+    language: ${11:# Language for the webConfigurator}
+    webguicss: ${12:# Choose an alternative css file (if installed) to change the appearance of the webConfigurator}
+    webguifixedmenu: ${13:# When enabled, menu remains visible at top of page}
+    webguihostnamemenu: ${14:# Replaces the Help menu title in the Navbar with the system hostname or FQDN}
+    session_timeout: ${15:# Time in minutes to expire idle management sessions (0 means no expiration)}
+    authmode: ${16:# Authentication Server ('Local Database' means local), use name of configured ldap or radius server}
+    shellauth: ${17:# Use Authentication Server for Shell Authentication (pfsense-CE >=2}
+    dashboardcolumns: ${18:# Dashboard columns}
+    interfacessort: ${19:# If selected, lists of interfaces will be sorted by description, otherwise they are listed wan,lan,optn}
+    dashboardavailablewidgetspanel: ${20:# Show the Available Widgets panel on the Dashboard}
+    systemlogsfilterpanel: ${21:# Show the Log Filter panel in System Logs}
+    systemlogsmanagelogpanel: ${22:# Show the Manage Log panel in System Logs}
+    statusmonitoringsettingspanel: ${23:# Show the Settings panel in Status Monitoring}
+    requirestatefilter: ${24:# This option requires a filter to be entered before the states are displayed}
+    webguileftcolumnhyper: ${25:# If selected, clicking a label in the left column will select/toggle the first item of the group}
+    disablealiaspopupdetail: ${26:# If selected, the details in alias popups will not be shown, just the alias description (e}
+    roworderdragging: ${27:# Disables dragging rows to allow selecting and copying row contents and avoid accidental changes}
+    logincss: ${28:# Color for the login page}
+    loginshowhost: ${29:# Show hostname on login banner}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_setup

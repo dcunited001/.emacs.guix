@@ -1,0 +1,64 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.x509_certificate
+# group: community.crypto
+# name: Generate and/or check OpenSSL certificates
+# --
+- name: ${1:Generate and/or check OpenSSL certificates}
+  community.crypto.x509_certificate:
+    state: ${2:# Whether the certificate should exist or not, taking action if the state is different from what is stated}
+    path: ${3:# Remote absolute path where the generated certificate file should be created or is already located}
+    provider: ${4:# Name of the provider to use to generate/retrieve the OpenSSL certificate}
+    return_content: ${5:# If set to C(true), will return the (current or generated) certificate's content as I(certificate)}
+    backup: ${6:# Create a backup file including a timestamp so you can get the original certificate back if you overwrote it with a new one by accident}
+    csr_content: ${7:# Content of the Certificate Signing Request (CSR) used to generate this certificate}
+    privatekey_content: ${8:# Content of the private key to use when signing the certificate}
+    acme_directory: ${9:# The ACME directory to use}
+    ownca_content: ${10:# Content of the CA (Certificate Authority) certificate}
+    ownca_privatekey_content: ${11:# Content of the CA (Certificate Authority) private key to use when signing the certificate}
+    mode: ${12:# The permissions the resulting filesystem object should have}
+    owner: ${13:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${14:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${15:# The user part of the SELinux filesystem object context}
+    serole: ${16:# The role part of the SELinux filesystem object context}
+    setype: ${17:# The type part of the SELinux filesystem object context}
+    selevel: ${18:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${19:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${20:# The attributes the resulting filesystem object should have}
+    force: ${21:# Generate the certificate, even if it already exists}
+    csr_path: ${22:# Path to the Certificate Signing Request (CSR) used to generate this certificate}
+    privatekey_path: ${23:# Path to the private key to use when signing the certificate}
+    privatekey_passphrase: ${24:# The passphrase for the I(privatekey_path) resp}
+    ignore_timestamps: ${25:# Whether the 'not before' and 'not after' timestamps should be ignored for idempotency checks}
+    select_crypto_backend: ${26:# Determines which crypto backend to use}
+    acme_accountkey_path: ${27:# The path to the accountkey for the C(acme) provider}
+    acme_challenge_path: ${28:# The path to the ACME challenge directory that is served on U(http://<HOST>:80/}
+    acme_chain: ${29:# Include the intermediate certificate to the generated certificate}
+    entrust_cert_type: ${30:# Specify the type of certificate requested}
+    entrust_requester_email: ${31:# The email of the requester of the certificate (for tracking purposes)}
+    entrust_requester_name: ${32:# The name of the requester of the certificate (for tracking purposes)}
+    entrust_requester_phone: ${33:# The phone number of the requester of the certificate (for tracking purposes)}
+    entrust_api_user: ${34:# The username for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_key: ${35:# The key (password) for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_path: ${36:# The path to the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_key_path: ${37:# The path to the private key of the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_not_after: ${38:# The point in time at which the certificate stops being valid}
+    entrust_api_specification_path: ${39:# The path to the specification file defining the Entrust Certificate Services (ECS) API configuration}
+    ownca_path: ${40:# Remote absolute path of the CA (Certificate Authority) certificate}
+    ownca_privatekey_path: ${41:# Path to the CA (Certificate Authority) private key to use when signing the certificate}
+    ownca_privatekey_passphrase: ${42:# The passphrase for the I(ownca_privatekey_path) resp}
+    ownca_digest: ${43:# The digest algorithm to be used for the C(ownca) certificate}
+    ownca_version: ${44:# The version of the C(ownca) certificate}
+    ownca_not_before: ${45:# The point in time the certificate is valid from}
+    ownca_not_after: ${46:# The point in time at which the certificate stops being valid}
+    ownca_create_subject_key_identifier: ${47:# Whether to create the Subject Key Identifier (SKI) from the public key}
+    ownca_create_authority_key_identifier: ${48:# Create a Authority Key Identifier from the CA's certificate}
+    selfsigned_version: ${49:# Version of the C(selfsigned) certificate}
+    selfsigned_digest: ${50:# Digest algorithm to be used when self-signing the certificate}
+    selfsigned_not_before: ${51:# The point in time the certificate is valid from}
+    selfsigned_not_after: ${52:# The point in time at which the certificate stops being valid}
+    selfsigned_create_subject_key_identifier: ${53:# Whether to create the Subject Key Identifier (SKI) from the public key}
+  tags:
+    - community
+    - crypto
+    - x509_certificate

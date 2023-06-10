@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_labels
+# group: community.google
+# name: Create, Update or Destroy GCE Labels
+# --
+- name: ${1:Create, Update or Destroy GCE Labels}
+  community.google.gce_labels:
+    labels: ${2:# A list of labels (key/value pairs) to add or remove for the resource}
+    resource_url: ${3:# The 'self_link' for the resource (instance, disk, snapshot, etc)}
+    resource_type: ${4:# The type of resource (instances, disks, snapshots, images)}
+    resource_location: ${5:# The location of resource (global, us-central1-f, etc}
+    resource_name: ${6:# The name of resource}
+    state: ${7:# The state the labels should be in}
+    project_id: ${8:# The Google Cloud Platform project ID to use}
+    pem_file: ${9:# The path to the PEM file associated with the service account email}
+    credentials_file: ${10:# The path to the JSON file associated with the service account email}
+    service_account_email: ${11:# service account email}
+    service_account_permissions: ${12:# service account email}
+  tags:
+    - community
+    - google
+    - gce_labels

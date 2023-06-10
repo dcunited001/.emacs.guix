@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_image
+# group: google.cloud
+# name: Creates a GCP Image
+# --
+- name: ${1:Creates a GCP Image}
+  google.cloud.gcp_compute_image:
+    state: ${2:# Whether the given object should exist in GCP}
+    description: ${3:# An optional description of this resource}
+    disk_size_gb: ${4:# Size of the image when restored onto a persistent disk (in GB)}
+    family: ${5:# The name of the image family to which this image belongs}
+    guest_os_features: ${6:# A list of features to enable on the guest operating system}
+    image_encryption_key: ${7:# Encrypts the image using a customer-supplied encryption key}
+    labels: ${8:# Labels to apply to this Image}
+    licenses: ${9:# Any applicable license URI}
+    name: ${10:# Name of the resource; provided by the client when the resource is created}
+    raw_disk: ${11:# The parameters of the raw disk image}
+    source_disk: ${12:# The source disk to create this image based on}
+    source_disk_encryption_key: ${13:# The customer-supplied encryption key of the source disk}
+    source_disk_id: ${14:# The ID value of the disk used to create this image}
+    source_image: ${15:# URL of the source image used to create this image}
+    source_snapshot: ${16:# URL of the source snapshot used to create this image}
+    source_type: ${17:# The type of the image used to create this disk}
+    project: ${18:# The Google Cloud Platform project to use}
+    auth_kind: ${19:# The type of credential used}
+    service_account_contents: ${20:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${21:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${22:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${23:# Array of scopes to be used}
+    env_type: ${24:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_image

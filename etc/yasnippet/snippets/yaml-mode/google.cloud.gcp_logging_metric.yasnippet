@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_logging_metric
+# group: google.cloud
+# name: Creates a GCP Metric
+# --
+- name: ${1:Creates a GCP Metric}
+  google.cloud.gcp_logging_metric:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# The client-assigned metric identifier}
+    description: ${4:# A description of this metric, which is used in documentation}
+    filter: ${5:# An advanced logs filter (U(https://cloud}
+    metric_descriptor: ${6:# The metric descriptor associated with the logs-based metric}
+    label_extractors: ${7:# A map from a label key string to an extractor expression which is used to extract data from a log entry field and assign as the label value}
+    value_extractor: ${8:# A valueExtractor is required when using a distribution logs-based metric to extract the values to record from a log entry}
+    bucket_options: ${9:# The bucketOptions are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values}
+    project: ${10:# The Google Cloud Platform project to use}
+    auth_kind: ${11:# The type of credential used}
+    service_account_contents: ${12:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${13:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${14:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${15:# Array of scopes to be used}
+    env_type: ${16:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_logging_metric

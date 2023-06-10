@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.hostname
+# group: ansible.builtin
+# name: Manage hostname
+# --
+- name: ${1:Manage hostname}
+  ansible.builtin.hostname:
+    name: ${2:# Name of the host}
+    use: ${3:# Which strategy to use to update the hostname}
+  tags:
+    - hostname

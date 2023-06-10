@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssh_keypair
+# group: community.crypto
+# name: Generate OpenSSH private and public keys
+# --
+- name: ${1:Generate OpenSSH private and public keys}
+  community.crypto.openssh_keypair:
+    state: ${2:# Whether the private and public keys should exist or not, taking action if the state is different from what is stated}
+    size: ${3:# Specifies the number of bits in the private key to create}
+    type: ${4:# The algorithm used to generate the SSH private key}
+    force: ${5:# Should the key be regenerated even if it already exists}
+    path: ${6:# Name of the files containing the public and private key}
+    comment: ${7:# Provides a new comment to the public key}
+    passphrase: ${8:# Passphrase used to decrypt an existing private key or encrypt a newly generated private key}
+    private_key_format: ${9:# Used when I(backend=cryptography) to select a format for the private key at the provided I(path)}
+    backend: ${10:# Selects between the C(cryptography) library or the OpenSSH binary C(opensshbin)}
+    regenerate: ${11:# Allows to configure in which situations the module is allowed to regenerate private keys}
+    mode: ${12:# The permissions the resulting filesystem object should have}
+    owner: ${13:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${14:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${15:# The user part of the SELinux filesystem object context}
+    serole: ${16:# The role part of the SELinux filesystem object context}
+    setype: ${17:# The type part of the SELinux filesystem object context}
+    selevel: ${18:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${19:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${20:# The attributes the resulting filesystem object should have}
+  tags:
+    - community
+    - crypto
+    - openssh_keypair

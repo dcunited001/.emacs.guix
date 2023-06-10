@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_cloudfunctions_cloud_function
+# group: google.cloud
+# name: Creates a GCP CloudFunction
+# --
+- name: ${1:Creates a GCP CloudFunction}
+  google.cloud.gcp_cloudfunctions_cloud_function:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# A user-defined name of the function}
+    description: ${4:# User-provided description of a function}
+    entry_point: ${5:# The name of the function (as defined in source code) that will be executed}
+    runtime: ${6:# The runtime in which to run the function}
+    timeout: ${7:# The function execution timeout}
+    available_memory_mb: ${8:# The amount of memory in MB available for a function}
+    labels: ${9:# A set of key/value label pairs associated with this Cloud Function}
+    environment_variables: ${10:# Environment variables that shall be available during function execution}
+    source_archive_url: ${11:# The Google Cloud Storage URL, starting with gs://, pointing to the zip archive which contains the function}
+    source_upload_url: ${12:# The Google Cloud Storage signed URL used for source uploading}
+    source_repository: ${13:# The source repository where a function is hosted}
+    https_trigger: ${14:# An HTTPS endpoint type of source that can be triggered via URL}
+    event_trigger: ${15:# An HTTPS endpoint type of source that can be triggered via URL}
+    location: ${16:# The location of this cloud function}
+    trigger_http: ${17:# Use HTTP to trigger this function}
+    project: ${18:# The Google Cloud Platform project to use}
+    auth_kind: ${19:# The type of credential used}
+    service_account_contents: ${20:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${21:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${22:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${23:# Array of scopes to be used}
+    env_type: ${24:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_cloudfunctions_cloud_function

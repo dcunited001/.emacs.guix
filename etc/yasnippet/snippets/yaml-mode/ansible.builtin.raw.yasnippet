@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.raw
+# group: ansible.builtin
+# name: Executes a low-down and dirty command
+# --
+- name: ${1:Executes a low-down and dirty command}
+  ansible.builtin.raw:
+    free_form: ${2:# The raw module takes a free form command to run}
+    executable: ${3:# Change the shell used to execute the command}
+  tags:
+    - raw

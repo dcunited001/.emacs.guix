@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.find
+# group: ansible.builtin
+# name: Return a list of files based on specific criteria
+# --
+- name: ${1:Return a list of files based on specific criteria}
+  ansible.builtin.find:
+    age: ${2:# Select files whose age is equal to or greater than the specified time}
+    patterns: ${3:# One or more (shell or regex) patterns, which type is controlled by C(use_regex) option}
+    excludes: ${4:# One or more (shell or regex) patterns, which type is controlled by I(use_regex) option}
+    contains: ${5:# A regular expression or pattern which should be matched against the file content}
+    read_whole_file: ${6:# When doing a C(contains) search, determines whether the whole file should be read into memory or if the regex should be applied to the file line-by-line}
+    paths: ${7:# List of paths of directories to search}
+    file_type: ${8:# Type of file to select}
+    recurse: ${9:# If target is a directory, recursively descend into the directory looking for files}
+    size: ${10:# Select files whose size is equal to or greater than the specified size}
+    age_stamp: ${11:# Choose the file property against which we compare age}
+    hidden: ${12:# Set this to C(true) to include hidden files, otherwise they will be ignored}
+    follow: ${13:# Set this to C(true) to follow symlinks in path for systems with python 2}
+    get_checksum: ${14:# Set this to C(true) to retrieve a file's SHA1 checksum}
+    use_regex: ${15:# If C(false), the patterns are file globs (shell)}
+    depth: ${16:# Set the maximum number of levels to descend into}
+  tags:
+    - find

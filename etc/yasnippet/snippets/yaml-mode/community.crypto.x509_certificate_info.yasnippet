@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.x509_certificate_info
+# group: community.crypto
+# name: Provide information of OpenSSL X
+# --
+- name: ${1:Provide information of OpenSSL X}
+  community.crypto.x509_certificate_info:
+    path: ${2:# Remote absolute path where the certificate file is loaded from}
+    content: ${3:# Content of the X}
+    valid_at: ${4:# A dict of names mapping to time specifications}
+    select_crypto_backend: ${5:# Determines which crypto backend to use}
+    name_encoding: ${6:# How to encode names (DNS names, URIs, email addresses) in return values}
+  tags:
+    - community
+    - crypto
+    - x509_certificate_info

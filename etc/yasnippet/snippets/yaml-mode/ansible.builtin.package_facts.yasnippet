@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.package_facts
+# group: ansible.builtin
+# name: Package information as facts
+# --
+- name: ${1:Package information as facts}
+  ansible.builtin.package_facts:
+    manager: ${2:# The package manager used by the system so we can query the package information}
+    strategy: ${3:# This option controls how the module queries the package managers on the system}
+  tags:
+    - package_facts

@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_rule_separator
+# group: pfsensible.core
+# name: Manage pfSense firewall rule separators
+# --
+- name: ${1:Manage pfSense firewall rule separators}
+  pfsensible.core.pfsense_rule_separator:
+    name: ${2:# The name of the separator}
+    state: ${3:# State in which to leave the separator}
+    interface: ${4:# The interface for the separator}
+    floating: ${5:# Is the rule on floating tab}
+    after: ${6:# Rule to go after, or 'top'}
+    before: ${7:# Rule to go before, or 'bottom'}
+    color: ${8:# The separator's color}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_rule_separator

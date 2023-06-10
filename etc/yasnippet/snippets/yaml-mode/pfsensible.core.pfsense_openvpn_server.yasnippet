@@ -1,0 +1,61 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_openvpn_server
+# group: pfsensible.core
+# name: Manage pfSense OpenVPN server configuration
+# --
+- name: ${1:Manage pfSense OpenVPN server configuration}
+  pfsensible.core.pfsense_openvpn_server:
+    name: ${2:# The name of the OpenVPN server}
+    mode: ${3:# The server mode}
+    authmode: ${4:# Authentication servers}
+    state: ${5:# State in which to leave the OpenVPN config}
+    disable: ${6:# Is the OpenVPN config disabled?}
+    interface: ${7:# The interface for OpenVPN to listen on}
+    local_port: ${8:# The port for OpenVPN to listen on}
+    protocol: ${9:# The protocol used for the connection}
+    dev_mode: ${10:# Device mode}
+    tls: ${11:# TLS Key}
+    tls_type: ${12:# Use TLS for authentication ('auth') or encyprtion and authentication ('crypt')}
+    ca: ${13:# Certificate Authority name}
+    crl: ${14:# Certificate Revocation List name}
+    cert: ${15:# Server certificate name}
+    cert_depth: ${16:# Depth of certificates to check}
+    strictuserdn: ${17:# Enforce a match between the common name of the client certificate and the username given at login}
+    shared_key: ${18:# Pre-shared key for shared key modes}
+    dh_length: ${19:# DH parameter length}
+    ecdh_curve: ${20:# Elliptic Curve to use for key exchange}
+    data_ciphers_fallback: ${21:# Fallback cryptographic algorithm}
+    data_ciphers: ${22:# Allowed cryptographic algorithms}
+    ncp_enable: ${23:# Enable data encryption negotiation}
+    digest: ${24:# Auth digest algorithm}
+    tunnel_network: ${25:# IPv4 virtual network used for private communications between this server and client hosts expressed using CIDR notation}
+    tunnel_networkv6: ${26:# IPv6 virtual network used for private communications between this server and client hosts expressed using CIDR notation}
+    local_network: ${27:# IPv4 networks that will be accessible from the remote endpoint}
+    local_networkv6: ${28:# IPv6 networks that will be accessible from the remote endpoint}
+    remote_network: ${29:# IPv4 networks that will be routed through the tunnel}
+    remote_networkv6: ${30:# IPv6 networks that will be routed through the tunnel}
+    gwredir: ${31:# Redirect IPv4 gateway}
+    gwredir6: ${32:# Redirect IPv6 gateway}
+    maxclients: ${33:# The maximum number of clients allowed to concurrently connect to this server}
+    allow_compression: ${34:# Allow compression to be used with this VPN instance}
+    compression: ${35:# Allowed compression to be used with this VPN instance}
+    compression_push: ${36:# Push the selected Compression setting to connecting clients}
+    passtos: ${37:# Set the TOS IP header value of tunnel packets to match the encapsulated packet value}
+    client2client: ${38:# Allow communication between clients connected to this server}
+    dynamic_ip: ${39:# Allow connected clients to retain their connections if their IP address changes}
+    topology: ${40:# The method used to supply a virtual adapter IP address to clients when using TUN mode on IPv4}
+    dns_domain: ${41:# DNS default domain}
+    dns_server1: ${42:# DNS server 1}
+    dns_server2: ${43:# DNS server 2}
+    dns_server3: ${44:# DNS server 3}
+    dns_server4: ${45:# DNS server 4}
+    push_register_dns: ${46:# Push DNS}
+    create_gw: ${47:# Which gateway types to create}
+    verbosity_level: ${48:# Verbosity level}
+    custom_options: ${49:# Custom openvpn options}
+    username_as_common_name: ${50:# Use the authenticated client username instead of the certificate common name (CN)}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_openvpn_server

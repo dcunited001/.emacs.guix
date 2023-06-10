@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.debconf
+# group: ansible.builtin
+# name: Configure a
+# --
+- name: ${1:Configure a }
+  ansible.builtin.debconf:
+    name: ${2:# Name of package to configure}
+    question: ${3:# A debconf configuration setting}
+    vtype: ${4:# The type of the value supplied}
+    value: ${5:# Value to set the configuration to}
+    unseen: ${6:# Do not set 'seen' flag when pre-seeding}
+  tags:
+    - debconf

@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_haproxy_backend
+# group: pfsensible.core
+# name: Manage pfSense HAProxy backends
+# --
+- name: ${1:Manage pfSense HAProxy backends}
+  pfsensible.core.pfsense_haproxy_backend:
+    name: ${2:# The backend name}
+    balance: ${3:# The load balancing option}
+    balance_urilen: ${4:# Indicates that the algorithm should only consider that many characters at the beginning of the URI to compute the hash}
+    balance_uridepth: ${5:# Indicates the maximum directory depth to be used to compute the hash}
+    balance_uriwhole: ${6:# Allow using whole URI including url parameters behind a question mark}
+    connection_timeout: ${7:# The time (in milliseconds) we give up if the connection does not complete within (default 30000)}
+    server_timeout: ${8:# The time (in milliseconds) we accept to wait for data from the server, or for the server to accept data (default 30000)}
+    retries: ${9:# After a connection failure to a server, it is possible to retry, potentially on another server}
+    check_type: ${10:# Health check method}
+    check_frequency: ${11:# The check interval (in milliseconds)}
+    log_checks: ${12:# When this option is enabled, any change of the health check status or to the server's health will be logged}
+    httpcheck_method: ${13:# HTTP check method}
+    monitor_uri: ${14:# Url used by http check requests}
+    monitor_httpversion: ${15:# Defaults to 'HTTP/1}
+    monitor_username: ${16:# Username used in checks (MySQL and PostgreSQL)}
+    monitor_domain: ${17:# Domain used in checks (SMTP and ESMTP)}
+    state: ${18:# State in which to leave the backend}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_haproxy_backend

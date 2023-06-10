@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_save
+# group: containers.podman
+# name: Saves podman image to tar file
+# --
+- name: ${1:Saves podman image to tar file}
+  containers.podman.podman_save:
+    image: ${2:# Image to save}
+    compress: ${3:# Compress tarball image layers when pushing to a directory using the 'dir' transport}
+    dest: ${4:# Destination file to write image to}
+    format: ${5:# Save image to docker-archive, oci-archive (see containers-transports(5)), oci-dir (oci transport), or docker-dir (dir transport with v2s2 manifest type)}
+    multi_image_archive: ${6:# Allow for creating archives with more than one image}
+    force: ${7:# Force saving to file even if it exists}
+    executable: ${8:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+  tags:
+    - containers
+    - podman
+    - podman_save

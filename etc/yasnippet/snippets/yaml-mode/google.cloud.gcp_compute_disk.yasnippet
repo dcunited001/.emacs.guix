@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_disk
+# group: google.cloud
+# name: Creates a GCP Disk
+# --
+- name: ${1:Creates a GCP Disk}
+  google.cloud.gcp_compute_disk:
+    state: ${2:# Whether the given object should exist in GCP}
+    description: ${3:# An optional description of this resource}
+    labels: ${4:# Labels to apply to this disk}
+    licenses: ${5:# Any applicable publicly visible licenses}
+    name: ${6:# Name of the resource}
+    size_gb: ${7:# Size of the persistent disk, specified in GB}
+    physical_block_size_bytes: ${8:# Physical block size of the persistent disk, in bytes}
+    type: ${9:# URL of the disk type resource describing which disk type to use to create the disk}
+    source_image: ${10:# The source image used to create this disk}
+    provisioned_iops: ${11:# Indicates how many IOPS must be provisioned for the disk}
+    zone: ${12:# A reference to the zone where the disk resides}
+    source_image_encryption_key: ${13:# The customer-supplied encryption key of the source image}
+    disk_encryption_key: ${14:# Encrypts the disk using a customer-supplied encryption key}
+    source_snapshot: ${15:# The source snapshot used to create this disk}
+    source_snapshot_encryption_key: ${16:# The customer-supplied encryption key of the source snapshot}
+    project: ${17:# The Google Cloud Platform project to use}
+    auth_kind: ${18:# The type of credential used}
+    service_account_contents: ${19:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${20:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${21:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${22:# Array of scopes to be used}
+    env_type: ${23:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_disk

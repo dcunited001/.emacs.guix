@@ -1,0 +1,41 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.ecs_certificate
+# group: community.crypto
+# name: Request SSL/TLS certificates with the Entrust Certificate Services (ECS) API
+# --
+- name: ${1:Request SSL/TLS certificates with the Entrust Certificate Services (ECS) API}
+  community.crypto.ecs_certificate:
+    backup: ${2:# Whether a backup should be made for the certificate in I(path)}
+    force: ${3:# If force is used, a certificate is requested regardless of whether I(path) points to an existing valid certificate}
+    path: ${4:# The destination path for the generated certificate as a PEM encoded cert}
+    full_chain_path: ${5:# The destination path for the full certificate chain of the certificate, intermediates, and roots}
+    csr: ${6:# Base-64 encoded Certificate Signing Request (CSR)}
+    tracking_id: ${7:# The tracking ID of the certificate to reissue or renew}
+    remaining_days: ${8:# The number of days the certificate must have left being valid}
+    request_type: ${9:# The operation performed if I(tracking_id) references a valid certificate to reissue, or there is already a certificate present in I(path) but either I(force) is specified or C(cert_days < remaining_days)}
+    cert_type: ${10:# Specify the type of certificate requested}
+    subject_alt_name: ${11:# The subject alternative name identifiers, as an array of values (applies to I(cert_type) with a value of C(STANDARD_SSL), C(ADVANTAGE_SSL), C(UC_SSL), C(EV_SSL), C(WILDCARD_SSL), C(PRIVATE_SSL), and C(PD_SSL))}
+    eku: ${12:# If specified, overrides the key usage in the I(csr)}
+    ct_log: ${13:# In compliance with browser requirements, this certificate may be posted to the Certificate Transparency (CT) logs}
+    client_id: ${14:# The client ID to submit the Certificate Signing Request under}
+    org: ${15:# Organization 'O=' to include in the certificate}
+    ou: ${16:# Organizational unit 'OU=' to include in the certificate}
+    end_user_key_storage_agreement: ${17:# The end user of the Code Signing certificate must generate and store the private key for this request on cryptographically secure hardware to be compliant with the Entrust CSP and Subscription agreement}
+    tracking_info: ${18:# Free form tracking information to attach to the record for the certificate}
+    requester_name: ${19:# The requester name to associate with certificate tracking information}
+    requester_email: ${20:# The requester email to associate with certificate tracking information and receive delivery and expiry notices for the certificate}
+    requester_phone: ${21:# The requester phone number to associate with certificate tracking information}
+    additional_emails: ${22:# A list of additional email addresses to receive the delivery notice and expiry notification for the certificate}
+    custom_fields: ${23:# Mapping of custom fields to associate with the certificate request and certificate}
+    cert_expiry: ${24:# The date the certificate should be set to expire, in RFC3339 compliant date or date-time format}
+    cert_lifetime: ${25:# The lifetime of the certificate}
+    entrust_api_user: ${26:# The username for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_key: ${27:# The key (password) for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_path: ${28:# The path to the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_key_path: ${29:# The path to the key for the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_api_specification_path: ${30:# The path to the specification file defining the Entrust Certificate Services (ECS) API configuration}
+  tags:
+    - community
+    - crypto
+    - ecs_certificate

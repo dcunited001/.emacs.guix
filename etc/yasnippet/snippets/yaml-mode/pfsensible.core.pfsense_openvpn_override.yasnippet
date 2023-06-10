@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_openvpn_override
+# group: pfsensible.core
+# name: Manage pfSense OpenVPN Client Specific Overrides
+# --
+- name: ${1:Manage pfSense OpenVPN Client Specific Overrides}
+  pfsensible.core.pfsense_openvpn_override:
+    name: ${2:# The name of the override}
+    state: ${3:# State in which to leave the override}
+    disable: ${4:# Disable this override}
+    descr: ${5:# The description of the override}
+    server_list: ${6:# A list of OpenVPN servers this applies to}
+    block: ${7:# Block this client connection based on its common name}
+    tunnel_network: ${8:# IPv4 virtual network used for private communications between this server and client hosts expressed using CIDR notation}
+    tunnel_networkv6: ${9:# IPv6 virtual network used for private communications between this server and client hosts expressed using CIDR notation}
+    local_network: ${10:# IPv4 networks that will be accessible from the remote endpoint}
+    local_networkv6: ${11:# IPv6 networks that will be accessible from the remote endpoint}
+    remote_network: ${12:# IPv4 networks that will be routed through the tunnel}
+    remote_networkv6: ${13:# IPv6 networks that will be routed through the tunnel}
+    gwredir: ${14:# Redirect IPv4 gateway}
+    push_reset: ${15:# Prevent this client from receiving any server-defined client settings}
+    netbios_enable: ${16:# Enable NetBIOS over TCP/IP}
+    netbios_ntype: ${17:# NetBIOS Node Type}
+    netbios_scope: ${18:# A NetBIOS Scope ID provides an extended naming service for NetBIOS over TCP/IP}
+    wins_server_enable: ${19:# Provide a WINS server list to clients,}
+    custom_options: ${20:# Additional options to add for this client specific override, separated by a semicolon}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_openvpn_override

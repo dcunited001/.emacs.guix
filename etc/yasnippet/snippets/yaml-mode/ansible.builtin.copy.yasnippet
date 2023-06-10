@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.copy
+# group: ansible.builtin
+# name: Copy files to remote locations
+# --
+- name: ${1:Copy files to remote locations}
+  ansible.builtin.copy:
+    src: ${2:# Local path to a file to copy to the remote server}
+    content: ${3:# When used instead of C(src), sets the contents of a file directly to the specified value}
+    dest: ${4:# Remote absolute path where the file should be copied to}
+    backup: ${5:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    force: ${6:# Influence whether the remote file must always be replaced}
+    mode: ${7:# The permissions of the destination file or directory}
+    directory_mode: ${8:# When doing a recursive copy set the mode for the directories}
+    remote_src: ${9:# Influence whether C(src) needs to be transferred or already is present remotely}
+    follow: ${10:# This flag indicates that filesystem links in the destination, if they exist, should be followed}
+    local_follow: ${11:# This flag indicates that filesystem links in the source tree, if they exist, should be followed}
+    checksum: ${12:# SHA1 checksum of the file being transferred}
+    decrypt: ${13:# This option controls the autodecryption of source files using vault}
+    owner: ${14:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${15:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${16:# The user part of the SELinux filesystem object context}
+    serole: ${17:# The role part of the SELinux filesystem object context}
+    setype: ${18:# The type part of the SELinux filesystem object context}
+    selevel: ${19:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${20:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${21:# The attributes the resulting filesystem object should have}
+    validate: ${22:# The validation command to run before copying the updated file into the final destination}
+  tags:
+    - copy

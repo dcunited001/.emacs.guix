@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_bigquery_table
+# group: google.cloud
+# name: Creates a GCP Table
+# --
+- name: ${1:Creates a GCP Table}
+  google.cloud.gcp_bigquery_table:
+    state: ${2:# Whether the given object should exist in GCP}
+    table_reference: ${3:# Reference describing the ID of this table}
+    clustering: ${4:# One or more fields on which data should be clustered}
+    description: ${5:# A user-friendly description of the dataset}
+    friendly_name: ${6:# A descriptive name for this table}
+    labels: ${7:# The labels associated with this dataset}
+    name: ${8:# Name of the table}
+    num_rows: ${9:# The number of rows of data in this table, excluding any data in the streaming buffer}
+    view: ${10:# The view definition}
+    time_partitioning: ${11:# If specified, configures time-based partitioning for this table}
+    schema: ${12:# Describes the schema of this table}
+    encryption_configuration: ${13:# Custom encryption configuration}
+    expiration_time: ${14:# The time when this table expires, in milliseconds since the epoch}
+    external_data_configuration: ${15:# Describes the data format, location, and other properties of a table stored outside of BigQuery}
+    dataset: ${16:# Name of the dataset}
+    project: ${17:# The Google Cloud Platform project to use}
+    auth_kind: ${18:# The type of credential used}
+    service_account_contents: ${19:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${20:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${21:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${22:# Array of scopes to be used}
+    env_type: ${23:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_bigquery_table

@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_authserver_radius
+# group: pfsensible.core
+# name: Manage pfSense RADIUS authentication servers
+# --
+- name: ${1:Manage pfSense RADIUS authentication servers}
+  pfsensible.core.pfsense_authserver_radius:
+    name: ${2:# The name of the authentication server}
+    state: ${3:# State in which to leave the authentication server}
+    host: ${4:# The hostname or IP address of the authentication server}
+    auth_port: ${5:# RADIUS authentication port}
+    acct_port: ${6:# RADIUS accounting port}
+    protocol: ${7:# RADIUS protocol}
+    secret: ${8:# RADIUS secret}
+    timeout: ${9:# Server timeout in seconds}
+    nasip_attribute: ${10:# IP to use for the 'NAS-IP-Address' attribute during RADIUS Acccess-Requests, must be an interface name}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_authserver_radius

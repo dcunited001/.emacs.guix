@@ -1,0 +1,37 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_authserver_ldap
+# group: pfsensible.core
+# name: Manage pfSense LDAP authentication servers
+# --
+- name: ${1:Manage pfSense LDAP authentication servers}
+  pfsensible.core.pfsense_authserver_ldap:
+    name: ${2:# The name of the authentication server}
+    state: ${3:# State in which to leave the authentication server}
+    host: ${4:# The hostname or IP address of the authentication server}
+    port: ${5:# Port to connect to}
+    transport: ${6:# Transport to use}
+    ca: ${7:# Certificate Authority}
+    protver: ${8:# LDAP protocol version}
+    timeout: ${9:# Server timeout in seconds}
+    scope: ${10:# Search scope}
+    basedn: ${11:# Search base DN}
+    authcn: ${12:# Authentication containers added to basedn}
+    extended_enabled: ${13:# Enable extended query}
+    extended_query: ${14:# Extended query}
+    binddn: ${15:# Search bind DN}
+    bindpw: ${16:# Search bind password}
+    attr_user: ${17:# LDAP User naming attribute}
+    attr_group: ${18:# LDAP Group naming attribute}
+    attr_member: ${19:# LDAP Group member naming attribute}
+    attr_groupobj: ${20:# LDAP Group objectClass naming attribute}
+    ldap_rfc2307: ${21:# LDAP Server uses RFC 2307 style group membership (RFC 2307bis when False)}
+    ldap_rfc2307_userdn: ${22:# Use DN for username search (pfsense-CE >=2}
+    ldap_utf8: ${23:# UTF8 encode LDAP parameters before sending them to the server}
+    ldap_nostrip_at: ${24:# Do not strip away parts of the username after the @ symbol}
+    ldap_pam_groupdn: ${25:# Shell Authentication Group DN (pfsense-CE >=2}
+    ldap_allow_unauthenticated: ${26:# Allow unauthenticated bind (pfsense-CE >=2}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_authserver_ldap

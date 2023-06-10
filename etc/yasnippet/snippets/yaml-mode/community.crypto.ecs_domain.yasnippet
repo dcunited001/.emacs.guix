@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.ecs_domain
+# group: community.crypto
+# name: Request validation of a domain with the Entrust Certificate Services (ECS) API
+# --
+- name: ${1:Request validation of a domain with the Entrust Certificate Services (ECS) API}
+  community.crypto.ecs_domain:
+    client_id: ${2:# The client ID to request the domain be associated with}
+    domain_name: ${3:# The domain name to be verified or reverified}
+    verification_method: ${4:# The verification method to be used to prove control of the domain}
+    verification_email: ${5:# Email address to be used to verify domain ownership}
+    entrust_api_user: ${6:# The username for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_key: ${7:# The key (password) for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_path: ${8:# The path to the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_key_path: ${9:# The path to the key for the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_api_specification_path: ${10:# The path to the specification file defining the Entrust Certificate Services (ECS) API configuration}
+  tags:
+    - community
+    - crypto
+    - ecs_domain

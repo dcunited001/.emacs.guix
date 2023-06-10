@@ -1,0 +1,50 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_pod
+# group: containers.podman
+# name: Manage Podman pods
+# --
+- name: ${1:Manage Podman pods}
+  containers.podman.podman_pod:
+    state: ${2:# This variable is set for state}
+    recreate: ${3:# Use with present and started states to force the re-creation of an existing pod}
+    add_host: ${4:# Add a host to the /etc/hosts file shared between all containers in the pod}
+    cgroup_parent: ${5:# Path to cgroups under which the cgroup for the pod will be created}
+    cpus: ${6:# Set the total number of CPUs delegated to the pod}
+    cpuset_cpus: ${7:# Limit the CPUs to support execution}
+    device: ${8:# Add a host device to the pod}
+    device_read_bps: ${9:# Limit read rate (bytes per second) from a device (e}
+    dns: ${10:# Set custom DNS servers in the /etc/resolv}
+    dns_opt: ${11:# Set custom DNS options in the /etc/resolv}
+    dns_search: ${12:# Set custom DNS search domains in the /etc/resolv}
+    generate_systemd: ${13:# Generate systemd unit file for container}
+    gidmap: ${14:# GID map for the user namespace}
+    hostname: ${15:# Set a hostname to the pod}
+    infra: ${16:# Create an infra container and associate it with the pod}
+    infra_conmon_pidfile: ${17:# Write the pid of the infra container's conmon process to a file}
+    infra_command: ${18:# The command that will be run to start the infra container}
+    infra_image: ${19:# The image that will be created for the infra container}
+    infra_name: ${20:# The name that will be used for the pod's infra container}
+    ip: ${21:# Set a static IP for the pod's shared network}
+    label: ${22:# Add metadata to a pod, pass dictionary of label keys and values}
+    label_file: ${23:# Read in a line delimited file of labels}
+    mac_address: ${24:# Set a static MAC address for the pod's shared network}
+    name: ${25:# Assign a name to the pod}
+    network: ${26:# Set network mode for the pod}
+    network_alias: ${27:# Add a network-scoped alias for the pod, setting the alias for all networks that the pod joins}
+    no_hosts: ${28:# Disable creation of /etc/hosts for the pod}
+    pid: ${29:# Set the PID mode for the pod}
+    pod_id_file: ${30:# Write the pod ID to the file}
+    publish: ${31:# Publish a port or range of ports from the pod to the host}
+    share: ${32:# A comma delimited list of kernel namespaces to share}
+    subgidname: ${33:# Name for GID map from the /etc/subgid file}
+    subuidname: ${34:# Name for UID map from the /etc/subuid file}
+    uidmap: ${35:# Run the container in a new user namespace using the supplied mapping}
+    userns: ${36:# Set the user namespace mode for all the containers in a pod}
+    volume: ${37:# Create a bind mount}
+    executable: ${38:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+    debug: ${39:# Return additional information which can be helpful for investigations}
+  tags:
+    - containers
+    - podman
+    - podman_pod

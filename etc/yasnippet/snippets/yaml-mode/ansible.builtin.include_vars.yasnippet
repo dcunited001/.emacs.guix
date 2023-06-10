@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.include_vars
+# group: ansible.builtin
+# name: Load variables from files, dynamically within a task
+# --
+- name: ${1:Load variables from files, dynamically within a task}
+  ansible.builtin.include_vars:
+    file: ${2:# The file name from which variables should be loaded}
+    dir: ${3:# The directory name from which the variables should be loaded}
+    name: ${4:# The name of a variable into which assign the included vars}
+    depth: ${5:# When using C(dir), this module will, by default, recursively go through each sub directory and load up the variables}
+    files_matching: ${6:# Limit the files that are loaded within any directory to this regular expression}
+    ignore_files: ${7:# List of file names to ignore}
+    extensions: ${8:# List of file extensions to read when using C(dir)}
+    ignore_unknown_extensions: ${9:# Ignore unknown file extensions within the directory}
+    hash_behaviour: ${10:# If set to C(merge), merges existing hash variables instead of overwriting them}
+    free-form: ${11:# This module allows you to specify the 'file' option directly without any other options}
+  tags:
+    - include_vars

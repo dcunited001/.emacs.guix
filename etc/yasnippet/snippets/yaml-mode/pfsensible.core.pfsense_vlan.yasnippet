@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_vlan
+# group: pfsensible.core
+# name: Manage pfSense VLANs
+# --
+- name: ${1:Manage pfSense VLANs}
+  pfsensible.core.pfsense_vlan:
+    vlan_id: ${2:# The VLAN tag}
+    interface: ${3:# The interface on which to declare the VLAN}
+    priority: ${4:# 802}
+    descr: ${5:# The description of the VLAN}
+    state: ${6:# State in which to leave the VLAN}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_vlan

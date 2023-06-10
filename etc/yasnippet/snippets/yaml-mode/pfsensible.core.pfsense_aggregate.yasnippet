@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_aggregate
+# group: pfsensible.core
+# name: Manage multiple pfSense firewall aliases, rules, and rule separators, plus interfaces and VLANs
+# --
+- name: ${1:Manage multiple pfSense firewall aliases, rules, and rule separators, plus interfaces and VLANs}
+  pfsensible.core.pfsense_aggregate:
+    aggregated_aliases: ${2:# Dict of aliases to apply on the target}
+    aggregated_interfaces: ${3:# Dict of interfaces to apply on the target}
+    aggregated_nat_outbounds: ${4:# Dict of nat_outbound rules to apply on the target}
+    aggregated_nat_port_forwards: ${5:# Dict of nat_port_forward rules to apply on the target}
+    aggregated_rules: ${6:# Dict of rules to apply on the target}
+    aggregated_rule_separators: ${7:# Dict of rule separators to apply on the target}
+    aggregated_vlans: ${8:# Dict of VLANs to apply on the target}
+    order_rules: ${9:# rules will be generated following the playbook order}
+    purge_aliases: ${10:# delete all the aliases that are not defined into aggregated_aliases}
+    purge_interfaces: ${11:# delete all the interfaces that are not defined into aggregated_interfaces}
+    purge_nat_outbounds: ${12:# delete all the nat_outbound rules that are not defined into aggregated_nat_outbounds}
+    purge_nat_port_forwards: ${13:# delete all the nat_port_forward rules that are not defined into aggregated_nat_port_forwards}
+    purge_rules: ${14:# delete all the rules that are not defined into aggregated_rules}
+    purge_rule_separators: ${15:# delete all the rule separators that are not defined into aggregated_rule_separators}
+    purge_vlans: ${16:# delete all the VLANs that are not defined into aggregated_vlans}
+    interface_filter: ${17:# only apply rules and rules separators on those interfaces (separated by space)}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_aggregate

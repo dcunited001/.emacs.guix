@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_volume
+# group: containers.podman
+# name: Manage Podman volumes
+# --
+- name: ${1:Manage Podman volumes}
+  containers.podman.podman_volume:
+    state: ${2:# State of volume, default 'present'}
+    recreate: ${3:# Recreate volume even if exists}
+    name: ${4:# Name of volume}
+    label: ${5:# Add metadata to a pod volume (e}
+    driver: ${6:# Specify volume driver name (default local)}
+    options: ${7:# Set driver specific options}
+    executable: ${8:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+    debug: ${9:# Return additional information which can be helpful for investigations}
+  tags:
+    - containers
+    - podman
+    - podman_volume

@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssl_privatekey_pipe
+# group: community.crypto
+# name: Generate OpenSSL private keys without disk access
+# --
+- name: ${1:Generate OpenSSL private keys without disk access}
+  community.crypto.openssl_privatekey_pipe:
+    content: ${2:# The current private key data}
+    content_base64: ${3:# Set to C(true) if the content is base64 encoded}
+    return_current_key: ${4:# Set to C(true) to return the current private key when the module did not generate a new one}
+    size: ${5:# Size (in bits) of the TLS/SSL key to generate}
+    type: ${6:# The algorithm used to generate the TLS/SSL private key}
+    curve: ${7:# Note that not all curves are supported by all versions of C(cryptography)}
+    passphrase: ${8:# The passphrase for the private key}
+    cipher: ${9:# The cipher to encrypt the private key}
+    select_crypto_backend: ${10:# Determines which crypto backend to use}
+    format: ${11:# Determines which format the private key is written in}
+    format_mismatch: ${12:# Determines behavior of the module if the format of a private key does not match the expected format, but all other parameters are as expected}
+    regenerate: ${13:# Allows to configure in which situations the module is allowed to regenerate private keys}
+  tags:
+    - community
+    - crypto
+    - openssl_privatekey_pipe

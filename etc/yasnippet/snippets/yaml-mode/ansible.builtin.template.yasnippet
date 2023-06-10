@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.template
+# group: ansible.builtin
+# name: Template a file out to a target host
+# --
+- name: ${1:Template a file out to a target host}
+  ansible.builtin.template:
+    follow: ${2:# Determine whether symbolic links should be followed}
+    backup: ${3:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    mode: ${4:# The permissions the resulting filesystem object should have}
+    owner: ${5:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${6:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${7:# The user part of the SELinux filesystem object context}
+    serole: ${8:# The role part of the SELinux filesystem object context}
+    setype: ${9:# The type part of the SELinux filesystem object context}
+    selevel: ${10:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${11:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${12:# The attributes the resulting filesystem object should have}
+    src: ${13:# Path of a Jinja2 formatted template on the Ansible controller}
+    dest: ${14:# Location to render the template to on the remote machine}
+    newline_sequence: ${15:# Specify the newline sequence to use for templating files}
+    block_start_string: ${16:# The string marking the beginning of a block}
+    block_end_string: ${17:# The string marking the end of a block}
+    variable_start_string: ${18:# The string marking the beginning of a print statement}
+    variable_end_string: ${19:# The string marking the end of a print statement}
+    comment_start_string: ${20:# The string marking the beginning of a comment statement}
+    comment_end_string: ${21:# The string marking the end of a comment statement}
+    trim_blocks: ${22:# Determine when newlines should be removed from blocks}
+    lstrip_blocks: ${23:# Determine when leading spaces and tabs should be stripped}
+    force: ${24:# Determine when the file is being transferred if the destination already exists}
+    output_encoding: ${25:# Overrides the encoding used to write the template file defined by C(dest)}
+    validate: ${26:# The validation command to run before copying the updated file into the final destination}
+  tags:
+    - template

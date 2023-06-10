@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: grafana.grafana.cloud_api_key
+# group: grafana.grafana
+# name: Manage Grafana Cloud API keys
+# --
+- name: ${1:Manage Grafana Cloud API keys}
+  grafana.grafana.cloud_api_key:
+    name: ${2:# Sets the name of the Grafana Cloud API key}
+    role: ${3:# Sets the role to be associated with the Cloud API key}
+    org_slug: ${4:# Name of the Grafana Cloud organization in which Cloud API key will be created}
+    existing_cloud_api_key: ${5:# Cloud API Key to authenticate with Grafana Cloud}
+    fail_if_already_created: ${6:# If set to C(true), the task will fail if the API key with same name already exists in the Organization}
+    state: ${7:# State for the Grafana Cloud stack}
+  tags:
+    - grafana
+    - grafana
+    - cloud_api_key

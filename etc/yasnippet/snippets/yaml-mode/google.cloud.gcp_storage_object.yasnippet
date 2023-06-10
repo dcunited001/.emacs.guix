@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_storage_object
+# group: google.cloud
+# name: Creates a GCP Object
+# --
+- name: ${1:Creates a GCP Object}
+  google.cloud.gcp_storage_object:
+    action: ${2:# The actions to be taken on this object}
+    src: ${3:# Source location of file (may be local machine or cloud depending on action)}
+    dest: ${4:# Destination location of file (may be local machine or cloud depending on action)}
+    bucket: ${5:# The name of the bucket}
+    project: ${6:# The Google Cloud Platform project to use}
+    auth_kind: ${7:# The type of credential used}
+    service_account_contents: ${8:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${9:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${10:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${11:# Array of scopes to be used}
+    env_type: ${12:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_storage_object

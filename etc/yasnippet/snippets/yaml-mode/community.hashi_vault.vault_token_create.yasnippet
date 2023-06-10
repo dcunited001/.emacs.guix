@@ -1,0 +1,59 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.hashi_vault.vault_token_create
+# group: community.hashi_vault
+# name: Create a HashiCorp Vault token
+# --
+- name: ${1:Create a HashiCorp Vault token}
+  community.hashi_vault.vault_token_create:
+    url: ${2:# URL to the Vault service}
+    proxies: ${3:# URL(s) to the proxies used to access the Vault service}
+    ca_cert: ${4:# Path to certificate to use for authentication}
+    validate_certs: ${5:# Controls verification and validation of SSL certificates, mostly you only want to turn off with self signed ones}
+    namespace: ${6:# Vault namespace where secrets reside}
+    timeout: ${7:# Sets the connection timeout in seconds}
+    retries: ${8:# Allows for retrying on errors, based on the L(Retry class in the urllib3 library,https://urllib3}
+    retry_action: ${9:# Controls whether and how to show messages on I(retries)}
+    auth_method: ${10:# Authentication method to be used}
+    mount_point: ${11:# Vault mount point}
+    token: ${12:# Vault token}
+    token_path: ${13:# If no token is specified, will try to read the I(token_file) from this path}
+    token_file: ${14:# If no token is specified, will try to read the token from this file in I(token_path)}
+    token_validate: ${15:# For token auth, will perform a C(lookup-self) operation to determine the token's validity before using it}
+    username: ${16:# Authentication user name}
+    password: ${17:# Authentication password}
+    role_id: ${18:# Vault Role ID or name}
+    secret_id: ${19:# Secret ID to be used for Vault AppRole authentication}
+    jwt: ${20:# The JSON Web Token (JWT) to use for JWT authentication to Vault}
+    aws_profile: ${21:# The AWS profile}
+    aws_access_key: ${22:# The AWS access key to use}
+    aws_secret_key: ${23:# The AWS secret key that corresponds to the access key}
+    aws_security_token: ${24:# The AWS security token if using temporary access and secret keys}
+    region: ${25:# The AWS region for which to create the connection}
+    aws_iam_server_id: ${26:# If specified, sets the value to use for the C(X-Vault-AWS-IAM-Server-ID) header as part of C(GetCallerIdentity) request}
+    azure_tenant_id: ${27:# The Azure Active Directory Tenant ID (also known as the Directory ID) of the service principal}
+    azure_client_id: ${28:# The client ID (also known as application ID) of the Azure AD service principal or managed identity}
+    azure_client_secret: ${29:# The client secret of the Azure AD service principal}
+    azure_resource: ${30:# The resource URL for the application registered in Azure Active Directory}
+    cert_auth_public_key: ${31:# For C(cert) auth, path to the certificate file to authenticate with, in PEM format}
+    cert_auth_private_key: ${32:# For C(cert) auth, path to the private key file to authenticate with, in PEM format}
+    orphan: ${33:# When C(true), uses the C(/create-orphan) API endpoint, which requires C(sudo) (but not C(root)) to create an orphan}
+    no_parent: ${34:# This option only has effect if used by a C(root) or C(sudo) caller and only when I(orphan=false)}
+    no_default_policy: ${35:# If C(true) the default policy will not be contained in this token's policy set}
+    policies: ${36:# A list of policies for the token}
+    id: ${37:# The ID of the client token}
+    role_name: ${38:# The name of the token role}
+    meta: ${39:# A dict of string to string valued metadata}
+    renewable: ${40:# Set to C(false) to disable the ability of the token to be renewed past its initial TTL}
+    ttl: ${41:# The TTL period of the token, provided as C(1h) for example, where hour is the largest suffix}
+    type: ${42:# The token type}
+    explicit_max_ttl: ${43:# If set, the token will have an explicit max TTL set upon it}
+    display_name: ${44:# The display name of the token}
+    num_uses: ${45:# The maximum uses for the given token}
+    period: ${46:# If specified, the token will be periodic}
+    entity_alias: ${47:# Name of the entity alias to associate with during token creation}
+    wrap_ttl: ${48:# Specifies response wrapping token creation with duration}
+  tags:
+    - community
+    - hashi_vault
+    - vault_token_create

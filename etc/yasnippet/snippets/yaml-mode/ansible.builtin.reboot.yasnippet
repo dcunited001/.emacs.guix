@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.reboot
+# group: ansible.builtin
+# name: Reboot a machine
+# --
+- name: ${1:Reboot a machine}
+  ansible.builtin.reboot:
+    pre_reboot_delay: ${2:# Seconds to wait before reboot}
+    post_reboot_delay: ${3:# Seconds to wait after the reboot command was successful before attempting to validate the system rebooted successfully}
+    reboot_timeout: ${4:# Maximum seconds to wait for machine to reboot and respond to a test command}
+    connect_timeout: ${5:# Maximum seconds to wait for a successful connection to the managed hosts before trying again}
+    test_command: ${6:# Command to run on the rebooted host and expect success from to determine the machine is ready for further tasks}
+    msg: ${7:# Message to display to users before reboot}
+    search_paths: ${8:# Paths to search on the remote machine for the C(shutdown) command}
+    boot_time_command: ${9:# Command to run that returns a unique string indicating the last time the system was booted}
+    reboot_command: ${10:# Command to run that reboots the system, including any parameters passed to the command}
+  tags:
+    - reboot

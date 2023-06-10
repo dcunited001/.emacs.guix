@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_tag
+# group: containers.podman
+# name: Add an additional name to a local image
+# --
+- name: ${1:Add an additional name to a local image}
+  containers.podman.podman_tag:
+    image: ${2:# Image to tag}
+    target_names: ${3:# Additional names}
+    executable: ${4:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+  tags:
+    - containers
+    - podman
+    - podman_tag

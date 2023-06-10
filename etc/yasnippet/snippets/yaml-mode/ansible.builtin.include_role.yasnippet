@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.include_role
+# group: ansible.builtin
+# name: Load and execute a role
+# --
+- name: ${1:Load and execute a role}
+  ansible.builtin.include_role:
+    apply: ${2:# Accepts a hash of task keywords (e}
+    name: ${3:# The name of the role to be executed}
+    tasks_from: ${4:# File to load from a role's C(tasks/) directory}
+    vars_from: ${5:# File to load from a role's C(vars/) directory}
+    defaults_from: ${6:# File to load from a role's C(defaults/) directory}
+    allow_duplicates: ${7:# Overrides the role's metadata setting to allow using a role more than once with the same parameters}
+    public: ${8:# This option dictates whether the role's C(vars) and C(defaults) are exposed to the play}
+    handlers_from: ${9:# File to load from a role's C(handlers/) directory}
+    rolespec_validate: ${10:# Perform role argument spec validation if an argument spec is defined}
+  tags:
+    - include_role

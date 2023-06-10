@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_net
+# group: community.google
+# name: create/destroy GCE networks and firewall rules
+# --
+- name: ${1:create/destroy GCE networks and firewall rules}
+  community.google.gce_net:
+    allowed: ${2:# the protocol:ports to allow (I(tcp:80) or I(tcp:80,443) or I(tcp:80-800;udp:1-25)) this parameter is mandatory when creating or updating a firewall rule}
+    ipv4_range: ${3:# the IPv4 address range in CIDR notation for the network this parameter is not mandatory when you specified existing network in name parameter, but when you create new network, this parameter is mandatory}
+    fwname: ${4:# name of the firewall rule}
+    name: ${5:# name of the network}
+    src_range: ${6:# the source IPv4 address range in CIDR notation}
+    src_tags: ${7:# the source instance tags for creating a firewall rule}
+    target_tags: ${8:# the target instance tags for creating a firewall rule}
+    state: ${9:# desired state of the network or firewall}
+    service_account_email: ${10:# service account email}
+    pem_file: ${11:# path to the pem file associated with the service account email This option is deprecated}
+    credentials_file: ${12:# path to the JSON file associated with the service account email}
+    project_id: ${13:# your GCE project ID}
+    mode: ${14:# network mode for Google Cloud C(legacy) indicates a network with an IP address range; C(auto) automatically generates subnetworks in different regions; C(custom) uses networks to group subnets of user specified IP address ranges https://cloud}
+    subnet_name: ${15:# name of subnet to create}
+    subnet_region: ${16:# region of subnet to create}
+    subnet_desc: ${17:# description of subnet to create}
+  tags:
+    - community
+    - google
+    - gce_net

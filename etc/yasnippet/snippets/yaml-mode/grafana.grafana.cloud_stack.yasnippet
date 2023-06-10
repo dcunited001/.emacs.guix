@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: grafana.grafana.cloud_stack
+# group: grafana.grafana
+# name: Manage Grafana Cloud stack
+# --
+- name: ${1:Manage Grafana Cloud stack}
+  grafana.grafana.cloud_stack:
+    name: ${2:# Sets the name of stack}
+    stack_slug: ${3:# Sets the subdomain of the Grafana instance}
+    cloud_api_key: ${4:# Cloud API Key to authenticate with Grafana Cloud}
+    region: ${5:# Sets the region for the Grafana Cloud stack}
+    url: ${6:# If you use a custom domain for the instance, you can provide it here}
+    org_slug: ${7:# Name of the organization under which Cloud stack is created}
+    state: ${8:# State for the Grafana Cloud stack}
+  tags:
+    - grafana
+    - grafana
+    - cloud_stack

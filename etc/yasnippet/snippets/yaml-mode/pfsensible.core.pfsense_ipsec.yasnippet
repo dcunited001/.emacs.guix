@@ -1,0 +1,47 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_ipsec
+# group: pfsensible.core
+# name: Manage pfSense IPsec tunnels and phase 1 options
+# --
+- name: ${1:Manage pfSense IPsec tunnels and phase 1 options}
+  pfsensible.core.pfsense_ipsec:
+    iketype: ${2:# Internet Key Exchange protocol version to be used}
+    protocol: ${3:# IP family}
+    interface: ${4:# Interface for the local endpoint of this phase1 entry}
+    remote_gateway: ${5:# Public IP address or host name of the remote gateway}
+    nattport: ${6:# UDP port for NAT-T on the remote gateway}
+    disabled: ${7:# Set this option to disable this phase1 without removing it from the list}
+    authentication_method: ${8:# Authenticatin method}
+    mode: ${9:# Negotiation mode}
+    myid_type: ${10:# Local identifier type}
+    myid_data: ${11:# Local identifier value}
+    peerid_type: ${12:# Remote identifier type}
+    peerid_data: ${13:# Remote identifier value}
+    certificate: ${14:# a certificate previously configured}
+    certificate_authority: ${15:# a certificate authority previously configured}
+    preshared_key: ${16:# This key must match on both peers}
+    lifetime: ${17:# The lifetime defines how often the connection will be rekeyed, in seconds}
+    rekey_time: ${18:# Time, in seconds, before an IKE SA establishes new keys}
+    reauth_time: ${19:# Time, in seconds, before an IKE SA is torn down and recreated from scratch, including authentication}
+    rand_time: ${20:# A random value up to this amount will be subtracted from Rekey Time/Reauth Time to avoid simultaneous renegotiation}
+    disable_rekey: ${21:# Disables renegotiation when a connection is about to expire (deprecated with pfSense 2}
+    margintime: ${22:# How long before connection expiry or keying-channel expiry should attempt to negotiate a replacement begin (deprecated with pfSense 2}
+    startaction: ${23:# Set this option to force specific initiation/responder behavior for child SA (P2) entries}
+    closeaction: ${24:# Set this option to control the behavior when the remote peer unexpectedly closes a child SA (P2)}
+    responderonly: ${25:# Enable this option to never initiate this connection from this side, only respond to incoming requests}
+    disable_reauth: ${26:# (IKEv2 only) Whether rekeying of an IKE_SA should also reauthenticate the peer}
+    mobike: ${27:# (IKEv2 only) Set this option to control the use of MOBIKE}
+    gw_duplicates: ${28:# Allow multiple phase 1 configurations with the same endpoint}
+    splitconn: ${29:# (IKEv2 only) Enable this to split connection entries with multiple phase 2 configurations}
+    nat_traversal: ${30:# Set this option to enable the use of NAT-T (i}
+    enable_dpd: ${31:# Enable dead peer detection}
+    dpd_delay: ${32:# Delay between requesting peer acknowledgement}
+    dpd_maxfail: ${33:# Number of consecutive failures allowed before disconnect}
+    descr: ${34:# The description of the IPsec tunnel}
+    state: ${35:# State in which to leave the IPsec tunnel}
+    apply: ${36:# Apply VPN configuration on target pfSense}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_ipsec

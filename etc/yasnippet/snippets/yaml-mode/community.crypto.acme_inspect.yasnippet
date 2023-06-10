@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.acme_inspect
+# group: community.crypto
+# name: Send direct requests to an ACME server
+# --
+- name: ${1:Send direct requests to an ACME server}
+  community.crypto.acme_inspect:
+    url: ${2:# The URL to send the request to}
+    method: ${3:# The method to use to access the given URL on the ACME server}
+    content: ${4:# An encoded JSON object which will be sent as the content if I(method) is C(post)}
+    fail_on_acme_error: ${5:# If I(method) is C(post) or C(get), make the module fail in case an ACME error is returned}
+    account_key_src: ${6:# Path to a file containing the ACME account RSA or Elliptic Curve key}
+    account_key_content: ${7:# Content of the ACME account RSA or Elliptic Curve key}
+    account_key_passphrase: ${8:# Phassphrase to use to decode the account key}
+    account_uri: ${9:# If specified, assumes that the account URI is as given}
+    acme_version: ${10:# The ACME version of the endpoint}
+    acme_directory: ${11:# The ACME directory to use}
+    validate_certs: ${12:# Whether calls to the ACME directory will validate TLS certificates}
+    select_crypto_backend: ${13:# Determines which crypto backend to use}
+    request_timeout: ${14:# The time Ansible should wait for a response from the ACME API}
+  tags:
+    - community
+    - crypto
+    - acme_inspect

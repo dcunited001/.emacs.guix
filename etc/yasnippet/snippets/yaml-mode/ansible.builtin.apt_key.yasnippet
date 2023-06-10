@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.apt_key
+# group: ansible.builtin
+# name: Add or remove an apt key
+# --
+- name: ${1:Add or remove an apt key}
+  ansible.builtin.apt_key:
+    id: ${2:# The identifier of the key}
+    data: ${3:# The keyfile contents to add to the keyring}
+    file: ${4:# The path to a keyfile on the remote server to add to the keyring}
+    keyring: ${5:# The full path to specific keyring file in C(/etc/apt/trusted}
+    url: ${6:# The URL to retrieve key from}
+    keyserver: ${7:# The keyserver to retrieve key from}
+    state: ${8:# Ensures that the key is present (added) or absent (revoked)}
+    validate_certs: ${9:# If C(false), SSL certificates for the target url will not be validated}
+  tags:
+    - apt_key

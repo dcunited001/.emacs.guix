@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_ca
+# group: pfsensible.core
+# name: Manage pfSense Certificate Authorities
+# --
+- name: ${1:Manage pfSense Certificate Authorities}
+  pfsensible.core.pfsense_ca:
+    name: ${2:# The name of the Certificate Authority}
+    state: ${3:# State in which to leave the Certificate Authority}
+    trust: ${4:# Add this Certificate Authority to the Operating System Trust Store}
+    randomserial: ${5:# Use random serial numbers when signing certifices}
+    certificate: ${6:# The certificate for the Certificate Authority}
+    crl: ${7:# The Certificate Revocation List for the Certificate Authority}
+    crlname: ${8:# The name of the CRL}
+    crlrefid: ${9:# The refrence ID of the CRL}
+    serial: ${10:# Number to be used as a sequential serial number for the next certificate to be signed by this CA}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_ca

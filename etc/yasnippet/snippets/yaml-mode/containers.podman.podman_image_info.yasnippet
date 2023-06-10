@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_image_info
+# group: containers.podman
+# name: Gather info about images using podman
+# --
+- name: ${1:Gather info about images using podman}
+  containers.podman.podman_image_info:
+    executable: ${2:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+    name: ${3:# List of tags or UID to gather info about}
+  tags:
+    - containers
+    - podman
+    - podman_image_info

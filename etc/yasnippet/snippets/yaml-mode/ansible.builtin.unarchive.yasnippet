@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.unarchive
+# group: ansible.builtin
+# name: Unpacks an archive after (optionally) copying it from the local machine
+# --
+- name: ${1:Unpacks an archive after (optionally) copying it from the local machine}
+  ansible.builtin.unarchive:
+    src: ${2:# If C(remote_src=no) (default), local path to archive file to copy to the target server; can be absolute or relative}
+    dest: ${3:# Remote absolute path where the archive should be unpacked}
+    copy: ${4:# If true, the file is copied from local controller to the managed (remote) node, otherwise, the plugin will look for src archive on the managed machine}
+    creates: ${5:# If the specified absolute path (file or directory) already exists, this step will B(not) be run}
+    io_buffer_size: ${6:# Size of the volatile memory buffer that is used for extracting files from the archive in bytes}
+    list_files: ${7:# If set to True, return the list of files that are contained in the tarball}
+    exclude: ${8:# List the directory and file entries that you would like to exclude from the unarchive action}
+    include: ${9:# List of directory and file entries that you would like to extract from the archive}
+    keep_newer: ${10:# Do not replace existing files that are newer than files from the archive}
+    extra_opts: ${11:# Specify additional options by passing in an array}
+    remote_src: ${12:# Set to C(true) to indicate the archived file is already on the remote system and not local to the Ansible controller}
+    validate_certs: ${13:# This only applies if using a https URL as the source of the file}
+    decrypt: ${14:# This option controls the autodecryption of source files using vault}
+    mode: ${15:# The permissions the resulting filesystem object should have}
+    owner: ${16:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${17:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${18:# The user part of the SELinux filesystem object context}
+    serole: ${19:# The role part of the SELinux filesystem object context}
+    setype: ${20:# The type part of the SELinux filesystem object context}
+    selevel: ${21:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${22:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${23:# The attributes the resulting filesystem object should have}
+  tags:
+    - unarchive

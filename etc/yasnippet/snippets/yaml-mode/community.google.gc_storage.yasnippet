@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gc_storage
+# group: community.google
+# name: This module manages objects/buckets in Google Cloud Storage
+# --
+- name: ${1:This module manages objects/buckets in Google Cloud Storage}
+  community.google.gc_storage:
+    bucket: ${2:# Bucket name}
+    object: ${3:# Keyname of the object inside the bucket}
+    src: ${4:# The source file path when performing a PUT operation}
+    dest: ${5:# The destination file path when downloading an object/key with a GET operation}
+    overwrite: ${6:# Forces an overwrite either locally on the filesystem or remotely with the object/key}
+    permission: ${7:# This option let's the user set the canned permissions on the object/bucket that are created}
+    headers: ${8:# Headers to attach to object}
+    expiration: ${9:# Time limit (in seconds) for the URL generated and returned by GCA when performing a mode=put or mode=get_url operation}
+    mode: ${10:# Switches the module behaviour between upload, download, get_url (return download url) , get_str (download object as string), create (bucket) and delete (bucket)}
+    gs_secret_key: ${11:# GS secret key}
+    gs_access_key: ${12:# GS access key}
+    region: ${13:# The gs region to use}
+    versioning: ${14:# Whether versioning is enabled or disabled (note that once versioning is enabled, it can only be suspended)}
+  tags:
+    - community
+    - google
+    - gc_storage

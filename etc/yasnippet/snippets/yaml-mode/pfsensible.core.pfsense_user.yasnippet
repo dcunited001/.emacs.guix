@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_user
+# group: pfsensible.core
+# name: Manage pfSense users
+# --
+- name: ${1:Manage pfSense users}
+  pfsensible.core.pfsense_user:
+    name: ${2:# The name of the user}
+    state: ${3:# State in which to leave the user}
+    descr: ${4:# Description of the user}
+    scope: ${5:# Scope of the user ('user' is a normal user, use 'system' for 'admin' user)}
+    uid: ${6:# UID of the user}
+    groups: ${7:# Groups of the user}
+    password: ${8:# bcrypt encrypted password of the user}
+    priv: ${9:# A list of privileges to assign}
+    authorizedkeys: ${10:# Contents of ~/}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_user

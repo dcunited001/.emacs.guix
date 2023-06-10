@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.meta
+# group: ansible.builtin
+# name: Execute Ansible 'actions'
+# --
+- name: ${1:Execute Ansible 'actions'}
+  ansible.builtin.meta:
+    free_form: ${2:# This module takes a free form command, as a string}
+  tags:
+    - meta

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.acme_challenge_cert_helper
+# group: community.crypto
+# name: Prepare certificates required for ACME challenges such as C(tls-alpn-01)
+# --
+- name: ${1:Prepare certificates required for ACME challenges such as C(tls-alpn-01)}
+  community.crypto.acme_challenge_cert_helper:
+    challenge: ${2:# The challenge type}
+    challenge_data: ${3:# The C(challenge_data) entry provided by M(community}
+    private_key_src: ${4:# Path to a file containing the private key file to use for this challenge certificate}
+    private_key_content: ${5:# Content of the private key to use for this challenge certificate}
+    private_key_passphrase: ${6:# Phassphrase to use to decode the private key}
+  tags:
+    - community
+    - crypto
+    - acme_challenge_cert_helper

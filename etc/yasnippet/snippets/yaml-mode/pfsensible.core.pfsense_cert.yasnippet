@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_cert
+# group: pfsensible.core
+# name: Manage pfSense certificates
+# --
+- name: ${1:Manage pfSense certificates}
+  pfsensible.core.pfsense_cert:
+    name: ${2:# The name of the certificate}
+    ca: ${3:# The Certificate Authority}
+    keytype: ${4:# The type of key to generate}
+    digestalg: ${5:# The digest method used when the certificate is signed}
+    ecname: ${6:# The Elliptic Curve Name to use when generating a new ECDSA key}
+    keylen: ${7:# The length to use when generating a new RSA key, in bits}
+    lifetime: ${8:# The length of time the signed certificate will be valid, in days}
+    dn_country: ${9:# The Country Code}
+    dn_state: ${10:# The State or Province}
+    dn_city: ${11:# The City}
+    dn_organization: ${12:# The Organization}
+    dn_organizationalunit: ${13:# The Organizational Unit}
+    altnames: ${14:# The Alternative Names}
+    certificate: ${15:# The certificate to import}
+    key: ${16:# The key to import}
+    state: ${17:# State in which to leave the certificate}
+    method: ${18:# Method of the certificate created}
+    certtype: ${19:# Type of the certificate ('user' is a certificate for the user)}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_cert

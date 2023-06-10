@@ -1,0 +1,45 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_log_settings
+# group: pfsensible.core
+# name: Manage pfSense syslog settings
+# --
+- name: ${1:Manage pfSense syslog settings}
+  pfsensible.core.pfsense_log_settings:
+    logformat: ${2:# Log Message Format}
+    reverse: ${3:# Show log entries in reverse order (newest entries on top)}
+    nentries: ${4:# GUI Log Entries}
+    nologdefaultblock: ${5:# Don't log packets that are blocked by the implicit default block rule}
+    nologdefaultpass: ${6:# Don't log packets that are allowed by the implicit default pass rule}
+    nologbogons: ${7:# Don't log packets blocked by 'Block Bogon Networks' rules}
+    nologprivatenets: ${8:# Don't log packets blocked by 'Block Private Networks' rules}
+    nolognginx: ${9:# Don't log errors from the web server process}
+    rawfilter: ${10:# Show raw filter logs}
+    filterdescriptions: ${11:# Where to show rule descriptions}
+    disablelocallogging: ${12:# Disable writing log files to the local disk}
+    logfilesize: ${13:# Log Rotation Size (Bytes)}
+    logcompressiontype: ${14:# The type of compression to use when rotating log files}
+    rotatecount: ${15:# The number of log files to keep before the oldest copy is removed on rotation}
+    enable: ${16:# Enable Remote logging}
+    sourceip: ${17:# Source Address}
+    ipproto: ${18:# IP Protocol}
+    remoteserver: ${19:# First Remote log server (IP Address or Hostname/FQDN)}
+    remoteserver2: ${20:# Second Remote log server (IP Address or Hostname/FQDN)}
+    remoteserver3: ${21:# Third Remote log server (IP Address or Hostname/FQDN)}
+    logall: ${22:# Log Everything}
+    system: ${23:# Include System Events}
+    logfilter: ${24:# Include Firewall Events}
+    resolver: ${25:# Include DNS Events (Resolver/unbound, Forwarder/dnsmasq, filterdns)}
+    dhcp: ${26:# Include DHCP Events (DHCP Daemon, DHCP Relay, DHCP Client)}
+    ppp: ${27:# Include PPP Events (PPPoE WAN Client, L2TP WAN Client, PPTP WAN Client)}
+    auth: ${28:# Include General Authentication Events}
+    portalauth: ${29:# Include Captive Portal Events}
+    vpn: ${30:# Include VPN Events (IPsec, OpenVPN, L2TP, PPPoE Server)}
+    dpinger: ${31:# Include Gateway Monitor Events}
+    routing: ${32:# Include Routing Daemon Events (RADVD, UPnP, RIP, OSPF, BGP)}
+    ntpd: ${33:# Include Network Time Protocol Events (NTP Daemon, NTP Client)}
+    hostapd: ${34:# Wireless Events (hostapd)}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_log_settings

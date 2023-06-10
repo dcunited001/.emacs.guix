@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_target_https_proxy
+# group: google.cloud
+# name: Creates a GCP TargetHttpsProxy
+# --
+- name: ${1:Creates a GCP TargetHttpsProxy}
+  google.cloud.gcp_compute_target_https_proxy:
+    state: ${2:# Whether the given object should exist in GCP}
+    description: ${3:# An optional description of this resource}
+    name: ${4:# Name of the resource}
+    quic_override: ${5:# Specifies the QUIC override policy for this resource}
+    ssl_certificates: ${6:# A list of SslCertificate resources that are used to authenticate connections between users and the load balancer}
+    ssl_policy: ${7:# A reference to the SslPolicy resource that will be associated with the TargetHttpsProxy resource}
+    url_map: ${8:# A reference to the UrlMap resource that defines the mapping from URL to the BackendService}
+    proxy_bind: ${9:# This field only applies when the forwarding rule that references this target proxy has a loadBalancingScheme set to INTERNAL_SELF_MANAGED}
+    project: ${10:# The Google Cloud Platform project to use}
+    auth_kind: ${11:# The type of credential used}
+    service_account_contents: ${12:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${13:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${14:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${15:# Array of scopes to be used}
+    env_type: ${16:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_target_https_proxy

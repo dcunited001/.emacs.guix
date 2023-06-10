@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.debug
+# group: ansible.builtin
+# name: Print statements during execution
+# --
+- name: ${1:Print statements during execution}
+  ansible.builtin.debug:
+    msg: ${2:# The customized message that is printed}
+    var: ${3:# A variable name to debug}
+    verbosity: ${4:# A number that controls when the debug is run, if you set to 3 it will only run debug when -vvv or above}
+  tags:
+    - debug

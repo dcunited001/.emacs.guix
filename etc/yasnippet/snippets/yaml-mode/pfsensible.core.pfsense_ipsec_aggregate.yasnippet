@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_ipsec_aggregate
+# group: pfsensible.core
+# name: Manage multiple pfSense IPsec tunnels, phases 1, phases 2 and proposals
+# --
+- name: ${1:Manage multiple pfSense IPsec tunnels, phases 1, phases 2 and proposals}
+  pfsensible.core.pfsense_ipsec_aggregate:
+    aggregated_ipsecs: ${2:# Dict of IPsec tunnels and phase 1 options to apply on the target}
+    aggregated_ipsec_proposals: ${3:# Dict of IPsec proposals to apply on the target}
+    aggregated_ipsec_p2s: ${4:# Dict of IPsec tunnels phase 2 options to apply on the target}
+    purge_ipsecs: ${5:# delete all the IPsec tunnels that are not defined into aggregated_ipsecs}
+    purge_ipsec_proposals: ${6:# delete all the phase1 proposals that are not defined into aggregated_ipsec_proposals}
+    purge_ipsec_p2s: ${7:# delete all the phase2 that are not defined into aggregated_ipsec_p2s}
+    apply: ${8:# Apply VPN configuration on target pfSense}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_ipsec_aggregate

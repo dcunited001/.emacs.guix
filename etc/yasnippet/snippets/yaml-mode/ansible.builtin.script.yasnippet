@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.script
+# group: ansible.builtin
+# name: Runs a local script on a remote node after transferring it
+# --
+- name: ${1:Runs a local script on a remote node after transferring it}
+  ansible.builtin.script:
+    free_form: ${2:# Path to the local script file followed by optional arguments}
+    cmd: ${3:# Path to the local script to run followed by optional arguments}
+    creates: ${4:# A filename on the remote node, when it already exists, this step will B(not) be run}
+    removes: ${5:# A filename on the remote node, when it does not exist, this step will B(not) be run}
+    chdir: ${6:# Change into this directory on the remote node before running the script}
+    executable: ${7:# Name or path of a executable to invoke the script with}
+    decrypt: ${8:# This option controls the autodecryption of source files using vault}
+  tags:
+    - script

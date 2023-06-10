@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_dns_managed_zone
+# group: google.cloud
+# name: Creates a GCP ManagedZone
+# --
+- name: ${1:Creates a GCP ManagedZone}
+  google.cloud.gcp_dns_managed_zone:
+    state: ${2:# Whether the given object should exist in GCP}
+    description: ${3:# A mutable string of at most 1024 characters associated with this resource for the user's convenience}
+    dns_name: ${4:# The DNS name of this managed zone, for instance 'example}
+    dnssec_config: ${5:# DNSSEC configuration}
+    name: ${6:# User assigned name for this resource}
+    name_server_set: ${7:# Optionally specifies the NameServerSet for this ManagedZone}
+    labels: ${8:# A set of key/value label pairs to assign to this ManagedZone}
+    visibility: ${9:# The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources}
+    private_visibility_config: ${10:# For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from}
+    forwarding_config: ${11:# The presence for this field indicates that outbound forwarding is enabled for this zone}
+    peering_config: ${12:# The presence of this field indicates that DNS Peering is enabled for this zone}
+    project: ${13:# The Google Cloud Platform project to use}
+    auth_kind: ${14:# The type of credential used}
+    service_account_contents: ${15:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${16:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${17:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${18:# Array of scopes to be used}
+    env_type: ${19:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_dns_managed_zone

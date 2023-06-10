@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.luks_device
+# group: community.crypto
+# name: Manage encrypted (LUKS) devices
+# --
+- name: ${1:Manage encrypted (LUKS) devices}
+  community.crypto.luks_device:
+    device: ${2:# Device to work with (for example C(/dev/sda1))}
+    state: ${3:# Desired state of the LUKS container}
+    name: ${4:# Sets container name when I(state=opened)}
+    keyfile: ${5:# Used to unlock the container}
+    passphrase: ${6:# Used to unlock the container}
+    keysize: ${7:# Sets the key size only if LUKS container does not exist}
+    new_keyfile: ${8:# Adds additional key to given container on I(device)}
+    new_passphrase: ${9:# Adds additional passphrase to given container on I(device)}
+    remove_keyfile: ${10:# Removes given key from the container on I(device)}
+    remove_passphrase: ${11:# Removes given passphrase from the container on I(device)}
+    force_remove_last_key: ${12:# If set to C(true), allows removing the last key from a container}
+    label: ${13:# This option allow the user to create a LUKS2 format container with label support, respectively to identify the container by label on later usages}
+    uuid: ${14:# With this option user can identify the LUKS container by UUID}
+    type: ${15:# This option allow the user explicit define the format of LUKS container that wants to work with}
+    cipher: ${16:# This option allows the user to define the cipher specification string for the LUKS container}
+    hash: ${17:# This option allows the user to specify the hash function used in LUKS key setup scheme and volume key digest}
+    pbkdf: ${18:# This option allows the user to configure the Password-Based Key Derivation Function (PBKDF) used}
+    sector_size: ${19:# This option allows the user to specify the sector size (in bytes) used for LUKS2 containers}
+    perf_same_cpu_crypt: ${20:# Allows the user to perform encryption using the same CPU that IO was submitted on}
+    perf_submit_from_crypt_cpus: ${21:# Allows the user to disable offloading writes to a separate thread after encryption}
+    perf_no_read_workqueue: ${22:# Allows the user to bypass dm-crypt internal workqueue and process read requests synchronously}
+    perf_no_write_workqueue: ${23:# Allows the user to bypass dm-crypt internal workqueue and process write requests synchronously}
+    persistent: ${24:# Allows the user to store options into container's metadata persistently and automatically use them next time}
+  tags:
+    - community
+    - crypto
+    - luks_device

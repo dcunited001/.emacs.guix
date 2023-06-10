@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.blockinfile
+# group: ansible.builtin
+# name: Insert/update/remove a text block surrounded by marker lines
+# --
+- name: ${1:Insert/update/remove a text block surrounded by marker lines}
+  ansible.builtin.blockinfile:
+    path: ${2:# The file to modify}
+    state: ${3:# Whether the block should be there or not}
+    marker: ${4:# The marker line template}
+    block: ${5:# The text to insert inside the marker lines}
+    insertafter: ${6:# If specified and no begin/ending C(marker) lines are found, the block will be inserted after the last match of specified regular expression}
+    insertbefore: ${7:# If specified and no begin/ending C(marker) lines are found, the block will be inserted before the last match of specified regular expression}
+    create: ${8:# Create a new file if it does not exist}
+    backup: ${9:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    marker_begin: ${10:# This will be inserted at C({mark}) in the opening ansible block marker}
+    marker_end: ${11:# This will be inserted at C({mark}) in the closing ansible block marker}
+    mode: ${12:# The permissions the resulting filesystem object should have}
+    owner: ${13:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${14:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${15:# The user part of the SELinux filesystem object context}
+    serole: ${16:# The role part of the SELinux filesystem object context}
+    setype: ${17:# The type part of the SELinux filesystem object context}
+    selevel: ${18:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${19:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${20:# The attributes the resulting filesystem object should have}
+    validate: ${21:# The validation command to run before copying the updated file into the final destination}
+  tags:
+    - blockinfile

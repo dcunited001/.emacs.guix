@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_instance_template
+# group: community.google
+# name: create or destroy instance templates of Compute Engine of GCP
+# --
+- name: ${1:create or destroy instance templates of Compute Engine of GCP}
+  community.google.gce_instance_template:
+    state: ${2:# The desired state for the instance template}
+    name: ${3:# The name of the GCE instance template}
+    size: ${4:# The desired machine type for the instance template}
+    source: ${5:# A source disk to attach to the instance}
+    image: ${6:# The image to use to create the instance}
+    image_family: ${7:# The image family to use to create the instance}
+    disk_type: ${8:# Specify a C(pd-standard) disk or C(pd-ssd) for an SSD disk}
+    disk_auto_delete: ${9:# Indicate that the boot disk should be deleted when the Node is deleted}
+    network: ${10:# The network to associate with the instance}
+    subnetwork: ${11:# The Subnetwork resource name for this instance}
+    can_ip_forward: ${12:# Set to C(yes) to allow instance to send/receive non-matching src/dst packets}
+    external_ip: ${13:# The external IP address to use}
+    service_account_email: ${14:# service account email}
+    service_account_permissions: ${15:# service account permissions (see U(https://cloud}
+    automatic_restart: ${16:# Defines whether the instance should be automatically restarted when it is terminated by Compute Engine}
+    preemptible: ${17:# Defines whether the instance is preemptible}
+    tags: ${18:# a comma-separated list of tags to associate with the instance}
+    metadata: ${19:# a hash/dictionary of custom data for the instance; '{'key':'value', }
+    description: ${20:# description of instance template}
+    disks: ${21:# a list of persistent disks to attach to the instance; a string value gives the name of the disk; alternatively, a dictionary value can define 'name' and 'mode' ('READ_ONLY' or 'READ_WRITE')}
+    nic_gce_struct: ${22:# Support passing in the GCE-specific formatted networkInterfaces[] structure}
+    disks_gce_struct: ${23:# Support passing in the GCE-specific formatted formatted disks[] structure}
+    project_id: ${24:# your GCE project ID}
+    pem_file: ${25:# path to the pem file associated with the service account email This option is deprecated}
+    credentials_file: ${26:# path to the JSON file associated with the service account email}
+    subnetwork_region: ${27:# Region that subnetwork resides in}
+  tags:
+    - community
+    - google
+    - gce_instance_template

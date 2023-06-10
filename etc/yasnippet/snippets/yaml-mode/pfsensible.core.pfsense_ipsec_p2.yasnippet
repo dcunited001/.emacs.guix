@@ -1,0 +1,43 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_ipsec_p2
+# group: pfsensible.core
+# name: Manage pfSense IPsec tunnels phase 2 options
+# --
+- name: ${1:Manage pfSense IPsec tunnels phase 2 options}
+  pfsensible.core.pfsense_ipsec_p2:
+    disabled: ${2:# Set this option to disable this phase2 without removing it from the list}
+    mode: ${3:# Method for managing IPsec traffic}
+    local: ${4:# Local network component of this IPsec security association}
+    nat: ${5:# If NAT/BINAT is required on the local network specify the address to be translated}
+    remote: ${6:# Remote network component of this IPsec security association}
+    protocol: ${7:# Encapsulating Security Payload (ESP) is encryption, Authentication Header (AH) is authentication only}
+    aes: ${8:# Set this option to enable AES encryption}
+    aes_len: ${9:# AES encryption key length}
+    aes128gcm: ${10:# Set this option to enable AES128-GCM encryption}
+    aes128gcm_len: ${11:# AES128-GCM encryption key length}
+    aes192gcm: ${12:# Set this option to enable AES192-GCM encryption}
+    aes192gcm_len: ${13:# AES192-GCM encryption key length}
+    aes256gcm: ${14:# Set this option to enable AES256-GCM encryption}
+    aes256gcm_len: ${15:# AES256-GCM encryption key length}
+    blowfish: ${16:# Set this option to enable Blowfish encryption}
+    blowfish_len: ${17:# AES encryption key length}
+    des: ${18:# Set this option to enable 3DES encryption}
+    cast128: ${19:# Set this option to enable CAST128 encryption}
+    md5: ${20:# Set this option to enable MD5 hashing}
+    sha1: ${21:# Set this option to enable SHA1 hashing}
+    sha256: ${22:# Set this option to enable SHA256 hashing}
+    sha384: ${23:# Set this option to enable SHA384 hashing}
+    sha512: ${24:# Set this option to enable SHA512 hashing}
+    aesxcbc: ${25:# Set this option to enable AES-XCBC hashing}
+    pfsgroup: ${26:# PFS key group, 0 for off}
+    lifetime: ${27:# Specifies how often the connection must be rekeyed, in seconds}
+    pinghost: ${28:# Automatically ping host}
+    descr: ${29:# The description of the IPsec tunnel phase2}
+    p1_descr: ${30:# The description of the IPsec tunnel}
+    state: ${31:# State in which to leave the IPsec tunnel phase2}
+    apply: ${32:# Apply VPN configuration on target pfSense}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_ipsec_p2

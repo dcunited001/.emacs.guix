@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssl_privatekey
+# group: community.crypto
+# name: Generate OpenSSL private keys
+# --
+- name: ${1:Generate OpenSSL private keys}
+  community.crypto.openssl_privatekey:
+    state: ${2:# Whether the private key should exist or not, taking action if the state is different from what is stated}
+    force: ${3:# Should the key be regenerated even if it already exists}
+    path: ${4:# Name of the file in which the generated TLS/SSL private key will be written}
+    format: ${5:# Determines which format the private key is written in}
+    format_mismatch: ${6:# Determines behavior of the module if the format of a private key does not match the expected format, but all other parameters are as expected}
+    backup: ${7:# Create a backup file including a timestamp so you can get the original private key back if you overwrote it with a new one by accident}
+    return_content: ${8:# If set to C(true), will return the (current or generated) private key's content as I(privatekey)}
+    regenerate: ${9:# Allows to configure in which situations the module is allowed to regenerate private keys}
+    mode: ${10:# The permissions the resulting filesystem object should have}
+    owner: ${11:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${12:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${13:# The user part of the SELinux filesystem object context}
+    serole: ${14:# The role part of the SELinux filesystem object context}
+    setype: ${15:# The type part of the SELinux filesystem object context}
+    selevel: ${16:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${17:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${18:# The attributes the resulting filesystem object should have}
+    size: ${19:# Size (in bits) of the TLS/SSL key to generate}
+    type: ${20:# The algorithm used to generate the TLS/SSL private key}
+    curve: ${21:# Note that not all curves are supported by all versions of C(cryptography)}
+    passphrase: ${22:# The passphrase for the private key}
+    cipher: ${23:# The cipher to encrypt the private key}
+    select_crypto_backend: ${24:# Determines which crypto backend to use}
+  tags:
+    - community
+    - crypto
+    - openssl_privatekey

@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.replace
+# group: ansible.builtin
+# name: Replace all instances of a particular string in a file using a back-referenced regular expression
+# --
+- name: ${1:Replace all instances of a particular string in a file using a back-referenced regular expression}
+  ansible.builtin.replace:
+    path: ${2:# The file to modify}
+    regexp: ${3:# The regular expression to look for in the contents of the file}
+    replace: ${4:# The string to replace regexp matches}
+    after: ${5:# If specified, only content after this match will be replaced/removed}
+    before: ${6:# If specified, only content before this match will be replaced/removed}
+    backup: ${7:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    others: ${8:# All arguments accepted by the M(ansible}
+    encoding: ${9:# The character encoding for reading and writing the file}
+    mode: ${10:# The permissions the resulting filesystem object should have}
+    owner: ${11:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${12:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${13:# The user part of the SELinux filesystem object context}
+    serole: ${14:# The role part of the SELinux filesystem object context}
+    setype: ${15:# The type part of the SELinux filesystem object context}
+    selevel: ${16:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${17:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${18:# The attributes the resulting filesystem object should have}
+    validate: ${19:# The validation command to run before copying the updated file into the final destination}
+  tags:
+    - replace

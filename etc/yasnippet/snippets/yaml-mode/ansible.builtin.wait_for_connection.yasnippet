@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.wait_for_connection
+# group: ansible.builtin
+# name: Waits until remote system is reachable/usable
+# --
+- name: ${1:Waits until remote system is reachable/usable}
+  ansible.builtin.wait_for_connection:
+    connect_timeout: ${2:# Maximum number of seconds to wait for a connection to happen before closing and retrying}
+    delay: ${3:# Number of seconds to wait before starting to poll}
+    sleep: ${4:# Number of seconds to sleep between checks}
+    timeout: ${5:# Maximum number of seconds to wait for}
+  tags:
+    - wait_for_connection

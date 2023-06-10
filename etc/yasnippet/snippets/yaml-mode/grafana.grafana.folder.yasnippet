@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: grafana.grafana.folder
+# group: grafana.grafana
+# name: Manage Folders in Grafana Cloud
+# --
+- name: ${1:Manage Folders in Grafana Cloud}
+  grafana.grafana.folder:
+    title: ${2:# Sets the title of the folder}
+    uid: ${3:# Sets the UID for your folder}
+    overwrite: ${4:# Set to C(false) if you dont want to overwrite existing folder with newer version}
+    grafana_api_key: ${5:# Grafana API Key to authenticate with Grafana}
+    stack_slug: ${6:# Name of the Grafana Cloud stack to which the folder will be added}
+    state: ${7:# State for the Grafana Cloud stack}
+  tags:
+    - grafana
+    - grafana
+    - folder

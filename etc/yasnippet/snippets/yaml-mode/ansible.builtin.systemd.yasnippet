@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.systemd
+# group: ansible.builtin
+# name: Manage systemd units
+# --
+- name: ${1:Manage systemd units}
+  ansible.builtin.systemd:
+    name: ${2:# Name of the unit}
+    state: ${3:# C(started)/C(stopped) are idempotent actions that will not run commands unless necessary}
+    enabled: ${4:# Whether the unit should start on boot}
+    force: ${5:# Whether to override existing symlinks}
+    masked: ${6:# Whether the unit should be masked or not, a masked unit is impossible to start}
+    daemon_reload: ${7:# Run daemon-reload before doing any other operations, to make sure systemd has read any changes}
+    daemon_reexec: ${8:# Run daemon_reexec command before doing any other operations, the systemd manager will serialize the manager state}
+    scope: ${9:# Run systemctl within a given service manager scope, either as the default system scope C(system), the current user's scope C(user), or the scope of all users C(global)}
+    no_block: ${10:# Do not synchronously wait for the requested operation to finish}
+  tags:
+    - systemd

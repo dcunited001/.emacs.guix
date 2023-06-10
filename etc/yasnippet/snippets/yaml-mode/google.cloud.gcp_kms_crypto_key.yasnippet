@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_kms_crypto_key
+# group: google.cloud
+# name: Creates a GCP CryptoKey
+# --
+- name: ${1:Creates a GCP CryptoKey}
+  google.cloud.gcp_kms_crypto_key:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# The resource name for the CryptoKey}
+    labels: ${4:# Labels with user-defined metadata to apply to this resource}
+    purpose: ${5:# Immutable purpose of CryptoKey}
+    rotation_period: ${6:# Every time this period passes, generate a new CryptoKeyVersion and set it as the primary}
+    version_template: ${7:# A template describing settings for new crypto key versions}
+    key_ring: ${8:# The KeyRing that this key belongs to}
+    skip_initial_version_creation: ${9:# If set to true, the request will create a CryptoKey without any CryptoKeyVersions}
+    project: ${10:# The Google Cloud Platform project to use}
+    auth_kind: ${11:# The type of credential used}
+    service_account_contents: ${12:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${13:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${14:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${15:# Array of scopes to be used}
+    env_type: ${16:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_kms_crypto_key

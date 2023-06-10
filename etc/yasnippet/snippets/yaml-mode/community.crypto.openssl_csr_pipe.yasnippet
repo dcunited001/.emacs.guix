@@ -1,0 +1,48 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssl_csr_pipe
+# group: community.crypto
+# name: Generate OpenSSL Certificate Signing Request (CSR)
+# --
+- name: ${1:Generate OpenSSL Certificate Signing Request (CSR)}
+  community.crypto.openssl_csr_pipe:
+    content: ${2:# The existing CSR}
+    digest: ${3:# The digest used when signing the certificate signing request with the private key}
+    privatekey_path: ${4:# The path to the private key to use when signing the certificate signing request}
+    privatekey_content: ${5:# The content of the private key to use when signing the certificate signing request}
+    privatekey_passphrase: ${6:# The passphrase for the private key}
+    version: ${7:# The version of the certificate signing request}
+    subject: ${8:# Key/value pairs that will be present in the subject name field of the certificate signing request}
+    subject_ordered: ${9:# A list of dictionaries, where every dictionary must contain one key/value pair}
+    country_name: ${10:# The countryName field of the certificate signing request subject}
+    state_or_province_name: ${11:# The stateOrProvinceName field of the certificate signing request subject}
+    locality_name: ${12:# The localityName field of the certificate signing request subject}
+    organization_name: ${13:# The organizationName field of the certificate signing request subject}
+    organizational_unit_name: ${14:# The organizationalUnitName field of the certificate signing request subject}
+    common_name: ${15:# The commonName field of the certificate signing request subject}
+    email_address: ${16:# The emailAddress field of the certificate signing request subject}
+    subject_alt_name: ${17:# Subject Alternative Name (SAN) extension to attach to the certificate signing request}
+    subject_alt_name_critical: ${18:# Should the subjectAltName extension be considered as critical}
+    use_common_name_for_san: ${19:# If set to C(true), the module will fill the common name in for C(subject_alt_name) with C(DNS:) prefix if no SAN is specified}
+    key_usage: ${20:# This defines the purpose (for example encipherment, signature, certificate signing) of the key contained in the certificate}
+    key_usage_critical: ${21:# Should the keyUsage extension be considered as critical}
+    extended_key_usage: ${22:# Additional restrictions (for example client authentication, server authentication) on the allowed purposes for which the public key may be used}
+    extended_key_usage_critical: ${23:# Should the extkeyUsage extension be considered as critical}
+    basic_constraints: ${24:# Indicates basic constraints, such as if the certificate is a CA}
+    basic_constraints_critical: ${25:# Should the basicConstraints extension be considered as critical}
+    ocsp_must_staple: ${26:# Indicates that the certificate should contain the OCSP Must Staple extension (U(https://tools}
+    ocsp_must_staple_critical: ${27:# Should the OCSP Must Staple extension be considered as critical}
+    name_constraints_permitted: ${28:# For CA certificates, this specifies a list of identifiers which describe subtrees of names that this CA is allowed to issue certificates for}
+    name_constraints_excluded: ${29:# For CA certificates, this specifies a list of identifiers which describe subtrees of names that this CA is B(not) allowed to issue certificates for}
+    name_constraints_critical: ${30:# Should the Name Constraints extension be considered as critical}
+    select_crypto_backend: ${31:# Determines which crypto backend to use}
+    create_subject_key_identifier: ${32:# Create the Subject Key Identifier from the public key}
+    subject_key_identifier: ${33:# The subject key identifier as a hex string, where two bytes are separated by colons}
+    authority_key_identifier: ${34:# The authority key identifier as a hex string, where two bytes are separated by colons}
+    authority_cert_issuer: ${35:# Names that will be present in the authority cert issuer field of the certificate signing request}
+    authority_cert_serial_number: ${36:# The authority cert serial number}
+    crl_distribution_points: ${37:# Allows to specify one or multiple CRL distribution points}
+  tags:
+    - community
+    - crypto
+    - openssl_csr_pipe

@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_sql_instance
+# group: google.cloud
+# name: Creates a GCP Instance
+# --
+- name: ${1:Creates a GCP Instance}
+  google.cloud.gcp_sql_instance:
+    state: ${2:# Whether the given object should exist in GCP}
+    backend_type: ${3:# * FIRST_GEN: First Generation instance}
+    connection_name: ${4:# Connection name of the Cloud SQL instance used in connection strings}
+    database_version: ${5:# The database engine type and version}
+    failover_replica: ${6:# The name and status of the failover replica}
+    instance_type: ${7:# The instance type}
+    ipv6_address: ${8:# The IPv6 address assigned to the instance}
+    master_instance_name: ${9:# The name of the instance which will act as master in the replication setup}
+    max_disk_size: ${10:# The maximum disk size of the instance in bytes}
+    name: ${11:# Name of the Cloud SQL instance}
+    region: ${12:# The geographical region}
+    replica_configuration: ${13:# Configuration specific to failover replicas and read replicas}
+    settings: ${14:# The user settings}
+    disk_encryption_configuration: ${15:# Disk encryption settings}
+    disk_encryption_status: ${16:# Disk encryption status}
+    project: ${17:# The Google Cloud Platform project to use}
+    auth_kind: ${18:# The type of credential used}
+    service_account_contents: ${19:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${20:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${21:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${22:# Array of scopes to be used}
+    env_type: ${23:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_sql_instance

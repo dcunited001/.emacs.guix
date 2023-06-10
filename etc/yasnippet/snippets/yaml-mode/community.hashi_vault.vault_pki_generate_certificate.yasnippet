@@ -1,0 +1,54 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.hashi_vault.vault_pki_generate_certificate
+# group: community.hashi_vault
+# name: Generates a new set of credentials (private key and certificate) using HashiCorp Vault PKI
+# --
+- name: ${1:Generates a new set of credentials (private key and certificate) using HashiCorp Vault PKI}
+  community.hashi_vault.vault_pki_generate_certificate:
+    alt_names: ${2:# Specifies requested Subject Alternative Names}
+    common_name: ${3:# Specifies the requested CN for the certificate}
+    exclude_cn_from_sans: ${4:# If true, the given I(common_name) will not be included in DNS or Email Subject Alternate Names (as appropriate)}
+    format: ${5:# Specifies the format for returned data}
+    ip_sans: ${6:# Specifies requested IP Subject Alternative Names}
+    role_name: ${7:# Specifies the name of the role to create the certificate against}
+    other_sans: ${8:# Specifies custom OID/UTF8-string SANs}
+    engine_mount_point: ${9:# Specify the mount point used by the PKI engine}
+    private_key_format: ${10:# Specifies the format for marshaling the private key}
+    ttl: ${11:# Specifies requested Time To Live}
+    uri_sans: ${12:# Specifies the requested URI Subject Alternative Names}
+    url: ${13:# URL to the Vault service}
+    proxies: ${14:# URL(s) to the proxies used to access the Vault service}
+    ca_cert: ${15:# Path to certificate to use for authentication}
+    validate_certs: ${16:# Controls verification and validation of SSL certificates, mostly you only want to turn off with self signed ones}
+    namespace: ${17:# Vault namespace where secrets reside}
+    timeout: ${18:# Sets the connection timeout in seconds}
+    retries: ${19:# Allows for retrying on errors, based on the L(Retry class in the urllib3 library,https://urllib3}
+    retry_action: ${20:# Controls whether and how to show messages on I(retries)}
+    auth_method: ${21:# Authentication method to be used}
+    mount_point: ${22:# Vault mount point}
+    token: ${23:# Vault token}
+    token_path: ${24:# If no token is specified, will try to read the I(token_file) from this path}
+    token_file: ${25:# If no token is specified, will try to read the token from this file in I(token_path)}
+    token_validate: ${26:# For token auth, will perform a C(lookup-self) operation to determine the token's validity before using it}
+    username: ${27:# Authentication user name}
+    password: ${28:# Authentication password}
+    role_id: ${29:# Vault Role ID or name}
+    secret_id: ${30:# Secret ID to be used for Vault AppRole authentication}
+    jwt: ${31:# The JSON Web Token (JWT) to use for JWT authentication to Vault}
+    aws_profile: ${32:# The AWS profile}
+    aws_access_key: ${33:# The AWS access key to use}
+    aws_secret_key: ${34:# The AWS secret key that corresponds to the access key}
+    aws_security_token: ${35:# The AWS security token if using temporary access and secret keys}
+    region: ${36:# The AWS region for which to create the connection}
+    aws_iam_server_id: ${37:# If specified, sets the value to use for the C(X-Vault-AWS-IAM-Server-ID) header as part of C(GetCallerIdentity) request}
+    azure_tenant_id: ${38:# The Azure Active Directory Tenant ID (also known as the Directory ID) of the service principal}
+    azure_client_id: ${39:# The client ID (also known as application ID) of the Azure AD service principal or managed identity}
+    azure_client_secret: ${40:# The client secret of the Azure AD service principal}
+    azure_resource: ${41:# The resource URL for the application registered in Azure Active Directory}
+    cert_auth_public_key: ${42:# For C(cert) auth, path to the certificate file to authenticate with, in PEM format}
+    cert_auth_private_key: ${43:# For C(cert) auth, path to the private key file to authenticate with, in PEM format}
+  tags:
+    - community
+    - hashi_vault
+    - vault_pki_generate_certificate

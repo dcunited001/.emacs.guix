@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.setup
+# group: ansible.builtin
+# name: Gathers facts about remote hosts
+# --
+- name: ${1:Gathers facts about remote hosts}
+  ansible.builtin.setup:
+    gather_subset: ${2:# If supplied, restrict the additional facts collected to the given subset}
+    gather_timeout: ${3:# Set the default timeout in seconds for individual fact gathering}
+    filter: ${4:# If supplied, only return facts that match one of the shell-style (fnmatch) pattern}
+    fact_path: ${5:# Path used for local ansible facts (C(*}
+  tags:
+    - setup

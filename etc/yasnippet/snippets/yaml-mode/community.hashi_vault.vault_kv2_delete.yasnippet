@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.hashi_vault.vault_kv2_delete
+# group: community.hashi_vault
+# name: Delete one or more versions of a secret from HashiCorp Vault's KV version 2 secret store
+# --
+- name: ${1:Delete one or more versions of a secret from HashiCorp Vault's KV version 2 secret store}
+  community.hashi_vault.vault_kv2_delete:
+    engine_mount_point: ${2:# The path where the secret backend is mounted}
+    path: ${3:# Vault KV path to be deleted}
+    versions: ${4:# One or more versions of the secret to delete}
+    url: ${5:# URL to the Vault service}
+    proxies: ${6:# URL(s) to the proxies used to access the Vault service}
+    ca_cert: ${7:# Path to certificate to use for authentication}
+    validate_certs: ${8:# Controls verification and validation of SSL certificates, mostly you only want to turn off with self signed ones}
+    namespace: ${9:# Vault namespace where secrets reside}
+    timeout: ${10:# Sets the connection timeout in seconds}
+    retries: ${11:# Allows for retrying on errors, based on the L(Retry class in the urllib3 library,https://urllib3}
+    retry_action: ${12:# Controls whether and how to show messages on I(retries)}
+    auth_method: ${13:# Authentication method to be used}
+    mount_point: ${14:# Vault mount point}
+    token: ${15:# Vault token}
+    token_path: ${16:# If no token is specified, will try to read the I(token_file) from this path}
+    token_file: ${17:# If no token is specified, will try to read the token from this file in I(token_path)}
+    token_validate: ${18:# For token auth, will perform a C(lookup-self) operation to determine the token's validity before using it}
+    username: ${19:# Authentication user name}
+    password: ${20:# Authentication password}
+    role_id: ${21:# Vault Role ID or name}
+    secret_id: ${22:# Secret ID to be used for Vault AppRole authentication}
+    jwt: ${23:# The JSON Web Token (JWT) to use for JWT authentication to Vault}
+    aws_profile: ${24:# The AWS profile}
+    aws_access_key: ${25:# The AWS access key to use}
+    aws_secret_key: ${26:# The AWS secret key that corresponds to the access key}
+    aws_security_token: ${27:# The AWS security token if using temporary access and secret keys}
+    region: ${28:# The AWS region for which to create the connection}
+    aws_iam_server_id: ${29:# If specified, sets the value to use for the C(X-Vault-AWS-IAM-Server-ID) header as part of C(GetCallerIdentity) request}
+    azure_tenant_id: ${30:# The Azure Active Directory Tenant ID (also known as the Directory ID) of the service principal}
+    azure_client_id: ${31:# The client ID (also known as application ID) of the Azure AD service principal or managed identity}
+    azure_client_secret: ${32:# The client secret of the Azure AD service principal}
+    azure_resource: ${33:# The resource URL for the application registered in Azure Active Directory}
+    cert_auth_public_key: ${34:# For C(cert) auth, path to the certificate file to authenticate with, in PEM format}
+    cert_auth_private_key: ${35:# For C(cert) auth, path to the private key file to authenticate with, in PEM format}
+  tags:
+    - community
+    - hashi_vault
+    - vault_kv2_delete

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.fetch
+# group: ansible.builtin
+# name: Fetch files from remote nodes
+# --
+- name: ${1:Fetch files from remote nodes}
+  ansible.builtin.fetch:
+    src: ${2:# The file on the remote system to fetch}
+    dest: ${3:# A directory to save the file into}
+    fail_on_missing: ${4:# When set to C(true), the task will fail if the remote file cannot be read for any reason}
+    validate_checksum: ${5:# Verify that the source and destination checksums match after the files are fetched}
+    flat: ${6:# Allows you to override the default behavior of appending hostname/path/to/file to the destination}
+  tags:
+    - fetch

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_load
+# group: containers.podman
+# name: Load image from a tar file
+# --
+- name: ${1:Load image from a tar file}
+  containers.podman.podman_load:
+    input: ${2:# Path to image file to load}
+    executable: ${3:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+  tags:
+    - containers
+    - podman
+    - podman_load

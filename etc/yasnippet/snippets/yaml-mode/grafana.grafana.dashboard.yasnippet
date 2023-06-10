@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: grafana.grafana.dashboard
+# group: grafana.grafana
+# name: Manage Dashboards in Grafana Cloud
+# --
+- name: ${1:Manage Dashboards in Grafana Cloud}
+  grafana.grafana.dashboard:
+    dashboard: ${2:# JSON source code for dashboard}
+    stack_slug: ${3:# Name of the Grafana Cloud stack to which the dashboard will be added}
+    grafana_api_key: ${4:# Grafana API Key to authenticate with Grafana Cloud}
+    state: ${5:# State for the Grafana Cloud stack}
+  tags:
+    - grafana
+    - grafana
+    - dashboard

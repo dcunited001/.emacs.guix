@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.git
+# group: ansible.builtin
+# name: Deploy software (or files) from git checkouts
+# --
+- name: ${1:Deploy software (or files) from git checkouts}
+  ansible.builtin.git:
+    repo: ${2:# git, SSH, or HTTP(S) protocol address of the git repository}
+    dest: ${3:# The path of where the repository should be checked out}
+    version: ${4:# What version of the repository to check out}
+    accept_hostkey: ${5:# Will ensure or not that '-o StrictHostKeyChecking=no' is present as an ssh option}
+    accept_newhostkey: ${6:# As of OpenSSH 7}
+    ssh_opts: ${7:# Options git will pass to ssh when used as protocol, it works via C(git)'s GIT_SSH/GIT_SSH_COMMAND environment variables}
+    key_file: ${8:# Specify an optional private key file path, on the target host, to use for the checkout}
+    reference: ${9:# Reference repository (see 'git clone --reference }
+    remote: ${10:# Name of the remote}
+    refspec: ${11:# Add an additional refspec to be fetched}
+    force: ${12:# If C(true), any modified files in the working repository will be discarded}
+    depth: ${13:# Create a shallow clone with a history truncated to the specified number or revisions}
+    clone: ${14:# If C(false), do not clone the repository even if it does not exist locally}
+    update: ${15:# If C(false), do not retrieve new revisions from the origin repository}
+    executable: ${16:# Path to git executable to use}
+    bare: ${17:# If C(true), repository will be created as a bare repo, otherwise it will be a standard repo with a workspace}
+    umask: ${18:# The umask to set before doing any checkouts, or any other repository maintenance}
+    recursive: ${19:# If C(false), repository will be cloned without the --recursive option, skipping sub-modules}
+    single_branch: ${20:# Clone only the history leading to the tip of the specified revision}
+    track_submodules: ${21:# If C(true), submodules will track the latest commit on their master branch (or other branch specified in }
+    verify_commit: ${22:# If C(true), when cloning or checking out a I(version) verify the signature of a GPG signed commit}
+    archive: ${23:# Specify archive file path with extension}
+    archive_prefix: ${24:# Specify a prefix to add to each file path in archive}
+    separate_git_dir: ${25:# The path to place the cloned repository}
+    gpg_whitelist: ${26:# A list of trusted GPG fingerprints to compare to the fingerprint of the GPG-signed commit}
+  tags:
+    - git

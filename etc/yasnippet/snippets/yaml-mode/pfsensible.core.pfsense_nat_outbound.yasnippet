@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_nat_outbound
+# group: pfsensible.core
+# name: Manage pfSense Outbound NAT (SNAT) rules
+# --
+- name: ${1:Manage pfSense Outbound NAT (SNAT) rules}
+  pfsensible.core.pfsense_nat_outbound:
+    descr: ${2:# The name of the nat rule}
+    disabled: ${3:# Is the rule disabled}
+    nonat: ${4:# This option will disable NAT for traffic matching this rule and stop processing Outbound NAT rules}
+    interface: ${5:# The interface for the rule}
+    ipprotocol: ${6:# The Internet Protocol version this rule applies to}
+    protocol: ${7:# Which protocol this rule should match}
+    source: ${8:# The matching source address, in {any,(self),ALIAS,NETWORK}[:port] format}
+    destination: ${9:# The matching destination address, in {any,ALIAS,NETWORK}[:port] format}
+    invert: ${10:# Invert the sense of the destination match}
+    address: ${11:# The translated to address, in {ALIAS,NETWORK}[:port] format}
+    poolopts: ${12:# When an address pool is used, there are several options available that control how NAT translations happen on the pool}
+    source_hash_key: ${13:# The key that is fed to the hashing algorithm in hex format, preceeded by '0x', or any string}
+    staticnatport: ${14:# Do not randomize source port}
+    nosync: ${15:# Prevents the rule on Master from automatically syncing to other CARP members}
+    state: ${16:# State in which to leave the rule}
+    after: ${17:# Rule to go after, or 'top'}
+    before: ${18:# Rule to go before, or 'bottom'}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_nat_outbound

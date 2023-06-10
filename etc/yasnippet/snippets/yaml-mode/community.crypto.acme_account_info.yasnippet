@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.acme_account_info
+# group: community.crypto
+# name: Retrieves information on ACME accounts
+# --
+- name: ${1:Retrieves information on ACME accounts}
+  community.crypto.acme_account_info:
+    retrieve_orders: ${2:# Whether to retrieve the list of order URLs or order objects, if provided by the ACME server}
+    account_key_src: ${3:# Path to a file containing the ACME account RSA or Elliptic Curve key}
+    account_key_content: ${4:# Content of the ACME account RSA or Elliptic Curve key}
+    account_key_passphrase: ${5:# Phassphrase to use to decode the account key}
+    account_uri: ${6:# If specified, assumes that the account URI is as given}
+    acme_version: ${7:# The ACME version of the endpoint}
+    acme_directory: ${8:# The ACME directory to use}
+    validate_certs: ${9:# Whether calls to the ACME directory will validate TLS certificates}
+    select_crypto_backend: ${10:# Determines which crypto backend to use}
+    request_timeout: ${11:# The time Ansible should wait for a response from the ACME API}
+  tags:
+    - community
+    - crypto
+    - acme_account_info

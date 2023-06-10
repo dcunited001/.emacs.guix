@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssl_privatekey_info
+# group: community.crypto
+# name: Provide information for OpenSSL private keys
+# --
+- name: ${1:Provide information for OpenSSL private keys}
+  community.crypto.openssl_privatekey_info:
+    path: ${2:# Remote absolute path where the private key file is loaded from}
+    content: ${3:# Content of the private key file}
+    passphrase: ${4:# The passphrase for the private key}
+    return_private_key_data: ${5:# Whether to return private key data}
+    check_consistency: ${6:# Whether to check consistency of the private key}
+    select_crypto_backend: ${7:# Determines which crypto backend to use}
+  tags:
+    - community
+    - crypto
+    - openssl_privatekey_info

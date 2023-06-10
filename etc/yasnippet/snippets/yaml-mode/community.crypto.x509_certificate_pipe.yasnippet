@@ -1,0 +1,48 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.x509_certificate_pipe
+# group: community.crypto
+# name: Generate and/or check OpenSSL certificates
+# --
+- name: ${1:Generate and/or check OpenSSL certificates}
+  community.crypto.x509_certificate_pipe:
+    provider: ${2:# Name of the provider to use to generate/retrieve the OpenSSL certificate}
+    content: ${3:# The existing certificate}
+    force: ${4:# Generate the certificate, even if it already exists}
+    csr_path: ${5:# Path to the Certificate Signing Request (CSR) used to generate this certificate}
+    csr_content: ${6:# Content of the Certificate Signing Request (CSR) used to generate this certificate}
+    privatekey_path: ${7:# Path to the private key to use when signing the certificate}
+    privatekey_content: ${8:# Content of the private key to use when signing the certificate}
+    privatekey_passphrase: ${9:# The passphrase for the I(privatekey_path) resp}
+    ignore_timestamps: ${10:# Whether the 'not before' and 'not after' timestamps should be ignored for idempotency checks}
+    select_crypto_backend: ${11:# Determines which crypto backend to use}
+    entrust_cert_type: ${12:# Specify the type of certificate requested}
+    entrust_requester_email: ${13:# The email of the requester of the certificate (for tracking purposes)}
+    entrust_requester_name: ${14:# The name of the requester of the certificate (for tracking purposes)}
+    entrust_requester_phone: ${15:# The phone number of the requester of the certificate (for tracking purposes)}
+    entrust_api_user: ${16:# The username for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_key: ${17:# The key (password) for authentication to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_path: ${18:# The path to the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_api_client_cert_key_path: ${19:# The path to the private key of the client certificate used to authenticate to the Entrust Certificate Services (ECS) API}
+    entrust_not_after: ${20:# The point in time at which the certificate stops being valid}
+    entrust_api_specification_path: ${21:# The path to the specification file defining the Entrust Certificate Services (ECS) API configuration}
+    ownca_path: ${22:# Remote absolute path of the CA (Certificate Authority) certificate}
+    ownca_content: ${23:# Content of the CA (Certificate Authority) certificate}
+    ownca_privatekey_path: ${24:# Path to the CA (Certificate Authority) private key to use when signing the certificate}
+    ownca_privatekey_content: ${25:# Content of the CA (Certificate Authority) private key to use when signing the certificate}
+    ownca_privatekey_passphrase: ${26:# The passphrase for the I(ownca_privatekey_path) resp}
+    ownca_digest: ${27:# The digest algorithm to be used for the C(ownca) certificate}
+    ownca_version: ${28:# The version of the C(ownca) certificate}
+    ownca_not_before: ${29:# The point in time the certificate is valid from}
+    ownca_not_after: ${30:# The point in time at which the certificate stops being valid}
+    ownca_create_subject_key_identifier: ${31:# Whether to create the Subject Key Identifier (SKI) from the public key}
+    ownca_create_authority_key_identifier: ${32:# Create a Authority Key Identifier from the CA's certificate}
+    selfsigned_version: ${33:# Version of the C(selfsigned) certificate}
+    selfsigned_digest: ${34:# Digest algorithm to be used when self-signing the certificate}
+    selfsigned_not_before: ${35:# The point in time the certificate is valid from}
+    selfsigned_not_after: ${36:# The point in time at which the certificate stops being valid}
+    selfsigned_create_subject_key_identifier: ${37:# Whether to create the Subject Key Identifier (SKI) from the public key}
+  tags:
+    - community
+    - crypto
+    - x509_certificate_pipe

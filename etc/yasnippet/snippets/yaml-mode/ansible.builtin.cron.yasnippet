@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.cron
+# group: ansible.builtin
+# name: Manage cron
+# --
+- name: ${1:Manage cron}
+  ansible.builtin.cron:
+    name: ${2:# Description of a crontab entry or, if env is set, the name of environment variable}
+    user: ${3:# The specific user whose crontab should be modified}
+    job: ${4:# The command to execute or, if env is set, the value of environment variable}
+    state: ${5:# Whether to ensure the job or environment variable is present or absent}
+    cron_file: ${6:# If specified, uses this file instead of an individual user's crontab}
+    backup: ${7:# If set, create a backup of the crontab before it is modified}
+    minute: ${8:# Minute when the job should run (C(0-59), C(*), C(*/2), and so on)}
+    hour: ${9:# Hour when the job should run (C(0-23), C(*), C(*/2), and so on)}
+    day: ${10:# Day of the month the job should run (C(1-31), C(*), C(*/2), and so on)}
+    month: ${11:# Month of the year the job should run (C(1-12), C(*), C(*/2), and so on)}
+    weekday: ${12:# Day of the week that the job should run (C(0-6) for Sunday-Saturday, C(*), and so on)}
+    special_time: ${13:# Special time specification nickname}
+    disabled: ${14:# If the job should be disabled (commented out) in the crontab}
+    env: ${15:# If set, manages a crontab's environment variable}
+    insertafter: ${16:# Used with I(state=present) and I(env)}
+    insertbefore: ${17:# Used with I(state=present) and I(env)}
+  tags:
+    - cron

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_interface_group
+# group: pfsensible.core
+# name: Manage pfSense interface groups
+# --
+- name: ${1:Manage pfSense interface groups}
+  pfsensible.core.pfsense_interface_group:
+    state: ${2:# State in which to leave the interface group}
+    name: ${3:# The name of the interface group}
+    descr: ${4:# Description of the interface group}
+    members: ${5:# The members of the interface group}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_interface_group

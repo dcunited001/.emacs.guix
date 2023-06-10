@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.x509_crl
+# group: community.crypto
+# name: Generate Certificate Revocation Lists (CRLs)
+# --
+- name: ${1:Generate Certificate Revocation Lists (CRLs)}
+  community.crypto.x509_crl:
+    state: ${2:# Whether the CRL file should exist or not, taking action if the state is different from what is stated}
+    crl_mode: ${3:# Defines how to process entries of existing CRLs}
+    mode: ${4:# This parameter has been renamed to I(crl_mode)}
+    force: ${5:# Should the CRL be forced to be regenerated}
+    backup: ${6:# Create a backup file including a timestamp so you can get the original CRL back if you overwrote it with a new one by accident}
+    path: ${7:# Remote absolute path where the generated CRL file should be created or is already located}
+    format: ${8:# Whether the CRL file should be in PEM or DER format}
+    privatekey_path: ${9:# Path to the CA's private key to use when signing the CRL}
+    privatekey_content: ${10:# The content of the CA's private key to use when signing the CRL}
+    privatekey_passphrase: ${11:# The passphrase for the I(privatekey_path)}
+    issuer: ${12:# Key/value pairs that will be present in the issuer name field of the CRL}
+    issuer_ordered: ${13:# A list of dictionaries, where every dictionary must contain one key/value pair}
+    last_update: ${14:# The point in time from which this CRL can be trusted}
+    next_update: ${15:# The absolute latest point in time by which this I(issuer) is expected to have issued another CRL}
+    digest: ${16:# Digest algorithm to be used when signing the CRL}
+    revoked_certificates: ${17:# List of certificates to be revoked}
+    ignore_timestamps: ${18:# Whether the timestamps I(last_update), I(next_update) and I(revocation_date) (in I(revoked_certificates)) should be ignored for idempotency checks}
+    return_content: ${19:# If set to C(true), will return the (current or generated) CRL's content as I(crl)}
+    owner: ${20:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${21:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${22:# The user part of the SELinux filesystem object context}
+    serole: ${23:# The role part of the SELinux filesystem object context}
+    setype: ${24:# The type part of the SELinux filesystem object context}
+    selevel: ${25:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${26:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${27:# The attributes the resulting filesystem object should have}
+    name_encoding: ${28:# How to encode names (DNS names, URIs, email addresses) in return values}
+  tags:
+    - community
+    - crypto
+    - x509_crl

@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.yum
+# group: ansible.builtin
+# name: Manages packages with the I(yum) package manager
+# --
+- name: ${1:Manages packages with the I(yum) package manager}
+  ansible.builtin.yum:
+    use_backend: ${2:# This module supports C(yum) (as it always has), this is known as C(yum3)/C(YUM3)/C(yum-deprecated) by upstream yum developers}
+    name: ${3:# A package name or package specifier with version, like C(name-1}
+    exclude: ${4:# Package name(s) to exclude when state=present, or latest}
+    list: ${5:# Package name to run the equivalent of C(yum list --show-duplicates <package>) against}
+    state: ${6:# Whether to install (C(present) or C(installed), C(latest)), or remove (C(absent) or C(removed)) a package}
+    enablerepo: ${7:# I(Repoid) of repositories to enable for the install/update operation}
+    disablerepo: ${8:# I(Repoid) of repositories to disable for the install/update operation}
+    conf_file: ${9:# The remote yum configuration file to use for the transaction}
+    disable_gpg_check: ${10:# Whether to disable the GPG checking of signatures of packages being installed}
+    skip_broken: ${11:# Skip all unavailable packages or packages with broken dependencies without raising an error}
+    update_cache: ${12:# Force yum to check if cache is out of date and redownload if needed}
+    validate_certs: ${13:# This only applies if using a https url as the source of the rpm}
+    sslverify: ${14:# Disables SSL validation of the repository server for this transaction}
+    update_only: ${15:# When using latest, only update installed packages}
+    installroot: ${16:# Specifies an alternative installroot, relative to which all packages will be installed}
+    security: ${17:# If set to C(true), and C(state=latest) then only installs updates that have been marked security related}
+    bugfix: ${18:# If set to C(true), and C(state=latest) then only installs updates that have been marked bugfix related}
+    allow_downgrade: ${19:# Specify if the named package and version is allowed to downgrade a maybe already installed higher version of that package}
+    enable_plugin: ${20:# I(Plugin) name to enable for the install/update operation}
+    disable_plugin: ${21:# I(Plugin) name to disable for the install/update operation}
+    releasever: ${22:# Specifies an alternative release from which all packages will be installed}
+    autoremove: ${23:# If C(true), removes all 'leaf' packages from the system that were originally installed as dependencies of user-installed packages but which are no longer required by any such package}
+    disable_excludes: ${24:# Disable the excludes defined in YUM config files}
+    download_only: ${25:# Only download the packages, do not install them}
+    lock_timeout: ${26:# Amount of time to wait for the yum lockfile to be freed}
+    install_weak_deps: ${27:# Will also install all packages linked by a weak dependency relation}
+    download_dir: ${28:# Specifies an alternate directory to store packages}
+    install_repoquery: ${29:# If repoquery is not available, install yum-utils}
+    cacheonly: ${30:# Tells yum to run entirely from system cache; does not download or update metadata}
+  tags:
+    - yum

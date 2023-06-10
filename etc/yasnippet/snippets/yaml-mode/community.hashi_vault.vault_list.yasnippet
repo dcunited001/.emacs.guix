@@ -1,0 +1,44 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.hashi_vault.vault_list
+# group: community.hashi_vault
+# name: Perform a list operation against HashiCorp Vault
+# --
+- name: ${1:Perform a list operation against HashiCorp Vault}
+  community.hashi_vault.vault_list:
+    path: ${2:# Vault path to be listed}
+    url: ${3:# URL to the Vault service}
+    proxies: ${4:# URL(s) to the proxies used to access the Vault service}
+    ca_cert: ${5:# Path to certificate to use for authentication}
+    validate_certs: ${6:# Controls verification and validation of SSL certificates, mostly you only want to turn off with self signed ones}
+    namespace: ${7:# Vault namespace where secrets reside}
+    timeout: ${8:# Sets the connection timeout in seconds}
+    retries: ${9:# Allows for retrying on errors, based on the L(Retry class in the urllib3 library,https://urllib3}
+    retry_action: ${10:# Controls whether and how to show messages on I(retries)}
+    auth_method: ${11:# Authentication method to be used}
+    mount_point: ${12:# Vault mount point}
+    token: ${13:# Vault token}
+    token_path: ${14:# If no token is specified, will try to read the I(token_file) from this path}
+    token_file: ${15:# If no token is specified, will try to read the token from this file in I(token_path)}
+    token_validate: ${16:# For token auth, will perform a C(lookup-self) operation to determine the token's validity before using it}
+    username: ${17:# Authentication user name}
+    password: ${18:# Authentication password}
+    role_id: ${19:# Vault Role ID or name}
+    secret_id: ${20:# Secret ID to be used for Vault AppRole authentication}
+    jwt: ${21:# The JSON Web Token (JWT) to use for JWT authentication to Vault}
+    aws_profile: ${22:# The AWS profile}
+    aws_access_key: ${23:# The AWS access key to use}
+    aws_secret_key: ${24:# The AWS secret key that corresponds to the access key}
+    aws_security_token: ${25:# The AWS security token if using temporary access and secret keys}
+    region: ${26:# The AWS region for which to create the connection}
+    aws_iam_server_id: ${27:# If specified, sets the value to use for the C(X-Vault-AWS-IAM-Server-ID) header as part of C(GetCallerIdentity) request}
+    azure_tenant_id: ${28:# The Azure Active Directory Tenant ID (also known as the Directory ID) of the service principal}
+    azure_client_id: ${29:# The client ID (also known as application ID) of the Azure AD service principal or managed identity}
+    azure_client_secret: ${30:# The client secret of the Azure AD service principal}
+    azure_resource: ${31:# The resource URL for the application registered in Azure Active Directory}
+    cert_auth_public_key: ${32:# For C(cert) auth, path to the certificate file to authenticate with, in PEM format}
+    cert_auth_private_key: ${33:# For C(cert) auth, path to the private key file to authenticate with, in PEM format}
+  tags:
+    - community
+    - hashi_vault
+    - vault_list

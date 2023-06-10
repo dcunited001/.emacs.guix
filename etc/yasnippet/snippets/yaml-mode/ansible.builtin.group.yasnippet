@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.group
+# group: ansible.builtin
+# name: Add or remove groups
+# --
+- name: ${1:Add or remove groups}
+  ansible.builtin.group:
+    name: ${2:# Name of the group to manage}
+    gid: ${3:# Optional I(GID) to set for the group}
+    state: ${4:# Whether the group should be present or not on the remote host}
+    system: ${5:# If I(yes), indicates that the group created is a system group}
+    local: ${6:# Forces the use of 'local' command alternatives on platforms that implement it}
+    non_unique: ${7:# This option allows to change the group ID to a non-unique value}
+  tags:
+    - group

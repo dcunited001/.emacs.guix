@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_url_map
+# group: google.cloud
+# name: Creates a GCP UrlMap
+# --
+- name: ${1:Creates a GCP UrlMap}
+  google.cloud.gcp_compute_url_map:
+    state: ${2:# Whether the given object should exist in GCP}
+    default_service: ${3:# The full or partial URL of the defaultService resource to which traffic is directed if none of the hostRules match}
+    description: ${4:# An optional description of this resource}
+    header_action: ${5:# Specifies changes to request and response headers that need to take effect for the selected backendService}
+    host_rules: ${6:# The list of HostRules to use against the URL}
+    name: ${7:# Name of the resource}
+    path_matchers: ${8:# The list of named PathMatchers to use against the URL}
+    tests: ${9:# The list of expected URL mapping tests}
+    default_url_redirect: ${10:# When none of the specified hostRules match, the request is redirected to a URL specified by defaultUrlRedirect}
+    default_route_action: ${11:# defaultRouteAction takes effect when none of the hostRules match}
+    project: ${12:# The Google Cloud Platform project to use}
+    auth_kind: ${13:# The type of credential used}
+    service_account_contents: ${14:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${15:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${16:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${17:# Array of scopes to be used}
+    env_type: ${18:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_url_map

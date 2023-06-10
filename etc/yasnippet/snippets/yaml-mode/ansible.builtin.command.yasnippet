@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.command
+# group: ansible.builtin
+# name: Execute commands on targets
+# --
+- name: ${1:Execute commands on targets}
+  ansible.builtin.command:
+    free_form: ${2:# The command module takes a free form string as a command to run}
+    cmd: ${3:# The command to run}
+    argv: ${4:# Passes the command as a list rather than a string}
+    creates: ${5:# A filename or (since 2}
+    removes: ${6:# A filename or (since 2}
+    chdir: ${7:# Change into this directory before running the command}
+    stdin: ${8:# Set the stdin of the command directly to the specified value}
+    stdin_add_newline: ${9:# If set to C(true), append a newline to stdin data}
+    strip_empty_ends: ${10:# Strip empty lines from the end of stdout/stderr in result}
+  tags:
+    - command

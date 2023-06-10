@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_interface
+# group: pfsensible.core
+# name: Manage pfSense interfaces
+# --
+- name: ${1:Manage pfSense interfaces}
+  pfsensible.core.pfsense_interface:
+    state: ${2:# State in which to leave the interface}
+    descr: ${3:# Description (name) for the interface}
+    interface: ${4:# Network port to which assign the interface}
+    interface_descr: ${5:# Network port descr to which assign the interface}
+    enable: ${6:# Enable interface}
+    ipv4_type: ${7:# IPv4 Configuration Type}
+    ipv6_type: ${8:# IPv4 Configuration Type}
+    mac: ${9:# Used to modify ('spoof') the MAC address of this interface}
+    mtu: ${10:# Maximum transmission unit}
+    mss: ${11:# MSS clamping for TCP connections}
+    speed_duplex: ${12:# Set speed and duplex mode for this interface}
+    ipv4_address: ${13:# IPv4 Address}
+    ipv4_prefixlen: ${14:# IPv4 subnet prefix length}
+    ipv4_gateway: ${15:# IPv4 gateway for this interface}
+    ipv6_address: ${16:# IPv6 Address}
+    ipv6_prefixlen: ${17:# IPv6 subnet prefix length}
+    ipv6_gateway: ${18:# IPv6 gateway for this interface}
+    blockpriv: ${19:# Blocks traffic from IP addresses that are reserved for private networks}
+    blockbogons: ${20:# Blocks traffic from reserved IP addresses (but not RFC 1918) or not yet assigned by IANA}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_interface

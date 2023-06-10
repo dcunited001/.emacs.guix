@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_vpn_tunnel
+# group: google.cloud
+# name: Creates a GCP VpnTunnel
+# --
+- name: ${1:Creates a GCP VpnTunnel}
+  google.cloud.gcp_compute_vpn_tunnel:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# Name of the resource}
+    description: ${4:# An optional description of this resource}
+    target_vpn_gateway: ${5:# URL of the Target VPN gateway with which this VPN tunnel is associated}
+    vpn_gateway: ${6:# URL of the VPN gateway with which this VPN tunnel is associated}
+    vpn_gateway_interface: ${7:# The interface ID of the VPN gateway with which this VPN tunnel is associated}
+    peer_external_gateway: ${8:# URL of the peer side external VPN gateway to which this VPN tunnel is connected}
+    peer_external_gateway_interface: ${9:# The interface ID of the external VPN gateway to which this VPN tunnel is connected}
+    peer_gcp_gateway: ${10:# URL of the peer side HA GCP VPN gateway to which this VPN tunnel is connected}
+    router: ${11:# URL of router resource to be used for dynamic routing}
+    peer_ip: ${12:# IP address of the peer VPN gateway}
+    shared_secret: ${13:# Shared secret used to set the secure session between the Cloud VPN gateway and the peer VPN gateway}
+    ike_version: ${14:# IKE protocol version to use when establishing the VPN tunnel with peer VPN gateway}
+    local_traffic_selector: ${15:# Local traffic selector to use when establishing the VPN tunnel with peer VPN gateway}
+    remote_traffic_selector: ${16:# Remote traffic selector to use when establishing the VPN tunnel with peer VPN gateway}
+    region: ${17:# The region where the tunnel is located}
+    project: ${18:# The Google Cloud Platform project to use}
+    auth_kind: ${19:# The type of credential used}
+    service_account_contents: ${20:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${21:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${22:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${23:# Array of scopes to be used}
+    env_type: ${24:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_vpn_tunnel

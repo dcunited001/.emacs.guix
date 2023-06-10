@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_node_template
+# group: google.cloud
+# name: Creates a GCP NodeTemplate
+# --
+- name: ${1:Creates a GCP NodeTemplate}
+  google.cloud.gcp_compute_node_template:
+    state: ${2:# Whether the given object should exist in GCP}
+    description: ${3:# An optional textual description of the resource}
+    name: ${4:# Name of the resource}
+    node_affinity_labels: ${5:# Labels to use for node affinity, which will be used in instance scheduling}
+    node_type: ${6:# Node type to use for nodes group that are created from this template}
+    node_type_flexibility: ${7:# Flexible properties for the desired node type}
+    server_binding: ${8:# The server binding policy for nodes using this template}
+    cpu_overcommit_type: ${9:# CPU overcommit}
+    region: ${10:# Region where nodes using the node template will be created }
+    project: ${11:# The Google Cloud Platform project to use}
+    auth_kind: ${12:# The type of credential used}
+    service_account_contents: ${13:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${14:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${15:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${16:# Array of scopes to be used}
+    env_type: ${17:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_node_template

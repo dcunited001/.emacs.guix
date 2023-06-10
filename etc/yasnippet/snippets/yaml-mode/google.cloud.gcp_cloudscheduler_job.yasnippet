@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_cloudscheduler_job
+# group: google.cloud
+# name: Creates a GCP Job
+# --
+- name: ${1:Creates a GCP Job}
+  google.cloud.gcp_cloudscheduler_job:
+    state: ${2:# Whether the given object should exist in GCP}
+    name: ${3:# The name of the job}
+    description: ${4:# A human-readable description for the job}
+    schedule: ${5:# Describes the schedule on which the job will be executed}
+    time_zone: ${6:# Specifies the time zone to be used in interpreting schedule}
+    attempt_deadline: ${7:# The deadline for job attempts}
+    retry_config: ${8:# By default, if a job does not complete successfully, meaning that an acknowledgement is not received from the handler, then it will be retried with exponential backoff according to the settings }
+    pubsub_target: ${9:# Pub/Sub target If the job providers a Pub/Sub target the cron will publish a message to the provided topic }
+    app_engine_http_target: ${10:# App Engine HTTP target}
+    http_target: ${11:# HTTP target}
+    region: ${12:# Region where the scheduler job resides }
+    project: ${13:# The Google Cloud Platform project to use}
+    auth_kind: ${14:# The type of credential used}
+    service_account_contents: ${15:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${16:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${17:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${18:# Array of scopes to be used}
+    env_type: ${19:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_cloudscheduler_job

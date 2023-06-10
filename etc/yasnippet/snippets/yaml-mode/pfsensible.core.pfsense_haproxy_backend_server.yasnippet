@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_haproxy_backend_server
+# group: pfsensible.core
+# name: Manage pfSense haproxy backend servers
+# --
+- name: ${1:Manage pfSense haproxy backend servers}
+  pfsensible.core.pfsense_haproxy_backend_server:
+    backend: ${2:# The backend name}
+    name: ${3:# The server name}
+    mode: ${4:# How to use the server}
+    forwardto: ${5:# The name of the frontend to forward}
+    address: ${6:# IP or hostname of the backend (only resolved on start-up}
+    port: ${7:# The port of the backend}
+    ssl: ${8:# Should haproxy encrypt the traffic to the backend with SSL (commonly used with mode http on frontend and a port 443 on backend)}
+    checkssl: ${9:# This can be used with for example a LDAPS health-checks where LDAPS is passed along with mode TCP}
+    weight: ${10:# A weight between 0 and 256, this setting can be used when multiple servers on different hardware need to be balanced with a different part the traffic}
+    sslserververify: ${11:# SSL servers only, The server certificate will be verified against the CA and CRL certificate configured below}
+    verifyhost: ${12:# SSL servers only, when set, must match the hostnames in the subject and subjectAlternateNames of the certificate provided by the server}
+    ca: ${13:# SSL servers only, set the CA authority to check the server certificate against}
+    crl: ${14:# SSL servers only, set the CRL to check revoked certificates}
+    clientcert: ${15:# SSL servers only, This certificate will be sent if the server send a client certificate request}
+    cookie: ${16:# Persistence only, Used to identify server when cookie persistence is configured for the backend}
+    maxconn: ${17:# Tuning, If the number of incoming concurrent requests goes higher than this value, they will be queued}
+    advanced: ${18:# Allows for adding custom HAProxy settings to the server}
+    istemplate: ${19:# If set, configures this server item as a template to provision servers from dns/srv responses}
+    state: ${20:# State in which to leave the backend server}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_haproxy_backend_server

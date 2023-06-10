@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_img
+# group: community.google
+# name: utilize GCE image resources
+# --
+- name: ${1:utilize GCE image resources}
+  community.google.gce_img:
+    name: ${2:# the name of the image to create or delete}
+    description: ${3:# an optional description}
+    family: ${4:# an optional family name}
+    source: ${5:# the source disk or the Google Cloud Storage URI to create the image from}
+    state: ${6:# desired state of the image}
+    zone: ${7:# the zone of the disk specified by source}
+    timeout: ${8:# timeout for the operation}
+    service_account_email: ${9:# service account email}
+    pem_file: ${10:# path to the pem file associated with the service account email}
+    project_id: ${11:# your GCE project ID}
+  tags:
+    - community
+    - google
+    - gce_img

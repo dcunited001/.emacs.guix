@@ -1,0 +1,40 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.get_url
+# group: ansible.builtin
+# name: Downloads files from HTTP, HTTPS, or FTP to node
+# --
+- name: ${1:Downloads files from HTTP, HTTPS, or FTP to node}
+  ansible.builtin.get_url:
+    ciphers: ${2:# SSL/TLS Ciphers to use for the request}
+    decompress: ${3:# Whether to attempt to decompress gzip content-encoded responses}
+    url: ${4:# HTTP, HTTPS, or FTP URL in the form (http|https|ftp)://[user[:pass]]@host}
+    dest: ${5:# Absolute path of where to download the file to}
+    tmp_dest: ${6:# Absolute path of where temporary file is downloaded to}
+    force: ${7:# If C(true) and C(dest) is not a directory, will download the file every time and replace the file if the contents change}
+    backup: ${8:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    checksum: ${9:# If a checksum is passed to this parameter, the digest of the destination file will be calculated after it is downloaded to ensure its integrity and verify that the transfer completed successfully}
+    use_proxy: ${10:# if C(false), it will not use a proxy, even if one is defined in an environment variable on the target hosts}
+    validate_certs: ${11:# If C(false), SSL certificates will not be validated}
+    timeout: ${12:# Timeout in seconds for URL request}
+    headers: ${13:# Add custom HTTP headers to a request in hash/dict format}
+    url_username: ${14:# The username for use in HTTP basic authentication}
+    url_password: ${15:# The password for use in HTTP basic authentication}
+    force_basic_auth: ${16:# Force the sending of the Basic authentication header upon initial request}
+    client_cert: ${17:# PEM formatted certificate chain file to be used for SSL client authentication}
+    client_key: ${18:# PEM formatted file that contains your private key to be used for SSL client authentication}
+    http_agent: ${19:# Header to identify as, generally appears in web server logs}
+    unredirected_headers: ${20:# A list of header names that will not be sent on subsequent redirected requests}
+    use_gssapi: ${21:# Use GSSAPI to perform the authentication, typically this is for Kerberos or Kerberos through Negotiate authentication}
+    use_netrc: ${22:# Determining whether to use credentials from ``~/}
+    mode: ${23:# The permissions the resulting filesystem object should have}
+    owner: ${24:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${25:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${26:# The user part of the SELinux filesystem object context}
+    serole: ${27:# The role part of the SELinux filesystem object context}
+    setype: ${28:# The type part of the SELinux filesystem object context}
+    selevel: ${29:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${30:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${31:# The attributes the resulting filesystem object should have}
+  tags:
+    - get_url

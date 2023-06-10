@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_rule
+# group: pfsensible.core
+# name: Manage pfSense firewall rules
+# --
+- name: ${1:Manage pfSense firewall rules}
+  pfsensible.core.pfsense_rule:
+    name: ${2:# The name the rule}
+    action: ${3:# The action of the rule}
+    state: ${4:# State in which to leave the rule}
+    disabled: ${5:# Is the rule disabled}
+    interface: ${6:# The interface for the rule}
+    floating: ${7:# Is the rule floating}
+    direction: ${8:# Direction floating rule applies to}
+    ipprotocol: ${9:# The IP protocol}
+    protocol: ${10:# The protocol}
+    source: ${11:# The source address, in [!]{IP,HOST,ALIAS,any,(self),IP:INTERFACE,NET:INTERFACE} format}
+    source_port: ${12:# Source port or port range specification}
+    destination: ${13:# The destination address, in [!]{IP,HOST,ALIAS,any,(self),IP:INTERFACE,NET:INTERFACE} format}
+    destination_port: ${14:# Destination port or port range specification}
+    log: ${15:# Log packets matched by rule}
+    after: ${16:# Rule to go after, or C(top)}
+    before: ${17:# Rule to go before, or C(bottom)}
+    tcpflags_any: ${18:# Allow TCP packets with any flags set}
+    statetype: ${19:# State type}
+    queue: ${20:# QOS default queue}
+    ackqueue: ${21:# QOS acknowledge queue}
+    in_queue: ${22:# Limiter queue for traffic coming into the chosen interface}
+    out_queue: ${23:# Limiter queue for traffic leaving the chosen interface}
+    gateway: ${24:# Leave as C(default) to use the system routing table or choose a gateway to utilize policy based routing}
+    tracker: ${25:# Rule tracking ID}
+    icmptype: ${26:# One or more of these ICMP subtypes may be specified, separated by comma, or C(any) for all of them}
+    sched: ${27:# Schedule day/time when the rule must be active}
+    quick: ${28:# Set this option to apply this action to traffic that matches this rule immediately}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_rule

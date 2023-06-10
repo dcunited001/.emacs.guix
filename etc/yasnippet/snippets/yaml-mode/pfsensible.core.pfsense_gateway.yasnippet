@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: pfsensible.core.pfsense_gateway
+# group: pfsensible.core
+# name: Manage pfSense gateways
+# --
+- name: ${1:Manage pfSense gateways}
+  pfsensible.core.pfsense_gateway:
+    name: ${2:# Gateway name}
+    interface: ${3:# Choose which interface this gateway applies to}
+    ipprotocol: ${4:# Choose the Internet Protocol this gateway uses}
+    gateway: ${5:# Gateway IP address}
+    descr: ${6:# The description of the gateway}
+    disabled: ${7:# Set this option to disable this gateway without removing it from the list}
+    monitor: ${8:# Enter an alternative address here to be used to monitor the link}
+    monitor_disable: ${9:# This will consider this gateway as always being up}
+    action_disable: ${10:# No action will be taken on gateway events}
+    force_down: ${11:# This will force this gateway to be considered down}
+    weight: ${12:# Weight for this gateway when used in a Gateway Group}
+    nonlocalgateway: ${13:# This will allow use of a gateway outside of this interface's subnet}
+    state: ${14:# State in which to leave the gateway}
+  tags:
+    - pfsensible
+    - core
+    - pfsense_gateway

@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_pd
+# group: community.google
+# name: utilize GCE persistent disk resources
+# --
+- name: ${1:utilize GCE persistent disk resources}
+  community.google.gce_pd:
+    detach_only: ${2:# do not destroy the disk, merely detach it from an instance}
+    instance_name: ${3:# instance name if you wish to attach or detach the disk}
+    mode: ${4:# GCE mount mode of disk, READ_ONLY (default) or READ_WRITE}
+    name: ${5:# name of the disk}
+    size_gb: ${6:# whole integer size of disk (in GB) to create, default is 10 GB}
+    image: ${7:# the source image to use for the disk}
+    snapshot: ${8:# the source snapshot to use for the disk}
+    state: ${9:# desired state of the persistent disk}
+    zone: ${10:# zone in which to create the disk}
+    service_account_email: ${11:# service account email}
+    pem_file: ${12:# path to the pem file associated with the service account email This option is deprecated}
+    credentials_file: ${13:# path to the JSON file associated with the service account email}
+    project_id: ${14:# your GCE project ID}
+    disk_type: ${15:# Specify a C(pd-standard) disk or C(pd-ssd) for an SSD disk}
+    delete_on_termination: ${16:# If C(yes), deletes the volume when instance is terminated}
+    image_family: ${17:# The image family to use to create the instance}
+    external_projects: ${18:# A list of other projects (accessible with the provisioning credentials) to be searched for the image}
+  tags:
+    - community
+    - google
+    - gce_pd

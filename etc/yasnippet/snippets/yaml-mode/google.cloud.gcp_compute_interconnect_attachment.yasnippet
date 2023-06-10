@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_compute_interconnect_attachment
+# group: google.cloud
+# name: Creates a GCP InterconnectAttachment
+# --
+- name: ${1:Creates a GCP InterconnectAttachment}
+  google.cloud.gcp_compute_interconnect_attachment:
+    state: ${2:# Whether the given object should exist in GCP}
+    admin_enabled: ${3:# Whether the VLAN attachment is enabled or disabled}
+    interconnect: ${4:# URL of the underlying Interconnect object that this attachment's traffic will traverse through}
+    description: ${5:# An optional description of this resource}
+    mtu: ${6:# Maximum Transmission Unit (MTU), in bytes, of packets passing through this interconnect attachment}
+    bandwidth: ${7:# Provisioned bandwidth capacity for the interconnect attachment}
+    edge_availability_domain: ${8:# Desired availability domain for the attachment}
+    type: ${9:# The type of InterconnectAttachment you wish to create}
+    router: ${10:# URL of the cloud router to be used for dynamic routing}
+    name: ${11:# Name of the resource}
+    candidate_subnets: ${12:# Up to 16 candidate prefixes that can be used to restrict the allocation of cloudRouterIpAddress and customerRouterIpAddress for this attachment}
+    vlan_tag8021q: ${13:# The IEEE 802}
+    ipsec_internal_addresses: ${14:# URL of addresses that have been reserved for the interconnect attachment, Used only for interconnect attachment that has the encryption option as IPSEC}
+    encryption: ${15:# Indicates the user-supplied encryption option of this interconnect attachment: NONE is the default value, which means that the attachment carries unencrypted traffic}
+    region: ${16:# Region where the regional interconnect attachment resides}
+    project: ${17:# The Google Cloud Platform project to use}
+    auth_kind: ${18:# The type of credential used}
+    service_account_contents: ${19:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${20:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${21:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${22:# Array of scopes to be used}
+    env_type: ${23:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_compute_interconnect_attachment

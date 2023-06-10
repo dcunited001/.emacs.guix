@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.slurp
+# group: ansible.builtin
+# name: Slurps a file from remote nodes
+# --
+- name: ${1:Slurps a file from remote nodes}
+  ansible.builtin.slurp:
+    src: ${2:# The file on the remote system to fetch}
+  tags:
+    - slurp

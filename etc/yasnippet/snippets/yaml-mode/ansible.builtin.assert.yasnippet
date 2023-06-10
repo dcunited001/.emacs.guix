@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.assert
+# group: ansible.builtin
+# name: Asserts given expressions are true
+# --
+- name: ${1:Asserts given expressions are true}
+  ansible.builtin.assert:
+    that: ${2:# A list of string expressions of the same form that can be passed to the 'when' statement}
+    fail_msg: ${3:# The customized message used for a failing assertion}
+    success_msg: ${4:# The customized message used for a successful assertion}
+    quiet: ${5:# Set this to C(true) to avoid verbose output}
+  tags:
+    - assert

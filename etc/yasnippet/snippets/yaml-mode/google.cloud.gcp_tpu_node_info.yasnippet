@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: google.cloud.gcp_tpu_node_info
+# group: google.cloud
+# name: Gather info for GCP Node
+# --
+- name: ${1:Gather info for GCP Node}
+  google.cloud.gcp_tpu_node_info:
+    zone: ${2:# The GCP location for the TPU}
+    project: ${3:# The Google Cloud Platform project to use}
+    auth_kind: ${4:# The type of credential used}
+    service_account_contents: ${5:# The contents of a Service Account JSON file, either in a dictionary or as a JSON string that represents it}
+    service_account_file: ${6:# The path of a Service Account JSON file if serviceaccount is selected as type}
+    service_account_email: ${7:# An optional service account email address if machineaccount is selected and the user does not wish to use the default email}
+    scopes: ${8:# Array of scopes to be used}
+    env_type: ${9:# Specifies which Ansible environment you're running this module within}
+  tags:
+    - google
+    - cloud
+    - gcp_tpu_node_info

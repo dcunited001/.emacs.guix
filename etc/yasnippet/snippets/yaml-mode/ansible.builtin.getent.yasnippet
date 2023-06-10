@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.getent
+# group: ansible.builtin
+# name: A wrapper to the unix getent utility
+# --
+- name: ${1:A wrapper to the unix getent utility}
+  ansible.builtin.getent:
+    database: ${2:# The name of a getent database supported by the target system (passwd, group, hosts, etc)}
+    key: ${3:# Key from which to return values from the specified database, otherwise the full contents are returned}
+    service: ${4:# Override all databases with the specified service}
+    split: ${5:# Character used to split the database values into lists/arrays such as C(:) or C(\\t), otherwise it will try to pick one depending on the database}
+    fail_key: ${6:# If a supplied key is missing this will make the task fail if C(true)}
+  tags:
+    - getent

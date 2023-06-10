@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.service
+# group: ansible.builtin
+# name: Manage services
+# --
+- name: ${1:Manage services}
+  ansible.builtin.service:
+    name: ${2:# Name of the service}
+    state: ${3:# C(started)/C(stopped) are idempotent actions that will not run commands unless necessary}
+    sleep: ${4:# If the service is being C(restarted) then sleep this many seconds between the stop and start command}
+    pattern: ${5:# If the service does not respond to the status command, name a substring to look for as would be found in the output of the I(ps) command as a stand-in for a status result}
+    enabled: ${6:# Whether the service should start on boot}
+    runlevel: ${7:# For OpenRC init scripts (e}
+    arguments: ${8:# Additional arguments provided on the command line}
+    use: ${9:# The service module actually uses system specific modules, normally through auto detection, this setting can force a specific module}
+  tags:
+    - service

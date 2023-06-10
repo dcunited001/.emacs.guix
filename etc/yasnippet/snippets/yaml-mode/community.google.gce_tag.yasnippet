@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.google.gce_tag
+# group: community.google
+# name: add or remove tag(s) to/from GCE instances
+# --
+- name: ${1:add or remove tag(s) to/from GCE instances}
+  community.google.gce_tag:
+    instance_name: ${2:# The name of the GCE instance to add/remove tags}
+    instance_pattern: ${3:# The pattern of GCE instance names to match for adding/removing tags}
+    tags: ${4:# Comma-separated list of tags to add or remove}
+    state: ${5:# Desired state of the tags}
+    zone: ${6:# The zone of the disk specified by source}
+    service_account_email: ${7:# Service account email}
+    pem_file: ${8:# Path to the PEM file associated with the service account email}
+    project_id: ${9:# Your GCE project ID}
+  tags:
+    - community
+    - google
+    - gce_tag

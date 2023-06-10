@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.builtin.add_host
+# group: ansible.builtin
+# name: Add a host (and alternatively a group) to the ansible-playbook in-memory inventory
+# --
+- name: ${1:Add a host (and alternatively a group) to the ansible-playbook in-memory inventory}
+  ansible.builtin.add_host:
+    name: ${2:# The hostname/ip of the host to add to the inventory, can include a colon and a port number}
+    groups: ${3:# The groups to add the hostname to}
+  tags:
+    - add_host

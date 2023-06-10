@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_logout
+# group: containers.podman
+# name: Log out of a container registry using podman
+# --
+- name: ${1:Log out of a container registry using podman}
+  containers.podman.podman_logout:
+    registry: ${2:# Registry server}
+    authfile: ${3:# Path of the authentication file}
+    all: ${4:# Remove the cached credentials for all registries in the auth file}
+    ignore_docker_credentials: ${5:# Credentials created using other tools such as `docker login` are not removed unless the corresponding `authfile` is explicitly specified}
+    executable: ${6:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+  tags:
+    - containers
+    - podman
+    - podman_logout

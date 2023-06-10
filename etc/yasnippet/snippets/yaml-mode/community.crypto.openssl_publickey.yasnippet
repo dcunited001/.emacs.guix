@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.crypto.openssl_publickey
+# group: community.crypto
+# name: Generate an OpenSSL public key from its private key
+# --
+- name: ${1:Generate an OpenSSL public key from its private key}
+  community.crypto.openssl_publickey:
+    state: ${2:# Whether the public key should exist or not, taking action if the state is different from what is stated}
+    force: ${3:# Should the key be regenerated even it it already exists}
+    format: ${4:# The format of the public key}
+    path: ${5:# Name of the file in which the generated TLS/SSL public key will be written}
+    privatekey_path: ${6:# Path to the TLS/SSL private key from which to generate the public key}
+    privatekey_content: ${7:# The content of the TLS/SSL private key from which to generate the public key}
+    privatekey_passphrase: ${8:# The passphrase for the private key}
+    backup: ${9:# Create a backup file including a timestamp so you can get the original public key back if you overwrote it with a different one by accident}
+    select_crypto_backend: ${10:# Determines which crypto backend to use}
+    return_content: ${11:# If set to C(true), will return the (current or generated) public key's content as I(publickey)}
+    mode: ${12:# The permissions the resulting filesystem object should have}
+    owner: ${13:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${14:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${15:# The user part of the SELinux filesystem object context}
+    serole: ${16:# The role part of the SELinux filesystem object context}
+    setype: ${17:# The type part of the SELinux filesystem object context}
+    selevel: ${18:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${19:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${20:# The attributes the resulting filesystem object should have}
+  tags:
+    - community
+    - crypto
+    - openssl_publickey

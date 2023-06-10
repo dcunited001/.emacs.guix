@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: containers.podman.podman_image
+# group: containers.podman
+# name: Pull images for use by podman
+# --
+- name: ${1:Pull images for use by podman}
+  containers.podman.podman_image:
+    name: ${2:# Name of the image to pull, push, or delete}
+    executable: ${3:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
+    ca_cert_dir: ${4:# Path to directory containing TLS certificates and keys to use}
+    tag: ${5:# Tag of the image to pull, push, or delete}
+    pull: ${6:# Whether or not to pull the image}
+    push: ${7:# Whether or not to push an image}
+    path: ${8:# Path to the build context directory}
+    force: ${9:# Whether or not to force push or pull an image}
+    state: ${10:# Whether an image should be present, absent, or built}
+    validate_certs: ${11:# Require HTTPS and validate certificates when pulling or pushing}
+    password: ${12:# Password to use when authenticating to remote registries}
+    username: ${13:# username to use when authenticating to remote registries}
+    auth_file: ${14:# Path to file containing authorization credentials to the remote registry}
+    build: ${15:# Arguments that control image build}
+    push_args: ${16:# Arguments that control pushing images}
+  tags:
+    - containers
+    - podman
+    - podman_image
