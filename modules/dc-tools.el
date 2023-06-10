@@ -76,6 +76,7 @@
 ;;
 ;; look at trace of guix-packages-by-name for calls to consult--
 ;; - this uses cl-letf* to rebind the closure
+
 ;; - (completion-extra-properties ... ) sets up data for marginalia
 ;; - consult-completion-in-region handles previewing region-based completion
 ;;
@@ -196,6 +197,12 @@
 ;; - equivalent to doom's (+make/run)
 
 ;;* Network
+
+;;** Terraform
+
+;; mostly a major-mode only
+(setup (:pkg terraform)
+  (:option terraform-format-on-save t))
 
 ;;** Ansible
 

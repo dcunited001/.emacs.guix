@@ -392,6 +392,10 @@ compilation was initiated from compile-mode."
 
 ;;*** Indentation
 
+(setup (:pkg highlight-indent-guides)
+  (:option highlight-indent-guides-method 'column)
+  (:hook-into yaml-mode))
+
 (defun dc/indent-buffer ()
   (interactive)
   (save-excursion

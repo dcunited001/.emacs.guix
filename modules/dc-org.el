@@ -618,6 +618,7 @@ This is a variadic `cl-pushnew'."
   ;; DOOM: ./modules/lang/org/config.el
   (pushnew! org-link-abbrev-alist
             '("github"      . "https://github.com/%s")
+            '("nyxt"        . "https://nyxt.atlas.engineer/documentation#%s")
             '("youtube"     . "https://youtube.com/watch?v=%s")
             '("google"      . "https://google.com/search?q=")
             '("gimages"     . "https://google.com/images?q=%s")

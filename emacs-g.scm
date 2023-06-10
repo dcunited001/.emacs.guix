@@ -203,6 +203,7 @@
                   "emacs-smartparens"
                   "emacs-rainbow-delimiters"
                   "emacs-highlight-symbol"
+                  "emacs-highlight-indent-guides"
 
                   ;; direnv for buffer-local environments
                   ;; "emacs-buffer-env"
@@ -307,7 +308,8 @@
 (define guix-emacs-vhash
   (vhash-consq
    'devops
-   (list->vlist '("emacs-docker"
+   (list->vlist '("emacs-terraform-mode"
+                  "emacs-docker"
                   "emacs-dockerfile-mode"))
    guix-emacs-vhash))
 
@@ -525,8 +527,12 @@
                   "emacs-ox-reveal"
                   "emacs-org-re-reveal"
 
-                  ;; babel
-                  "emacs-restclient"
+                  ;; TODO: setup pandoc (usually req pandoc/haskell deps)
+                  "emacs-pandoc-mode"   ; for conversions outside of org-mode
+                  ;; "emacs-org-pandoc-import" ; dep on pandoc
+
+                  ;; ;; babel
+                  ;; "emacs-restclient"
                   "emacs-ob-restclient"))
    guix-emacs-vhash))
 
