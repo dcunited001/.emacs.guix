@@ -1046,8 +1046,8 @@
  :keymaps 'project-prefix-map
  "k" #'dw/close-project-tab
  ;; "f" #'consult-ripgrep
- "f" #'dc/instead-use-M-g
- "F" #'project-find-file)
+ ;; "f" #'dc/instead-use-M-g
+ "f" #'project-find-file)
 
 ;; "p" . "project")
 ;;        :desc "Search project for symbol"   "." #'+default/search-project-for-symbol-at-point

@@ -102,8 +102,9 @@
 ;; tide not completely compatible with LSP
 
 (with-eval-after-load 'flycheck
-  (setup (:pkg consult-flycheck :straight t))
-  (global-flycheck-mode))
+  (setup (:pkg consult-flycheck :straight t)))
+
+(global-flycheck-mode)
 
 ;;*** Flymake
 
@@ -392,8 +393,24 @@ compilation was initiated from compile-mode."
 
 ;;*** Indentation
 
+(defun dc/fix-highlight-indent-colors ()
+  "Ensures colors for highlight-indent-guides-mode are compatible
+ with dark ef-themes."
+  (set-face-background
+   'highlight-indent-guides-odd-face
+   (car (alist-get 'bg-added-refine
+                   (ef-themes--palette-value
+                    (ef-themes--current-theme)))))
+  (set-face-background
+   'highlight-indent-guides-even-face
+   (car (alist-get 'bg-added-faint
+                   (ef-themes--palette-value
+                    (ef-themes--current-theme))))))
+
 (setup (:pkg highlight-indent-guides)
   (:option highlight-indent-guides-method 'column)
+  (:with-hook ef-themes-post-load-hook
+    (:hook dc/fix-highlight-indent-colors))
   (:hook-into yaml-mode))
 
 (defun dc/indent-buffer ()

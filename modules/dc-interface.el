@@ -243,7 +243,9 @@
                       :weight 'light
                       :height (dw/system-settings-get 'emacs/variable-face-size)))
 
-(add-hook 'emacs-startup-hook #'dc/reset-fonts)
+
+;; TODO: emacs doesn't seem to call emacs-startup-hook when started by systemd
+(dc/reset-fonts)
 
 ;; TODO: interactive: set a specific frame's font
 ;; (set-frame-font)

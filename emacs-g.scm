@@ -48,7 +48,7 @@
 ;;** Fonts
 ;; some fontconfig may be necessary.
 ;; if it's configured on the base system, then installing there will probobly work
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'font
    (list->vlist '("font-juliamono"
@@ -74,7 +74,7 @@
 ;; "emacs-jq"
 ;; "emacs-map"
 
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'support
    (list->vlist '("emacs-a"
@@ -83,7 +83,7 @@
    guix-emacs-vhash))
 
 ;;** Config
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'config
    (list->vlist '("emacs-better-defaults"
@@ -93,14 +93,14 @@
    guix-emacs-vhash))
 
 ;;*** Input
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'input
    (list->vlist '())
    guix-emacs-vhash))
 
 ;;*** Auth
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'auth
    (list->vlist '(
@@ -111,7 +111,7 @@
    guix-emacs-vhash))
 
 ;;** Completion
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'completion
    (list->vlist '("emacs-vertico"
@@ -136,7 +136,7 @@
 ;; "emacs-corfu-doc-terminal"
 
 ;;** UI
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'ui
    (list->vlist '("emacs-hide-mode-line"
@@ -159,7 +159,7 @@
    guix-emacs-vhash))
 
 ;;*** Prettify
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'prettify
    (list->vlist '("emacs-info-plus"
@@ -172,7 +172,7 @@
    guix-emacs-vhash))
 
 ;;** Keys
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'keys
    (list->vlist '("emacs-general"
@@ -180,7 +180,7 @@
    guix-emacs-vhash))
 
 ;;** Themes
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'themes
    (list->vlist '("emacs-ef-themes"
@@ -191,7 +191,7 @@
    guix-emacs-vhash))
 
 ;;** Editor
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'editor
    (list->vlist '("emacs-origami-el"
@@ -234,7 +234,7 @@
 ;;** Term
 ;; (append! guix-emacs-packages
 ;;          '())
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'term
    (list->vlist '("emacs-vterm"
@@ -253,7 +253,7 @@
 
 ;;** VCS
 
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'vcs
    (list->vlist '("emacs-git-modes"
@@ -278,7 +278,7 @@
 
 ;;** Tools
 ;; mostly loaded in dc-tools
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'tools
    (list->vlist '("emacs-debbugs"
@@ -305,7 +305,7 @@
 ;; "emacs-aurel"                       ;; browse AUR
 
 ;;*** Devops
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'devops
    (list->vlist '("emacs-terraform-mode"
@@ -314,14 +314,14 @@
    guix-emacs-vhash))
 
 ;;*** Cloud
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'cloud
    (list->vlist '())
    guix-emacs-vhash))
 
 ;;** OS
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'os
    (list->vlist '(;; "emacs-xclip"
@@ -329,7 +329,7 @@
    guix-emacs-vhash))
 
 ;;** Tree-sitter
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'tree-sitter
    (list->vlist '("tree-sitter"
@@ -369,7 +369,7 @@
 ;; (append! guix-emacs-packages
 ;;          '())
 
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'lang
    (list->vlist '("emacs-guix"
@@ -440,6 +440,14 @@
 ;; "emacs-sass-mode"
 ;; "emacs-arduino-cli-mode"
 
+;;*** Packages bringing python to the party
+(set! guix-emacs-vhash
+  (vhash-consq
+   'latex
+   (list->vlist '("python-yamllint"
+                  "python-yapf"))
+   guix-emacs-vhash))
+
 ;;*** Clojure
 ;; "emacs-clomacs" ?
 
@@ -495,7 +503,7 @@
    guix-emacs-vhash))
 
 ;;** Org
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'org
    (list->vlist '("emacs-org"
@@ -547,7 +555,7 @@
 ;;*** Org Roam
 
 ;;** Natlang
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'natlang
    (list->vlist '("emacs-spell-fu"
@@ -558,7 +566,7 @@
    guix-emacs-vhash))
 
 ;;** App
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'app
    (list->vlist '("emacs-elpher"
@@ -569,7 +577,7 @@
 ;; "emacs-app-launcher"
 
 ;;*** Social
-(define guix-emacs-vhash
+(set! guix-emacs-vhash
   (vhash-consq
    'social
    (list->vlist '("emacs-elfeed"
