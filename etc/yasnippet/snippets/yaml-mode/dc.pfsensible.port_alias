@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor: David Conner
+# key: dc.pfsensible.port_alias
+# group: pfsensible.core
+# name: Manage list of pfSense port aliases
+# --
+- { name: ${1:alias name}, type: port, address: ${2: port(s)}, state: present }
