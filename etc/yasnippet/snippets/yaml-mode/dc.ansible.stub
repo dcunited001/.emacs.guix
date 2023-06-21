@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# contributor: David Conner
+# key: dc.ansible.stub
+# group: ansible.builtin
+# name: Stub out an ansible task
+# --
+- name: ${1:Task Name}
+  ansible.builtin.debug: {msg: "${1:Task Name}"}
