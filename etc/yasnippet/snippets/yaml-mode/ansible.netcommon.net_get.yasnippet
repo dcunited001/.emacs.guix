@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.net_get
+# group: ansible.netcommon
+# name: Copy a file from a network device to Ansible Controller
+# --
+- name: ${1:Copy a file from a network device to Ansible Controller}
+  ansible.netcommon.net_get:
+    src: ${2:# Specifies the source file}
+    protocol: ${3:# Protocol used to transfer file}
+    dest: ${4:# Specifies the destination file}
+  tags:
+    - net_get

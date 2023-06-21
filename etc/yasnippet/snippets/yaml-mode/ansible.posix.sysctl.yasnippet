@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.sysctl
+# group: ansible.posix
+# name: Manage entries in sysctl
+# --
+- name: ${1:Manage entries in sysctl}
+  ansible.posix.sysctl:
+    name: ${2:# The dot-separated path (also known as I(key)) specifying the sysctl variable}
+    value: ${3:# Desired value of the sysctl key}
+    state: ${4:# Whether the entry should be present or absent in the sysctl file}
+    ignoreerrors: ${5:# Use this option to ignore errors about unknown keys}
+    reload: ${6:# If C(true), performs a I(/sbin/sysctl -p) if the C(sysctl_file) is updated}
+    sysctl_file: ${7:# Specifies the absolute path to C(sysctl}
+    sysctl_set: ${8:# Verify token value with the sysctl command and set with -w if necessary}
+  tags:
+    - sysctl

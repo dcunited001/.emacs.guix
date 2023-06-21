@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.cli_command
+# group: ansible.netcommon
+# name: Run a cli command on cli-based network devices
+# --
+- name: ${1:Run a cli command on cli-based network devices}
+  ansible.netcommon.cli_command:
+    command: ${2:# The command to send to the remote network device}
+    prompt: ${3:# A single regex pattern or a sequence of patterns to evaluate the expected prompt from I(command)}
+    answer: ${4:# The answer to reply with if I(prompt) is matched}
+    sendonly: ${5:# The boolean value, that when set to true will send I(command) to the device but not wait for a result}
+    newline: ${6:# The boolean value, that when set to false will send I(answer) to the device without a trailing newline}
+    check_all: ${7:# By default if any one of the prompts mentioned in C(prompt) option is matched it won't check for other prompts}
+  tags:
+    - cli_command

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.netconf_get
+# group: ansible.netcommon
+# name: Fetch configuration/state data from NETCONF enabled network devices
+# --
+- name: ${1:Fetch configuration/state data from NETCONF enabled network devices}
+  ansible.netcommon.netconf_get:
+    source: ${2:# This argument specifies the datastore from which configuration data should be fetched}
+    filter: ${3:# This argument specifies the string which acts as a filter to restrict the portions of the data to be are retrieved from the remote device}
+    display: ${4:# Encoding scheme to use when serializing output from the device}
+    lock: ${5:# Instructs the module to explicitly lock the datastore specified as C(source)}
+  tags:
+    - netconf_get

@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.firewalld_info
+# group: ansible.posix
+# name: Gather information about firewalld
+# --
+- name: ${1:Gather information about firewalld}
+  ansible.posix.firewalld_info:
+    active_zones: ${2:# Gather information about active zones}
+    zones: ${3:# Gather information about specific zones}
+  tags:
+    - firewalld_info

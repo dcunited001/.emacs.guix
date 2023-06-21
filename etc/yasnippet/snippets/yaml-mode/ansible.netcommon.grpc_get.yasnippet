@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.grpc_get
+# group: ansible.netcommon
+# name: Fetch configuration/state data from gRPC enabled target hosts
+# --
+- name: ${1:Fetch configuration/state data from gRPC enabled target hosts}
+  ansible.netcommon.grpc_get:
+    section: ${2:# This option specifies the string which acts as a filter to restrict the portions of the data to be retrieved from the target host device}
+    command: ${3:# The option specifies the command to be executed on the target host and return the response in result}
+    display: ${4:# Encoding scheme to use when serializing output from the device}
+    data_type: ${5:# The type of data that should be fetched from the target host}
+  tags:
+    - grpc_get

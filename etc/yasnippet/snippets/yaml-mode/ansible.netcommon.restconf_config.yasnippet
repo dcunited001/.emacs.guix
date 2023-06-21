@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.restconf_config
+# group: ansible.netcommon
+# name: Handles create, update, read and delete of configuration data on RESTCONF enabled devices
+# --
+- name: ${1:Handles create, update, read and delete of configuration data on RESTCONF enabled devices}
+  ansible.netcommon.restconf_config:
+    path: ${2:# URI being used to execute API calls}
+    content: ${3:# The configuration data in format as specififed in C(format) option}
+    method: ${4:# The RESTCONF method to manage the configuration change on device}
+    format: ${5:# The format of the configuration provided as value of C(content)}
+  tags:
+    - restconf_config

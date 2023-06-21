@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.net_ping
+# group: ansible.netcommon
+# name: Tests reachability using ping from a network device
+# --
+- name: ${1:Tests reachability using ping from a network device}
+  ansible.netcommon.net_ping:
+    count: ${2:# Number of packets to send}
+    dest: ${3:# The IP Address or hostname (resolvable by switch) of the remote node}
+    source: ${4:# The source IP Address}
+    state: ${5:# Determines if the expected result is success or fail}
+    vrf: ${6:# The VRF to use for forwarding}
+  tags:
+    - net_ping

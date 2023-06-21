@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.firewalld
+# group: ansible.posix
+# name: Manage arbitrary ports/services with firewalld
+# --
+- name: ${1:Manage arbitrary ports/services with firewalld}
+  ansible.posix.firewalld:
+    service: ${2:# Name of a service to add/remove to/from firewalld}
+    protocol: ${3:# Name of a protocol to add/remove to/from firewalld}
+    port: ${4:# Name of a port or port range to add/remove to/from firewalld}
+    port_forward: ${5:# Port and protocol to forward using firewalld}
+    rich_rule: ${6:# Rich rule to add/remove to/from firewalld}
+    source: ${7:# The source/network you would like to add/remove to/from firewalld}
+    interface: ${8:# The interface you would like to add/remove to/from a zone in firewalld}
+    icmp_block: ${9:# The ICMP block you would like to add/remove to/from a zone in firewalld}
+    icmp_block_inversion: ${10:# Enable/Disable inversion of ICMP blocks for a zone in firewalld}
+    zone: ${11:# The firewalld zone to add/remove to/from}
+    permanent: ${12:# Should this configuration be in the running firewalld configuration or persist across reboots}
+    immediate: ${13:# Should this configuration be applied immediately, if set as permanent}
+    state: ${14:# Enable or disable a setting}
+    timeout: ${15:# The amount of time in seconds the rule should be in effect for when non-permanent}
+    masquerade: ${16:# The masquerade setting you would like to enable/disable to/from zones within firewalld}
+    offline: ${17:# Whether to run this module even when firewalld is offline}
+    target: ${18:# firewalld Zone target}
+  tags:
+    - firewalld

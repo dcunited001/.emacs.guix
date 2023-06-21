@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.rpm_ostree_upgrade
+# group: ansible.posix
+# name: Manage rpm-ostree upgrade transactions
+# --
+- name: ${1:Manage rpm-ostree upgrade transactions}
+  ansible.posix.rpm_ostree_upgrade:
+    os: ${2:# The OSNAME upon which to operate}
+    cache_only: ${3:# Perform the transaction using only pre-cached data, do not download}
+    allow_downgrade: ${4:# Allow for the upgrade to be a chronologically older tree}
+    peer: ${5:# Force peer-to-peer connection instead of using a system message bus}
+  tags:
+    - rpm_ostree_upgrade

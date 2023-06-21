@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.cli_config
+# group: ansible.netcommon
+# name: Push text based configuration to network devices over network_cli
+# --
+- name: ${1:Push text based configuration to network devices over network_cli}
+  ansible.netcommon.cli_config:
+    config: ${2:# The config to be pushed to the network device}
+    commit: ${3:# The C(commit) argument instructs the module to push the configuration to the device}
+    replace: ${4:# If the C(replace) argument is set to C(yes), it will replace the entire running-config of the device with the C(config) argument value}
+    backup: ${5:# This argument will cause the module to create a full backup of the current running config from the remote device before any changes are made}
+    rollback: ${6:# The C(rollback) argument instructs the module to rollback the current configuration to the identifier specified in the argument}
+    commit_comment: ${7:# The C(commit_comment) argument specifies a text string to be used when committing the configuration}
+    defaults: ${8:# The I(defaults) argument will influence how the running-config is collected from the device}
+    multiline_delimiter: ${9:# This argument is used when pushing a multiline configuration element to the device}
+    diff_replace: ${10:# Instructs the module on the way to perform the configuration on the device}
+    diff_match: ${11:# Instructs the module on the way to perform the matching of the set of commands against the current device config}
+    diff_ignore_lines: ${12:# Use this argument to specify one or more lines that should be ignored during the diff}
+    backup_options: ${13:# This is a dict object containing configurable options related to backup file path}
+  tags:
+    - cli_config

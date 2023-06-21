@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.grpc_config
+# group: ansible.netcommon
+# name: Fetch configuration/state data from gRPC enabled target hosts
+# --
+- name: ${1:Fetch configuration/state data from gRPC enabled target hosts}
+  ansible.netcommon.grpc_config:
+    config: ${2:# This option specifies the string which acts as a filter to restrict the portions of the data to be retrieved from the target host device}
+    state: ${3:# action to be performed}
+    backup: ${4:# This argument will cause the module to create a full backup of the current C(running-config) from the remote device before any changes are made}
+    backup_options: ${5:# This is a dict object containing configurable options related to backup file path}
+  tags:
+    - grpc_config

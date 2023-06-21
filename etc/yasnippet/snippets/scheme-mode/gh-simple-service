@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: gh-simple-cfg
+# key: simple-cfg
+# --
+
+(simple-service '${1:service-name}-config
+                    home-files-service-type
+                    (list `("${2:config-file}" ,(local-file $0))))

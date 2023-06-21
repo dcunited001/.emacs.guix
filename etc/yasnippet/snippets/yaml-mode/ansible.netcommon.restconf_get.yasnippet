@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.restconf_get
+# group: ansible.netcommon
+# name: Fetch configuration/state data from RESTCONF enabled devices
+# --
+- name: ${1:Fetch configuration/state data from RESTCONF enabled devices}
+  ansible.netcommon.restconf_get:
+    path: ${2:# URI being used to execute API calls}
+    content: ${3:# The C(content) is a query parameter that controls how descendant nodes of the requested data nodes in C(path) will be processed in the reply}
+    output: ${4:# The output of response received}
+  tags:
+    - restconf_get

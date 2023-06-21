@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.selinux
+# group: ansible.posix
+# name: Change policy and state of SELinux
+# --
+- name: ${1:Change policy and state of SELinux}
+  ansible.posix.selinux:
+    policy: ${2:# The name of the SELinux policy to use (e}
+    state: ${3:# The SELinux mode}
+    update_kernel_param: ${4:# If set to I(true), will update also the kernel boot parameters when disabling/enabling SELinux}
+    configfile: ${5:# The path to the SELinux configuration file, if non-standard}
+  tags:
+    - selinux

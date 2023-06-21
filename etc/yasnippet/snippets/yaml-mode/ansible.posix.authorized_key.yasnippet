@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.authorized_key
+# group: ansible.posix
+# name: Adds or removes an SSH authorized key
+# --
+- name: ${1:Adds or removes an SSH authorized key}
+  ansible.posix.authorized_key:
+    user: ${2:# The username on the remote host whose authorized_keys file will be modified}
+    key: ${3:# The SSH public key(s), as a string or (since Ansible 1}
+    path: ${4:# Alternate path to the authorized_keys file}
+    manage_dir: ${5:# Whether this module should manage the directory of the authorized key file}
+    state: ${6:# Whether the given key (with the given key_options) should or should not be in the file}
+    key_options: ${7:# A string of ssh key options to be prepended to the key in the authorized_keys file}
+    exclusive: ${8:# Whether to remove all other non-specified keys from the authorized_keys file}
+    validate_certs: ${9:# This only applies if using a https url as the source of the keys}
+    comment: ${10:# Change the comment on the public key}
+    follow: ${11:# Follow path symlink instead of replacing it}
+  tags:
+    - authorized_key

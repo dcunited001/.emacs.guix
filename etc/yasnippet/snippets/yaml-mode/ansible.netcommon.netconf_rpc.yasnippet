@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.netconf_rpc
+# group: ansible.netcommon
+# name: Execute operations on NETCONF enabled network devices
+# --
+- name: ${1:Execute operations on NETCONF enabled network devices}
+  ansible.netcommon.netconf_rpc:
+    rpc: ${2:# This argument specifies the request (name of the operation) to be executed on the remote NETCONF enabled device}
+    xmlns: ${3:# NETCONF operations not defined in rfc6241 typically require the appropriate XML namespace to be set}
+    content: ${4:# This argument specifies the optional request content (all RPC attributes)}
+    display: ${5:# Encoding scheme to use when serializing output from the device}
+  tags:
+    - netconf_rpc

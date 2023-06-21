@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.patch
+# group: ansible.posix
+# name: Apply patch files using the GNU patch tool
+# --
+- name: ${1:Apply patch files using the GNU patch tool}
+  ansible.posix.patch:
+    basedir: ${2:# Path of a base directory in which the patch file will be applied}
+    dest: ${3:# Path of the file on the remote machine to be patched}
+    src: ${4:# Path of the patch file as accepted by the GNU patch tool}
+    state: ${5:# Whether the patch should be applied or reverted}
+    remote_src: ${6:# If C(false), it will search for src at originating/controller machine, if C(true) it will go to the remote/target machine for the C(src)}
+    strip: ${7:# Number that indicates the smallest prefix containing leading slashes that will be stripped from each file name found in the patch file}
+    backup: ${8:# Passes C(--backup --version-control=numbered) to patch, producing numbered backup copies}
+    binary: ${9:# Setting to C(true) will disable patch's heuristic for transforming CRLF line endings into LF}
+    ignore_whitespace: ${10:# Setting to C(true) will ignore white space changes between patch and input}
+  tags:
+    - patch

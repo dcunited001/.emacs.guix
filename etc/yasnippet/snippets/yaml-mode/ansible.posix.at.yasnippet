@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.at
+# group: ansible.posix
+# name: Schedule the execution of a command or script file via the at command
+# --
+- name: ${1:Schedule the execution of a command or script file via the at command}
+  ansible.posix.at:
+    command: ${2:# A command to be executed in the future}
+    script_file: ${3:# An existing script file to be executed in the future}
+    count: ${4:# The count of units in the future to execute the command or script file}
+    units: ${5:# The type of units in the future to execute the command or script file}
+    state: ${6:# The state dictates if the command or script file should be evaluated as present(added) or absent(deleted)}
+    unique: ${7:# If a matching job is present a new job will not be added}
+  tags:
+    - at

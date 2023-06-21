@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.netcommon.netconf_config
+# group: ansible.netcommon
+# name: netconf device configuration
+# --
+- name: ${1:netconf device configuration}
+  ansible.netcommon.netconf_config:
+    content: ${2:# The configuration data as defined by the device's data models, the value can be either in xml string format or text format or python dictionary representation of JSON format}
+    target: ${3:# Name of the configuration datastore to be edited}
+    source_datastore: ${4:# Name of the configuration datastore to use as the source to copy the configuration to the datastore mentioned by C(target) option}
+    format: ${5:# The format of the configuration provided as value of C(content)}
+    lock: ${6:# Instructs the module to explicitly lock the datastore specified as C(target)}
+    default_operation: ${7:# The default operation for <edit-config> rpc, valid values are I(merge), I(replace) and I(none)}
+    confirm: ${8:# This argument will configure a timeout value for the commit to be confirmed before it is automatically rolled back}
+    confirm_commit: ${9:# This argument will execute commit operation on remote device}
+    error_option: ${10:# This option controls the netconf server action after an error occurs while editing the configuration}
+    save: ${11:# The C(save) argument instructs the module to save the configuration in C(target) datastore to the startup-config if changed and if :startup capability is supported by Netconf server}
+    backup: ${12:# This argument will cause the module to create a full backup of the current C(running-config) from the remote device before any changes are made}
+    delete: ${13:# It instructs the module to delete the configuration from value mentioned in C(target) datastore}
+    commit: ${14:# This boolean flag controls if the configuration changes should be committed or not after editing the candidate datastore}
+    validate: ${15:# This boolean flag if set validates the content of datastore given in C(target) option}
+    backup_options: ${16:# This is a dict object containing configurable options related to backup file path}
+    get_filter: ${17:# This argument specifies the XML string which acts as a filter to restrict the portions of the data retrieved from the remote device when comparing the before and after state of the device following calls to edit_config}
+  tags:
+    - netconf_config

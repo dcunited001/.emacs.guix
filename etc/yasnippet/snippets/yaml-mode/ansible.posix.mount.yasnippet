@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: ansible.posix.mount
+# group: ansible.posix
+# name: Control active and configured mount points
+# --
+- name: ${1:Control active and configured mount points}
+  ansible.posix.mount:
+    path: ${2:# Path to the mount point (e}
+    src: ${3:# Device (or NFS volume, or something else) to be mounted on I(path)}
+    fstype: ${4:# Filesystem type}
+    opts: ${5:# Mount options (see fstab(5), or vfstab(4) on Solaris)}
+    dump: ${6:# Dump (see fstab(5))}
+    passno: ${7:# Passno (see fstab(5))}
+    state: ${8:# If C(mounted), the device will be actively mounted and appropriately configured in I(fstab)}
+    fstab: ${9:# File to use instead of C(/etc/fstab)}
+    boot: ${10:# Determines if the filesystem should be mounted on boot}
+    backup: ${11:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+  tags:
+    - mount
