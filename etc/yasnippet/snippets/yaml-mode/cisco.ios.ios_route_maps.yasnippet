@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_route_maps
+# group: cisco.ios
+# name: Resource module to configure route maps
+# --
+- name: ${1:Resource module to configure route maps}
+  cisco.ios.ios_route_maps:
+    config: ${2:# A list of configurations for Route maps}
+    running_config: ${3:# This option is used only with state I(parsed)}
+    state: ${4:# The state the configuration should be left in}

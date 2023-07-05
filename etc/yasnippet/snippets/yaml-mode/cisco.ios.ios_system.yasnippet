@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_system
+# group: cisco.ios
+# name: Module to manage the system attributes
+# --
+- name: ${1:Module to manage the system attributes}
+  cisco.ios.ios_system:
+    hostname: ${2:# Configure the device hostname parameter}
+    domain_name: ${3:# Configure the IP domain name on the remote device to the provided value}
+    domain_search: ${4:# Provides the list of domain suffixes to append to the hostname for the purpose of doing name resolution}
+    lookup_source: ${5:# Provides one or more source interfaces to use for performing DNS lookups}
+    lookup_enabled: ${6:# Administrative control for enabling or disabling DNS lookups}
+    name_servers: ${7:# List of DNS name servers by IP address to use to perform name resolution lookups}
+    state: ${8:# State of the configuration values in the device's current active configuration}

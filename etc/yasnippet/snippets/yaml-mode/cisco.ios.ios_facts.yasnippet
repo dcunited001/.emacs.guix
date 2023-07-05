@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_facts
+# group: cisco.ios
+# name: Module to collect facts from remote devices
+# --
+- name: ${1:Module to collect facts from remote devices}
+  cisco.ios.ios_facts:
+    gather_subset: ${2:# When supplied, this argument restricts the facts collected to a given subset}
+    gather_network_resources: ${3:# When supplied, this argument will restrict the facts collected to a given subset}
+    available_network_resources: ${4:# When 'True' a list of network resources for which resource modules are available will be provided}

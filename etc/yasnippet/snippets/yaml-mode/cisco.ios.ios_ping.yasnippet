@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_ping
+# group: cisco.ios
+# name: Tests reachability using ping from IOS switch
+# --
+- name: ${1:Tests reachability using ping from IOS switch}
+  cisco.ios.ios_ping:
+    count: ${2:# Number of packets to send}
+    afi: ${3:# Define echo type ip or ipv6}
+    dest: ${4:# The IP Address or hostname (resolvable by switch) of the remote node}
+    df_bit: ${5:# Set the DF bit}
+    source: ${6:# The source IP Address}
+    egress: ${7:# Force egress interface bypassing routing}
+    ingress: ${8:# LAN source interface for Ingress}
+    timeout: ${9:# specify timeout interval}
+    state: ${10:# Determines if the expected result is success or fail}
+    vrf: ${11:# The VRF to use for forwarding}

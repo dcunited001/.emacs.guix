@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_bgp
+# group: cisco.ios
+# name: Module to configure BGP protocol settings
+# --
+- name: ${1:Module to configure BGP protocol settings}
+  cisco.ios.ios_bgp:
+    config: ${2:# Specifies the BGP related configuration}
+    operation: ${3:# Specifies the operation to be performed on the BGP process configured on the device}

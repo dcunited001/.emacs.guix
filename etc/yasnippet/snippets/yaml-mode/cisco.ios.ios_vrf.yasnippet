@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_vrf
+# group: cisco.ios
+# name: Module to configure VRF definitions
+# --
+- name: ${1:Module to configure VRF definitions}
+  cisco.ios.ios_vrf:
+    vrfs: ${2:# The set of VRF definition objects to be configured on the remote IOS device}
+    name: ${3:# The name of the VRF definition to be managed on the remote IOS device}
+    description: ${4:# Provides a short description of the VRF definition in the current active configuration}
+    rd: ${5:# The router-distinguisher value uniquely identifies the VRF to routing processes on the remote IOS system}
+    interfaces: ${6:# Identifies the set of interfaces that should be configured in the VRF}
+    associated_interfaces: ${7:# This is a intent option and checks the operational state of the for given vrf C(name) for associated interfaces}
+    delay: ${8:# Time in seconds to wait before checking for the operational state on remote device}
+    purge: ${9:# Instructs the module to consider the VRF definition absolute}
+    state: ${10:# Configures the state of the VRF definition as it relates to the device operational configuration}
+    route_both: ${11:# Adds an export and import list of extended route target communities to the VRF}
+    route_export: ${12:# Adds an export list of extended route target communities to the VRF}
+    route_import: ${13:# Adds an import list of extended route target communities to the VRF}
+    route_both_ipv4: ${14:# Adds an export and import list of extended route target communities in address-family configuration submode to the VRF}
+    route_export_ipv4: ${15:# Adds an export list of extended route target communities in address-family configuration submode to the VRF}
+    route_import_ipv4: ${16:# Adds an import list of extended route target communities in address-family configuration submode to the VRF}
+    route_both_ipv6: ${17:# Adds an export and import list of extended route target communities in address-family configuration submode to the VRF}
+    route_export_ipv6: ${18:# Adds an export list of extended route target communities in address-family configuration submode to the VRF}
+    route_import_ipv6: ${19:# Adds an import list of extended route target communities in address-family configuration submode to the VRF}

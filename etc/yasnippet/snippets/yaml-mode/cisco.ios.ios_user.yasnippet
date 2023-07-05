@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_user
+# group: cisco.ios
+# name: Module to manage the aggregates of local users
+# --
+- name: ${1:Module to manage the aggregates of local users}
+  cisco.ios.ios_user:
+    aggregate: ${2:# The set of username objects to be configured on the remote Cisco IOS device}
+    name: ${3:# The username to be configured on the Cisco IOS device}
+    configured_password: ${4:# The password to be configured on the Cisco IOS device}
+    update_password: ${5:# Since passwords are encrypted in the device running config, this argument will instruct the module when to change the password}
+    password_type: ${6:# This argument determines whether a 'password' or 'secret' will be configured}
+    hashed_password: ${7:# This option allows configuring hashed passwords on Cisco IOS devices}
+    privilege: ${8:# The C(privilege) argument configures the privilege level of the user when logged into the system}
+    view: ${9:# Configures the view for the username in the device running configuration}
+    sshkey: ${10:# Specifies one or more SSH public key(s) to configure for the given username}
+    nopassword: ${11:# Defines the username without assigning a password}
+    purge: ${12:# Instructs the module to consider the resource definition absolute}
+    state: ${13:# Configures the state of the username definition as it relates to the device operational configuration}

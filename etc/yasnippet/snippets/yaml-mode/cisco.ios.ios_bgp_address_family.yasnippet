@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_bgp_address_family
+# group: cisco.ios
+# name: Resource module to configure BGP Address family
+# --
+- name: ${1:Resource module to configure BGP Address family}
+  cisco.ios.ios_bgp_address_family:
+    config: ${2:# A list of configurations for bgp address family}
+    running_config: ${3:# This option is used only with state I(parsed)}
+    state: ${4:# The state the configuration should be left in}

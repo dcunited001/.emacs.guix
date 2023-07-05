@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_command
+# group: cisco.ios
+# name: Module to run commands on remote devices
+# --
+- name: ${1:Module to run commands on remote devices}
+  cisco.ios.ios_command:
+    commands: ${2:# List of commands to send to the remote ios device over the configured provider}
+    wait_for: ${3:# List of conditions to evaluate against the output of the command}
+    match: ${4:# The I(match) argument is used in conjunction with the I(wait_for) argument to specify the match policy}
+    retries: ${5:# Specifies the number of retries a command should by tried before it is considered failed}
+    interval: ${6:# Configures the interval in seconds to wait between retries of the command}

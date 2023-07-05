@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_banner
+# group: cisco.ios
+# name: Module to configure multiline banners
+# --
+- name: ${1:Module to configure multiline banners}
+  cisco.ios.ios_banner:
+    banner: ${2:# Specifies which banner should be configured on the remote device}
+    multiline_delimiter: ${3:# Specify the delimiting character than will be used for configuration}
+    text: ${4:# The banner text that should be present in the remote device running configuration}
+    state: ${5:# Specifies whether or not the configuration is present in the current devices active running configuration}

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_ntp
+# group: cisco.ios
+# name: (deprecated, removed after 2024-01-01) Manages core NTP configuration
+# --
+- name: ${1:(deprecated, removed after 2024-01-01) Manages core NTP configuration}
+  cisco.ios.ios_ntp:
+    server: ${2:# Network address of NTP server}
+    source_int: ${3:# Source interface for NTP packets}
+    acl: ${4:# ACL for peer/server access restricition}
+    logging: ${5:# Enable NTP logs}
+    auth: ${6:# Enable NTP authentication}
+    auth_key: ${7:# md5 NTP authentication key of tye 7}
+    key_id: ${8:# auth_key id}
+    state: ${9:# Manage the state of the resource}
+    vrf: ${10:# VRF configuration for NTP servers}

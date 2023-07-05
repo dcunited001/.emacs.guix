@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_static_routes
+# group: cisco.ios
+# name: Resource module to configure static routes
+# --
+- name: ${1:Resource module to configure static routes}
+  cisco.ios.ios_static_routes:
+    config: ${2:# A dictionary of static route options}
+    running_config: ${3:# This option is used only with state I(parsed)}
+    state: ${4:# The state the configuration should be left in}

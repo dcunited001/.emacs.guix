@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_lacp_interfaces
+# group: cisco.ios
+# name: Resource module to configure LACP interfaces
+# --
+- name: ${1:Resource module to configure LACP interfaces}
+  cisco.ios.ios_lacp_interfaces:
+    config: ${2:# A dictionary of LACP lacp_interfaces option}
+    running_config: ${3:# This option is used only with state I(parsed)}
+    state: ${4:# The state the configuration should be left in}

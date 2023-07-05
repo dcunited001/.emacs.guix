@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_logging
+# group: cisco.ios
+# name: (deprecated, removed after 2023-06-01) Manage logging on network devices
+# --
+- name: ${1:(deprecated, removed after 2023-06-01) Manage logging on network devices}
+  cisco.ios.ios_logging:
+    dest: ${2:# Destination of the logs}
+    name: ${3:# The hostname or IP address of the destination}
+    size: ${4:# Size of buffer}
+    facility: ${5:# Set logging facility}
+    level: ${6:# Set logging severity levels}
+    aggregate: ${7:# List of logging definitions}
+    state: ${8:# State of the logging configuration}

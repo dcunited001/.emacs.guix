@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_config
+# group: cisco.ios
+# name: Module to manage configuration sections
+# --
+- name: ${1:Module to manage configuration sections}
+  cisco.ios.ios_config:
+    lines: ${2:# The ordered set of commands that should be configured in the section}
+    parents: ${3:# The ordered set of parents that uniquely identify the section or hierarchy the commands should be checked against}
+    src: ${4:# Specifies the source path to the file that contains the configuration or configuration template to load}
+    before: ${5:# The ordered set of commands to push on to the command stack if a change needs to be made}
+    after: ${6:# The ordered set of commands to append to the end of the command stack if a change needs to be made}
+    match: ${7:# Instructs the module on the way to perform the matching of the set of commands against the current device config}
+    replace: ${8:# Instructs the module on the way to perform the configuration on the device}
+    multiline_delimiter: ${9:# This argument is used when pushing a multiline configuration element to the IOS device}
+    backup: ${10:# This argument will cause the module to create a full backup of the current C(running-config) from the remote device before any changes are made}
+    running_config: ${11:# The module, by default, will connect to the remote device and retrieve the current running-config to use as a base for comparing against the contents of source}
+    defaults: ${12:# This argument specifies whether or not to collect all defaults when getting the remote device running config}
+    save_when: ${13:# When changes are made to the device running-configuration, the changes are not copied to non-volatile storage by default}
+    diff_against: ${14:# When using the C(ansible-playbook --diff) command line argument the module can generate diffs against different sources}
+    diff_ignore_lines: ${15:# Use this argument to specify one or more lines that should be ignored during the diff}
+    intended_config: ${16:# The C(intended_config) provides the master configuration that the node should conform to and is used to check the final running-config against}
+    backup_options: ${17:# This is a dict object containing configurable options related to backup file path}

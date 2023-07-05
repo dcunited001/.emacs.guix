@@ -628,6 +628,8 @@ preferring the value of sym if present"
 ;; (doom-snippets-dir
 ;; "~/.emacs.g/etc/yasnippet/snippets/")
 
+;; TODO yas creates new snippets in yas--default-user-snippets-dir
+
 ;;*** Yasnippet Snippets
 
 (setup (:pkg yasnippet)

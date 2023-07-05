@@ -1,0 +1,14 @@
+# key: figrowmp
+# name: figrowminipage
+# --
+%[!htb] directive for figure placement
+\begin{figure}[!htb]
+\minipage{0.${4:"Figure Width"}\textwidth}
+  \includegraphics[width=\linewidth]{${1:img/image.jpg}}
+  \caption{${2:caption}}
+  \label{${3:fig:label}}
+\endminipage\hfill
+
+% ... $0
+
+\end{figure}

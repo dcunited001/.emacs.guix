@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_lag_interfaces
+# group: cisco.ios
+# name: Resource module to configure LAG interfaces
+# --
+- name: ${1:Resource module to configure LAG interfaces}
+  cisco.ios.ios_lag_interfaces:
+    config: ${2:# A list of link aggregation group configurations}
+    running_config: ${3:# This option is used only with state I(parsed)}
+    state: ${4:# The state the configuration should be left in}

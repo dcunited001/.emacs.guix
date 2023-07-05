@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_logging_global
+# group: cisco.ios
+# name: Resource module to configure logging
+# --
+- name: ${1:Resource module to configure logging}
+  cisco.ios.ios_logging_global:
+    config: ${2:# A dictionary of logging options}
+    running_config: ${3:# This option is used only with state I(parsed)}
+    state: ${4:# The state the configuration should be left in}

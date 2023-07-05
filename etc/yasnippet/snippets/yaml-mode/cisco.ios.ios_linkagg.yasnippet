@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: cisco.ios.ios_linkagg
+# group: cisco.ios
+# name: Module to configure link aggregation groups
+# --
+- name: ${1:Module to configure link aggregation groups}
+  cisco.ios.ios_linkagg:
+    group: ${2:# Channel-group number for the port-channel Link aggregation group}
+    mode: ${3:# Mode of the link aggregation group}
+    members: ${4:# List of members of the link aggregation group}
+    aggregate: ${5:# List of link aggregation definitions}
+    state: ${6:# State of the link aggregation group}
+    purge: ${7:# Purge links not defined in the I(aggregate) parameter}
