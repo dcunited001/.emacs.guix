@@ -774,7 +774,8 @@ This is a variadic `cl-pushnew'."
    'org-babel-load-languages
    '((emacs-lisp . t)
      (shell . t)
-     (python . t)))
+     (python . t)
+     (jq . t)))
 
   ;;*** org-src-lang-modes
   (push '("conf-unix" . conf-unix) org-src-lang-modes)

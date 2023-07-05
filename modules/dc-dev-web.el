@@ -74,4 +74,11 @@
 (setup (:pkg yaml-mode)
   (:file-match "\\.ya?ml\\'"))
 
+(setup (:pkg jq-mode)
+  (:file-match "\\.ya?ml\\'")
+  (:with-hook yaml-mode-hook
+    (lambda () (setq-local jq-interactive-command "yq"
+                           jq-interactive-font-lock-mode #'yaml-mode
+                           jq-interactive-default-options "--yaml-roundtrip"))))
+
 (provide 'dc-dev-web)

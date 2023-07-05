@@ -83,10 +83,6 @@
 
        (evil-define-key '(normal insert visual) org-mode-map (kbd "M-j") 'org-metadown)
        (evil-define-key '(normal insert visual) org-mode-map (kbd "M-k") 'org-metaup)
-
-       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((emacs-lisp . t)))
                                         ;(ledger . t))) -- Not working right now
 
        (push '("conf-unix" . conf-unix) org-src-lang-modes))

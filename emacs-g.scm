@@ -285,6 +285,7 @@
                   "emacs-burly"
                   "emacs-elf-mode"
                   "emacs-syslog-mode"
+                  "emacs-x509-mode"
                   "emacs-ssh-config-mode"
                   "emacs-tldr"
                   "emacs-google-translate"
@@ -404,6 +405,7 @@
 
                   "emacs-csv-mode"
                   "emacs-yaml-mode"
+                  "emacs-jq-mode"       ; propagated by emacs-restclient
                   "emacs-json-mode"
                   "emacs-json-snatcher"
                   "emacs-json-reformat"

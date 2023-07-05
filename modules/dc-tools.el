@@ -239,7 +239,7 @@
 
 ;;*** x509 Mode
 ;; Inspect details on Certificates, CA's and CSR's
-(setup (:pkg x509-mode :straight t)
+(setup (:pkg x509-mode)
   (cl-dolist (modespec '(("\\.pem$" . x509-mode)
                          ("\\.cer$" . x509-mode)
                          ("\\.der$" . x509-mode)

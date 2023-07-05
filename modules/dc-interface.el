@@ -405,7 +405,7 @@
 
 ;;** Completion
 
-;;*** Vertigo
+;;*** Vertico
 
 (setup (:pkg vertico)
   (vertico-mode)
@@ -426,6 +426,12 @@
                                          ;; (consult-lsp-diagnostics)
                                          ))
   (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
+
+  ;; from prot's video on files/dired
+  ;;
+  ;; to clear out dired suggestions to enter a full path quickly with / or ~/
+  (:with-hook rfn-eshadow-update-overlay-hook
+    (:hook #'vertico-directory-tidy))
 
   (:with-hook emacs-startup-hook
     ;; different actions for left/right click

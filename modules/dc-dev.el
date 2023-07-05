@@ -633,6 +633,8 @@ preferring the value of sym if present"
 (setup (:pkg yasnippet)
   (:with-hook org-mode-hook
     (:hook yas-minor-mode))
+  (:with-hook yaml-mode-hook
+    (:hook yas-minor-mode))
   (:with-hook prog-mode-hook
     (:hook yas-minor-mode)))
 
