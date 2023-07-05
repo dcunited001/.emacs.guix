@@ -11,7 +11,3 @@
     all: ${4:# Remove the cached credentials for all registries in the auth file}
     ignore_docker_credentials: ${5:# Credentials created using other tools such as `docker login` are not removed unless the corresponding `authfile` is explicitly specified}
     executable: ${6:# Path to C(podman) executable if it is not in the C($PATH) on the machine running C(podman)}
-  tags:
-    - containers
-    - podman
-    - podman_logout

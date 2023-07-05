@@ -15,5 +15,3 @@
     daemon_reexec: ${8:# Run daemon_reexec command before doing any other operations, the systemd manager will serialize the manager state}
     scope: ${9:# Run systemctl within a given service manager scope, either as the default system scope C(system), the current user's scope C(user), or the scope of all users C(global)}
     no_block: ${10:# Do not synchronously wait for the requested operation to finish}
-  tags:
-    - systemd_service
