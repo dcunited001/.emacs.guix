@@ -638,4 +638,24 @@
   ;; Use Embark to show command prefix help
   (setq prefix-help-command #'embark-prefix-help-command))
 
+;; ** Speedbar
+
+;;
+(setup (:pkg speedbar)
+  (:option speedbar-indentation-width 2
+           speedbar-ignored-modes
+           '(help-mode
+             custom-mode
+             eshell-mode
+             shell-mode
+             term-mode
+             vterm-mode
+             docker-image-mode
+             docker-container-mode
+             docker-volume-mode
+             docker-network-mode)))
+
+;; (add-to-list 'window-buffer-change-functions #'dc/speedbar-refresh-if-open)
+;; (advice-add 'window-change :after #'speedbar-refresh)
+
 (provide 'dc-interface)
