@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# contributor: David Conner
+# key: dc.ansible.debug_facts
+# group: ansible.builtin
+# name: Stub out an ansible task
+# --
+- name: debug facts
+  ansible.builtin.debug:
+    msg: "{{ ansible_facts | to_yaml }}"
