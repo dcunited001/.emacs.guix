@@ -1300,6 +1300,14 @@
 
 ;;*** lisp-mode
 
+(local-leader-def
+  :keymaps '(emacs-lisp-mode-map)
+
+  ;; to debug with lispy, use xe (like C-x C-e) which i think works now
+  ;; that i have a new versiion of lispy
+  "i" #'edebug-instrument-callee
+  "I" #'edebug-remove-instrumentation)
+
 ;;**** clojure-mode
 
 ;;**** emacs-lisp-mode

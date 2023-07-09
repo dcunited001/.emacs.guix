@@ -75,7 +75,7 @@
   (:file-match "\\.ya?ml\\'"))
 
 (setup (:pkg jq-mode)
-  (:file-match "\\.ya?ml\\'")
+  (:file-match "\\.jq\\'")
   (:with-hook yaml-mode-hook
     (lambda () (setq-local jq-interactive-command "yq"
                            jq-interactive-font-lock-mode #'yaml-mode
