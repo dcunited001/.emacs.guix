@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.firewall_lib
+# group: fedora.linux_system_roles
+# name: Module for firewall role
+# --
+- name: ${1:Module for firewall role}
+  fedora.linux_system_roles.firewall_lib:
+    service: ${2:# List of service name strings}
+    port: ${3:# List of ports or port range strings}
+    source_port: ${4:# List of source port or port range strings}
+    forward_port: ${5:# List of forward port strings or dicts, or a single string or dict}
+    masquerade: ${6:# The masquerade bool setting}
+    rich_rule: ${7:# List of rich rule strings}
+    source: ${8:# List of source address or address range strings}
+    interface: ${9:# List of interface name strings}
+    interface_pci_id: ${10:# List of inteface PCI device ID strings}
+    icmp_block: ${11:# List of ICMP type strings to block}
+    icmp_block_inversion: ${12:# ICMP block inversion bool setting}
+    timeout: ${13:# The amount of time in seconds a setting is in effect}
+    target: ${14:# The firewalld Zone target}
+    zone: ${15:# The zone name string}
+    set_default_zone: ${16:# Sets the default zone}
+    permanent: ${17:# The permanent bool flag}
+    runtime: ${18:# The runtime bool flag}
+    state: ${19:# Ensure presence or absence of entries}
+    description: ${20:# Creates or updates the description of a new or existing service}
+    short: ${21:# Creates or updates a short description, generally just a full name of a new or existing service}
+    protocol: ${22:# list of protocols supported by managed system}
+    helper_module: ${23:# List of netfiler kernel helper module names}
+    destination: ${24:# List of IPv4/IPv6 addresses with optional mask format - address[/mask] Currently only supported for service configuration Only one IPv4 and one IPv6 address allowed in list}
+    __report_changed: ${25:# If false, do not report changed true even if changed}

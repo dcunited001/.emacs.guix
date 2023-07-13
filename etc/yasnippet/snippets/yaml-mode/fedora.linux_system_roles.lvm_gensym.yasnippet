@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.lvm_gensym
+# group: fedora.linux_system_roles
+# name: Generate default names for lvm variables
+# --
+- name: ${1:Generate default names for lvm variables}
+  fedora.linux_system_roles.lvm_gensym:
+    fs_type: ${2:# String describing the desired file system type}
+    mount: ${3:# String describing the mount point path}

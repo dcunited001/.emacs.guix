@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.local_semodule
+# group: fedora.linux_system_roles
+# name: Manages SELinux modules
+# --
+- name: ${1:Manages SELinux modules}
+  fedora.linux_system_roles.local_semodule:
+    name: ${2:# A module name, used with 'enabled' to enabled disabled module}
+    path: ${3:# A local module filename, used with 'enabled' to install a module}
+    priority: ${4:# SELinux module priority, 0 means SELinux store default (400) with 'path' and 'enabled', otherwise all priorities}
+    state: ${5:# Desired module state}
+    store: ${6:# Use other than current SELinux module store, e}

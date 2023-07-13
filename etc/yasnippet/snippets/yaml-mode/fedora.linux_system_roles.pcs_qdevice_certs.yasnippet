@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.pcs_qdevice_certs
+# group: fedora.linux_system_roles
+# name: Setup qdevice certificates on a node
+# --
+- name: ${1:Setup qdevice certificates on a node}
+  fedora.linux_system_roles.pcs_qdevice_certs:
+    qnetd_host: ${2:# address of a qnetd host}
+    cluster_name: ${3:# name of the cluster the node belongs to}
+    cmd_options: ${4:# pcs API v2 command options}

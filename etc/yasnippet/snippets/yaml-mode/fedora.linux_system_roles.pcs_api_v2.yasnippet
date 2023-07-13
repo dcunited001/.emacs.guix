@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.pcs_api_v2
+# group: fedora.linux_system_roles
+# name: Exposes pcs API v2 to manage HA Cluster
+# --
+- name: ${1:Exposes pcs API v2 to manage HA Cluster}
+  fedora.linux_system_roles.pcs_api_v2:
+    cmd_name: ${2:# pcs API v2 command name}
+    cmd_params: ${3:# parameters of the command specified in cmd_name}
+    cmd_options: ${4:# generic command options}

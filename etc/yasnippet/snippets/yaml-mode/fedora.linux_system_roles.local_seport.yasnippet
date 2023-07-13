@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.local_seport
+# group: fedora.linux_system_roles
+# name: Manages SELinux network port type definitions
+# --
+- name: ${1:Manages SELinux network port type definitions}
+  fedora.linux_system_roles.local_seport:
+    ports: ${2:# Ports or port ranges}
+    proto: ${3:# Protocol for the specified port}
+    setype: ${4:# SELinux type for the specified port}
+    state: ${5:# Desired boolean value}
+    reload: ${6:# Reload SELinux policy after commit}
+    ignore_selinux_state: ${7:# Run independent of selinux runtime state}
+    local: ${8:# Work with local modifications only}

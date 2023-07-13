@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.kernel_settings
+# group: fedora.linux_system_roles
+# name: Manage kernel settings using tuned via a wrapper
+# --
+- name: ${1:Manage kernel settings using tuned via a wrapper}
+  fedora.linux_system_roles.kernel_settings:
+    sysctl: ${2:# list of sysctl settings to apply - this works mostly
+like the C(sysctl) module except that C(/etc/sysctl}
+    sysfs: ${3:# key/value pairs of sysfs settings to apply}
+    bootloader: ${4:# the C(cmdline) option can be used to set, add, or delete kernel command line options}
+    purge: ${5:# Remove the current kernel_settings, whatever they are, and force the given settings to be the current and only settings}
+    ansible_managed_new: ${6:# Ansible ansible_managed string to put in header of file}
+    ansible_managed_current: ${7:# the current config file header to be compared and replaced}

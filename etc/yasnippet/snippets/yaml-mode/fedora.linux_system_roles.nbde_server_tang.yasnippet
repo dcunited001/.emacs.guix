@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.nbde_server_tang
+# group: fedora.linux_system_roles
+# name: Handle key management operations in a tang server
+# --
+- name: ${1:Handle key management operations in a tang server}
+  fedora.linux_system_roles.nbde_server_tang:
+    state: ${2:# indicates the state to achieve, which basically maps to
+certain operations to be performed}
+    keygen: ${3:# tang key generation tool '/usr/libexec/tangd-keygen'}
+    keydir: ${4:# key database directory on the Tang server '/var/db/tang'}
+    update: ${5:# the tool for performing a cache update '/usr/libexec/tangd-update'}
+    cachedir: ${6:# cache directory}
+    force: ${7:# force to create keys}
+    keys_to_deploy_dir: ${8:# deploys keys that are present in keys_to_deploy_dir}

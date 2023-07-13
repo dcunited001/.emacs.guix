@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: fedora.linux_system_roles.certificate_request
+# group: fedora.linux_system_roles
+# name: Manage SSL/TLS certificates
+# --
+- name: ${1:Manage SSL/TLS certificates}
+  fedora.linux_system_roles.certificate_request:
+    name: ${2:# Name of the certificate}
+    dns: ${3:# Domain (or list of domains) to be included in the certificate}
+    ip: ${4:# IP (or list of IPs) to be included in the certificate}
+    email: ${5:# Email (or list of emails) to be included in the certificate}
+    owner: ${6:# User name (or user id) for the certificate and key files}
+    group: ${7:# Group name (or group id) for the certificate and key files}
+    mode: ${8:# The file system permissions for the certificate and key files}
+    common_name: ${9:# Common Name requested for the certificate subject}
+    key_size: ${10:# Generate keys with a specific keysize in bits}
+    ca: ${11:# CA that will issue the certificate}
+    provider: ${12:# The underlying method used to request and manage the certificate}
+    directory: ${13:# Directory where certificate and key will be stored}
+    provider_config_directory: ${14:# Directory where pre/post run scripts will be stored}
+    principal: ${15:# Kerberos principal}
+    key_usage: ${16:# Allowed Key Usage for the certificate}
+    extended_key_usage: ${17:# Extended Key Usage attributes to be present in the certificate request}
+    auto_renew: ${18:# Indicates if the certificate should be renewed automatically before it expires}
+    wait: ${19:# If the role should block while waiting for the certificate to be issued}
+    country: ${20:# Country requested for the certificate subject}
+    state: ${21:# State requested for the certificate subject}
+    locality: ${22:# Locality requested for the certificate subject (usually city)}
+    organization: ${23:# Organization requested for the certificate subject}
+    organizational_unit: ${24:# Organizational unit requested for the certificate subject}
+    contact_email: ${25:# Contact email requested for the certificate subject}
+    run_before: ${26:# Command that should run before saving the certificate}
+    run_after: ${27:# Command that should run after saving the certificate}
+    __header: ${28:# Ansible ansible_managed string to put in header of file}
