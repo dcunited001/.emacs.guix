@@ -210,7 +210,17 @@ compilation was initiated from compile-mode."
 ;;** Treesitter
 ;; TODO setup major-mode-remap-alist
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
-(setup treesit)
+(setup treesit
+  (:option treesit-language-source-alist
+           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml")))))
+
+;; TODO: where does this install? any way to reduce startup time after updates?
+;; ... and by itself this isn't very useful. also, doom only provides treesitter
+;;      navigation functionality to evil users
+(cl-loop for lang-key
+         in (a-keys treesit-language-source-alist)
+         unless (treesit-language-available-p lang-key)
+         do (treesit-install-language-grammar lang-key))
 
 ;;** LSP/Eglot
 

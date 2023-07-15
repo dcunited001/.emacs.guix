@@ -1,6 +1,8 @@
 migrate/pkg/*
 migrate/daviwil
 
+tree-sitter/*.so
+
 # emacs state
 var/**
 #var/desktop/*
