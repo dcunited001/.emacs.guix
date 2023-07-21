@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.xfconf_info
+# group: community.general
+# name: Retrieve XFCE4 configurations
+# --
+- name: ${1:Retrieve XFCE4 configurations}
+  community.general.xfconf_info:
+    channel: ${2:# A Xfconf preference channel is a top-level tree key, inside of the Xfconf repository that corresponds to the location for which all application properties/keys are stored}
+    property: ${3:# A Xfce preference key is an element in the Xfconf repository that corresponds to an application preference}

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.dnf_versionlock
+# group: community.general
+# name: Locks package versions in C(dnf) based systems
+# --
+- name: ${1:Locks package versions in C(dnf) based systems}
+  community.general.dnf_versionlock:
+    name: ${2:# Package name spec to add or exclude to or delete from the C(locklist) using the format expected by the C(dnf repoquery) command}
+    raw: ${3:# Do not resolve package name specs to NEVRAs to find specific version to lock to}
+    state: ${4:# Whether to add (C(present) or C(excluded)) to or remove (C(absent) or C(clean)) from the C(locklist)}

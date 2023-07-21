@@ -1,0 +1,60 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_client
+# group: community.general
+# name: Allows administration of Keycloak clients via Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak clients via Keycloak API}
+  community.general.keycloak_client:
+    state: ${2:# State of the client}
+    realm: ${3:# The realm to create the client in}
+    client_id: ${4:# Client id of client to be worked on}
+    id: ${5:# Id of client to be worked on}
+    name: ${6:# Name of the client (this is not the same as I(client_id))}
+    description: ${7:# Description of the client in Keycloak}
+    root_url: ${8:# Root URL appended to relative URLs for this client}
+    admin_url: ${9:# URL to the admin interface of the client}
+    base_url: ${10:# Default URL to use when the auth server needs to redirect or link back to the client This is 'baseUrl' in the Keycloak REST API}
+    enabled: ${11:# Is this client enabled or not?}
+    client_authenticator_type: ${12:# How do clients authenticate with the auth server? Either C(client-secret) or C(client-jwt) can be chosen}
+    secret: ${13:# When using I(client_authenticator_type) C(client-secret) (the default), you can specify a secret here (otherwise one will be generated if it does not exit)}
+    registration_access_token: ${14:# The registration access token provides access for clients to the client registration service}
+    default_roles: ${15:# list of default roles for this client}
+    redirect_uris: ${16:# Acceptable redirect URIs for this client}
+    web_origins: ${17:# List of allowed CORS origins}
+    not_before: ${18:# Revoke any tokens issued before this date for this client (this is a UNIX timestamp)}
+    bearer_only: ${19:# The access type of this client is bearer-only}
+    consent_required: ${20:# If enabled, users have to consent to client access}
+    standard_flow_enabled: ${21:# Enable standard flow for this client or not (OpenID connect)}
+    implicit_flow_enabled: ${22:# Enable implicit flow for this client or not (OpenID connect)}
+    direct_access_grants_enabled: ${23:# Are direct access grants enabled for this client or not (OpenID connect)}
+    service_accounts_enabled: ${24:# Are service accounts enabled for this client or not (OpenID connect)}
+    authorization_services_enabled: ${25:# Are authorization services enabled for this client or not (OpenID connect)}
+    public_client: ${26:# Is the access type for this client public or not}
+    frontchannel_logout: ${27:# Is frontchannel logout enabled for this client or not}
+    protocol: ${28:# Type of client (either C(openid-connect) or C(saml)}
+    full_scope_allowed: ${29:# Is the 'Full Scope Allowed' feature set for this client or not}
+    node_re_registration_timeout: ${30:# Cluster node re-registration timeout for this client}
+    registered_nodes: ${31:# dict of registered cluster nodes (with C(nodename) as the key and last registration time as the value)}
+    client_template: ${32:# Client template to use for this client}
+    use_template_config: ${33:# Whether or not to use configuration from the I(client_template)}
+    use_template_scope: ${34:# Whether or not to use scope configuration from the I(client_template)}
+    use_template_mappers: ${35:# Whether or not to use mapper configuration from the I(client_template)}
+    always_display_in_console: ${36:# Whether or not to display this client in account console, even if the user does not have an active session}
+    surrogate_auth_required: ${37:# Whether or not surrogate auth is required}
+    authorization_settings: ${38:# a data structure defining the authorization settings for this client}
+    authentication_flow_binding_overrides: ${39:# Override realm authentication flow bindings}
+    default_client_scopes: ${40:# List of default client scopes}
+    optional_client_scopes: ${41:# List of optional client scopes}
+    protocol_mappers: ${42:# a list of dicts defining protocol mappers for this client}
+    attributes: ${43:# A dict of further attributes for this client}
+    auth_keycloak_url: ${44:# URL to the Keycloak instance}
+    auth_client_id: ${45:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${46:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${47:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${48:# Username to authenticate for API access with}
+    auth_password: ${49:# Password to authenticate for API access with}
+    token: ${50:# Authentication token for Keycloak API}
+    validate_certs: ${51:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${52:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${53:# Configures the HTTP User-Agent header}

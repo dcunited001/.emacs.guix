@@ -1,0 +1,69 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox_disk
+# group: community.general
+# name: Management of a disk of a Qemu(KVM) VM in a Proxmox VE cluster
+# --
+- name: ${1:Management of a disk of a Qemu(KVM) VM in a Proxmox VE cluster}
+  community.general.proxmox_disk:
+    name: ${2:# The unique name of the VM}
+    vmid: ${3:# The unique ID of the VM}
+    disk: ${4:# The disk key (C(unused[n]), C(ide[n]), C(sata[n]), C(scsi[n]) or C(virtio[n])) you want to operate on}
+    state: ${5:# Indicates desired state of the disk}
+    create: ${6:# With I(create) flag you can control behavior of I(state=present)}
+    storage: ${7:# The drive's backing storage}
+    size: ${8:# Desired volume size in GB to allocate when I(state=present) (specify I(size) without suffix)}
+    bwlimit: ${9:# Override I/O bandwidth limit (in KB/s)}
+    delete_moved: ${10:# Delete the original disk after successful copy}
+    target_disk: ${11:# The config key the disk will be moved to on the target VM (for example, C(ide0) or C(scsi1))}
+    target_storage: ${12:# Move the disk to this storage when I(state=moved)}
+    target_vmid: ${13:# The (unique) ID of the VM where disk will be placed when I(state=moved)}
+    timeout: ${14:# Timeout in seconds to wait for slow operations such as importing disk or moving disk between storages}
+    aio: ${15:# AIO type to use}
+    backup: ${16:# Whether the drive should be included when making backups}
+    bps_max_length: ${17:# Maximum length of total r/w I/O bursts in seconds}
+    bps_rd_max_length: ${18:# Maximum length of read I/O bursts in seconds}
+    bps_wr_max_length: ${19:# Maximum length of write I/O bursts in seconds}
+    cache: ${20:# The drive's cache mode}
+    cyls: ${21:# Force the drive's physical geometry to have a specific cylinder count}
+    detect_zeroes: ${22:# Control whether to detect and try to optimize writes of zeroes}
+    discard: ${23:# Control whether to pass discard/trim requests to the underlying storage}
+    format: ${24:# The drive's backing file's data format}
+    heads: ${25:# Force the drive's physical geometry to have a specific head count}
+    import_from: ${26:# Import volume from this existing one}
+    iops: ${27:# Maximum total r/w I/O in operations per second}
+    iops_max: ${28:# Maximum unthrottled total r/w I/O pool in operations per second}
+    iops_max_length: ${29:# Maximum length of total r/w I/O bursts in seconds}
+    iops_rd: ${30:# Maximum read I/O in operations per second}
+    iops_rd_max: ${31:# Maximum unthrottled read I/O pool in operations per second}
+    iops_rd_max_length: ${32:# Maximum length of read I/O bursts in seconds}
+    iops_wr: ${33:# Maximum write I/O in operations per second}
+    iops_wr_max: ${34:# Maximum unthrottled write I/O pool in operations per second}
+    iops_wr_max_length: ${35:# Maximum length of write I/O bursts in seconds}
+    iothread: ${36:# Whether to use iothreads for this drive (only for SCSI and VirtIO)}
+    mbps: ${37:# Maximum total r/w speed in megabytes per second}
+    mbps_max: ${38:# Maximum unthrottled total r/w pool in megabytes per second}
+    mbps_rd: ${39:# Maximum read speed in megabytes per second}
+    mbps_rd_max: ${40:# Maximum unthrottled read pool in megabytes per second}
+    mbps_wr: ${41:# Maximum write speed in megabytes per second}
+    mbps_wr_max: ${42:# Maximum unthrottled write pool in megabytes per second}
+    media: ${43:# The drive's media type}
+    queues: ${44:# Number of queues (SCSI only)}
+    replicate: ${45:# Whether the drive should considered for replication jobs}
+    rerror: ${46:# Read error action}
+    ro: ${47:# Whether the drive is read-only}
+    scsiblock: ${48:# Whether to use scsi-block for full passthrough of host block device}
+    secs: ${49:# Force the drive's physical geometry to have a specific sector count}
+    serial: ${50:# The drive's reported serial number, url-encoded, up to 20 bytes long}
+    shared: ${51:# Mark this locally-managed volume as available on all nodes}
+    snapshot: ${52:# Control qemu's snapshot mode feature}
+    ssd: ${53:# Whether to expose this drive as an SSD, rather than a rotational hard disk}
+    trans: ${54:# Force disk geometry bios translation mode}
+    werror: ${55:# Write error action}
+    wwn: ${56:# The drive's worldwide name, encoded as 16 bytes hex string, prefixed by C(0x)}
+    api_host: ${57:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${58:# Specify the user to authenticate with}
+    api_password: ${59:# Specify the password to authenticate with}
+    api_token_id: ${60:# Specify the token ID}
+    api_token_secret: ${61:# Specify the token secret}
+    validate_certs: ${62:# If C(false), SSL certificates will not be validated}

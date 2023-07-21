@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pamd
+# group: community.general
+# name: Manage PAM Modules
+# --
+- name: ${1:Manage PAM Modules}
+  community.general.pamd:
+    name: ${2:# The name generally refers to the PAM service file to change, for example system-auth}
+    type: ${3:# The type of the PAM rule being modified}
+    control: ${4:# The control of the PAM rule being modified}
+    module_path: ${5:# The module path of the PAM rule being modified}
+    new_type: ${6:# The new type to assign to the new rule}
+    new_control: ${7:# The new control to assign to the new rule}
+    new_module_path: ${8:# The new module path to be assigned to the new rule}
+    module_arguments: ${9:# When state is C(updated), the module_arguments will replace existing module_arguments}
+    state: ${10:# The default of C(updated) will modify an existing rule if type, control and module_path all match an existing rule}
+    path: ${11:# This is the path to the PAM service files}
+    backup: ${12:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}

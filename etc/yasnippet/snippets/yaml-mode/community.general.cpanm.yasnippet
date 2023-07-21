@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.cpanm
+# group: community.general
+# name: Manages Perl library dependencies
+# --
+- name: ${1:Manages Perl library dependencies}
+  community.general.cpanm:
+    name: ${2:# The Perl library to install}
+    from_path: ${3:# The local directory or C(tar}
+    notest: ${4:# Do not run unit tests}
+    locallib: ${5:# Specify the install base to install modules}
+    mirror: ${6:# Specifies the base URL for the CPAN mirror to use}
+    mirror_only: ${7:# Use the mirror's index file instead of the CPAN Meta DB}
+    installdeps: ${8:# Only install dependencies}
+    version: ${9:# Version specification for the perl module}
+    executable: ${10:# Override the path to the cpanm executable}
+    mode: ${11:# Controls the module behavior}
+    name_check: ${12:# When in C(new) mode, this parameter can be used to check if there is a module I(name) installed (at I(version), when specified)}

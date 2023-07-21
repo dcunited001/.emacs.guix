@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.git_config
+# group: community.general
+# name: Read and write git configuration
+# --
+- name: ${1:Read and write git configuration}
+  community.general.git_config:
+    list_all: ${2:# List all settings (optionally limited to a given I(scope))}
+    name: ${3:# The name of the setting}
+    repo: ${4:# Path to a git repository for reading and writing values from a specific repo}
+    file: ${5:# Path to an adhoc git configuration file to be managed using the C(file) scope}
+    scope: ${6:# Specify which scope to read/set values from}
+    state: ${7:# Indicates the setting should be set/unset}
+    value: ${8:# When specifying the name of a single setting, supply a value to set that setting to the given value}

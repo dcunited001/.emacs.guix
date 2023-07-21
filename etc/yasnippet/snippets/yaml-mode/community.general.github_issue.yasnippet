@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.github_issue
+# group: community.general
+# name: View GitHub issue
+# --
+- name: ${1:View GitHub issue}
+  community.general.github_issue:
+    repo: ${2:# Name of repository from which issue needs to be retrieved}
+    organization: ${3:# Name of the GitHub organization in which the repository is hosted}
+    issue: ${4:# Issue number for which information is required}
+    action: ${5:# Get various details about issue depending upon action specified}

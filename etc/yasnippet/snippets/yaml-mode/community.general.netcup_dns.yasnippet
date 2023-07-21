@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.netcup_dns
+# group: community.general
+# name: Manage Netcup DNS records
+# --
+- name: ${1:Manage Netcup DNS records}
+  community.general.netcup_dns:
+    api_key: ${2:# API key for authentication, must be obtained via the netcup CCP (U(https://ccp}
+    api_password: ${3:# API password for authentication, must be obtained via the netcup CCP (U(https://ccp}
+    customer_id: ${4:# Netcup customer id}
+    domain: ${5:# Domainname the records should be added / removed}
+    record: ${6:# Record to add or delete, supports wildcard (*)}
+    type: ${7:# Record type}
+    value: ${8:# Record value}
+    solo: ${9:# Whether the record should be the only one for that record type and record name}
+    priority: ${10:# Record priority}
+    state: ${11:# Whether the record should exist or not}
+    timeout: ${12:# HTTP(S) connection timeout in seconds}

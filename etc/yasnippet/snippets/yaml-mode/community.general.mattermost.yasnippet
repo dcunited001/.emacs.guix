@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.mattermost
+# group: community.general
+# name: Send Mattermost notifications
+# --
+- name: ${1:Send Mattermost notifications}
+  community.general.mattermost:
+    url: ${2:# Mattermost url (i}
+    api_key: ${3:# Mattermost webhook api key}
+    text: ${4:# Text to send}
+    attachments: ${5:# Define a list of attachments}
+    channel: ${6:# Channel to send the message to}
+    username: ${7:# This is the sender of the message (Username Override need to be enabled by mattermost admin, see mattermost doc}
+    icon_url: ${8:# URL for the message sender's icon}
+    validate_certs: ${9:# If C(false), SSL certificates will not be validated}

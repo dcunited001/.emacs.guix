@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_protected_branch
+# group: community.general
+# name: Manage protection of existing branches
+# --
+- name: ${1:Manage protection of existing branches}
+  community.general.gitlab_protected_branch:
+    state: ${2:# Create or delete protected branch}
+    project: ${3:# The path and name of the project}
+    name: ${4:# The name of the branch that needs to be protected}
+    merge_access_levels: ${5:# Access levels allowed to merge}
+    push_access_level: ${6:# Access levels allowed to push}
+    api_url: ${7:# The resolvable endpoint for the API}
+    api_username: ${8:# The username to use for authentication against the API}
+    api_password: ${9:# The password to use for authentication against the API}
+    validate_certs: ${10:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${11:# GitLab access token with API permissions}
+    api_oauth_token: ${12:# GitLab OAuth token for logging in}
+    api_job_token: ${13:# GitLab CI job token for logging in}

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.idrac_redfish_info
+# group: community.general
+# name: Gather PowerEdge server information through iDRAC using Redfish APIs
+# --
+- name: ${1:Gather PowerEdge server information through iDRAC using Redfish APIs}
+  community.general.idrac_redfish_info:
+    category: ${2:# Category to execute on iDRAC}
+    command: ${3:# List of commands to execute on iDRAC}
+    baseuri: ${4:# Base URI of iDRAC}
+    username: ${5:# Username for authenticating to iDRAC}
+    password: ${6:# Password for authenticating to iDRAC}
+    auth_token: ${7:# Security token for authenticating to iDRAC}
+    timeout: ${8:# Timeout in seconds for HTTP requests to iDRAC}

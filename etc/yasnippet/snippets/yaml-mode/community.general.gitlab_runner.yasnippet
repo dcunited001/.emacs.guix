@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_runner
+# group: community.general
+# name: Create, modify and delete GitLab Runners
+# --
+- name: ${1:Create, modify and delete GitLab Runners}
+  community.general.gitlab_runner:
+    group: ${2:# ID or full path of the group in the form group/subgroup}
+    project: ${3:# ID or full path of the project in the form of group/name}
+    description: ${4:# The unique name of the runner}
+    state: ${5:# Make sure that the runner with the same name exists with the same configuration or delete the runner with the same name}
+    registration_token: ${6:# The registration token is used to register new runners}
+    owned: ${7:# Searches only runners available to the user when searching for existing, when false admin token required}
+    active: ${8:# Define if the runners is immediately active after creation}
+    locked: ${9:# Determines if the runner is locked or not}
+    access_level: ${10:# Determines if a runner can pick up jobs only from protected branches}
+    access_level_on_creation: ${11:# Whether the runner should be registered with an access level or not}
+    maximum_timeout: ${12:# The maximum time that a runner has to complete a specific job}
+    run_untagged: ${13:# Run untagged jobs or not}
+    tag_list: ${14:# The tags that apply to the runner}
+    api_url: ${15:# The resolvable endpoint for the API}
+    api_username: ${16:# The username to use for authentication against the API}
+    api_password: ${17:# The password to use for authentication against the API}
+    validate_certs: ${18:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${19:# GitLab access token with API permissions}
+    api_oauth_token: ${20:# GitLab OAuth token for logging in}
+    api_job_token: ${21:# GitLab CI job token for logging in}

@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.datadog_event
+# group: community.general
+# name: Posts events to Datadog service
+# --
+- name: ${1:Posts events to Datadog  service}
+  community.general.datadog_event:
+    api_key: ${2:# Your DataDog API key}
+    app_key: ${3:# Your DataDog app key}
+    title: ${4:# The event title}
+    text: ${5:# The body of the event}
+    date_happened: ${6:# POSIX timestamp of the event}
+    priority: ${7:# The priority of the event}
+    host: ${8:# Host name to associate with the event}
+    api_host: ${9:# DataDog API endpoint URL}
+    tags: ${10:# Comma separated list of tags to apply to the event}
+    alert_type: ${11:# Type of alert}
+    aggregation_key: ${12:# An arbitrary string to use for aggregation}
+    validate_certs: ${13:# If C(false), SSL certificates will not be validated}

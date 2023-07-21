@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.github_webhook
+# group: community.general
+# name: Manage GitHub webhooks
+# --
+- name: ${1:Manage GitHub webhooks}
+  community.general.github_webhook:
+    repository: ${2:# Full name of the repository to configure a hook for}
+    url: ${3:# URL to which payloads will be delivered}
+    content_type: ${4:# The media type used to serialize the payloads}
+    secret: ${5:# The shared secret between GitHub and the payload URL}
+    insecure_ssl: ${6:# Flag to indicate that GitHub should skip SSL verification when calling the hook}
+    events: ${7:# A list of GitHub events the hook is triggered for}
+    active: ${8:# Whether or not the hook is active}
+    state: ${9:# Whether the hook should be present or absent}
+    user: ${10:# User to authenticate to GitHub as}
+    password: ${11:# Password to authenticate to GitHub with}
+    token: ${12:# Token to authenticate to GitHub with}
+    github_url: ${13:# Base URL of the GitHub API}

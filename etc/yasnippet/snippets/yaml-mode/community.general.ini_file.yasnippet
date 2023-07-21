@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ini_file
+# group: community.general
+# name: Tweak settings in INI files
+# --
+- name: ${1:Tweak settings in INI files}
+  community.general.ini_file:
+    path: ${2:# Path to the INI-style file; this file is created if required}
+    section: ${3:# Section name in INI file}
+    option: ${4:# If set (required for changing a I(value)), this is the name of the option}
+    value: ${5:# The string value to be associated with an I(option)}
+    values: ${6:# The string value to be associated with an I(option)}
+    backup: ${7:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    state: ${8:# If set to C(absent) and I(exclusive) set to C(true) all matching I(option) lines are removed}
+    exclusive: ${9:# If set to C(true) (default), all matching I(option) lines are removed when I(state=absent), or replaced when I(state=present)}
+    no_extra_spaces: ${10:# Do not insert spaces before and after '=' symbol}
+    create: ${11:# If set to C(false), the module will fail if the file does not already exist}
+    allow_no_value: ${12:# Allow option without value and without '=' symbol}
+    mode: ${13:# The permissions the resulting filesystem object should have}
+    owner: ${14:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${15:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${16:# The user part of the SELinux filesystem object context}
+    serole: ${17:# The role part of the SELinux filesystem object context}
+    setype: ${18:# The type part of the SELinux filesystem object context}
+    selevel: ${19:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${20:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${21:# The attributes the resulting filesystem object should have}

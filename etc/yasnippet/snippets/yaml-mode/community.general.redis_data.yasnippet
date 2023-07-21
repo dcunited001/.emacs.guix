@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redis_data
+# group: community.general
+# name: Set key value pairs in Redis
+# --
+- name: ${1:Set key value pairs in Redis}
+  community.general.redis_data:
+    key: ${2:# Database key}
+    value: ${3:# Value that key should be set to}
+    expiration: ${4:# Expiration time in milliseconds}
+    non_existing: ${5:# Only set key if it does not already exist}
+    existing: ${6:# Only set key if it already exists}
+    keep_ttl: ${7:# Retain the time to live associated with the key}
+    state: ${8:# State of the key}
+    login_host: ${9:# Specify the target host running the database}
+    login_port: ${10:# Specify the port to connect to}
+    login_user: ${11:# Specify the user to authenticate with}
+    login_password: ${12:# Specify the password to authenticate with}
+    tls: ${13:# Specify whether or not to use TLS for the connection}
+    validate_certs: ${14:# Specify whether or not to validate TLS certificates}
+    ca_certs: ${15:# Path to root certificates file}

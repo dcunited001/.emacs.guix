@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gem
+# group: community.general
+# name: Manage Ruby gems
+# --
+- name: ${1:Manage Ruby gems}
+  community.general.gem:
+    name: ${2:# The name of the gem to be managed}
+    state: ${3:# The desired state of the gem}
+    gem_source: ${4:# The path to a local gem used as installation source}
+    include_dependencies: ${5:# Whether to include dependencies or not}
+    repository: ${6:# The repository from which the gem will be installed}
+    user_install: ${7:# Install gem in user's local gems cache or for all users}
+    executable: ${8:# Override the path to the gem executable}
+    install_dir: ${9:# Install the gems into a specific directory}
+    bindir: ${10:# Install executables into a specific directory}
+    norc: ${11:# Avoid loading any C(}
+    env_shebang: ${12:# Rewrite the shebang line on installed scripts to use /usr/bin/env}
+    version: ${13:# Version of the gem to be installed/removed}
+    pre_release: ${14:# Allow installation of pre-release versions of the gem}
+    include_doc: ${15:# Install with or without docs}
+    build_flags: ${16:# Allow adding build flags for gem compilation}
+    force: ${17:# Force gem to (un-)install, bypassing dependency checks}

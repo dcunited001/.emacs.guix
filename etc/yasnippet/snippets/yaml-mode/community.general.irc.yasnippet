@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.irc
+# group: community.general
+# name: Send a message to an IRC channel or a nick
+# --
+- name: ${1:Send a message to an IRC channel or a nick}
+  community.general.irc:
+    server: ${2:# IRC server name/address}
+    port: ${3:# IRC server port number}
+    nick: ${4:# Nickname to send the message from}
+    msg: ${5:# The message body}
+    topic: ${6:# Set the channel topic}
+    color: ${7:# Text color for the message}
+    channel: ${8:# Channel name}
+    nick_to: ${9:# A list of nicknames to send the message to}
+    key: ${10:# Channel key}
+    passwd: ${11:# Server password}
+    timeout: ${12:# Timeout to use while waiting for successful registration and join messages, this is to prevent an endless loop}
+    use_ssl: ${13:# Designates whether TLS/SSL should be used when connecting to the IRC server}
+    part: ${14:# Designates whether user should part from channel after sending message or not}
+    style: ${15:# Text style for the message}

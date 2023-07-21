@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_sudorule
+# group: community.general
+# name: Manage FreeIPA sudo rule
+# --
+- name: ${1:Manage FreeIPA sudo rule}
+  community.general.ipa_sudorule:
+    cn: ${2:# Canonical name}
+    cmdcategory: ${3:# Command category the rule applies to}
+    cmd: ${4:# List of commands assigned to the rule}
+    cmdgroup: ${5:# List of command groups assigned to the rule}
+    description: ${6:# Description of the sudo rule}
+    host: ${7:# List of hosts assigned to the rule}
+    hostcategory: ${8:# Host category the rule applies to}
+    hostgroup: ${9:# List of host groups assigned to the rule}
+    runasextusers: ${10:# List of external RunAs users}
+    runasusercategory: ${11:# RunAs User category the rule applies to}
+    runasgroupcategory: ${12:# RunAs Group category the rule applies to}
+    sudoopt: ${13:# List of options to add to the sudo rule}
+    user: ${14:# List of users assigned to the rule}
+    usercategory: ${15:# User category the rule applies to}
+    usergroup: ${16:# List of user groups assigned to the rule}
+    state: ${17:# State to ensure}
+    ipa_port: ${18:# Port of FreeIPA / IPA server}
+    ipa_host: ${19:# IP or hostname of IPA server}
+    ipa_user: ${20:# Administrative account used on IPA server}
+    ipa_pass: ${21:# Password of administrative user}
+    ipa_prot: ${22:# Protocol used by IPA server}
+    validate_certs: ${23:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${24:# Specifies idle timeout (in seconds) for the connection}

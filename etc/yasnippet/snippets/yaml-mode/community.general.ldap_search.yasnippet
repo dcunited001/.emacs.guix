@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ldap_search
+# group: community.general
+# name: Search for entries in a LDAP server
+# --
+- name: ${1:Search for entries in a LDAP server}
+  community.general.ldap_search:
+    dn: ${2:# The LDAP DN to search in}
+    scope: ${3:# The LDAP scope to use}
+    filter: ${4:# Used for filtering the LDAP search result}
+    attrs: ${5:# A list of attributes for limiting the result}
+    schema: ${6:# Set to C(true) to return the full attribute schema of entries, not their attribute values}
+    base64_attributes: ${7:# If provided, all attribute values returned that are listed in this option will be Base64 encoded}
+    bind_dn: ${8:# A DN to bind with}
+    bind_pw: ${9:# The password to use with I(bind_dn)}
+    ca_path: ${10:# Set the path to PEM file with CA certs}
+    referrals_chasing: ${11:# Set the referrals chasing behavior}
+    server_uri: ${12:# The I(server_uri) parameter may be a comma- or whitespace-separated list of URIs containing only the schema, the host, and the port fields}
+    start_tls: ${13:# If true, we'll use the START_TLS LDAP extension}
+    validate_certs: ${14:# If set to C(false), SSL certificates will not be validated}
+    sasl_class: ${15:# The class to use for SASL authentication}
+    xorder_discovery: ${16:# Set the behavior on how to process Xordered DNs}

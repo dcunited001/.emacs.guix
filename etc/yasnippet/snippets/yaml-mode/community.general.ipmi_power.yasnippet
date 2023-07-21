@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipmi_power
+# group: community.general
+# name: Power management for machine
+# --
+- name: ${1:Power management for machine}
+  community.general.ipmi_power:
+    name: ${2:# Hostname or ip address of the BMC}
+    port: ${3:# Remote RMCP port}
+    user: ${4:# Username to use to connect to the BMC}
+    password: ${5:# Password to connect to the BMC}
+    key: ${6:# Encryption key to connect to the BMC in hex format}
+    state: ${7:# Whether to ensure that the machine in desired state}
+    timeout: ${8:# Maximum number of seconds before interrupt request}
+    machine: ${9:# Provide a list of the remote target address for the bridge IPMI request, and the power status}

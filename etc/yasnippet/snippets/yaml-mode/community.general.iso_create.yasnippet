@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.iso_create
+# group: community.general
+# name: Generate ISO file with specified files or folders
+# --
+- name: ${1:Generate ISO file with specified files or folders}
+  community.general.iso_create:
+    src_files: ${2:# This is a list of absolute paths of source files or folders which will be contained in the new generated ISO file}
+    dest_iso: ${3:# The absolute path with file name of the new generated ISO file on local machine}
+    interchange_level: ${4:# The ISO9660 interchange level to use, it dictates the rules on the names of files}
+    vol_ident: ${5:# The volume identification string to use on the new generated ISO image}
+    rock_ridge: ${6:# Whether to make this ISO have the Rock Ridge extensions or not}
+    joliet: ${7:# Support levels and valid values are C(1), C(2), or C(3)}
+    udf: ${8:# Whether to add UDF support to this ISO}

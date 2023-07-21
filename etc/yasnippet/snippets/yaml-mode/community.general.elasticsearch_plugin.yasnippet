@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.elasticsearch_plugin
+# group: community.general
+# name: Manage Elasticsearch plugins
+# --
+- name: ${1:Manage Elasticsearch plugins}
+  community.general.elasticsearch_plugin:
+    name: ${2:# Name of the plugin to install}
+    state: ${3:# Desired state of a plugin}
+    src: ${4:# Optionally set the source location to retrieve the plugin from}
+    url: ${5:# Set exact URL to download the plugin from (Only works for ES 1}
+    timeout: ${6:# Timeout setting: 30s, 1m, 1h}
+    force: ${7:# Force batch mode when installing plugins}
+    plugin_bin: ${8:# Location of the plugin binary}
+    plugin_dir: ${9:# Your configured plugin directory specified in Elasticsearch}
+    proxy_host: ${10:# Proxy host to use during plugin installation}
+    proxy_port: ${11:# Proxy port to use during plugin installation}
+    version: ${12:# Version of the plugin to be installed}

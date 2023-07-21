@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.github_repo
+# group: community.general
+# name: Manage your repositories on Github
+# --
+- name: ${1:Manage your repositories on Github}
+  community.general.github_repo:
+    username: ${2:# Username used for authentication}
+    password: ${3:# Password used for authentication}
+    access_token: ${4:# Token parameter for authentication}
+    name: ${5:# Repository name}
+    description: ${6:# Description for the repository}
+    private: ${7:# Whether the repository should be private or not}
+    state: ${8:# Whether the repository should exist or not}
+    organization: ${9:# Organization for the repository}
+    api_url: ${10:# URL to the GitHub API if not using github}
+    force_defaults: ${11:# Overwrite current I(description) and I(private) attributes with defaults if set to C(true), which currently is the default}

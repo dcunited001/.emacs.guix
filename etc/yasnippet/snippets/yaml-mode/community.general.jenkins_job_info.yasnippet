@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jenkins_job_info
+# group: community.general
+# name: Get information about Jenkins jobs
+# --
+- name: ${1:Get information about Jenkins jobs}
+  community.general.jenkins_job_info:
+    name: ${2:# Exact name of the Jenkins job to fetch information about}
+    glob: ${3:# A shell glob of Jenkins job names to fetch information about}
+    color: ${4:# Only fetch jobs with the given status color}
+    password: ${5:# Password to authenticate with the Jenkins server}
+    token: ${6:# API token used to authenticate with the Jenkins server}
+    url: ${7:# URL where the Jenkins server is accessible}
+    user: ${8:# User to authenticate with the Jenkins server}
+    validate_certs: ${9:# If set to C(False), the SSL certificates will not be validated}

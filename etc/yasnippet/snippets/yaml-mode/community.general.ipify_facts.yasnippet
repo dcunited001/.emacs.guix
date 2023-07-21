@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipify_facts
+# group: community.general
+# name: Retrieve the public IP of your internet gateway
+# --
+- name: ${1:Retrieve the public IP of your internet gateway}
+  community.general.ipify_facts:
+    api_url: ${2:# URL of the ipify}
+    timeout: ${3:# HTTP connection timeout in seconds}
+    validate_certs: ${4:# When set to C(NO), SSL certificates will not be validated}

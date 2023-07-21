@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.znode
+# group: community.general
+# name: Create, delete, retrieve, and update znodes using ZooKeeper
+# --
+- name: ${1:Create, delete, retrieve, and update znodes using ZooKeeper}
+  community.general.znode:
+    hosts: ${2:# A list of ZooKeeper servers (format '[server]:[port]')}
+    name: ${3:# The path of the znode}
+    value: ${4:# The value assigned to the znode}
+    op: ${5:# An operation to perform}
+    state: ${6:# The state to enforce}
+    timeout: ${7:# The amount of time to wait for a node to appear}
+    recursive: ${8:# Recursively delete node and all its children}
+    auth_scheme: ${9:# Authentication scheme}
+    auth_credential: ${10:# The authentication credential value}
+    use_tls: ${11:# Using TLS/SSL or not}

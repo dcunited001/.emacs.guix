@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ufw
+# group: community.general
+# name: Manage firewall with UFW
+# --
+- name: ${1:Manage firewall with UFW}
+  community.general.ufw:
+    state: ${2:# C(enabled) reloads firewall and enables firewall on boot}
+    default: ${3:# Change the default policy for incoming or outgoing traffic}
+    direction: ${4:# Select direction for a rule or default policy command}
+    logging: ${5:# Toggles logging}
+    insert: ${6:# Insert the corresponding rule as rule number NUM}
+    insert_relative_to: ${7:# Allows to interpret the index in I(insert) relative to a position}
+    rule: ${8:# Add firewall rule}
+    log: ${9:# Log new connections matched to this rule}
+    from_ip: ${10:# Source IP address}
+    from_port: ${11:# Source port}
+    to_ip: ${12:# Destination IP address}
+    to_port: ${13:# Destination port}
+    proto: ${14:# TCP/IP protocol}
+    name: ${15:# Use profile located in C(/etc/ufw/applications}
+    delete: ${16:# Delete rule}
+    interface: ${17:# Specify interface for the rule}
+    interface_in: ${18:# Specify input interface for the rule}
+    interface_out: ${19:# Specify output interface for the rule}
+    route: ${20:# Apply the rule to routed/forwarded packets}
+    comment: ${21:# Add a comment to the rule}

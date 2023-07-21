@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox_storage_info
+# group: community.general
+# name: Retrieve information about one or more Proxmox VE storages
+# --
+- name: ${1:Retrieve information about one or more Proxmox VE storages}
+  community.general.proxmox_storage_info:
+    storage: ${2:# Only return informations on a specific storage}
+    type: ${3:# Filter on a specifc storage type}
+    api_host: ${4:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${5:# Specify the user to authenticate with}
+    api_password: ${6:# Specify the password to authenticate with}
+    api_token_id: ${7:# Specify the token ID}
+    api_token_secret: ${8:# Specify the token secret}
+    validate_certs: ${9:# If C(false), SSL certificates will not be validated}

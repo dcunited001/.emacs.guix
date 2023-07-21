@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_subca
+# group: community.general
+# name: Manage FreeIPA Lightweight Sub Certificate Authorities
+# --
+- name: ${1:Manage FreeIPA Lightweight Sub Certificate Authorities}
+  community.general.ipa_subca:
+    subca_name: ${2:# The Sub Certificate Authority name which needs to be managed}
+    subca_subject: ${3:# The Sub Certificate Authority's Subject}
+    subca_desc: ${4:# The Sub Certificate Authority's description}
+    state: ${5:# State to ensure}
+    ipa_port: ${6:# Port of FreeIPA / IPA server}
+    ipa_host: ${7:# IP or hostname of IPA server}
+    ipa_user: ${8:# Administrative account used on IPA server}
+    ipa_pass: ${9:# Password of administrative user}
+    ipa_prot: ${10:# Protocol used by IPA server}
+    validate_certs: ${11:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${12:# Specifies idle timeout (in seconds) for the connection}

@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_clienttemplate
+# group: community.general
+# name: Allows administration of Keycloak client templates via Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak client templates via Keycloak API}
+  community.general.keycloak_clienttemplate:
+    state: ${2:# State of the client template}
+    id: ${3:# Id of client template to be worked on}
+    realm: ${4:# Realm this client template is found in}
+    name: ${5:# Name of the client template}
+    description: ${6:# Description of the client template in Keycloak}
+    protocol: ${7:# Type of client template (either C(openid-connect) or C(saml)}
+    full_scope_allowed: ${8:# Is the 'Full Scope Allowed' feature set for this client template or not}
+    protocol_mappers: ${9:# a list of dicts defining protocol mappers for this client template}
+    attributes: ${10:# A dict of further attributes for this client template}
+    auth_keycloak_url: ${11:# URL to the Keycloak instance}
+    auth_client_id: ${12:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${13:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${14:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${15:# Username to authenticate for API access with}
+    auth_password: ${16:# Password to authenticate for API access with}
+    token: ${17:# Authentication token for Keycloak API}
+    validate_certs: ${18:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${19:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${20:# Configures the HTTP User-Agent header}

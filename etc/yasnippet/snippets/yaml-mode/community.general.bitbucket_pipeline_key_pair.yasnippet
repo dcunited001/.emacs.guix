@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.bitbucket_pipeline_key_pair
+# group: community.general
+# name: Manages Bitbucket pipeline SSH key pair
+# --
+- name: ${1:Manages Bitbucket pipeline SSH key pair}
+  community.general.bitbucket_pipeline_key_pair:
+    repository: ${2:# The repository name}
+    workspace: ${3:# The repository owner}
+    public_key: ${4:# The public key}
+    private_key: ${5:# The private key}
+    state: ${6:# Indicates desired state of the key pair}
+    client_id: ${7:# The OAuth consumer key}
+    client_secret: ${8:# The OAuth consumer secret}
+    user: ${9:# The username}
+    password: ${10:# The App password}

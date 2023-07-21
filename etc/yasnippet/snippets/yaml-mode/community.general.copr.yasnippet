@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.copr
+# group: community.general
+# name: Manage one of the Copr repositories
+# --
+- name: ${1:Manage one of the Copr repositories}
+  community.general.copr:
+    host: ${2:# The Copr host to work with}
+    protocol: ${3:# This indicate which protocol to use with the host}
+    name: ${4:# Copr directory name, for example C(@copr/copr-dev)}
+    state: ${5:# Whether to set this project as C(enabled), C(disabled) or C(absent)}
+    chroot: ${6:# The name of the chroot that you want to enable/disable/remove in the project, for example C(epel-7-x86_64)}

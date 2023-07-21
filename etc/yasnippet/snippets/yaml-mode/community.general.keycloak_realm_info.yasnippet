@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_realm_info
+# group: community.general
+# name: Allows obtaining Keycloak realm public information via Keycloak API
+# --
+- name: ${1:Allows obtaining Keycloak realm public information via Keycloak API}
+  community.general.keycloak_realm_info:
+    auth_keycloak_url: ${2:# URL to the Keycloak instance}
+    validate_certs: ${3:# Verify TLS certificates (do not disable this in production)}
+    realm: ${4:# They Keycloak realm ID}

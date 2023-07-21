@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.riak
+# group: community.general
+# name: This module handles some common Riak operations
+# --
+- name: ${1:This module handles some common Riak operations}
+  community.general.riak:
+    command: ${2:# The command you would like to perform against the cluster}
+    config_dir: ${3:# The path to the riak configuration directory}
+    http_conn: ${4:# The ip address and port that is listening for Riak HTTP queries}
+    target_node: ${5:# The target node for certain operations (join, ping)}
+    wait_for_handoffs: ${6:# Number of seconds to wait for handoffs to complete}
+    wait_for_ring: ${7:# Number of seconds to wait for all nodes to agree on the ring}
+    wait_for_service: ${8:# Waits for a riak service to come online before continuing}
+    validate_certs: ${9:# If C(false), SSL certificates will not be validated}

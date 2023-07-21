@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.lvol
+# group: community.general
+# name: Configure LVM logical volumes
+# --
+- name: ${1:Configure LVM logical volumes}
+  community.general.lvol:
+    vg: ${2:# The volume group this logical volume is part of}
+    lv: ${3:# The name of the logical volume}
+    size: ${4:# The size of the logical volume, according to lvcreate(8) --size, by default in megabytes or optionally with one of [bBsSkKmMgGtTpPeE] units; or according to lvcreate(8) --extents as a percentage of [VG|PVS|FREE]; Float values must begin with a digit}
+    state: ${5:# Control if the logical volume exists}
+    active: ${6:# Whether the volume is active and visible to the host}
+    force: ${7:# Shrink or remove operations of volumes requires this switch}
+    opts: ${8:# Free-form options to be passed to the lvcreate command}
+    snapshot: ${9:# The name of the snapshot volume}
+    pvs: ${10:# Comma separated list of physical volumes (e}
+    thinpool: ${11:# The thin pool volume name}
+    shrink: ${12:# Shrink if current size is higher than size requested}
+    resizefs: ${13:# Resize the underlying filesystem together with the logical volume}

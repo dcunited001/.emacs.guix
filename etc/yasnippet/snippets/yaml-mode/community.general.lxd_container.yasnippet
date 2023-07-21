@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.lxd_container
+# group: community.general
+# name: Manage LXD instances
+# --
+- name: ${1:Manage LXD instances}
+  community.general.lxd_container:
+    name: ${2:# Name of an instance}
+    project: ${3:# Project of an instance}
+    architecture: ${4:# The architecture for the instance (for example C(x86_64) or C(i686))}
+    config: ${5:# The config for the instance (for example C({'limits}
+    ignore_volatile_options: ${6:# If set to C(true), options starting with C(volatile}
+    profiles: ${7:# Profile to be used by the instance}
+    devices: ${8:# The devices for the instance (for example C({ 'rootfs': { 'path': '/dev/kvm', 'type': 'unix-char' }}))}
+    ephemeral: ${9:# Whether or not the instance is ephemeral (for example C(true) or C(false))}
+    source: ${10:# The source for the instance (e}
+    state: ${11:# Define the state of an instance}
+    target: ${12:# For cluster deployments}
+    timeout: ${13:# A timeout for changing the state of the instance}
+    type: ${14:# Instance type can be either C(virtual-machine) or C(container)}
+    wait_for_ipv4_addresses: ${15:# If this is true, the C(lxd_container) waits until IPv4 addresses are set to the all network interfaces in the instance after starting or restarting}
+    wait_for_container: ${16:# If set to C(true), the tasks will wait till the task reports a success status when performing container operations}
+    force_stop: ${17:# If this is true, the C(lxd_container) forces to stop the instance when it stops or restarts the instance}
+    url: ${18:# The unix domain socket path or the https URL for the LXD server}
+    snap_url: ${19:# The unix domain socket path when LXD is installed by snap package manager}
+    client_key: ${20:# The client certificate key file path}
+    client_cert: ${21:# The client certificate file path}
+    trust_password: ${22:# The client trusted password}

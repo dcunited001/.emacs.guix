@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.apache2_mod_proxy
+# group: community.general
+# name: Set and/or get members' attributes of an Apache httpd 2
+# --
+- name: ${1:Set and/or get members' attributes of an Apache httpd 2}
+  community.general.apache2_mod_proxy:
+    balancer_url_suffix: ${2:# Suffix of the balancer pool url required to access the balancer pool status page (e}
+    balancer_vhost: ${3:# (ipv4|ipv6|fqdn):port of the Apache httpd 2}
+    member_host: ${4:# (ipv4|ipv6|fqdn) of the balancer member to get or to set attributes to}
+    state: ${5:# Desired state of the member host}
+    tls: ${6:# Use https to access balancer management page}
+    validate_certs: ${7:# Validate ssl/tls certificates}

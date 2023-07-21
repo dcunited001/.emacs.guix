@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.read_csv
+# group: community.general
+# name: Read a CSV file
+# --
+- name: ${1:Read a CSV file}
+  community.general.read_csv:
+    path: ${2:# The CSV filename to read data from}
+    key: ${3:# The column name used as a key for the resulting dictionary}
+    dialect: ${4:# The CSV dialect to use when parsing the CSV file}
+    fieldnames: ${5:# A list of field names for every column}
+    unique: ${6:# Whether the C(key) used is expected to be unique}
+    delimiter: ${7:# A one-character string used to separate fields}
+    skipinitialspace: ${8:# Whether to ignore any whitespaces immediately following the delimiter}
+    strict: ${9:# Whether to raise an exception on bad CSV input}

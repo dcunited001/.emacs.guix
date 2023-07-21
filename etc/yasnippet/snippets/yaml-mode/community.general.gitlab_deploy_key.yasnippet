@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_deploy_key
+# group: community.general
+# name: Manages GitLab project deploy keys
+# --
+- name: ${1:Manages GitLab project deploy keys}
+  community.general.gitlab_deploy_key:
+    project: ${2:# Id or Full path of project in the form of group/name}
+    title: ${3:# Deploy key's title}
+    key: ${4:# Deploy key}
+    can_push: ${5:# Whether this key can push to the project}
+    state: ${6:# When C(present) the deploy key added to the project if it doesn't exist}
+    api_url: ${7:# The resolvable endpoint for the API}
+    api_username: ${8:# The username to use for authentication against the API}
+    api_password: ${9:# The password to use for authentication against the API}
+    validate_certs: ${10:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${11:# GitLab access token with API permissions}
+    api_oauth_token: ${12:# GitLab OAuth token for logging in}
+    api_job_token: ${13:# GitLab CI job token for logging in}

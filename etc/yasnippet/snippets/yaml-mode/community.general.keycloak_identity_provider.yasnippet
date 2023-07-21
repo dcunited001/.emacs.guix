@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_identity_provider
+# group: community.general
+# name: Allows administration of Keycloak identity providers via Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak identity providers via Keycloak API}
+  community.general.keycloak_identity_provider:
+    state: ${2:# State of the identity provider}
+    realm: ${3:# The Keycloak realm under which this identity provider resides}
+    alias: ${4:# The alias uniquely identifies an identity provider and it is also used to build the redirect URI}
+    display_name: ${5:# Friendly name for identity provider}
+    enabled: ${6:# Enable/disable this identity provider}
+    store_token: ${7:# Enable/disable whether tokens must be stored after authenticating users}
+    add_read_token_role_on_create: ${8:# Enable/disable whether new users can read any stored tokens}
+    trust_email: ${9:# If enabled, email provided by this provider is not verified even if verification is enabled for the realm}
+    link_only: ${10:# If true, users cannot log in through this provider}
+    first_broker_login_flow_alias: ${11:# Alias of authentication flow, which is triggered after first login with this identity provider}
+    post_broker_login_flow_alias: ${12:# Alias of authentication flow, which is triggered after each login with this identity provider}
+    authenticate_by_default: ${13:# Specifies if this identity provider should be used by default for authentication even before displaying login screen}
+    provider_id: ${14:# Protocol used by this provider (supported values are C(oidc) or C(saml))}
+    config: ${15:# Dict specifying the configuration options for the provider; the contents differ depending on the value of I(providerId)}
+    mappers: ${16:# A list of dicts defining mappers associated with this Identity Provider}
+    auth_keycloak_url: ${17:# URL to the Keycloak instance}
+    auth_client_id: ${18:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${19:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${20:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${21:# Username to authenticate for API access with}
+    auth_password: ${22:# Password to authenticate for API access with}
+    token: ${23:# Authentication token for Keycloak API}
+    validate_certs: ${24:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${25:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${26:# Configures the HTTP User-Agent header}

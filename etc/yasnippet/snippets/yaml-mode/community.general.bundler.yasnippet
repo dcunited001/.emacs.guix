@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.bundler
+# group: community.general
+# name: Manage Ruby Gem dependencies with Bundler
+# --
+- name: ${1:Manage Ruby Gem dependencies with Bundler}
+  community.general.bundler:
+    executable: ${2:# The path to the bundler executable}
+    state: ${3:# The desired state of the Gem bundle}
+    chdir: ${4:# The directory to execute the bundler commands from}
+    exclude_groups: ${5:# A list of Gemfile groups to exclude during operations}
+    clean: ${6:# Only applies if state is C(present)}
+    gemfile: ${7:# Only applies if state is C(present)}
+    local: ${8:# If set only installs gems from the cache on the target host}
+    deployment_mode: ${9:# Only applies if state is C(present)}
+    user_install: ${10:# Only applies if state is C(present)}
+    gem_path: ${11:# Only applies if state is C(present)}
+    binstub_directory: ${12:# Only applies if state is C(present)}
+    extra_args: ${13:# A space separated string of additional commands that can be applied to the Bundler command}

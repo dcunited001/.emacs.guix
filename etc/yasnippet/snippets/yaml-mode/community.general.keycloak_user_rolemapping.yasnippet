@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_user_rolemapping
+# group: community.general
+# name: Allows administration of Keycloak user_rolemapping with the Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak user_rolemapping with the Keycloak API}
+  community.general.keycloak_user_rolemapping:
+    state: ${2:# State of the user_rolemapping}
+    realm: ${3:# They Keycloak realm under which this role_representation resides}
+    target_username: ${4:# Username of the user roles are mapped to}
+    uid: ${5:# ID of the user to be mapped}
+    service_account_user_client_id: ${6:# Client ID of the service-account-user to be mapped}
+    client_id: ${7:# Name of the client to be mapped (different than I(cid))}
+    cid: ${8:# ID of the client to be mapped}
+    roles: ${9:# Roles to be mapped to the user}
+    auth_keycloak_url: ${10:# URL to the Keycloak instance}
+    auth_client_id: ${11:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${12:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${13:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${14:# Username to authenticate for API access with}
+    auth_password: ${15:# Password to authenticate for API access with}
+    token: ${16:# Authentication token for Keycloak API}
+    validate_certs: ${17:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${18:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${19:# Configures the HTTP User-Agent header}

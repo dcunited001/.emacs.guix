@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.datadog_downtime
+# group: community.general
+# name: Manages Datadog downtimes
+# --
+- name: ${1:Manages Datadog downtimes}
+  community.general.datadog_downtime:
+    api_key: ${2:# Your Datadog API key}
+    api_host: ${3:# The URL to the Datadog API}
+    app_key: ${4:# Your Datadog app key}
+    state: ${5:# The designated state of the downtime}
+    id: ${6:# The identifier of the downtime}
+    monitor_tags: ${7:# A list of monitor tags to which the downtime applies}
+    scope: ${8:# A list of scopes to which the downtime applies}
+    monitor_id: ${9:# The ID of the monitor to mute}
+    downtime_message: ${10:# A message to include with notifications for this downtime}
+    start: ${11:# POSIX timestamp to start the downtime}
+    end: ${12:# POSIX timestamp to end the downtime}
+    timezone: ${13:# The timezone for the downtime}
+    rrule: ${14:# The C(RRULE) standard for defining recurring events}

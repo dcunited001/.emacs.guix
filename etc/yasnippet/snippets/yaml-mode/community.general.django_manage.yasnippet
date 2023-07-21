@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.django_manage
+# group: community.general
+# name: Manages a Django application
+# --
+- name: ${1:Manages a Django application}
+  community.general.django_manage:
+    command: ${2:# The name of the Django management command to run}
+    project_path: ${3:# The path to the root of the Django application where C(manage}
+    settings: ${4:# The Python path to the application's settings module, such as C(myapp}
+    pythonpath: ${5:# A directory to add to the Python path}
+    virtualenv: ${6:# An optional path to a C(virtualenv) installation to use while running the manage application}
+    apps: ${7:# A list of space-delimited apps to target}
+    cache_table: ${8:# The name of the table used for database-backed caching}
+    clear: ${9:# Clear the existing files before trying to copy or link the original file}
+    database: ${10:# The database to target}
+    failfast: ${11:# Fail the command immediately if a test fails}
+    fixtures: ${12:# A space-delimited list of fixture file names to load in the database}
+    skip: ${13:# Will skip over out-of-order missing migrations, you can only use this parameter with C(migrate) command}
+    merge: ${14:# Will run out-of-order or missing migrations as they are not rollback migrations, you can only use this parameter with C(migrate) command}
+    link: ${15:# Will create links to the files instead of copying them, you can only use this parameter with C(collectstatic) command}
+    testrunner: ${16:# Controls the test runner class that is used to execute tests}
+    ack_venv_creation_deprecation: ${17:# When a I(virtualenv) is set but the virtual environment does not exist, the current behavior is to create a new virtual environment}

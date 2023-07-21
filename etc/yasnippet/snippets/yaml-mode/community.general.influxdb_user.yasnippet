@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.influxdb_user
+# group: community.general
+# name: Manage InfluxDB users
+# --
+- name: ${1:Manage InfluxDB users}
+  community.general.influxdb_user:
+    user_name: ${2:# Name of the user}
+    user_password: ${3:# Password to be set for the user}
+    admin: ${4:# Whether the user should be in the admin role or not}
+    state: ${5:# State of the user}
+    grants: ${6:# Privileges to grant to this user}
+    hostname: ${7:# The hostname or IP address on which InfluxDB server is listening}
+    username: ${8:# Username that will be used to authenticate against InfluxDB server}
+    password: ${9:# Password that will be used to authenticate against InfluxDB server}
+    port: ${10:# The port on which InfluxDB server is listening}
+    path: ${11:# The path on which InfluxDB server is accessible}
+    validate_certs: ${12:# If set to C(false), the SSL certificates will not be validated}
+    ssl: ${13:# Use https instead of http to connect to InfluxDB server}
+    timeout: ${14:# Number of seconds Requests will wait for client to establish a connection}
+    retries: ${15:# Number of retries client will try before aborting}
+    use_udp: ${16:# Use UDP to connect to InfluxDB server}
+    udp_port: ${17:# UDP port to connect to InfluxDB server}
+    proxies: ${18:# HTTP(S) proxy to use for Requests to connect to InfluxDB server}

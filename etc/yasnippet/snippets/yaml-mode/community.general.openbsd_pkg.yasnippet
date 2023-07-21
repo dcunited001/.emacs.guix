@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.openbsd_pkg
+# group: community.general
+# name: Manage packages on OpenBSD
+# --
+- name: ${1:Manage packages on OpenBSD}
+  community.general.openbsd_pkg:
+    name: ${2:# A name or a list of names of the packages}
+    state: ${3:# C(present) will make sure the package is installed}
+    build: ${4:# Build the package from source instead of downloading and installing a binary}
+    snapshot: ${5:# Force C(%c) and C(%m) to expand to C(snapshots), even on a release kernel}
+    ports_dir: ${6:# When used in combination with the C(build) option, allows overriding the default ports source directory}
+    clean: ${7:# When updating or removing packages, delete the extra configuration file(s) in the old packages which are annotated with @extra in the packaging-list}
+    quick: ${8:# Replace or delete packages quickly; do not bother with checksums before removing normal files}

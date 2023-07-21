@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.consul
+# group: community.general
+# name: Add, modify & delete services within a consul cluster
+# --
+- name: ${1:Add, modify & delete services within a consul cluster}
+  community.general.consul:
+    state: ${2:# Register or deregister the consul service, defaults to present}
+    service_name: ${3:# Unique name for the service on a node, must be unique per node, required if registering a service}
+    service_id: ${4:# The ID for the service, must be unique per node}
+    host: ${5:# Host of the consul agent defaults to localhost}
+    port: ${6:# The port on which the consul agent is running}
+    scheme: ${7:# The protocol scheme on which the consul agent is running}
+    validate_certs: ${8:# Whether to verify the TLS certificate of the consul agent}
+    notes: ${9:# Notes to attach to check when registering it}
+    service_port: ${10:# The port on which the service is listening}
+    service_address: ${11:# The address to advertise that the service will be listening on}
+    tags: ${12:# Tags that will be attached to the service registration}
+    script: ${13:# The script/command that will be run periodically to check the health of the service}
+    interval: ${14:# The interval at which the service check will be run}
+    check_id: ${15:# An ID for the service check}
+    check_name: ${16:# Name for the service check}
+    ttl: ${17:# Checks can be registered with a ttl instead of a I(script) and I(interval) this means that the service will check in with the agent before the ttl expires}
+    tcp: ${18:# Checks can be registered with a TCP port}
+    http: ${19:# Checks can be registered with an HTTP endpoint}
+    timeout: ${20:# A custom HTTP check timeout}
+    token: ${21:# The token key identifying an ACL rule set}
+    ack_params_state_absent: ${22:# Disable deprecation warning when using parameters incompatible with I(state=absent)}

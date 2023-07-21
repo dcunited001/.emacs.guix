@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.capabilities
+# group: community.general
+# name: Manage Linux capabilities
+# --
+- name: ${1:Manage Linux capabilities}
+  community.general.capabilities:
+    path: ${2:# Specifies the path to the file to be managed}
+    capability: ${3:# Desired capability to set (with operator and flags, if state is C(present)) or remove (if state is C(absent))}
+    state: ${4:# Whether the entry should be present or absent in the file's capabilities}

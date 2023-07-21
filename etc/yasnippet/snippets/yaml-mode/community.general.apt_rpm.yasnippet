@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.apt_rpm
+# group: community.general
+# name: APT-RPM package manager
+# --
+- name: ${1:APT-RPM package manager}
+  community.general.apt_rpm:
+    package: ${2:# List of packages to install, upgrade, or remove}
+    state: ${3:# Indicates the desired package state}
+    update_cache: ${4:# Run the equivalent of C(apt-get update) before the operation}
+    clean: ${5:# Run the equivalent of C(apt-get clean) to clear out the local repository of retrieved package files}
+    dist_upgrade: ${6:# If true performs an C(apt-get dist-upgrade) to upgrade system}
+    update_kernel: ${7:# If true performs an C(update-kernel) to upgrade kernel packages}

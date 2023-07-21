@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.dnsmadeeasy
+# group: community.general
+# name: Interface with dnsmadeeasy
+# --
+- name: ${1:Interface with dnsmadeeasy}
+  community.general.dnsmadeeasy:
+    account_key: ${2:# Account API Key}
+    account_secret: ${3:# Account Secret Key}
+    domain: ${4:# Domain to work with}
+    sandbox: ${5:# Decides if the sandbox API should be used}
+    record_name: ${6:# Record name to get/create/delete/update}
+    record_type: ${7:# Record type}
+    record_value: ${8:# Record value}
+    record_ttl: ${9:# record's 'Time to live'}
+    state: ${10:# whether the record should exist or not}
+    validate_certs: ${11:# If C(false), SSL certificates will not be validated}
+    monitor: ${12:# If C(true), add or change the monitor}
+    systemDescription: ${13:# Description used by the monitor}
+    maxEmails: ${14:# Number of emails sent to the contact list by the monitor}
+    protocol: ${15:# Protocol used by the monitor}
+    port: ${16:# Port used by the monitor}
+    sensitivity: ${17:# Number of checks the monitor performs before a failover occurs where Low = 8, Medium = 5,and High = 3}
+    contactList: ${18:# Name or id of the contact list that the monitor will notify}
+    httpFqdn: ${19:# The fully qualified domain name used by the monitor}
+    httpFile: ${20:# The file at the Fqdn that the monitor queries for HTTP or HTTPS}
+    httpQueryString: ${21:# The string in the httpFile that the monitor queries for HTTP or HTTPS}
+    failover: ${22:# If C(true), add or change the failover}
+    autoFailover: ${23:# If true, fallback to the primary IP address is manual after a failover}
+    ip1: ${24:# Primary IP address for the failover}
+    ip2: ${25:# Secondary IP address for the failover}
+    ip3: ${26:# Tertiary IP address for the failover}
+    ip4: ${27:# Quaternary IP address for the failover}
+    ip5: ${28:# Quinary IP address for the failover}

@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox
+# group: community.general
+# name: Management of instances in Proxmox VE cluster
+# --
+- name: ${1:Management of instances in Proxmox VE cluster}
+  community.general.proxmox:
+    password: ${2:# the instance root password}
+    hostname: ${3:# the instance hostname}
+    ostemplate: ${4:# the template for VM creating}
+    disk: ${5:# This option was previously described as 'hard disk size in GB for instance' however several formats describing a lxc mount are permitted}
+    cores: ${6:# Specify number of cores per socket}
+    cpus: ${7:# numbers of allocated cpus for instance}
+    memory: ${8:# memory size in MB for instance}
+    swap: ${9:# swap memory size in MB for instance}
+    netif: ${10:# specifies network interfaces for the container}
+    features: ${11:# Specifies a list of features to be enabled}
+    mounts: ${12:# specifies additional mounts (separate disks) for the container}
+    ip_address: ${13:# specifies the address the container will be assigned}
+    onboot: ${14:# specifies whether a VM will be started during system bootup}
+    storage: ${15:# target storage}
+    cpuunits: ${16:# CPU weight for a VM}
+    nameserver: ${17:# sets DNS server IP address for a container}
+    searchdomain: ${18:# sets DNS search domain for a container}
+    tags: ${19:# List of tags to apply to the container}
+    timeout: ${20:# timeout for operations}
+    force: ${21:# forcing operations}
+    purge: ${22:# Remove container from all related configurations}
+    state: ${23:# Indicate desired state of the instance}
+    pubkey: ${24:# Public key to add to /root/}
+    unprivileged: ${25:# Indicate if the container should be unprivileged}
+    description: ${26:# Specify the description for the container}
+    hookscript: ${27:# Script that will be executed during various steps in the containers lifetime}
+    proxmox_default_behavior: ${28:# As of community}
+    clone: ${29:# ID of the container to be cloned}
+    clone_type: ${30:# Type of the clone created}
+    api_host: ${31:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${32:# Specify the user to authenticate with}
+    api_password: ${33:# Specify the password to authenticate with}
+    api_token_id: ${34:# Specify the token ID}
+    api_token_secret: ${35:# Specify the token secret}
+    validate_certs: ${36:# If C(false), SSL certificates will not be validated}
+    vmid: ${37:# Specifies the instance ID}
+    node: ${38:# Proxmox VE node on which to operate}
+    pool: ${39:# Add the new VM to the specified pool}

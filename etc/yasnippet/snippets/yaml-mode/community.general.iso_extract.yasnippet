@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.iso_extract
+# group: community.general
+# name: Extract files from an ISO image
+# --
+- name: ${1:Extract files from an ISO image}
+  community.general.iso_extract:
+    image: ${2:# The ISO image to extract files from}
+    dest: ${3:# The destination directory to extract files to}
+    files: ${4:# A list of files to extract from the image}
+    force: ${5:# If C(true), which will replace the remote file when contents are different than the source}
+    executable: ${6:# The path to the C(7z) executable to use for extracting files from the ISO}

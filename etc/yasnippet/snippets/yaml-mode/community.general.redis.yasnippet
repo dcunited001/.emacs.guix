@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redis
+# group: community.general
+# name: Various redis commands, replica and flush
+# --
+- name: ${1:Various redis commands, replica and flush}
+  community.general.redis:
+    command: ${2:# The selected redis command}
+    tls: ${3:# Specify whether or not to use TLS for the connection}
+    login_user: ${4:# Specify the user to authenticate with}
+    validate_certs: ${5:# Specify whether or not to validate TLS certificates}
+    ca_certs: ${6:# Path to root certificates file}
+    master_host: ${7:# The host of the master instance [replica command]}
+    master_port: ${8:# The port of the master instance [replica command]}
+    replica_mode: ${9:# The mode of the redis instance [replica command]}
+    db: ${10:# The database to flush (used in db mode) [flush command]}
+    flush_mode: ${11:# Type of flush (all the dbs in a redis instance or a specific one) [flush command]}
+    name: ${12:# A redis config key}
+    value: ${13:# A redis config value}
+    login_host: ${14:# Specify the target host running the database}
+    login_port: ${15:# Specify the port to connect to}
+    login_password: ${16:# Specify the password to authenticate with}

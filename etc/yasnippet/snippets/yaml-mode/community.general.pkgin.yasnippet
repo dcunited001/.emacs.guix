@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pkgin
+# group: community.general
+# name: Package manager for SmartOS, NetBSD, et al
+# --
+- name: ${1:Package manager for SmartOS, NetBSD, et al}
+  community.general.pkgin:
+    name: ${2:# Name of package to install/remove;}
+    state: ${3:# Intended state of the package}
+    update_cache: ${4:# Update repository database}
+    upgrade: ${5:# Upgrade main packages to their newer versions}
+    full_upgrade: ${6:# Upgrade all packages to their newer versions}
+    clean: ${7:# Clean packages cache}
+    force: ${8:# Force package reinstall}

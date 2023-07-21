@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.awall
+# group: community.general
+# name: Manage awall policies
+# --
+- name: ${1:Manage awall policies}
+  community.general.awall:
+    name: ${2:# One or more policy names}
+    state: ${3:# Whether the policies should be enabled or disabled}
+    activate: ${4:# Activate the new firewall rules}

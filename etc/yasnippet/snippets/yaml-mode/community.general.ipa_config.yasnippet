@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_config
+# group: community.general
+# name: Manage Global FreeIPA Configuration Settings
+# --
+- name: ${1:Manage Global FreeIPA Configuration Settings}
+  community.general.ipa_config:
+    ipaconfigstring: ${2:# Extra hashes to generate in password plug-in}
+    ipadefaultloginshell: ${3:# Default shell for new users}
+    ipadefaultemaildomain: ${4:# Default e-mail domain for new users}
+    ipadefaultprimarygroup: ${5:# Default group for new users}
+    ipagroupsearchfields: ${6:# A list of fields to search in when searching for groups}
+    ipahomesrootdir: ${7:# Default location of home directories}
+    ipakrbauthzdata: ${8:# Default types of PAC supported for services}
+    ipamaxusernamelength: ${9:# Maximum length of usernames}
+    ipapwdexpadvnotify: ${10:# Notice of impending password expiration, in days}
+    ipasearchrecordslimit: ${11:# Maximum number of records to search (-1 or 0 is unlimited)}
+    ipasearchtimelimit: ${12:# Maximum amount of time (seconds) for a search (-1 or 0 is unlimited)}
+    ipaselinuxusermaporder: ${13:# The SELinux user map order (order in increasing priority of SELinux users)}
+    ipauserauthtype: ${14:# The authentication type to use by default}
+    ipausersearchfields: ${15:# A list of fields to search in when searching for users}
+    ipa_port: ${16:# Port of FreeIPA / IPA server}
+    ipa_host: ${17:# IP or hostname of IPA server}
+    ipa_user: ${18:# Administrative account used on IPA server}
+    ipa_pass: ${19:# Password of administrative user}
+    ipa_prot: ${20:# Protocol used by IPA server}
+    validate_certs: ${21:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${22:# Specifies idle timeout (in seconds) for the connection}

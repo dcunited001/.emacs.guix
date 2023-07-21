@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_hook
+# group: community.general
+# name: Manages GitLab project hooks
+# --
+- name: ${1:Manages GitLab project hooks}
+  community.general.gitlab_hook:
+    project: ${2:# Id or Full path of the project in the form of group/name}
+    hook_url: ${3:# The url that you want GitLab to post to, this is used as the primary key for updates and deletion}
+    state: ${4:# When C(present) the hook will be updated to match the input or created if it doesn't exist}
+    push_events: ${5:# Trigger hook on push events}
+    push_events_branch_filter: ${6:# Branch name of wildcard to trigger hook on push events}
+    issues_events: ${7:# Trigger hook on issues events}
+    merge_requests_events: ${8:# Trigger hook on merge requests events}
+    tag_push_events: ${9:# Trigger hook on tag push events}
+    note_events: ${10:# Trigger hook on note events or when someone adds a comment}
+    job_events: ${11:# Trigger hook on job events}
+    pipeline_events: ${12:# Trigger hook on pipeline events}
+    wiki_page_events: ${13:# Trigger hook on wiki events}
+    hook_validate_certs: ${14:# Whether GitLab will do SSL verification when triggering the hook}
+    token: ${15:# Secret token to validate hook messages at the receiver}
+    api_url: ${16:# The resolvable endpoint for the API}
+    api_username: ${17:# The username to use for authentication against the API}
+    api_password: ${18:# The password to use for authentication against the API}
+    validate_certs: ${19:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${20:# GitLab access token with API permissions}
+    api_oauth_token: ${21:# GitLab OAuth token for logging in}
+    api_job_token: ${22:# GitLab CI job token for logging in}

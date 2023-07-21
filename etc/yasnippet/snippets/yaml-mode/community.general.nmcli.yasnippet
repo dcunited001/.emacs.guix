@@ -1,0 +1,86 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.nmcli
+# group: community.general
+# name: Manage Networking
+# --
+- name: ${1:Manage Networking}
+  community.general.nmcli:
+    state: ${2:# Whether the device should exist or not, taking action if the state is different from what is stated}
+    autoconnect: ${3:# Whether the connection should start on boot}
+    conn_name: ${4:# The name used to call the connection}
+    ifname: ${5:# The interface to bind the connection to}
+    type: ${6:# This is the type of device or network connection that you wish to create or modify}
+    mode: ${7:# This is the type of device or network connection that you wish to create for a bond or bridge}
+    transport_mode: ${8:# This option sets the connection type of Infiniband IPoIB devices}
+    slave_type: ${9:# Type of the device of this slave's master connection (for example C(bond))}
+    master: ${10:# Master <master (ifname, or connection UUID or conn_name) of bridge, team, bond master connection profile}
+    ip4: ${11:# List of IPv4 addresses to this interface}
+    gw4: ${12:# The IPv4 gateway for this interface}
+    gw4_ignore_auto: ${13:# Ignore automatically configured IPv4 routes}
+    routes4: ${14:# The list of IPv4 routes}
+    routes4_extended: ${15:# The list of IPv4 routes}
+    route_metric4: ${16:# Set metric level of ipv4 routes configured on interface}
+    routing_rules4: ${17:# Is the same as in an C(ip route add) command, except always requires specifying a priority}
+    never_default4: ${18:# Set as default route}
+    dns4: ${19:# A list of up to 3 DNS servers}
+    dns4_search: ${20:# A list of DNS search domains}
+    dns4_ignore_auto: ${21:# Ignore automatically configured IPv4 name servers}
+    method4: ${22:# Configuration method to be used for IPv4}
+    may_fail4: ${23:# If you need I(ip4) configured before C(network-online}
+    ip6: ${24:# List of IPv6 addresses to this interface}
+    gw6: ${25:# The IPv6 gateway for this interface}
+    gw6_ignore_auto: ${26:# Ignore automatically configured IPv6 routes}
+    routes6: ${27:# The list of IPv6 routes}
+    routes6_extended: ${28:# The list of IPv6 routes but with parameters}
+    route_metric6: ${29:# Set metric level of IPv6 routes configured on interface}
+    dns6: ${30:# A list of up to 3 DNS servers}
+    dns6_search: ${31:# A list of DNS search domains}
+    dns6_ignore_auto: ${32:# Ignore automatically configured IPv6 name servers}
+    method6: ${33:# Configuration method to be used for IPv6}
+    ip_privacy6: ${34:# If enabled, it makes the kernel generate a temporary IPv6 address in addition to the public one}
+    addr_gen_mode6: ${35:# Configure method for creating the address for use with IPv6 Stateless Address Autoconfiguration}
+    mtu: ${36:# The connection MTU, e}
+    dhcp_client_id: ${37:# DHCP Client Identifier sent to the DHCP server}
+    primary: ${38:# This is only used with bond and is the primary interface name (for 'active-backup' mode), this is the usually the 'ifname'}
+    miimon: ${39:# This is only used with bond - miimon}
+    downdelay: ${40:# This is only used with bond - downdelay}
+    updelay: ${41:# This is only used with bond - updelay}
+    xmit_hash_policy: ${42:# This is only used with bond - xmit_hash_policy type}
+    arp_interval: ${43:# This is only used with bond - ARP interval}
+    arp_ip_target: ${44:# This is only used with bond - ARP IP target}
+    stp: ${45:# This is only used with bridge and controls whether Spanning Tree Protocol (STP) is enabled for this bridge}
+    priority: ${46:# This is only used with 'bridge' - sets STP priority}
+    forwarddelay: ${47:# This is only used with bridge - [forward-delay <2-30>] STP forwarding delay, in seconds}
+    hellotime: ${48:# This is only used with bridge - [hello-time <1-10>] STP hello time, in seconds}
+    maxage: ${49:# This is only used with bridge - [max-age <6-42>] STP maximum message age, in seconds}
+    ageingtime: ${50:# This is only used with bridge - [ageing-time <0-1000000>] the Ethernet MAC address aging time, in seconds}
+    mac: ${51:# MAC address of the connection}
+    slavepriority: ${52:# This is only used with 'bridge-slave' - [<0-63>] - STP priority of this slave}
+    path_cost: ${53:# This is only used with 'bridge-slave' - [<1-65535>] - STP port cost for destinations via this slave}
+    hairpin: ${54:# This is only used with 'bridge-slave' - 'hairpin mode' for the slave, which allows frames to be sent back out through the slave the frame was received on}
+    runner: ${55:# This is the type of device or network connection that you wish to create for a team}
+    runner_hwaddr_policy: ${56:# This defines the policy of how hardware addresses of team device and port devices should be set during the team lifetime}
+    runner_fast_rate: ${57:# Option specifies the rate at which our link partner is asked to transmit LACPDU packets}
+    vlanid: ${58:# This is only used with VLAN - VLAN ID in range <0-4095>}
+    vlandev: ${59:# This is only used with VLAN - parent device this VLAN is on, can use ifname}
+    flags: ${60:# This is only used with VLAN - flags}
+    ingress: ${61:# This is only used with VLAN - VLAN ingress priority mapping}
+    egress: ${62:# This is only used with VLAN - VLAN egress priority mapping}
+    vxlan_id: ${63:# This is only used with VXLAN - VXLAN ID}
+    vxlan_remote: ${64:# This is only used with VXLAN - VXLAN destination IP address}
+    vxlan_local: ${65:# This is only used with VXLAN - VXLAN local IP address}
+    ip_tunnel_dev: ${66:# This is used with GRE/IPIP/SIT - parent device this GRE/IPIP/SIT tunnel, can use ifname}
+    ip_tunnel_remote: ${67:# This is used with GRE/IPIP/SIT - GRE/IPIP/SIT destination IP address}
+    ip_tunnel_local: ${68:# This is used with GRE/IPIP/SIT - GRE/IPIP/SIT local IP address}
+    ip_tunnel_input_key: ${69:# The key used for tunnel input packets}
+    ip_tunnel_output_key: ${70:# The key used for tunnel output packets}
+    zone: ${71:# The trust level of the connection}
+    wifi_sec: ${72:# The security configuration of the WiFi connection}
+    ssid: ${73:# Name of the Wireless router or the access point}
+    wifi: ${74:# The configuration of the WiFi connection}
+    ignore_unsupported_suboptions: ${75:# Ignore suboptions which are invalid or unsupported by the version of NetworkManager/nmcli installed on the host}
+    gsm: ${76:# The configuration of the GSM connection}
+    macvlan: ${77:# The configuration of the MAC VLAN connection}
+    wireguard: ${78:# The configuration of the Wireguard connection}
+    vpn: ${79:# Configuration of a VPN connection (PPTP and L2TP)}

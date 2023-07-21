@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.github_key
+# group: community.general
+# name: Manage GitHub access keys
+# --
+- name: ${1:Manage GitHub access keys}
+  community.general.github_key:
+    token: ${2:# GitHub Access Token with permission to list and create public keys}
+    name: ${3:# SSH key name}
+    pubkey: ${4:# SSH public key value}
+    state: ${5:# Whether to remove a key, ensure that it exists, or update its value}
+    force: ${6:# The default is C(true), which will replace the existing remote key if it's different than C(pubkey)}

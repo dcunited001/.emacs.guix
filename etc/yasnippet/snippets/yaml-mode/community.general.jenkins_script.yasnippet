@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jenkins_script
+# group: community.general
+# name: Executes a groovy script in the jenkins instance
+# --
+- name: ${1:Executes a groovy script in the jenkins instance}
+  community.general.jenkins_script:
+    script: ${2:# The groovy script to be executed}
+    url: ${3:# The jenkins server to execute the script against}
+    validate_certs: ${4:# If set to C(false), the SSL certificates will not be validated}
+    user: ${5:# The username to connect to the jenkins server with}
+    password: ${6:# The password to connect to the jenkins server with}
+    timeout: ${7:# The request timeout in seconds}
+    args: ${8:# A dict of key-value pairs used in formatting the script using string}

@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pkgng
+# group: community.general
+# name: Package manager for FreeBSD >= 9
+# --
+- name: ${1:Package manager for FreeBSD >= 9}
+  community.general.pkgng:
+    name: ${2:# Name or list of names of packages to install/remove}
+    state: ${3:# State of the package}
+    cached: ${4:# Use local package base instead of fetching an updated one}
+    annotation: ${5:# A list of keyvalue-pairs of the form C(<+/-/:><key>[=<value>])}
+    pkgsite: ${6:# For pkgng versions before 1}
+    rootdir: ${7:# For pkgng versions 1}
+    chroot: ${8:# Pkg will chroot in the specified environment}
+    jail: ${9:# Pkg will execute in the given jail name or id}
+    autoremove: ${10:# Remove automatically installed packages which are no longer needed}
+    ignore_osver: ${11:# Ignore FreeBSD OS version check, useful on -STABLE and -CURRENT branches}

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipmi_boot
+# group: community.general
+# name: Management of order of boot devices
+# --
+- name: ${1:Management of order of boot devices}
+  community.general.ipmi_boot:
+    name: ${2:# Hostname or ip address of the BMC}
+    port: ${3:# Remote RMCP port}
+    user: ${4:# Username to use to connect to the BMC}
+    password: ${5:# Password to connect to the BMC}
+    key: ${6:# Encryption key to connect to the BMC in hex format}
+    bootdev: ${7:# Set boot device to use on next reboot}
+    state: ${8:# Whether to ensure that boot devices is desired}
+    persistent: ${9:# If set, ask that system firmware uses this device beyond next boot}
+    uefiboot: ${10:# If set, request UEFI boot explicitly}

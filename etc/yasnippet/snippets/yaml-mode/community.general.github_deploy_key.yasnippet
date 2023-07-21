@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.github_deploy_key
+# group: community.general
+# name: Manages deploy keys for GitHub repositories
+# --
+- name: ${1:Manages deploy keys for GitHub repositories}
+  community.general.github_deploy_key:
+    github_url: ${2:# The base URL of the GitHub API}
+    owner: ${3:# The name of the individual account or organization that owns the GitHub repository}
+    repo: ${4:# The name of the GitHub repository}
+    name: ${5:# The name for the deploy key}
+    key: ${6:# The SSH public key to add to the repository as a deploy key}
+    read_only: ${7:# If C(true), the deploy key will only be able to read repository contents}
+    state: ${8:# The state of the deploy key}
+    force: ${9:# If C(true), forcefully adds the deploy key by deleting any existing deploy key with the same public key or title}
+    username: ${10:# The username to authenticate with}
+    password: ${11:# The password to authenticate with}
+    token: ${12:# The OAuth2 token or personal access token to authenticate with}
+    otp: ${13:# The 6 digit One Time Password for 2-Factor Authentication}

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.svc
+# group: community.general
+# name: Manage daemontools services
+# --
+- name: ${1:Manage daemontools services}
+  community.general.svc:
+    name: ${2:# Name of the service to manage}
+    state: ${3:# C(Started)/C(stopped) are idempotent actions that will not run commands unless necessary}
+    downed: ${4:# Should a 'down' file exist or not, if it exists it disables auto startup}
+    enabled: ${5:# Whether the service is enabled or not, if disabled it also implies stopped}
+    service_dir: ${6:# Directory svscan watches for services}
+    service_src: ${7:# Directory where services are defined, the source of symlinks to service_dir}

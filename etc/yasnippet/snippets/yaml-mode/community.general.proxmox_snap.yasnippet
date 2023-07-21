@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox_snap
+# group: community.general
+# name: Snapshot management of instances in Proxmox VE cluster
+# --
+- name: ${1:Snapshot management of instances in Proxmox VE cluster}
+  community.general.proxmox_snap:
+    hostname: ${2:# The instance name}
+    vmid: ${3:# The instance id}
+    state: ${4:# Indicate desired state of the instance snapshot}
+    force: ${5:# For removal from config file, even if removing disk snapshot fails}
+    unbind: ${6:# This option only applies to LXC containers}
+    vmstate: ${7:# Snapshot includes RAM}
+    description: ${8:# Specify the description for the snapshot}
+    timeout: ${9:# Timeout for operations}
+    snapname: ${10:# Name of the snapshot that has to be created/deleted/restored}
+    api_host: ${11:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${12:# Specify the user to authenticate with}
+    api_password: ${13:# Specify the password to authenticate with}
+    api_token_id: ${14:# Specify the token ID}
+    api_token_secret: ${15:# Specify the token secret}
+    validate_certs: ${16:# If C(false), SSL certificates will not be validated}

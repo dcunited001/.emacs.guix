@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.bitbucket_pipeline_variable
+# group: community.general
+# name: Manages Bitbucket pipeline variables
+# --
+- name: ${1:Manages Bitbucket pipeline variables}
+  community.general.bitbucket_pipeline_variable:
+    repository: ${2:# The repository name}
+    workspace: ${3:# The repository owner}
+    name: ${4:# The pipeline variable name}
+    value: ${5:# The pipeline variable value}
+    secured: ${6:# Whether to encrypt the variable value}
+    state: ${7:# Indicates desired state of the variable}
+    client_id: ${8:# The OAuth consumer key}
+    client_secret: ${9:# The OAuth consumer secret}
+    user: ${10:# The username}
+    password: ${11:# The App password}

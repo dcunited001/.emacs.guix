@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.syslogger
+# group: community.general
+# name: Log messages in the syslog
+# --
+- name: ${1:Log messages in the syslog}
+  community.general.syslogger:
+    msg: ${2:# This is the message to place in syslog}
+    priority: ${3:# Set the log priority}
+    facility: ${4:# Set the log facility}
+    log_pid: ${5:# Log the PID in brackets}
+    ident: ${6:# Specify the name of application name which is sending the log to syslog}

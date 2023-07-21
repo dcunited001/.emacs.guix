@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.bitbucket_pipeline_known_host
+# group: community.general
+# name: Manages Bitbucket pipeline known hosts
+# --
+- name: ${1:Manages Bitbucket pipeline known hosts}
+  community.general.bitbucket_pipeline_known_host:
+    repository: ${2:# The repository name}
+    workspace: ${3:# The repository owner}
+    name: ${4:# The FQDN of the known host}
+    key: ${5:# The public key}
+    state: ${6:# Indicates desired state of the record}
+    client_id: ${7:# The OAuth consumer key}
+    client_secret: ${8:# The OAuth consumer secret}
+    user: ${9:# The username}
+    password: ${10:# The App password}

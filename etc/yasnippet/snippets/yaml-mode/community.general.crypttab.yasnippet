@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.crypttab
+# group: community.general
+# name: Encrypted Linux block devices
+# --
+- name: ${1:Encrypted Linux block devices}
+  community.general.crypttab:
+    name: ${2:# Name of the encrypted block device as it appears in the C(/etc/crypttab) file, or optionally prefixed with C(/dev/mapper/), as it appears in the filesystem}
+    state: ${3:# Use I(present) to add a line to C(/etc/crypttab) or update its definition if already present}
+    backing_device: ${4:# Path to the underlying block device or file, or the UUID of a block-device prefixed with I(UUID=)}
+    password: ${5:# Encryption password, the path to a file containing the password, or C(-) or unset if the password should be entered at boot}
+    opts: ${6:# A comma-delimited list of options}
+    path: ${7:# Path to file to use instead of C(/etc/crypttab)}

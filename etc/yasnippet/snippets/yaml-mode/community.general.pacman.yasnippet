@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pacman
+# group: community.general
+# name: Manage packages with I(pacman)
+# --
+- name: ${1:Manage packages with I(pacman)}
+  community.general.pacman:
+    name: ${2:# Name or list of names of the package(s) or file(s) to install, upgrade, or remove}
+    state: ${3:# Whether to install (C(present) or C(installed), C(latest)), or remove (C(absent) or C(removed)) a package}
+    force: ${4:# When removing packages, forcefully remove them, without any checks}
+    remove_nosave: ${5:# When removing packages, do not save modified configuration files as C(}
+    executable: ${6:# Path of the binary to use}
+    extra_args: ${7:# Additional option to pass to pacman when enforcing C(state)}
+    update_cache: ${8:# Whether or not to refresh the master package lists}
+    update_cache_extra_args: ${9:# Additional option to pass to pacman when enforcing C(update_cache)}
+    upgrade: ${10:# Whether or not to upgrade the whole system}
+    upgrade_extra_args: ${11:# Additional option to pass to pacman when enforcing C(upgrade)}
+    reason: ${12:# The install reason to set for the packages}
+    reason_for: ${13:# Set the install reason for C(all) packages or only for C(new) packages}

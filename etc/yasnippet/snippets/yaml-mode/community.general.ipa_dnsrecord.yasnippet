@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_dnsrecord
+# group: community.general
+# name: Manage FreeIPA DNS records
+# --
+- name: ${1:Manage FreeIPA DNS records}
+  community.general.ipa_dnsrecord:
+    zone_name: ${2:# The DNS zone name to which DNS record needs to be managed}
+    record_name: ${3:# The DNS record name to manage}
+    record_type: ${4:# The type of DNS record name}
+    record_value: ${5:# Manage DNS record name with this value}
+    record_values: ${6:# Manage DNS record name with this value}
+    record_ttl: ${7:# Set the TTL for the record}
+    state: ${8:# State to ensure}
+    ipa_port: ${9:# Port of FreeIPA / IPA server}
+    ipa_host: ${10:# IP or hostname of IPA server}
+    ipa_user: ${11:# Administrative account used on IPA server}
+    ipa_pass: ${12:# Password of administrative user}
+    ipa_prot: ${13:# Protocol used by IPA server}
+    validate_certs: ${14:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${15:# Specifies idle timeout (in seconds) for the connection}

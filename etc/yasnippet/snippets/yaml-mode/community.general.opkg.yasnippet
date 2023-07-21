@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.opkg
+# group: community.general
+# name: Package manager for OpenWrt and Openembedded/Yocto based Linux distributions
+# --
+- name: ${1:Package manager for OpenWrt and Openembedded/Yocto based Linux distributions}
+  community.general.opkg:
+    name: ${2:# Name of package(s) to install/remove}
+    state: ${3:# State of the package}
+    force: ${4:# The C(opkg --force) parameter used}
+    update_cache: ${5:# Update the package DB first}

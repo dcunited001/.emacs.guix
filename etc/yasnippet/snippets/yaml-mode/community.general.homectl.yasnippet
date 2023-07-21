@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.homectl
+# group: community.general
+# name: Manage user accounts with systemd-homed
+# --
+- name: ${1:Manage user accounts with systemd-homed}
+  community.general.homectl:
+    name: ${2:# The user name to create, remove, or update}
+    password: ${3:# Set the user's password to this}
+    state: ${4:# The operation to take on the user}
+    storage: ${5:# Indicates the storage mechanism for the user's home directory}
+    disksize: ${6:# The intended home directory disk space}
+    resize: ${7:# When used with I(disksize) this will attempt to resize the home directory immediately}
+    realname: ${8:# The user's real ('human') name}
+    realm: ${9:# The 'realm' a user is defined in}
+    email: ${10:# The email address of the user}
+    location: ${11:# A free-form location string describing the location of the user}
+    iconname: ${12:# The name of an icon picked by the user, for example for the purpose of an avatar}
+    homedir: ${13:# Path to use as home directory for the user}
+    imagepath: ${14:# Path to place the user's home directory}
+    uid: ${15:# Sets the UID of the user}
+    gid: ${16:# Sets the gid of the user}
+    mountopts: ${17:# String separated by comma each indicating mount options for a users home directory}
+    umask: ${18:# Sets the umask for the user's login sessions}
+    memberof: ${19:# String separated by comma each indicating a UNIX group this user shall be a member of}
+    skeleton: ${20:# The absolute path to the skeleton directory to populate a new home directory from}
+    shell: ${21:# Shell binary to use for terminal logins of given user}
+    environment: ${22:# String separated by comma each containing an environment variable and its value to set for the user's login session, in a format compatible with ``putenv()``}
+    timezone: ${23:# Preferred timezone to use for the user}
+    locked: ${24:# Whether the user account should be locked or not}
+    language: ${25:# The preferred language/locale for the user}
+    passwordhint: ${26:# Password hint for the given user}
+    sshkeys: ${27:# String separated by comma each listing a SSH public key that is authorized to access the account}
+    notbefore: ${28:# A time since the UNIX epoch before which the record should be considered invalid for the purpose of logging in}
+    notafter: ${29:# A time since the UNIX epoch after which the record should be considered invalid for the purpose of logging in}

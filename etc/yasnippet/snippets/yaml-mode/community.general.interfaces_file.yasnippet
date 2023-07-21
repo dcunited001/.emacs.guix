@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.interfaces_file
+# group: community.general
+# name: Tweak settings in /etc/network/interfaces files
+# --
+- name: ${1:Tweak settings in /etc/network/interfaces files}
+  community.general.interfaces_file:
+    dest: ${2:# Path to the interfaces file}
+    iface: ${3:# Name of the interface, required for value changes or option remove}
+    address_family: ${4:# Address family of the interface, useful if same interface name is used for both inet and inet6}
+    option: ${5:# Name of the option, required for value changes or option remove}
+    value: ${6:# If I(option) is not presented for the I(interface) and I(state) is C(present) option will be added}
+    backup: ${7:# Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly}
+    state: ${8:# If set to C(absent) the option or section will be removed if present instead of created}
+    mode: ${9:# The permissions the resulting filesystem object should have}
+    owner: ${10:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${11:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${12:# The user part of the SELinux filesystem object context}
+    serole: ${13:# The role part of the SELinux filesystem object context}
+    setype: ${14:# The type part of the SELinux filesystem object context}
+    selevel: ${15:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${16:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${17:# The attributes the resulting filesystem object should have}

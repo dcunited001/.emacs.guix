@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.xfs_quota
+# group: community.general
+# name: Manage quotas on XFS filesystems
+# --
+- name: ${1:Manage quotas on XFS filesystems}
+  community.general.xfs_quota:
+    type: ${2:# The XFS quota type}
+    name: ${3:# The name of the user, group or project to apply the quota to, if other than default}
+    mountpoint: ${4:# The mount point on which to apply the quotas}
+    bhard: ${5:# Hard blocks quota limit}
+    bsoft: ${6:# Soft blocks quota limit}
+    ihard: ${7:# Hard inodes quota limit}
+    isoft: ${8:# Soft inodes quota limit}
+    rtbhard: ${9:# Hard realtime blocks quota limit}
+    rtbsoft: ${10:# Soft realtime blocks quota limit}
+    state: ${11:# Whether to apply the limits or remove them}

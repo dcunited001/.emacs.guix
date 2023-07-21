@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.make
+# group: community.general
+# name: Run targets in a Makefile
+# --
+- name: ${1:Run targets in a Makefile}
+  community.general.make:
+    chdir: ${2:# Change to this directory before running make}
+    file: ${3:# Use a custom Makefile}
+    jobs: ${4:# Set the number of make jobs to run concurrently}
+    make: ${5:# Use a specific make binary}
+    params: ${6:# Any extra parameters to pass to make}
+    target: ${7:# The target to run}

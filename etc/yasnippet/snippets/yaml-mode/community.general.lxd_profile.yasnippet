@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.lxd_profile
+# group: community.general
+# name: Manage LXD profiles
+# --
+- name: ${1:Manage LXD profiles}
+  community.general.lxd_profile:
+    name: ${2:# Name of a profile}
+    project: ${3:# Project of a profile}
+    description: ${4:# Description of the profile}
+    config: ${5:# The config for the instance (e}
+    devices: ${6:# The devices for the profile (e}
+    new_name: ${7:# A new name of a profile}
+    merge_profile: ${8:# Merge the configuration of the present profile with the new desired configuration, instead of replacing it}
+    state: ${9:# Define the state of a profile}
+    url: ${10:# The unix domain socket path or the https URL for the LXD server}
+    snap_url: ${11:# The unix domain socket path when LXD is installed by snap package manager}
+    client_key: ${12:# The client certificate key file path}
+    client_cert: ${13:# The client certificate file path}
+    trust_password: ${14:# The client trusted password}

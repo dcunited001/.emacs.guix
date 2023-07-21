@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.dnsimple
+# group: community.general
+# name: Interface with dnsimple
+# --
+- name: ${1:Interface with dnsimple}
+  community.general.dnsimple:
+    account_email: ${2:# Account email}
+    account_api_token: ${3:# Account API token}
+    domain: ${4:# Domain to work with}
+    record: ${5:# Record to add, if blank a record for the domain will be created, supports the wildcard (*)}
+    record_ids: ${6:# List of records to ensure they either exist or do not exist}
+    type: ${7:# The type of DNS record to create}
+    ttl: ${8:# The TTL to give the new record in seconds}
+    value: ${9:# Record value}
+    priority: ${10:# Record priority}
+    state: ${11:# whether the record should exist or not}
+    solo: ${12:# Whether the record should be the only one for that record type and record name}
+    sandbox: ${13:# Use the DNSimple sandbox environment}

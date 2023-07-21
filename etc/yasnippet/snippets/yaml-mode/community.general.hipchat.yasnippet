@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.hipchat
+# group: community.general
+# name: Send a message to Hipchat
+# --
+- name: ${1:Send a message to Hipchat}
+  community.general.hipchat:
+    token: ${2:# API token}
+    room: ${3:# ID or name of the room}
+    msg_from: ${4:# Name the message will appear to be sent from}
+    msg: ${5:# The message body}
+    color: ${6:# Background color for the message}
+    msg_format: ${7:# Message format}
+    notify: ${8:# If true, a notification will be triggered for users in the room}
+    validate_certs: ${9:# If C(false), SSL certificates will not be validated}
+    api: ${10:# API url if using a self-hosted hipchat server}

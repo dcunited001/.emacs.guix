@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_hostgroup
+# group: community.general
+# name: Manage FreeIPA host-group
+# --
+- name: ${1:Manage FreeIPA host-group}
+  community.general.ipa_hostgroup:
+    append: ${2:# If C(true), add the listed I(host) to the I(hostgroup)}
+    cn: ${3:# Name of host-group}
+    description: ${4:# Description}
+    host: ${5:# List of hosts that belong to the host-group}
+    hostgroup: ${6:# List of host-groups than belong to that host-group}
+    state: ${7:# State to ensure}
+    ipa_port: ${8:# Port of FreeIPA / IPA server}
+    ipa_host: ${9:# IP or hostname of IPA server}
+    ipa_user: ${10:# Administrative account used on IPA server}
+    ipa_pass: ${11:# Password of administrative user}
+    ipa_prot: ${12:# Protocol used by IPA server}
+    validate_certs: ${13:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${14:# Specifies idle timeout (in seconds) for the connection}

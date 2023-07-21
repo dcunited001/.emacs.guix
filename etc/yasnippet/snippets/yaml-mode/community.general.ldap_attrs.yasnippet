@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ldap_attrs
+# group: community.general
+# name: Add or remove multiple LDAP attribute values
+# --
+- name: ${1:Add or remove multiple LDAP attribute values}
+  community.general.ldap_attrs:
+    state: ${2:# The state of the attribute values}
+    attributes: ${3:# The attribute(s) and value(s) to add or remove}
+    ordered: ${4:# If C(true), prepend list values with X-ORDERED index numbers in all attributes specified in the current task}
+    bind_dn: ${5:# A DN to bind with}
+    bind_pw: ${6:# The password to use with I(bind_dn)}
+    ca_path: ${7:# Set the path to PEM file with CA certs}
+    dn: ${8:# The DN of the entry to add or remove}
+    referrals_chasing: ${9:# Set the referrals chasing behavior}
+    server_uri: ${10:# The I(server_uri) parameter may be a comma- or whitespace-separated list of URIs containing only the schema, the host, and the port fields}
+    start_tls: ${11:# If true, we'll use the START_TLS LDAP extension}
+    validate_certs: ${12:# If set to C(false), SSL certificates will not be validated}
+    sasl_class: ${13:# The class to use for SASL authentication}
+    xorder_discovery: ${14:# Set the behavior on how to process Xordered DNs}

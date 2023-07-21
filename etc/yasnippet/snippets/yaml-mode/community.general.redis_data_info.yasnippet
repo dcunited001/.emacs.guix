@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redis_data_info
+# group: community.general
+# name: Get value of key in Redis database
+# --
+- name: ${1:Get value of key in Redis database}
+  community.general.redis_data_info:
+    key: ${2:# Database key}
+    login_host: ${3:# Specify the target host running the database}
+    login_port: ${4:# Specify the port to connect to}
+    login_user: ${5:# Specify the user to authenticate with}
+    login_password: ${6:# Specify the password to authenticate with}
+    tls: ${7:# Specify whether or not to use TLS for the connection}
+    validate_certs: ${8:# Specify whether or not to validate TLS certificates}
+    ca_certs: ${9:# Path to root certificates file}

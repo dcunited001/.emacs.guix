@@ -1,0 +1,31 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_user
+# group: community.general
+# name: Creates/updates/deletes/blocks/unblocks GitLab Users
+# --
+- name: ${1:Creates/updates/deletes/blocks/unblocks GitLab Users}
+  community.general.gitlab_user:
+    name: ${2:# Name of the user you want to create}
+    username: ${3:# The username of the user}
+    password: ${4:# The password of the user}
+    reset_password: ${5:# Whether the user can change its password or not}
+    email: ${6:# The email that belongs to the user}
+    sshkey_name: ${7:# The name of the SSH public key}
+    sshkey_file: ${8:# The SSH public key itself}
+    sshkey_expires_at: ${9:# The expiration date of the SSH public key in ISO 8601 format C(YYYY-MM-DDTHH:MM:SSZ)}
+    group: ${10:# Id or Full path of parent group in the form of group/name}
+    access_level: ${11:# The access level to the group}
+    state: ${12:# Create, delete or block a user}
+    confirm: ${13:# Require confirmation}
+    isadmin: ${14:# Grant admin privileges to the user}
+    external: ${15:# Define external parameter for this user}
+    identities: ${16:# List of identities to be added/updated for this user}
+    overwrite_identities: ${17:# Overwrite identities with identities added in this module}
+    api_url: ${18:# The resolvable endpoint for the API}
+    api_username: ${19:# The username to use for authentication against the API}
+    api_password: ${20:# The password to use for authentication against the API}
+    validate_certs: ${21:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${22:# GitLab access token with API permissions}
+    api_oauth_token: ${23:# GitLab OAuth token for logging in}
+    api_job_token: ${24:# GitLab CI job token for logging in}

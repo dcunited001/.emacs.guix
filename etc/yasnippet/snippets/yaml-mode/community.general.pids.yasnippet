@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pids
+# group: community.general
+# name: Retrieves process IDs list if the process is running otherwise return empty list
+# --
+- name: ${1:Retrieves process IDs list if the process is running otherwise return empty list}
+  community.general.pids:
+    name: ${2:# The name of the process(es) you want to get PID(s) for}
+    pattern: ${3:# The pattern (regular expression) to match the process(es) you want to get PID(s) for}
+    ignore_case: ${4:# Ignore case in pattern if using the I(pattern) option}

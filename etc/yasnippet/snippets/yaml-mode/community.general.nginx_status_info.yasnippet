@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.nginx_status_info
+# group: community.general
+# name: Retrieve information on nginx status
+# --
+- name: ${1:Retrieve information on nginx status}
+  community.general.nginx_status_info:
+    url: ${2:# URL of the nginx status}
+    timeout: ${3:# HTTP connection timeout in seconds}

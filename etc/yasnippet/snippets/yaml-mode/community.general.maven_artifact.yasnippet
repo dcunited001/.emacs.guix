@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.maven_artifact
+# group: community.general
+# name: Downloads an Artifact from a Maven Repository
+# --
+- name: ${1:Downloads an Artifact from a Maven Repository}
+  community.general.maven_artifact:
+    group_id: ${2:# The Maven groupId coordinate}
+    artifact_id: ${3:# The maven artifactId coordinate}
+    version: ${4:# The maven version coordinate}
+    version_by_spec: ${5:# The maven dependency version ranges}
+    classifier: ${6:# The maven classifier coordinate}
+    extension: ${7:# The maven type/extension coordinate}
+    repository_url: ${8:# The URL of the Maven Repository to download from}
+    username: ${9:# The username to authenticate as to the Maven Repository}
+    password: ${10:# The password to authenticate with to the Maven Repository}
+    headers: ${11:# Add custom HTTP headers to a request in hash/dict format}
+    force_basic_auth: ${12:# httplib2, the library used by the uri module only sends authentication information when a webservice responds to an initial request with a 401 status}
+    dest: ${13:# The path where the artifact should be written to}
+    state: ${14:# The desired state of the artifact}
+    timeout: ${15:# Specifies a timeout in seconds for the connection attempt}
+    validate_certs: ${16:# If C(false), SSL certificates will not be validated}
+    client_cert: ${17:# PEM formatted certificate chain file to be used for SSL client authentication}
+    client_key: ${18:# PEM formatted file that contains your private key to be used for SSL client authentication}
+    keep_name: ${19:# If C(true), the downloaded artifact's name is preserved, i}
+    verify_checksum: ${20:# If C(never), the MD5/SHA1 checksum will never be downloaded and verified}
+    checksum_alg: ${21:# If C(md5), checksums will use the MD5 algorithm}
+    unredirected_headers: ${22:# A list of headers that should not be included in the redirection}
+    directory_mode: ${23:# Filesystem permission mode applied recursively to I(dest) when it is a directory}
+    mode: ${24:# The permissions the resulting filesystem object should have}
+    owner: ${25:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${26:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${27:# The user part of the SELinux filesystem object context}
+    serole: ${28:# The role part of the SELinux filesystem object context}
+    setype: ${29:# The type part of the SELinux filesystem object context}
+    selevel: ${30:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${31:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${32:# The attributes the resulting filesystem object should have}

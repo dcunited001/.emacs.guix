@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.yum_versionlock
+# group: community.general
+# name: Locks / unlocks a installed package(s) from being updated by yum package manager
+# --
+- name: ${1:Locks / unlocks a installed package(s) from being updated by yum package manager}
+  community.general.yum_versionlock:
+    name: ${2:# Package name or a list of package names with optional wildcards}
+    state: ${3:# If state is C(present), package(s) will be added to yum versionlock list}

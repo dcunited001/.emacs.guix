@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_hbacrule
+# group: community.general
+# name: Manage FreeIPA HBAC rule
+# --
+- name: ${1:Manage FreeIPA HBAC rule}
+  community.general.ipa_hbacrule:
+    cn: ${2:# Canonical name}
+    description: ${3:# Description}
+    host: ${4:# List of host names to assign}
+    hostcategory: ${5:# Host category}
+    hostgroup: ${6:# List of hostgroup names to assign}
+    service: ${7:# List of service names to assign}
+    servicecategory: ${8:# Service category}
+    servicegroup: ${9:# List of service group names to assign}
+    sourcehost: ${10:# List of source host names to assign}
+    sourcehostcategory: ${11:# Source host category}
+    sourcehostgroup: ${12:# List of source host group names to assign}
+    state: ${13:# State to ensure}
+    user: ${14:# List of user names to assign}
+    usercategory: ${15:# User category}
+    usergroup: ${16:# List of user group names to assign}
+    ipa_port: ${17:# Port of FreeIPA / IPA server}
+    ipa_host: ${18:# IP or hostname of IPA server}
+    ipa_user: ${19:# Administrative account used on IPA server}
+    ipa_pass: ${20:# Password of administrative user}
+    ipa_prot: ${21:# Protocol used by IPA server}
+    validate_certs: ${22:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${23:# Specifies idle timeout (in seconds) for the connection}

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.sysrc
+# group: community.general
+# name: Manage FreeBSD using sysrc
+# --
+- name: ${1:Manage FreeBSD using sysrc}
+  community.general.sysrc:
+    name: ${2:# Name of variable in C(/etc/rc}
+    value: ${3:# The value to set when I(state=present)}
+    state: ${4:# Use I(present) to add the variable}
+    path: ${5:# Path to file to use instead of C(/etc/rc}
+    delim: ${6:# Delimiter to be used instead of C( )}
+    jail: ${7:# Name or ID of the jail to operate on}

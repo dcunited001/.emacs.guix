@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_clientscope
+# group: community.general
+# name: Allows administration of Keycloak client_scopes via Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak client_scopes via Keycloak API}
+  community.general.keycloak_clientscope:
+    state: ${2:# State of the client_scope}
+    name: ${3:# Name of the client_scope}
+    realm: ${4:# They Keycloak realm under which this client_scope resides}
+    id: ${5:# The unique identifier for this client_scope}
+    description: ${6:# Description for this client_scope}
+    protocol: ${7:# Type of client}
+    protocol_mappers: ${8:# A list of dicts defining protocol mappers for this client}
+    attributes: ${9:# A dict of key/value pairs to set as custom attributes for the client_scope}
+    auth_keycloak_url: ${10:# URL to the Keycloak instance}
+    auth_client_id: ${11:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${12:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${13:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${14:# Username to authenticate for API access with}
+    auth_password: ${15:# Password to authenticate for API access with}
+    token: ${16:# Authentication token for Keycloak API}
+    validate_certs: ${17:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${18:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${19:# Configures the HTTP User-Agent header}

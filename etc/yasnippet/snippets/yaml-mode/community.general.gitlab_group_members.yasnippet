@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_group_members
+# group: community.general
+# name: Manage group members on GitLab Server
+# --
+- name: ${1:Manage group members on GitLab Server}
+  community.general.gitlab_group_members:
+    gitlab_group: ${2:# The C(full_path) of the GitLab group the member is added to/removed from}
+    gitlab_user: ${3:# A username or a list of usernames to add to/remove from the GitLab group}
+    access_level: ${4:# The access level for the user}
+    gitlab_users_access: ${5:# Provide a list of user to access level mappings}
+    state: ${6:# State of the member in the group}
+    purge_users: ${7:# Adds/remove users of the given access_level to match the given I(gitlab_user)/I(gitlab_users_access) list}
+    api_url: ${8:# The resolvable endpoint for the API}
+    api_username: ${9:# The username to use for authentication against the API}
+    api_password: ${10:# The password to use for authentication against the API}
+    validate_certs: ${11:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${12:# GitLab access token with API permissions}
+    api_oauth_token: ${13:# GitLab OAuth token for logging in}
+    api_job_token: ${14:# GitLab CI job token for logging in}

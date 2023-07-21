@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.layman
+# group: community.general
+# name: Manage Gentoo overlays
+# --
+- name: ${1:Manage Gentoo overlays}
+  community.general.layman:
+    name: ${2:# The overlay id to install, synchronize, or uninstall}
+    list_url: ${3:# An URL of the alternative overlays list that defines the overlay to install}
+    state: ${4:# Whether to install (C(present)), sync (C(updated)), or uninstall (C(absent)) the overlay}
+    validate_certs: ${5:# If C(false), SSL certificates will not be validated}

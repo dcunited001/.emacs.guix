@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.flatpak
+# group: community.general
+# name: Manage flatpaks
+# --
+- name: ${1:Manage flatpaks}
+  community.general.flatpak:
+    executable: ${2:# The path to the C(flatpak) executable to use}
+    method: ${3:# The installation method to use}
+    name: ${4:# The name of the flatpak to manage}
+    no_dependencies: ${5:# If installing runtime dependencies should be omitted or not}
+    remote: ${6:# The flatpak remote (repository) to install the flatpak from}
+    state: ${7:# Indicates the desired package state}

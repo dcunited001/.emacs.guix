@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redis_info
+# group: community.general
+# name: Gather information about Redis servers
+# --
+- name: ${1:Gather information about Redis servers}
+  community.general.redis_info:
+    login_host: ${2:# The host running the database}
+    login_port: ${3:# The port to connect to}
+    login_password: ${4:# The password used to authenticate with, when authentication is enabled for the Redis server}

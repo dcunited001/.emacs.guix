@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.mail
+# group: community.general
+# name: Send an email
+# --
+- name: ${1:Send an email}
+  community.general.mail:
+    sender: ${2:# The email-address the mail is sent from}
+    to: ${3:# The email-address(es) the mail is being sent to}
+    cc: ${4:# The email-address(es) the mail is being copied to}
+    bcc: ${5:# The email-address(es) the mail is being 'blind' copied to}
+    subject: ${6:# The subject of the email being sent}
+    body: ${7:# The body of the email being sent}
+    username: ${8:# If SMTP requires username}
+    password: ${9:# If SMTP requires password}
+    host: ${10:# The mail server}
+    port: ${11:# The mail server port}
+    attach: ${12:# A list of pathnames of files to attach to the message}
+    headers: ${13:# A list of headers which should be added to the message}
+    charset: ${14:# The character set of email being sent}
+    subtype: ${15:# The minor mime type, can be either C(plain) or C(html)}
+    secure: ${16:# If C(always), the connection will only send email if the connection is Encrypted}
+    timeout: ${17:# Sets the timeout in seconds for connection attempts}
+    ehlohost: ${18:# Allows for manual specification of host for EHLO}

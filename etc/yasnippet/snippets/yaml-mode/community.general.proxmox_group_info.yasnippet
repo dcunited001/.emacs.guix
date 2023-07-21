@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox_group_info
+# group: community.general
+# name: Retrieve information about one or more Proxmox VE groups
+# --
+- name: ${1:Retrieve information about one or more Proxmox VE groups}
+  community.general.proxmox_group_info:
+    group: ${2:# Restrict results to a specific group}
+    api_host: ${3:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${4:# Specify the user to authenticate with}
+    api_password: ${5:# Specify the password to authenticate with}
+    api_token_id: ${6:# Specify the token ID}
+    api_token_secret: ${7:# Specify the token secret}
+    validate_certs: ${8:# If C(false), SSL certificates will not be validated}

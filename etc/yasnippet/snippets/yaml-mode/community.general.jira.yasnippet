@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jira
+# group: community.general
+# name: Create and modify issues in a JIRA instance
+# --
+- name: ${1:Create and modify issues in a JIRA instance}
+  community.general.jira:
+    uri: ${2:# Base URI for the JIRA instance}
+    operation: ${3:# The operation to perform}
+    username: ${4:# The username to log-in with}
+    password: ${5:# The password to log-in with}
+    token: ${6:# The personal access token to log-in with}
+    project: ${7:# The project for this operation}
+    summary: ${8:# The issue summary, where appropriate}
+    description: ${9:# The issue description, where appropriate}
+    issuetype: ${10:# The issue type, for issue creation}
+    issue: ${11:# An existing issue key to operate on}
+    comment: ${12:# The comment text to add}
+    comment_visibility: ${13:# Used to specify comment comment visibility}
+    status: ${14:# Only used when I(operation) is C(transition), and a bit of a misnomer, it actually refers to the transition name}
+    assignee: ${15:# Sets the the assignee when I(operation) is C(create), C(transition) or C(edit)}
+    account_id: ${16:# Sets the account identifier for the assignee when I(operation) is C(create), C(transition) or C(edit)}
+    linktype: ${17:# Set type of link, when action 'link' selected}
+    inwardissue: ${18:# Set issue from which link will be created}
+    outwardissue: ${19:# Set issue to which link will be created}
+    fields: ${20:# This is a free-form data structure that can contain arbitrary data}
+    jql: ${21:# Query JIRA in JQL Syntax, e}
+    maxresults: ${22:# Limit the result of I(operation=search)}
+    timeout: ${23:# Set timeout, in seconds, on requests to JIRA API}
+    validate_certs: ${24:# Require valid SSL certificates (set to C(false) if you'd like to use self-signed certificates)}
+    attachment: ${25:# Information about the attachment being uploaded}

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pkgutil
+# group: community.general
+# name: OpenCSW package management on Solaris
+# --
+- name: ${1:OpenCSW package management on Solaris}
+  community.general.pkgutil:
+    name: ${2:# The name of the package}
+    site: ${3:# The repository path to install the package from}
+    state: ${4:# Whether to install (C(present)/C(installed)), or remove (C(absent)/C(removed)) packages}
+    update_catalog: ${5:# If you always want to refresh your catalog from the mirror, even when it's not stale, set this to C(true)}
+    force: ${6:# To allow the update process to downgrade packages to match what is present in the repository, set this to C(true)}

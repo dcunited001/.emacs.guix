@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.archive
+# group: community.general
+# name: Creates a compressed archive of one or more files or trees
+# --
+- name: ${1:Creates a compressed archive of one or more files or trees}
+  community.general.archive:
+    path: ${2:# Remote absolute path, glob, or list of paths or globs for the file or files to compress or archive}
+    format: ${3:# The type of compression to use}
+    dest: ${4:# The file name of the destination archive}
+    exclude_path: ${5:# Remote absolute path, glob, or list of paths or globs for the file or files to exclude from I(path) list and glob expansion}
+    exclusion_patterns: ${6:# Glob style patterns to exclude files or directories from the resulting archive}
+    force_archive: ${7:# Allows you to force the module to treat this as an archive even if only a single file is specified}
+    remove: ${8:# Remove any added source files and trees after adding to archive}
+    mode: ${9:# The permissions the resulting filesystem object should have}
+    owner: ${10:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${11:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${12:# The user part of the SELinux filesystem object context}
+    serole: ${13:# The role part of the SELinux filesystem object context}
+    setype: ${14:# The type part of the SELinux filesystem object context}
+    selevel: ${15:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${16:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${17:# The attributes the resulting filesystem object should have}

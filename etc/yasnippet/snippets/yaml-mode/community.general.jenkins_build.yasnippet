@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jenkins_build
+# group: community.general
+# name: Manage jenkins builds
+# --
+- name: ${1:Manage jenkins builds}
+  community.general.jenkins_build:
+    args: ${2:# A list of parameters to pass to the build}
+    name: ${3:# Name of the Jenkins job to build}
+    build_number: ${4:# An integer which specifies a build of a job}
+    password: ${5:# Password to authenticate with the Jenkins server}
+    state: ${6:# Attribute that specifies if the build is to be created, deleted or stopped}
+    token: ${7:# API token used to authenticate with the Jenkins server}
+    url: ${8:# URL of the Jenkins server}
+    user: ${9:# User to authenticate with the Jenkins server}

@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.kdeconfig
+# group: community.general
+# name: Manage KDE configuration files
+# --
+- name: ${1:Manage KDE configuration files}
+  community.general.kdeconfig:
+    path: ${2:# Path to the config file}
+    kwriteconfig_path: ${3:# Path to the kwriteconfig executable}
+    values: ${4:# List of values to set}
+    backup: ${5:# Create a backup file}
+    mode: ${6:# The permissions the resulting filesystem object should have}
+    owner: ${7:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${8:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${9:# The user part of the SELinux filesystem object context}
+    serole: ${10:# The role part of the SELinux filesystem object context}
+    setype: ${11:# The type part of the SELinux filesystem object context}
+    selevel: ${12:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${13:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${14:# The attributes the resulting filesystem object should have}

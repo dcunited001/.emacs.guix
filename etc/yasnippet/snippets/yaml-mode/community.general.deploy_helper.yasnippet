@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.deploy_helper
+# group: community.general
+# name: Manages some of the steps common in deploying projects
+# --
+- name: ${1:Manages some of the steps common in deploying projects}
+  community.general.deploy_helper:
+    path: ${2:# The root path of the project}
+    state: ${3:# The state of the project}
+    release: ${4:# The release version that is being deployed}
+    releases_path: ${5:# The name of the folder that will hold the releases}
+    shared_path: ${6:# The name of the folder that will hold the shared resources}
+    current_path: ${7:# The name of the symlink that is created when the deploy is finalized}
+    unfinished_filename: ${8:# The name of the file that indicates a deploy has not finished}
+    clean: ${9:# Whether to run the clean procedure in case of I(state=finalize)}
+    keep_releases: ${10:# The number of old releases to keep when cleaning}
+    mode: ${11:# The permissions the resulting filesystem object should have}
+    owner: ${12:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${13:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${14:# The user part of the SELinux filesystem object context}
+    serole: ${15:# The role part of the SELinux filesystem object context}
+    setype: ${16:# The type part of the SELinux filesystem object context}
+    selevel: ${17:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${18:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${19:# The attributes the resulting filesystem object should have}

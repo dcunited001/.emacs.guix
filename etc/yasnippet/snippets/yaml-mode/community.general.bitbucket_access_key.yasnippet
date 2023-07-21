@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.bitbucket_access_key
+# group: community.general
+# name: Manages Bitbucket repository access keys
+# --
+- name: ${1:Manages Bitbucket repository access keys}
+  community.general.bitbucket_access_key:
+    repository: ${2:# The repository name}
+    workspace: ${3:# The repository owner}
+    key: ${4:# The SSH public key}
+    label: ${5:# The key label}
+    state: ${6:# Indicates desired state of the access key}
+    client_id: ${7:# The OAuth consumer key}
+    client_secret: ${8:# The OAuth consumer secret}
+    user: ${9:# The username}
+    password: ${10:# The App password}

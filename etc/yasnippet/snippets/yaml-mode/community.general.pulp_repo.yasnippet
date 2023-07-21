@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pulp_repo
+# group: community.general
+# name: Add or remove Pulp repos from a remote host
+# --
+- name: ${1:Add or remove Pulp repos from a remote host}
+  community.general.pulp_repo:
+    add_export_distributor: ${2:# Whether or not to add the export distributor to new C(rpm) repositories}
+    feed: ${3:# Upstream feed URL to receive updates from}
+    force_basic_auth: ${4:# httplib2, the library used by the M(ansible}
+    generate_sqlite: ${5:# Boolean flag to indicate whether sqlite files should be generated during a repository publish}
+    feed_ca_cert: ${6:# CA certificate string used to validate the feed source SSL certificate}
+    feed_client_cert: ${7:# Certificate used as the client certificate when synchronizing the repository}
+    feed_client_key: ${8:# Private key to the certificate specified in I(importer_ssl_client_cert), assuming it is not included in the certificate file itself}
+    name: ${9:# Name of the repo to add or remove}
+    proxy_host: ${10:# Proxy url setting for the pulp repository importer}
+    proxy_port: ${11:# Proxy port setting for the pulp repository importer}
+    proxy_username: ${12:# Proxy username for the pulp repository importer}
+    proxy_password: ${13:# Proxy password for the pulp repository importer}
+    publish_distributor: ${14:# Distributor to use when state is C(publish)}
+    pulp_host: ${15:# URL of the pulp server to connect to}
+    relative_url: ${16:# Relative URL for the local repository}
+    repo_type: ${17:# Repo plugin type to use (i}
+    repoview: ${18:# Whether to generate repoview files for a published repository}
+    serve_http: ${19:# Make the repo available over HTTP}
+    serve_https: ${20:# Make the repo available over HTTPS}
+    state: ${21:# The repo state}
+    url_password: ${22:# The password for use in HTTP basic authentication to the pulp API}
+    url_username: ${23:# The username for use in HTTP basic authentication to the pulp API}
+    validate_certs: ${24:# If C(false), SSL certificates will not be validated}
+    wait_for_completion: ${25:# Wait for asynchronous tasks to complete before returning}
+    url: ${26:# HTTP, HTTPS, or FTP URL in the form (http|https|ftp)://[user[:pass]]@host}
+    force: ${27:# If C(yes) do not get a cached copy}
+    http_agent: ${28:# Header to identify as, generally appears in web server logs}
+    use_proxy: ${29:# If C(no), it will not use a proxy, even if one is defined in an environment variable on the target hosts}
+    client_cert: ${30:# PEM formatted certificate chain file to be used for SSL client authentication}
+    client_key: ${31:# PEM formatted file that contains your private key to be used for SSL client authentication}
+    use_gssapi: ${32:# Use GSSAPI to perform the authentication, typically this is for Kerberos or Kerberos through Negotiate authentication}

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.yarn
+# group: community.general
+# name: Manage node
+# --
+- name: ${1:Manage node}
+  community.general.yarn:
+    name: ${2:# The name of a node}
+    path: ${3:# The base path where Node}
+    version: ${4:# The version of the library to be installed}
+    global: ${5:# Install the node}
+    executable: ${6:# The executable location for yarn}
+    ignore_scripts: ${7:# Use the --ignore-scripts flag when installing}
+    production: ${8:# Install dependencies in production mode}
+    registry: ${9:# The registry to install modules from}
+    state: ${10:# Installation state of the named node}

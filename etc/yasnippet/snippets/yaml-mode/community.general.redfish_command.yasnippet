@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redfish_command
+# group: community.general
+# name: Manages Out-Of-Band controllers using Redfish APIs
+# --
+- name: ${1:Manages Out-Of-Band controllers using Redfish APIs}
+  community.general.redfish_command:
+    category: ${2:# Category to execute on OOB controller}
+    command: ${3:# List of commands to execute on OOB controller}
+    baseuri: ${4:# Base URI of OOB controller}
+    username: ${5:# Username for authenticating to OOB controller}
+    password: ${6:# Password for authenticating to OOB controller}
+    auth_token: ${7:# Security token for authenticating to OOB controller}
+    session_uri: ${8:# URI of the session resource}
+    id: ${9:# ID of account to delete/modify}
+    new_username: ${10:# Username of account to add/delete/modify}
+    new_password: ${11:# New password of account to add/modify}
+    roleid: ${12:# Role of account to add/modify}
+    bootdevice: ${13:# Boot device when setting boot configuration}
+    timeout: ${14:# Timeout in seconds for HTTP requests to OOB controller}
+    boot_override_mode: ${15:# Boot mode when using an override}
+    uefi_target: ${16:# UEFI boot target when bootdevice is 'UefiTarget'}
+    boot_next: ${17:# BootNext target when bootdevice is 'UefiBootNext'}
+    update_username: ${18:# New user name for updating account_username}
+    account_properties: ${19:# Properties of account service to update}
+    resource_id: ${20:# ID of the System, Manager or Chassis to modify}
+    update_image_uri: ${21:# URI of the image for the update}
+    update_protocol: ${22:# Protocol for the update}
+    update_targets: ${23:# List of target resource URIs to apply the update to}
+    update_creds: ${24:# Credentials for retrieving the update image}
+    update_apply_time: ${25:# Time when to apply the update}
+    update_handle: ${26:# Handle to check the status of an update in progress}
+    virtual_media: ${27:# Options for VirtualMedia commands}
+    strip_etag_quotes: ${28:# Removes surrounding quotes of etag used in C(If-Match) header of C(PATCH) requests}
+    bios_attributes: ${29:# BIOS attributes that needs to be verified in the given server}

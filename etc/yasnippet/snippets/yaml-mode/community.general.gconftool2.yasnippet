@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gconftool2
+# group: community.general
+# name: Edit GNOME Configurations
+# --
+- name: ${1:Edit GNOME Configurations}
+  community.general.gconftool2:
+    key: ${2:# A GConf preference key is an element in the GConf repository that corresponds to an application preference}
+    value: ${3:# Preference keys typically have simple values such as strings, integers, or lists of strings and integers}
+    value_type: ${4:# The type of value being set}
+    state: ${5:# The action to take upon the key/value}
+    config_source: ${6:# Specify a configuration source to use rather than the default path}
+    direct: ${7:# Access the config database directly, bypassing server}

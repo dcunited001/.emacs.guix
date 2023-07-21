@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox_user_info
+# group: community.general
+# name: Retrieve information about one or more Proxmox VE users
+# --
+- name: ${1:Retrieve information about one or more Proxmox VE users}
+  community.general.proxmox_user_info:
+    domain: ${2:# Restrict results to a specific authentication realm}
+    user: ${3:# Restrict results to a specific user}
+    userid: ${4:# Restrict results to a specific user ID, which is a concatenation of a user and domain parts}
+    api_host: ${5:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${6:# Specify the user to authenticate with}
+    api_password: ${7:# Specify the password to authenticate with}
+    api_token_id: ${8:# Specify the token ID}
+    api_token_secret: ${9:# Specify the token secret}
+    validate_certs: ${10:# If C(false), SSL certificates will not be validated}

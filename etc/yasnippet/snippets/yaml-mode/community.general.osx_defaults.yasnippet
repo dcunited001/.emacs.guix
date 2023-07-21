@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.osx_defaults
+# group: community.general
+# name: Manage macOS user defaults
+# --
+- name: ${1:Manage macOS user defaults}
+  community.general.osx_defaults:
+    domain: ${2:# The domain is a domain name of the form C(com}
+    host: ${3:# The host on which the preference should apply}
+    key: ${4:# The key of the user preference}
+    type: ${5:# The type of value to write}
+    array_add: ${6:# Add new elements to the array for a key which has an array as its value}
+    value: ${7:# The value to write}
+    state: ${8:# The state of the user defaults}
+    path: ${9:# The path in which to search for C(defaults)}

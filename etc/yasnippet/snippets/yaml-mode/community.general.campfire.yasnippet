@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.campfire
+# group: community.general
+# name: Send a message to Campfire
+# --
+- name: ${1:Send a message to Campfire}
+  community.general.campfire:
+    subscription: ${2:# The subscription name to use}
+    token: ${3:# API token}
+    room: ${4:# Room number to which the message should be sent}
+    msg: ${5:# The message body}
+    notify: ${6:# Send a notification sound before the message}

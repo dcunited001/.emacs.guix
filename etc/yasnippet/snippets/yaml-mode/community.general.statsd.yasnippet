@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.statsd
+# group: community.general
+# name: Send metrics to StatsD
+# --
+- name: ${1:Send metrics to StatsD}
+  community.general.statsd:
+    state: ${2:# State of the check, only C(present) makes sense}
+    host: ${3:# StatsD host (hostname or IP) to send metrics to}
+    port: ${4:# The port on C(host) which StatsD is listening on}
+    protocol: ${5:# The transport protocol to send metrics over}
+    timeout: ${6:# Sender timeout, only applicable if C(protocol) is C(tcp)}
+    metric: ${7:# The name of the metric}
+    metric_type: ${8:# The type of metric}
+    metric_prefix: ${9:# The prefix to add to the metric}
+    value: ${10:# The value of the metric}
+    delta: ${11:# If the metric is of type C(gauge), change the value by C(delta)}

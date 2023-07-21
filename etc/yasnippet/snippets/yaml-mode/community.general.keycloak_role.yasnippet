@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_role
+# group: community.general
+# name: Allows administration of Keycloak roles via Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak roles via Keycloak API}
+  community.general.keycloak_role:
+    state: ${2:# State of the role}
+    name: ${3:# Name of the role}
+    description: ${4:# The role description}
+    realm: ${5:# The Keycloak realm under which this role resides}
+    client_id: ${6:# If the role is a client role, the client id under which it resides}
+    attributes: ${7:# A dict of key/value pairs to set as custom attributes for the role}
+    auth_keycloak_url: ${8:# URL to the Keycloak instance}
+    auth_client_id: ${9:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${10:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${11:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${12:# Username to authenticate for API access with}
+    auth_password: ${13:# Password to authenticate for API access with}
+    token: ${14:# Authentication token for Keycloak API}
+    validate_certs: ${15:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${16:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${17:# Configures the HTTP User-Agent header}

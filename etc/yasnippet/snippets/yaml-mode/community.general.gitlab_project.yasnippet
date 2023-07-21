@@ -1,0 +1,50 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_project
+# group: community.general
+# name: Creates/updates/deletes GitLab Projects
+# --
+- name: ${1:Creates/updates/deletes GitLab Projects}
+  community.general.gitlab_project:
+    group: ${2:# Id or the full path of the group of which this projects belongs to}
+    name: ${3:# The name of the project}
+    path: ${4:# The path of the project you want to create, this will be server_url/<group>/path}
+    description: ${5:# An description for the project}
+    initialize_with_readme: ${6:# Will initialize the project with a default C(README}
+    issues_enabled: ${7:# Whether you want to create issues or not}
+    merge_requests_enabled: ${8:# If merge requests can be made or not}
+    wiki_enabled: ${9:# If an wiki for this project should be available or not}
+    snippets_enabled: ${10:# If creating snippets should be available or not}
+    visibility: ${11:# C(private) Project access must be granted explicitly for each user}
+    import_url: ${12:# Git repository which will be imported into gitlab}
+    state: ${13:# Create or delete project}
+    merge_method: ${14:# What requirements are placed upon merges}
+    lfs_enabled: ${15:# Enable Git large file systems to manages large files such as audio, video, and graphics files}
+    username: ${16:# Used to create a personal project under a user's name}
+    allow_merge_on_skipped_pipeline: ${17:# Allow merge when skipped pipelines exist}
+    only_allow_merge_if_all_discussions_are_resolved: ${18:# All discussions on a merge request (MR) have to be resolved}
+    only_allow_merge_if_pipeline_succeeds: ${19:# Only allow merges if pipeline succeeded}
+    packages_enabled: ${20:# Enable GitLab package repository}
+    remove_source_branch_after_merge: ${21:# Remove the source branch after merge}
+    squash_option: ${22:# Squash commits when merging}
+    ci_config_path: ${23:# Custom path to the CI configuration file for this project}
+    shared_runners_enabled: ${24:# Enable shared runners for this project}
+    avatar_path: ${25:# Absolute path image to configure avatar}
+    default_branch: ${26:# Default branch name for a new project}
+    builds_access_level: ${27:# C(private) means that repository CI/CD is allowed only to project members}
+    forking_access_level: ${28:# C(private) means that repository forks is allowed only to project members}
+    container_registry_access_level: ${29:# C(private) means that container registry is allowed only to project members}
+    releases_access_level: ${30:# C(private) means that accessing release is allowed only to project members}
+    environments_access_level: ${31:# C(private) means that deployment to environment is allowed only to project members}
+    feature_flags_access_level: ${32:# C(private) means that feature rollout is allowed only to project members}
+    infrastructure_access_level: ${33:# C(private) means that configuring infrastructure is allowed only to project members}
+    monitor_access_level: ${34:# C(private) means that monitoring health is allowed only to project members}
+    security_and_compliance_access_level: ${35:# C(private) means that accessing security and complicance tab is allowed only to project members}
+    topics: ${36:# A topic or list of topics to be assigned to a project}
+    api_url: ${37:# The resolvable endpoint for the API}
+    api_username: ${38:# The username to use for authentication against the API}
+    api_password: ${39:# The password to use for authentication against the API}
+    validate_certs: ${40:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${41:# GitLab access token with API permissions}
+    api_oauth_token: ${42:# GitLab OAuth token for logging in}
+    api_job_token: ${43:# GitLab CI job token for logging in}

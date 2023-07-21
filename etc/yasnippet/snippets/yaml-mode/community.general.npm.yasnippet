@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.npm
+# group: community.general
+# name: Manage node
+# --
+- name: ${1:Manage node}
+  community.general.npm:
+    name: ${2:# The name of a node}
+    path: ${3:# The base path where to install the node}
+    version: ${4:# The version to be installed}
+    global: ${5:# Install the node}
+    executable: ${6:# The executable location for npm}
+    ignore_scripts: ${7:# Use the C(--ignore-scripts) flag when installing}
+    unsafe_perm: ${8:# Use the C(--unsafe-perm) flag when installing}
+    ci: ${9:# Install packages based on package-lock file, same as running C(npm ci)}
+    production: ${10:# Install dependencies in production mode, excluding devDependencies}
+    registry: ${11:# The registry to install modules from}
+    state: ${12:# The state of the node}
+    no_optional: ${13:# Use the C(--no-optional) flag when installing}
+    no_bin_links: ${14:# Use the C(--no-bin-links) flag when installing}

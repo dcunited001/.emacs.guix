@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.alternatives
+# group: community.general
+# name: Manages alternative programs for common commands
+# --
+- name: ${1:Manages alternative programs for common commands}
+  community.general.alternatives:
+    name: ${2:# The generic name of the link}
+    path: ${3:# The path to the real executable that the link should point to}
+    link: ${4:# The path to the symbolic link that should point to the real executable}
+    priority: ${5:# The priority of the alternative}
+    state: ${6:# C(present) - install the alternative (if not already installed), but do not set it as the currently selected alternative for the group}
+    subcommands: ${7:# A list of subcommands}

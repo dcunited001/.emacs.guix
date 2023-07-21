@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jabber
+# group: community.general
+# name: Send a message to jabber user or chat room
+# --
+- name: ${1:Send a message to jabber user or chat room}
+  community.general.jabber:
+    user: ${2:# User as which to connect}
+    password: ${3:# password for user to connect}
+    to: ${4:# user ID or name of the room, when using room use a slash to indicate your nick}
+    msg: ${5:# The message body}
+    host: ${6:# host to connect, overrides user info}
+    port: ${7:# port to connect to, overrides default}
+    encoding: ${8:# message encoding}

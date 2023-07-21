@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.nomad_job_info
+# group: community.general
+# name: Get Nomad Jobs info
+# --
+- name: ${1:Get Nomad Jobs info}
+  community.general.nomad_job_info:
+    name: ${2:# Name of job for Get info}
+    host: ${3:# FQDN of Nomad server}
+    use_ssl: ${4:# Use TLS/SSL connection}
+    timeout: ${5:# Timeout (in seconds) for the request to Nomad}
+    validate_certs: ${6:# Enable TLS/SSL certificate validation}
+    client_cert: ${7:# Path of certificate for TLS/SSL}
+    client_key: ${8:# Path of certificate's private key for TLS/SSL}
+    namespace: ${9:# Namespace for Nomad}
+    token: ${10:# ACL token for authentification}

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.bzr
+# group: community.general
+# name: Deploy software (or files) from bzr branches
+# --
+- name: ${1:Deploy software (or files) from bzr branches}
+  community.general.bzr:
+    name: ${2:# SSH or HTTP protocol address of the parent branch}
+    dest: ${3:# Absolute path of where the branch should be cloned to}
+    version: ${4:# What version of the branch to clone}
+    force: ${5:# If C(true), any modified files in the working tree will be discarded}
+    executable: ${6:# Path to bzr executable to use}

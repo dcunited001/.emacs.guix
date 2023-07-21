@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.cronvar
+# group: community.general
+# name: Manage variables in crontabs
+# --
+- name: ${1:Manage variables in crontabs}
+  community.general.cronvar:
+    name: ${2:# Name of the crontab variable}
+    value: ${3:# The value to set this variable to}
+    insertafter: ${4:# If specified, the variable will be inserted after the variable specified}
+    insertbefore: ${5:# Used with I(state=present)}
+    state: ${6:# Whether to ensure that the variable is present or absent}
+    user: ${7:# The specific user whose crontab should be modified}
+    cron_file: ${8:# If specified, uses this file instead of an individual user's crontab}
+    backup: ${9:# If set, create a backup of the crontab before it is modified}

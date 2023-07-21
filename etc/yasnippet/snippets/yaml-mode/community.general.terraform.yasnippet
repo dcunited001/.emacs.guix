@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.terraform
+# group: community.general
+# name: Manages a Terraform deployment (and plans)
+# --
+- name: ${1:Manages a Terraform deployment (and plans)}
+  community.general.terraform:
+    state: ${2:# Goal state of given stage/project}
+    binary_path: ${3:# The path of a terraform binary to use, relative to the 'service_path' unless you supply an absolute path}
+    project_path: ${4:# The path to the root of the Terraform directory with the vars}
+    plugin_paths: ${5:# List of paths containing Terraform plugin executable files}
+    workspace: ${6:# The terraform workspace to work with}
+    purge_workspace: ${7:# Only works with state = absent}
+    plan_file: ${8:# The path to an existing Terraform plan file to apply}
+    state_file: ${9:# The path to an existing Terraform state file to use when building plan}
+    variables_files: ${10:# The path to a variables file for Terraform to fill into the TF configurations}
+    variables: ${11:# A group of key-values pairs to override template variables or those in variables files}
+    complex_vars: ${12:# Enable/disable capability to handle complex variable structures for C(terraform)}
+    targets: ${13:# A list of specific resources to target in this plan/application}
+    lock: ${14:# Enable statefile locking, if you use a service that accepts locks (such as S3+DynamoDB) to store your statefile}
+    lock_timeout: ${15:# How long to maintain the lock on the statefile, if you use a service that accepts locks (such as S3+DynamoDB)}
+    force_init: ${16:# To avoid duplicating infra, if a state file can't be found this will force a C(terraform init)}
+    overwrite_init: ${17:# Run init even if C(}
+    backend_config: ${18:# A group of key-values to provide at init stage to the -backend-config parameter}
+    backend_config_files: ${19:# The path to a configuration file to provide at init state to the -backend-config parameter}
+    provider_upgrade: ${20:# Allows Terraform init to upgrade providers to versions specified in the project's version constraints}
+    init_reconfigure: ${21:# Forces backend reconfiguration during init}
+    check_destroy: ${22:# Apply only when no resources are destroyed}
+    parallelism: ${23:# Restrict concurrent operations when Terraform applies the plan}

@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.proxmox_nic
+# group: community.general
+# name: Management of a NIC of a Qemu(KVM) VM in a Proxmox VE cluster
+# --
+- name: ${1:Management of a NIC of a Qemu(KVM) VM in a Proxmox VE cluster}
+  community.general.proxmox_nic:
+    bridge: ${2:# Add this interface to the specified bridge device}
+    firewall: ${3:# Whether this interface should be protected by the firewall}
+    interface: ${4:# Name of the interface, should be C(net[n]) where C(1 ≤ n ≤ 31)}
+    link_down: ${5:# Whether this interface should be disconnected (like pulling the plug)}
+    mac: ${6:# C(XX:XX:XX:XX:XX:XX) should be a unique MAC address}
+    model: ${7:# The NIC emulator model}
+    mtu: ${8:# Force MTU, for C(virtio) model only, setting will be ignored otherwise}
+    name: ${9:# Specifies the VM name}
+    queues: ${10:# Number of packet queues to be used on the device}
+    rate: ${11:# Rate limit in MBps (MegaBytes per second) as floating point number}
+    state: ${12:# Indicates desired state of the NIC}
+    tag: ${13:# VLAN tag to apply to packets on this interface}
+    trunks: ${14:# List of VLAN trunks to pass through this interface}
+    vmid: ${15:# Specifies the instance ID}
+    api_host: ${16:# Specify the target host of the Proxmox VE cluster}
+    api_user: ${17:# Specify the user to authenticate with}
+    api_password: ${18:# Specify the password to authenticate with}
+    api_token_id: ${19:# Specify the token ID}
+    api_token_secret: ${20:# Specify the token secret}
+    validate_certs: ${21:# If C(false), SSL certificates will not be validated}

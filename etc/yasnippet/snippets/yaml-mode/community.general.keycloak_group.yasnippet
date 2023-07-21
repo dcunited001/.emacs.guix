@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_group
+# group: community.general
+# name: Allows administration of Keycloak groups via Keycloak API
+# --
+- name: ${1:Allows administration of Keycloak groups via Keycloak API}
+  community.general.keycloak_group:
+    state: ${2:# State of the group}
+    name: ${3:# Name of the group}
+    realm: ${4:# They Keycloak realm under which this group resides}
+    id: ${5:# The unique identifier for this group}
+    attributes: ${6:# A dict of key/value pairs to set as custom attributes for the group}
+    parents: ${7:# List of parent groups for the group to handle sorted top to bottom}
+    auth_keycloak_url: ${8:# URL to the Keycloak instance}
+    auth_client_id: ${9:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${10:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${11:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${12:# Username to authenticate for API access with}
+    auth_password: ${13:# Password to authenticate for API access with}
+    token: ${14:# Authentication token for Keycloak API}
+    validate_certs: ${15:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${16:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${17:# Configures the HTTP User-Agent header}

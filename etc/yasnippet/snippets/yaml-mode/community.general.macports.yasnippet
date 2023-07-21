@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.macports
+# group: community.general
+# name: Package manager for MacPorts
+# --
+- name: ${1:Package manager for MacPorts}
+  community.general.macports:
+    name: ${2:# A list of port names}
+    selfupdate: ${3:# Update Macports and the ports tree, either prior to installing ports or as a separate step}
+    state: ${4:# Indicates the desired state of the port}
+    upgrade: ${5:# Upgrade all outdated ports, either prior to installing ports or as a separate step}
+    variant: ${6:# A port variant specification}

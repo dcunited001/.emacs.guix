@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.apk
+# group: community.general
+# name: Manages apk packages
+# --
+- name: ${1:Manages apk packages}
+  community.general.apk:
+    available: ${2:# During upgrade, reset versioned world dependencies and change logic to prefer replacing or downgrading packages (instead of holding them) if the currently installed package is no longer available from any repository}
+    name: ${3:# A package name, like C(foo), or multiple packages, like C(foo, bar)}
+    no_cache: ${4:# Do not use any local cache path}
+    repository: ${5:# A package repository or multiple repositories}
+    state: ${6:# Indicates the desired package(s) state}
+    update_cache: ${7:# Update repository indexes}
+    upgrade: ${8:# Upgrade all installed packages to their latest version}
+    world: ${9:# Use a custom world file when checking for explicitly installed packages}

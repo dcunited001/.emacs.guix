@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.iptables_state
+# group: community.general
+# name: Save iptables state into a file or restore it from a file
+# --
+- name: ${1:Save iptables state into a file or restore it from a file}
+  community.general.iptables_state:
+    counters: ${2:# Save or restore the values of all packet and byte counters}
+    ip_version: ${3:# Which version of the IP protocol this module should apply to}
+    modprobe: ${4:# Specify the path to the C(modprobe) program internally used by iptables related commands to load kernel modules}
+    noflush: ${5:# For I(state=restored), ignored otherwise}
+    path: ${6:# The file the iptables state should be saved to}
+    state: ${7:# Whether the firewall state should be saved (into a file) or restored (from a file)}
+    table: ${8:# When I(state=restored), restore only the named table even if the input file contains other tables}
+    wait: ${9:# Wait N seconds for the xtables lock to prevent instant failure in case multiple instances of the program are running concurrently}

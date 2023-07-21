@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.java_cert
+# group: community.general
+# name: Uses keytool to import/remove certificate to/from java keystore (cacerts)
+# --
+- name: ${1:Uses keytool to import/remove certificate to/from java keystore (cacerts)}
+  community.general.java_cert:
+    cert_url: ${2:# Basic URL to fetch SSL certificate from}
+    cert_port: ${3:# Port to connect to URL}
+    cert_path: ${4:# Local path to load certificate from}
+    cert_alias: ${5:# Imported certificate alias}
+    trust_cacert: ${6:# Trust imported cert as CAcert}
+    pkcs12_path: ${7:# Local path to load PKCS12 keystore from}
+    pkcs12_password: ${8:# Password for importing from PKCS12 keystore}
+    pkcs12_alias: ${9:# Alias in the PKCS12 keystore}
+    keystore_path: ${10:# Path to keystore}
+    keystore_pass: ${11:# Keystore password}
+    keystore_create: ${12:# Create keystore if it does not exist}
+    keystore_type: ${13:# Keystore type (JCEKS, JKS)}
+    executable: ${14:# Path to keytool binary if not used we search in PATH for it}
+    state: ${15:# Defines action which can be either certificate import or removal}

@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gunicorn
+# group: community.general
+# name: Run gunicorn with various settings
+# --
+- name: ${1:Run gunicorn with various settings}
+  community.general.gunicorn:
+    app: ${2:# The app module}
+    venv: ${3:# Path to the virtualenv directory}
+    config: ${4:# Path to the gunicorn configuration file}
+    chdir: ${5:# Chdir to specified directory before apps loading}
+    pid: ${6:# A filename to use for the PID file}
+    worker: ${7:# The type of workers to use}
+    user: ${8:# Switch worker processes to run as this user}

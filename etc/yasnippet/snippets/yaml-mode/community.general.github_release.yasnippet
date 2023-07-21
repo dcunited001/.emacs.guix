@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.github_release
+# group: community.general
+# name: Interact with GitHub Releases
+# --
+- name: ${1:Interact with GitHub Releases}
+  community.general.github_release:
+    token: ${2:# GitHub Personal Access Token for authenticating}
+    user: ${3:# The GitHub account that owns the repository}
+    password: ${4:# The GitHub account password for the user}
+    repo: ${5:# Repository name}
+    action: ${6:# Action to perform}
+    tag: ${7:# Tag name when creating a release}
+    target: ${8:# Target of release when creating a release}
+    name: ${9:# Name of release when creating a release}
+    body: ${10:# Description of the release when creating a release}
+    draft: ${11:# Sets if the release is a draft or not}
+    prerelease: ${12:# Sets if the release is a prerelease or not}

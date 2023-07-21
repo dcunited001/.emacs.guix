@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.lvg
+# group: community.general
+# name: Configure LVM volume groups
+# --
+- name: ${1:Configure LVM volume groups}
+  community.general.lvg:
+    vg: ${2:# The name of the volume group}
+    pvs: ${3:# List of comma-separated devices to use as physical devices in this volume group}
+    pesize: ${4:# The size of the physical extent}
+    pv_options: ${5:# Additional options to pass to C(pvcreate) when creating the volume group}
+    pvresize: ${6:# If C(true), resize the physical volume to the maximum available size}
+    vg_options: ${7:# Additional options to pass to C(vgcreate) when creating the volume group}
+    state: ${8:# Control if the volume group exists}
+    force: ${9:# If C(true), allows to remove volume group with logical volumes}

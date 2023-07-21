@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.nsupdate
+# group: community.general
+# name: Manage DNS records
+# --
+- name: ${1:Manage DNS records}
+  community.general.nsupdate:
+    state: ${2:# Manage DNS record}
+    server: ${3:# Apply DNS modification on this server, specified by IPv4 or IPv6 address}
+    port: ${4:# Use this TCP port when connecting to C(server)}
+    key_name: ${5:# Use TSIG key name to authenticate against DNS C(server)}
+    key_secret: ${6:# Use TSIG key secret, associated with C(key_name), to authenticate against C(server)}
+    key_algorithm: ${7:# Specify key algorithm used by C(key_secret)}
+    zone: ${8:# DNS record will be modified on this C(zone)}
+    record: ${9:# Sets the DNS record to modify}
+    type: ${10:# Sets the record type}
+    ttl: ${11:# Sets the record TTL}
+    value: ${12:# Sets the record value}
+    protocol: ${13:# Sets the transport protocol (TCP or UDP)}

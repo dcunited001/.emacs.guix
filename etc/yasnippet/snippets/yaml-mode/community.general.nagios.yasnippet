@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.nagios
+# group: community.general
+# name: Perform common tasks in Nagios related to downtime and notifications
+# --
+- name: ${1:Perform common tasks in Nagios related to downtime and notifications}
+  community.general.nagios:
+    action: ${2:# Action to take}
+    host: ${3:# Host to operate on in Nagios}
+    cmdfile: ${4:# Path to the nagios I(command file) (FIFO pipe)}
+    author: ${5:# Author to leave downtime comments as}
+    comment: ${6:# Comment when I(action) is C(downtime) or C(acknowledge)}
+    start: ${7:# When downtime should start, in C(time_t) format (epoch seconds)}
+    minutes: ${8:# Minutes to schedule downtime for}
+    services: ${9:# What to manage downtime/alerts for}
+    servicegroup: ${10:# The Servicegroup we want to set downtimes/alerts for}
+    command: ${11:# The raw command to send to nagios, which should not include the submitted time header or the line-feed B(Required) option when using the C(command) action}

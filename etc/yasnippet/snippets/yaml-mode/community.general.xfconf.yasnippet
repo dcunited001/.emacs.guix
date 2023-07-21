@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.xfconf
+# group: community.general
+# name: Edit XFCE4 Configurations
+# --
+- name: ${1:Edit XFCE4 Configurations}
+  community.general.xfconf:
+    channel: ${2:# A Xfconf preference channel is a top-level tree key, inside of the Xfconf repository that corresponds to the location for which all application properties/keys are stored}
+    property: ${3:# A Xfce preference key is an element in the Xfconf repository that corresponds to an application preference}
+    value: ${4:# Preference properties typically have simple values such as strings, integers, or lists of strings and integers}
+    value_type: ${5:# The type of value being set}
+    state: ${6:# The action to take upon the property/value}
+    force_array: ${7:# Force array even if only one element}
+    disable_facts: ${8:# The value C(false) is no longer allowed since community}

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keyring_info
+# group: community.general
+# name: Get a passphrase using the Operating System's native keyring
+# --
+- name: ${1:Get a passphrase using the Operating System's native keyring}
+  community.general.keyring_info:
+    service: ${2:# The name of the service}
+    username: ${3:# The user belonging to the service}
+    keyring_password: ${4:# Password to unlock keyring}

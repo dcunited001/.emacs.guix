@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_project_badge
+# group: community.general
+# name: Manage project badges on GitLab Server
+# --
+- name: ${1:Manage project badges on GitLab Server}
+  community.general.gitlab_project_badge:
+    project: ${2:# The name (or full path) of the GitLab project the badge is added to/removed from}
+    state: ${3:# State of the badge in the project}
+    link_url: ${4:# The URL associated with the badge}
+    image_url: ${5:# The image URL of the badge}
+    api_url: ${6:# The resolvable endpoint for the API}
+    api_username: ${7:# The username to use for authentication against the API}
+    api_password: ${8:# The password to use for authentication against the API}
+    validate_certs: ${9:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${10:# GitLab access token with API permissions}
+    api_oauth_token: ${11:# GitLab OAuth token for logging in}
+    api_job_token: ${12:# GitLab CI job token for logging in}

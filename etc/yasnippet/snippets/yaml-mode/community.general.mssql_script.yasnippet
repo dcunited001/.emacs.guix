@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.mssql_script
+# group: community.general
+# name: Execute SQL scripts on a MSSQL database
+# --
+- name: ${1:Execute SQL scripts on a MSSQL database}
+  community.general.mssql_script:
+    name: ${2:# Database to run script against}
+    login_user: ${3:# The username used to authenticate with}
+    login_password: ${4:# The password used to authenticate with}
+    login_host: ${5:# Host running the database}
+    login_port: ${6:# Port of the MSSQL server}
+    script: ${7:# The SQL script to be executed}
+    output: ${8:# With C(default) each row will be returned as a list of values}
+    params: ${9:# Parameters passed to the script as SQL parameters}

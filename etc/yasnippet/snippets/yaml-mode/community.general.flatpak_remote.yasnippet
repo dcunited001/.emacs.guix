@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.flatpak_remote
+# group: community.general
+# name: Manage flatpak repository remotes
+# --
+- name: ${1:Manage flatpak repository remotes}
+  community.general.flatpak_remote:
+    executable: ${2:# The path to the C(flatpak) executable to use}
+    flatpakrepo_url: ${3:# The URL to the I(flatpakrepo) file representing the repository remote to add}
+    method: ${4:# The installation method to use}
+    name: ${5:# The desired name for the flatpak remote to be registered under on the managed host}
+    state: ${6:# Indicates the desired package state}
+    enabled: ${7:# Indicates whether this remote is enabled}

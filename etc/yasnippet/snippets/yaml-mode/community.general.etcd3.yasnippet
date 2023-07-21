@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.etcd3
+# group: community.general
+# name: Set or delete key value pairs from an etcd3 cluster
+# --
+- name: ${1:Set or delete key value pairs from an etcd3 cluster}
+  community.general.etcd3:
+    key: ${2:# the key where the information is stored in the cluster}
+    value: ${3:# the information stored}
+    host: ${4:# the IP address of the cluster}
+    port: ${5:# the port number used to connect to the cluster}
+    state: ${6:# the state of the value for the key}
+    user: ${7:# The etcd user to authenticate with}
+    password: ${8:# The password to use for authentication}
+    ca_cert: ${9:# The Certificate Authority to use to verify the etcd host}
+    client_cert: ${10:# PEM formatted certificate chain file to be used for SSL client authentication}
+    client_key: ${11:# PEM formatted file that contains your private key to be used for SSL client authentication}
+    timeout: ${12:# The socket level timeout in seconds}

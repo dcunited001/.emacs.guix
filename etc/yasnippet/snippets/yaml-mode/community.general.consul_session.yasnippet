@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.consul_session
+# group: community.general
+# name: Manipulate consul sessions
+# --
+- name: ${1:Manipulate consul sessions}
+  community.general.consul_session:
+    id: ${2:# ID of the session, required when I(state) is either C(info) or C(remove)}
+    state: ${3:# Whether the session should be present i}
+    name: ${4:# The name that should be associated with the session}
+    delay: ${5:# The optional lock delay that can be attached to the session when it is created}
+    node: ${6:# The name of the node that with which the session will be associated}
+    datacenter: ${7:# The name of the datacenter in which the session exists or should be created}
+    checks: ${8:# Checks that will be used to verify the session health}
+    host: ${9:# The host of the consul agent defaults to localhost}
+    port: ${10:# The port on which the consul agent is running}
+    scheme: ${11:# The protocol scheme on which the consul agent is running}
+    validate_certs: ${12:# Whether to verify the TLS certificate of the consul agent}
+    behavior: ${13:# The optional behavior that can be attached to the session when it is created}
+    ttl: ${14:# Specifies the duration of a session in seconds (between 10 and 86400)}
+    token: ${15:# The token key identifying an ACL rule set that controls access to the key value pair}

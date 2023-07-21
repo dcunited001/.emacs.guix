@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_pwpolicy
+# group: community.general
+# name: Manage FreeIPA password policies
+# --
+- name: ${1:Manage FreeIPA password policies}
+  community.general.ipa_pwpolicy:
+    group: ${2:# Name of the group that the policy applies to}
+    state: ${3:# State to ensure}
+    maxpwdlife: ${4:# Maximum password lifetime (in days)}
+    minpwdlife: ${5:# Minimum password lifetime (in hours)}
+    historylength: ${6:# Number of previous passwords that are remembered}
+    minclasses: ${7:# Minimum number of character classes}
+    minlength: ${8:# Minimum password length}
+    priority: ${9:# Priority of the policy}
+    maxfailcount: ${10:# Maximum number of consecutive failures before lockout}
+    failinterval: ${11:# Period (in seconds) after which the number of failed login attempts is reset}
+    lockouttime: ${12:# Period (in seconds) for which users are locked out}
+    ipa_port: ${13:# Port of FreeIPA / IPA server}
+    ipa_host: ${14:# IP or hostname of IPA server}
+    ipa_user: ${15:# Administrative account used on IPA server}
+    ipa_pass: ${16:# Password of administrative user}
+    ipa_prot: ${17:# Protocol used by IPA server}
+    validate_certs: ${18:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${19:# Specifies idle timeout (in seconds) for the connection}

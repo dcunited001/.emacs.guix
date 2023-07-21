@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.filesize
+# group: community.general
+# name: Create a file with a given size, or resize it if it exists
+# --
+- name: ${1:Create a file with a given size, or resize it if it exists}
+  community.general.filesize:
+    path: ${2:# Path of the regular file to create or resize}
+    size: ${3:# Requested size of the file}
+    blocksize: ${4:# Size of blocks, in bytes if not followed by a multiplicative suffix}
+    source: ${5:# Device or file that provides input data to provision the file}
+    force: ${6:# Whether or not to overwrite the file if it exists, in other words, to truncate it from 0}
+    sparse: ${7:# Whether or not the file to create should be a sparse file}
+    unsafe_writes: ${8:# This option is silently ignored}
+    mode: ${9:# The permissions the resulting filesystem object should have}
+    owner: ${10:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${11:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${12:# The user part of the SELinux filesystem object context}
+    serole: ${13:# The role part of the SELinux filesystem object context}
+    setype: ${14:# The type part of the SELinux filesystem object context}
+    selevel: ${15:# The level part of the SELinux filesystem object context}
+    attributes: ${16:# The attributes the resulting filesystem object should have}

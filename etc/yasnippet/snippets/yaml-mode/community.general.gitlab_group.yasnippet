@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_group
+# group: community.general
+# name: Creates/updates/deletes GitLab Groups
+# --
+- name: ${1:Creates/updates/deletes GitLab Groups}
+  community.general.gitlab_group:
+    name: ${2:# Name of the group you want to create}
+    path: ${3:# The path of the group you want to create, this will be api_url/group_path}
+    description: ${4:# A description for the group}
+    state: ${5:# create or delete group}
+    parent: ${6:# Allow to create subgroups}
+    visibility: ${7:# Default visibility of the group}
+    project_creation_level: ${8:# Determine if developers can create projects in the group}
+    auto_devops_enabled: ${9:# Default to Auto DevOps pipeline for all projects within this group}
+    subgroup_creation_level: ${10:# Allowed to create subgroups}
+    require_two_factor_authentication: ${11:# Require all users in this group to setup two-factor authentication}
+    avatar_path: ${12:# Absolute path image to configure avatar}
+    api_url: ${13:# The resolvable endpoint for the API}
+    api_username: ${14:# The username to use for authentication against the API}
+    api_password: ${15:# The password to use for authentication against the API}
+    validate_certs: ${16:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${17:# GitLab access token with API permissions}
+    api_oauth_token: ${18:# GitLab OAuth token for logging in}
+    api_job_token: ${19:# GitLab CI job token for logging in}

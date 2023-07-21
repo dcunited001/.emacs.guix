@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redfish_config
+# group: community.general
+# name: Manages Out-Of-Band controllers using Redfish APIs
+# --
+- name: ${1:Manages Out-Of-Band controllers using Redfish APIs}
+  community.general.redfish_config:
+    category: ${2:# Category to execute on OOB controller}
+    command: ${3:# List of commands to execute on OOB controller}
+    baseuri: ${4:# Base URI of OOB controller}
+    username: ${5:# Username for authenticating to OOB controller}
+    password: ${6:# Password for authenticating to OOB controller}
+    auth_token: ${7:# Security token for authenticating to OOB controller}
+    bios_attributes: ${8:# Dictionary of BIOS attributes to update}
+    timeout: ${9:# Timeout in seconds for HTTP requests to OOB controller}
+    boot_order: ${10:# List of BootOptionReference strings specifying the BootOrder}
+    network_protocols: ${11:# Setting dict of manager services to update}
+    resource_id: ${12:# ID of the System, Manager or Chassis to modify}
+    nic_addr: ${13:# EthernetInterface Address string on OOB controller}
+    nic_config: ${14:# Setting dict of EthernetInterface on OOB controller}
+    strip_etag_quotes: ${15:# Removes surrounding quotes of etag used in C(If-Match) header of C(PATCH) requests}
+    hostinterface_config: ${16:# Setting dict of HostInterface on OOB controller}
+    hostinterface_id: ${17:# Redfish HostInterface instance ID if multiple HostInterfaces are present}
+    sessions_config: ${18:# Setting dict of Sessions}

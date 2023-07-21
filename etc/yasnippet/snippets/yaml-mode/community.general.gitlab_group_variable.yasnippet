@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_group_variable
+# group: community.general
+# name: Creates, updates, or deletes GitLab groups variables
+# --
+- name: ${1:Creates, updates, or deletes GitLab groups variables}
+  community.general.gitlab_group_variable:
+    state: ${2:# Create or delete group variable}
+    group: ${3:# The path and name of the group}
+    purge: ${4:# When set to C(true), delete all variables which are not untouched in the task}
+    vars: ${5:# When the list element is a simple key-value pair, set masked and protected to false}
+    variables: ${6:# A list of dictionaries that represents CI/CD variables}
+    api_url: ${7:# The resolvable endpoint for the API}
+    api_username: ${8:# The username to use for authentication against the API}
+    api_password: ${9:# The password to use for authentication against the API}
+    validate_certs: ${10:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${11:# GitLab access token with API permissions}
+    api_oauth_token: ${12:# GitLab OAuth token for logging in}
+    api_job_token: ${13:# GitLab CI job token for logging in}

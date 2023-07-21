@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.composer
+# group: community.general
+# name: Dependency Manager for PHP
+# --
+- name: ${1:Dependency Manager for PHP}
+  community.general.composer:
+    command: ${2:# Composer command like 'install', 'update' and so on}
+    arguments: ${3:# Composer arguments like required package, version and so on}
+    executable: ${4:# Path to PHP Executable on the remote host, if PHP is not in PATH}
+    working_dir: ${5:# Directory of your project (see --working-dir)}
+    global_command: ${6:# Runs the specified command globally}
+    prefer_source: ${7:# Forces installation from package sources when possible (see --prefer-source)}
+    prefer_dist: ${8:# Forces installation from package dist even for dev versions (see --prefer-dist)}
+    no_dev: ${9:# Disables installation of require-dev packages (see --no-dev)}
+    no_scripts: ${10:# Skips the execution of all scripts defined in composer}
+    no_plugins: ${11:# Disables all plugins (see --no-plugins)}
+    optimize_autoloader: ${12:# Optimize autoloader during autoloader dump (see --optimize-autoloader)}
+    classmap_authoritative: ${13:# Autoload classes from classmap only}
+    apcu_autoloader: ${14:# Uses APCu to cache found/not-found classes}
+    ignore_platform_reqs: ${15:# Ignore php, hhvm, lib-* and ext-* requirements and force the installation even if the local machine does not fulfill these}
+    composer_executable: ${16:# Path to composer executable on the remote host, if composer is not in C(PATH) or a custom composer is needed}

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.zfs_delegate_admin
+# group: community.general
+# name: Manage ZFS delegated administration (user admin privileges)
+# --
+- name: ${1:Manage ZFS delegated administration (user admin privileges)}
+  community.general.zfs_delegate_admin:
+    name: ${2:# File system or volume name e}
+    state: ${3:# Whether to allow (C(present)), or unallow (C(absent)) a permission}
+    users: ${4:# List of users to whom permission(s) should be granted}
+    groups: ${5:# List of groups to whom permission(s) should be granted}
+    everyone: ${6:# Apply permissions to everyone}
+    permissions: ${7:# The list of permission(s) to delegate (required if C(state) is C(present))}
+    local: ${8:# Apply permissions to C(name) locally (C(zfs allow -l))}
+    descendents: ${9:# Apply permissions to C(name)'s descendents (C(zfs allow -d))}
+    recursive: ${10:# Unallow permissions recursively (ignored when C(state) is C(present))}

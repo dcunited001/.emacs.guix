@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jboss
+# group: community.general
+# name: Deploy applications to JBoss
+# --
+- name: ${1:Deploy applications to JBoss}
+  community.general.jboss:
+    deployment: ${2:# The name of the deployment}
+    src: ${3:# The remote path of the application ear or war to deploy}
+    deploy_path: ${4:# The location in the filesystem where the deployment scanner listens}
+    state: ${5:# Whether the application should be deployed or undeployed}

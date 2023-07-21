@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jenkins_job
+# group: community.general
+# name: Manage jenkins jobs
+# --
+- name: ${1:Manage jenkins jobs}
+  community.general.jenkins_job:
+    config: ${2:# config in XML format}
+    enabled: ${3:# Whether the job should be enabled or disabled}
+    name: ${4:# Name of the Jenkins job}
+    password: ${5:# Password to authenticate with the Jenkins server}
+    state: ${6:# Attribute that specifies if the job has to be created or deleted}
+    token: ${7:# API token used to authenticate alternatively to password}
+    url: ${8:# URL where the Jenkins server is accessible}
+    user: ${9:# User to authenticate with the Jenkins server}
+    validate_certs: ${10:# If set to C(false), the SSL certificates will not be validated}

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.mssql_db
+# group: community.general
+# name: Add or remove MSSQL databases from a remote host
+# --
+- name: ${1:Add or remove MSSQL databases from a remote host}
+  community.general.mssql_db:
+    name: ${2:# name of the database to add or remove}
+    login_user: ${3:# The username used to authenticate with}
+    login_password: ${4:# The password used to authenticate with}
+    login_host: ${5:# Host running the database}
+    login_port: ${6:# Port of the MSSQL server}
+    state: ${7:# The database state}
+    target: ${8:# Location, on the remote host, of the dump file to read from or write to}
+    autocommit: ${9:# Automatically commit the change only if the import succeed}

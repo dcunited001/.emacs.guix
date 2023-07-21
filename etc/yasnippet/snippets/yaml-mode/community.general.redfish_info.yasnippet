@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.redfish_info
+# group: community.general
+# name: Manages Out-Of-Band controllers using Redfish APIs
+# --
+- name: ${1:Manages Out-Of-Band controllers using Redfish APIs}
+  community.general.redfish_info:
+    category: ${2:# List of categories to execute on OOB controller}
+    command: ${3:# List of commands to execute on OOB controller}
+    baseuri: ${4:# Base URI of OOB controller}
+    username: ${5:# Username for authenticating to OOB controller}
+    password: ${6:# Password for authenticating to OOB controller}
+    auth_token: ${7:# Security token for authenticating to OOB controller}
+    timeout: ${8:# Timeout in seconds for HTTP requests to OOB controller}
+    update_handle: ${9:# Handle to check the status of an update in progress}

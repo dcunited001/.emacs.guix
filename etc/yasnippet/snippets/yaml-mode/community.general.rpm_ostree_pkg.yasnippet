@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.rpm_ostree_pkg
+# group: community.general
+# name: Install or uninstall overlay additional packages
+# --
+- name: ${1:Install or uninstall overlay additional packages}
+  community.general.rpm_ostree_pkg:
+    name: ${2:# Name of overlay package to install or remove}
+    state: ${3:# State of the overlay package}

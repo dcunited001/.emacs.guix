@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.parted
+# group: community.general
+# name: Configure block device partitions
+# --
+- name: ${1:Configure block device partitions}
+  community.general.parted:
+    device: ${2:# The block device (disk) where to operate}
+    align: ${3:# Set alignment for newly created partitions}
+    number: ${4:# The partition number being affected}
+    unit: ${5:# Selects the current default unit that Parted will use to display locations and capacities on the disk and to interpret those given by the user if they are not suffixed by an unit}
+    label: ${6:# Disk label type or partition table to use}
+    part_type: ${7:# May be specified only with I(label=msdos) or I(label=dvh)}
+    part_start: ${8:# Where the partition will start as offset from the beginning of the disk, that is, the 'distance' from the start of the disk}
+    part_end: ${9:# Where the partition will end as offset from the beginning of the disk, that is, the 'distance' from the start of the disk}
+    name: ${10:# Sets the name for the partition number (GPT, Mac, MIPS and PC98 only)}
+    flags: ${11:# A list of the flags that has to be set on the partition}
+    state: ${12:# Whether to create or delete a partition}
+    fs_type: ${13:# If specified and the partition does not exist, will set filesystem type to given partition}
+    resize: ${14:# Call C(resizepart) on existing partitions to match the size specified by I(part_end)}

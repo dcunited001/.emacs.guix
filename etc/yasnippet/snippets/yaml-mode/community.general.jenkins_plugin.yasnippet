@@ -1,0 +1,39 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.jenkins_plugin
+# group: community.general
+# name: Add or remove Jenkins plugin
+# --
+- name: ${1:Add or remove Jenkins plugin}
+  community.general.jenkins_plugin:
+    group: ${2:# Name of the Jenkins group on the OS}
+    jenkins_home: ${3:# Home directory of the Jenkins user}
+    mode: ${4:# File mode applied on versioned plugins}
+    name: ${5:# Plugin name}
+    owner: ${6:# Name of the Jenkins user on the OS}
+    state: ${7:# Desired plugin state}
+    timeout: ${8:# Server connection timeout in secs}
+    updates_expiration: ${9:# Number of seconds after which a new copy of the I(update-center}
+    updates_url: ${10:# A list of base URL(s) to retrieve I(update-center}
+    update_json_url_segment: ${11:# A list of URL segment(s) to retrieve the update center json file from}
+    latest_plugins_url_segments: ${12:# Path inside the I(updates_url) to get latest plugins from}
+    versioned_plugins_url_segments: ${13:# Path inside the I(updates_url) to get specific version of plugins from}
+    url: ${14:# URL of the Jenkins server}
+    version: ${15:# Plugin version number}
+    with_dependencies: ${16:# Defines whether to install plugin dependencies}
+    force: ${17:# If C(yes) do not get a cached copy}
+    http_agent: ${18:# Header to identify as, generally appears in web server logs}
+    use_proxy: ${19:# If C(no), it will not use a proxy, even if one is defined in an environment variable on the target hosts}
+    validate_certs: ${20:# If C(no), SSL certificates will not be validated}
+    url_username: ${21:# The username for use in HTTP basic authentication}
+    url_password: ${22:# The password for use in HTTP basic authentication}
+    force_basic_auth: ${23:# Credentials specified with I(url_username) and I(url_password) should be passed in HTTP Header}
+    client_cert: ${24:# PEM formatted certificate chain file to be used for SSL client authentication}
+    client_key: ${25:# PEM formatted file that contains your private key to be used for SSL client authentication}
+    use_gssapi: ${26:# Use GSSAPI to perform the authentication, typically this is for Kerberos or Kerberos through Negotiate authentication}
+    seuser: ${27:# The user part of the SELinux filesystem object context}
+    serole: ${28:# The role part of the SELinux filesystem object context}
+    setype: ${29:# The type part of the SELinux filesystem object context}
+    selevel: ${30:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${31:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${32:# The attributes the resulting filesystem object should have}

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.xattr
+# group: community.general
+# name: Manage user defined extended attributes
+# --
+- name: ${1:Manage user defined extended attributes}
+  community.general.xattr:
+    path: ${2:# The full path of the file/object to get the facts of}
+    namespace: ${3:# Namespace of the named name/key}
+    key: ${4:# The name of a specific Extended attribute key to set/retrieve}
+    value: ${5:# The value to set the named name/key to, it automatically sets the I(state) to C(present)}
+    state: ${6:# defines which state you want to do}
+    follow: ${7:# If C(true), dereferences symlinks and sets/gets attributes on symlink target, otherwise acts on symlink itself}

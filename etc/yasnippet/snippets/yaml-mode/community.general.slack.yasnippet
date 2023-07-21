@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.slack
+# group: community.general
+# name: Send Slack notifications
+# --
+- name: ${1:Send Slack notifications}
+  community.general.slack:
+    domain: ${2:# Slack (sub)domain for your environment without protocol}
+    token: ${3:# Slack integration token}
+    msg: ${4:# Message to send}
+    channel: ${5:# Channel to send the message to}
+    thread_id: ${6:# Optional}
+    message_id: ${7:# Optional}
+    username: ${8:# This is the sender of the message}
+    icon_url: ${9:# URL for the message sender's icon (default C(https://docs}
+    icon_emoji: ${10:# Emoji for the message sender}
+    link_names: ${11:# Automatically create links for channels and usernames in I(msg)}
+    parse: ${12:# Setting for the message parser at Slack}
+    validate_certs: ${13:# If C(false), SSL certificates will not be validated}
+    color: ${14:# Allow text to use default colors - use the default of 'normal' to not send a custom color bar at the start of the message}
+    attachments: ${15:# Define a list of attachments}
+    blocks: ${16:# Define a list of blocks}
+    prepend_hash: ${17:# Setting for automatically prepending a C(#) symbol on the passed in I(channel_id)}

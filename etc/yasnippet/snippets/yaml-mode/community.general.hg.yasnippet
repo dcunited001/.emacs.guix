@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.hg
+# group: community.general
+# name: Manages Mercurial (hg) repositories
+# --
+- name: ${1:Manages Mercurial (hg) repositories}
+  community.general.hg:
+    repo: ${2:# The repository address}
+    dest: ${3:# Absolute path of where the repository should be cloned to}
+    revision: ${4:# Equivalent C(-r) option in hg command which could be the changeset, revision number, branch name or even tag}
+    force: ${5:# Discards uncommitted changes}
+    purge: ${6:# Deletes untracked files}
+    update: ${7:# If C(false), do not retrieve new revisions from the origin repository}
+    clone: ${8:# If C(false), do not clone the repository if it does not exist locally}
+    executable: ${9:# Path to hg executable to use}

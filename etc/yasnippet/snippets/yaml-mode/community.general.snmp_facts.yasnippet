@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.snmp_facts
+# group: community.general
+# name: Retrieve facts for a device using SNMP
+# --
+- name: ${1:Retrieve facts for a device using SNMP}
+  community.general.snmp_facts:
+    host: ${2:# Set to target SNMP server (normally C({{ inventory_hostname }}))}
+    version: ${3:# SNMP Version to use, C(v2), C(v2c) or C(v3)}
+    community: ${4:# The SNMP community string, required if I(version) is C(v2) or C(v2c)}
+    level: ${5:# Authentication level}
+    username: ${6:# Username for SNMPv3}
+    integrity: ${7:# Hashing algorithm}
+    authkey: ${8:# Authentication key}
+    privacy: ${9:# Encryption algorithm}
+    privkey: ${10:# Encryption key}
+    timeout: ${11:# Response timeout in seconds}
+    retries: ${12:# Maximum number of request retries, 0 retries means just a single request}

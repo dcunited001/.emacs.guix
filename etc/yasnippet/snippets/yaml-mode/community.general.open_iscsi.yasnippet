@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.open_iscsi
+# group: community.general
+# name: Manage iSCSI targets with Open-iSCSI
+# --
+- name: ${1:Manage iSCSI targets with Open-iSCSI}
+  community.general.open_iscsi:
+    portal: ${2:# The domain name or IP address of the iSCSI target}
+    port: ${3:# The port on which the iSCSI target process listens}
+    target: ${4:# The iSCSI target name}
+    login: ${5:# Whether the target node should be connected}
+    node_auth: ${6:# The value for C(node}
+    node_user: ${7:# The value for C(node}
+    node_pass: ${8:# The value for C(node}
+    node_user_in: ${9:# The value for C(node}
+    node_pass_in: ${10:# The value for C(node}
+    auto_node_startup: ${11:# Whether the target node should be automatically connected at startup}
+    auto_portal_startup: ${12:# Whether the target node portal should be automatically connected at startup}
+    discover: ${13:# Whether the list of target nodes on the portal should be (re)discovered and added to the persistent iSCSI database}
+    show_nodes: ${14:# Whether the list of nodes in the persistent iSCSI database should be returned by the module}
+    rescan: ${15:# Rescan an established session for discovering new targets}

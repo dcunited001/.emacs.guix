@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ssh_config
+# group: community.general
+# name: Manage SSH config for user
+# --
+- name: ${1:Manage SSH config for user}
+  community.general.ssh_config:
+    state: ${2:# Whether a host entry should exist or not}
+    user: ${3:# Which user account this configuration file belongs to}
+    group: ${4:# Which group this configuration file belongs to}
+    host: ${5:# The endpoint this configuration is valid for}
+    hostname: ${6:# The actual host to connect to when connecting to the host defined}
+    port: ${7:# The actual port to connect to when connecting to the host defined}
+    remote_user: ${8:# Specifies the user to log in as}
+    identity_file: ${9:# The path to an identity file (SSH private key) that will be used when connecting to this host}
+    user_known_hosts_file: ${10:# Sets the user known hosts file option}
+    strict_host_key_checking: ${11:# Whether to strictly check the host key when doing connections to the remote host}
+    proxycommand: ${12:# Sets the C(ProxyCommand) option}
+    proxyjump: ${13:# Sets the C(ProxyJump) option}
+    forward_agent: ${14:# Sets the C(ForwardAgent) option}
+    ssh_config_file: ${15:# SSH config file}
+    host_key_algorithms: ${16:# Sets the C(HostKeyAlgorithms) option}

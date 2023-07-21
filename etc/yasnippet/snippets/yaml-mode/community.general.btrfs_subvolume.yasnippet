@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.btrfs_subvolume
+# group: community.general
+# name: Manage btrfs subvolumes
+# --
+- name: ${1:Manage btrfs subvolumes}
+  community.general.btrfs_subvolume:
+    automount: ${2:# Allow the module to temporarily mount the targeted btrfs filesystem in order to validate the current state and make any required changes}
+    default: ${3:# Make the subvolume specified by I(name) the filesystem's default subvolume}
+    filesystem_device: ${4:# A block device contained within the btrfs filesystem to be targeted}
+    filesystem_label: ${5:# A descriptive label assigned to the btrfs filesystem to be targeted}
+    filesystem_uuid: ${6:# A unique identifier assigned to the btrfs filesystem to be targeted}
+    name: ${7:# Name of the subvolume/snapshot to be targeted}
+    recursive: ${8:# When true, indicates that parent/child subvolumes should be created/removedas necessary to complete the operation (for I(state=present) and I(state=absent) respectively)}
+    snapshot_source: ${9:# Identifies the source subvolume for the created snapshot}
+    snapshot_conflict: ${10:# Policy defining behavior when a subvolume already exists at the path of the requested snapshot}
+    state: ${11:# Indicates the current state of the targeted subvolume}

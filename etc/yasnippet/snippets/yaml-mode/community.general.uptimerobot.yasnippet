@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.uptimerobot
+# group: community.general
+# name: Pause and start Uptime Robot monitoring
+# --
+- name: ${1:Pause and start Uptime Robot monitoring}
+  community.general.uptimerobot:
+    state: ${2:# Define whether or not the monitor should be running or paused}
+    monitorid: ${3:# ID of the monitor to check}
+    apikey: ${4:# Uptime Robot API key}

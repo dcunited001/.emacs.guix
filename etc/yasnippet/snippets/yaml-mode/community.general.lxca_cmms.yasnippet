@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.lxca_cmms
+# group: community.general
+# name: Custom module for lxca cmms inventory utility
+# --
+- name: ${1:Custom module for lxca cmms inventory utility}
+  community.general.lxca_cmms:
+    uuid: ${2:# uuid of device, this is string with length greater than 16}
+    command_options: ${3:# options to filter nodes information}
+    chassis: ${4:# uuid of chassis, this is string with length greater than 16}
+    login_user: ${5:# The username for use in HTTP basic authentication}
+    login_password: ${6:# The password for use in HTTP basic authentication}
+    auth_url: ${7:# lxca https full web address}

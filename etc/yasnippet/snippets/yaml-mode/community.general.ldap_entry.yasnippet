@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ldap_entry
+# group: community.general
+# name: Add or remove LDAP entries
+# --
+- name: ${1:Add or remove LDAP entries}
+  community.general.ldap_entry:
+    attributes: ${2:# If I(state=present), attributes necessary to create an entry}
+    objectClass: ${3:# If I(state=present), value or list of values to use when creating the entry}
+    state: ${4:# The target state of the entry}
+    recursive: ${5:# If I(state=delete), a flag indicating whether a single entry or the whole branch must be deleted}
+    bind_dn: ${6:# A DN to bind with}
+    bind_pw: ${7:# The password to use with I(bind_dn)}
+    ca_path: ${8:# Set the path to PEM file with CA certs}
+    dn: ${9:# The DN of the entry to add or remove}
+    referrals_chasing: ${10:# Set the referrals chasing behavior}
+    server_uri: ${11:# The I(server_uri) parameter may be a comma- or whitespace-separated list of URIs containing only the schema, the host, and the port fields}
+    start_tls: ${12:# If true, we'll use the START_TLS LDAP extension}
+    validate_certs: ${13:# If set to C(false), SSL certificates will not be validated}
+    sasl_class: ${14:# The class to use for SASL authentication}
+    xorder_discovery: ${15:# Set the behavior on how to process Xordered DNs}

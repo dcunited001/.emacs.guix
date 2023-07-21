@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.gitlab_project_variable
+# group: community.general
+# name: Creates/updates/deletes GitLab Projects Variables
+# --
+- name: ${1:Creates/updates/deletes GitLab Projects Variables}
+  community.general.gitlab_project_variable:
+    state: ${2:# Create or delete project variable}
+    project: ${3:# The path and name of the project}
+    purge: ${4:# When set to true, all variables which are not untouched in the task will be deleted}
+    vars: ${5:# When the list element is a simple key-value pair, masked and protected will be set to false}
+    variables: ${6:# A list of dictionaries that represents CI/CD variables}
+    api_url: ${7:# The resolvable endpoint for the API}
+    api_username: ${8:# The username to use for authentication against the API}
+    api_password: ${9:# The password to use for authentication against the API}
+    validate_certs: ${10:# Whether or not to validate SSL certs when supplying a https endpoint}
+    api_token: ${11:# GitLab access token with API permissions}
+    api_oauth_token: ${12:# GitLab OAuth token for logging in}
+    api_job_token: ${13:# GitLab CI job token for logging in}

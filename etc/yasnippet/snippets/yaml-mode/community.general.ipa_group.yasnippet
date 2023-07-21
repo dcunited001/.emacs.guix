@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_group
+# group: community.general
+# name: Manage FreeIPA group
+# --
+- name: ${1:Manage FreeIPA group}
+  community.general.ipa_group:
+    append: ${2:# If C(true), add the listed I(user) and I(group) to the group members}
+    cn: ${3:# Canonical name}
+    description: ${4:# Description of the group}
+    external: ${5:# Allow adding external non-IPA members from trusted domains}
+    gidnumber: ${6:# GID (use this option to set it manually)}
+    group: ${7:# List of group names assigned to this group}
+    nonposix: ${8:# Create as a non-POSIX group}
+    user: ${9:# List of user names assigned to this group}
+    external_user: ${10:# List of external users assigned to this group}
+    state: ${11:# State to ensure}
+    ipa_port: ${12:# Port of FreeIPA / IPA server}
+    ipa_host: ${13:# IP or hostname of IPA server}
+    ipa_user: ${14:# Administrative account used on IPA server}
+    ipa_pass: ${15:# Password of administrative user}
+    ipa_prot: ${16:# Protocol used by IPA server}
+    validate_certs: ${17:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${18:# Specifies idle timeout (in seconds) for the connection}

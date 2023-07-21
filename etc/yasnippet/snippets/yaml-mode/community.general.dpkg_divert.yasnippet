@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.dpkg_divert
+# group: community.general
+# name: Override a debian package's version of a file
+# --
+- name: ${1:Override a debian package's version of a file}
+  community.general.dpkg_divert:
+    path: ${2:# The original and absolute path of the file to be diverted or undiverted}
+    state: ${3:# When I(state=absent), remove the diversion of the specified I(path); when I(state=present), create the diversion if it does not exist, or update its package I(holder) or I(divert) location, if it already exists}
+    holder: ${4:# The name of the package whose copy of file is not diverted, also known as the diversion holder or the package the diversion belongs to}
+    divert: ${5:# The location where the versions of file will be diverted}
+    rename: ${6:# Actually move the file aside (when I(state=present)) or back (when I(state=absent)), but only when changing the state of the diversion}
+    force: ${7:# When I(rename=true) and I(force=true), renaming is performed even if the target of the renaming exists, i}

@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.sefcontext
+# group: community.general
+# name: Manages SELinux file context mapping definitions
+# --
+- name: ${1:Manages SELinux file context mapping definitions}
+  community.general.sefcontext:
+    target: ${2:# Target path (expression)}
+    ftype: ${3:# The file type that should have SELinux contexts applied}
+    setype: ${4:# SELinux type for the specified I(target)}
+    substitute: ${5:# Path to use to substitute file context(s) for the specified I(target)}
+    seuser: ${6:# SELinux user for the specified I(target)}
+    selevel: ${7:# SELinux range for the specified I(target)}
+    state: ${8:# Whether the SELinux file context must be C(absent) or C(present)}
+    reload: ${9:# Reload SELinux policy after commit}
+    ignore_selinux_state: ${10:# Useful for scenarios (chrooted environment) that you can't get the real SELinux state}

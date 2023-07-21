@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.slackpkg
+# group: community.general
+# name: Package manager for Slackware >= 12
+# --
+- name: ${1:Package manager for Slackware >= 12}
+  community.general.slackpkg:
+    name: ${2:# name of package to install/remove}
+    state: ${3:# state of the package, you can use 'installed' as an alias for C(present) and removed as one for C(absent)}
+    update_cache: ${4:# update the package database first}

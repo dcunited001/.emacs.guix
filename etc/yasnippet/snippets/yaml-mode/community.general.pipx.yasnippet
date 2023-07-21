@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pipx
+# group: community.general
+# name: Manages applications installed with pipx
+# --
+- name: ${1:Manages applications installed with pipx}
+  community.general.pipx:
+    state: ${2:# Desired state for the application}
+    name: ${3:# The name of the application to be installed}
+    source: ${4:# If the application source, such as a package with version specifier, or an URL, directory or any other accepted specification}
+    install_apps: ${5:# Add apps from the injected packages}
+    install_deps: ${6:# Include applications of dependent packages}
+    inject_packages: ${7:# Packages to be injected into an existing virtual environment}
+    force: ${8:# Force modification of the application's virtual environment}
+    include_injected: ${9:# Upgrade the injected packages along with the application}
+    index_url: ${10:# Base URL of Python Package Index}
+    python: ${11:# Python version to be used when creating the application virtual environment}
+    system_site_packages: ${12:# Give application virtual environment access to the system site-packages directory}
+    executable: ${13:# Path to the C(pipx) installed in the system}
+    editable: ${14:# Install the project in editable mode}
+    pip_args: ${15:# Arbitrary arguments to pass directly to C(pip)}

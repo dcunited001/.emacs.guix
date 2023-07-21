@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipbase_info
+# group: community.general
+# name: Retrieve IP geolocation and other facts of a host's IP address using the ipbase
+# --
+- name: ${1:Retrieve IP geolocation and other facts of a host's IP address using the ipbase}
+  community.general.ipbase_info:
+    ip: ${2:# The IP you want to get the info for}
+    apikey: ${3:# The API key for the request if you need more requests}
+    hostname: ${4:# If the hostname parameter is set to C(true), the API response will contain the hostname of the IP}
+    language: ${5:# An ISO Alpha 2 Language Code for localizing the IP data}

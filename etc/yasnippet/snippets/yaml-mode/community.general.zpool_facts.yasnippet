@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.zpool_facts
+# group: community.general
+# name: Gather facts about ZFS pools
+# --
+- name: ${1:Gather facts about ZFS pools}
+  community.general.zpool_facts:
+    name: ${2:# ZFS pool name}
+    parsable: ${3:# Specifies if property values should be displayed in machine friendly format}
+    properties: ${4:# Specifies which dataset properties should be queried in comma-separated format}

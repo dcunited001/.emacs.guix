@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.cloudflare_dns
+# group: community.general
+# name: Manage Cloudflare DNS records
+# --
+- name: ${1:Manage Cloudflare DNS records}
+  community.general.cloudflare_dns:
+    api_token: ${2:# API token}
+    account_api_key: ${3:# Account API key}
+    account_email: ${4:# Account email}
+    algorithm: ${5:# Algorithm number}
+    cert_usage: ${6:# Certificate usage number}
+    hash_type: ${7:# Hash type number}
+    key_tag: ${8:# DNSSEC key tag}
+    port: ${9:# Service port}
+    priority: ${10:# Record priority}
+    proto: ${11:# Service protocol}
+    proxied: ${12:# Proxy through Cloudflare network or just use DNS}
+    record: ${13:# Record to add}
+    selector: ${14:# Selector number}
+    service: ${15:# Record service}
+    solo: ${16:# Whether the record should be the only one for that record type and record name}
+    state: ${17:# Whether the record(s) should exist or not}
+    timeout: ${18:# Timeout for Cloudflare API calls}
+    ttl: ${19:# The TTL to give the new record}
+    type: ${20:# The type of DNS record to create}
+    value: ${21:# The record value}
+    weight: ${22:# Service weight}
+    zone: ${23:# The name of the Zone to work with (e}

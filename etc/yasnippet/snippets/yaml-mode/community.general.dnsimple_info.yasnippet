@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.dnsimple_info
+# group: community.general
+# name: Pull basic info from DNSimple API
+# --
+- name: ${1:Pull basic info from DNSimple API}
+  community.general.dnsimple_info:
+    name: ${2:# The domain name to retrieve info from}
+    account_id: ${3:# The account ID to query}
+    api_key: ${4:# The API key to use}
+    record: ${5:# The record to find}
+    sandbox: ${6:# Whether or not to use sandbox environment}

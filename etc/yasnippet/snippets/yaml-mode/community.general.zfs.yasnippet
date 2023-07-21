@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.zfs
+# group: community.general
+# name: Manage zfs
+# --
+- name: ${1:Manage zfs}
+  community.general.zfs:
+    name: ${2:# File system, snapshot or volume name e}
+    state: ${3:# Whether to create (C(present)), or remove (C(absent)) a file system, snapshot or volume}
+    origin: ${4:# Snapshot from which to create a clone}
+    extra_zfs_properties: ${5:# A dictionary of zfs properties to be set}

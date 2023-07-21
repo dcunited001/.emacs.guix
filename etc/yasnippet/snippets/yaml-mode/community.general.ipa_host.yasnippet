@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_host
+# group: community.general
+# name: Manage FreeIPA host
+# --
+- name: ${1:Manage FreeIPA host}
+  community.general.ipa_host:
+    fqdn: ${2:# Full qualified domain name}
+    description: ${3:# A description of this host}
+    force: ${4:# Force host name even if not in DNS}
+    ip_address: ${5:# Add the host to DNS with this IP address}
+    mac_address: ${6:# List of Hardware MAC address(es) off this host}
+    ns_host_location: ${7:# Host location (e}
+    ns_hardware_platform: ${8:# Host hardware platform (e}
+    ns_os_version: ${9:# Host operating system and version (e}
+    user_certificate: ${10:# List of Base-64 encoded server certificates}
+    state: ${11:# State to ensure}
+    update_dns: ${12:# If set C('True') with state as C('absent'), then removes DNS records of the host managed by FreeIPA DNS}
+    random_password: ${13:# Generate a random password to be used in bulk enrollment}
+    ipa_port: ${14:# Port of FreeIPA / IPA server}
+    ipa_host: ${15:# IP or hostname of IPA server}
+    ipa_user: ${16:# Administrative account used on IPA server}
+    ipa_pass: ${17:# Password of administrative user}
+    ipa_prot: ${18:# Protocol used by IPA server}
+    validate_certs: ${19:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${20:# Specifies idle timeout (in seconds) for the connection}

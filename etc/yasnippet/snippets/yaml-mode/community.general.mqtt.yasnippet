@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.mqtt
+# group: community.general
+# name: Publish a message on an MQTT topic for the IoT
+# --
+- name: ${1:Publish a message on an MQTT topic for the IoT}
+  community.general.mqtt:
+    server: ${2:# MQTT broker address/name}
+    port: ${3:# MQTT broker port number}
+    username: ${4:# Username to authenticate against the broker}
+    password: ${5:# Password for C(username) to authenticate against the broker}
+    client_id: ${6:# MQTT client identifier}
+    topic: ${7:# MQTT topic name}
+    payload: ${8:# Payload}
+    qos: ${9:# QoS (Quality of Service)}
+    retain: ${10:# Setting this flag causes the broker to retain (i}
+    ca_cert: ${11:# The path to the Certificate Authority certificate files that are to be treated as trusted by this client}
+    client_cert: ${12:# The path pointing to the PEM encoded client certificate}
+    client_key: ${13:# The path pointing to the PEM encoded client private key}
+    tls_version: ${14:# Specifies the version of the SSL/TLS protocol to be used}

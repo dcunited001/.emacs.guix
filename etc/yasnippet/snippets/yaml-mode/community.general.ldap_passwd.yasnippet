@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ldap_passwd
+# group: community.general
+# name: Set passwords in LDAP
+# --
+- name: ${1:Set passwords in LDAP}
+  community.general.ldap_passwd:
+    passwd: ${2:# The (plaintext) password to be set for I(dn)}
+    bind_dn: ${3:# A DN to bind with}
+    bind_pw: ${4:# The password to use with I(bind_dn)}
+    ca_path: ${5:# Set the path to PEM file with CA certs}
+    dn: ${6:# The DN of the entry to add or remove}
+    referrals_chasing: ${7:# Set the referrals chasing behavior}
+    server_uri: ${8:# The I(server_uri) parameter may be a comma- or whitespace-separated list of URIs containing only the schema, the host, and the port fields}
+    start_tls: ${9:# If true, we'll use the START_TLS LDAP extension}
+    validate_certs: ${10:# If set to C(false), SSL certificates will not be validated}
+    sasl_class: ${11:# The class to use for SASL authentication}
+    xorder_discovery: ${12:# Set the behavior on how to process Xordered DNs}

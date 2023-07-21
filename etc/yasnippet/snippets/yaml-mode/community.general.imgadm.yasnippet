@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.imgadm
+# group: community.general
+# name: Manage SmartOS images
+# --
+- name: ${1:Manage SmartOS images}
+  community.general.imgadm:
+    force: ${2:# Force a given operation (where supported by imgadm(1M))}
+    pool: ${3:# zpool to import to or delete images from}
+    source: ${4:# URI for the image source}
+    state: ${5:# State the object operated on should be in}
+    type: ${6:# Type for image sources}
+    uuid: ${7:# Image UUID}

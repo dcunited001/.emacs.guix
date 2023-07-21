@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keyring
+# group: community.general
+# name: Set or delete a passphrase using the Operating System's native keyring
+# --
+- name: ${1:Set or delete a passphrase using the Operating System's native keyring}
+  community.general.keyring:
+    service: ${2:# The name of the service}
+    username: ${3:# The user belonging to the service}
+    user_password: ${4:# The password to set}
+    keyring_password: ${5:# Password to unlock keyring}
+    state: ${6:# Whether the password should exist}

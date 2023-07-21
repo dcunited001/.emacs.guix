@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.filesystem
+# group: community.general
+# name: Makes a filesystem
+# --
+- name: ${1:Makes a filesystem}
+  community.general.filesystem:
+    state: ${2:# If I(state=present), the filesystem is created if it doesn't already exist, that is the default behaviour if I(state) is omitted}
+    fstype: ${3:# Filesystem type to be created}
+    dev: ${4:# Target path to block device (Linux) or character device (FreeBSD) or regular file (both)}
+    force: ${5:# If C(true), allows to create new filesystem on devices that already has filesystem}
+    resizefs: ${6:# If C(true), if the block device and filesystem size differ, grow the filesystem into the space}
+    opts: ${7:# List of options to be passed to C(mkfs) command}

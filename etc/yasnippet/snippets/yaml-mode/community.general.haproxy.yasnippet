@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.haproxy
+# group: community.general
+# name: Enable, disable, and set weights for HAProxy backend servers using socket commands
+# --
+- name: ${1:Enable, disable, and set weights for HAProxy backend servers using socket commands}
+  community.general.haproxy:
+    backend: ${2:# Name of the HAProxy backend pool}
+    drain: ${3:# Wait until the server has no active connections or until the timeout determined by wait_interval and wait_retries is reached}
+    host: ${4:# Name of the backend host to change}
+    shutdown_sessions: ${5:# When disabling a server, immediately terminate all the sessions attached to the specified server}
+    socket: ${6:# Path to the HAProxy socket file}
+    state: ${7:# Desired state of the provided backend host}
+    agent: ${8:# Disable/enable agent checks (depending on I(state) value)}
+    health: ${9:# Disable/enable health checks (depending on I(state) value)}
+    fail_on_not_found: ${10:# Fail whenever trying to enable/disable a backend host that does not exist}
+    wait: ${11:# Wait until the server reports a status of C(UP) when I(state=enabled), status of C(MAINT) when I(state=disabled) or status of C(DRAIN) when I(state=drain)}
+    wait_interval: ${12:# Number of seconds to wait between retries}
+    wait_retries: ${13:# Number of times to check for status after changing the state}
+    weight: ${14:# The value passed in argument}

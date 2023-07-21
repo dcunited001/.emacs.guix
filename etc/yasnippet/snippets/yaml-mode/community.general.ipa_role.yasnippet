@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ipa_role
+# group: community.general
+# name: Manage FreeIPA role
+# --
+- name: ${1:Manage FreeIPA role}
+  community.general.ipa_role:
+    cn: ${2:# Role name}
+    description: ${3:# A description of this role-group}
+    group: ${4:# List of group names assign to this role}
+    host: ${5:# List of host names to assign}
+    hostgroup: ${6:# List of host group names to assign}
+    privilege: ${7:# List of privileges granted to the role}
+    service: ${8:# List of service names to assign}
+    state: ${9:# State to ensure}
+    user: ${10:# List of user names to assign}
+    ipa_port: ${11:# Port of FreeIPA / IPA server}
+    ipa_host: ${12:# IP or hostname of IPA server}
+    ipa_user: ${13:# Administrative account used on IPA server}
+    ipa_pass: ${14:# Password of administrative user}
+    ipa_prot: ${15:# Protocol used by IPA server}
+    validate_certs: ${16:# This only applies if C(ipa_prot) is I(https)}
+    ipa_timeout: ${17:# Specifies idle timeout (in seconds) for the connection}

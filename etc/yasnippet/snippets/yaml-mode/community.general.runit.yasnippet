@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.runit
+# group: community.general
+# name: Manage runit services
+# --
+- name: ${1:Manage runit services}
+  community.general.runit:
+    name: ${2:# Name of the service to manage}
+    state: ${3:# C(started)/C(stopped) are idempotent actions that will not run commands unless necessary}
+    enabled: ${4:# Whether the service is enabled or not, if disabled it also implies stopped}
+    service_dir: ${5:# directory runsv watches for services}
+    service_src: ${6:# directory where services are defined, the source of symlinks to service_dir}

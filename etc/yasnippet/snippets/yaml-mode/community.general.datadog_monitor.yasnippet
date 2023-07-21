@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.datadog_monitor
+# group: community.general
+# name: Manages Datadog monitors
+# --
+- name: ${1:Manages Datadog monitors}
+  community.general.datadog_monitor:
+    api_key: ${2:# Your Datadog API key}
+    api_host: ${3:# The URL to the Datadog API}
+    app_key: ${4:# Your Datadog app key}
+    state: ${5:# The designated state of the monitor}
+    tags: ${6:# A list of tags to associate with your monitor when creating or updating}
+    type: ${7:# The type of the monitor}
+    query: ${8:# The monitor query to notify on}
+    name: ${9:# The name of the alert}
+    notification_message: ${10:# A message to include with notifications for this monitor}
+    silenced: ${11:# Dictionary of scopes to silence, with timestamps or None}
+    notify_no_data: ${12:# Whether this monitor will notify when data stops reporting}
+    no_data_timeframe: ${13:# The number of minutes before a monitor will notify when data stops reporting}
+    timeout_h: ${14:# The number of hours of the monitor not reporting data before it will automatically resolve from a triggered state}
+    renotify_interval: ${15:# The number of minutes after the last notification before a monitor will re-notify on the current status}
+    escalation_message: ${16:# A message to include with a re-notification}
+    notify_audit: ${17:# Whether tagged users will be notified on changes to this monitor}
+    thresholds: ${18:# A dictionary of thresholds by status}
+    locked: ${19:# Whether changes to this monitor should be restricted to the creator or admins}
+    require_full_window: ${20:# Whether this monitor needs a full window of data before it gets evaluated}
+    new_host_delay: ${21:# A positive integer representing the number of seconds to wait before evaluating the monitor for new hosts}
+    evaluation_delay: ${22:# Time to delay evaluation (in seconds)}
+    id: ${23:# The ID of the alert}
+    include_tags: ${24:# Whether notifications from this monitor automatically inserts its triggering tags into the title}
+    priority: ${25:# Integer from 1 (high) to 5 (low) indicating alert severity}

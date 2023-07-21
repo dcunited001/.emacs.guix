@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.shutdown
+# group: community.general
+# name: Shut down a machine
+# --
+- name: ${1:Shut down a machine}
+  community.general.shutdown:
+    delay: ${2:# Seconds to wait before shutdown}
+    msg: ${3:# Message to display to users before shutdown}
+    search_paths: ${4:# Paths to search on the remote machine for the C(shutdown) command}

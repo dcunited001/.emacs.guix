@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.selinux_permissive
+# group: community.general
+# name: Change permissive domain in SELinux policy
+# --
+- name: ${1:Change permissive domain in SELinux policy}
+  community.general.selinux_permissive:
+    domain: ${2:# The domain that will be added or removed from the list of permissive domains}
+    permissive: ${3:# Indicate if the domain should or should not be set as permissive}
+    no_reload: ${4:# Disable reloading of the SELinux policy after making change to a domain's permissive setting}
+    store: ${5:# Name of the SELinux policy store to use}

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ansible_galaxy_install
+# group: community.general
+# name: Install Ansible roles or collections using ansible-galaxy
+# --
+- name: ${1:Install Ansible roles or collections using ansible-galaxy}
+  community.general.ansible_galaxy_install:
+    type: ${2:# The type of installation performed by C(ansible-galaxy)}
+    name: ${3:# Name of the collection or role being installed}
+    requirements_file: ${4:# Path to a file containing a list of requirements to be installed}
+    dest: ${5:# The path to the directory containing your collections or roles, according to the value of I(type)}
+    no_deps: ${6:# Refrain from installing dependencies}
+    force: ${7:# Force overwriting an existing role or collection}
+    ack_ansible29: ${8:# Acknowledge using Ansible 2}
+    ack_min_ansiblecore211: ${9:# Acknowledge the module is deprecating support for Ansible 2}

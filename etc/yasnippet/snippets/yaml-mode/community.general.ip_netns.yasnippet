@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.ip_netns
+# group: community.general
+# name: Manage network namespaces
+# --
+- name: ${1:Manage network namespaces}
+  community.general.ip_netns:
+    name: ${2:# Name of the namespace}
+    state: ${3:# Whether the namespace should exist}

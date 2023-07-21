@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.listen_ports_facts
+# group: community.general
+# name: Gather facts on processes listening on TCP and UDP ports
+# --
+- name: ${1:Gather facts on processes listening on TCP and UDP ports}
+  community.general.listen_ports_facts:
+    command: ${2:# Override which command to use for fetching listen ports}
+    include_non_listening: ${3:# Show both listening and non-listening sockets (for TCP this means established connections)}

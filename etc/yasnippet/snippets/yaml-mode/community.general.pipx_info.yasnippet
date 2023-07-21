@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.pipx_info
+# group: community.general
+# name: Rretrieves information about applications installed with pipx
+# --
+- name: ${1:Rretrieves information about applications installed with pipx}
+  community.general.pipx_info:
+    name: ${2:# Name of an application installed with C(pipx)}
+    include_deps: ${3:# Include dependent packages in the output}
+    include_injected: ${4:# Include injected packages in the output}
+    include_raw: ${5:# Returns the raw output of C(pipx list --json)}
+    executable: ${6:# Path to the C(pipx) installed in the system}

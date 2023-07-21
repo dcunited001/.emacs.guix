@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.selogin
+# group: community.general
+# name: Manages linux user to SELinux user mapping
+# --
+- name: ${1:Manages linux user to SELinux user mapping}
+  community.general.selogin:
+    login: ${2:# a Linux user}
+    seuser: ${3:# SELinux user name}
+    selevel: ${4:# MLS/MCS Security Range (MLS/MCS Systems only) SELinux Range for SELinux login mapping defaults to the SELinux user record range}
+    state: ${5:# Desired mapping value}
+    reload: ${6:# Reload SELinux policy after commit}
+    ignore_selinux_state: ${7:# Run independent of selinux runtime state}

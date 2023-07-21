@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.general.keycloak_authentication
+# group: community.general
+# name: Configure authentication in Keycloak
+# --
+- name: ${1:Configure authentication in Keycloak}
+  community.general.keycloak_authentication:
+    realm: ${2:# The name of the realm in which is the authentication}
+    alias: ${3:# Alias for the authentication flow}
+    description: ${4:# Description of the flow}
+    providerId: ${5:# C(providerId) for the new flow when not copied from an existing flow}
+    copyFrom: ${6:# C(flowAlias) of the authentication flow to use for the copy}
+    authenticationExecutions: ${7:# Configuration structure for the executions}
+    state: ${8:# Control if the authentication flow must exists or not}
+    force: ${9:# If C(true), allows to remove the authentication flow and recreate it}
+    auth_keycloak_url: ${10:# URL to the Keycloak instance}
+    auth_client_id: ${11:# OpenID Connect I(client_id) to authenticate to the API with}
+    auth_realm: ${12:# Keycloak realm name to authenticate to for API access}
+    auth_client_secret: ${13:# Client Secret to use in conjunction with I(auth_client_id) (if required)}
+    auth_username: ${14:# Username to authenticate for API access with}
+    auth_password: ${15:# Password to authenticate for API access with}
+    token: ${16:# Authentication token for Keycloak API}
+    validate_certs: ${17:# Verify TLS certificates (do not disable this in production)}
+    connection_timeout: ${18:# Controls the HTTP connections timeout period (in seconds) to Keycloak API}
+    http_agent: ${19:# Configures the HTTP User-Agent header}
