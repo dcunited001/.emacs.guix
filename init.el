@@ -127,6 +127,7 @@
 
 (require 'dc-keys)
 (require 'dc-mouse)
+(require 'dc-shim)
 
 (when (featurep 'ido)
   (ido-mode nil))

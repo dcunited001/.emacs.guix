@@ -72,7 +72,9 @@
   (add-to-list 'httpd-mime-types '("wasm" . "application/wasm")))
 
 (setup (:pkg yaml-mode)
-  (:file-match "\\.ya?ml\\'"))
+  ;; yaml-mode is already in auto-mode-alist
+  ;; (:file-match "\\.ya?ml\\'")
+  )
 
 (setup (:pkg jq-mode)
   (:file-match "\\.jq\\'")

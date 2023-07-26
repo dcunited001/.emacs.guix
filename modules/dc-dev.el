@@ -1,7 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2021 David Wilson
-;; Copyright © 2014-2022 Henrik Lissner.
+;; Copyright © 2014-2022 Henrik Lissner
+;; Copyright © 2023 David Conner
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
 ;; of this software and associated documentation files (the “Software”), to deal
@@ -211,6 +212,7 @@ compilation was initiated from compile-mode."
 ;; TODO setup major-mode-remap-alist
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
 (setup treesit
+  ;; something is automatically setting up major-mode-remap-alist
   (:option treesit-language-source-alist
            '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml")))))
 
