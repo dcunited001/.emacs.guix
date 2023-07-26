@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_service
+# group: kubernetes.core
+# name: Manage Services on Kubernetes
+# --
+- name: ${1:Manage Services on Kubernetes}
+  kubernetes.core.k8s_service:
+    merge_type: ${2:# Whether to override the default patch merge approach with a specific type}
+    name: ${3:# Use to specify a Service object name}
+    namespace: ${4:# Use to specify a Service object namespace}
+    type: ${5:# Specifies the type of Service to create}
+    ports: ${6:# A list of ports to expose}
+    selector: ${7:# Label selectors identify objects this Service should apply to}
+    apply: ${8:# C(apply) compares the desired resource definition with the previously supplied resource definition, ignoring properties that are automatically generated}
+    host: ${9:# Provide a URL for accessing the API}
+    api_key: ${10:# Token used to authenticate with the API}
+    kubeconfig: ${11:# Path to an existing Kubernetes config file}
+    context: ${12:# The name of a context found in the config file}
+    username: ${13:# Provide a username for authenticating with the API}
+    password: ${14:# Provide a password for authenticating with the API}
+    client_cert: ${15:# Path to a certificate used to authenticate with the API}
+    client_key: ${16:# Path to a key file used to authenticate with the API}
+    ca_cert: ${17:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${18:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${19:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${20:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${21:# The Header used for the HTTP proxy}
+    persist_config: ${22:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${23:# Username to impersonate for the operation}
+    impersonate_groups: ${24:# Group(s) to impersonate for the operation}
+    resource_definition: ${25:# Provide a valid YAML definition (either as a string, list, or dict) for an object when creating or updating}
+    src: ${26:# Provide a path to a file containing a valid YAML definition of an object or objects to be created or updated}
+    state: ${27:# Determines if an object should be created, patched, or deleted}
+    force: ${28:# If set to C(yes), and I(state) is C(present), an existing object will be replaced}

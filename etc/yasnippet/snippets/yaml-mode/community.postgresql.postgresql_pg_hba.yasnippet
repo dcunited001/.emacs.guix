@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_pg_hba
+# group: community.postgresql
+# name: Add, remove or modify a rule in a pg_hba file
+# --
+- name: ${1:Add, remove or modify a rule in a pg_hba file}
+  community.postgresql.postgresql_pg_hba:
+    address: ${2:# The source address/net where the connections could come from}
+    backup: ${3:# If set, create a backup of the C(pg_hba) file before it is modified}
+    backup_file: ${4:# Write backup to a specific backupfile rather than a temp file}
+    create: ${5:# Create an C(pg_hba) file if none exists}
+    contype: ${6:# Type of the rule}
+    comment: ${7:# A comment that will be placed in the same line behind the rule}
+    databases: ${8:# Databases this line applies to}
+    dest: ${9:# Path to C(pg_hba) file to modify}
+    method: ${10:# Authentication method to be used}
+    netmask: ${11:# The netmask of the source address}
+    options: ${12:# Additional options for the authentication I(method)}
+    order: ${13:# The entries will be written out in a specific order}
+    overwrite: ${14:# Remove all existing rules before adding rules}
+    keep_comments_at_rules: ${15:# If C(true), comments that stand together with a rule in one line are kept behind that line}
+    rules: ${16:# A list of objects, specifying rules for the pg_hba}
+    rules_behavior: ${17:# Configure how the I(rules) argument works together with the rule-specific arguments outside the I(rules) argument}
+    state: ${18:# The lines will be added/modified when C(state=present) and removed when C(state=absent)}
+    users: ${19:# Users this line applies to}
+    mode: ${20:# The permissions the resulting filesystem object should have}
+    owner: ${21:# Name of the user that should own the filesystem object, as would be fed to I(chown)}
+    group: ${22:# Name of the group that should own the filesystem object, as would be fed to I(chown)}
+    seuser: ${23:# The user part of the SELinux filesystem object context}
+    serole: ${24:# The role part of the SELinux filesystem object context}
+    setype: ${25:# The type part of the SELinux filesystem object context}
+    selevel: ${26:# The level part of the SELinux filesystem object context}
+    unsafe_writes: ${27:# Influence when to use atomic operation to prevent data corruption or inconsistent reads from the target filesystem object}
+    attributes: ${28:# The attributes the resulting filesystem object should have}

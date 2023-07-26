@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_user
+# group: community.postgresql
+# name: Create, alter, or remove a user (role) from a PostgreSQL server instance
+# --
+- name: ${1:Create, alter, or remove a user (role) from a PostgreSQL server instance}
+  community.postgresql.postgresql_user:
+    name: ${2:# Name of the user (role) to add or remove}
+    password: ${3:# Set the user's password, before 1}
+    db: ${4:# Name of database to connect to and where user's permissions are granted}
+    fail_on_user: ${5:# If C(true), fails when the user (role) cannot be removed}
+    priv: ${6:# This option has been B(deprecated) and will be removed in community}
+    role_attr_flags: ${7:# PostgreSQL user attributes string in the format: CREATEDB,CREATEROLE,SUPERUSER}
+    session_role: ${8:# Switch to session role after connecting}
+    state: ${9:# The user (role) state}
+    encrypted: ${10:# Whether the password is stored hashed in the database}
+    expires: ${11:# The date at which the user's password is to expire}
+    no_password_changes: ${12:# If C(true), does not inspect the database for password changes}
+    conn_limit: ${13:# Specifies the user (role) connection limit}
+    ssl_mode: ${14:# Determines how an SSL session is negotiated with the server}
+    ca_cert: ${15:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    groups: ${16:# This option has been B(deprecated) and will be removed in community}
+    comment: ${17:# Adds a comment on the user (equivalent to the C(COMMENT ON ROLE) statement)}
+    trust_input: ${18:# If C(false), checks whether values of options I(name), I(password), I(privs), I(expires), I(role_attr_flags), I(groups), I(comment), I(session_role) are potentially dangerous}
+    login_user: ${19:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${20:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${21:# Host running the database}
+    login_unix_socket: ${22:# Path to a Unix domain socket for local connections}
+    port: ${23:# Database port to connect to}
+    ssl_cert: ${24:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${25:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${26:# Any additional parameters to be passed to libpg}

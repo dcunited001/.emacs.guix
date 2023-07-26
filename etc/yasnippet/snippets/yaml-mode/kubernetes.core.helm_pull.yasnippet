@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.helm_pull
+# group: kubernetes.core
+# name: download a chart from a repository and (optionally) unpack it in local directory
+# --
+- name: ${1:download a chart from a repository and (optionally) unpack it in local directory}
+  kubernetes.core.helm_pull:
+    chart_ref: ${2:# chart name on chart repository}
+    chart_version: ${3:# Specify a version constraint for the chart version to use}
+    verify_chart: ${4:# Verify the package before using it}
+    verify_chart_keyring: ${5:# location of public keys used for verification}
+    provenance: ${6:# Fetch the provenance file, but don't perform verification}
+    repo_url: ${7:# chart repository url where to locate the requested chart}
+    repo_username: ${8:# Chart repository username where to locate the requested chart}
+    repo_password: ${9:# Chart repository password where to locate the requested chart}
+    pass_credentials: ${10:# Pass credentials to all domains}
+    skip_tls_certs_check: ${11:# Whether or not to check tls certificate for the chart download}
+    chart_devel: ${12:# Use development versions, too}
+    untar_chart: ${13:# if set to true, will untar the chart after downloading it}
+    destination: ${14:# location to write the chart}
+    chart_ca_cert: ${15:# Verify certificates of HTTPS-enabled servers using this CA bundle}
+    chart_ssl_cert_file: ${16:# Identify HTTPS client using this SSL certificate file}
+    chart_ssl_key_file: ${17:# Identify HTTPS client using this SSL key file}
+    binary_path: ${18:# The path of a helm binary to use}

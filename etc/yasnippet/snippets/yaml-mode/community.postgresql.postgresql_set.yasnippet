@@ -1,0 +1,24 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_set
+# group: community.postgresql
+# name: Change a PostgreSQL server configuration parameter
+# --
+- name: ${1:Change a PostgreSQL server configuration parameter}
+  community.postgresql.postgresql_set:
+    name: ${2:# Name of PostgreSQL server parameter}
+    value: ${3:# Parameter value to set}
+    reset: ${4:# Restore parameter to initial state (boot_val)}
+    session_role: ${5:# Switch to session_role after connecting}
+    db: ${6:# Name of database to connect}
+    trust_input: ${7:# If C(false), check whether values of parameters are potentially dangerous}
+    login_user: ${8:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${9:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${10:# Host running the database}
+    login_unix_socket: ${11:# Path to a Unix domain socket for local connections}
+    port: ${12:# Database port to connect to}
+    ssl_mode: ${13:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${14:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${15:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${16:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${17:# Any additional parameters to be passed to libpg}

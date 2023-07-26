@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_copy
+# group: community.postgresql
+# name: Copy data between a file/program and a PostgreSQL table
+# --
+- name: ${1:Copy data between a file/program and a PostgreSQL table}
+  community.postgresql.postgresql_copy:
+    copy_to: ${2:# Copy the contents of a table to a file}
+    copy_from: ${3:# Copy data from a file to a table (appending the data to whatever is in the table already)}
+    src: ${4:# Copy data from I(copy_from) to I(src=tablename)}
+    dst: ${5:# Copy data to I(dst=tablename) from I(copy_from=/path/to/data}
+    columns: ${6:# List of column names for the src/dst table to COPY FROM/TO}
+    program: ${7:# Mark I(src)/I(dst) as a program}
+    options: ${8:# Options of COPY command}
+    db: ${9:# Name of database to connect to}
+    session_role: ${10:# Switch to session_role after connecting}
+    trust_input: ${11:# If C(false), check whether values of parameters are potentially dangerous}
+    login_user: ${12:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${13:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${14:# Host running the database}
+    login_unix_socket: ${15:# Path to a Unix domain socket for local connections}
+    port: ${16:# Database port to connect to}
+    ssl_mode: ${17:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${18:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${19:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${20:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${21:# Any additional parameters to be passed to libpg}

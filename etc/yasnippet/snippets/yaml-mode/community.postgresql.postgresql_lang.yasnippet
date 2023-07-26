@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_lang
+# group: community.postgresql
+# name: Adds, removes or changes procedural languages with a PostgreSQL database
+# --
+- name: ${1:Adds, removes or changes procedural languages with a PostgreSQL database}
+  community.postgresql.postgresql_lang:
+    lang: ${2:# Name of the procedural language to add, remove or change}
+    trust: ${3:# Make this language trusted for the selected db}
+    db: ${4:# Name of database to connect to and where the language will be added, removed or changed}
+    force_trust: ${5:# Marks the language as trusted, even if it's marked as untrusted in pg_pltemplate}
+    fail_on_drop: ${6:# If C(true), fail when removing a language}
+    cascade: ${7:# When dropping a language, also delete object that depend on this language}
+    session_role: ${8:# Switch to session_role after connecting}
+    state: ${9:# The state of the language for the selected database}
+    login_unix_socket: ${10:# Path to a Unix domain socket for local connections}
+    ssl_mode: ${11:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${12:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    owner: ${13:# Set an owner for the language}
+    trust_input: ${14:# If C(false), check whether values of parameters I(lang), I(session_role), I(owner) are potentially dangerous}
+    login_user: ${15:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${16:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${17:# Host running the database}
+    port: ${18:# Database port to connect to}
+    ssl_cert: ${19:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${20:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${21:# Any additional parameters to be passed to libpg}

@@ -1,0 +1,46 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s
+# group: kubernetes.core
+# name: Manage Kubernetes (K8s) objects
+# --
+- name: ${1:Manage Kubernetes (K8s) objects}
+  kubernetes.core.k8s:
+    state: ${2:# Determines if an object should be created, patched, or deleted}
+    force: ${3:# If set to C(yes), and I(state) is C(present), an existing object will be replaced}
+    merge_type: ${4:# Whether to override the default patch merge approach with a specific type}
+    validate: ${5:# how (if at all) to validate the resource definition against the kubernetes schema}
+    append_hash: ${6:# Whether to append a hash to a resource name for immutability purposes}
+    apply: ${7:# C(apply) compares the desired resource definition with the previously supplied resource definition, ignoring properties that are automatically generated}
+    template: ${8:# Provide a valid YAML template definition file for an object when creating or updating}
+    continue_on_error: ${9:# Whether to continue on creation/deletion errors when multiple resources are defined}
+    label_selectors: ${10:# Selector (label query) to filter on}
+    generate_name: ${11:# Use to specify the basis of an object name and random characters will be added automatically on server to generate a unique name}
+    server_side_apply: ${12:# When this option is set, apply runs in the server instead of the client}
+    api_version: ${13:# Use to specify the API version}
+    kind: ${14:# Use to specify an object model}
+    name: ${15:# Use to specify an object name}
+    namespace: ${16:# Use to specify an object namespace}
+    resource_definition: ${17:# Provide a valid YAML definition (either as a string, list, or dict) for an object when creating or updating}
+    src: ${18:# Provide a path to a file containing a valid YAML definition of an object or objects to be created or updated}
+    host: ${19:# Provide a URL for accessing the API}
+    api_key: ${20:# Token used to authenticate with the API}
+    kubeconfig: ${21:# Path to an existing Kubernetes config file}
+    context: ${22:# The name of a context found in the config file}
+    username: ${23:# Provide a username for authenticating with the API}
+    password: ${24:# Provide a password for authenticating with the API}
+    client_cert: ${25:# Path to a certificate used to authenticate with the API}
+    client_key: ${26:# Path to a key file used to authenticate with the API}
+    ca_cert: ${27:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${28:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${29:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${30:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${31:# The Header used for the HTTP proxy}
+    persist_config: ${32:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${33:# Username to impersonate for the operation}
+    impersonate_groups: ${34:# Group(s) to impersonate for the operation}
+    wait: ${35:# Whether to wait for certain resource kinds to end up in the desired state}
+    wait_sleep: ${36:# Number of seconds to sleep between checks}
+    wait_timeout: ${37:# How long in seconds to wait for the resource to end up in the desired state}
+    wait_condition: ${38:# Specifies a custom condition on the status to wait for}
+    delete_options: ${39:# Configure behavior when deleting an object}

@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_drain
+# group: kubernetes.core
+# name: Drain, Cordon, or Uncordon node in k8s cluster
+# --
+- name: ${1:Drain, Cordon, or Uncordon node in k8s cluster}
+  kubernetes.core.k8s_drain:
+    state: ${2:# Determines whether to drain, cordon, or uncordon node}
+    name: ${3:# The name of the node}
+    delete_options: ${4:# Specify options to delete pods}
+    host: ${5:# Provide a URL for accessing the API}
+    api_key: ${6:# Token used to authenticate with the API}
+    kubeconfig: ${7:# Path to an existing Kubernetes config file}
+    context: ${8:# The name of a context found in the config file}
+    username: ${9:# Provide a username for authenticating with the API}
+    password: ${10:# Provide a password for authenticating with the API}
+    client_cert: ${11:# Path to a certificate used to authenticate with the API}
+    client_key: ${12:# Path to a key file used to authenticate with the API}
+    ca_cert: ${13:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${14:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${15:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${16:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${17:# The Header used for the HTTP proxy}
+    persist_config: ${18:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${19:# Username to impersonate for the operation}
+    impersonate_groups: ${20:# Group(s) to impersonate for the operation}

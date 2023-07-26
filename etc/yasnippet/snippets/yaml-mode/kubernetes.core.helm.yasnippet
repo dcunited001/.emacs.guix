@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.helm
+# group: kubernetes.core
+# name: Manages Kubernetes packages with the Helm package manager
+# --
+- name: ${1:Manages Kubernetes packages with the Helm package manager}
+  kubernetes.core.helm:
+    chart_ref: ${2:# chart_reference on chart repository}
+    chart_repo_url: ${3:# Chart repository URL where to locate the requested chart}
+    chart_version: ${4:# Chart version to install}
+    dependency_update: ${5:# Run standalone C(helm dependency update CHART) before the operation}
+    release_name: ${6:# Release name to manage}
+    release_namespace: ${7:# Kubernetes namespace where the chart should be installed}
+    release_state: ${8:# Desirated state of release}
+    release_values: ${9:# Value to pass to chart}
+    values_files: ${10:# Value files to pass to chart}
+    update_repo_cache: ${11:# Run C(helm repo update) before the operation}
+    set_values: ${12:# Values to pass to chart configuration}
+    disable_hook: ${13:# Helm option to disable hook on install/upgrade/delete}
+    force: ${14:# Helm option to force reinstall, ignore on new install}
+    purge: ${15:# Remove the release from the store and make its name free for later use}
+    wait: ${16:# When I(release_state) is set to C(present), wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful}
+    wait_timeout: ${17:# Timeout when wait option is enabled (helm2 is a number of seconds, helm3 is a duration)}
+    timeout: ${18:# A Go duration (described here I(https://pkg}
+    atomic: ${19:# If set, the installation process deletes the installation on failure}
+    create_namespace: ${20:# Create the release namespace if not present}
+    post_renderer: ${21:# Path to an executable to be used for post rendering}
+    replace: ${22:# Reuse the given name, only if that name is a deleted release which remains in the history}
+    skip_crds: ${23:# Skip custom resource definitions when installing or upgrading}
+    history_max: ${24:# Limit the maximum number of revisions saved per release}
+    binary_path: ${25:# The path of a helm binary to use}
+    context: ${26:# Helm option to specify which kubeconfig context to use}
+    kubeconfig: ${27:# Helm option to specify kubeconfig path to use}
+    host: ${28:# Provide a URL for accessing the API}
+    api_key: ${29:# Token used to authenticate with the API}
+    validate_certs: ${30:# Whether or not to verify the API server's SSL certificates}
+    ca_cert: ${31:# Path to a CA certificate used to authenticate with the API}

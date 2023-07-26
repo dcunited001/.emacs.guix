@@ -1,0 +1,34 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_log
+# group: kubernetes.core
+# name: Fetch logs from Kubernetes resources
+# --
+- name: ${1:Fetch logs from Kubernetes resources}
+  kubernetes.core.k8s_log:
+    kind: ${2:# Use to specify an object model}
+    name: ${3:# Use to specify an object name}
+    label_selectors: ${4:# List of label selectors to use to filter results}
+    container: ${5:# Use to specify the container within a pod to grab the log from}
+    since_seconds: ${6:# A relative time in seconds before the current time from which to show logs}
+    previous: ${7:# If C(true), print the logs for the previous instance of the container in a pod if it exists}
+    tail_lines: ${8:# A number of lines from the end of the logs to retrieve}
+    all_containers: ${9:# If set to C(true), retrieve all containers' logs in the pod(s)}
+    host: ${10:# Provide a URL for accessing the API}
+    api_key: ${11:# Token used to authenticate with the API}
+    kubeconfig: ${12:# Path to an existing Kubernetes config file}
+    context: ${13:# The name of a context found in the config file}
+    username: ${14:# Provide a username for authenticating with the API}
+    password: ${15:# Provide a password for authenticating with the API}
+    client_cert: ${16:# Path to a certificate used to authenticate with the API}
+    client_key: ${17:# Path to a key file used to authenticate with the API}
+    ca_cert: ${18:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${19:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${20:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${21:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${22:# The Header used for the HTTP proxy}
+    persist_config: ${23:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${24:# Username to impersonate for the operation}
+    impersonate_groups: ${25:# Group(s) to impersonate for the operation}
+    api_version: ${26:# Use to specify the API version}
+    namespace: ${27:# Use to specify an object namespace}

@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_cp
+# group: kubernetes.core
+# name: Copy files and directories to and from pod
+# --
+- name: ${1:Copy files and directories to and from pod}
+  kubernetes.core.k8s_cp:
+    namespace: ${2:# The pod namespace name}
+    pod: ${3:# The pod name}
+    container: ${4:# The name of the container in the pod to copy files/directories from/to}
+    remote_path: ${5:# Path of the file or directory to copy}
+    local_path: ${6:# Path of the local file or directory}
+    content: ${7:# When used instead of I(local_path), sets the contents of a local file directly to the specified value}
+    state: ${8:# When set to C(to_pod), the local I(local_path) file or directory will be copied to I(remote_path) into the pod}
+    no_preserve: ${9:# The copied file/directory's ownership and permissions will not be preserved in the container}
+    host: ${10:# Provide a URL for accessing the API}
+    api_key: ${11:# Token used to authenticate with the API}
+    kubeconfig: ${12:# Path to an existing Kubernetes config file}
+    context: ${13:# The name of a context found in the config file}
+    username: ${14:# Provide a username for authenticating with the API}
+    password: ${15:# Provide a password for authenticating with the API}
+    client_cert: ${16:# Path to a certificate used to authenticate with the API}
+    client_key: ${17:# Path to a key file used to authenticate with the API}
+    ca_cert: ${18:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${19:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${20:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${21:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${22:# The Header used for the HTTP proxy}
+    persist_config: ${23:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${24:# Username to impersonate for the operation}
+    impersonate_groups: ${25:# Group(s) to impersonate for the operation}

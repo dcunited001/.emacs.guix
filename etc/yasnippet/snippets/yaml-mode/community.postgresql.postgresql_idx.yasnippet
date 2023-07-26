@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_idx
+# group: community.postgresql
+# name: Create or drop indexes from a PostgreSQL database
+# --
+- name: ${1:Create or drop indexes from a PostgreSQL database}
+  community.postgresql.postgresql_idx:
+    idxname: ${2:# Name of the index to create or drop}
+    db: ${3:# Name of database to connect to and where the index will be created/dropped}
+    session_role: ${4:# Switch to session_role after connecting}
+    schema: ${5:# Name of a database schema where the index will be created}
+    state: ${6:# Index state}
+    table: ${7:# Table to create index on it}
+    columns: ${8:# List of index columns that need to be covered by index}
+    cond: ${9:# Index conditions}
+    idxtype: ${10:# Index type (like btree, gist, gin, etc}
+    concurrent: ${11:# Enable or disable concurrent mode (CREATE / DROP INDEX CONCURRENTLY)}
+    unique: ${12:# Enable unique index}
+    tablespace: ${13:# Set a tablespace for the index}
+    storage_params: ${14:# Storage parameters like fillfactor, vacuum_cleanup_index_scale_factor, etc}
+    cascade: ${15:# Automatically drop objects that depend on the index, and in turn all objects that depend on those objects}
+    trust_input: ${16:# If C(false), check whether values of parameters I(idxname), I(session_role), I(schema), I(table), I(columns), I(tablespace), I(storage_params), I(cond) are potentially dangerous}
+    login_user: ${17:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${18:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${19:# Host running the database}
+    login_unix_socket: ${20:# Path to a Unix domain socket for local connections}
+    port: ${21:# Database port to connect to}
+    ssl_mode: ${22:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${23:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${24:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${25:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${26:# Any additional parameters to be passed to libpg}

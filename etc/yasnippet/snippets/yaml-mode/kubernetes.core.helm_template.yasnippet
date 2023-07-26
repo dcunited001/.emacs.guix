@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.helm_template
+# group: kubernetes.core
+# name: Render chart templates
+# --
+- name: ${1:Render chart templates}
+  kubernetes.core.helm_template:
+    binary_path: ${2:# The path of a helm binary to use}
+    chart_ref: ${3:# Chart reference with repo prefix, for example, C(nginx-stable/nginx-ingress)}
+    chart_repo_url: ${4:# Chart repository URL where the requested chart is located}
+    chart_version: ${5:# Chart version to use}
+    dependency_update: ${6:# Run helm dependency update before the operation}
+    disable_hook: ${7:# Prevent hooks from running during install}
+    include_crds: ${8:# Include custom resource descriptions in rendered templates}
+    output_dir: ${9:# Output directory where templates will be written}
+    release_name: ${10:# Release name to use in rendered templates}
+    release_namespace: ${11:# namespace scope for this request}
+    release_values: ${12:# Values to pass to chart}
+    show_only: ${13:# Only show manifests rendered from the given templates}
+    values_files: ${14:# Value files to pass to chart}
+    update_repo_cache: ${15:# Run C(helm repo update) before the operation}
+    set_values: ${16:# Values to pass to chart configuration}

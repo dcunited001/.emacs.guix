@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_scale
+# group: kubernetes.core
+# name: Set a new size for a Deployment, ReplicaSet, Replication Controller, or Job
+# --
+- name: ${1:Set a new size for a Deployment, ReplicaSet, Replication Controller, or Job}
+  kubernetes.core.k8s_scale:
+    label_selectors: ${2:# List of label selectors to use to filter results}
+    continue_on_error: ${3:# Whether to continue on errors when multiple resources are defined}
+    api_version: ${4:# Use to specify the API version}
+    kind: ${5:# Use to specify an object model}
+    name: ${6:# Use to specify an object name}
+    namespace: ${7:# Use to specify an object namespace}
+    host: ${8:# Provide a URL for accessing the API}
+    api_key: ${9:# Token used to authenticate with the API}
+    kubeconfig: ${10:# Path to an existing Kubernetes config file}
+    context: ${11:# The name of a context found in the config file}
+    username: ${12:# Provide a username for authenticating with the API}
+    password: ${13:# Provide a password for authenticating with the API}
+    client_cert: ${14:# Path to a certificate used to authenticate with the API}
+    client_key: ${15:# Path to a key file used to authenticate with the API}
+    ca_cert: ${16:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${17:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${18:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${19:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${20:# The Header used for the HTTP proxy}
+    persist_config: ${21:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${22:# Username to impersonate for the operation}
+    impersonate_groups: ${23:# Group(s) to impersonate for the operation}
+    resource_definition: ${24:# Provide a valid YAML definition (either as a string, list, or dict) for an object when creating or updating}
+    src: ${25:# Provide a path to a file containing a valid YAML definition of an object or objects to be created or updated}
+    replicas: ${26:# The desired number of replicas}
+    current_replicas: ${27:# For Deployment, ReplicaSet, Replication Controller, only scale, if the number of existing replicas matches}
+    resource_version: ${28:# Only attempt to scale, if the current object version matches}
+    wait: ${29:# For Deployment, ReplicaSet, Replication Controller, wait for the status value of I(ready_replicas) to change to the number of I(replicas)}
+    wait_timeout: ${30:# When C(wait) is I(True), the number of seconds to wait for the I(ready_replicas) status to equal  I(replicas)}
+    wait_sleep: ${31:# Number of seconds to sleep between checks}

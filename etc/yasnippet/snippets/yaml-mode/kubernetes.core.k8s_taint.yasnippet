@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_taint
+# group: kubernetes.core
+# name: Taint a node in a Kubernetes/OpenShift cluster
+# --
+- name: ${1:Taint a node in a Kubernetes/OpenShift cluster}
+  kubernetes.core.k8s_taint:
+    state: ${2:# Determines whether to add or remove taints}
+    name: ${3:# The name of the node}
+    taints: ${4:# List containing the taints}
+    replace: ${5:# If C(true), allow taints to be replaced}
+    host: ${6:# Provide a URL for accessing the API}
+    api_key: ${7:# Token used to authenticate with the API}
+    kubeconfig: ${8:# Path to an existing Kubernetes config file}
+    context: ${9:# The name of a context found in the config file}
+    username: ${10:# Provide a username for authenticating with the API}
+    password: ${11:# Provide a password for authenticating with the API}
+    client_cert: ${12:# Path to a certificate used to authenticate with the API}
+    client_key: ${13:# Path to a key file used to authenticate with the API}
+    ca_cert: ${14:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${15:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${16:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${17:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${18:# The Header used for the HTTP proxy}
+    persist_config: ${19:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${20:# Username to impersonate for the operation}
+    impersonate_groups: ${21:# Group(s) to impersonate for the operation}

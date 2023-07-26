@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_query
+# group: community.postgresql
+# name: Run PostgreSQL queries
+# --
+- name: ${1:Run PostgreSQL queries}
+  community.postgresql.postgresql_query:
+    query: ${2:# SQL query string or list of queries to run}
+    positional_args: ${3:# List of values to be passed as positional arguments to the query}
+    named_args: ${4:# Dictionary of key-value arguments to pass to the query}
+    path_to_script: ${5:# This option has been B(deprecated) and will be removed in community}
+    session_role: ${6:# Switch to session_role after connecting}
+    db: ${7:# Name of database to connect to and run queries against}
+    autocommit: ${8:# Execute in autocommit mode when the query can't be run inside a transaction block (e}
+    encoding: ${9:# Set the client encoding for the current session (e}
+    trust_input: ${10:# If C(false), check whether a value of I(session_role) is potentially dangerous}
+    search_path: ${11:# List of schema names to look in}
+    as_single_query: ${12:# This option has been B(deprecated) and will be removed in community}
+    login_user: ${13:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${14:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${15:# Host running the database}
+    login_unix_socket: ${16:# Path to a Unix domain socket for local connections}
+    port: ${17:# Database port to connect to}
+    ssl_mode: ${18:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${19:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${20:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${21:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${22:# Any additional parameters to be passed to libpg}

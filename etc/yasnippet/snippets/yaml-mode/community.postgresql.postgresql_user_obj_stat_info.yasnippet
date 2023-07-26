@@ -1,0 +1,23 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_user_obj_stat_info
+# group: community.postgresql
+# name: Gather statistics about PostgreSQL user objects
+# --
+- name: ${1:Gather statistics about PostgreSQL user objects}
+  community.postgresql.postgresql_user_obj_stat_info:
+    filter: ${2:# Limit the collected information by comma separated string or YAML list}
+    schema: ${3:# Restrict the output by certain schema}
+    db: ${4:# Name of database to connect}
+    session_role: ${5:# Switch to session_role after connecting}
+    trust_input: ${6:# If C(false), check the value of I(session_role) is potentially dangerous}
+    login_user: ${7:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${8:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${9:# Host running the database}
+    login_unix_socket: ${10:# Path to a Unix domain socket for local connections}
+    port: ${11:# Database port to connect to}
+    ssl_mode: ${12:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${13:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${14:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${15:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${16:# Any additional parameters to be passed to libpg}

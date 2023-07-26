@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.k8s_cluster_info
+# group: kubernetes.core
+# name: Describe Kubernetes (K8s) cluster, APIs available and their respective versions
+# --
+- name: ${1:Describe Kubernetes (K8s) cluster, APIs available and their respective versions}
+  kubernetes.core.k8s_cluster_info:
+    invalidate_cache: ${2:# Invalidate cache before retrieving information about cluster}
+    host: ${3:# Provide a URL for accessing the API}
+    api_key: ${4:# Token used to authenticate with the API}
+    kubeconfig: ${5:# Path to an existing Kubernetes config file}
+    context: ${6:# The name of a context found in the config file}
+    username: ${7:# Provide a username for authenticating with the API}
+    password: ${8:# Provide a password for authenticating with the API}
+    client_cert: ${9:# Path to a certificate used to authenticate with the API}
+    client_key: ${10:# Path to a key file used to authenticate with the API}
+    ca_cert: ${11:# Path to a CA certificate used to authenticate with the API}
+    validate_certs: ${12:# Whether or not to verify the API server's SSL certificates}
+    proxy: ${13:# The URL of an HTTP proxy to use for the connection}
+    no_proxy: ${14:# The comma separated list of hosts/domains/IP/CIDR that shouldn't go through proxy}
+    proxy_headers: ${15:# The Header used for the HTTP proxy}
+    persist_config: ${16:# Whether or not to save the kube config refresh tokens}
+    impersonate_user: ${17:# Username to impersonate for the operation}
+    impersonate_groups: ${18:# Group(s) to impersonate for the operation}

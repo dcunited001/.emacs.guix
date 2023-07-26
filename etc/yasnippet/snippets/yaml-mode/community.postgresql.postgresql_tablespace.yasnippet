@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_tablespace
+# group: community.postgresql
+# name: Add or remove PostgreSQL tablespaces from remote hosts
+# --
+- name: ${1:Add or remove PostgreSQL tablespaces from remote hosts}
+  community.postgresql.postgresql_tablespace:
+    tablespace: ${2:# Name of the tablespace to add or remove}
+    location: ${3:# Path to the tablespace directory in the file system}
+    state: ${4:# Tablespace state}
+    owner: ${5:# Name of the role to set as an owner of the tablespace}
+    set: ${6:# Dict of tablespace options to set}
+    rename_to: ${7:# New name of the tablespace}
+    session_role: ${8:# Switch to session_role after connecting}
+    db: ${9:# Name of database to connect to and run queries against}
+    trust_input: ${10:# If C(false), check whether values of parameters I(tablespace), I(location), I(owner), I(rename_to), I(session_role), I(settings_list) are potentially dangerous}
+    login_user: ${11:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${12:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${13:# Host running the database}
+    login_unix_socket: ${14:# Path to a Unix domain socket for local connections}
+    port: ${15:# Database port to connect to}
+    ssl_mode: ${16:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${17:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${18:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${19:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${20:# Any additional parameters to be passed to libpg}

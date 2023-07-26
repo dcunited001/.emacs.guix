@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.helm_repository
+# group: kubernetes.core
+# name: Manage Helm repositories
+# --
+- name: ${1:Manage Helm repositories}
+  kubernetes.core.helm_repository:
+    binary_path: ${2:# The path of a helm binary to use}
+    repo_name: ${3:# Chart repository name}
+    repo_url: ${4:# Chart repository url}
+    repo_username: ${5:# Chart repository username for repository with basic auth}
+    repo_password: ${6:# Chart repository password for repository with basic auth}
+    repo_state: ${7:# Desired state of repository}
+    pass_credentials: ${8:# Pass credentials to all domains}
+    host: ${9:# Provide a URL for accessing the API}
+    api_key: ${10:# Token used to authenticate with the API}
+    validate_certs: ${11:# Whether or not to verify the API server's SSL certificates}
+    ca_cert: ${12:# Path to a CA certificate used to authenticate with the API}
+    context: ${13:# Helm option to specify which kubeconfig context to use}
+    kubeconfig: ${14:# Helm option to specify kubeconfig path to use}
+    force_update: ${15:# Whether or not to replace (overwrite) the repo if it already exists}

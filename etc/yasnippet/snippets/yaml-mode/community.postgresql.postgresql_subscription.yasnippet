@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_subscription
+# group: community.postgresql
+# name: Add, update, or remove PostgreSQL subscription
+# --
+- name: ${1:Add, update, or remove PostgreSQL subscription}
+  community.postgresql.postgresql_subscription:
+    name: ${2:# Name of the subscription to add, update, or remove}
+    db: ${3:# Name of the database to connect to and where the subscription state will be changed}
+    state: ${4:# The subscription state}
+    owner: ${5:# Subscription owner}
+    publications: ${6:# The publication names on the publisher to use for the subscription}
+    connparams: ${7:# The connection dict param-value to connect to the publisher}
+    cascade: ${8:# Drop subscription dependencies}
+    subsparams: ${9:# Dictionary of optional parameters for a subscription, e}
+    session_role: ${10:# Switch to session_role after connecting}
+    trust_input: ${11:# If C(false), check whether values of parameters I(name), I(publications), I(owner), I(session_role), I(connparams), I(subsparams) are potentially dangerous}
+    login_user: ${12:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${13:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${14:# Host running the database}
+    login_unix_socket: ${15:# Path to a Unix domain socket for local connections}
+    port: ${16:# Database port to connect to}
+    ssl_mode: ${17:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${18:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${19:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${20:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${21:# Any additional parameters to be passed to libpg}

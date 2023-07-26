@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_ext
+# group: community.postgresql
+# name: Add or remove PostgreSQL extensions from a database
+# --
+- name: ${1:Add or remove PostgreSQL extensions from a database}
+  community.postgresql.postgresql_ext:
+    name: ${2:# Name of the extension to add or remove}
+    db: ${3:# Name of the database to add or remove the extension to/from}
+    schema: ${4:# Name of the schema to add the extension to}
+    session_role: ${5:# Switch to session_role after connecting}
+    state: ${6:# The database extension state}
+    cascade: ${7:# Automatically install/remove any extensions that this extension depends on that are not already installed/removed (supported since PostgreSQL 9}
+    login_unix_socket: ${8:# Path to a Unix domain socket for local connections}
+    ssl_mode: ${9:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${10:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    version: ${11:# Extension version to add or update to}
+    trust_input: ${12:# If C(false), check whether values of parameters I(ext), I(schema), I(version), I(session_role) are potentially dangerous}
+    login_user: ${13:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${14:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${15:# Host running the database}
+    port: ${16:# Database port to connect to}
+    ssl_cert: ${17:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${18:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${19:# Any additional parameters to be passed to libpg}

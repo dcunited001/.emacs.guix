@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.helm_plugin_info
+# group: kubernetes.core
+# name: Gather information about Helm plugins
+# --
+- name: ${1:Gather information about Helm plugins}
+  kubernetes.core.helm_plugin_info:
+    plugin_name: ${2:# Name of Helm plugin, to gather particular plugin info}
+    binary_path: ${3:# The path of a helm binary to use}
+    context: ${4:# Helm option to specify which kubeconfig context to use}
+    kubeconfig: ${5:# Helm option to specify kubeconfig path to use}
+    host: ${6:# Provide a URL for accessing the API}
+    api_key: ${7:# Token used to authenticate with the API}
+    validate_certs: ${8:# Whether or not to verify the API server's SSL certificates}
+    ca_cert: ${9:# Path to a CA certificate used to authenticate with the API}

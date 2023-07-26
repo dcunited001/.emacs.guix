@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: kubernetes.core.helm_info
+# group: kubernetes.core
+# name: Get information from Helm package deployed inside the cluster
+# --
+- name: ${1:Get information from Helm package deployed inside the cluster}
+  kubernetes.core.helm_info:
+    release_name: ${2:# Release name to manage}
+    release_namespace: ${3:# Kubernetes namespace where the chart should be installed}
+    release_state: ${4:# Show releases as per their states}
+    get_all_values: ${5:# Set to C(True) if you want to get all (computed) values of the release}
+    binary_path: ${6:# The path of a helm binary to use}
+    context: ${7:# Helm option to specify which kubeconfig context to use}
+    kubeconfig: ${8:# Helm option to specify kubeconfig path to use}
+    host: ${9:# Provide a URL for accessing the API}
+    api_key: ${10:# Token used to authenticate with the API}
+    validate_certs: ${11:# Whether or not to verify the API server's SSL certificates}
+    ca_cert: ${12:# Path to a CA certificate used to authenticate with the API}

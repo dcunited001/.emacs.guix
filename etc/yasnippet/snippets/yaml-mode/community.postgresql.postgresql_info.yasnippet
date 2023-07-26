@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# contributor: Translated to yasnippet by sublime-snippet import
+# key: community.postgresql.postgresql_info
+# group: community.postgresql
+# name: Gather information about PostgreSQL servers
+# --
+- name: ${1:Gather information about PostgreSQL servers}
+  community.postgresql.postgresql_info:
+    filter: ${2:# Limit the collected information by comma separated string or YAML list}
+    db: ${3:# Name of database to connect}
+    session_role: ${4:# Switch to session_role after connecting}
+    trust_input: ${5:# If C(false), check whether a value of I(session_role) is potentially dangerous}
+    login_user: ${6:# The username this module should use to establish its PostgreSQL session}
+    login_password: ${7:# The password this module should use to establish its PostgreSQL session}
+    login_host: ${8:# Host running the database}
+    login_unix_socket: ${9:# Path to a Unix domain socket for local connections}
+    port: ${10:# Database port to connect to}
+    ssl_mode: ${11:# Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the server}
+    ca_cert: ${12:# Specifies the name of a file containing SSL certificate authority (CA) certificate(s)}
+    ssl_cert: ${13:# Specifies the file name of the client SSL certificate}
+    ssl_key: ${14:# Specifies the location for the secret key used for the client certificate}
+    connect_params: ${15:# Any additional parameters to be passed to libpg}
