@@ -93,7 +93,9 @@
         "^\\*cider-repl"
         "^\\*cider-repl-history"
         "^\\*Org Links"
-        "^ ?\\*\\(?:Agenda Com\\|Calendar\\|Org Export Dispatcher\\)"
+        ;; \\|Calendar
+        ;; the calendar requires special handling
+        "^ ?\\*\\(?:Agenda Com\\|Org Export Dispatcher\\)"
         "^\\*Org Agenda"
         "^\\*Org Src"
         "^\\*Org-Babel"
