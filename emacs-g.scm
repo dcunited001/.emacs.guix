@@ -238,6 +238,7 @@
   (vhash-consq
    'term
    (list->vlist '("emacs-vterm"
+                  ;; "emacs-eat"
                   "emacs-bash-completion"
                   "emacs-esh-autosuggest"
                   "emacs-eshell-syntax-highlighting"

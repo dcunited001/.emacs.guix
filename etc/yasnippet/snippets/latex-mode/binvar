@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: binvar
+# uuid: binvar
+# key: <binv
+# condition: t
+# --
+$1 := \{0,1\}^n

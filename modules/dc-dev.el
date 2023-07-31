@@ -644,8 +644,11 @@ preferring the value of sym if present"
 
 ;;*** Yasnippet Snippets
 
+;; NOTE: all yas/ functions are deprecated
 (setup (:pkg yasnippet)
   (:with-hook org-mode-hook
+    (:hook yas-minor-mode))
+  (:with-hook LaTeX-mode-hook
     (:hook yas-minor-mode))
   (:with-hook yaml-mode-hook
     (:hook yas-minor-mode))
