@@ -1341,6 +1341,12 @@
 ;;*** text-mode
 
 ;;**** org-mode
+(general-define-key
+ :keymaps '(org-mode-map org-sidebar-map org-sidebar-tree-map)
+ :wk-full-keys nil
+ :prefix "<f7>"
+ "SPC" #'org-sidebar-tree-toggle
+ "C-SPC" #'org-sidebar-toggle)
 
 ;;**** sgml-mode
 

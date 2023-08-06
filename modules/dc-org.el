@@ -686,6 +686,11 @@ This is a variadic `cl-pushnew'."
         org-M-RET-may-split-line '((default . nil)))
   (dc/org-fix-buf-move))
 
+(defun dc/org-init-sidebar-h ()
+  (setup (:pkg org-sidebar)
+    (:option org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-source
+             org-sidebar-jump-indirect nil)))
+
 (defun dc/org-init-popup-rules-h ()
 
   )

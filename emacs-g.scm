@@ -513,6 +513,7 @@
                   "emacs-org-modern"
                   "emacs-org-contrib"
                   "emacs-toc-org"
+                  "emacs-org-sidebar"
 
                   "emacs-org-make-toc"
                   "emacs-org-caldav"
