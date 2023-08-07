@@ -43,6 +43,8 @@
 ;; menu-bar-mode gets a bad rap from tool-bar-mode
 (menu-bar-mode +1)            ; Enable the menu bar
 
+(context-menu-mode +1)
+
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;; one line at a time
       ;; mouse-wheel-scroll-amount '(8)
       mouse-wheel-progressive-speed nil ;; don't accelerate scrolling
