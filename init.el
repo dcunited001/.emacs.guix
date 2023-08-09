@@ -119,6 +119,8 @@
 
 (require 'dc-tools)
 
+(require 'dc-latex)
+
 ;; (require 'dc-workflow)
 
 (require 'dc-social)

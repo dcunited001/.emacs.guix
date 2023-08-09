@@ -1,4 +1,6 @@
+# -*- mode: snippet -*-
 # key: figrowmp
+# uuid: figrowmp
 # name: figrowminipage
 # --
 %[!htb] directive for figure placement
