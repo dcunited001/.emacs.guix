@@ -63,8 +63,9 @@
       (sp-local-pair modes "``" nil :unless '(:add sp-in-math-p)))))
 
 (defun dc/setup-tex ()
-  (add-to-list 'TeX-command-list
-               '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+  ;; M-x TeX-engine-set to xetex
+  ;; (add-to-list 'TeX-command-list
+  ;;              '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
 
   (add-hook 'TeX-update-style-hook #'rainbow-delimiters-mode)
 

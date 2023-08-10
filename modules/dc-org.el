@@ -638,13 +638,48 @@ This is a variadic `cl-pushnew'."
   (setup (:pkg org-make-toc)
     (:option org-toc-default-depth 1)
     (:hook-into org-mode)))
+
+(defun dc/org-init-plot-h ()
+  ;; TODO configure/style org plot
+  ;; https://tecosaur.github.io/emacs-config/config.html#org-plot
+  )
+
+(defun dc/org-init-latex-h ()
+  ;; from tecosaur
+  ;; auto-preview latex (this breaks when you change the tex-
+  (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
+
+  ;; TODO https://tecosaur.github.io/emacs-config/config.html#prettier-highlighting
+  )
+
 (defun dc/org-init-export-h ()
+
+  ;; from tecosaur
   (setq org-export-headline-levels 5)
 
-  ;; TODO ox-extra: enable :ignore: headlines (in addition to :noexport:)
-  ;; (require 'ox-extra)
-  ;; (ox-extras-activate '(ignore-headlines))
+  ;; TODO https://tecosaur.github.io/emacs-config/config.html#maths-notation-conveniences
+
+  ;; add :ignore tag to headings to keep content, but ignore heading
+  (require 'ox-extra)
+  (ox-extras-activate '(ignore-headlines))
+
+  ;; TODO Koma Class Templates:
+  ;; https://tecosaur.github.io/emacs-config/config.html#class-templates
+
+  ;; TODO get booktabs to produce better tables
+  ;; (and get table.el to export multicol cells)
+  ;; (setq org-latex-tables-booktabs t)
+  ;; org-latex-tables-centered t ; default
+
+  ;; TODO beamer export: https://tecosaur.github.io/emacs-config/config.html#beamer-export
+  ;; TODO make this start at headline level 2
+  ;; org-latex-compilers
+  ;; ("pdflatex" "xelatex" "lualatex")
+
+  ;; org-latex-pdf-process
+  ;; ("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
   )
+
 (defun dc/org-init-habit-h ()
 
   )
@@ -768,6 +803,8 @@ This is a variadic `cl-pushnew'."
   (dc/org-init-custom-links-h)
   (dc/org-init-formatting-h)
   (dc/org-init-export-h)
+  (dc/org-init-plot-h)
+  (dc/org-init-latex-h)
   (dc/org-init-habit-h)
   (dc/org-init-hacks-h)
   (dc/org-init-keybinds-h)
