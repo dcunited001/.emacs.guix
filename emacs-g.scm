@@ -392,6 +392,7 @@
                   "emacs-parseclj"
 
                   "emacs-scala-mode"
+                  "emacs-sbt-mode"
 
                   "emacs-sly"
                   "emacs-sly-asdf"
