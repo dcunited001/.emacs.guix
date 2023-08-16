@@ -391,6 +391,8 @@
                   "emacs-parseedn"
                   "emacs-parseclj"
 
+                  "emacs-scala-mode"
+
                   "emacs-sly"
                   "emacs-sly-asdf"
                   "emacs-sly-macrostep"

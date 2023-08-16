@@ -108,8 +108,7 @@
          "<" nil                        ; cdlatex-pbb
 
          ;; TAB is used for CDLaTeX's snippets and navigation. But we have yasnippet
-         ;; (:when (modulep! :editor snippets)
-         ;;        "TAB" nil)           ; cdlatex-tab
+         "TAB" nil           ; cdlatex-tab
 
          "^" nil                        ; cdlatex-sub-superscript
          "_" nil                        ; cdlatex-sub-superscript
