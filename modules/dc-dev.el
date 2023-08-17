@@ -691,6 +691,4 @@ preferring the value of sym if present"
 ;;              :repo "dcunited001/snippets" :files ("*.el" "*"))
 ;;   (:option doom-snippets-enable-short-helpers t))
 
-
-
 (provide 'dc-dev)

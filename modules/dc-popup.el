@@ -102,6 +102,7 @@
         "^\\*Capture\\*$\\|CAPTURE-.*$"
         "\\*ob-ipython.*"
         "^ \\*Python"
+        "*\\sbt"
         " output\\*$"
         "^\\*TeX \\(?:Help\\|errors\\)"
         "^\\*Ledger Report"
