@@ -24,13 +24,13 @@
 
 (setup (:pkg scala-mode))
 
-;; use sbt through docker-sbt: https://github.com/sbt/docker-sbt
-;; - docker pull sbtscala/scala-sbt:$TAG
-;; - where TAG=${JVM_TYPE}-${JVM_VERSION}_${SDT_VERSION}_${SCALA_VERSION}
-;; - and where JVM_TYPE={eclipse-temurin,graalvm-ce}
-;; e.g. eclipse-temurin-focal-17.0.5_8_1.9.3_2.13.11
-
 ;; sbt-mode is for comint buffers, .sbt files should still use scala
-(setup (:pkg sbt-mode))
+(setup (:pkg sbt-mode)
+  ;; -Djline.terminal=none is default
+  ;; -Dsbt.supershell=false is suggested
+  (:option sbt:program-options '("-Djline.terminal=none"
+                                 "-Dsbt.supershell=false")))
+
+;; TODO: also suggested is a fix for the minibuffer
 
 (provide 'dc-dev-scala)

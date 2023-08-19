@@ -647,7 +647,8 @@ This is a variadic `cl-pushnew'."
 (defun dc/org-init-latex-h ()
   ;; from tecosaur
   ;; auto-preview latex (this breaks when you change the tex-
-  (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
+  ;; this relies on upstream changes to org-mode
+  ;; (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
 
   ;; TODO https://tecosaur.github.io/emacs-config/config.html#prettier-highlighting
   )

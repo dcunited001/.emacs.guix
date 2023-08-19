@@ -204,7 +204,10 @@
     (setq super-save-auto-save-when-idle t)))
 
 ;; Revert Dired and other buffers
-(setq global-auto-revert-non-file-buffers t)
+(setq global-auto-revert-non-file-buffers t
+      ;; prevents auto-revert-mode from displaying constant "reverting buffer"
+      ;; messages in the echo area
+      auto-revert-verbose nil)
 
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
