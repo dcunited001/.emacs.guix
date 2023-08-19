@@ -22,6 +22,9 @@
 
 ;;* Info
 
+;; Load the info system for info files
+(add-to-list 'auto-mode-alist '("\\.info\\'" . Info-on-current-buffer))
+
 ;; (setup (:pkg info-colors :straight t))
 
 ;; this loads a version from 2020

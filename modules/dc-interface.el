@@ -26,11 +26,9 @@
 
 ;;** Basics
 
-(setq-default fill-column 80)
+(setq inhibit-startup-message t)
 
-(scroll-bar-mode -1)       ; Disable visible scrollbar
-(tool-bar-mode -1)         ; Disable the toolbar
-(set-fringe-mode 10)       ; Give some breathing room
+;;*** Tooltips
 
 ;; there are realgud/dap integrations for inspecting vars/etc with tooltip
 (setq tooltip-delay 0.7                 ;2.0
@@ -40,10 +38,30 @@
 ;; (tooltip-mode -1)       ; Disable tooltips
 (tooltip-mode +1)
 
+;;*** Menus
+
 ;; menu-bar-mode gets a bad rap from tool-bar-mode
 (menu-bar-mode +1)            ; Enable the menu bar
-
 (context-menu-mode +1)
+(tool-bar-mode -1)         ; Disable the toolbar
+
+;;*** Date & Time
+
+(setq display-time-world-list
+      '(("Etc/UTC" "UTC")
+        ("Europe/Athens" "Athens")
+        ("America/Los_Angeles" "Seattle")
+        ("America/Denver" "Denver")
+        ("America/New_York" "New York")
+        ("Pacific/Auckland" "Auckland")
+        ("Asia/Shanghai" "Shanghai")
+        ("Asia/Kolkata" "Hyderabad")))
+
+(setq display-time-world-time-format "%a, %d %b %I:%M %p %Z"
+      display-time-format "%l:%M %p %b %d W%U"
+      display-time-load-average-threshold 0.0)
+
+;;*** Mouse
 
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;; one line at a time
       ;; mouse-wheel-scroll-amount '(8)
@@ -51,9 +69,9 @@
       mouse-wheel-follow-mouse t        ;; scroll window under mouse
       mouse-drag-and-drop-region t
       scroll-step 1 ;; keyboard scroll one line at a time
-      use-dialog-box nil ;; Disable dialog boxes since they weren't working in Mac OSX
-      ;; inhibit-startup-message t
-      visible-bell t)
+      use-dialog-box nil) ;; Disable dialog boxes since they weren't working in Mac OSX
+
+(setq visible-bell t)
 
 ;; (set-frame-parameter (selected-frame) 'alpha-background 90)
 ;; (add-to-list 'default-frame-alist '(alpha-background 90))
@@ -70,46 +88,29 @@
       vc-handled-backends '(Git SVN))
 (setq ad-redefinition-action 'accept)
 
-;;*** Modeline
+;;*** Buffers
 
-(setup (:pkg minions)
-  (:hook-into doom-modeline-mode))
+;; Revert Dired and other buffers
+(setq global-auto-revert-non-file-buffers t
+      ;; prevents auto-revert-mode from displaying constant "reverting buffer"
+      ;; messages in the echo area
+      auto-revert-verbose nil)
 
-(column-number-mode)
+;; Revert buffers when the underlying file has changed
+(global-auto-revert-mode 1)
 
-(defun dw/start-doom-modeline ()
-  (require 'doom-modeline)
+;;*** Minibuffer
 
-  ;; Start it
-  (doom-modeline-mode 1)
+;;**** Minibuffer history
 
-  ;; Customize the default modeline
-  (doom-modeline-def-modeline 'default
-    '(bar window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-    ;; lsp
-    '(objed-state grip debug repl minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
-  (doom-modeline-set-modeline 'default t))
+;; TODO: review savehist-file: .emacs.g/var/savehist.el
+(setup savehist
+  (setq history-length 50)
+  (savehist-mode 1)
 
-;; guix version does not include the eglot--spinner bugfix
-(setup (:pkg doom-modeline :straight t :type git :flavor melpa
-             :host github :repo "seagle0128/doom-modeline")
-  ;; somehow doom modeline was interfering with after-init-hook's from completing without
-  ;; throwing an error. this was inherited properties on faces to be unspecified/undefined
-  (:with-hook emacs-startup-hook
-    (:hook dw/start-doom-modeline))
-
-  (:option doom-modeline-height (dw/system-settings-get 'emacs/doom-modeline-height)
-           doom-modeline-bar-width 6
-           ;; doom-modeline-lsp t
-           doom-modeline-github nil
-           doom-modeline-mu4e nil
-           doom-modeline-irc nil
-           doom-modeline-minor-modes t
-           doom-modeline-persp-name nil
-           doom-modeline-buffer-file-name-style 'truncate-except-project
-           doom-modeline-major-mode-icon nil)
-  (custom-set-faces '(mode-line ((t (:height 1.00))))
-                    '(mode-line-inactive ((t (:height 1.00))))))
+  ;; Individual history elements can be configured separately
+  (put 'minibuffer-history 'history-length 25)
+  (put 'kill-ring 'history-length 25))
 
 ;;*** Themes
 (setup (:pkg ef-themes)
@@ -220,7 +221,6 @@
       ;; default '(ascii unicode github)
       emojify-emoji-styles '(unicode github))
 
-
 ;; Set the font face based on platform
 
 (defun dc/reset-fonts ()
@@ -270,7 +270,27 @@
 
 ;;** Editor
 
-;;*** Text
+;; Better Defaults
+(setup (:pkg better-defaults)
+  (:option confirm-kill-emacs 'yes-or-no-p))
+
+;;*** Indentation
+
+(setq-default tab-width 2
+              indent-tabs-mode nil)
+
+;;*** Fills & Alignment
+
+(setq-default fill-column 80)
+
+;;**** Visual Fill Column
+
+(setup (:pkg visual-fill-column)
+  ;; (:hook-into org-mode)
+  (setq visual-fill-column-width 110
+        visual-fill-column-center-text t))
+
+;;*** Selection
 (delete-selection-mode +1)
 
 ;;*** Clipbaord
@@ -293,6 +313,12 @@
 ;; - it it is perhaps related to sleep/hibernate ... or something
 ;; - vterm-enable-manipulate-selection-data-by-osc52 is nil and this shouldn't run
 ;; seriously, this is the worst
+
+;;*** Undo
+
+(setup (:pkg undo-tree)
+  (setq undo-tree-auto-save-history nil)
+  (global-undo-tree-mode 1))
 
 ;;** Highlighting
 
@@ -324,7 +350,6 @@
   (recentf-mode)
   (add-to-list 'recentf-exclude (rx (and line-start "/gnu/store"))))
 
-
 ;;*** Window Management
 
 (setup (:pkg avy))
@@ -343,7 +368,100 @@
 ;; options including moving buffer without moving pointer
 (setup (:pkg buffer-move))
 
-;;*** Tab Management
+;;*** Confirmations
+
+(setq dired-deletion-confirmer 'y-or-n-p
+      ;; dired-no-confirm '()
+      url-confirmation-func 'y-or-n-p
+      ;; url-cookie-confirmation nil
+
+      ;; smerge-mode is lazy loaded, default: t
+      smerge-change-buffer-confirm t)
+
+;;*** Hydra
+(setup (:pkg hydra)
+  (require 'hydra))
+
+(defhydra dw/smerge-panel ()
+  "smerge"
+  ("k" (smerge-prev) "prev change" )
+  ("j" (smerge-next) "next change")
+  ("u" (smerge-keep-upper) "keep upper")
+  ("l" (smerge-keep-lower) "keep lower")
+  ("q" nil "quit" :exit t))
+
+;;*** Timers
+
+;; TODO: bind `tmr' and `C-u tmr' to a key
+(setup (:pkg tmr))
+
+(defun dw/tmr-mode-line ()
+  (if (not (and (boundp 'tmr--timers)
+                tmr--timers))
+      ""
+    (propertize (format " %s 🕐 %s"
+                        (tmr--format-remaining (car tmr--timers))
+                        (or (tmr--timer-description (car tmr--timers)) ""))
+                'tab-bar '(:foreground "orange"))))
+
+;; ** Speedbar
+
+(setup (:pkg speedbar)
+  (:option speedbar-indentation-width 2
+           speedbar-ignored-modes
+           '(help-mode
+             custom-mode
+             eshell-mode
+             shell-mode
+             term-mode
+             vterm-mode
+             docker-image-mode
+             docker-container-mode
+             docker-volume-mode
+             docker-network-mode)))
+
+;; (add-to-list 'window-buffer-change-functions #'dc/speedbar-refresh-if-open)
+;; (advice-add 'window-change :after #'speedbar-refresh)
+
+;;** UI Components
+
+;;*** Modeline
+
+(column-number-mode)
+
+;;*** Scrollbars
+
+(scroll-bar-mode -1)       ; Disable visible scrollbar
+
+;;*** Fringes
+
+(set-fringe-mode 10)       ; Give some breathing room
+
+;;*** Tabs
+
+(setq tab-bar-close-button-show nil
+      tab-bar-format '(tab-bar-format-history
+                       tab-bar-format-tabs-groups
+                       tab-bar-separator
+                       dw/tmr-mode-line
+                       tab-bar-separator ; nil
+                       ;; display global-mode-string in the tab bar (right-aligned)
+                       tab-bar-format-align-right
+                       tab-bar-format-global))
+
+;;**** Tabspaces
+
+(setup (:pkg tabspaces :straight t)
+  (tabspaces-mode 1)
+  (setq tabspaces-default-tab "Main"
+        ;; NOTE: this remaps switch-to-buffer to the tabspaces command,
+        ;; but it's available through C-c TAB b
+        ;; tabspaces-use-filtered-buffers-as-default t
+        tabspaces-remove-to-default t
+        tabspaces-include-buffers '("*scratch*")))
+
+
+;;**** Tab Management
 
 ;; interactive tab/bar commands must be called interactively
 
@@ -354,6 +472,16 @@
 ;; (tab-names (mapcar (lambda (tab) (alist-get 'name (cdr tab))) tabs-on-frame))
 ;; (tab-name (alist-get 'name (nth arg tab-names)))
 ;; (tab-switch tab-name)
+
+;;**** Switching Tabs
+
+;; NOTE: useful when mapping tabs-to-projects
+(defun dw/switch-tab-buffer (&optional arg)
+  (interactive "P")
+  (cond
+   ((and arg (> (car arg) 0)) (call-interactively #'consult-buffer))
+   ((project-current) (call-interactively #'project-switch-to-buffer))
+   (t (call-interactively #'consult-buffer))))
 
 ;; this is definitely "doing it wrong". firefox finally figured out the tabs
 ;; interface, but we've inculcated bad usage habits into our society -- and
@@ -383,27 +511,6 @@
         (tab-bar-select-tab (+ 1 (mod (- arg) num-tabs)))
       (tab-previous))))
 
-;;*** Confirmations
-
-(setq dired-deletion-confirmer 'y-or-n-p
-      ;; dired-no-confirm '()
-      url-confirmation-func 'y-or-n-p
-      ;; url-cookie-confirmation nil
-
-      ;; smerge-mode is lazy loaded, default: t
-      smerge-change-buffer-confirm t)
-
-;;*** Hydra
-(setup (:pkg hydra)
-  (require 'hydra))
-
-(defhydra dw/smerge-panel ()
-  "smerge"
-  ("k" (smerge-prev) "prev change" )
-  ("j" (smerge-next) "next change")
-  ("u" (smerge-keep-upper) "keep upper")
-  ("l" (smerge-keep-lower) "keep lower")
-  ("q" nil "quit" :exit t))
 
 ;;** Completion
 
@@ -600,6 +707,28 @@
   (:option xref-show-xrefs-function 'consult-xref
            xref-show-definitions-function 'consult-xref))
 
+;;*** Consult Workspaces
+
+(with-eval-after-load 'consult
+  ;; Hide full buffer list by default (still available with "b" prefix)
+  (consult-customize consult--source-buffer :hidden t :default nil)
+
+  ;; Set consult-workspace buffer list
+  (defvar consult--source-workspace
+    (list :name "Workspace Buffers"
+          :narrow ?w
+          :history 'buffer-name-history
+          :category 'buffer
+          :state #'consult--buffer-state
+          :default t
+          :items (lambda () (consult--buffer-query
+                             :predicate #'tabspaces--local-buffer-p
+                             :sort 'visibility
+                             :as #'buffer-name)))
+
+    "Set workspace buffer list for consult-buffer.")
+  (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
 ;;*** Consult Dir
 
 (with-eval-after-load 'consult
@@ -640,24 +769,40 @@
   ;; Use Embark to show command prefix help
   (setq prefix-help-command #'embark-prefix-help-command))
 
-;; ** Speedbar
+;;** TODO: Remove
 
-;;
-(setup (:pkg speedbar)
-  (:option speedbar-indentation-width 2
-           speedbar-ignored-modes
-           '(help-mode
-             custom-mode
-             eshell-mode
-             shell-mode
-             term-mode
-             vterm-mode
-             docker-image-mode
-             docker-container-mode
-             docker-volume-mode
-             docker-network-mode)))
+;; NOTE: this req. doom-modeline and sets faces in the tab-bar
+;;   so global-mode-string becomes visible there as well
+;;   it's useful for exwm and as an example
 
-;; (add-to-list 'window-buffer-change-functions #'dc/speedbar-refresh-if-open)
-;; (advice-add 'window-change :after #'speedbar-refresh)
+;; (defun dw/set-tab-bar-faces ()
+;;   ;; TODO setting :background nil warns to set to 'unspecified, but that throws error
+;;   (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
+;;     (set-face-attribute 'tab-bar-tab nil
+;;                         :foreground 'unspecified
+;;                         :background 'unspecified
+;;                         :weight 'semi-bold
+;;                         :underline `(:color ,color)
+;;                         :inherit nil)
+;;     (set-face-attribute 'tab-bar nil
+;;                         :font "Iosevka Aile"
+;;                         :foreground 'unspecified
+;;                         :inherit 'mode-line)))
+
+;; This never actually gets loaded
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             ;; (dw/set-tab-bar-faces)
+
+;;             (add-to-list 'global-mode-string '(" " display-time-string))
+;;             ;; (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
+;;             (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
+
+;;             (display-time-mode 1)
+;;             (display-battery-mode 1)
+
+;;             (setq tab-bar-show t)
+;;             (tab-bar-mode 1)
+;;             (tab-bar-rename-tab "Main")))
 
 (provide 'dc-interface)

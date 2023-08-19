@@ -78,14 +78,6 @@
 
 ;;** Editor
 
-;;*** Better Defaults
-(setup (:pkg better-defaults)
-  (:option confirm-kill-emacs 'yes-or-no-p))
-
-(setup (:pkg undo-tree)
-  (setq undo-tree-auto-save-history nil)
-  (global-undo-tree-mode 1))
-
 ;;*** Core Key Bindings
 
 (setup (:pkg which-key)
@@ -109,90 +101,7 @@
   (general-create-definer local-leader-def
     :prefix "C-c l"))
 
-;;*** Timers
-
-(setup (:pkg tmr))
-
-(defun dw/tmr-mode-line ()
-  (if (not (and (boundp 'tmr--timers)
-                tmr--timers))
-      ""
-    (propertize (format " 🕐 %s: %s"
-                        (tmr--format-remaining (car tmr--timers))
-                        (tmr--timer-description (car tmr--timers)))
-                'tab-bar '(:foreground "orange"))))
-
-;;*** Tab Bar Workspaces
-
-(setup (:pkg tabspaces :straight t)
-  (tabspaces-mode 1)
-  (setq tabspaces-use-filtered-buffers-as-default t
-        tabspaces-default-tab "Main"
-        tabspaces-remove-to-default t
-        tabspaces-include-buffers '("*scratch*")))
-
-(with-eval-after-load 'consult
-  ;; Hide full buffer list by default (still available with "b" prefix)
-  (consult-customize consult--source-buffer :hidden t :default nil)
-
-  ;; Set consult-workspace buffer list
-  (defvar consult--source-workspace
-    (list :name "Workspace Buffers"
-          :narrow ?w
-          :history 'buffer-name-history
-          :category 'buffer
-          :state #'consult--buffer-state
-          :default t
-          :items (lambda () (consult--buffer-query
-                             :predicate #'tabspaces--local-buffer-p
-                             :sort 'visibility
-                             :as #'buffer-name)))
-
-    "Set workspace buffer list for consult-buffer.")
-  (add-to-list 'consult-buffer-sources 'consult--source-workspace))
-
-(defun dw/switch-tab-buffer (&optional arg)
-  (interactive "P")
-  (cond
-   ((and arg (> (car arg) 0)) (call-interactively #'consult-buffer))
-   ((project-current) (call-interactively #'project-switch-to-buffer))
-   (t (call-interactively #'consult-buffer))))
-
-(defun dw/set-tab-bar-faces ()
-
-  ;; TODO setting :background nil warns to set to 'unspecified, but that throws error
-  (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
-    (set-face-attribute 'tab-bar-tab nil :foreground 'unspecified :background 'unspecified :weight 'semi-bold :underline `(:color ,color) :inherit nil)
-    (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground 'unspecified :inherit 'mode-line)))
-
-(setq tab-bar-close-button-show nil
-      tab-bar-format '(tab-bar-format-history
-                       tab-bar-format-tabs-groups
-                       tab-bar-separator
-                       dw/tmr-mode-line
-                       tab-bar-separator
-                       tab-bar-format-align-right
-                       tab-bar-format-global))
-
-(with-eval-after-load 'doom-modeline
-  (dw/set-tab-bar-faces)
-
-  (add-to-list 'global-mode-string '(" " display-time-string))
-  (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
-  (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
-
-  (display-time-mode 1)
-  (display-battery-mode 1)
-
-  (setq tab-bar-show t)
-  (tab-bar-mode 1)
-  (tab-bar-rename-tab "Main"))
-
 ;;*** Editing Configuration
-
-(setq-default tab-width 2)
-
-(setq-default indent-tabs-mode nil)
 
 (setup (:pkg ws-butler)
   (:hook-into text-mode prog-mode))
@@ -203,24 +112,10 @@
     (super-save-mode +1)
     (setq super-save-auto-save-when-idle t)))
 
-;; Revert Dired and other buffers
-(setq global-auto-revert-non-file-buffers t
-      ;; prevents auto-revert-mode from displaying constant "reverting buffer"
-      ;; messages in the echo area
-      auto-revert-verbose nil)
-
-;; Revert buffers when the underlying file has changed
-(global-auto-revert-mode 1)
-
 (setup (:require paren)
   (:option show-paren-style 'mixed)
   (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
   (show-paren-mode 1))
-
-(setup (:pkg visual-fill-column)
-  ;; (:hook-into org-mode)
-  (setq visual-fill-column-width 110
-        visual-fill-column-center-text t))
 
 ;;*** Dired
 
@@ -266,53 +161,26 @@
 
 (setup (:pkg dired-rainbow)
   (:load-after dired
-   (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
-   (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
-   (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
-   (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
-   (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
-   (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
-   (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
-   (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
-   (dired-rainbow-define log "#c17d11" ("log"))
-   (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
-   (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
-   (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
-   (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
-   (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
-   (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
-   (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
-   (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
-   (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
-   (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
-   (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
-
-;;*** Date & Time
-
-(setq display-time-world-list
-  '(("Etc/UTC" "UTC")
-    ("Europe/Athens" "Athens")
-    ("America/Los_Angeles" "Seattle")
-    ("America/Denver" "Denver")
-    ("America/New_York" "New York")
-    ("Pacific/Auckland" "Auckland")
-    ("Asia/Shanghai" "Shanghai")
-    ("Asia/Kolkata" "Hyderabad")))
-
-(setq display-time-world-time-format "%a, %d %b %I:%M %p %Z"
-      display-time-format "%l:%M %p %b %d W%U"
-      display-time-load-average-threshold 0.0)
-
-;;*** Save Minibuffer History
-
-;; TODO: review savehist-file: .emacs.g/var/savehist.el
-(setup savehist
-  (setq history-length 50)
-  (savehist-mode 1)
-
-  ;; Individual history elements can be configured separately
-  (put 'minibuffer-history 'history-length 25)
-  (put 'kill-ring 'history-length 25))
+    (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+    (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
+    (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
+    (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
+    (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
+    (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
+    (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
+    (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
+    (dired-rainbow-define log "#c17d11" ("log"))
+    (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
+    (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
+    (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
+    (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+    (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
+    (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
+    (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
+    (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
+    (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
+    (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
+    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
 
 ;;*** Make Help More Helpful
 
@@ -324,9 +192,6 @@
 ;;            [remap describe-variable] helpful-variable
 ;;            [remap describe-command] helpful-command
 ;;            [remap describe-key] helpful-key))
-
-;; Load the info system for info files
-(add-to-list 'auto-mode-alist '("\\.info\\'" . Info-on-current-buffer))
 
 ;;*** Convenience Key Bindings
 
@@ -348,8 +213,5 @@
   (org-reveal)
   (org-show-subtree)
   (forward-line))
-
-;;*** Start the Daemon
-;; (server-start)
 
 (provide 'dw-core)
