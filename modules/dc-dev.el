@@ -431,10 +431,12 @@ compilation was initiated from compile-mode."
                    (ef-themes--palette-value
                     (ef-themes--current-theme))))))
 
+;; TODO: on init, this runs before ef-themes has defined faces
+;; Invalid face: highlight-indent-guides-odd-face
 (setup (:pkg highlight-indent-guides)
   (:option highlight-indent-guides-method 'column)
   (:with-hook ef-themes-post-load-hook
-    (:hook dc/fix-highlight-indent-colors))
+    (:hook #'dc/fix-highlight-indent-colors))
   (:hook-into yaml-mode))
 
 (defun dc/indent-buffer ()
