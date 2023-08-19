@@ -132,15 +132,17 @@
            dired-omit-verbose nil
            dired-hide-details-hide-symlink-targets nil
            delete-by-moving-to-trash nil
-           dired-dwim-target 'dired-dwim-target-recent)
-  dired-omit-files (string-join
-                    '("^.DS_Store\\'"
-                      "^.project\\(?:ile\\)?\\'"
-                      "^.\\(svn\\)\\'"
-                      "^.ccls-cache\\'"
-                      "\\(?:\\.js\\)?\\.meta\\'"
-                      "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
-                    "\\|")
+           dired-dwim-target 'dired-dwim-target-recent
+
+           ;; NOTE: apparently defaults to: "\\`[.]?#\\|\\`[.][.]?\\'" ...
+           dired-omit-files (string-join
+                             '("^.DS_Store\\'"
+                               "^.project\\(?:ile\\)?\\'"
+                               "^.\\(svn\\)\\'"
+                               "^.ccls-cache\\'"
+                               "\\(?:\\.js\\)?\\.meta\\'"
+                               "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
+                             "\\|"))
 
   (autoload 'dired-omit-mode "dired-x")
 
