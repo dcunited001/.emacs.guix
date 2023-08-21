@@ -358,6 +358,7 @@
                   ;; "tree-sitter-racket"
                   "tree-sitter-scheme"
                   ;; "tree-sitter-c-sharp"
+                  ;; "tree-sitter-scala"
                   "tree-sitter-clojure"
                   ;; "tree-sitter-haskell"
                   ;; "tree-sitter-markdown"
@@ -391,8 +392,8 @@
                   "emacs-parseedn"
                   "emacs-parseclj"
 
-                  "emacs-scala-mode"
-                  "emacs-sbt-mode"
+                  ;; "emacs-scala-mode"
+                  ;; "emacs-sbt-mode"
 
                   "emacs-sly"
                   "emacs-sly-asdf"

@@ -227,12 +227,9 @@
 (setup (:pkg tramp)
   (:option tramp-default-method "ssh"))
 
+;; the guix emacs build prepends guix search paths to tramp-remote-path
 (with-eval-after-load 'tramp
-  (require 'tramp-container)
-  (add-to-list 'tramp-remote-path
-               '("~/.guix-profile/bin"
-                 "~/.guix-profile/sbin"
-                 "/run/current-system/profile/bin")))
+  (require 'tramp-container))
 
 ;;*** SSH Config Mode
 (setup (:pkg ssh-config-mode))

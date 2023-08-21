@@ -427,7 +427,7 @@
 
 ;;*** Modeline
 
-(column-number-mode)
+;; (column-number-mode)
 
 ;;*** Scrollbars
 
