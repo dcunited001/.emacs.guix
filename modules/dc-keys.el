@@ -1211,6 +1211,47 @@
 
 ;;*** v VCS
 
+;; TODO: forge keybinds/functionality
+
+;; ... forge shows pullreqs/issues in the magit-status buffer?
+
+;; ... github.com/from/timbuktu
+
+;; forge-create/edit-mark, forge-toggle-mark (non-interactive)
+;; forge-edit-topic-marks
+;; forge-list-assigned-issues
+;; forge-list-authored-issues
+;; forge-list-owned-issues
+;; -- forge-create-pullreq-from-issue
+
+;; forge-list-repositories
+;; forge-list-owned-repositories
+;; forge-add-organization-repositories (req. sync)
+
+;; dir-locals forge-toggle-display-in-status-buffer
+
+(general-define-key
+ :keymaps '(forge-topic-mode-map)
+ :wk-full-keys nil
+ "c" #'forge-create-post
+ "e" '(:ignore t :which-key "EDIT")
+ "ea" #'forge-edit-topic-assignees
+ "ed" #'forge-edit-topic-draft
+ "ek" #'forge-delete-comment
+ "el" #'forge-edit-topic-labels
+ "em" #'forge-edit-topic-marks
+ ;; "eM" #'forge-merge
+ "en" #'forge-edit-topic-note
+ "ep" #'forge-edit-post
+ "er" #'forge-edit-topic-review-requests
+ "es" #'forge-edit-topic-state
+ "et" #'forge-edit-topic-title)
+
+;; (phundrak/major-leader-key
+;;  :keymaps 'forge-topic-mode-map
+;;  "c"  #'forge-create-post
+;;  "e"  '(:ignore t :which-key "edit"))
+
 ;; (:prefix-map ("v" . "versioning")
 ;;        :desc "Git revert file"             "R"   #'vc-revert
 ;;        :desc "Kill link to remote"         "y"   #'+vc/browse-at-remote-kill

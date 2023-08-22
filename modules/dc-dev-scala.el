@@ -22,14 +22,13 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(setup (:pkg scala-mode :straight t :type git :flavor melpa :host
-             github :repo "hvesalai/emacs-scala-mode"))
-
-(setup (:pkg sbt-mode :straight t :type git :flavor melpa :host
-             github :repo "dcunited001/emacs-sbt-mode"))
+(setup (:pkg scala-mode :straight t :type git :flavor melpa
+             :host github :repo "hvesalai/emacs-scala-mode"))
 
 ;; sbt-mode is for comint buffers, .sbt files should still use scala
-(setup (:pkg sbt-mode)
+(setup (:pkg sbt-mode :straight t :type git :flavor melpa
+             :host github :repo "hvesalai/emacs-sbt-mode"
+             :fork (:host github :protocol ssh :repo "dcunited001/emacs-sbt-mode"))
   ;; -Djline.terminal=none is default
   ;; -Dsbt.supershell=false is suggested
   (:option sbt:program-options '("-Djline.terminal=none"
