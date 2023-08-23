@@ -435,9 +435,10 @@ compilation was initiated from compile-mode."
 ;; Invalid face: highlight-indent-guides-odd-face
 (setup (:pkg highlight-indent-guides)
   (:option highlight-indent-guides-method 'column)
-  (:with-hook ef-themes-post-load-hook
-    (:hook #'dc/fix-highlight-indent-colors))
   (:hook-into yaml-mode))
+
+(with-eval-after-load 'highlight-indent-guides
+  (add-hook 'ef-themes-post-load-hook #'dc/fix-highlight-indent-colors))
 
 (defun dc/indent-buffer ()
   (interactive)

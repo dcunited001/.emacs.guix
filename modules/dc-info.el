@@ -79,4 +79,23 @@
   (Info-breadcrumbs-in-mode-line-mode +1)
   (Info-persist-history-mode +1))
 
+;;** Shortdoc
+
+;; cheatsheets for emacs-lisp
+
+;; https://www.masteringemacs.org/article/emacs-builtin-elisp-cheat-sheet
+
+(setup shortdoc
+  (:with-hook ef-themes-post-load-hook
+    (:hook (lambda () (dc/swap-face 'shortdoc-section 'ef-themes-heading-3)))))
+
+(with-eval-after-load 'shortdoc
+  (define-short-documentation-group face
+    "Manipulating Faces in Emacs"
+    ;; this auto-inserts the docstrings
+    (get
+     :no-eval (get 'ef-themes-heading-0 'face)
+     :no-manual nil                     ; ish
+     :result 854)))
+
 (provide 'dc-info)

@@ -124,6 +124,14 @@
     (:hook ;; #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))
      (lambda () (ef-themes-select (car ef-themes-to-toggle))))))
 
+(defun dc/swap-face (face1 face2)
+  "Swap `face1' with the spec of `face2'."
+
+  ;; TODO: won't survice swapping themes
+  (if-let* ((face (get face2 'face))
+            (spec (cadar (get face2 'theme-face))))
+      (face-spec-set face1 spec)))
+
 (with-eval-after-load 'ef-themes
   ;; the index of the theme in each list doesn't really correspond to its complement
   ;; - but this would perhaps break in the future anyways.
