@@ -1,6 +1,7 @@
 ;;* Guix Emacs Packages
 (use-modules (ice-9 vlist)
-             (ice-9 match))
+             (ice-9 match)
+             (gnu packages guile))
 
 ;;* System
 ;; A ridiculous way to manage package lists? Yes ... Reduction in cyclomatic
@@ -556,6 +557,7 @@
 ;; "smiles"
 ;; "ob-smiles"
 ;; "ob-"
+
 ;;*** Org Babel
 ;;*** Org Capture
 ;;*** Org Export

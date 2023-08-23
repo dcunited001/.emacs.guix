@@ -605,6 +605,24 @@ preferring the value of sym if present"
 
 ;;***** Guile init files
 
+;; defaults noted if changed
+(setq geiser-guile-manual-lookup-other-window t ;; default: nil
+      ;; geiser-guile-extra-keywords nil
+      geiser-guile-show-debug-help t
+      geiser-guile-warning-level 'medium)
+
+;; The Paths are added to both %`load-path' and %load-compiled path,
+;; and only if they are not already present. (in .dir-locals.el)
+;; geiser-guile-load-path
+
+(with-eval-after-load 'geiser-guile
+  ;; TODO: (add-to-list 'geiser-guile-manual-lookup-nodes '(...))
+  ;; default: '("Guile" "guile-2.0")
+  (add-to-list 'geiser-guile-manual-lookup-nodes "Geiser")
+  (add-to-list 'geiser-guile-manual-lookup-nodes "Guile Reference")
+  (add-to-list 'geiser-guile-manual-lookup-nodes "Guile Library")
+  (add-to-list 'geiser-guile-manual-lookup-nodes "Guix"))
+
 ;; geiser will load ~/.guile-geiser and not ~/.guile (defaults)
 ;; (setq geiser-guile-init-file "~/.guile-geiser")
 ;; (setq geiser-guile-load-init-file nil)
@@ -622,11 +640,11 @@ preferring the value of sym if present"
 
 ;;**** Mesche
 
-(setup mesche
-  (:load-path "~/Projects/Code/mesche/mesche-emacs")
-  (:with-mode mesche-mode
-    (:file-match "\\.msc\\'"))
-  (require 'mesche))
+;; (setup mesche
+;;   (:load-path "~/Projects/Code/mesche/mesche-emacs")
+;;   (:with-mode mesche-mode
+;;     (:file-match "\\.msc\\'"))
+;;   (require 'mesche))
 
 ;;** Lang
 
@@ -667,7 +685,13 @@ preferring the value of sym if present"
   (:with-hook yaml-mode-hook
     (:hook yas-minor-mode))
   (:with-hook prog-mode-hook
-    (:hook yas-minor-mode)))
+    (:hook yas-minor-mode))
+  (:with-hook window-setup-hook
+    (:hook #'yas-reload-all)))
+
+(with-eval-after-load 'yasnippet
+  (when dc/guix-checkout-path
+    (add-to-list 'yas-snippet-dirs dc/guix-checkout-path)))
 
 (setup (:pkg yasnippet-snippets))
 

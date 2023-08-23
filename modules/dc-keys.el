@@ -115,17 +115,19 @@
    "<f2> bu" #'buffer-env-update
    "<f2> br" #'buffer-env-reset
 
-   "<f2> e" #'envrc-command-map
-   "<f2> E" '(:ignore t :which-key "ENVRC")
-   "<f2> Er" #'envrc-reload-all
-   "<f2> Eg" #'envrc-global-mode
-
    "<f2> d" #'docker
 
    "<f2> D" '(:ignore t :which-key "DESKTOP")
    "<f2> Ds" #'desktop-save-in-desktop-dir
    "<f2> DS" #'desktop-save
    "<f2> Dr" #'desktop-read
+
+   "<f2> e" #'envrc-command-map
+   "<f2> E" '(:ignore t :which-key "ENVRC")
+   "<f2> Er" #'envrc-reload-all
+   "<f2> Eg" #'envrc-global-mode
+
+   "<f2> h" #'shortdoc
 
    "<f2> O" #'aw-show-dispatch-help
 
@@ -139,8 +141,18 @@
    "<f2> T M-c" #'tramp-cleanup-all-connections
    "<f2> TM" #'tramp-compat-set-file-modes
 
+   "<f2> r" '(:ignore t :which-key "RELOAD")
+
+   "<f2> t" '(:ignore t :which-key "THEME")
+   "<f2> tr" #'ef-themes-load-random
+   "<f2> ts" #'ef-themes-select
+   "<f2> tt" #'ef-themes-toggle
+
    ;; TODO check tramp-completion-use-auth-sources
    "<f2> Tg" #'tramp-crypt-add-directory
+
+   ;; vterm
+   "<f2> M-v" #'vterm
 
    ;; needs tramp-default-rename-alist
    ;; "<f2> Tr" #'tramp-rename-these-files
@@ -194,15 +206,7 @@
    "<f2> 0f" #'0x0-upload-file
    "<f2> 0k" #'0x0-upload-kill-ring
    "<f2> 0p" #'0x0-popup
-   "<f2> 0u" #'0x0-shorten-uri
-   "<f2> r" '(:ignore t :which-key "RELOAD")
-   "<f2> t" '(:ignore t :which-key "THEME")
-   "<f2> tr" #'ef-themes-load-random
-   "<f2> ts" #'ef-themes-select
-   "<f2> tt" #'ef-themes-toggle
-
-   ;; vterm
-   "<f2> M-v" #'vterm))
+   "<f2> 0u" #'0x0-shorten-uri))
 
 (defun dc/init-keybinds-help ()
   (dolist (pfx '("C-h" "<f1>"))

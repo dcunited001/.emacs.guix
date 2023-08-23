@@ -38,7 +38,7 @@
 ;; gmp: GNU multiple precision
 ;; mpfr: multiple-precision floating-point reliable lib
 
-;; TODO: load this from an eld file
+;;** Narrow Info Search
 
 ;; things i have a working knowledge of
 ;; (by which i mean namedrop-level familiarity...)
@@ -61,6 +61,8 @@
                  (seq-mapcat (lambda (k) (a-get dc/Info-manuals-by-category k)))
                  (seq-uniq)
                  (seq-map #'prin1-to-string))))
+
+;;** Info+
 
 ;; (prin1-to-string 'emacs)
 (setup (:pkg info+ :straight t :type git :host github :repo "emacsmirror/info-plus")
