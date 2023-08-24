@@ -379,9 +379,29 @@
 ;;*** Confirmations
 
 (setq dired-deletion-confirmer 'y-or-n-p
+      dired-confirm-shell-command 'y-or-n-p
+
       ;; dired-no-confirm '()
+
+      ;; files/urs
+      openwith-confirm-invocation 'y-or-n-p
       url-confirmation-func 'y-or-n-p
-      ;; url-cookie-confirmation nil
+      url-cookie-confirmation 'y-or-n-p
+      log-edit-confirm nil
+      ;; log-edit-confirm #'yes-or-no-p ; defaults to 'changed
+
+      ;; emacs
+      confirm-kill-processes 'y-or-n-p
+      confirm-kill-emacs 'yes-or-no-p
+
+      ;; email
+      message-confirm-send 'y-or-n-p
+
+      ;; org
+      org-table-fix-formulas-confirm 'y-or-n-p
+
+      ;; lsp/eglot
+      eglot-confirm-server-initiated-edits 'y-or-n-p
 
       ;; smerge-mode is lazy loaded, default: t
       smerge-change-buffer-confirm t)

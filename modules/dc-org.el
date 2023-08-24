@@ -434,8 +434,6 @@
                                        "#+TAGS: ") "\n")
                        ("Roam" "Docs" "Resources" "Issues" "Projects"))))))
 
-
-
     ;; (setq-hook! 'org-roam-find-file-hook
     ;;             org-id-link-to-org-use-id
     ;;             +org-roam-link-to-org-use-id)

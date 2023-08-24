@@ -90,12 +90,20 @@
     (:hook (lambda () (dc/swap-face 'shortdoc-section 'ef-themes-heading-3)))))
 
 (with-eval-after-load 'shortdoc
+
   (define-short-documentation-group face
     "Manipulating Faces in Emacs"
     ;; this auto-inserts the docstrings
     (get
      :no-eval (get 'ef-themes-heading-0 'face)
-     :no-manual nil                     ; ish
-     :result 854)))
+     ;; :no-manual nil                     ; ish
+     :result 854))
+
+  (define-short-documentation-group dc/lambda
+    "Common functional programming patterns in emacs lisp"
+    ;; this auto-inserts the docstrings
+    (apply-partially
+     :no-eval (mapcar (apply-partially '* 10 7 6) '(4 3))
+     :result '(1680 1260))))
 
 (provide 'dc-info)

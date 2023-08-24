@@ -163,8 +163,8 @@ Guix channel.")
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
 (let ((deps-from-guix '(pdftools org)))
-  (dolist (pkg deps-from-emacs)
-    (add-to-list 'straight-built-in-pseudo-packages pkg)))
+  (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
+        deps-from-guix))
 
 ;;*** Core
 

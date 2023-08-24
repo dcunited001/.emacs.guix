@@ -716,10 +716,6 @@ preferring the value of sym if present"
 ;;     (doom-snippets-initialize)
 ;;     (yas-reload-all)))
 
-;; (with-eval-after-load 'yasnippet
-;;   (add-hook 'org-mode-hook #'yas-minor-mode)
-;;   (add-hook 'prog-mode-hook #'yas-minor-mode))
-
 ;; (setup (:pkg doom-snippets :straight t :type git :host github
 ;;              :repo "dcunited001/snippets" :files ("*.el" "*"))
 ;;   (:option doom-snippets-enable-short-helpers t))

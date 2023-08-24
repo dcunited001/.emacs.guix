@@ -684,7 +684,7 @@
  ;; "Å" #'lispy-move-outline-up         ;W
  ;; "§" #'lispy-move-outline-up         ;S
  ;; altgr+] and altgr+}
- "»" #'lispy-unstringify
+ "»" #'lispy-stringify
  "”" #'lispy-unstringify
 
  ;; altgr+jk
