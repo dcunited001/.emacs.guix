@@ -22,6 +22,11 @@
 
 ;;* Support
 
+;;** No Littering Paths
+
+(defalias 'dc/emacs-etc #'no-littering-expand-etc-file-name)
+(defalias 'dc/emacs-var #'no-littering-expand-var-file-name)
+
 ;;** Doom
 
 ;; DOOM: ./lisp/core/doom-lib.el

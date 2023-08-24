@@ -678,6 +678,11 @@ preferring the value of sym if present"
 ;;*** Yasnippet Snippets
 
 ;; NOTE: all yas/ functions are deprecated
+
+(defun dc/yasnippet-set-default ()
+  (let ((yas-def (org-file-contents (dc/emacs-etc "yasnippet/yasdefault"))))
+    (setq yas-new-snippet-default yas-def)))
+
 (setup (:pkg yasnippet)
   (:with-hook org-mode-hook
     (:hook yas-minor-mode))
@@ -688,11 +693,12 @@ preferring the value of sym if present"
   (:with-hook prog-mode-hook
     (:hook yas-minor-mode))
   (:with-hook window-setup-hook
+    (:hook #'dc/yasnippet-set-default)
     (:hook #'yas-reload-all)))
 
 (with-eval-after-load 'yasnippet
   (when dc/guix-checkout-path
-    (add-to-list 'yas-snippet-dirs dc/guix-checkout-path)))
+    (add-to-list 'yas-snippet-dirs dc/guix-checkout-path nil)))
 
 (setup (:pkg yasnippet-snippets))
 
