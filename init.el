@@ -155,6 +155,16 @@ Guix channel.")
 (require 'iso-transl)
 (require 'dw-settings)
 
+;;** Straight
+
+;;*** Pseudo Packages
+
+;; get straight to avoid fetching these (i'm hoping it will build against the
+;; correct entryies in load-paths, but I haven't had problems yet.
+
+(let ((deps-from-guix '(pdftools org)))
+  (dolist (pkg deps-from-emacs)
+    (add-to-list 'straight-built-in-pseudo-packages pkg)))
 
 ;;*** Core
 

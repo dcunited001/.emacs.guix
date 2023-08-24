@@ -26,7 +26,8 @@
 
 ;;** Project.el
 
-(setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo"))
+(setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo")
+      project-kill-buffers-display-buffer-list t)
 
 ;;** Project functions
 

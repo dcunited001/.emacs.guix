@@ -26,9 +26,9 @@
 
 (straight-use-package '(org :type built-in))
 
-   ;; (setq org-capture-templates
-   ;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \
-   ;;          In %:journal, %:pages.")))
+;; (setq org-capture-templates
+;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \
+;;          In %:journal, %:pages.")))
 
 ;; hmmm... well that could work... a little too well
 ;; (defun gv-qset (pairs)
@@ -61,6 +61,8 @@
 ;;** Org Load Hooks
 ;; these run when org first loads
 
+;;*** Files
+
 (defun dc/org-init-org-directory-h ()
   (unless org-directory
     (setq-default org-directory (or (getenv "ORG_DIRECTORY")
@@ -70,6 +72,8 @@
 
   (setq org-calendars-directory
         (file-name-as-directory (file-name-concat org-directory "calendars"))))
+
+;;*** Appearance
 
 (defun dc/org-init-appearance-h ()
   ;; TODO try org-modern. it is unlikely to conflict but other packages that
@@ -220,6 +224,10 @@
   (dolist (mode '(org-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0)))))
 
+;;*** Clock
+
+;;**** Configure clock sound
+
 ;; TODO: script more behavior with (org-notify notification &optional pay-sound)
 ;; - calls (org-clock-play-sound play-sound)
 ;; - requires aplay. extremely loud noise when aplay plays .oga files
@@ -246,6 +254,8 @@
     (advice-add 'org-clock-play-sound :override #'dc/org-clock-play-sound)
   (warn "org-clock-sound: Can't find `playsound`. Not overriding org-clock-play-sound")
   (setq org-clock-sound nil))
+
+;;*** Agenda
 
 (defun dc/org-init-agenda-h ()
   (setup org-agenda
@@ -312,8 +322,24 @@
 
     (org-super-agenda-mode +1)))
 
-;; (defun dc/org-super-agenda-queries ()
-;;     )
+;; (defun dc/org-super-agenda-queries ())
+
+;;*** Noter
+
+;; switchs doc/notes lookup based on the calling context (and prefix args)
+
+;; TODO org-noter-default-notes-file-names (paths to search)
+;; or use prefix args
+
+(setup (:pkg org-noter :straight t :type git :flavor melpa
+             :host github
+             :repo "org-noter/org-noter"
+             :files ("*.el" "modules" "org-noter-pkg.el"
+                     (:exclude "*-test-utils.el" "*-devel.el"))))
+
+;;*** Roam
+
+;; TODO deal with completion (i'd rather have this as a command)
 
 ;; org-roam-node-display-template:
 ;;
@@ -373,6 +399,10 @@
              (file+head "%<%Y-%m-%d>.org"
                         ,(dc/org-read-template-from-file
                           dc/org-roam-dailies-template)))))
+
+    ;; [[file:/data/ecto/x.files/plattfot/emacs/init.el]]
+    ;; [[file:/data/ecto/x.files/sunnyhasija/doom/config.org]]
+    ;;
     (setq org-roam-capture-templates
           (append
            '(("d" "default"
@@ -423,6 +453,7 @@
              (-> (directory-files dc/org-roam-dailies-dir nil ".org$")
                  (sort #'string<)
                  (last 5)))
+
     (defun org-roam-ui-open ()
       "Ensure the server is active, then open the roam graph."
       (interactive)
@@ -447,6 +478,8 @@
 
 (defun dc/org-init-attachments-h ()
   )
+
+;;*** Babel
 
 ;; set with (setq org-confirm-evaluate #'dc/org-babel-dont-confirm-shell-elisp)
 (defun dc/org-babel-dont-confirm-shell-elisp (lang body)
@@ -477,9 +510,8 @@
   ;; org-exports (if latex/html exports with evaluation doesn't work, this may be the cause)
   ;; (after! ob
   ;;         (add-to-list 'org-babel-default-lob-header-args '(:sync)))
-  (setup (:pkg ob-smiles :straight t))
 
-  )
+  (setup (:pkg ob-smiles :straight t)))
 
 ;; NOTE: the advice-add here needs to properly bind the closure
 ;; - follow defadvice! down to subr.el
@@ -513,6 +545,8 @@
 
 (defun dc/org-init-babel-lazy-loader-h ()
   )
+
+;;*** Capture
 
 ;; the logic here is copied from doom-emacs
 (defvar dc/org-capture-todo-file "todo.org")
@@ -590,13 +624,7 @@
 
   )
 
-;; DOOM: ./lisp/core/doom-lib.el
-(defmacro pushnew! (place &rest values)
-  "Push VALUES sequentially into PLACE, if they aren't already present.
-This is a variadic `cl-pushnew'."
-  (let ((var (make-symbol "result")))
-    `(dolist (,var (list ,@values) (with-no-warnings ,place))
-       (cl-pushnew ,var ,place :test #'equal))))
+;;*** Hypermedia
 
 (defun dc/org-init-custom-links-h ()
 
@@ -634,6 +662,8 @@ This is a variadic `cl-pushnew'."
   (pushnew! org-link-abbrev-alist
             `("emacsdir"    . (file-name-concat dc/emacs-d "%s"))))
 
+;;*** Exports
+
 (defun dc/org-init-formatting-h ()
   (setup (:pkg org-make-toc)
     (:option org-toc-default-depth 1)
@@ -642,15 +672,6 @@ This is a variadic `cl-pushnew'."
 (defun dc/org-init-plot-h ()
   ;; TODO configure/style org plot
   ;; https://tecosaur.github.io/emacs-config/config.html#org-plot
-  )
-
-(defun dc/org-init-latex-h ()
-  ;; from tecosaur
-  ;; auto-preview latex (this breaks when you change the tex-
-  ;; this relies on upstream changes to org-mode
-  ;; (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
-
-  ;; TODO https://tecosaur.github.io/emacs-config/config.html#prettier-highlighting
   )
 
 (defun dc/org-init-export-h ()
@@ -681,12 +702,27 @@ This is a variadic `cl-pushnew'."
   ;; ("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
   )
 
+;;*** Latex
+
+(defun dc/org-init-latex-h ()
+  ;; from tecosaur
+  ;; auto-preview latex (this breaks when you change the tex-
+  ;; this relies on upstream changes to org-mode
+  ;; (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
+
+  ;; TODO https://tecosaur.github.io/emacs-config/config.html#prettier-highlighting
+  )
+
 (defun dc/org-init-habit-h ()
 
   )
 (defun dc/org-init-hacks-h ()
 
   )
+
+;;*** Misc
+
+;;**** Keys
 
 (defun dc/catch-org-shiftselect-error (newfun oldfun &rest args)
   (condition-case err
@@ -722,6 +758,10 @@ This is a variadic `cl-pushnew'."
         org-M-RET-may-split-line '((default . nil)))
   (dc/org-fix-buf-move))
 
+;;*** UI
+
+;;**** Sidebar
+
 (defun dc/org-init-sidebar-h ()
   (setup (:pkg org-sidebar)
     (:option org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-source
@@ -732,6 +772,8 @@ This is a variadic `cl-pushnew'."
   )
 
 ;; (defun dc/org-init-smartparens-h ())
+
+;;*** Tempo and Eldoc
 
 (with-eval-after-load 'org
   (setup (:pkg org-contrib))
