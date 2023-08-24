@@ -46,7 +46,13 @@
 ;; shift: move the file
 (setq dired-mouse-drag-files 'move)
 
+;;** Clipboard
+
+;; (setq mouse-yank-at-point t)
+
 ;;** Mousemaps
+
+;;*** Unbind at init
 
 (defvar mousemaps-unbound-at-init
   ;; mouse-1
@@ -68,10 +74,11 @@
     "<drag-mouse-3>"                    ;mouse-secondary-yank
     "<mode-line> <mouse-3>"             ;mouse-delete-window
 
-    "S-<wheel-up>"                       ;mwheel-scroll
-    "S-<wheel-down>"                     ;mwheel-scroll
-
+    "S-<wheel-up>"                      ;mwheel-scroll
+    "S-<wheel-down>"                    ;mwheel-scroll
     ))
+
+;;*** Scrolling
 
 ;; this variable doesn't do anything on either computer
 ;; (setq mouse-wheel-follow-mouse nil)
@@ -108,6 +115,10 @@
 ;;         ())
 ;;     (user-error "Minibuffer probably not active")))
 
+;;*** Mouse UI Events
+
+;;**** Divider/Scrollbars
+
 ;; hmmm how to refactor?
 (defun dc/mousemaps-rebind-mouse-split ()
   (let* ((mouse-contexts
@@ -142,6 +153,8 @@
 
 ;; TODO: get the code below to work with two-finger gestures on laptop
 ;; '((#'select-frame-by-name . ("s-<mouse-9>" "s-<wheel-right>")))
+
+;;*** Mouse 8 9
 
 (general-define-key
  :keymap 'global
