@@ -659,6 +659,38 @@
 
 ;;*** Lispy
 
+;; TODO: determine why the lispy-x hydra req. manual eval to run
+;;  shows in message buffer sometimes.
+
+;; most of these are already bound under the lispy-x functionality
+;; https://github.com/abo-abo/lispy#features
+
+(general-define-key
+ :keymaps '(lispy-mode-map)
+ "M-<up>" #'lispy-outline-prev
+ "M-<down>" #'lispy-outline-next
+
+ "å" #'lispy-to-cond                    ;w
+ "á" #'lispy-to-lambda                  ;a
+ "ß" #'lispy-to-ifs                     ;d
+ "ð" #'lispy-to-defun                   ;s
+
+ ;; altgr+wads (on us intl altgr + deadkeys, maybe custom keyboard)
+ "Å" #'lispy-move-up                    ;W
+ "Á" #'lispy-move-left                  ;A
+ "§" #'lispy-move-down                  ;D
+ "Ð" #'lispy-move-right                 ;S
+
+ ;; "Å" #'lispy-move-outline-up         ;W
+ ;; "§" #'lispy-move-outline-up         ;S
+ ;; altgr+] and altgr+}
+ "»" #'lispy-unstringify
+ "”" #'lispy-unstringify
+
+ ;; altgr+jk
+ "œ" #'lispy-insert-outline-left
+ "ï" #'lispy-insert-outline-below)
+
 ;;** Doom
 
 ;;*** Prefixes (C-c)
@@ -1048,7 +1080,8 @@
 
 (general-define-key
  :keymaps 'project-prefix-map
- "k" #'dw/close-project-tab
+ ;; "k" #'dw/close-project-tab
+ "k" #'project-kill-buffers
  ;; "f" #'consult-ripgrep
  ;; "f" #'dc/instead-use-M-g
  "f" #'project-find-file)

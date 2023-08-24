@@ -34,7 +34,9 @@
 (setq user-full-name "David Conner"
       user-mail-address (or (getenv "EMAIL") "noreply@te.xel.io"))
 
-;;*** Emacs Paths
+;;*** Emacs Config
+
+;;**** Paths
 
 (setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
       dc/emacs-d (expand-file-name "~/.emacs.g/")
@@ -58,6 +60,12 @@
 ;;       user-emacs-cache-directory "~/.cache/emacs/"
 ;;       user-emacs-config-directory "~/.config/emacs/"
 ;;       user-emacs-ensime-directory "~/.emacs.g/var/ensime/")
+
+;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
+;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
+;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
+
+;;**** Native Comp
 
 ;; (setq native-comp-eln-load-path "not ~/.emacs.g/eln-cache")
 
@@ -131,6 +139,7 @@ Guix channel.")
                                        (file-truename)
                                        (file-name-as-directory))
 
+
       ;; gets set by no-littering anyways
       ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
 
@@ -146,9 +155,6 @@ Guix channel.")
 (require 'iso-transl)
 (require 'dw-settings)
 
-;; Change the user-emacs-directory to keep unwanted things out of ~/.emacs.d
-;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
-;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
 ;;*** Core
 
