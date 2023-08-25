@@ -361,11 +361,6 @@
 
 ;; org-roam-node-display-template
 
-(defun dc/org-read-template-from-file (file)
-  (if (file-exists-p file) (org-file-contents file)
-    (error "* Template file %s not found" file)))
-
-
 (defun dc/org-roam-insert-slug ()
   (interactive)
   (insert (org-roam-node-slug (org-roam-node-at-point))))
@@ -397,7 +392,7 @@
     (setq org-roam-dailies-capture-templates
           `(("d" "default" entry "%?" :target
              (file+head "%<%Y-%m-%d>.org"
-                        ,(dc/org-read-template-from-file
+                        ,(dc/read-template-from-file
                           dc/org-roam-dailies-template)))))
 
     ;; [[file:/data/ecto/x.files/plattfot/emacs/init.el]]

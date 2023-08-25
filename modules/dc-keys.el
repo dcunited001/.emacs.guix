@@ -682,6 +682,29 @@
 ;;   "<remap> <end-of-buffer-other-window>" #'corfu-popupinfo-end
 ;;   "<remap> <beginning-of-buffer-other-window>" #'corfu-popupinfo-beginning)
 
+;;**** cape
+
+(leader-def
+  :keymaps '(global)
+  :wk-full-keys nil
+  "p" '(:ignore t :which-key "CAPF")
+  "p p"  #'completion-at-point
+  "p t"  #'complete-tag
+  "p d"  #'cape-dabbrev
+  "p h"  #'cape-history
+  "p f"  #'cape-file
+  "p k"  #'cape-keyword
+  "p s"  #'cape-elisp-symbol
+  "p e"  #'cape-elisp-block
+  "p a"  #'cape-abbrev
+  "p l"  #'cape-line
+  "p w"  #'cape-dict
+  "p \\"  #'cape-tex
+  "p _"  #'cape-tex
+  "p ^"  #'cape-tex
+  "p &"  #'cape-sgml
+  "p r"  #'cape-rfc1345)
+
 ;;** UI
 
 ;;*** Bookmarks, Registers
@@ -689,7 +712,7 @@
 (global-leader-def
   :keymaps '(global)
   :wk-full-keys nil
-  "rB" '(:ignore t :wk "BURLY")
+  "rB" '(:ignore t :which-key "BURLY")
   "rBo" #'burly-open-bookmark
   "rBO" #'burly-open-url
   "rBw" #'burly-bookmark-windows
@@ -703,6 +726,7 @@
 ;;*** Jump
 
 (leader-def
+  :wk-full-keys nil
   "j"   '(:ignore t :which-key "jump")
   "jj"  '(avy-goto-char :which-key "jump to char")
   "jw"  '(avy-goto-word-0 :which-key "jump to word")

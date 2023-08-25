@@ -126,6 +126,7 @@
                   ;; "emacs-consult-lsp"
                   ;; "emacs-consult-eglot" ;; 0.2.0 does not include fix to #14
                   "emacs-consult-bibtex"
+                  "emacs-cape"
 
                   "emacs-wgrep"
                   "emacs-marginalia"
@@ -506,7 +507,9 @@
                   "emacs-cdlatex"
                   "emacs-parsebib"
                   "emacs-biblio"
-                  "emacs-math-symbol-lists"))
+                  "emacs-math-symbol-lists"
+                  "emacs-citar"
+                  "emacs-citar-org-roam"))
    guix-emacs-vhash))
 
 ;;** Org

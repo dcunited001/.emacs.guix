@@ -157,9 +157,6 @@
 ;;*** Journalctl Mode
 (setup (:pkg journalctl-mode :straight t))
 
-;;*** XDG Paths
-(setup (:pkg xdg-paths :straight t))
-
 ;;** Red Hat
 ;; an emacs package that integrates a mock workflow would help quite a bit
 

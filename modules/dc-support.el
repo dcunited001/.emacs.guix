@@ -44,6 +44,12 @@ This is a variadic `cl-pushnew'."
 (defalias 'dc/eld-serialize 'projectile-serialize)
 (defalias 'dc/eld-unserialize 'projectile-unserialize)
 
+;;** Templates
+
+(defun dc/read-template-from-file (file)
+  (if (file-exists-p file) (org-file-contents file)
+    (error "* Template file %s not found" file)))
+
 ;;** Macros
 
 ;; NOTE: if parsing the body to extract bindings is necessary,

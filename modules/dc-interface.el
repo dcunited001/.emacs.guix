@@ -786,6 +786,40 @@
 ;; TODO: dc/marginalia-annotators-reset
 ;; reset marginalia annotators to their default values
 
+;;*** Cape
+
+(defun dc/capf-fix<emacs-29 ()
+  (when (< emacs-major-version 29)
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
+    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
+
+(setup (:pkg cape)
+  )
+
+(with-eval-after-load 'cape
+  (dc/capf-fix<emacs-29))
+
+;; ignore keyword completion
+(defun dc/ignore-elisp-keywords (sym)
+  (not (keywordp sym)))
+
+;; TODO capf: use macro and assign this to a key
+(defun dc/toggle-emacs-lisp-keyword-completion ()
+  (interactive)
+  (setq-local completion-at-point-functions
+              (list (cape-capf-predicate #'elisp-completion-at-point
+                                         #'ignore-elisp-keywords))))
+
+;; TODO: capf: explicit key for completion
+
+;; (keymap-global-set "C-c p e" (cape-interactive-capf #'elisp-completion-at-point))
+
+
+;; if needed (integrate company completion into capf)
+;; (setq-local completion-at-point-functions
+;;   (mapcar #'cape-company-to-capf
+;;     (list #'company-files #'company-keywords #'company-dabbrev)))
+
 ;;*** Embark
 
 ;; embark-consult included and loaded with embark

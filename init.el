@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 (require 'subr-x)
 (require 'a)
+(require 'xdg)
 
 ;;* Init
 
@@ -134,6 +135,7 @@ Guix channel.")
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
       org-roam-file-extensions '("org")
       org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
+      citar-org-roam-subdir "notes"
       org-roam-directory (thread-first org-roam-directory
                                        (expand-file-name org-directory)
                                        (file-truename)
@@ -147,6 +149,44 @@ Guix channel.")
                                                    dc/emacs-d)
       dc/org-roam-dailies-template (expand-file-name "daily-default.org"
                                                      dc/org-roam-templates-path))
+
+;;**** Org Ref & Bibtex
+
+;; TODO refactor slim down (auto def symbols, create paths if aca-root exists)
+;;
+;; - may need to ensure that the doi's exist. a macro would help, but i just
+;;   need to determine how the file/db structure would accommodate changes
+
+;; i'm not sure what structure i'll stick with. this is usually what PhD's need
+;;   zero help with, of course. the most successful PhD's have no idea what
+;;   they're doing here and typically leave notes wherever. doesn't
+;;   matter. </joking>
+
+(let ((aca-root (xdg-user-dir "DOCUMENTS")))
+  (setq dc/aca-texts-directory (expand-file-name "text" aca-root)
+        dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
+        dc/aca-papers-directory (expand-file-name "papers" aca-root)
+        dc/aca-papers-bibtex (expand-file-name "noter/papers.bib" org-roam-directory)
+        dc/aca-books-directory (expand-file-name "books" aca-root)
+        dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
+        dc/aca-doi-directory (expand-file-name "doi" aca-root)
+        dc/aca-doi-bibtex (expand-file-name "noter/doi.bib" org-roam-directory)
+        dc/aca-library-paths (list dc/aca-texts-directory
+                                   dc/aca-papers-directory
+                                   dc/aca-books-directory
+                                   dc/aca-doi-directory)
+        dc/aca-bibtex-paths (list dc/aca-texts-bibtex
+                                  dc/aca-papers-bibtex
+                                  dc/aca-books-bibtex
+                                  dc/aca-doi-bibtex)))
+
+(dolist (el (list dc/aca-texts-bibtex
+                  dc/aca-papers-bibtex
+                  dc/aca-books-bibtex
+                  dc/aca-doi-bibtex))
+  (unless (file-exists-p el)
+    ;; (f-touch el)
+    (warn "Bibtex: file does not exist %s. See 'dc-bibtex" el)))
 
 ;;** Modules
 
@@ -162,7 +202,8 @@ Guix channel.")
 ;; get straight to avoid fetching these (i'm hoping it will build against the
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
-(let ((deps-from-guix '(pdftools org which-key)))
+(let ((deps-from-guix '(pdftools org which-key embark consult corfu
+                                 cape vertigo marginalia orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 
