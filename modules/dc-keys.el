@@ -101,6 +101,10 @@
 
 ;; "\\(!\\|@\\|&\\|_\\|1\\|2\\|3\\|4\\|5\\|6\\|7\\|8\\| ...
 
+;; "M" "C-M" "C-.+" "H"  ;only highlights commands starting with modkey
+
+;; regexps like [:punct:], \\[:punct:\\], etc don't seem to work (req. pcre afaik)
+
 ;; NOTE: which-key-local-map-descriptions-face highlights what's listed
 ;;       on the (current-local-map) keymap
 
@@ -112,19 +116,24 @@
            ;; also: 'custom 'frame (not a child frame for me)
            ;; 'minibuffer (probably inconsistent with consult)
            which-key-special-keys
-           '("M" "C" "C-M" "H"  ;only highlights commands starting with modkey
+           '(
              ;; regexp cause problems here "*" "^"
              "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ;; "-" "="
              ;; "10" "11" "12" ;; bc function keys
              ;; and the vowels (to visually space)
-             "a" "e" "i" "o" "u" "y"
-             "A" "E" "I" "O" "U" "Y"))
+             "a$" "e" "i" "o" "u" "y"
+             "A$" "E" "I" "O" "U" "Y"))
   (:with-hook ef-themes-post-load-hook
     (:hook (lambda ()
              (dc/update-face 'which-key-separator-face
                              'epa-string)
              (dc/update-face 'which-key-local-map-description-face
                              'ef-themes-heading-5)))))
+
+;; TODO: many of the overwritten replacements aren't labelled correctly
+;; e.g. <f12> for C-c, but I may remove many of these. they are okay, but
+;; don't work in console/etc
+;; (setq which-key-allow-multiple-replacements t)
 
 ;; TODO: define a global minor mode where a *regexp* for the active major mode's
 ;; prefix is prepended to the which-key lookup
