@@ -340,6 +340,51 @@ compilation was initiated from compile-mode."
 ;; TODO: repology interactives/customs:
 ;; https://github.com/emacs-straight/repology/blob/master/repology.el
 
+;;*** Consult-GH
+
+(setq dc/clone-club (expand-file-name "gh" (or (getenv "_LANG") "/data/lang"))
+      consult-gh-default-clone-directory dc/clone-club)
+(unless (file-exists-p dc/clone-club)
+  (mkdir dc/clone-club))
+
+;; https://github.com/armindarvish/consult-gh
+
+(defun dc/load-consult-gh ()
+  "Load code for consult-gh. Req. reloading f1-f2 keybinds"
+
+  ;; req. cmdline gh tool :( but otherwise really cool. I've never used that bc
+  ;; of the cookie storage. making an alias that uses something like <(gpg ...)>
+  ;; may work, but it may be a bad idea. the API doesn't yet integrate with
+  ;; 'auth-secrets or `pass`, though it probably could
+  (setup (:pkg consult-gh :straight t :type git :host github
+               :repo "armindarvish/consult-gh" :branch "main")
+
+    ;; TODO customize consult-gh-default-orgs-list (for M-x consult-gh-default-repos)
+
+    (:option consult-gh-large-file-warning-threshold 2500000
+             consult-gh-prioritize-local-folder 'suggest
+
+             consult-gh-forge-timeout-seconds 12
+
+             ;; preview gh on demand (avoids large files)
+             consult-gh-show-preview t
+             consult-gh-preview-key "M-o"
+             ;; consult-gh-preview-buffer-mode 'org-mode ;preview in org
+
+             ;; do things in emacs
+             consult-gh-issue-action #'consult-gh--issue-view-action
+             consult-gh-repo-action #'consult-gh--repo-browse-files-action
+             consult-gh-file-action #'consult-gh--files-view-action)
+
+    (with-eval-after-load 'forge
+      (require 'consult-gh-forge))
+    (with-eval-after-load 'embark
+      (require 'consult-gh-embark)))
+
+  (with-eval-after-load 'consult-gh
+    (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list)
+    (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list)))
+
 ;;*** Sr.ht
 (setup (:pkg srht)
   (:option srht-username user-mail-address))

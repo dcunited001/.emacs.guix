@@ -271,7 +271,22 @@
    "<f2> 0f" #'0x0-upload-file
    "<f2> 0k" #'0x0-upload-kill-ring
    "<f2> 0p" #'0x0-popup
-   "<f2> 0u" #'0x0-shorten-uri))
+   "<f2> 0u" #'0x0-shorten-uri)
+
+  (when (featurep 'consult-gh)
+    (general-define-key
+     :keymaps '(global help)
+     :wk-full-keys nil
+     :prefix "<f1>"
+     ;; use #'embark-select with SPC for embark integration
+     "<f2> g" '(:ignore t :which-key "GH")
+     "<f2> gc" #'consult-gh-repo-clone
+     "<f2> gf" #'consult-gh-find-file
+     "<f2> g M-f" #'consult-gh-repo-fork
+     "<f2> gi" #'consult-gh-search-issues
+     "<f2> go" #'consult-gh-orgs
+     "<f2> gr" #'consult-gh-search-repos
+     "<f2> gR" #'consult-gh-default-repos)))
 
 (defun dc/init-keybinds-help ()
   (dolist (pfx '("C-h" "<f1>"))
@@ -510,7 +525,8 @@
 (general-define-key
  :keymaps 'global
 
- "C-x C-d" #'consult-dir
+ "C-x d" #'consult-dir
+ "C-x C-d" #'dired
  "C-s" #'consult-line
  "C-M-j" #'consult-buffer
  "C-M-l" #'consult-imenu
