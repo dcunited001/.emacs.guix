@@ -278,10 +278,6 @@
 
 ;;** Editor
 
-;; Better Defaults
-(setup (:pkg better-defaults)
-  (:option confirm-kill-emacs 'yes-or-no-p))
-
 ;;*** Indentation
 
 (setq-default tab-width 2

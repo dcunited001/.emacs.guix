@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: setupguix
+# key: <pkg<g
+# uuid: setup-pkg-guix
+# group: setup.el
+# --
+(setup (:pkg ${1:"package or feature"})
+ (:option $0))

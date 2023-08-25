@@ -87,9 +87,8 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'config
-   (list->vlist '("emacs-better-defaults"
+   (list->vlist '(
                   ;; "emacs-gcmh" ;; hmmmmm
-
                   ))
    guix-emacs-vhash))
 

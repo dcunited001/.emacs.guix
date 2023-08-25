@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: $1
+# key: ${2:${1:$(yas--key-from-desc yas-text)}}
+# uuid: $1
+# group: 
+# --
+$0`(yas-escape-text yas-selected-text)`

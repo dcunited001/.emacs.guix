@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: setupstraight
+# key: <pkg<str
+# uuid: setup-pkg-straight
+# group: setup.el
+# --
+(setup (:pkg ${1:"package or feature"} :straight t :type git :flavor melpa
+       :host ${2:$$(yas-choose-value '("github" "gitlab" "bitbucket" "sourcehut" "codeberg" "nil"))}
+       :repo $3)
+ (:option $0))
