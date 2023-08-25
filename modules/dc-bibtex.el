@@ -111,14 +111,8 @@ be explicitly required after loading"
 
 ;; https://github.com/emacs-citar/citar
 (setup (:pkg citar)
-  (:option citar-library-paths (list dc/aca-papers-directory
-                                     dc/aca-doi-directory
-                                     dc/aca-texts-directory
-                                     dc/aca-books-directory)
-           citar-bibliography (list dc/aca-texts-bibtex
-                                    dc/aca-papers-bibtex
-                                    dc/aca-books-bibtex
-                                    dc/aca-doi-bibtex)
+  (:option citar-library-paths dc/aca-library-paths
+           citar-bibliography dc/aca-bibtex-paths
            org-cite-insert-processor 'citar
            org-cite-follow-processor 'citar
            org-cite-activate-processor 'citar)
@@ -128,14 +122,13 @@ be explicitly required after loading"
     (:hook citar-capf-setup)))
 
 (defun dc/setup-citar ()
-  (add-to-list 'org-roam-capture-templates
-               `("n" "literature note" plain
-                 "%?"
-                 :target
-                 (file+head
-                  "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
-                  "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")
-                 :unnarrowed t))
+  (add-to-list
+   'org-roam-capture-templates
+   `("n" "notes" plain "%?" :unnarrowed t
+     :target
+     (file+head
+      "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
+      "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")))
   (citar-org-roam-mode))
 
 

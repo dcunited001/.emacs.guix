@@ -163,7 +163,7 @@ Guix channel.")
 
 (let ((aca-root (xdg-user-dir "DOCUMENTS"))
       (aca-notes (xdg-user-dir "DOCUMENTS")))
-  (setq citar-org-roam-subdir "notes"
+  (setq citar-org-roam-subdir "noter"
         dc/aca-notes-path (expand-file-name citar-org-roam-subdir org-roam-directory)
         dc/aca-texts-directory (expand-file-name "text" aca-root)
         dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
@@ -182,10 +182,7 @@ Guix channel.")
                                   dc/aca-books-bibtex
                                   dc/aca-doi-bibtex)))
 
-(dolist (el (list dc/aca-texts-bibtex
-                  dc/aca-papers-bibtex
-                  dc/aca-books-bibtex
-                  dc/aca-doi-bibtex))
+(dolist (el dc/aca-bibtex-paths)
   (unless (file-exists-p el)
     ;; (f-touch el)
     (warn "Bibtex: file does not exist %s. See 'dc-bibtex" el)))
