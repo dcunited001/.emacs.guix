@@ -92,6 +92,56 @@
 ;; and if you buy right now, we'll double your function keys
 ;; chromebooks and macbooks not applicable
 
+;;* Which Keys
+
+;;** Special Keys
+
+;; NOTE: which-keys-special-keys will assemble a regexp like the following
+;;       which, in the which-keys--propertize-key, matches on the "key"
+
+;; "\\(!\\|@\\|&\\|_\\|1\\|2\\|3\\|4\\|5\\|6\\|7\\|8\\| ...
+
+;; NOTE: which-key-local-map-descriptions-face highlights what's listed
+;;       on the (current-local-map) keymap
+
+(setup (:pkg which-key)
+  (:option which-key-side-window-location 'bottom ;; 'top
+           which-key-frame-max-height 20          ; default
+           which-key-min-display-lines 8
+           which-key-popup-type 'side-window ; default
+           ;; also: 'custom 'frame (not a child frame for me)
+           ;; 'minibuffer (probably inconsistent with consult)
+           which-key-special-keys
+           '("M" "C" "C-M" "H"  ;only highlights commands starting with modkey
+             ;; regexp cause problems here "*" "^"
+             "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ;; "-" "="
+             ;; "10" "11" "12" ;; bc function keys
+             ;; and the vowels (to visually space)
+             "a" "e" "i" "o" "u" "y"
+             "A" "E" "I" "O" "U" "Y"))
+  (:with-hook ef-themes-post-load-hook
+    (:hook (lambda ()
+             (dc/update-face 'which-key-separator-face
+                             'epa-string)
+             (dc/update-face 'which-key-local-map-description-face
+                             'ef-themes-heading-5)))))
+
+;; TODO: define a global minor mode where a *regexp* for the active major mode's
+;; prefix is prepended to the which-key lookup
+
+;; (defun dc/learn-good-mode- (rx mode-name)
+;;   "highlight the major modes functions in which-key"
+;;   ;; use major-mode to get symbol, then extract the prefix, use (rx ...)
+;;   ;; prepend to which-key-highlighted-command-list
+;; )
+
+;; TODO: custom sorting is possible by creating a new comparator with
+;;       potentially a new (performant) which-key--{string,description}<
+
+;; which-key-key-order
+
+;; TODO: customize which-key-group-description-face to include background
+
 ;;* Keys
 
 ;;** Help

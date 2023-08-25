@@ -124,7 +124,7 @@
     (:hook ;; #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))
      (lambda () (ef-themes-select (car ef-themes-to-toggle))))))
 
-(defun dc/swap-face (face1 face2)
+(defun dc/update-face (face1 face2)
   "Swap `face1' with the spec of `face2'."
 
   ;; TODO: won't survice swapping themes

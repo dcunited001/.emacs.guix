@@ -162,7 +162,7 @@ Guix channel.")
 ;; get straight to avoid fetching these (i'm hoping it will build against the
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
-(let ((deps-from-guix '(pdftools org)))
+(let ((deps-from-guix '(pdftools org which-key)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 

@@ -87,7 +87,7 @@
 
 (setup shortdoc
   (:with-hook ef-themes-post-load-hook
-    (:hook (lambda () (dc/swap-face 'shortdoc-section 'ef-themes-heading-3)))))
+    (:hook (lambda () (dc/update-face 'shortdoc-section 'ef-themes-heading-3)))))
 
 (with-eval-after-load 'shortdoc
 
