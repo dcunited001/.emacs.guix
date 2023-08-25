@@ -188,6 +188,12 @@
 
    "<f2> h" #'shortdoc
 
+   ;; lookups
+   "<f2> l" '(:ignore t :which-key "LOOKUP")
+   "<f2> ln" '(:ignore t :which-key "NIST")
+   "<f2> lnf" #'nist-webbook-formula
+   "<f2> lnn" #'nist-webbook-name
+
    "<f2> O" #'aw-show-dispatch-help
 
    ;; "<f2> p"  '(:ignore t :wk "POPUP")
@@ -1185,7 +1191,61 @@
 ;; "5" . "in other frame")))
 
 ;;*** q QUIT
-;;*** r REMOTE
+
+;;*** r REF
+
+(leader-def
+  :keymaps '(org-mode-map latex-mode-map)
+  :wk-full-keys nil
+  "r" '(:ignore t :which-key "REF")
+  ;; "r]" #'org-ref-insert-cite-link
+  ;; "r]" #'org-ref-insert-cite-link
+  "r]" #'org-ref-insert-cite-link
+
+  ;; TODO: google scholar? (mostly in hydra)
+
+  ;; org-link: adds arxiv
+  "ra" '(:ignore t :which-key "arXiv")
+  "rab" #'arxiv-get-pdf-add-bibtex-entry
+  "raB" #'arxiv-add-bibtex-entry
+  "rap" #'arxiv-get-pdf
+
+  "rb" '(:ignore t :which-key "bibtex")
+  "r M-b" #'org-ref-build-full-bibliography
+
+  "rd" '(:ignore t :which-key "doi")
+
+  "rh" '(:ignore t :which-key "hydras")
+  "rhb" #'org-ref-bibtex-hydra/body
+  "rhc" #'org-ref-citation-hydra/body
+  "rhd" #'doi-link-follow/body
+  "rhi" #'org-ref-insert-link-hydra/body
+  "rhS" #'scopus-hydra/body
+
+  "ri" '(:ignore t :which-key "isbn")
+  "rib" #'isbn-to-bibtex
+  "ril" #'isbn-to-bibtex-lead
+  "ric" #'org-ref-isbn-clean-bibtex-entry
+  "rio" #'isbn-to-bibtex-open-library
+
+  ;; org-link: adds pmid, pmcid, nihmsid, pubmed-search, pubmed-clinical
+  "rp" '(:ignore t :which-key "pubmed")
+  "rpp" #'pubmed
+  "rpC" #'pubmed-clinical-search
+  "rpC" #'pubmed-clinical
+  "rps" #'pubmed-simple-search
+  "rpS" #'pubmed-advanced
+
+  ;; org-link: adds eid, scopus-search, scopus-advanced-search, scopusid
+  "rS" '(:ignore t :which-key "scopus")
+  "rSs" #'scopus-basic-search
+  "rSS" #'scopus-advanced-search
+  "rSe" #'scopus-open-eid
+  "rSa" #'scopus-related-by-author-url
+  "rSk" #'scopus-related-by-keyword-url
+  "rSr" #'scopus-related-by-references-url)
+
+;; Doom: REMOTE
 
 ;;       (:when (modulep! :tools upload)
 ;;        (:prefix-map ("r" . "remote")

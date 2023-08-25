@@ -135,7 +135,6 @@ Guix channel.")
 (setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
       org-roam-file-extensions '("org")
       org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
-      citar-org-roam-subdir "notes"
       org-roam-directory (thread-first org-roam-directory
                                        (expand-file-name org-directory)
                                        (file-truename)
@@ -162,8 +161,11 @@ Guix channel.")
 ;;   they're doing here and typically leave notes wherever. doesn't
 ;;   matter. </joking>
 
-(let ((aca-root (xdg-user-dir "DOCUMENTS")))
-  (setq dc/aca-texts-directory (expand-file-name "text" aca-root)
+(let ((aca-root (xdg-user-dir "DOCUMENTS"))
+      (aca-notes (xdg-user-dir "DOCUMENTS")))
+  (setq citar-org-roam-subdir "notes"
+        dc/aca-notes-path (expand-file-name citar-org-roam-subdir org-roam-directory)
+        dc/aca-texts-directory (expand-file-name "text" aca-root)
         dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
         dc/aca-papers-directory (expand-file-name "papers" aca-root)
         dc/aca-papers-bibtex (expand-file-name "noter/papers.bib" org-roam-directory)
@@ -202,7 +204,7 @@ Guix channel.")
 ;; get straight to avoid fetching these (i'm hoping it will build against the
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
-(let ((deps-from-guix '(pdftools org which-key embark consult corfu
+(let ((deps-from-guix '(pdftools org which-key hydra embark consult corfu
                                  cape vertigo marginalia orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
@@ -237,6 +239,7 @@ Guix channel.")
 
 (require 'dw-org)
 (require 'dc-org)
+(require 'dc-bibtex)
 
 ;;*** Dev
 
