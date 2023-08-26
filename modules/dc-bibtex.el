@@ -30,10 +30,20 @@
 ;; - https://git.sr.ht/~plattfot/emacs-plt/tree
 ;; - also has useful embark functionality
 
+;; (string-join (mapcar #'file-name-directory dc/aca-bibtex-files) ":")
+
+(setup (:pkg oc)
+  (:option org-cite-global-bibliography dc/aca-bibtex-files))
+
+;; also: oc-basic, oc-csl, oc-bibtex, oc-natbib, oc-biblatex
+
 (setup bibtex
-  (:option bibtex-completion-bibliography (list dc/aca-papers-bibtex)
-           bibtex-completion-library-path (list dc/aca-papers-directory)
+  (:option bibtex-completion-bibliography dc/aca-bibtex-files
+           bibtex-completion-library-path dc/aca-library-paths
            bibtex-completion-notes-path dc/aca-notes-path
+           bibtex-file-path dc/aca-notes-path
+
+           ;; TODO template for org-bibtex-type :book and maybe :techmanual
            bibtex-completion-display-formats
 
            '((article
@@ -47,7 +57,6 @@
              (t
               . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))
 
-           bibtex-completion-notes-path (expand-file-name citar-org-roam-subdir org-roam-directory)
            bibtex-completion-notes-template-multiple-files "\
 #+TITLE: ${title}
 #+ROAM_KEY: cite:${=key=}
@@ -63,7 +72,7 @@
 :END:
 
 # :NOTER_DOCUMENT: %s${=key=}.pdf
-" ;; (file-name-as-directory dc/aca-papers-directory)
+" ;; (file-name-as-directory dc/aca-articles-directory)
 
            bibtex-autokey-year-length 4
            bibtex-autokey-name-year-separator "-"
@@ -80,8 +89,8 @@
 
 ;; org-ref has removed its variable prefix:
 ;; org-ref-bibliography-notes org-roam-directory
-;; org-ref-default-bibliography (list dc/aca-papers-bibtex)
-;; org-ref-pdf-directory dc/aca-papers-directory
+;; org-ref-default-bibliography (list dc/aca-articles-bibtex)
+;; org-ref-pdf-directory dc/aca-articles-directory
 ;; reftex-default-bibliography org-ref-default-bibliography
 
 (defun dc/reload-org-ref-hydras ()
@@ -111,8 +120,11 @@ be explicitly required after loading"
 
 ;; https://github.com/emacs-citar/citar
 (setup (:pkg citar)
-  (:option citar-library-paths dc/aca-library-paths
-           citar-bibliography dc/aca-bibtex-paths
+  (:option citar-org-roam-subdir (file-name-base dc/aca-notes-path)
+           citar-library-paths dc/aca-library-paths
+           ;; citar-library-file-extensions: filters possible files more quickly
+           citar-bibliography dc/aca-bibtex-files
+           citar-notes-paths (list dc/aca-notes-path)
            org-cite-insert-processor 'citar
            org-cite-follow-processor 'citar
            org-cite-activate-processor 'citar)
@@ -121,17 +133,22 @@ be explicitly required after loading"
   (:with-hook org-mode-hook
     (:hook citar-capf-setup)))
 
+;; TODO: citar indicator icons?
+;; https://github.com/emacs-citar/citar/tree/main#indicators
+
+;; TODO: get citar template to supply the PDF to the :NOTER_DOCUMENT: tag
+
 (defun dc/setup-citar ()
   (add-to-list
    'org-roam-capture-templates
-   `("n" "notes" plain "%?" :unnarrowed t
+   `("nc" "Note: Citar" plain "%?" :unnarrowed t
      :target
      (file+head
-      "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
-      "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")))
+      "noter/${citar-citekey}.org"
+      "#+title: (${citar-date}) ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n+ file :: ${citar-citekey}.pdf\n\n* Notes\n:PROPERTIES:\n:END:\n\n")))
   (citar-org-roam-mode)
-  (require 'citar-embark))
-
+  (require 'citar-embark)
+  (citar-embark-mode))
 
 ;; `("n" topics
 ;;   plain "%?" :unnarrowed t
@@ -143,7 +160,7 @@ be explicitly required after loading"
 ;; https://github.com/emacs-citar/citar-org-roam
 (setup (:pkg citar-org-roam)
   (:option citar-org-roam-note-title-template "${title} - ${author}"
-           citar-org-roam-capture-template-key "n"))
+           citar-org-roam-capture-template-key "nc"))
 
 (with-eval-after-load 'citar
   (with-eval-after-load 'org-roam

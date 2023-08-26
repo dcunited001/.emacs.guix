@@ -22,6 +22,20 @@
 
 ;;* Shim
 
+;;** PDF View
+
+;; TODO: figure out what generated this in auto-mode-alist
+;; PDF's need to open in pdf-view-mode to generate skeletons
+
+;; ("\\.\\(?:PDF\\|EPUB\\|CBZ\\|FB2\\|O?XPS\\|DVI\\|OD[FGPST]\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|epub\\|cbz\\|fb2\\|o?xps\\|djvu\\|dvi\\|od[fgpst]\\|docx\\|xlsx?\\|pptx?\\)\\'" . doc-view-mode-maybe)
+
+;; (add-to-list 'auto-mode-alist `(,(rx ".pdf'") . pdf-view-mode))
+;;
+
+;; (setq org-noter-supported-modes '(pdf-view-mode doc-view-mode nov-mode djvu-read-mode))
+
+;; (setq org-noter-supported-modes '(pdf-view-mode nov-mode djvu-read-mode))
+
 ;;** Treesitter Auto Mode Alist
 
 ;; TODO: perhaps add yaml-ts-mode to extant snippets

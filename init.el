@@ -151,7 +151,7 @@ Guix channel.")
 
 ;;**** Org Ref & Bibtex
 
-;; TODO refactor slim down (auto def symbols, create paths if aca-root exists)
+;; TODO refactor slim down (auto def symbols, create paths if dc/aca-doc-root exists)
 ;;
 ;; - may need to ensure that the doi's exist. a macro would help, but i just
 ;;   need to determine how the file/db structure would accommodate changes
@@ -161,28 +161,31 @@ Guix channel.")
 ;;   they're doing here and typically leave notes wherever. doesn't
 ;;   matter. </joking>
 
-(let ((aca-root (xdg-user-dir "DOCUMENTS"))
-      (aca-notes (xdg-user-dir "DOCUMENTS")))
-  (setq citar-org-roam-subdir "noter"
-        dc/aca-notes-path (expand-file-name citar-org-roam-subdir org-roam-directory)
-        dc/aca-texts-directory (expand-file-name "texts" aca-root)
-        dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
-        dc/aca-papers-directory (expand-file-name "papers" aca-root)
-        dc/aca-papers-bibtex (expand-file-name "noter/papers.bib" org-roam-directory)
-        dc/aca-books-directory (expand-file-name "books" aca-root)
-        dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
-        dc/aca-doi-directory (expand-file-name "doi" aca-root)
-        dc/aca-doi-bibtex (expand-file-name "noter/doi.bib" org-roam-directory)
-        dc/aca-library-paths (list dc/aca-texts-directory
-                                   dc/aca-papers-directory
-                                   dc/aca-books-directory
-                                   dc/aca-doi-directory)
-        dc/aca-bibtex-paths (list dc/aca-texts-bibtex
-                                  dc/aca-papers-bibtex
-                                  dc/aca-books-bibtex
-                                  dc/aca-doi-bibtex)))
+(setq dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
 
-(dolist (el dc/aca-bibtex-paths)
+      ;; see 'org-bibtex-types for the 14 official types
+      ;; dc/aca-bibtex-types (list :article :book :techreport :manual)
+      dc/aca-subpaths (list "articles" "books" "texts")
+
+      ;; both citar and org-ref want these to end in a slash
+      ;; citar magically agrees on on the citekey org-ref uses to create PDF's
+      dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
+
+      dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
+      dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
+      dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
+      dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
+      dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
+      dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
+
+      dc/aca-library-paths (list dc/aca-texts-directory
+                                 dc/aca-articles-directory
+                                 dc/aca-books-directory)
+      dc/aca-bibtex-files (list dc/aca-texts-bibtex
+                                dc/aca-articles-bibtex
+                                dc/aca-books-bibtex))
+
+(dolist (el dc/aca-bibtex-files)
   (unless (file-exists-p el)
     ;; (f-touch el)
     (warn "Bibtex: file does not exist %s. See 'dc-bibtex" el)))
@@ -201,8 +204,8 @@ Guix channel.")
 ;; get straight to avoid fetching these (i'm hoping it will build against the
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
-(let ((deps-from-guix '(pdftools org which-key hydra embark consult corfu
-                                 cape vertigo marginalia orderless kind-icon)))
+(let ((deps-from-guix '(pdf-tools org which-key hydra embark consult corfu
+                                  cape vertigo marginalia orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 

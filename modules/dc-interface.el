@@ -287,6 +287,8 @@
 
 (setq-default fill-column 80)
 
+(global-display-fill-column-indicator-mode)
+
 ;;**** Visual Fill Column
 
 (setup (:pkg visual-fill-column)
@@ -443,6 +445,10 @@
              docker-container-mode
              docker-volume-mode
              docker-network-mode)))
+
+;; ** PDF Tools
+
+(setup (:pkg pdf-tools))
 
 ;; (add-to-list 'window-buffer-change-functions #'dc/speedbar-refresh-if-open)
 ;; (advice-add 'window-change :after #'speedbar-refresh)

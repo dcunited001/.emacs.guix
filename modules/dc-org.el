@@ -330,12 +330,22 @@
 
 ;; TODO org-noter-default-notes-file-names (paths to search)
 ;; or use prefix args
+(defun dc/org-init-noter-h ()
 
-(setup (:pkg org-noter :straight t :type git :flavor melpa
-             :host github
-             :repo "org-noter/org-noter"
-             :files ("*.el" "modules" "org-noter-pkg.el"
-                     (:exclude "*-test-utils.el" "*-devel.el"))))
+  ;; TODO: ensure that pdf-view-mode preceeds the doc-view-mode entry in
+  ;; auto-mode-alist (if not, outline can be extracted after switching to
+  ;; pdf-view-mode, but org-noter isn't aware of the change)
+
+  ;; TODO: does this need 'org-pdftools?
+
+  (setup (:pkg org-noter :straight t :type git :flavor melpa
+               :host github
+               :repo "org-noter/org-noter"
+               :files ("*.el" "modules" "org-noter-pkg.el"
+                       (:exclude "*-test-utils.el" "*-devel.el")))
+    (:option org-noter-notes-search-path dc/aca-notes-path)
+    (with-eval-after-load 'org-noter
+      (require 'org-noter-pdf))))
 
 ;;*** Roam
 
@@ -398,29 +408,30 @@
     ;; [[file:/data/ecto/x.files/plattfot/emacs/init.el]]
     ;; [[file:/data/ecto/x.files/sunnyhasija/doom/config.org]]
     ;;
+    ;; check (cl-defstruct (org-roam-note ...)) for valid keys to substitute
     (setq org-roam-capture-templates
           (append
-           '(("d" "default"
+           '(("n" "Note")
+             ("d" "Default"
               plain "%?" :unnarrowed t
               :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n"))
-             ("p" "projects"
+             ("p" "Project"
               plain "%?" :unnarrowed t
               :target (file+head
                        "projects/${slug}.org"
                        "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n"))
-             ("t" "topics"
+             ("t" "Topic"
               plain "%?" :unnarrowed t
               :target (file+head+olp
                        "topics/${slug}.org"
                        "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n"
                        ("Roam" "Docs" "Resources" "Topics" "Issues")))
-             ("c" "code"
+             ("c" "Code"
               plain "%?" :unnarrowed t
-              :target (file+head+olp
+              :target (file+head
                        "code/${slug}.org"
-                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n"
-                       ("Roam" "Docs" "Resources" "Issues" "Projects"))))
-           `(("s" "slips"
+                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n")))
+           `(("z" "Zettel"
               plain "%?" :unnarrowed t
               :target (file+head+olp
                        "slips/%<%Y%m%d%H%M%S>-${slug}.org"
@@ -830,6 +841,7 @@
   (dc/org-init-org-directory-h)
   (dc/org-init-appearance-h)
   (dc/org-init-agenda-h)
+  (dc/org-init-noter-h)
   (dc/org-init-roam-h)
   (dc/org-init-attachments-h)
   (dc/org-init-babel-h)
