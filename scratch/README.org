@@ -1,0 +1,40 @@
+#+TITLE:     Snippets
+#+AUTHOR:    David Conner
+#+EMAIL:     aionfork@gmail.com
+#+DESCRIPTION: notes
+
+These are snippets of mostly emacs-lisp. The idea is to iterate on them as
+extensions limited to a small set of domains, until they can be integrated more
+broadly across several domains.
+
+It took quite a bit of time to figure out this approach. Emacs lisp is about as
+convenient in emacs as the javascript console is in the browser. The scratch
+buffer is fairly obvious and I think necessary for lisp development, but it's
+not so clear that you should save your code iterations to reference later. There
+are so many random bits of the UI/UX to learn that it really helps to gradually
+save your progress.
+
+The =shortdoc= command also helps quite a bit in organizing snippets of
+emacs-lisp to develop a repertoire. I cannot for the life of me understand why I
+had so much success with clojure, but can't quickly upskill on emacs-lisp. It's
+not like it's that hard, it just feels like going from french to turkish or
+something.
+
+It's really a matter of learning the system by which emacs-lisp organizes its
+higher-order functions. All I want to do is map/reduce, thread first/last and
+r/fold. The equivalents here exist, but are tough for me to find what i'm
+looking for. Destructuring, overloading, reducers/transducers are first-class
+citizens in clojure, but emacs-lisp only has overloading via common lisp --
+cl-defgeneric and cl-defmethod.
+
+I'm also avoiding using the =dash.el= methods, since these are an "unnecessary
+abstraction" -- very convenient for personal code, but introducing that
+dependency in packages may result in reduced adoption of your packages. This is
+because, at the end of the day, the HoF methods from =dash.el= are /almost/
+one-to-one with emacs-lisp. Dash is also a great reference and I think a great
+library. However, for the same reasons that you may simply prefer Vanilla JS or
+ES6 over =underscore.js= or =jquery= -- better utilization/control over
+javascripts' options for performance like byte arrays and slicing -- then you
+may want to avoid such abstractions. If you want to reduce the complexity in
+memorizing functionality in emacs lisp, just learn the base API then the total
+complexity should be reduced.

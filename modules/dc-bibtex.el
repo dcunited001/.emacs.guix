@@ -129,7 +129,8 @@ be explicitly required after loading"
      (file+head
       "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
       "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")))
-  (citar-org-roam-mode))
+  (citar-org-roam-mode)
+  (require 'citar-embark))
 
 
 ;; `("n" topics

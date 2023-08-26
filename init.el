@@ -165,7 +165,7 @@ Guix channel.")
       (aca-notes (xdg-user-dir "DOCUMENTS")))
   (setq citar-org-roam-subdir "noter"
         dc/aca-notes-path (expand-file-name citar-org-roam-subdir org-roam-directory)
-        dc/aca-texts-directory (expand-file-name "text" aca-root)
+        dc/aca-texts-directory (expand-file-name "texts" aca-root)
         dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
         dc/aca-papers-directory (expand-file-name "papers" aca-root)
         dc/aca-papers-bibtex (expand-file-name "noter/papers.bib" org-roam-directory)
