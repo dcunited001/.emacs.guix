@@ -112,6 +112,25 @@
   (put 'minibuffer-history 'history-length 25)
   (put 'kill-ring 'history-length 25))
 
+;;**** Recursive Minibuffers
+
+;; fixes for vertico/consult
+(defun dc/crm-indicator (args)
+  "Set the indicator for `completing-read-multiple' status with `ARGS'."
+  (cons (format "[CRM%s] %s"
+                (replace-regexp-in-string
+                 "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                 crm-separator)
+                (car args))
+        (cdr args)))
+
+(advice-add #'completing-read-multiple :filter-args #'dc/crm-indicator)
+
+(setq enable-recursive-minibuffers t
+      minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
 ;;*** Themes
 (setup (:pkg ef-themes)
   (:option ef-themes-mixed-fonts t
@@ -330,7 +349,7 @@
 
 (setup (:pkg highlight-symbol)
   (:option highlight-symbol-idle-delay 0.5)
-  (:hook-into prog-mode))
+  (:hook-into fundamental-mode))
 
 ;;** Bookmarks
 
@@ -546,25 +565,62 @@
 
 ;;*** Vertico
 
+;;
+(setq vertico-multiform-categories
+      '((bookmark reverse grid)
+        (buffer reverse grid)           ; works for ido
+        (command reverse)
+        (consult-compile-error buffer)
+        ;; (consult-flymake-error)
+        (consult-grep buffer)
+        (consult-git-log-grep-result buffer)
+        (consult-info reverse)
+        ;; (consult-kmacro)
+        (consult-location buffer)
+        ;; (consult-imenu buffer)
+        (consult-man reverse grid (vertigo-cycle . t))
+        (consult-xref buffer)
+        (environment-variable reverse grid)
+        (expression reverse)                    ; for repeat-complex-command
+        (file reverse grid)
+        (imenu buffer)
+        (info-menu reverse grid)
+        (kill-ring reverse grid)
+        (minor-mode reverse)
+        (consult-org-heading reverse grid)
+        ;; not sure what symbol-help category refers to
+        (symbol-help reverse grid (vertico-grid-annotate . 20))
+        (theme reverse grid)
+        (unicode-name grid reverse)
+        (yasnippet grid reverse (vertico-cycle . t))
+        (t)))
+
+;; (consult-imenu buffer)
+
+;; fonts need adjustment, causes grid to be misaligned
+;; (file grid reverse (vertico-grid-annotate . 20))
+
+;; emojify-insert-emoji uses consult-line
+;; (emoji grid)
+
+;; (Man-completion-table ... )
+;; (Man reverse grid) ;also doesn't display grid
+;; (xref-location grid) ;doesn't display grid
+
+(setq vertico-multiform-commands
+      '(("flyspell-correct-*" grid reverse (vertico-grid-annotate . 20))
+        (org-refile grid reverse indexed)
+        (consult-yank-pop indexed)
+        ;; (consult-lsp-diagnostics)
+        (consult-flycheck reverse)
+        (consult-flymake reverse)))
+
 (setup (:pkg vertico)
   (vertico-mode)
+  (:option vertico-cycle t)
 
-  (:option vertico-cycle t
-           ;; this seems to be the default for me
-           ;; enable-recursive-minibuffers t
-           vertico-multiform-categories '((file grid)
-                                          (consult-location buffer)
-                                          (consult-grep buffer)
-                                          (minor-mode reverse)
-                                          (imenu buffer)
-                                          (t))
-           vertico-multiform-commands  '(("flyspell-correct-*" grid reverse)
-                                         (org-refile grid reverse indexed)
-                                         (consult-yank-pop indexed)
-                                         (consult-flycheck)
-                                         ;; (consult-lsp-diagnostics)
-                                         ))
-  (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
+  ;; TODO: this is still purple
+  ;; (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
 
   ;; from prot's video on files/dired
   ;;
@@ -580,10 +636,8 @@
     ;; handy when toggling vertico-grid-mode
     (:hook vertico-indexed-mode)))
 
-;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-;; Vertico commands are hidden in normal buffers.
-;; (setq read-extended-command-predicate
-;;       #'command-completion-default-include-p)
+;; TODO: double-check tramp remote configuration
+;; https://github.com/minad/vertico/tree/main#tramp-hostname-and-username-completion
 
 (defun vertico-quick-embark (&optional arg)
   "Embark on candidate using quick keys."
@@ -669,10 +723,14 @@
   (setq-local orderless-matching-styles '(orderless-literal)
               orderless-style-dispatchers nil))
 
+;; TODO: try as a buffer-local variable in various text-mode/prog-mode
+;; (setq completion-cycle-threshold 29)
+
 (setup (:pkg orderless)
   (require 'orderless)
   ;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
   (:option completion-styles '(orderless basic)
+           ;; completion-styles '(orderless+initialism basic)
            orderless-matching-styles '(orderless-prefixes
                                        ;; orderless-initialism
                                        orderless-regexp)
@@ -708,6 +766,8 @@
 (setup (:pkg consult)
   (require 'consult)
   (:also-load wgrep)
+  (:also-load consult-xref)
+  (:also-load consult-dir)
 
   (defun dw/get-project-root ()
     (when (fboundp 'projectile-project-root)
@@ -727,21 +787,25 @@
 
   ;; consult-narrow-key "C-=" ; doesn't work
   ;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
-  (:option consult-narrow-key "<f12> ="
-           consult-project-root-function #'dw/get-project-root
-           completion-in-region-function #'consult-completion-in-region)
+  (:option consult-narrow-key "<f12> ="))
 
-  (require 'consult-xref)
-
-  ;;  may need to be set per-mode if lsp/lispy/cider/geiser cause problems
-  (:option xref-show-xrefs-function 'consult-xref
-           xref-show-definitions-function 'consult-xref))
-
-;;*** Consult Workspaces
+;;**** Consult Workspaces
 
 (with-eval-after-load 'consult
+  (setq consult-project-root-function #'dw/get-project-root
+        completion-in-region-function #'consult-completion-in-region
+        consult-dir-project-list-function #'consult-dir-project-dirs
+
+        ;;  may need to be set per-mode
+        ;; if lsp/lispy/cider/geiser cause problems
+        xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  (consult-customize consult-theme :preview-key '(:debounce 0.2 any))
+
   ;; Hide full buffer list by default (still available with "b" prefix)
   (consult-customize consult--source-buffer :hidden t :default nil)
+  ;; (consult-customize consult--source-buffer)
 
   ;; Set consult-workspace buffer list
   (defvar consult--source-workspace
@@ -759,15 +823,13 @@
     "Set workspace buffer list for consult-buffer.")
   (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
-;;*** Consult Dir
-
-(with-eval-after-load 'consult
-  (setup (:pkg consult-dir)
-    (:option consult-dir-project-list-function nil)))
+;;**** Consult Flyspell
 
 (with-eval-after-load 'flyspell
   (setup (:pkg consult-flyspell :straight t :type git :flavor melpa
                :host gitlab :repo "OlMon/consult-flyspell")))
+
+;;**** Consult Yasnippet
 
 (with-eval-after-load 'yasnippet
   (setup (:pkg consult-yasnippet)
@@ -776,10 +838,24 @@
     )
   (consult-customize consult-yasnippet :preview-key '(:debounce 0.25 any)))
 
+;;**** Consult Magit
+
 (with-eval-after-load 'magit
   (setup (:pkg consult-git-log-grep :straight t :type git :flavor melpa
                :host github :repo "ghosty141/consult-git-log-grep")
     (:option consult-git-log-grep-open-function #'magit-show-commit)))
+
+;;**** Consult Recoll
+
+;; full-text search with control over indexing (req. config)
+;; https://www.lesbonscomptes.com/recoll/usermanual/usermanual.html
+(unless t
+  ;; try later
+  (with-eval-after-load 'consult
+    (setup (:pkg consult-recoll :straight t)
+      (:option consult-recoll-inline-snippets nil)
+      (require 'consult-recoll)
+      (consult-customize consult-recoll :preview-key "C-M-m"))))
 
 ;;*** Marginalia
 
@@ -788,6 +864,7 @@
                                    marginalia-annotators-light
                                    nil))
   (marginalia-mode))
+
 
 ;; TODO: dc/marginalia-annotators-reset
 ;; reset marginalia annotators to their default values
@@ -799,8 +876,7 @@
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
 
-(setup (:pkg cape)
-  )
+(setup (:pkg cape))
 
 (with-eval-after-load 'cape
   (dc/capf-fix<emacs-29))
@@ -819,7 +895,6 @@
 ;; TODO: capf: explicit key for completion
 
 ;; (keymap-global-set "C-c p e" (cape-interactive-capf #'elisp-completion-at-point))
-
 
 ;; if needed (integrate company completion into capf)
 ;; (setq-local completion-at-point-functions

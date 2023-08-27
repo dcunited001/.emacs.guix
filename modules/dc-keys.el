@@ -122,7 +122,11 @@
              ;; "10" "11" "12" ;; bc function keys
              ;; and the vowels (to visually space)
              "a$" "e" "i" "o" "u" "y"
-             "A$" "E" "I" "O" "U" "Y"))
+             "A$" "E" "I" "O" "U" "Y")
+           which-key-highlighted-command-list
+           `(
+             (,(rx string-start (or "consult-" "embark-")) 'ef-themes-heading-8)
+             (,(rx string-start (or "org-clock-")) 'ef-themes-heading-8)))
   (:with-hook ef-themes-post-load-hook
     (:hook (lambda ()
              (dc/update-face 'which-key-separator-face
@@ -363,7 +367,9 @@
   "T" #'tldr
   "<left>" #'winner-undo
   "<right>" #'winner-redo
-  "X M-e" #'esup)
+  "X M-e" #'esup
+
+  "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form")))
 
 ;;**** kmacro and
 
@@ -490,6 +496,24 @@
 
  "M-A" #'marginalia-cycle)
 
+;;*** Hilights (hi-lock)
+
+;; these hi-lock commands are all emacs native and in search-map by default
+;; M-s h .					highlight-symbol-at-point
+;; M-s h f					hi-lock-find-patterns
+;; M-s h l					highlight-lines-matching-regexp
+;; M-s h p					highlight-phrase
+;; M-s h r					highlight-regexp
+;; M-s h u					unhighlight-regexp
+;; M-s h w					hi-lock-write-interactive-patterns
+
+(general-define-key
+ :keymaps 'search-map
+
+ "h M-h" #'highlight-symbol
+ "h M-u" #'highlight-symbol-remove-all
+ "h M-U" #'highlight-symbol-remove-all)
+
 ;;*** Consult
 
 ;;**** remaps (consult)
@@ -587,8 +611,8 @@
  "o" #'consult-outline     ;; Alternative: consult-org-heading
  "m" #'consult-mark
  "k" #'consult-global-mark
- "i" #'consult-imenu
- "I" #'consult-imenu-multi
+ "i" #'consult-imenu-multi
+ "I" #'consult-imenu-multi              ;; duplicate
 
  "a" #'consult-org-agenda
 
@@ -611,9 +635,9 @@
  "G" #'consult-git-log-grep
  "M-g" #'consult-git-grep
  "i" #'consult-info
- "r" #'consult-ripgrep
  "k" #'consult-keep-lines
  "m" #'consult-man
+ "r" #'consult-ripgrep
  "s" #'consult-line-multi               ; "L"
  "M-s" #'consult-yasnippet
  "M-S" #'consult-yasnippet-visit-snippet-file
@@ -653,8 +677,7 @@
  "C-c \"" #'vertico-quick-exit
 
  "C-x C-d" #'consult-dir
- "C-x C-j" #'consult-dir-jump-file
- )
+ "C-x C-j" #'consult-dir-jump-file)
 
 ;;*** corfu-map
 
@@ -1358,6 +1381,7 @@
   "ts" #'flyspell-mode
   "tv" #'visual-line-mode
   "tV" #'visual-fill-column-mode
+  "t C-v" #'vertico-multiform-mode
   "t M-v" #'visible-mode
   ;; "tw" #'visual-line-mode
   ;; "tw" #'+word-wrap-mode
