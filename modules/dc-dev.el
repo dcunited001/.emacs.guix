@@ -336,9 +336,8 @@ compilation was initiated from compile-mode."
 (setup (:pkg forge)
   (:option forge-pull-notifications t))
 
-(setup (:pkg repology))
-;; TODO: repology interactives/customs:
 ;; https://github.com/emacs-straight/repology/blob/master/repology.el
+(setup (:pkg repology))
 
 ;;*** Consult-GH
 

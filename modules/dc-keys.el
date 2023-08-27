@@ -206,7 +206,7 @@
    "<f2> T M-c" #'tramp-cleanup-all-connections
    "<f2> TM" #'tramp-compat-set-file-modes
 
-   "<f2> r" '(:ignore t :which-key "RELOAD")
+   "<f2> r" #'repology
 
    "<f2> t" '(:ignore t :which-key "THEME")
    "<f2> tr" #'ef-themes-load-random
