@@ -144,6 +144,7 @@ Guix channel.")
       ;; gets set by no-littering anyways
       ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
 
+      dc/org-roam-n-dailies 5
       dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
                                                    dc/emacs-d)
       dc/org-roam-dailies-template (expand-file-name "daily-default.org"

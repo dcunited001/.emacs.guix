@@ -445,7 +445,8 @@
     ;;             +org-roam-link-to-org-use-id)
     ;; (:hook turn-on-visual-line-mode)
     (:with-hook desktop-after-read-hook
-      (:hook org-roam-db-autosync-enable)))
+      (:hook org-roam-db-autosync-enable)
+      (:hook dc/init-org-agenda-files)))
 
   (setup (:pkg org-roam-ui)
     (:option org-roam-dailies-directory "dailies/"
@@ -466,6 +467,20 @@
 
   ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
   (advice-add #'org-roam-link-replace-at-point :override #'org-roam-link-replace-at-point-a))
+
+(defun dc/take-org-roam-dailies (n)
+  (let ((dailies-glob
+         (thread-last org-roam-directory
+                      (expand-file-name org-roam-dailies-directory)
+                      (expand-file-name "*.org"))))
+
+    (take n
+          (sort
+           (file-expand-wildcards dailies-glob "\d{4}-\d{2}-\d{2}.org$") #'string-greaterp))))
+
+(defun dc/init-org-agenda-files ()
+  (setq org-agenda-files
+        (dc/take-org-roam-dailies dc/org-roam-n-dailies)))
 
 (with-eval-after-load 'org-roam
   (setup (:pkg consult-org-roam :straight t :type git :flavor melpa

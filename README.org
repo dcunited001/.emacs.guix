@@ -58,14 +58,17 @@ For a more complete list of =.emacs.d= file paths, see these lines in
 Dependencies are loaded from guix first by a manifest and straight dependencies
 are loaded on top.
 
-**** TODO Setup manifest
+Update with a script like this
 
-**** TODO Activate profile
-
-+ guix shell will redo this anyways if there are changes, but unless you've run
-  =guix pull -p $profile= this is unlikely
-
-**** TODO Guix Shell
+#+headers: :var emacsg_manifest=(expand-file-name "emacs-g.scm" dc/emacs-d)
+#+headers: :var guix_manifest_dir=(expand-file-name "guix/manifests" (getenv "XDG_CONFIG_HOME"))
+#+headers: :tangle (expand-file-name ".bin/update-emacs-g" (getenv "HOME")) :tangle-mode (identity #o744)
+#+begin_src sh
+manifest=$emacsg_manifest
+guix_manifests=$guix_manifest_dir
+cp $manifest $guix_manifest_dir
+update-profiles "emacs-g"
+#+end_src
 
 *** Straight
 
@@ -79,109 +82,10 @@ font directories in =~/.guix-extra-profiles= is made available in fontconfig.
 
 *** =no-littering=
 
+This package ensures that most of your emacs-generated files like cache, history,
+etc end up inside =~/.emacs.g/etc= or =~/.emacs.g/var=
+
 ** Emacs Config
-
-*** Mixing Popper.el with Doom's Popups
-
-+ [[https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Zen-of-Buffer-Display.html][Zen of the Buffer Display]]
-+ [[https://www.gnu.org/software/emacs/manual/html_node/elisp/The-Zen-of-Buffer-Display.html][Displaying Buffers]]
-
-*Popper is simple and works great with almost zero config. It can:*
-
-- promote buffers to popups
-- narrow popup selection/manipulation to a context (project/etc)
-
-Extending Popper's behavior requires more understanding of emacs windows, frames
-and tabs. So, techniques like like surrounding function calls with let or using
-setf or creating functions to dispatch on context may be required.
-
-*Doom has more comprehensive configuration:*
-
-- the buffers you're likely to encounter are already spec'd out.
-- handles window/frame customizations.
-
-**** How Doom's code is loaded
-
-I just imported the extant =+popup= module code with minimal tweaks.
-
-While the Doom Emacs modeline and snippets packages are simple to utilize, there
-isn't a good way to cherry-pick packages/scripts from Doom Emacs.
-
-+ use-package, quelpa and straight do include features like =:files=,
-  =:includes= and =:build=, but Doom isn't a package AFAIK. Even if I could use
-  these, I don't want to risk building/running Doom's code unless I specify that
-  file/package.
-+ I don't have submodules and it's likely this will end up being a submodule.
-
-**** Some caveats
-
-#+begin_quote
-I really wouldn't have set out expecting to end up with a mixed config like
-this. I wouldn't try this in your init.el ... but for now, it should allow me to
-experiment with both popup systems.
-#+end_quote
-
-- As long as poppers config is at the end of display-buffer-alist (ACL?) then it
-  shouldn't affect buffer mgmt.
-- Doom's popup config should be mutually exclusive with popper's config --
-  i.e. each buffer potentially treated as a popup =default-buffer-alist=, should
-  only ever be handled by one system or the other.
-- Deactivating popper-mode will cl-remove =popper-display-control-h= from
-  display-buffer-alist. Popper won't run its dispatch, but its other
-  functionality will still be in tact.
-- Popper uses buffer-local variables to determine whether buffers are popups it
-  should manage. Using the keybinds from =popper-map= will cause it to adopt the
-  popups dispatched by doom's =+popup-display-buffer-stacked-side-window-fn=. If
-  =display-buffer-alist= ends with =popper-display-control-h=, Doom's dispatch
-  should pick it up.
-
-So (fingers crossed...) this config should work alright for now.  Besides the
-obvious overlapping regexp, there are two areas where unexpected state could
-arise:
-
-- Entries in =popper-reference-buffers= are specified by regexp or major mode.
-- Users can raise arbitrary buffers to be treated as popups.
-
-**** Problems
-
-+ Running =+set-popup-rules= updates =display-buffer-alist= but doesn't actually
-  change window placement. It initializes alright, but can't be changed
-  mid-session. =with-popup-rules= indicates that the state doesn't change.
-+ The =*Flycheck errors*= and =*Help*= buffers are configured to occupy the same
-  side. Opening the second popup buffer causes an invalid window configuration
-  that can't be closed.
-  + see [[https://github.com/emacs-mirror/emacs/blob/5ff018524c740c77215ddb5d5983dbfcadb05599/lisp/window.el#L1327-L1348][window.el#L1327-L1348]].
-    - The error is "Window %s has same side as window %s but no common parent"
-    - Workaround 2: just use =winner-undo= and then kill one of the buffers
-    - Workaround 2: run =window-toggle-side-windows= with =C-x w s= or =<f2> w s=
-      to unpop the window.
-      - However, killing one of the buffers still only allows interacting with
-        the window configuration via toggling the side windows. The error
-        persists.
-  + The problem doesn't originate with popper.el since =popper-popup-status=
-    is nil.
-    - My Doom =+popup.el= configuration is held together with duct tape and
-      popsicle sticks.
-  + What should happen: flycheck will generally stay open, then =*xref*=
-    buffers should become co-resident with it's window =:side= while flycheck
-    stays docked to leftmost side.
-    - what happens: nothing you do will close the windows.
-
-**** Notes on popups
-
-If you've never actually worked beside someone whose popups just work and you
-can't ask them about it, it's potentially a large source of friction. It makes
-sense for the kind of data or UI/UX interactions, but it's not your average
-window system. The semantics of window and frame are simple to get past.
-
-I just need the popups to work.  If my emacs session is fragile or if I can't
-depend on something being somewhere at a particular point, that's going to slow
-me down.  I need for the interface to feel familiar. With REPL-driven
-development, i need the popups/buffers under control.
-
-+ CIDER has lots of modes/buffers.
-+ LSP throws in another dozen or so buffer and window types.
-+ It's really nice when xref popups don't clutter your space.
 
 ** System Config
 
@@ -224,69 +128,44 @@ Run =M-x all-the-icons-install-fonts=
 
 *** Guix Home
 
-** TODO Describe CPU Pinning
-
-TL;DR: Emacs is single threaded: cache hits nice; any cache misses :( long gc
-
-+ emacs server should be pinned to a CPU
-  - clients should perhaps be pinned nearby (IPC?)
-  - Other tasks should avoid that CPU
-+ NUMA should be configured in bios and on system
-
-It probably won't help a ton, but it probably would make GC less noticeable,
-especially if you can guarantee that other processes don't compete for the pinned CPU core
-
-+ with [[https://www.amd.com/en/products/cpu/amd-ryzen-9-5950x][AMD 5950x]] (32 core, 8MB L2 and 64MB L3, it's probably somewhat
-  significant (esp. during GC, so thresholds could be higher)
-+ It's actually pretty nice that you can guarantee your IDE doesn't consume all
-  your resources.
-
-See [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Garbage-Collection.html][Garbage Collection]] for info
-  - #'garbage-collect :: runs GC and returns information about memory usage
-  - garbage-collection-messages :: indicates gc start/stop in messages buffer
-
-** TODO Other performance concerns
-
-How do bytecode/native compilation affect symbol names and memory footprint?
-
-+ Can these features reduce the time-to-GC?
-  - Yes, probably. The symbol representations/names /probably/ go away in
-    bytecode/nativecomp, but they are at least accessible when emacs-lisp
-    bytecode is made readable.
-+ Could other similar features/configs extend the life of single-threaded Emacs?
-
 * Notes
 
 ** Org Agenda
 
+*** Priorities
+
+I have 5 priorities configured.
+
 *** Capturing
 
 I attempt to capture as close to the context as possible, which is usually the
-project. I've imported some of the Doom Emacs capture templates, but I've borrowed
+project. I've imported some of the Doom Emacs capture templates.
 
-**** TODO ensure the above notes on org-capture have been properly implemented
+*** Agenda Files
+
+This will be initially set to =dc/org-roam-n-dailies=, which defaults
+to 5. This clears everything out.
+
+From there, the =todo.org= for projects can be appended.
 
 *** Refiling
 
+This is initially set as:
 
+#+begin_example emacs-lisp
+(setq org-refile-targets `((nil :maxlevel . 3)
+      (org-agenda-files :maxlevel . 2)
+      (org-default-notes-file :maxlevel . 2))
+      org-outline-path-complete-in-steps nil
+      org-refile-use-outline-path 'file)
+#+end_example
 
-**** TODO more robust control over refile targets (prefix args/etc)
+There should be an Inbox in each =todo.org= file, along with some top-level
+categories. For agenda files, two levels of headings are available in the
+=completing-read=.
 
-*** Agenda Files
-This will be initially set to none. This clears everything out. I've learned that =todo.org=
-
-**** TODO default to agenda-files being set to the last 3 org-roam-dailies
-
-only after I load the main desktop file
-
-*** Priorities
-I have 5 priorities configured.
-
-
-*** TODO finish org agenda configuration overview
-
-
-
+Other variants of =org-refile= commands can be created/used to allow for more
+control when needed.
 
 ** Learning Org Agenda
 
