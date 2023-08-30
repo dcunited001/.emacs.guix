@@ -125,15 +125,29 @@
 
 ;;*** M-x compile
 
-(defun dc/project-local-root ()
-  (and (project-current) (cdr (project-current))))
+(defun dc/project-local-root (&optional may-prompt)
+  ;; fails in a lot of cases
+  ;; (and (project-current) (cdr (project-current)))
+  (consult--default-project-function may-prompt))
+
+;; seemed to be needed to fix consult's project lookup when projects provided
+;; a vc-mode root
+;;
+;; (defun dc/consult-project-function (may-prompt)
+;;   (let ((proj (consult--default-project-function may-prompt)))
+;;     (cond
+;;      ((stringp proj) proj)
+;;      ((and (listp proj) (stringp (nth 1 proj)))
+;;       (nth 1 proj))
+;;      (t ))))
 
 (defun dc/compilation-start-alert (proc)
   ;; file-name-???
   (let* ((project-dir (nth 1 (reverse (file-name-split
-                                       (dc/project-local-root)))))
+                                       (dc/project-local-root t)))))
          (project-name (or project-dir "Emacs"))
-         (alert-body (format "(%s) compilation-start: %s"
+         ;; capital %S to properly escape from how (find-grep ...) reports event
+         (alert-body (format "(%s) compilation-start: %S"
                              project-name
                              (string-join (process-command proc) " ")))
          (alert-title (process-name proc)))
@@ -149,15 +163,19 @@
 ;;              `(,shell-command-switch ,command))
 ;; (start-file-process-shell-command (downcase mode-name) outbuf command)
 
+;; process-{name,command,environment}
+
 (defun dc/compilation-start-hook (proc)
   "Function called after starting a compilation. It gets passed PROC the
 result of either `comint-exec' or
 `start-file-process-shell-command' depending on whether the
 compilation was initiated from compile-mode."
 
-  ;; process-{name,command,environment}
-  (dc/compilation-start-alert proc))
-
+  ;; don't actually alert on find-grep events ... though that'd definitely break
+  ;; on a compilation if the escaping isn't escaped properly so it can be
+  ;; re-re-re-regexped
+  (when (not (derived-mode-p 'grep-mode))
+    (dc/compilation-start-alert proc)))
 
 (setup compile
   (:option compilation-scroll-output t

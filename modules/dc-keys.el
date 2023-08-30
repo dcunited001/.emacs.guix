@@ -1216,6 +1216,24 @@
  ;; "f" #'dc/instead-use-M-g
  "f" #'project-find-file)
 
+;;**** CMake
+
+;; applied to project-prefix-map
+
+;; "t" 'project-cmake-test
+;; "m" 'project-cmake-build
+;; "C" 'project-cmake-configure
+;; "s" 'project-cmake-shell
+;; "SK" 'project-cmake-select-kit
+;; "SE" 'project-cmake-edit-settings
+;; "SS" 'project-cmake-save-settings
+;; "SL" 'project-cmake-load-settings
+;; "U" 'project-cmake-debug
+
+
+
+
+
 ;; "p" . "project")
 ;;        :desc "Search project for symbol"   "." #'+default/search-project-for-symbol-at-point
 ;; "F" #'doom/find-file-in-other-project
@@ -1600,6 +1618,10 @@
 ;;           (:prefix ("v" . "var"))
 ;;           (:prefix ("w" . "wrap"))
 ;;           (:prefix ("3" . "ternary")))
+
+;;**** terraform-mode
+
+
 
 ;;*** text-mode
 

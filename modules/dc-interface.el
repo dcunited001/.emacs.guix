@@ -106,6 +106,7 @@
 ;; TODO: review savehist-file: .emacs.g/var/savehist.el
 (setup savehist
   (setq history-length 50)
+  (setq kill-ring-max 50)
   (savehist-mode 1)
 
   ;; Individual history elements can be configured separately
@@ -476,7 +477,7 @@
 
 ;;*** Modeline
 
-;; (column-number-mode)
+(column-number-mode)
 
 ;;*** Scrollbars
 
@@ -588,6 +589,7 @@
         (kill-ring reverse grid)
         (minor-mode reverse)
         (consult-org-heading reverse grid)
+        ;; (symbol)
         ;; not sure what symbol-help category refers to
         (symbol-help reverse grid (vertico-grid-annotate . 20))
         (theme reverse grid)
@@ -616,8 +618,9 @@
         (consult-flymake reverse)))
 
 (setup (:pkg vertico)
-  (vertico-mode)
-  (:option vertico-cycle t)
+  (:option vertico-cycle t
+           ;; resize-mini-frames t
+           resize-mini-windows t)
 
   ;; TODO: this is still purple
   ;; (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
@@ -628,9 +631,13 @@
   (:with-hook rfn-eshadow-update-overlay-hook
     (:hook #'vertico-directory-tidy))
 
+  ;; To check whether the minor mode is enabled in the current buffer,
+  ;; evaluate ‘(default-value 'vertico-multiform-mode)’.
+
   (:with-hook emacs-startup-hook
-    ;; different actions for left/right click
-    (:hook vertico-mouse-mode)
+    (:hook vertico-mode)
+    (:hook vertico-multiform-mode)
+    (:hook vertico-mouse-mode)         ;different actions for left/right click
 
     ;; numbers for prefix-based completion,
     ;; handy when toggling vertico-grid-mode
@@ -764,10 +771,12 @@
 ;;*** Consult
 
 (setup (:pkg consult)
+  (:option consult-async-min-input 3
+           consult-async-input-debounce 0.3
+           consult-async-input-throttle 0.5)
   (require 'consult)
   (:also-load wgrep)
   (:also-load consult-xref)
-  (:also-load consult-dir)
 
   (defun dw/get-project-root ()
     (when (fboundp 'projectile-project-root)
@@ -781,6 +790,10 @@
   ;; consult-preview-max-count 10
   ;; consult-preview-excluded-files '(regexp list...)
 
+  ;; TODO: update the text with the currently selected completion candidate
+  ;; (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
+
+
   ;; TODO: Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
@@ -789,12 +802,22 @@
   ;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
   (:option consult-narrow-key "<f12> ="))
 
-;;**** Consult Workspaces
+;;**** Consult Minibuffer Fix
+
+;; eval-expression uses (completion-in-region start end coll &optional pred)
+
+(defun dc/completion-in-region-function (&rest args)
+  (apply (if vertico-mode
+             #'consult-completion-in-region
+           #'completion--in-region)
+         args))
+
+(setq-default completion-in-region-function
+              #'dc/completion-in-region-function)
 
 (with-eval-after-load 'consult
-  (setq consult-project-root-function #'dw/get-project-root
-        completion-in-region-function #'consult-completion-in-region
-        consult-dir-project-list-function #'consult-dir-project-dirs
+  (setq consult-project-function nil ;; #'dw/get-project-root
+        ;; completion-in-region-function #'consult-completion-in-region
 
         ;;  may need to be set per-mode
         ;; if lsp/lispy/cider/geiser cause problems
@@ -822,6 +845,10 @@
 
     "Set workspace buffer list for consult-buffer.")
   (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
+(with-eval-after-load 'consult
+  (setup (:pkg consult-dir)
+    (:option consult-dir-project-list-function #'consult-dir-project-dirs)))
 
 ;;**** Consult Flyspell
 
