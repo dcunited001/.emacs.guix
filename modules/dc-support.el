@@ -37,6 +37,12 @@ This is a variadic `cl-pushnew'."
     `(dolist (,var (list ,@values) (with-no-warnings ,place))
        (cl-pushnew ,var ,place :test #'equal))))
 
+;;** Templates
+
+(defun dc/read-template-from-file (file)
+  (if (file-exists-p file) (org-file-contents file)
+    (error "* Template file %s not found" file)))
+
 ;;** ELD
 
 ;; projectile already has unserialize/deserialize to/from ELD
@@ -44,13 +50,15 @@ This is a variadic `cl-pushnew'."
 (defalias 'dc/eld-serialize 'projectile-serialize)
 (defalias 'dc/eld-unserialize 'projectile-unserialize)
 
-;;** Templates
+;;** Emacs Lisp
 
-(defun dc/read-template-from-file (file)
-  (if (file-exists-p file) (org-file-contents file)
-    (error "* Template file %s not found" file)))
+;;*** Pretty Print
 
-;;** Macros
+(defalias 'ppe #'pp-eval-last-sexp)
+(defalias 'ppel #'pp-emacs-lisp-code)
+(defalias 'ppme #'pp-macroexpand-last-sexp)
+
+;;*** Macros
 
 ;; NOTE: if parsing the body to extract bindings is necessary,
 ;; use macroexp-parse-body
@@ -69,6 +77,28 @@ along with KEYBIND, if present"
          (interactive)
          (setq ,name (not ,name)))
        ,(if keybind `(map! ,keybind #',toggle-sym)))))
+
+;;*** When Exec Found
+
+(defun dc/exec-found? (cmd &optional remote sym)
+  "Check for the presence of formatter command using exectable-find,
+preferring the value of sym if present"
+  (let ((cmd (or (bound-and-true-p sym) cmd)))
+    (executable-find cmd remote)))
+
+(defmacro dc/when-exec-found (formatter-cmd &optional formatter-sym &rest body)
+  "Return lambda that checks for an executable. Warn if executable
+doesn't exist."
+  `(lambda ()
+     (let ((remote? (file-remote-p default-directory)))
+       (if-let* ((formatter-loc (dc/exec-found? ,formatter-cmd
+                                                remote?
+                                                ,formatter-sym)))
+           ;; (progn
+           ;;   (warn "%s found" formatter-loc)
+           ;;   ,@body)
+           ,@body
+         (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
 
 ;;*** Toggle Variables
 

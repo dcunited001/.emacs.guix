@@ -22,9 +22,22 @@
 
 ;; Dev CPP
 
-;; ** Clang Projects
+;;** Clang Projects
 
-;; ** Bazel Projects
+;;** CMake Projects
+
+;;*** Project CMake
+
+;; https://github.com/juanjosegarciaripoll/project-cmake
+
+;; to integrate with eglot/clang
+(setup (:pkg project-cmake :straight t :type git
+             :host github :repo "juanjosegarciaripoll/project-cmake")
+  (require 'eglot)
+  (project-cmake-scan-kits)
+  (project-cmake-eglot-integration))
+
+;;** Bazel Projects
 
 ;; The hedronvision projects simply allow for the extraction of
 ;; compile_commands.json, which can then be used for eglot via clangd

@@ -71,6 +71,7 @@
         "^\\*\\([Hh]elp\\|Apropos\\)"
         "^\\*Warnings"
         "^\\*Backtrace"
+        "^\\*Edebug Backtrace"
         "^\\*Process List\\*"
         "^\\*\\(?:Proced\\|timer-list\\|Abbrevs\\|Output\\)\\*"
         "^\\*\\(?:Occur\\|unsent mail.*?\\|message\\)\\*"

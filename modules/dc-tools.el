@@ -184,7 +184,9 @@
 
 ;; mostly a major-mode only
 (setup (:pkg terraform)
-  (:option terraform-format-on-save t))
+  (:option terraform-format-on-save t)
+
+  (:hook #'eglot-ensure))
 
 ;;** Ansible
 
