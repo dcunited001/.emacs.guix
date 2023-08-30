@@ -173,6 +173,18 @@
    :wk-full-keys nil
    :prefix "<f1>"
    "<f2>" '(:ignore t :which-key "QUICK")
+
+   "<f2> a" '(:ignore t :which-key "ALERT")
+   "<f2> ao" #'alert--log-open-log
+   "<f2> a M-c" #'alert--log-clear-log
+   "<f2> ad" #'alert--log-enable-debugging
+   "<f2> aD" #'alert--log-disable-debugging
+   "<f2> al" #'alert--log-disable-logging
+   "<f2> aL" #'alert--log-enable-logging
+   "<f2> am" #'alert--log-enable-messaging
+   "<f2> aM" #'alert--log-disable-messaging
+
+
    "<f2> b" '(:ignore t :which-key "BUFFER ENV")
    "<f2> bd" #'buffer-env-describe
    "<f2> bu" #'buffer-env-update

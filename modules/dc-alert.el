@@ -22,14 +22,32 @@
 
 ;;* Alert
 
+;;** Notifications
+
+;; emacs built with d-bus and its socket are required
+
+(setup notifications)
+
+;;** Alert.el
+
 ;; main lib: https://github.com/jwiegley/alert
+
+(setup (:pkg alert)
+  (:option alert-default-style 'libnotify
+           alert-log-level 'normal))
 
 ;; alert-styles
 ;; 'notifications: bundled with emacs to be OS/WM-agnostic compatible with all
 ;; 'libnotify: works when notify-send is on the system
 ;; 'gntp: IRC bots https://github.com/tekai/gntp.el
+;; 'fringe: change fringe color
+;; 'modeline: change background color
 ;; 'custom: use (alert-define-style ...)
-(setup (:pkg alert)
-  (:option alert-default-style 'libnotify))
+
+;; NOTE: alert-add-rule adds to the alert-internal-configuration
+;; whereas modifying alert-user-configuration is separate
+
+;; the alert-style is dispatched on the plist values in the rules, so
+;; configuring things like category or mode is helpful
 
 (provide 'dc-alert)

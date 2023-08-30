@@ -61,7 +61,7 @@
 ;; {nntp:news.gmane.io} (opened)
 ;; {nnimap:imap.gmail.com} (opened)
 
-;;*** GNUS Startup Files
+;;*** Startup Files
 
 ;; don't read the newsrc file, but write to it
 (setq gnus-read-newsrc-file nil
@@ -69,16 +69,16 @@
       gnus-use-dribble-file t
       gnus-always-read-dribble-file t)
 
-;;*** GNUS Group
+;;*** Group
 
 
-;;*** GNUS Async
+;;*** Async
 (setq gnus-asynchronous t
       gnus-use-article-prefetch 20)
 
-;;*** GNUS Agent
+;;*** Agent
 
-;;*** GNUS Article
+;;*** Article
 (setq gnus-article-over-scroll nil
       gnus-article-show-cursor t
       gnus-html-frame-width 80
@@ -98,9 +98,9 @@
 ;;         "^X-Mailer:"))
 ;; (setq gnus-sorted-header-list gnus-visible-headers)
 
-;;*** GNUS Group
+;;*** Group
 
-;;*** GNUS Summary
+;;*** Summary
 
 (setup (:pkg gnus)
   ;; https://www.gnu.org/software/emacs/manual/html_mono/gnus.html#Changing-Servers
@@ -117,11 +117,18 @@
            )
 
   (:with-hook gnus-summary-mode-hook
-    (:hook bug-reference-mode)))
+    (:hook bug-reference-mode))
+
+  (:with-hook gnus-after-getting-new-news-hook
+    (:hook #'gnus-notifications)))
 
 (setup gnus-art
   (:with-hook gnus-article-mode-hook
     (:hook bug-reference-mode)))
+
+;;*** Notifications
+
+;;*** Interface
 
 ;; TODO (all-the-icons-gnus :type git :flavor melpa
 ;;                          :host github :repo "nlamirault/all-the-icons-gnus")
@@ -163,7 +170,9 @@
   (add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode)
 
   ;; send-mail-function is in the sendmail package
-  (setq send-mail-function 'smtpmail-send-it))
+  (setq send-mail-function 'smtpmail-send-it
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587))
 
 ;;** Debbugs
 ;; see debbugs.el manual for:
