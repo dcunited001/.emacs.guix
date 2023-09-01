@@ -381,7 +381,8 @@
   "<right>" #'winner-redo
   "X M-e" #'esup
 
-  "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form")))
+  "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form"))
+  "M-e" #'eval-last-sexp)
 
 ;;**** kmacro and
 
@@ -958,6 +959,11 @@
 
  ;; "cj" #'consult-eglot-symbols
  "cr" #'eglot-rename)
+
+
+;; TODO: eglot requires too many keystrokes
+;; (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)
+;; (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename)
 
 ;;*** e EVAL
 

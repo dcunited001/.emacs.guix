@@ -254,9 +254,44 @@ compilation was initiated from compile-mode."
          unless (treesit-language-available-p lang-key)
          do (treesit-install-language-grammar lang-key))
 
+;;*** Combobulate
+
+;; requires tempo,treesit
+
+;; https://github.com/mickeynp/combobulate
+(setup (:pkg combobulate :straight t :type git
+             :host github :repo "mickeynp/combobulate"
+             :files (:defaults)))
+
+;; TODO: setup combobulate for python-ts and yaml-ts
+
+;; TODO: decide on yaml-ts by default (setup major-mode-remap-alist)
+
+;; combobulate binds transient ui to C-c o o
+
 ;;** LSP/Eglot
 
 ;;*** Eglot
+
+(defun dc/eglot-organize-imports () (interactive)
+	     (eglot-code-actions nil nil "source.organizeImports" t))
+
+;; once hooked, eglot-managed-mode will toggle these
+(defun dc/eglot-setup-buffer ()
+  ;; generally: if depth <= 0, add-hook prepends and otherwise, it appends
+  ;; it defaults to zero.
+  (if (eglot-managed-p)
+      (progn
+        (add-hook 'before-save-hook #'eglot-format-buffer nil t)
+        (add-hook 'before-save-hook #'dc/eglot-organize-imports nil t))
+    (remove-hook 'before-save-hook #'dc/eglot-organize-imports t)
+    (remove-hook 'before-save-hook #'eglot-format-buffer t)))
+
+;; TODO: hook on eglot-managed-mode (via karthink & plt). gets eglot to work
+;; well with eldoc
+;;
+;; (setq eldoc-documentation-strategy
+;;       'eldoc-documentation-compose-eagerly)
 
 (setup (:pkg eglot)
   (:option eglot-autoshutdown t
@@ -273,9 +308,11 @@ compilation was initiated from compile-mode."
            ;; eglot-auto-display-help-buffer nil
            eglot-confirm-server-initiated-edits nil)
 
+  ;; TODO: maybe hook this (aphelia may need to be toggled off)
+  ;; (:with-hook eglot-managed-mode-hook
+  ;;   (:hook #'dc/eglot-setup-buffer))
+
   (require 'eglot)
-  (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)
-  (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename)
 
   ;; TODO: Is this needed now?
   (add-to-list

@@ -416,7 +416,7 @@
       message-confirm-send 'y-or-n-p
 
       ;; org
-      org-table-fix-formulas-confirm 'y-or-n-p
+      org-table-fix-formulas-confirm nil ;; 'y-or-n-p ; no default is no
 
       ;; lsp/eglot
       eglot-confirm-server-initiated-edits 'y-or-n-p
