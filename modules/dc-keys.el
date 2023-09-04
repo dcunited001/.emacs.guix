@@ -192,6 +192,9 @@
 
    "<f2> d" #'docker
 
+   ;; already accessible from docker
+   ;; "<f2> M-d" #'docker-compose
+
    "<f2> D" '(:ignore t :which-key "DESKTOP")
    "<f2> Ds" #'desktop-save-in-desktop-dir
    "<f2> DS" #'desktop-save

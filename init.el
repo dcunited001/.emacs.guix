@@ -256,6 +256,7 @@ Guix channel.")
 ;;*** System
 
 (require 'dc-tools)
+(require 'dc-dev-yaml)
 
 (require 'dc-latex)
 

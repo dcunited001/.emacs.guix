@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 ;;
 ;; Copyright © 2021 David Wilson
+;; Copyright © 2023 David Conner
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
 ;; of this software and associated documentation files (the “Software”), to deal
@@ -71,16 +72,7 @@
 (with-eval-after-load 'simple-httpd
   (add-to-list 'httpd-mime-types '("wasm" . "application/wasm")))
 
-(setup (:pkg yaml-mode)
-  ;; yaml-mode is already in auto-mode-alist
-  ;; (:file-match "\\.ya?ml\\'")
-  )
-
 (setup (:pkg jq-mode)
-  (:file-match "\\.jq\\'")
-  (:with-hook yaml-mode-hook
-    (lambda () (setq-local jq-interactive-command "yq"
-                           jq-interactive-font-lock-mode #'yaml-mode
-                           jq-interactive-default-options "--yaml-roundtrip"))))
+  (:file-match "\\.jq\\'"))
 
 (provide 'dc-dev-web)
