@@ -319,9 +319,7 @@ compilation was initiated from compile-mode."
    'eglot-server-programs
    '((js2-mode typescript-mode) .
      ("typescript-language-server" "--stdio")))
-  (add-to-list
-   'eglot-server-programs
-   '(python-mode . ("pylsp")))
+
   ;; TODO: c-mode-hook is hooked in c-mode-hook?
   ;; (:with-hook c-mode-hook
   ;;   (:hook eglot-ensure))
@@ -505,7 +503,6 @@ compilation was initiated from compile-mode."
                                      dc/apheleia-formatters))
 
   ;; setup formatters per mode
-  (add-to-list 'apheleia-mode-alist '(python-mode . yapf))
   ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
   (add-to-list 'apheleia-mode-alist '(lisp-data-mode . lisp-indent))
   (cl-dolist (aclang-mode dc/apheleia-clang-modes)

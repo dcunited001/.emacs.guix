@@ -102,7 +102,7 @@
         "^\\*Org-Babel"
         "^\\*Capture\\*$\\|CAPTURE-.*$"
         "\\*ob-ipython.*"
-        "^ \\*Python"
+        "^\\*Python"
         "*\\sbt"
         " output\\*$"
         "^\\*TeX \\(?:Help\\|errors\\)"

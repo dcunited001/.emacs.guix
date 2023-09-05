@@ -142,7 +142,7 @@
    'ui
    (list->vlist '("emacs-hide-mode-line"
                   ;; "emacs-doom-modeline" ; 3.3.2 does not include eglot--spinner fix
-                  "emacs-minions"       ;minor mode mgmt: toggle/info
+                  ;; "emacs-minions"       ;minor mode mgmt: toggle/info
                   "emacs-pulsar"
                   "emacs-hydra"
 
@@ -377,7 +377,7 @@
   (vhash-consq
    'lang
    (list->vlist '("emacs-guix"
-                  "emacs-geiser@0.28.2"
+                  "emacs-geiser"
 
                   "emacs-nix-mode"
 
@@ -448,12 +448,22 @@
 ;; "emacs-sass-mode"
 ;; "emacs-arduino-cli-mode"
 
-;;*** Packages bringing python to the party
+;;*** Python
+
+;; Packages bringing python to the party
 (set! guix-emacs-vhash
   (vhash-consq
    'latex
    (list->vlist '("python-yamllint"
                   "python-yapf"))
+   guix-emacs-vhash))
+
+;;*** Jupyter
+(set! guix-emacs-vhash
+  (vhash-consq
+   'latex
+   (list->vlist '("emacs-zmq"
+                  "emacs-jupyter"))
    guix-emacs-vhash))
 
 ;;*** Clojure
