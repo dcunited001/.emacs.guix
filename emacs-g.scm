@@ -515,6 +515,10 @@
                   "emacs-pdf-tools"
                   "emacs-latex-preview-pane"
                   "emacs-cdlatex"
+                  ;; github via straight (upstream git.tecosaur.net; Forgejo)
+                  ;; codeblock highlighting with emacs faces
+                  ;; some overhead, but low (compared to pygmints/minted)
+                  ;; "emacs-engrave-faces"
                   "emacs-parsebib"
                   "emacs-biblio"
                   "emacs-math-symbol-lists"
@@ -552,7 +556,7 @@
                   "emacs-org-caldav"
 
                   ;; ox
-                  "emacs-ox-pandoc"
+                  "emacs-ox-pandoc"     ; note: requires pandoc
                   "emacs-ox-reveal"
                   "emacs-org-re-reveal"
 

@@ -150,6 +150,15 @@ Guix channel.")
       dc/org-roam-dailies-template (expand-file-name "daily-default.org"
                                                      dc/org-roam-templates-path))
 
+;;*** Org Babel Load Languages
+
+;; this is appended to in dc-dev-*.el, then loaded in dc-org.el
+(setq dc/org-babel-load-languages
+      '((emacs-lisp . t)
+        (shell . t)
+        (python . t)
+        (jq . t)))
+
 ;;**** Org Ref & Bibtex
 
 ;; TODO refactor slim down (auto def symbols, create paths if dc/aca-doc-root exists)

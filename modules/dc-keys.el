@@ -1434,6 +1434,7 @@
 ;; the toggle-map overwrites the keybind
 (leader-def
   :keymaps 'org-mode-map
+  "t ©" #'cdlatex-mode
   "tt" #'org-todo)
 
 ;;**** dired toggles

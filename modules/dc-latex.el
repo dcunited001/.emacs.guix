@@ -85,17 +85,34 @@
           LaTeX-section-section
           LaTeX-section-label)))
 
+(defun dc/setup-engrave-faces ()
+
+  ;; TODO: try engrave-faces elsewhere: repl's and scrpts via emacsclient -c
+  ;;
+  ;; (require 'engrave-faces-ansi)
+  ;; (setq engrave-faces-ansi-color-mode '3-bit)
+
+  (setup (:pkg engrave-faces :straight t :type git
+               :host github :repo "tecosaur/engrave-faces"
+               :files ("*" (:exclude ".git")))
+    ;; (:also-load 'engrave-faces-latex)
+    (:option org-latex-listings 'engraved)))
+
 ;; from tecosaur
 
 (with-eval-after-load 'tex
   (dc/setup-tex)
-  (dc/setup-smartparens-latex))
+  (dc/setup-smartparens-latex)
+  (dc/setup-engrave-latex))
 
 (setup (:pkg cdlatex)
   (:hook-into latex-mode LaTeX-mode)
-  (:with-hook org-cdlatex-mode
-    (:hook-into org-mode))
   (:option cdlatex-use-dollar-to-ensure-math nil)
+
+  ;; instead use toggle
+  ;; (:with-hook org-cdlatex-mode
+  ;;   (:hook-into org-mode))
+
   ;; Smartparens takes care of inserting closing delimiters, and if you
   ;; don't use smartparens you probably don't want these either.
 
@@ -108,7 +125,7 @@
          "<" nil                        ; cdlatex-pbb
 
          ;; TAB is used for CDLaTeX's snippets and navigation. But we have yasnippet
-         "TAB" nil           ; cdlatex-tab
+         "TAB" nil                      ; cdlatex-tab
 
          "^" nil                        ; cdlatex-sub-superscript
          "_" nil                        ; cdlatex-sub-superscript

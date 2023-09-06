@@ -102,6 +102,7 @@
         "^\\*Org-Babel"
         "^\\*Capture\\*$\\|CAPTURE-.*$"
         "\\*ob-ipython.*"
+        "\\*jupyter-repl*"
         "^\\*Python"
         "*\\sbt"
         " output\\*$"
