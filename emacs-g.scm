@@ -425,7 +425,7 @@
                   "emacs-graphql"
                   "emacs-graphql-mode"
 
-                  "emacs-eglot"
+                  ;; "emacs-eglot"
                   ;; "emacs-lsp-mode"
                   ;; "emacs-lsp-ui"
                   ;; "emacs-dap-mode"

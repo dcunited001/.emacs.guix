@@ -284,7 +284,9 @@ Guix channel.")
 
 ;;*** Final
 
-;;**** Shims
+(require 'dc-modeline)
+
+;;
 
 (require 'dc-shim)
 

@@ -303,6 +303,8 @@ compilation was initiated from compile-mode."
            eglot-stay-out-of '(flymake)
            eglot-extend-to-xref t       ;TODO: assess eglot-extend-to-xref
 
+           eglot-menu-string "€"
+
            ;; see note about popups/point in
            ;; .emacs.doom/modules/tools/lsp/+eglot.el
            ;; eglot-auto-display-help-buffer nil

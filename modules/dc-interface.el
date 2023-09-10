@@ -489,10 +489,14 @@
 
 ;;*** Tabs
 
+;; TODO: move mode-line-position to tab-bar
+;; (req. tracking state per frame?)
+
 (setq tab-bar-close-button-show nil
       tab-bar-format '(tab-bar-format-history
                        tab-bar-format-tabs-groups
                        tab-bar-separator
+                       ;; mode-line-position tab-bar-separator
                        dw/tmr-mode-line
                        tab-bar-separator ; nil
                        ;; display global-mode-string in the tab bar (right-aligned)
