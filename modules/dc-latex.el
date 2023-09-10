@@ -103,7 +103,7 @@
 (with-eval-after-load 'tex
   (dc/setup-tex)
   (dc/setup-smartparens-latex)
-  (dc/setup-engrave-latex))
+  (dc/setup-engrave-faces))
 
 (setup (:pkg cdlatex)
   (:hook-into latex-mode LaTeX-mode)
