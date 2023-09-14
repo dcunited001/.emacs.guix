@@ -476,7 +476,7 @@ capture was not aborted."
 
 (defun dw/on-org-capture ()
   ;; Don't show the confirmation header text
-  (setq header-line-format nil)
+  (setq-local header-line-format nil)
 
   ;; Control how some buffers are handled
   (let ((template (org-capture-get :key t)))

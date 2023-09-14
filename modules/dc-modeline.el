@@ -49,7 +49,7 @@
 
 (setq-default
  header-line-format
- '("%e"
+ '("║ %e"
    mode-line-front-space
    (:propertize (""
                  mode-line-mule-info
