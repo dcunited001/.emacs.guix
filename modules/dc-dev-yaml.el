@@ -55,7 +55,7 @@
 (with-eval-after-load 'eglot
   (add-to-list
    'eglot-server-programs
-   '((ansible) .
+   '((ansible-mode) .
      ("ansible-language-server" "--stdio"))))
 
 ;;** Kubernetes
