@@ -47,8 +47,21 @@
 ;;    mode-line-misc-info
 ;;    mode-line-modes))
 
+;; NOTE: most of the mouse click events don't work in header-line-format
 (setq-default
  header-line-format
+ '("║ %e"
+   mode-line-front-space
+   mode-line-position
+   mode-line-buffer-identification
+   " ║ "
+   mode-line-frame-identification
+   " ║ "
+   (vc-mode vc-mode)
+   mode-line-end-spaces))
+
+(setq-default
+ mode-line-format
  '("║ %e"
    mode-line-front-space
    (:propertize (""
@@ -58,18 +71,7 @@
                  mode-line-remote)
                 display
                 (min-width (5.0)))
-   mode-line-frame-identification
-   "║ "
-   mode-line-buffer-identification
-   " ║"
-   (vc-mode vc-mode)
-   mode-line-end-spaces))
-
-(setq-default
- mode-line-format
- '("%e"
-   mode-line-front-space
-   mode-line-position
+   " ║ "
    mode-line-misc-info
    mode-line-modes
    mode-line-end-spaces))
