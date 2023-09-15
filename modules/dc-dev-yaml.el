@@ -46,6 +46,12 @@
 (setup (:pkg ansible :straight t :type git :host github :repo "k1LoW/emacs-ansible"
              :flavor melpa :files ("*.el" "snippets" "dict" "ansible-pkg.el")))
 
+;; i'm not the only who thought of this
+;; https://github.com/emacs-lsp/lsp-mode/issues/3687
+(define-derived-mode ansible-mode yaml-mode "Ansible"
+  "Major mode which is YAML-mode + ansible minor mode."
+  (ansible))
+
 (with-eval-after-load 'eglot
   (add-to-list
    'eglot-server-programs
