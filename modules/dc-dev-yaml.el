@@ -49,8 +49,15 @@
 ;; i'm not the only who thought of this
 ;; https://github.com/emacs-lsp/lsp-mode/issues/3687
 (define-derived-mode ansible-mode yaml-mode "Ansible"
-  "Major mode which is YAML-mode + ansible minor mode."
-  (ansible))
+  "Major mode which is YAML-mode + ansible minor mode.")
+
+(add-hook 'ansible-mode #'ansible)
+
+(define-derived-mode ansible-ts-mode yaml-ts-mode "Ansible TS"
+  "Major mode which is YAML-mode + ansible minor mode.")
+
+(add-hook 'ansible-ts-mode-hook #'ansible)
+(add-hook 'ansible-ts-mode-hook #'combobulate-mode)
 
 (with-eval-after-load 'eglot
   (add-to-list
