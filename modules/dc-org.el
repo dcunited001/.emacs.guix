@@ -178,6 +178,12 @@
   ;; Automatic indent detection in org files is meaningless
   ;; (add-to-list 'doom-detect-indentation-excluded-modes 'org-mode)
 
+  ;; To customize faces
+  ;; (setq org-todo-keyword-faces
+  ;;     '(("NEXT" . (:foreground "orange red" :weight bold))
+  ;;       ("WAIT" . (:foreground "HotPink2" :weight bold))
+  ;;       ("BACK" . (:foreground "MediumPurple3" :weight bold))))
+
   (setq org-todo-keywords
         '((sequence "TODO(t)" "PROJ(p)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
                     "|" "DONE(d)" "KILL(k)")
@@ -269,13 +275,20 @@
      org-clock-out-switch-to-state "HOLD"
      org-clock-out-remove-zero-time-clocks t
 
+     ;; org-log-into-drawer t ;; use #+STARTUP: logdrawer
      org-log-done 'time
-     ;; org-log-into-drawer t
 
-     )
+     ;; org-columns-default-format-for-agenda
+     org-columns-default-format (string-join '("%20CATEGORY(Category)"
+                                               "%65ITEM(Task)"
+                                               "%TODO"
+                                               "%6Effort(Estim){:}"
+                                               "%6CLOCKSUM(Clock)"
+                                               "%TAGS") " "))
 
     (and (file-exists-p dc/emacs-sound-theme-path)
-         (setq org-clock-sound (expand-file-name "complete.oga" dc/emacs-sound-theme-path)))
+         (setq org-clock-sound (expand-file-name "complete.oga"
+                                                 dc/emacs-sound-theme-path)))
 
     (setq-default
      ;; Different colors for different priority levels
@@ -287,6 +300,7 @@
      ;; Don't monopolize the whole frame just for the agenda
      org-agenda-window-setup 'current-window
      org-agenda-skip-unavailable-files t
+     ;; org-agenda-start-with-log-mode t
      ;; Shift the agenda to show the previous 3 days and the next 7 days for
      ;; better context on your week. The past is less important than the future.
      org-agenda-span 10
@@ -370,14 +384,6 @@
 ;;  '(ansi-color dash f rx seq magit-section emacsql emacsql-sqlite))
 
 ;; org-roam-node-display-template
-
-(defun dc/org-roam-insert-slug ()
-  (interactive)
-  (insert (org-roam-node-slug (org-roam-node-at-point))))
-
-(defun dc/org-roam-get-slug ()
-  (interactive)
-  (org-roam-node-slug (org-roam-node-at-point)))
 
 (defun dc/org-init-roam-h ()
   (require 'doom-org-roam2)
@@ -468,6 +474,127 @@
   ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
   (advice-add #'org-roam-link-replace-at-point :override #'org-roam-link-replace-at-point-a))
 
+;;**** Roam Slugs
+
+(defun dc/org-roam-insert-slug ()
+  (interactive)
+  (insert (org-roam-node-slug (org-roam-node-at-point))))
+
+(defun dc/org-roam-get-slug ()
+  (interactive)
+  (org-roam-node-slug (org-roam-node-at-point)))
+
+;;**** Roam Filters
+
+(defun my/org-roam-filter-by-tag (tag-name)
+  (lambda (node)
+    (member tag-name (org-roam-node-tags node))))
+
+(defun my/org-roam-list-notes-by-tag (tag-name)
+  (mapcar #'org-roam-node-file
+          (seq-filter
+           (my/org-roam-filter-by-tag tag-name)
+           (org-roam-node-list))))
+
+;;**** Roam Capture
+
+;; these are currently unused, but good examples of scripting with org-roam
+
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (push arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
+
+(defun dw/org-roam-goto-month ()
+  (interactive)
+  (org-roam-capture- :goto (when (org-roam-node-from-title-or-alias (format-time-string "%Y-%B")) '(4))
+                     :node (org-roam-node-create)
+                     :templates '(("m" "month" plain "\n* Goals\n\n%?* Summary\n\n"
+                                   :if-new (file+head "%<%Y-%B>.org"
+                                                      "#+title: %<%Y-%B>\n#+filetags: Project\n")
+                                   :unnarrowed t))))
+
+(defun dw/org-roam-goto-year ()
+  (interactive)
+  (org-roam-capture- :goto (when (org-roam-node-from-title-or-alias (format-time-string "%Y")) '(4))
+                     :node (org-roam-node-create)
+                     :templates '(("y" "year" plain "\n* Goals\n\n%?* Summary\n\n"
+                                   :if-new (file+head "%<%Y>.org"
+                                                      "#+title: %<%Y>\n#+filetags: Project\n")
+                                   :unnarrowed t))))
+
+(defun dw/org-roam-capture-task ()
+  (interactive)
+  ;; Add the project file to the agenda after capture is finished
+  (add-hook 'org-capture-after-finalize-hook #'my/org-roam-project-finalize-hook)
+
+  ;; Capture the new task, creating the project file if necessary
+  (org-roam-capture- :node (org-roam-node-read
+                            nil
+                            (my/org-roam-filter-by-tag "Project"))
+                     :templates (list dw/org-roam-project-template)))
+
+(defun my/org-roam-refresh-agenda-list ()
+  (interactive)
+  (setq org-agenda-files (my/org-roam-list-notes-by-tag "Project")))
+
+;;**** Roam Org Elements
+
+(defun my/org-roam-find-project ()
+  (interactive)
+  ;; Add the project file to the agenda after capture is finished
+  (add-hook 'org-capture-after-finalize-hook #'my/org-roam-project-finalize-hook)
+
+  ;; Select a project file to open, creating it if necessary
+  (org-roam-node-find
+   nil
+   nil
+   (my/org-roam-filter-by-tag "Project")
+   :templates
+   '(("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n#+filetags: Project")
+      :unnarrowed t))))
+
+(defun my/org-roam-project-finalize-hook ()
+  "Adds the captured project file to `org-agenda-files' if the
+capture was not aborted."
+  ;; Remove the hook since it was added temporarily
+  (remove-hook 'org-capture-after-finalize-hook #'my/org-roam-project-finalize-hook)
+
+  ;; Add project file to the agenda list if the capture was confirmed
+  (unless org-note-abort
+    (with-current-buffer (org-capture-get :buffer)
+      (add-to-list 'org-agenda-files (buffer-file-name)))))
+
+(defun my/org-roam-capture-inbox ()
+  (interactive)
+  (org-roam-capture- :node (org-roam-node-create)
+                     :templates '(("i" "inbox" plain "* %?"
+                                   :if-new (file+head "Inbox.org" "#+title: Inbox\n")))))
+
+(defun my/org-roam-copy-todo-to-today ()
+  (interactive)
+  (let ((org-refile-keep t) ;; Set this to nil to delete the original!
+        (org-roam-dailies-capture-templates
+         '(("t" "tasks" entry "%?"
+            :if-new (file+head+olp "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n" ("Tasks")))))
+        (org-after-refile-insert-hook #'save-buffer)
+        today-file
+        pos)
+    (save-window-excursion
+      (org-roam-dailies--capture (current-time) t)
+      (setq today-file (buffer-file-name))
+      (setq pos (point)))
+
+    ;; Only refile if the target file is different than the current file
+    (unless (equal (file-truename today-file)
+                   (file-truename (buffer-file-name)))
+      (org-refile nil nil (list "Tasks" today-file nil pos)))))
+
+;;**** Roam Dailies Filters
+
 (defun dc/take-org-roam-dailies (n)
   (let ((dailies-glob
          (thread-last org-roam-directory
@@ -481,6 +608,9 @@
 (defun dc/init-org-agenda-files ()
   (setq org-agenda-files
         (dc/take-org-roam-dailies dc/org-roam-n-dailies)))
+
+
+;;**** Roam Consult Integration
 
 (with-eval-after-load 'org-roam
   (setup (:pkg consult-org-roam :straight t :type git :flavor melpa
