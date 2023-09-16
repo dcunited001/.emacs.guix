@@ -191,8 +191,27 @@
 ;; post files/images to 0x0, intended for sharing in ERC
 
 ;;** 0x0
+
+(defun dc/0x0-set-retention-policy ()
+  "Change retention for 0x0 servers"
+
+  ;; `(,tag ,@(mapcar plist-put cfg :max-age 7))
+  ;; ok you can chain the setf
+
+  ;; TODO make this accept a plist and merge
+  (cl-loop for server in 0x0-servers
+           with cfg do
+           (setf tag (car server)
+                 cfg (cdr server)
+                 cfg (plist-put cfg :max-age 7)
+                 cfg (plist-put cfg :min-age 0))
+           collect `(,tag ,@cfg)))
+
 ;; retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
 (setup (:pkg 0x0 :host gitlab :repo "willvaughn/emacs-0x0" :straight t))
+
+(with-eval-after-load '0x0
+  (setq 0x0-servers (dc/0x0-set-retention-policy)))
 
 ;;** Elpher
 
