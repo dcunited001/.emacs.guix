@@ -105,6 +105,7 @@
         "\\*jupyter-repl*"
         "^\\*Python"
         "*\\sbt"
+        "^\\*EGLOT"
         " output\\*$"
         "^\\*TeX \\(?:Help\\|errors\\)"
         "^\\*Ledger Report"

@@ -29,6 +29,59 @@
 (setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo")
       project-kill-buffers-display-buffer-list t)
 
-;;** Project functions
+;;*** Project Switching
+
+;; (with-eval-after-load 'magit
+;;   (setq project-switch-commands #'magit-status))
+
+(setq project-switch-commands
+      ;; key is optional, but if absent a corresponding command must exist in
+      ;; project-prefix-map
+      '((project-find-file "Find file")
+        (project-find-regexp "Find regexp")
+        (project-find-dir "Find directory")
+        (project-vc-dir "VC-Dir")
+        (project-eshell "Eshell")
+        (magit-status "Magit Status" ?g)
+        (magit-project-status "Magit Project Status" ?G)))
+
+;;*** Interface Support
+
+(defun dw/current-project-name ()
+  (file-name-nondirectory
+   (directory-file-name
+    (project-root (project-current)))))
+
+(defun dw/switch-project-action ()
+  (interactive)
+  (let* ((project-name (dw/current-project-name))
+         (tab-bar-new-tab-choice #'magit-status)
+         (tab-index (tab-bar--tab-index-by-name project-name)))
+    (if tab-index
+        (tab-bar-select-tab (1+ tab-index))
+      (tab-bar-new-tab)
+      (tab-bar-rename-tab project-name))))
+
+(defun dw/close-project-tab ()
+  (interactive)
+  (let* ((project-name (dw/current-project-name))
+         (tab-index (tab-bar--tab-index-by-name project-name)))
+    (project-kill-buffers t)
+    (when tab-index
+      (tab-bar-close-tab (1+ tab-index)))))
+
+
+
+;; projectile-auto-discover is nil
+;; trigger project auto-discovery with projectile-discover-projects-in-search-path
+
+
+
+;;** Projectile
+
+;; NOTE: I'm not currently using this
+
+(setq projectile-project-search-path '(("/data/repo/" . 1)
+                                       ("/data/ecto/" . 3)))
 
 (provide 'dc-project)

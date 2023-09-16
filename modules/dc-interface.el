@@ -820,7 +820,8 @@
               #'dc/completion-in-region-function)
 
 (with-eval-after-load 'consult
-  (setq consult-project-function nil ;; #'dw/get-project-root
+  ;; nil (temp fix) ;; #'dw/get-project-root (fixes VC)
+  (setq consult-project-function #'consult--default-project-function
         ;; completion-in-region-function #'consult-completion-in-region
 
         ;;  may need to be set per-mode

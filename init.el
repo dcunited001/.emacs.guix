@@ -236,10 +236,10 @@ Guix channel.")
 ;; (require 'dc-terminal)
 (require 'dc-desktop)
 (require 'dc-alert)
+(require 'dc-project)
 (require 'dc-interface)
 (require 'dc-popup)
 (require 'dc-auth)
-(require 'dc-project)
 
 ;;**** Info
 

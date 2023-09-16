@@ -9,9 +9,6 @@
 ;;                              &context (project--within-roots-fallback
 ;;                                        (eql nil))) ...)
 
-(cl-defmethod project-root ((project (head go-module)))
-  (cdr project))
-
 (add-hook 'project-find-functions
           #'dc/project-find-go-module)
 

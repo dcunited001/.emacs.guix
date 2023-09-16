@@ -204,40 +204,6 @@ compilation was initiated from compile-mode."
 
 ;;** Projects
 
-;;*** project.el
-
-(defun dw/current-project-name ()
-  (file-name-nondirectory
-   (directory-file-name
-    (project-root (project-current)))))
-
-(defun dw/switch-project-action ()
-  (interactive)
-  (let* ((project-name (dw/current-project-name))
-         (tab-bar-new-tab-choice #'magit-status)
-         (tab-index (tab-bar--tab-index-by-name project-name)))
-    (if tab-index
-        (tab-bar-select-tab (1+ tab-index))
-      (tab-bar-new-tab)
-      (tab-bar-rename-tab project-name))))
-
-(defun dw/close-project-tab ()
-  (interactive)
-  (let* ((project-name (dw/current-project-name))
-         (tab-index (tab-bar--tab-index-by-name project-name)))
-    (project-kill-buffers t)
-    (when tab-index
-      (tab-bar-close-tab (1+ tab-index)))))
-
-(setup (:pkg project)
-  (setq project-switch-commands #'magit-status))
-
-;; TODO finish setting up projectile
-(setq projectile-project-search-path '(("/data/repo/" . 1)
-                                       ("/data/ecto/" . 3)))
-;; projectile-auto-discover is nil
-;; trigger project auto-discovery with projectile-discover-projects-in-search-path
-
 ;;** Treesitter
 ;; TODO setup major-mode-remap-alist
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3

@@ -574,12 +574,15 @@
 (defvar dc/org-capture-changelog-file "changelog.org")
 (defvar dc/org-capture-projects-file "projects.org")
 
+;; I've tried this for org-capture-local-root
+;; (or (locate-dominating-file
+;;      (file-truename default-directory) filename) ... )
+
 (defun dc/org-capture-local-root (path)
   (let ((filename (file-name-nondirectory path)))
     (expand-file-name
      filename
-     (or ;; (locate-dominating-file (file-truename default-directory)
-      ;;                         filename)
+     (or
       (and (project-current) (cdr (project-current)))
       (user-error "Couldn't detect a project")))))
 
