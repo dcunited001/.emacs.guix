@@ -61,10 +61,8 @@
 
 ;;** EIN
 
-;; (setq ')
-
-(setup (:pkg ein :straight t :type git :flavor melpa
-             :host github :repo "millejoh/emacs-ipython-notebook"))
+;; (setup (:pkg ein :straight t :type git :flavor melpa
+;;              :host github :repo "millejoh/emacs-ipython-notebook"))
 
 ;; (defun dc/ein-get-token (url)
 ;;   (gethash (ein:query-divine-authorization-tokens-key url) ein:query-authorization-tokens))

@@ -273,18 +273,7 @@
                       :weight 'light
                       :height (dw/system-settings-get 'emacs/variable-face-size)))
 
-
-;; TODO: emacs doesn't seem to call emacs-startup-hook when started by systemd
-(dc/reset-fonts)
-
-;; TODO: interactive: set a specific frame's font
-;; (set-frame-font)
-;; (defun dc/set-frame-font (&rest keys)
-;;  (while-let ((next)))
-;;  (let ((face ()))))
-
-;; -JB-JetBrains Mono-regular-normal-normal-*-12-*-*-*-d-0-iso10646-1
-;; -JB-JetBrains Mono-regular-normal-normal-*-14-*-*-*-d-0-iso10646-1
+(add-hook 'emacs-startup-hook #'dc/reset-fonts)
 
 ;;*** Window Dividers
 ;; - requires window-divider-mode being on

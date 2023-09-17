@@ -214,8 +214,9 @@ Guix channel.")
 ;; get straight to avoid fetching these (i'm hoping it will build against the
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
-(let ((deps-from-guix '(pdf-tools org which-key hydra embark consult corfu eglot
-                                  cape vertigo marginalia orderless kind-icon)))
+(let ((deps-from-guix
+       '(pdf-tools org which-key hydra embark consult corfu eglot magit
+                   cape vertigo marginalia orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 
