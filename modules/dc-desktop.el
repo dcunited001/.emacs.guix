@@ -21,6 +21,40 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
+;; * Desktop
+
+;;** Desktop Mode
+
+;; this module was originally intended for XDG desktop integration
+(require 'desktop)
+
+;; i'll probably need to revisit this to ensure it works as expected
+;; https://emacs.stackexchange.com/questions/31621/handle-stale-desktop-lock-files-after-emacs-system-crash
+(defun dc/desktop-read ()
+  "Restore an emacs desktop session. Open "
+  (interactive)
+  (let* ((desktop-process (process-attributes (or (desktop-owner) 0)))
+         (desktop-process-exec (alist-get 'comm desktop-process))
+         (desktop-dirname (expand-file-name "desktop" no-littering-var-directory))
+         (desktop-regexp (rx string-start (* (any ascii)) "emacs")))
+
+    (unless (and desktop-process-exec
+                 (string-match desktop-regexp desktop-process-exec))
+      (message "Deleting desktop owned by pid %s" (desktop-owner))
+      (delete-file (desktop-full-lock-name))))
+  (desktop-read))
+
+;;** Dashboard
+
+;; ䷅ -> ䷃
+;; 23 -> 4 (oh no!)
+(setup (:pkg i-ching :straight t :type git :flavor melpa
+             :host github :repo "zzkt/i-ching")
+  (:option i-ching-randomness-source 'pseudo
+           i-ching-divination-method 'yarrow-stalks))
+
+;;** Opening Files
+
 (setup (:pkg openwith)
   (require 'openwith)
   (setq openwith-associations
@@ -43,3 +77,7 @@
                '(file)))))
 
 (provide 'dc-desktop)
+
+;; TODO: encountering a wierd issue with emacs-29 (pgtk, i think) where desktops
+;; are being restored in an invalid state and causing crashes later .... or
+;; something? see org-roam
