@@ -211,12 +211,20 @@ Guix channel.")
 
 ;;*** Pseudo Packages
 
+;; alot of warnings like this when loading ghub
+;; - Required package ‘compat-29.1.4.1’ is unavailable
+;; - these reference the wrong version numbers (magit-2.21, ghub-2.0, ghub+)
+;; - see note in org roam
+
+(require 'compat)
+
 ;; get straight to avoid fetching these (i'm hoping it will build against the
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
 (let ((deps-from-guix
-       '(pdf-tools org which-key hydra embark consult corfu eglot magit
-                   cape vertigo marginalia orderless kind-icon)))
+       '(pdf-tools org which-key hydra eglot magit compat
+                   embark consult corfu cape vertigo marginalia
+                   orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 
@@ -287,7 +295,7 @@ Guix channel.")
 
 (require 'dc-modeline)
 
-;;
+;;*** Shim
 
 (require 'dc-shim)
 

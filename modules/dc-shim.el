@@ -48,4 +48,7 @@
   ;; this is complicated because it changes the order
   (setq auto-mode-alist (a-dissoc auto-mode-alist "\\.ya?ml\\'")))
 
+;;** Report
+(message "init.el finished loading")
+
 (provide 'dc-shim)
