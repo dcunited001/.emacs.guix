@@ -264,6 +264,27 @@
 
 ;; (setup (:pkg dynamic-graphs :straight t))
 
+;;*** Mermaid
+
+;; run from docker/podman, nice
+;; https://github.com/mermaid-js/mermaid-cli#alternative-installations
+(setup (:pkg mermaid-mode :straight t :type git :flavor melpa
+             :host github :repo "abrochard/mermaid-mode")
+  (require 'mermaid-mode)
+  ;; also mermaid-mmdc-location, mermaid-flags
+  (:option mermaid-output-format ".svg"))
+
+;; both pkgs define org-babel-execute:mermaid.  ensure ob-mermaid loads after.
+;; depending on how straight builds load-path, different functions could run.
+;; https://github.com/abrochard/mermaid-mode/blob/master/mermaid-mode.el#L102-L121
+(with-eval-after-load 'mermaid-mode
+  ;; ob-mermaid basically only provides org-babel-execute:mermaid and formatting
+  (setup (:pkg ob-mermaid :straight t :type git :flavor melpa
+               :host github :repo "arnm/ob-mermaid")))
+
+;; only necessary if (executable-find ...) returns nil
+;; (:option ob-mermaid-cli-path "mmdc")
+
 ;;*** PlantUML
 
 ;;* Misc
