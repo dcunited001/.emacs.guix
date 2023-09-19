@@ -123,6 +123,26 @@
 
 ;;** Compiling
 
+;;*** Comint
+
+(setq comint-prompt-read-only t)
+
+;;**** Sentinel for comint buffers
+
+;; from wasamasa
+
+(defun dc/shell-kill-buffer-sentinel (process event)
+  (when (and (memq (process-status process) '(exit signal))
+             (buffer-live-p (process-buffer process)))
+    (kill-buffer)))
+
+(defun dc/kill-process-buffer-on-exit ()
+  (set-process-sentinel (get-buffer-process (current-buffer))
+                        #'dc/shell-kill-buffer-sentinel))
+
+(dolist (hook '(ielm-mode-hook term-exec-hook comint-exec-hook))
+  (add-hook hook 'dc/kill-process-buffer-on-exit))
+
 ;;*** M-x compile
 
 (defun dc/project-local-root (&optional may-prompt)
@@ -303,7 +323,6 @@ compilation was initiated from compile-mode."
 ;;*** Magit
 
 (setup (:pkg magit)
-  (:global "C-M-;" magit-status)
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (setup (:pkg magit-todos)

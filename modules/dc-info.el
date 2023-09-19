@@ -79,7 +79,21 @@
   (Info-breadcrumbs-in-mode-line-mode +1)
   (Info-persist-history-mode +1))
 
-;;** Shortdoc
+;;* Eldoc
+
+;; there are also configurations for org & eglot
+
+(setq eldoc-idle-delay 0.1)
+
+;; currently 'truncate-sym-name-if-fit. eglot may change this
+;; eldoc-echo-area-use-multiline-p nil
+
+;;* Discover
+
+;; TODO: try pkg: discover.el https://github.com/mickeynp/discover.el
+;; TODO: try pkg: discover-my-major https://framagit.org/steckerhalter/discover-my-major
+
+;;* Shortdoc
 
 ;; cheatsheets for emacs-lisp
 

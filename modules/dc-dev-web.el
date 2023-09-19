@@ -21,6 +21,18 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
+;;* Web
+
+;;** JSON
+
+;; uses json-beautify -> json-pretty-print to format
+(setup (:pkg json-mode))
+
+(setup (:pkg jq-mode)
+  (:file-match "\\.jq\\'"))
+
+;;** Javascript
+
 (setup (:pkg typescript-mode)
   (:file-match "\\.ts\\'")
   ;; (:hook eglot-ensure)
@@ -44,8 +56,7 @@
   (add-hook 'js2-mode-hook #'dw/set-js-indentation)
   (add-hook 'json-mode-hook #'dw/set-js-indentation))
 
-;; uses json-beautify -> json-pretty-print to format
-(setup (:pkg json-mode))
+;;** Markdown
 
 (setup (:pkg markdown-mode)
   (setq markdown-command "marked")
@@ -58,11 +69,27 @@
                     (markdown-header-face-5 . 1.0)))
       (set-face-attribute (car face) nil :weight 'normal :height (cdr face)))))
 
+;;** Markup
+
+;;*** NXML
+
+(setq nxml-slash-auto-complete-flag t)
+
+;;*** SGML
+
+;;*** ESXML
+
+
+
+;;** HTML
+
 (setup (:pkg web-mode)
   (:file-match "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
   (setq-default web-mode-code-indent-offset 2)
   (setq-default web-mode-markup-indent-offset 2)
   (setq-default web-mode-attribute-indent-offset 2))
+
+;;*** Processes
 
 ;; 1. Start the server with `httpd-start'
 ;; 2. Use `impatient-mode' on any buffer
@@ -71,8 +98,5 @@
 
 (with-eval-after-load 'simple-httpd
   (add-to-list 'httpd-mime-types '("wasm" . "application/wasm")))
-
-(setup (:pkg jq-mode)
-  (:file-match "\\.jq\\'"))
 
 (provide 'dc-dev-web)

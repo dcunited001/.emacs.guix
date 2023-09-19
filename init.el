@@ -285,6 +285,7 @@ Guix channel.")
 (require 'dc-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
+;; (require 'dc-games)
 
 ;;*** Keys & Mouse
 
