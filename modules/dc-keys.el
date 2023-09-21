@@ -858,7 +858,7 @@
   "s" '(:ignore t :wk "SEARCH")
   "t" '(:ignore t :wk "TOGGLE")
   "v" '(:ignore t :wk "VCS")
-  "v" '(:ignore t :wk "WORKSPACE")
+  "w" '(:ignore t :wk "WORKSPACE")
 
   "&" '(:ignore t :wk "SNIPPET")
   "7" '(:ignore t :wk "SNIPPET")
@@ -1472,6 +1472,10 @@
   )
 
 ;;*** v VCS
+
+(leader-def
+  :keymaps '(global)
+  "vg" #'magit-status)
 
 ;; TODO: forge keybinds/functionality
 
