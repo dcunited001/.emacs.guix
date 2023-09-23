@@ -95,6 +95,27 @@ else
 fi
 #+end_src
 
+There's at least one big problem here: Can the =emacs-g-debug= profile run from
+the same =init.el=? This depends on how compiling emacs package "link" to their
+other dependencies. So of course, the answer is =¯\_(ツ)_/¯= or more precisely:
+
+#+begin_quote
+Over here on the x-axis we have ... and on the y-axis we have 'find out.'
+#+end_quote
+
+I still haven't really found out yet. I'm pretty sure they link by symbol name,
+which is why =autoload= and =declare-function= do what they do, but I skipped
+that part of Emacs 202 way back in 2014.
+
+The straight packages will be built from whatever profile loads them. The Guix
+=emacs-*= packages handle byte-compiling, whereas straight will build its code
+on top of the environment it gets, until it's asked to rebuild everything. These
+builds are actually isolated from one another or, at least they refer to the
+outputs of whatever's in their guix dependency tree -- this tree does not depend
+on emacs, only on the [[https://guix.gnu.org/en/manual/en/guix.html#emacs_002dbuild_002dsystem][emacs-build-system]] process, see also [[https://guix.gnu.org/en/manual/en/guix.html#Emacs-Packages][Emacs Packages]]. The
+Guix profile does some management of the dependency tree for a profile's set of
+dependencies.
+
 *** Straight
 
 Moving =~/.emacs.g= to a new location may require blowing away straight with =rm
@@ -145,7 +166,85 @@ installed properly. When it's not, dired won't function.
 
 Run =M-x all-the-icons-install-fonts=
 
-** TODO Emacs Server
+** Emacs Server
+
+Launch emacs with script
+
+#+headers: :tangle (expand-file-name ".bin/gmacs" (getenv "HOME")) :tangle-mode (identity #o744)
+#+begin_src sh :shebang #!/bin/sh
+export GUIX_SOURCE=$_ECTO/guix/guix
+export EMACS_SOURCE=$_ECTO/emacs/emacs/src
+
+# either set DEBUG_EMACS=1 (unset completely to avoid)
+# or pass full path with -p
+emacs_profile_name="emacs-g${DEBUG_EMACS+-debug}"
+emacs_profile=$GUIX_EXTRA/$emacs_profile_name/$emacs_profile_name
+search_paths=0
+
+while getopts :Zp: OPT; do
+    case $OPT in
+        Z|+Z)
+            search_paths=1
+            ;;
+        p|+p)
+            emacs_profile="$OPTARG"
+            ;;
+        ,*)
+            echo "usage: `basename $0` [+-p ARG} [--] ARGS..."
+            echo "-p profile/link"
+            exit 2
+    esac
+done
+shift `expr $OPTIND - 1`
+OPTIND=1
+
+if [ 0 -lt "$search_paths" ]; then
+    guix shell -E "^EMAIL$" \
+         -E 'EMACS_SOURCE' \
+         -E 'GUIX_SOURCE' \
+         -p $emacs_profile \
+         --search-paths
+else
+    guix shell -E "^EMAIL$" \
+         -E 'EMACS_SOURCE' \
+         -E 'GUIX_SOURCE' \
+         -p $emacs_profile \
+         -- emacs "$@"
+fi
+#+end_src
+
+Launch emacs client with script. It really needs to be the same profile (it will
+probably try to connect anyways)
+
+#+headers: :tangle (expand-file-name ".bin/gmacsclient" (getenv "HOME")) :tangle-mode (identity #o744)
+#+begin_src sh :shebang #!/bin/sh
+# either set DEBUG_EMACS=1 (unset completely to avoid)
+# or pass full path with -p
+emacs_profile_name="emacs-g${DEBUG_EMACS+-debug}"
+emacs_profile=$GUIX_EXTRA/$emacs_profile_name/$emacs_profile_name
+search_paths=0
+
+while getopts :Zp: OPT; do
+    case $OPT in
+        Z|+Z)
+            search_paths=1
+            ;;
+        p|+p)
+            emacs_profile="$OPTARG"
+            ;;
+        ,*)
+            echo "usage: `basename $0` [+-p ARG} [--] ARGS..."
+            echo "-p profile/link"
+            exit 2
+    esac
+done
+shift `expr $OPTIND - 1`
+OPTIND=1
+
+guix shell -E "^EMAIL$" \
+     -p $emacs_profile \
+     -- emacsclient -c "$@"
+#+end_src
 
 *** Shepherd
 
