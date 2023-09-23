@@ -51,6 +51,8 @@ For a more complete list of =.emacs.d= file paths, see these lines in
 
 ** Chemacs
 
+***** TODO migrate away from chemacs2 with =-init-directory=
+
 ** Packages
 
 *** Guix
@@ -58,16 +60,39 @@ For a more complete list of =.emacs.d= file paths, see these lines in
 Dependencies are loaded from guix first by a manifest and straight dependencies
 are loaded on top.
 
-Update with a script like this
+**** Update Guix Packages
 
-#+headers: :var emacsg_manifest=(expand-file-name "emacs-g.scm" dc/emacs-d)
-#+headers: :var guix_manifest_dir=(expand-file-name "guix/manifests" (getenv "XDG_CONFIG_HOME"))
+Update with the script below.
+
++ If the profile doesn't exist, setting =INSTALL_EMACS= will run activate it
++ If debugging is needed, set =DEBUG_EMACS= and a new guix profile will be
+  activated. Set the variable again when updating to update the debugging
+  profile.
++ Other supporting scripts like a systemd service or launcher scripts need to be
+  updated to respond to =DEBUG_EMACS= as expected.
++ The repo needs to be cloned to the installation location first. The supporting
+  scripts expect everything to be in =~/.emacs.g=
+
 #+headers: :tangle (expand-file-name ".bin/update-emacs-g" (getenv "HOME")) :tangle-mode (identity #o744)
-#+begin_src sh
-manifest=$emacsg_manifest
-guix_manifests=$guix_manifest_dir
-cp $manifest $guix_manifest_dir
-update-profiles "emacs-g"
+#+begin_src sh :shebang #!/bin/sh
+# hmmm +- works, but ensure DEBUG_EMACS is unset
+emacs_profile="emacs-g${DEBUG_EMACS+-debug}"
+#default_target=".emacs.g${DEBUG_EMACS+.debug}"
+default_target=".emacs.g"
+target="${INIT_EMACS:-$HOME/$default_target}"
+
+emacs_manifest="emacs-g.scm"
+new_manifest="$emacs_profile.scm"
+guix_manifests=$HOME/.config/guix/manifests
+
+guix_channel=$HOME/.dotfiles
+
+cp "$target/$emacs_manifest" "$guix_manifests/$new_manifest"
+if [ -d "$GUIX_EXTRA/$emacs_profile" ]; then
+    update-profiles $emacs_profile -- -L $guix_channel
+else
+    activate-profiles $emacs_profile -- -L $guix_channel
+fi
 #+end_src
 
 *** Straight

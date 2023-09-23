@@ -1,17 +1,29 @@
 ;;* Guix Emacs Packages
 (use-modules (ice-9 vlist)
              (ice-9 match)
+             ;; (ice-9 pretty-print)
              (gnu packages guile))
 
+;; export DEBUG=1 when running update-emacs-g
+;;
+;; the script should build an alternative profile and alternate launch scripts
+;; need to be used.
+;;
+;; hopefully this satisfies the requirements for gdb
+;;
+;; https://www.reddit.com/r/emacs/comments/rxg6z8/comment/hri3mrs/?context=3
+(define emacs-pkg
+  (if (getenv "DEBUG_EMACS")
+      "emacs-next-pgtk-debug"
+      "emacs-next-pgtk"))
+
 ;;* System
-;; A ridiculous way to manage package lists? Yes ... Reduction in cyclomatic
-;; complexity: basically none. Getting to know scheme folding on efficient data
-;; structures? ... yeh
+;; A ridiculous way to manage package lists? Yes ...
 (define guix-emacs-vhash
   (vhash-consq
    'system
-   (list->vlist '("nss-certs"
-                  "emacs-next-pgtk"
+   (list->vlist `("nss-certs"
+                  ,emacs-pkg
                   "emacs-setup"
                   "git"
                   "git:send-email"
@@ -378,6 +390,8 @@
    'lang
    (list->vlist '("emacs-guix"
                   "emacs-geiser"
+                  "emacs-geiser-guile"
+                  "emacs-geiser-racket"
 
                   "emacs-nix-mode"
 

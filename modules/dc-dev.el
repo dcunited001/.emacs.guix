@@ -584,7 +584,7 @@ compilation was initiated from compile-mode."
              :host github :repo "abo-abo/lispy"
              :files (:defaults "lispy-clojure.clj"
                                "lispy-clojure.cljs"
-                               "lispy-python.py"
+                               "le-scheme.el"
                                "lispy-pkg.el"))
 
   (:option lispy-compat '(cider edebug))
@@ -642,7 +642,8 @@ compilation was initiated from compile-mode."
 
 (setup (:pkg geiser)
   (:option geiser-default-implementation 'guile
-           geiser-active-implementations '(guile)
+           ;; evaluating scheme with lispy req. emacs-guile-racket loaded
+           geiser-active-implementations '(guile racket)
            geiser-implementations-alist '(((regexp "\\.scm$") guile))
 
            ;; these need to be correct
@@ -671,16 +672,18 @@ compilation was initiated from compile-mode."
 
 ;;***** Guile init files
 
-;; defaults noted if changed
-(setq geiser-guile-manual-lookup-other-window t ;; default: nil
-      ;; geiser-guile-extra-keywords nil
-      geiser-guile-show-debug-help t
-      geiser-guile-warning-level 'medium)
+(setup (:pkg geiser-guile)
+  (:option geiser-guile-manual-lookup-other-window t ;; default: nil
+           ;; geiser-guile-extra-keywords nil
+           geiser-guile-show-debug-help t
+           geiser-guile-warning-level 'medium))
 
 ;; The Paths are added to both %`load-path' and %load-compiled path,
 ;; and only if they are not already present. (in .dir-locals.el)
 ;; geiser-guile-load-path
 
+;; NOTE: it loads geiser-guile, even _without_ the emacs-geiser-guile package
+;; i had compat. issues with this about 6 months ago (just in case)
 (with-eval-after-load 'geiser-guile
   ;; TODO: (add-to-list 'geiser-guile-manual-lookup-nodes '(...))
   ;; default: '("Guile" "guile-2.0")
@@ -695,6 +698,10 @@ compilation was initiated from compile-mode."
 
 ;; NOTE autodoc does not seem to be crashing REPLs anymore
 ;; (setq geiser-repl-autodoc-p nil)
+
+;;*****  Racket
+;; evaluating scheme with lispy req. emacs-guile-racket loaded
+(setup (:pkg geiser-racket))
 
 ;;*****  Gambit Scheme
 
