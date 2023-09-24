@@ -376,6 +376,18 @@ compilation was initiated from compile-mode."
 (setup (:pkg forge)
   (:option forge-pull-notifications t))
 
+(with-eval-after-load 'forge
+  (add-to-list 'forge-alist
+               '("invent.kde.org"
+                 "invent.kde.org/api/v4"
+                 "invent.kde.org"
+                 forge-gitlab-repository))
+  (add-to-list 'forge-alist
+               '("gitlab.freedestkop.org"
+                 "gitlab.freedesktop.org/api/v4"
+                 "gitlab.freedesktop.org"
+                 forge-gitlab-repository)))
+
 ;; https://github.com/emacs-straight/repology/blob/master/repology.el
 (setup (:pkg repology))
 

@@ -95,31 +95,13 @@ else
 fi
 #+end_src
 
-There's at least one big problem here: Can the =emacs-g-debug= profile run from
-the same =init.el=? This depends on how compiling emacs package "link" to their
-other dependencies. So of course, the answer is =¯\_(ツ)_/¯= or more precisely:
-
-#+begin_quote
-Over here on the x-axis we have ... and on the y-axis we have 'find out.'
-#+end_quote
-
-I still haven't really found out yet. I'm pretty sure they link by symbol name,
-which is why =autoload= and =declare-function= do what they do, but I skipped
-that part of Emacs 202 way back in 2014.
-
-The straight packages will be built from whatever profile loads them. The Guix
-=emacs-*= packages handle byte-compiling, whereas straight will build its code
-on top of the environment it gets, until it's asked to rebuild everything. These
-builds are actually isolated from one another or, at least they refer to the
-outputs of whatever's in their guix dependency tree -- this tree does not depend
-on emacs, only on the [[https://guix.gnu.org/en/manual/en/guix.html#emacs_002dbuild_002dsystem][emacs-build-system]] process, see also [[https://guix.gnu.org/en/manual/en/guix.html#Emacs-Packages][Emacs Packages]]. The
-Guix profile does some management of the dependency tree for a profile's set of
-dependencies.
-
 *** Straight
 
 Moving =~/.emacs.g= to a new location may require blowing away straight with =rm
 -rf ~/.emacs.g/straight= and reloading emacs to reinstall everything.
+
+Instead of doing it like a caveman, you can also run =straight-prune-build= and
+=straight-rebuild-all= from a fresh emacs session. I miss Doom Emacs already.
 
 *** Fonts
 
@@ -251,6 +233,55 @@ guix shell -E "^EMAIL$" \
 *** SystemD
 
 *** Guix Home
+
+* Debugging Emacs
+
+** Running with =gdb=
+
+GDB expects a raw binary or one with args. That means you can't just use the
+=gmacs= script above, but you need a gdb launcher script. Watch [[https://www.youtube.com/watch?v=K5mYmTI6puY][this video]] in
+slow-motion for a gdb setup with tmux.
+
+** Potential Issues
+
+Problems ensue:
+
+#+begin_quote
+Emacs loaded in 30.39 seconds with 27 garbage collections.
+[yas] Prepared just-in-time loading of snippets successfully.
+#+end_quote
+
+And running the profile uses have of my 32 CPU threads. Wow. I'm not even
+sure... (and the light came on)
+
+*** Sharing the same =.emacs.d= directory
+
+There's at least one big problem here: Can the =emacs-g-debug= profile run from
+the same =init.el=? This depends on how compiling emacs package "link" to their
+other dependencies. So of course, the answer is =¯\_(ツ)_/¯= or more precisely:
+
+#+begin_quote
+Over here on the x-axis we have ... and on the y-axis we have 'find out.'
+#+end_quote
+
+I still haven't really found out yet. I'm pretty sure they link by symbol name,
+which is why =autoload= and =declare-function= do what they do, but I skipped
+that part of Emacs 202 way back in 2014.
+
+The straight packages will be built from whatever profile loads them. The Guix
+=emacs-*= packages handle byte-compiling, whereas straight will build its code
+on top of the environment it gets, until it's asked to rebuild everything. These
+builds are actually isolated from one another or, at least they refer to the
+outputs of whatever's in their guix dependency tree -- this tree does not depend
+on emacs, only on the [[https://guix.gnu.org/en/manual/en/guix.html#emacs_002dbuild_002dsystem][emacs-build-system]] process, see also [[https://guix.gnu.org/en/manual/en/guix.html#Emacs-Packages][Emacs Packages]]. The
+Guix profile does some management of the dependency tree for a profile's set of
+dependencies.
+
+***** Sharing the =no-littering= directory
+
+Yeh... probably don't check your email if both the =emacs-g= and =emacs-g-debug=
+are active and both think they own all the files.
+
 
 * Notes
 
