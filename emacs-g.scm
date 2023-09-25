@@ -15,7 +15,8 @@
 (define emacs-pkg
   (if (getenv "DEBUG_EMACS")
       "emacs-next-pgtk-debug"
-      "emacs-next-pgtk"))
+      ;; "emacs-next-pgtk"
+      "emacs-pgtk"))
 
 ;;* System
 ;; A ridiculous way to manage package lists? Yes ...
