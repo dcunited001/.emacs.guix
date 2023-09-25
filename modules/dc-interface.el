@@ -99,6 +99,11 @@
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
 
+(setup (:pkg bufler :straight t :type git :flavor melpa
+             :host github :repo "alphapapa/bufler.el"
+             :files (:defaults (:exclude "helm-bufler.el")
+                               "bufler-pkg.el")))
+
 ;;*** Minibuffer
 
 ;;**** Minibuffer history

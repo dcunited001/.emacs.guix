@@ -431,7 +431,6 @@
                   "emacs-json-reformat"
 
                   "emacs-emacsql"
-                  "emacs-emacsql-sqlite3"
 
                   "emacs-graphviz-dot-mode"
                   "emacs-gnuplot"
