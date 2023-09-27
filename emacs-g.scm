@@ -379,6 +379,9 @@
                   "tree-sitter-javascript"
                   "tree-sitter-typescript"
                   ;; "tree-sitter-markdown-gfm"
+
+                  ;; this requires -L $HOME/.dotfiles and a custom package
+                  "tree-sitter-tcl"
                   ))
    guix-emacs-vhash))
 
