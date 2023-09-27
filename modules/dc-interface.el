@@ -102,7 +102,22 @@
 (setup (:pkg bufler :straight t :type git :flavor melpa
              :host github :repo "alphapapa/bufler.el"
              :files (:defaults (:exclude "helm-bufler.el")
-                               "bufler-pkg.el")))
+                               "bufler-pkg.el"))
+  ;; bufler:
+  ;; -buffer-mode-annotate-preds
+  ;; -cache-timeout, -cache-related-dirs-p
+  ;; -columns & -column-name-max-width
+  ;; -filter-buffer(-functions,-buffer-mode,/buffer-name-regexp)
+  ;; -filter-buffer-modes
+  ;; -filter-buffer-name-regexp
+  ;; -path-separator
+  ;; -groups
+  ;; -indent-per-level
+  ;; -initial-face-depth
+  ;; -list-(display,group)-buffer-action
+  ;; -mode-hook
+  ;; -bufer-vc-(refresh,remote,state)
+  (:option bufler-indent-per-level 3))
 
 ;;*** Minibuffer
 
@@ -668,7 +683,8 @@
            corfu-popupinfo-delay '(1.0 . 0.0)
            corfu-popupinfo-hide nil     ;don't hide in between transitions
            corfu-preview-current nil)
-  (global-corfu-mode 1))
+  (global-corfu-mode 1)
+  (corfu-popupinfo-mode 1))
 
 (setup (:pkg corfu-quick)
   (:option corfu-quick1 "asdfghjkl;"))

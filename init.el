@@ -13,7 +13,9 @@
                      gcs-done)))
 
 ;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
+;; hitting this 30 times in startup with 50 MB
+;; 27 with 100 MB
+(setq gc-cons-threshold (* 100 (expt 2 20)))
 
 ;;** System Identification
 
@@ -308,4 +310,4 @@ Guix channel.")
 ;;**** Start the Daemon
 (server-start)
 
-(setq gc-cons-threshold (* 20 1000 1000))
+(setq gc-cons-threshold (* 20 (expt 2 20)))

@@ -279,6 +279,10 @@
    "<f2> $M" #'straight-merge-all       ;oh boy!
    "<f2> $N" #'straight-normalize-all
 
+   ;; thesaurus
+   "<f2> M-t t" #'synosaurus-choose-and-insert
+   "<f2> M-t M-t" #'synosaurus-choose-and-insert
+
    ;; vcs ops: merge, normalize
    ;; pull/fetch/merge-package-and-deps
    ;; freeze/thaw-versions
@@ -577,8 +581,11 @@
 
  ;; C-x bindings (ctl-x-map
  "C-x M-:" #'consult-complex-command ;; orig. repeat-complex-command
- "C-x b" #'consult-buffer            ;; orig. switch-to-buffer
- "C-x C-b" #'ibuffer
+
+ "C-x b" #'bufler
+ "C-c t b" #'bufler-sidebar
+ "C-x M-b" #'consult-buffer ;; orig. switch-to-buffer
+ "C-x B" #'ibuffer
 
  "C-x 4 b" #'consult-buffer-other-window ;; orig. switch-to-buffer-other-window
  "C-x 5 b" #'consult-buffer-other-frame  ;; orig. switch-to-buffer-other-frame
