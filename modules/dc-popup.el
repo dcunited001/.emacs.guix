@@ -55,6 +55,7 @@
       '(("Output\\*$" . hide)
         ;; ("\\*Messages\\*" . hide)
         "\\*Messages\\*"
+        "^\\*Bufler"
         "^\\*\\(?:[Cc]ompil\\(?:ation\\|e-Log\\)\\)"
         "^\\*eshell.*\\*$" eshell-mode  ;eshell as a popup
         "^\\*shell.*\\*$"  shell-mode   ;shell as a popup
@@ -106,6 +107,7 @@
         "^\\*Python"
         "*\\sbt"
         "^\\*EGLOT"
+        ;; "^\\*tree-sitter explorer" ;; doesn't work with popper
         " output\\*$"
         "^\\*TeX \\(?:Help\\|errors\\)"
         "^\\*Ledger Report"

@@ -80,6 +80,45 @@ intended for use during development.")
   "Syntax table for `tcl-ts-mode'. Set to the same syntax table as
 `tcl-mode' for now.")
 
+;;*** Keyword lists
+
+(defvar tcl-ts-proc-list
+  tcl-proc-list
+  "")
+(defvar tcl-ts-proc-regexp
+  tcl-proc-regexp
+  "")
+(defvar tcl-ts-typeword-list
+  tcl-typeword-list
+  "")
+(defvar tcl-ts-keyword-list
+  tcl-keyword-list
+  "")
+(defvar tcl-ts-keyword-list
+  tcl-keyword-list
+  "")
+(defvar tcl-ts-builtin-list
+  tcl-builtin-list
+  "")
+
+;;**** Keyword Regexps
+
+;; clojure-ts-mode uses defconst for these and runs (eval-and-compile...)
+;;
+;; for TCL, i think ideally, you could modify the builtin/etc lists either for a
+;; mode that extends from it or to append to the builtin keywords
+(defvar tcl-ts--proc-list-regexp
+  (rx-to-string `(seq bol (or ,@tcl-ts-proc-list) eol)))
+
+(defvar tcl-ts--keyword-list-regexp
+  ;; (concat "^" (regexp-opt tcl-ts-keyword-list) "$")
+  (rx-to-string `(seq bol (or ,@tcl-ts-keyword-list) eol)))
+
+(defvar tcl-ts--builtin-list-regexp
+  ;; (concat "^" (regexp-opt tcl-ts-builtin-list) "$")
+  (rx-to-string `(seq bol (or ,@tcl-ts-builtin-list) eol)))
+
+
 ;;*** Grammar Setup
 
 (defun tcl-ts--ensure-grammars ()
@@ -90,6 +129,63 @@ intended for use during development.")
 ;;** Parsing
 
 ;;*** Font Lock
+
+;; TODO variable assignment: command/braced, where first word is set. how 2 query?
+;;
+;; TODO fix 'command-name for braced_word (only match words after "\n"
+;;
+;; - this is a parser limitation (it might be difficult bc of recursion & types
+;;   or something)
+
+(defvar tcl-ts-font-lock-rules
+  (treesit-font-lock-rules
+   :language 'tcl
+   :feature 'comment
+   '((comment) @font-lock-comment-face)
+
+   :language 'tcl
+   :feature 'variable
+   '((variable_substitution) @font-lock-variable-name-face)
+
+   :language 'tcl
+   :feature 'quoted-word
+   '((quoted_word) @font-lock-string-face)
+
+   :language 'tcl
+   :feature 'escape-sequence
+   :override t
+   '((escape_sequence) @font-lock-escape-face)
+
+   :language 'tcl
+   :feature 'command-name
+   `(((command :anchor ((word) @font-lock-function-name-face))
+      ;; (:match ,tcl-ts--builtin-list-regexp @font-lock-function-name-face)
+      )
+     )
+
+   ;; adding this to command-name results in every word being
+   ;;
+   ;; only the first word on each line should be highlighted.
+   ;;
+   ;; ((braced_word :anchor ((word) @font-lock-function-name-face))
+   ;;  ;; (:match ,tcl-ts--builtin-list-regexp @font-lock-function-name-face)
+   ;;  )
+
+   :language 'tcl
+   :feature 'builtin
+   :override t
+   `(((command :anchor ((word) @font-lock-builtin-face))
+      (:match ,tcl-ts--builtin-list-regexp @font-lock-builtin-face))
+     ((braced_word :anchor ((word) @font-lock-builtin-face))
+      (:match ,tcl-ts--builtin-list-regexp @font-lock-builtin-face)))
+
+   :language 'tcl
+   :feature 'keyword
+   :override t
+   `(((command :anchor ((word) @font-lock-keyword-face))
+      (:match ,tcl-ts--keyword-list-regexp @font-lock-keyword-face))))
+
+  "Font Lock Rules for TCL TS")
 
 (defun tcl-ts--font-lock-settings ()
   "fdsa"
@@ -125,7 +221,13 @@ intended for use during development.")
   (setq-local comment-start-skip
               "\\(\\(^\\|[;{[]\\)\\s-*\\)#+ *")
   (setq-local comment-end "")
-  )
+
+  (setq-local treesit-font-lock-settings tcl-ts-font-lock-rules)
+  ;; (apply #'treesit-font-lock-rules tcl-ts-font-lock-rules)
+
+  (setq-local treesit-font-lock-feature-list
+              '((comment variable quoted-word)
+                (builtin keyword command-name escape-sequence))))
 
 ;;*** Map
 
