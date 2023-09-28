@@ -322,8 +322,9 @@
 
 (setup (:pkg visual-fill-column)
   ;; (:hook-into org-mode)
-  (setq visual-fill-column-width 110
-        visual-fill-column-center-text t))
+  (:hook-into message-mode)
+  (:option visual-fill-column-width nil ; 110
+           visual-fill-column-center-text nil)) ;; t
 
 ;;*** Selection
 (delete-selection-mode +1)

@@ -165,6 +165,7 @@
         message-wide-reply-confirm-recipients t)
 
   (add-hook 'message-setup-hook #'message-sort-headers)
+  (add-hook 'message-setup-hook (lambda () (auto-fill-mode -1)))
 
   ;; `gnus-dired' (does not require `gnus')
   (add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode)
