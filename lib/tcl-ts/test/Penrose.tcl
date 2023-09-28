@@ -9,6 +9,14 @@
 #Category: Visualization
 #Title: Penrose triangle on perspective view
 
+# test boolean
+set boolvar true
+
+# test if elseif else (elseif and else don't split across lines)
+if { boolvar == true } then { run_a_cmd } \
+elseif { boolvar == false } { run_a_cmd "with args" } \
+else { run_else_cmd foo bar "baz" }
+
 pload MODELING VISUALIZATION
 # Ray-Tracing doesn't work with Compatible Profile on macOS
 if { $::tcl_platform(os) == "Darwin" } { vcaps -core }

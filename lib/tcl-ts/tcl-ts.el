@@ -10,7 +10,6 @@
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "29"))
 
-
 ;;; License:
 ;;
 ;; Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -131,65 +130,107 @@ intended for use during development.")
 ;;*** Font Lock
 
 ;; TODO variable assignment: command/braced, where first word is set. how 2 query?
-;;
+
 ;; TODO fix 'command-name for braced_word (only match words after "\n"
-;;
+
 ;; - this is a parser limitation (it might be difficult bc of recursion & types
 ;;   or something)
 
+;; TODO: number_word matches hex strings incorrectly
+
+;; TODO: proc {} {  ... } blocks are not interpreted correctly
+
+
 (defvar tcl-ts-font-lock-rules
-  (treesit-font-lock-rules
-   :language 'tcl
-   :feature 'comment
-   '((comment) @font-lock-comment-face)
 
-   :language 'tcl
-   :feature 'variable
-   '((variable_substitution) @font-lock-variable-name-face)
-
-   :language 'tcl
-   :feature 'quoted-word
-   '((quoted_word) @font-lock-string-face)
-
-   :language 'tcl
-   :feature 'escape-sequence
-   :override t
-   '((escape_sequence) @font-lock-escape-face)
-
-   :language 'tcl
-   :feature 'command-name
-   `(((command :anchor ((word) @font-lock-function-name-face))
-      ;; (:match ,tcl-ts--builtin-list-regexp @font-lock-function-name-face)
-      )
-     )
-
-   ;; adding this to command-name results in every word being
-   ;;
-   ;; only the first word on each line should be highlighted.
-   ;;
-   ;; ((braced_word :anchor ((word) @font-lock-function-name-face))
-   ;;  ;; (:match ,tcl-ts--builtin-list-regexp @font-lock-function-name-face)
-   ;;  )
-
-   :language 'tcl
-   :feature 'builtin
-   :override t
-   `(((command :anchor ((word) @font-lock-builtin-face))
-      (:match ,tcl-ts--builtin-list-regexp @font-lock-builtin-face))
-     ((braced_word :anchor ((word) @font-lock-builtin-face))
-      (:match ,tcl-ts--builtin-list-regexp @font-lock-builtin-face)))
-
-   :language 'tcl
-   :feature 'keyword
-   :override t
-   `(((command :anchor ((word) @font-lock-keyword-face))
-      (:match ,tcl-ts--keyword-list-regexp @font-lock-keyword-face))))
 
   "Font Lock Rules for TCL TS")
 
 (defun tcl-ts--font-lock-settings ()
   "fdsa"
   (warn "tcl-ts-mode: font-lock-settings is not implemented"))
+
+(defun tcl-ts-font-lock-rules-for (tcl-lang)
+  "Generates the font-lock queries for `tcl-lang'."
+  (append
+   (treesit-font-lock-rules
+    :language tcl-lang
+    :feature 'comment
+    '((comment) @font-lock-comment-face)
+
+    :language tcl-lang
+    :feature 'variable
+    '((variable_substitution) @font-lock-variable-name-face)
+
+    :language tcl-lang
+    :feature 'quoted-word
+    '((quoted_word) @font-lock-string-face)
+
+    :language tcl-lang
+    :feature 'escape-sequence
+    :override t
+    '((escape_sequence) @font-lock-escape-face)
+
+    :language tcl-lang
+    :feature 'command-name
+    `(((command :anchor ((word) @font-lock-function-name-face))
+       ;; (:match ,tcl-ts--builtin-list-regexp @font-lock-function-name-face)
+       )
+      )
+
+    ;; adding this to command-name results in every word being
+    ;;
+    ;; only the first word on each line should be highlighted.
+    ;;
+    ;; ((braced_word :anchor ((word) @font-lock-function-name-face))
+    ;;  ;; (:match ,tcl-ts--builtin-list-regexp @font-lock-function-name-face)
+    ;;  )
+
+    :language tcl-lang
+    :feature 'builtin
+    :override t
+    `(((command :anchor ((word) @font-lock-builtin-face))
+       (:match ,tcl-ts--builtin-list-regexp @font-lock-builtin-face))
+      ((braced_word :anchor ((word) @font-lock-builtin-face))
+       (:match ,tcl-ts--builtin-list-regexp @font-lock-builtin-face)))
+
+    :language tcl-lang
+    :feature 'keyword
+    :override t
+    `(((command :anchor ((word) @font-lock-keyword-face))
+       (:match ,tcl-ts--keyword-list-regexp @font-lock-keyword-face))))
+
+   (when (eq tcl-lang 'tclsh)
+     (treesit-font-lock-rules
+      :language tcl-lang
+      :feature 'set-command
+      :override t
+      '(((set_command "set" @font-lock-builtin-face))
+        ((set_command name: (word) @font-lock-variable-name-face))
+        ;; ((set_command value: (word) @font-lock-variable-name-face))
+        )
+      ;; ((set_command @font-lock-builtin-face))
+
+      :language tcl-lang
+      :feature 'if-command
+      :override t
+      '(((if_clause "if" @font-lock-builtin-face))
+        ((if_clause "then" @font-lock-builtin-face))
+        ;; elseif doesn't do "then"
+        ;; ((elseif_clause "then" @font-lock-builtin-face))
+        ((elseif_clause "elseif" @font-lock-builtin-face))
+        ((else_clause "else" @font-lock-builtin-face)))
+
+      :language tcl-lang
+      :feature 'number
+      :override t
+      '((number_word) @font-lock-constant-face)
+      ;; looks better than @font-lock-number-face
+
+      :language tcl-lang
+      :feature 'boolean
+      :override t
+      '((boolean_word) @font-lock-constant-face)))))
 
 ;;*** Indentation
 
@@ -220,14 +261,7 @@ intended for use during development.")
   (setq-local comment-start "# ")
   (setq-local comment-start-skip
               "\\(\\(^\\|[;{[]\\)\\s-*\\)#+ *")
-  (setq-local comment-end "")
-
-  (setq-local treesit-font-lock-settings tcl-ts-font-lock-rules)
-  ;; (apply #'treesit-font-lock-rules tcl-ts-font-lock-rules)
-
-  (setq-local treesit-font-lock-feature-list
-              '((comment variable quoted-word)
-                (builtin keyword command-name escape-sequence))))
+  (setq-local comment-end ""))
 
 ;;*** Map
 
@@ -273,17 +307,24 @@ intended for use during development.")
 ;; Make sure necessary parsers are created for the current buffer
 ;; before calling this function.
 
-(define-derived-mode tcl-ts-mode prog-mode "TCL[TS]"
+(define-derived-mode tcl-ts-mode prog-mode "tcl[TS]"
   "Major mode for TCL, powered by tree-sitter."
   :syntax-table tcl-ts-mode-syntax-table
   (tcl-ts--ensure-grammars)
   (when (treesit-ready-p 'tcl)
     (treesit-parser-create 'tcl)
     (tcl-ts-mode-variables)
+
+    (setq-local treesit-font-lock-settings
+                (tcl-ts-font-lock-rules-for 'tcl))
+    (setq-local treesit-font-lock-feature-list
+                '((comment variable quoted-word)
+                  (builtin keyword command-name escape-sequence)))
+
     (when tcl-ts--debug
       (setq-local treesit--indent-verbose t)
       (when (eq tcl-ts--debug 'font-lock)
-        (setq-local treesit--font-lock-verbose))
+        (setq-local treesit--font-lock-verbose t))
       (treesit-inspect-mode))
     (treesit-major-mode-setup))
 
@@ -296,7 +337,33 @@ intended for use during development.")
 
   )
 
-(add-to-list 'major-mode-remap-alist '(tcl-mode . tcl-ts-mode))
+(define-derived-mode tclsh-ts-mode prog-mode "tclsh[TS]"
+  "Major mode for TCL, powered by tree-sitter."
+  :syntax-table tcl-ts-mode-syntax-table
+  (tcl-ts--ensure-grammars)
+  (when (treesit-ready-p 'tclsh)
+    (treesit-parser-create 'tclsh)
+    (tcl-ts-mode-variables)
+
+    (setq-local treesit-font-lock-settings
+                (tcl-ts-font-lock-rules-for 'tclsh))
+    (setq-local treesit-font-lock-feature-list
+                '((comment variable quoted-word number boolean)
+                  (builtin keyword set-command if-command
+                           command-name escape-sequence)))
+
+    (when tcl-ts--debug
+      (setq-local treesit--indent-verbose t)
+      (when (eq tcl-ts--debug 'font-lock)
+        (setq-local treesit--font-lock-verbose t))
+      (treesit-inspect-mode))
+    (treesit-major-mode-setup)))
+
+;; https://www.tcl.tk/man/tcl/UserCmd/tclsh.html
+;;
+;; default to tclsh for now
+(add-to-list 'major-mode-remap-alist
+             '(tcl-mode . tclsh-ts-mode))
 
 (provide 'tcl-ts)
 
