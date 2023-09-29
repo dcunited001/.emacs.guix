@@ -66,3 +66,49 @@
 ;; (if level
 ;;     (flycheck-has-errors-p flycheck-current-errors level)
 ;;   (and flycheck-current-errors t))
+
+
+;;================================================================================
+
+
+;; (eq nil 'nil)
+                                        ;setq
+
+(defun dc/toggle-flycheck-highlighting-style ()
+  (interactive)
+
+  (let ((other-style-index
+         (cl-case flycheck-highlighting-style
+           ((nth 0 dc/flycheck-highlighting-styles) 1)
+           (otherwise 0)))
+        ))
+
+  ;; can't ID the position
+  ;; (seq-position dc/flycheck-highlighting-styles dc/flycheck-highlighting-style-default)
+  (setq flycheck-highlighting-style
+
+        (if (eq flycheck-highlighting-style
+                (nth 0 dc/flycheck-highlighting-styles)))))
+
+
+
+
+
+(defun dc/flycheck-spec-alternative-face ()
+  "fdsa"
+  (let* ((current-face-spec (get 'flycheck-warning 'theme-face))
+         (spec-wo-theme (cadar current-face-spec))
+         (spec-car (car spec-wo-theme))
+         (spec-plist (cdar spec-wo-theme))
+         (updated-plist (org-plist-delete spec-plist :inherit)))
+
+    (pp mod-spec-plist)
+    ;; (defface dc/flycheck-warning
+    ;;   (org-plist-delete
+    ;;    '((ef-bio ((((class color) (min-colors 256)) :inherit ef-themes-underline-warning)))))
+    ;;   "Alternative face for warnings without the underline.")
+
+    (plistp (cdr mod-spec-plist))))
+
+(get 'flycheck-warning 'face)
+(get 'flycheck-warning 'theme-face)

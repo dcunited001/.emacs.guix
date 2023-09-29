@@ -54,6 +54,22 @@
                               sh-mode bash-ts-mode
                               python-mode python-ts-mode))
 
+(setq dc/flycheck-highlighting-style-default flycheck-highlighting-style
+      dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
+      flycheck-
+      dc/flycheck-warnings-have-underlines nil)
+
+(defun dc/toggle-flycheck-highlighting-style ()
+  "Don't taze me bro."
+  (interactive)
+  (setq flycheck-highlighting-style
+        (if flycheck-highlighting-style
+            nil
+          dc/flycheck-highlighting-style-default))
+  (and flycheck-mode
+       flycheck-highlighting-mode
+       (flycheck-refresh-fringes-and-margins)))
+
 ;; see .emacs.doom/modules/checkers/javascript/config.el
 ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 ;; (flycheck-add-mode 'javascript-eslint 'typescript-mode)
@@ -63,7 +79,7 @@
 
 ;; use M-x flycheck-error-list-set-filter to change (f, F in the list buffer)
 (setq-default flycheck-navigation-minimum-level 'error
-              flycheck-error-list-minimum-level 'error)
+              flycheck-error-list-minimum-level 'warning)
 
 ;;*** Troubleshoot
 
@@ -83,5 +99,23 @@
 
 (with-eval-after-load 'flycheck
   (setup (:pkg consult-flycheck :straight t)))
+
+;;** Juggle flycheck faces
+
+;; sometimes ... you don't actually want a warning per 2 sLOC.
+
+;; still have to reload the theme to refresh the face
+;; (dc/toggleable-boolean dc/flycheck-warnings-have-underlines)
+
+;; (add-hook
+;;  'ef-themes-post-load-hook
+;;  (lambda ()
+;;    (defface dc/flycheck-warning
+;;      (get 'flycheck-warning 'theme-face)
+;;      "Flycheck face for warnings, with underlines.")))
+
+;; (defface dc/flycheck-warning-no-underline
+;;   '((t :inherit warning))
+;;   "Flycheck face for warnings.")
 
 (provide 'dc-fly)
