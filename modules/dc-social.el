@@ -170,6 +170,110 @@
   (dolist (mode '(gnus-group-mode-hook gnus-summary-mode-hook gnus-browse-mode-hook))
     (add-hook mode #'hl-line-mode)))
 
+
+(with-eval-after-load 'gnus
+  ;; @see https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org
+  ;; gnus-group-mode
+  (eval-after-load 'gnus-group
+    '(progn
+       (defhydra hydra-gnus-group (:color blue)
+         "
+[_A_] Remote groups (A A) [_g_] Refresh
+[_L_] Local groups        [_\\^_] List servers
+[_c_] Mark all read       [_m_] Compose new mail
+[_#_] Mark mail
+"
+
+         ("A" gnus-group-list-active)
+         ("L" gnus-group-list-all-groups)
+         ("c" gnus-topic-catchup-articles)
+         ;; ("G" dianyou-group-make-nnir-group) ;; [_G_] Search mails (G G)   from gnus
+         ("g" gnus-group-get-new-news)
+         ("^" gnus-group-enter-server-mode)
+         ("m" gnus-group-new-mail)
+         ("#" gnus-topic-mark-topic)
+         ("q" nil))
+       ;; y is not used by default
+       (define-key gnus-group-mode-map "y" 'hydra-gnus-group/body)))
+
+  ;; gnus-summary-mode
+  (eval-after-load 'gnus-sum
+    '(progn
+       (defhydra hydra-gnus-summary (:color blue)
+         "
+[_s_] Show thread   [_F_] Forward (C-c C-f)
+[_h_] Hide thread   [_e_] Resend (S D e)
+[_n_] Refresh (/ N) [_r_] Reply
+[_!_] Mail -> disk  [_R_] Reply with original
+[_d_] Disk -> mail  [_w_] Reply all (S w)
+[_c_] Read all      [_W_] Reply all with original (S W)
+[_#_] Mark
+"
+         ("s" gnus-summary-show-thread)
+         ("h" gnus-summary-hide-thread)
+         ("n" gnus-summary-insert-new-articles)
+         ("F" gnus-summary-mail-forward)
+         ("!" gnus-summary-tick-article-forward)
+         ("d" gnus-summary-put-mark-as-read-next)
+         ("c" gnus-summary-catchup-and-exit)
+         ("e" gnus-summary-resend-message-edit)
+         ("R" gnus-summary-reply-with-original)
+         ("r" gnus-summary-reply)
+         ("W" gnus-summary-wide-reply-with-original)
+         ("w" gnus-summary-wide-reply)
+         ("#" gnus-topic-mark-topic)
+         ;; ("G" dianyou-group-make-nnir-group) [_G_] Search mails
+         ("q" nil))
+       ;; y is not used by default
+       (define-key gnus-summary-mode-map "y" 'hydra-gnus-summary/body)))
+
+  ;; gnus-article-mode
+  (eval-after-load 'gnus-art
+    '(progn
+       (defhydra hydra-gnus-article (:color blue)
+         "
+[_F_] Forward           [_o_] Save attachment
+[_r_] Reply
+[_R_] Reply with original
+[_w_] Reply all (S w)
+[_W_] Reply all with original (S W)
+
+"
+         ("F" gnus-summary-mail-forward)
+         ("r" gnus-article-reply)
+         ("R" gnus-article-reply-with-original)
+         ("w" gnus-article-wide-reply)
+         ("W" gnus-article-wide-reply-with-original)
+         ("o" gnus-mime-save-part)
+         ;; ("v" my-w3m-open-with-mplayer)
+         ;; ("d" my-w3m-download-rss-stream)
+         ;; ("b" my-w3m-open-link-or-image-or-url)
+         ;; ("f" w3m-lnum-follow)
+         ;; ("g" w3m-lnum-goto)
+         ("q" nil))
+       ;; y is not used by default
+       (define-key gnus-article-mode-map "y" 'hydra-gnus-article/body)))
+
+  ;; message-mode
+  (eval-after-load 'message
+    '(progn
+       (defhydra hydra-message (:color blue)
+         "
+[_c_] Complete mail address
+[_a_] Attach file
+[_s_] Send mail (C-c C-c)
+"
+         ;; ("c" counsel-bbdb-complete-mail)
+         ("a" mml-attach-file)
+         ("s" message-send-and-exit)
+         ;; ("i" dianyou-insert-email-address-from-received-mails)
+         ("q" nil))))
+
+  (defun message-mode-hook-hydra-setup ()
+    (local-set-key (kbd "C-c C-y") 'hydra-message/body))
+
+  (add-hook 'message-mode-hook 'message-mode-hook-hydra-setup))
+
 ;;** Mail
 
 (with-eval-after-load 'gnus
