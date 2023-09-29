@@ -145,7 +145,20 @@
 ;; definitely, definitely use the trees
 (setq gnus-use-trees t)
 
-;; use gnus-add-configuration to modify gnus-buffer-configuration (must run after gnus starts)
+;; use gnus-add-configuration to modify gnus-buffer-configuration (must run
+;; after gnus starts)
+
+;;**** Gravatars
+
+;; retro, identicon, robohash, wavatar, monsterid
+;; set to "404" to disable
+(setq gravatar-default-image "robohash")
+
+(setup gnus-gravatar
+  ;; gnus-gravatar-size 32
+  ;; gnus-gravatar-too-ugly "toougly@fugly.com"
+  (:option gnus-treat-from-gravatar 'head
+           gnus-treat-mail-gravatar 'head))
 
 ;;**** Notifications
 
