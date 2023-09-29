@@ -27,6 +27,9 @@
 
 ;;** Setup
 
+(setq mode-line-defining-kbd-macro " K♫ ")
+(add-to-list 'minions-prominent-modes 'defining-kbd-macro)
+
 ;;*** unbind function keys
 ;; or use the following (which may only work for general definitions)
 ;; (general-auto-unbind-keys)
@@ -1401,7 +1404,6 @@
 ;; c: fill-column indicator
 ;; D: desc
 ;; f: flycheck
-;;
 
 (leader-def
   :keymaps 'global
@@ -1425,6 +1427,8 @@
   "tl" #'display-line-numbers-mode
   ;; "tp" #'org-tree-slide-mode
   "ts" #'flyspell-mode
+  "tß" #'superword-mode
+  "t§" #'subword-mode
   "tv" #'visual-line-mode
   "tV" #'visual-fill-column-mode
   "t C-v" #'vertico-multiform-mode

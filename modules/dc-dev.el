@@ -66,6 +66,7 @@
   (:option envrc-on-lighter '("│Æ=" (:propertize "on" face envrc-mode-line-on-face))
            envrc-none-lighter '("│Æ=" (:propertize "none" face envrc-mode-line-none-face))
            envrc-error-lighter '("│Æ=" (:propertize "err" face envrc-mode-line-error-face)))
+  (add-to-list 'minions-prominent-modes 'envrc-mode)
   (add-hook 'emacs-startup-hook #'envrc-global-mode))
 
 ;; (setup (:pkg buffer-env)
@@ -95,38 +96,6 @@
             ((executable-find "ugrep") 'ugrep)
             ((or (executable-find "ripgrep") (executable-find "rg")) 'ripgrep)
             (t 'grep))))
-
-;;** Checking
-
-;;*** Flycheck
-;; This is a quick survey of flycheck and org-babel functionality
-;; https://github.com/jkitchin/scimax/commit/9a039cfc5fcdf0114a72d23d34b78a8b3d4349c9
-(setup (:pkg flycheck)
-  (:option flycheck-emacs-lisp-load-path 'inherit
-           flycheck-highlighting-mode 'columns
-
-           ;; enable most on per-buffer/per-project basis only
-           flycheck-global-modes '(emacs-lisp)
-           flycheck-mode-line-prefix "│♠ FlyC")
-  (:also-load flycheck-guile)
-  (:also-load flycheck-package))
-
-;; see .emacs.doom/modules/checkers/javascript/config.el
-;; (flycheck-add-mode 'javascript-eslint 'web-mode)
-;; (flycheck-add-mode 'javascript-eslint 'typescript-mode)
-;; (flycheck-add-mode 'javascript-eslint 'typescript-tsx-mode)
-;; (flycheck-add-mode 'typescript-tslint 'typescript-tsx-mode)
-;; tide not completely compatible with LSP
-
-(with-eval-after-load 'flycheck
-  (setup (:pkg consult-flycheck :straight t)))
-
-(global-flycheck-mode)
-
-;;*** Flymake
-
-(setup (:pkg flymake)
-  (:option flymake-mode-line-lighter "│♠ FlyM"))
 
 ;;** Compiling
 
@@ -325,137 +294,6 @@ compilation was initiated from compile-mode."
   (setup (:pkg consult-eglot :straight t :type git :flavor melpa
                :host github :repo "mohkale/consult-eglot")))
 
-;;** VCS
-
-;;*** Magit
-
-(setup (:pkg magit)
-  (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
-           magit-wip-mode-lighter "│§ WIP"
-           magit-blame-mode-lighter "│§ BLAME"))
-
-(setup (:pkg magit-todos)
-  (:with-hook emacs-startup-hook
-    (:hook magit-todos-mode)))
-
-;; interface to git-tbdiff, gives better control over git ranges
-(setup (:pkg magit-tbdiff :straight t))
-
-;; TODO: interactive: magit-tbdiff-ranges
-;; TODO: interactive: magit-tbdiff-revs
-;; TODO: interactive: magit-tbdiff-with-base
-;; TODO: interactive: magit-tbdiff-save
-
-;;*** Git
-
-(setup (:pkg git-link)
-  (:option git-link-open-in-browser t))
-
-;;*** Git Timemachine
-;; control-f8, like facebook's conference
-(setup (:pkg git-timemachine))
-
-;; TODO: DOOM: defadvice! +vc-support-git-timemachine-a (fn)
-;; TODO: DOOM: defadvice! +vc-update-header-line-a (revision)
-;; TODO: DOOM: keybindings
-;; (map! :map git-timemachine-mode-map
-;;       :n "C-p" #'git-timemachine-show-previous-revision
-;;       :n "C-n" #'git-timemachine-show-next-revision
-;;       :n "gb"  #'git-timemachine-blame
-;;       :n "gtc" #'git-timemachine-show-commit)
-;;*** Ghub
-
-(defun dc/ensure-ghub-graphql ()
-  "Emacs really did not want to load this code"
-  ;; can't load this, but there are examples of ghub/graphql
-  ;; (require 'graphql-examples)
-  (require 'graphql)
-  (require 'ghub-graphql)
-  (require 'glab)
-  (require 'gtea))
-
-(setup (:pkg ghub)
-  (:with-hook emacs-startup-hook
-    (:hook #'dc/ensure-ghub-graphql)))
-
-;; graphql propagates ghub input, but only for 'graphql-examples
-(setup (:pkg graphql))
-
-;;*** Forge
-(setup (:pkg forge)
-  (:option forge-pull-notifications t))
-
-(with-eval-after-load 'forge
-  (add-to-list 'forge-alist
-               '("invent.kde.org"
-                 "invent.kde.org/api/v4"
-                 "invent.kde.org"
-                 forge-gitlab-repository))
-  (add-to-list 'forge-alist
-               '("gitlab.freedestkop.org"
-                 "gitlab.freedesktop.org/api/v4"
-                 "gitlab.freedesktop.org"
-                 forge-gitlab-repository)))
-
-;; https://github.com/emacs-straight/repology/blob/master/repology.el
-(setup (:pkg repology))
-
-;;*** Consult-GH
-
-(setq dc/clone-club (expand-file-name "gh" (or (getenv "_LANG") "/data/lang"))
-      consult-gh-default-clone-directory dc/clone-club)
-(unless (file-exists-p dc/clone-club)
-  (mkdir dc/clone-club))
-
-;; https://github.com/armindarvish/consult-gh
-
-(defun dc/load-consult-gh ()
-  "Load code for consult-gh. Req. reloading f1-f2 keybinds"
-
-  ;; req. cmdline gh tool :( but otherwise really cool. I've never used that bc
-  ;; of the cookie storage. making an alias that uses something like <(gpg ...)>
-  ;; may work, but it may be a bad idea. the API doesn't yet integrate with
-  ;; 'auth-secrets or `pass`, though it probably could
-  (setup (:pkg consult-gh :straight t :type git :host github
-               :repo "armindarvish/consult-gh" :branch "main")
-
-    ;; TODO customize consult-gh-default-orgs-list (for M-x consult-gh-default-repos)
-
-    (:option consult-gh-large-file-warning-threshold 2500000
-             consult-gh-prioritize-local-folder 'suggest
-
-             consult-gh-forge-timeout-seconds 12
-
-             ;; preview gh on demand (avoids large files)
-             consult-gh-show-preview t
-             consult-gh-preview-key "M-o"
-             ;; consult-gh-preview-buffer-mode 'org-mode ;preview in org
-
-             ;; do things in emacs
-             consult-gh-issue-action #'consult-gh--issue-view-action
-             consult-gh-repo-action #'consult-gh--repo-browse-files-action
-             consult-gh-file-action #'consult-gh--files-view-action)
-
-    (with-eval-after-load 'forge
-      (require 'consult-gh-forge))
-    (with-eval-after-load 'embark
-      (require 'consult-gh-embark)))
-
-  (with-eval-after-load 'consult-gh
-    (add-to-list 'savehist-additional-variables 'consult-gh--known-orgs-list)
-    (add-to-list 'savehist-additional-variables 'consult-gh--known-repos-list)))
-
-;;*** Sr.ht
-(setup (:pkg srht)
-  (:option srht-username user-mail-address))
-
-;; (srht :type git :host github :repo "emacs-straight/srht" :files ("*" (:exclude ".git")))
-
-;;*** Repo
-;; For Google Repo
-(setup (:pkg repo))
-;; TODO: repo interactives/customs: repo-status, repo-init...
-
 ;;** Formatting
 
 ;;*** Aphelia
@@ -519,6 +357,7 @@ compilation was initiated from compile-mode."
   (cl-dolist (aclang-mode dc/apheleia-clang-modes)
     (add-to-list 'apheleia-mode-alist `(,(car aclang-mode) . clang-format)))
 
+  (add-to-list 'minions-prominent-modes 'apheleia-mode)
   (apheleia-global-mode +1))
 
 ;;*** Indentation
@@ -633,6 +472,11 @@ compilation was initiated from compile-mode."
 ;;*** Emacs Lisp
 
 (setup emacs-lisp-mode)
+
+(setq dash-fontify-mode-lighter "DASH")
+
+(add-to-list 'minions-prominent-modes 'edebug-mode)
+
 ;; NOTE: doesn't work (separate debugging system, hoped to get lucky)
 ;; (add-to-list 'gud-tooltip-modes 'emacs-lisp-mode)
 

@@ -441,14 +441,6 @@
 (setup (:pkg hydra)
   (require 'hydra))
 
-(defhydra dw/smerge-panel ()
-  "smerge"
-  ("k" (smerge-prev) "prev change" )
-  ("j" (smerge-next) "next change")
-  ("u" (smerge-keep-upper) "keep upper")
-  ("l" (smerge-keep-lower) "keep lower")
-  ("q" nil "quit" :exit t))
-
 ;;*** Timers
 
 ;; TODO: bind `tmr' and `C-u tmr' to a key

@@ -50,6 +50,9 @@
   (:with-mode guix-build-log-mode
     (:file-match "\\/var\\/log\\/guix\\/drvs\\/.*\\.drv\\'")))
 
+(cl-dolist (m '(guix-devel-mode guix-build-log-mode guix-derivation-mode))
+  (add-to-list 'minions-prominent-modes m))
+
 ;; (setq auto-mode-alist (cddr auto-mode-alist))
 
 ;;*** Guix Geiser Configuration

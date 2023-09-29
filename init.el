@@ -79,10 +79,14 @@
 ;; emacs world)
 
 ;; comments are such bad, docs are wow and var lookups yay
-(defvar dc/ecto-path (getenv "_ECTO")
+(defvar dc/ecto-path (or (getenv "_ECTO") (expand-file-name "~/ecto"))
   "Directory where git-repo projects are checked out.")
-(defvar dc/repo-path (getenv "_REPO")
+(defvar dc/repo-path (or (getenv "_REPO") (expand-file-name "~/repo"))
   "Directory containing XML for git-repo projects are checked out.")
+(defvar dc/lang-path (or (getenv "_LANG") (expand-file-name "~/lang"))
+  "Directory containing quick projects under ./lang. It typically
+contains config under ./.lang to encourage native and portable
+12factor language configs, when not container.")
 
 ;;*** Guix/Geiser Paths
 
@@ -226,6 +230,7 @@ Guix channel.")
 (let ((deps-from-guix
        '(pdf-tools org which-key hydra eglot magit compat
                    embark consult corfu cape vertigo marginalia
+                   flycheck
                    orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
@@ -234,11 +239,27 @@ Guix channel.")
 
 ;;*** Appendables
 
-;; init early to keep logic close to (require 'package)
+;; init early to keep logic close to (require 'package) ... which I may change,
+;; since I lose control of the ordering of prominent modes.
+
+;; In that case, i'll just run this and then fixup.
+;;
+;; `grep -re "(add-to-list 'minions-prominent-modes '.*)" >> ./modules/dc-modelines.el
 
 ;; (eq t (xor (minions-demoted (or minions-promoted enabled))))
-(setq minions-prominent-modes nil
+(setq minions-prominent-modes
+      '(superword-mode
+        subword-mode
+        2C-mode)
       minions-demoted-modes nil)
+
+;;**** Prominent
+
+(add-to-list 'minions-prominent-modes 'combobulate-mode)
+(add-to-list 'minions-prominent-modes 'apheleia-mode)
+(add-to-list 'minions-prominent-modes 'undo-tree)
+
+;;**** Demoted
 
 ;;*** Core Init
 
@@ -274,6 +295,7 @@ Guix channel.")
 
 ;;** Dev
 
+(require 'dc-fly)
 ;; (require 'dw-shell)
 (require 'dc-dev)
 (require 'dc-dev-web)
@@ -285,6 +307,7 @@ Guix channel.")
 
 ;;** System
 
+(require 'dc-vcs)
 (require 'dc-tools)
 (require 'dc-dev-yaml)
 

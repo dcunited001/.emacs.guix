@@ -83,7 +83,10 @@
 
 ;; there are also configurations for org & eglot
 
-(setq eldoc-idle-delay 0.1)
+(setq eldoc-idle-delay 0.1
+      eldoc-minor-mode-string "│εL")
+
+(add-to-list 'minions-prominent-modes 'eldoc-mode)
 
 ;; currently 'truncate-sym-name-if-fit. eglot may change this
 ;; eldoc-echo-area-use-multiline-p nil

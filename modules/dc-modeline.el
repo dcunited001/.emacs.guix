@@ -28,14 +28,18 @@
 
 ;; '("╒╛" . "╒╛")
 (setup (:pkg minions)
-  ;; (:with-hook window-setup-hook
-  ;;   (:hook minions-mode))
+  (:with-hook window-setup-hook
+    (:hook minions-mode))
   (:option minions-mode-line-lighter "⌠≡⌡"
-           minions-mode-line-delimiters '("╔╦╗" . "")))
+           minions-mode-line-delimiters '("╔╦╗ " . "")))
 
-(setq minions-prominent-modes
-      '(combobulate-mode
-        flyspell-mode))
+;; To list a mode even though the defining library has not been loaded yet, you
+;; must add it to minor-mode-list yourself. Additionally it must be
+;; autoloaded. For example:
+(defun dc/minions-push (modesym)
+  "Add a placeholder for `modesym' in "
+  (when (autoloadp (symbol-function sym))
+    (cl-pushnew sym minor-mode-list)))
 
 ;;** Modeline
 
