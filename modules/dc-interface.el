@@ -305,6 +305,12 @@
 (setq window-divider-default-right-width 3
       window-divider-default-bottom-width 3)
 
+;;*** Images
+
+;; my build doesn't have webp ... but just in case
+(add-hook 'emacs-startup-hook
+          (lambda () (setq image-types (remq 'webp image-types))))
+
 ;;** Editor
 
 ;;*** Indentation

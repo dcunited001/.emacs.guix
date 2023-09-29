@@ -69,6 +69,16 @@
       gnus-use-dribble-file t
       gnus-always-read-dribble-file t)
 
+;;**** Lock Files
+
+;; TODO reappropriate locking from desktop.el
+;; - also: https://www.emacswiki.org/emacs/PreventingMultipleGnus
+(defvar gnus-lock-filename)
+
+;; gnus--load-locked-desktop-p
+;; gnus-claim-lock
+;; gnus-release-lock
+
 ;;*** Group
 
 
@@ -126,19 +136,22 @@
   (:with-hook gnus-article-mode-hook
     (:hook bug-reference-mode)))
 
-;;*** Notifications
-
 ;;*** Interface
+
+;; gnus-buffer-configuration
+
+;;**** Window Layout
+
+;; definitely, definitely use the trees
+(setq gnus-use-trees t)
+
+;; use gnus-add-configuration to modify gnus-buffer-configuration (must run after gnus starts)
+
+;;**** Notifications
+
 
 ;; TODO (all-the-icons-gnus :type git :flavor melpa
 ;;                          :host github :repo "nlamirault/all-the-icons-gnus")
-
-;; TODO reappropriate locking from desktop.el
-;; - also: https://www.emacswiki.org/emacs/PreventingMultipleGnus
-(defvar gnus-lock-filename)
-;; gnus--load-locked-desktop-p
-;; gnus-claim-lock
-;; gnus-release-lock
 
 (with-eval-after-load 'gnus
   (dolist (mode '(gnus-group-mode-hook gnus-summary-mode-hook gnus-browse-mode-hook))
