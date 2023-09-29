@@ -63,6 +63,9 @@
 ;;*** Direnv
 
 (setup (:pkg envrc)
+  (:option envrc-on-lighter '("│Æ=" (:propertize "on" face envrc-mode-line-on-face))
+           envrc-none-lighter '("│Æ=" (:propertize "none" face envrc-mode-line-none-face))
+           envrc-error-lighter '("│Æ=" (:propertize "err" face envrc-mode-line-error-face)))
   (add-hook 'emacs-startup-hook #'envrc-global-mode))
 
 ;; (setup (:pkg buffer-env)
@@ -103,7 +106,8 @@
            flycheck-highlighting-mode 'columns
 
            ;; enable most on per-buffer/per-project basis only
-           flycheck-global-modes '(emacs-lisp))
+           flycheck-global-modes '(emacs-lisp)
+           flycheck-mode-line-prefix "│♠ FlyC")
   (:also-load flycheck-guile)
   (:also-load flycheck-package))
 
@@ -120,6 +124,9 @@
 (global-flycheck-mode)
 
 ;;*** Flymake
+
+(setup (:pkg flymake)
+  (:option flymake-mode-line-lighter "│♠ FlyM"))
 
 ;;** Compiling
 
@@ -323,7 +330,9 @@ compilation was initiated from compile-mode."
 ;;*** Magit
 
 (setup (:pkg magit)
-  (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
+           magit-wip-mode-lighter "│§ WIP"
+           magit-blame-mode-lighter "│§ BLAME"))
 
 (setup (:pkg magit-todos)
   (:with-hook emacs-startup-hook
@@ -496,6 +505,9 @@ compilation was initiated from compile-mode."
 ;; (a-get apheleia-mode-alist 'html-mode)
 ;; (a-get apheleia-mode-alist 'json-mode)
 
+(setup (:pkg apheleia)
+  (:option apheleia-mode-lighter "│¶"))
+
 (with-eval-after-load 'apheleia
   ;; setup formatters
   (setq apheleia-formatters (a-merge apheleia-formatters
@@ -505,9 +517,8 @@ compilation was initiated from compile-mode."
   ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
   (add-to-list 'apheleia-mode-alist '(lisp-data-mode . lisp-indent))
   (cl-dolist (aclang-mode dc/apheleia-clang-modes)
-    (add-to-list 'apheleia-mode-alist `(,(car aclang-mode) . clang-format))))
+    (add-to-list 'apheleia-mode-alist `(,(car aclang-mode) . clang-format)))
 
-(setup (:pkg apheleia)
   (apheleia-global-mode +1))
 
 ;;*** Indentation

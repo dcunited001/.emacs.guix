@@ -82,6 +82,7 @@
 ;; NOTE: I'm not currently using this
 
 (setq projectile-project-search-path '(("/data/repo/" . 1)
-                                       ("/data/ecto/" . 3)))
+                                       ("/data/ecto/" . 3))
+      projectile-mode-line-prefix "│π →")
 
 (provide 'dc-project)

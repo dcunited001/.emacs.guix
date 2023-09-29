@@ -69,7 +69,8 @@
 
 (setup (:pkg which-key)
   (:option which-key-idle-delay 1.0
-           which-key-idle-secondary-delay 0.05)
+           which-key-idle-secondary-delay 0.05
+           which-key-lighter "│WK")
   (require 'which-key)
   (which-key-mode)
   (which-key-setup-side-window-bottom))
@@ -106,7 +107,8 @@
 
 ;;*** Dired
 
-(setup (:pkg all-the-icons-dired :straight t))
+(setup (:pkg all-the-icons-dired :straight t)
+  (:option all-the-icons-dired-lighter "│ic☼ns"))
 ;; You must run (all-the-icons-install-fonts) one time after
 ;; installing this package!
 

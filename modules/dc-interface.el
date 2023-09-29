@@ -353,7 +353,10 @@
 ;;*** Undo
 
 (setup (:pkg undo-tree)
-  (setq undo-tree-auto-save-history nil)
+  (:option undo-tree-auto-save-history nil
+           undo-tree-mode-lighter "│Ü¿"))
+
+(with-eval-after-load 'undo-tree
   (global-undo-tree-mode 1))
 
 ;;** Highlighting

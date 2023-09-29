@@ -69,6 +69,9 @@
    mode-line-modes
    mode-line-end-spaces))
 
+;; TODO: fix minor-mode-alist, so i can put the file name back in the modeline
+
+
 ;; TODO: ensure this doesn't become incompatible with what's underneath
 (defun eglot--mode-line-format ()
   "Compose Eglot's mode-line."

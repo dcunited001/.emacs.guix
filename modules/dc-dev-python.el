@@ -79,8 +79,8 @@
 
 ;;** formatting
 
-(with-eval-after-load 'aphelia
-  (add-to-list 'apheleia-mode-alist '(python-mode . yapf)))
+;; (with-eval-after-load 'apheleia
+;;   (add-to-list 'apheleia-mode-alist '(python-mode . yapf)))
 
 
 ;;** jupyter
