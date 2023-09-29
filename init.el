@@ -230,7 +230,17 @@ Guix channel.")
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 
-;;*** Core
+;;** Core
+
+;;*** Appendables
+
+;; init early to keep logic close to (require 'package)
+
+;; (eq t (xor (minions-demoted (or minions-promoted enabled))))
+(setq minions-prominent-modes nil
+      minions-demoted-modes nil)
+
+;;*** Core Init
 
 (require 'dw-core)
 
@@ -242,7 +252,7 @@ Guix channel.")
 
 (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 
-;;*** UI
+;;** UI
 
 ;; (require 'dc-terminal)
 (require 'dc-desktop)
@@ -252,17 +262,17 @@ Guix channel.")
 (require 'dc-popup)
 (require 'dc-auth)
 
-;;**** Info
+;;*** Info
 
 (require 'dc-info)
 
-;;*** Org
+;;** Org
 
 (require 'dw-org)
 (require 'dc-org)
 (require 'dc-bibtex)
 
-;;*** Dev
+;;** Dev
 
 ;; (require 'dw-shell)
 (require 'dc-dev)
@@ -273,7 +283,7 @@ Guix channel.")
 (require 'dc-dev-scala)
 (require 'dc-dev-python)
 
-;;*** System
+;;** System
 
 (require 'dc-tools)
 (require 'dc-dev-yaml)
@@ -282,19 +292,19 @@ Guix channel.")
 
 ;; (require 'dc-workflow)
 
-;;*** Apps
+;;** Apps
 
 (require 'dc-social)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
 ;; (require 'dc-games)
 
-;;*** Keys & Mouse
+;;** Keys & Mouse
 
 (require 'dc-keys)
 (require 'dc-mouse)
 
-;;*** Final
+;;** Final
 
 (require 'dc-modeline)
 

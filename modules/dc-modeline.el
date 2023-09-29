@@ -24,6 +24,21 @@
 
 ;; https://en.wikipedia.org/wiki/Code_page_437#Character_set
 
+;;** Minions
+
+;; '("╒╛" . "╒╛")
+(setup (:pkg minions)
+  ;; (:with-hook window-setup-hook
+  ;;   (:hook minions-mode))
+  (:option minions-mode-line-lighter "⌠≡⌡"
+           minions-mode-line-delimiters '("╔╦╗" . "")))
+
+(setq minions-prominent-modes
+      '(combobulate-mode
+        flyspell-mode))
+
+;;** Modeline
+
 ;; (min-width 10.0) is specified in (:propertize)
 ;; "║%l↔%c║" ;; "|%l↓%c→|" " 
 (setq mode-line-position-column-line-format '("↓%l →%c ║ ")
@@ -38,25 +53,15 @@
 ;;    mode-line-misc-info
 ;;    mode-line-modes))
 
-;; ** Headerline
-
-;; NOTE: most of the mouse click events don't work in header-line-format
-(setq-default
- header-line-format
- '("║ %e"
-   mode-line-front-space
-   mode-line-position
-   mode-line-buffer-identification
-   " ║ "
-   mode-line-frame-identification
-   " ║ "
-   (vc-mode vc-mode)
-   mode-line-end-spaces))
-
 (setq-default
  mode-line-format
- '("║ %e"
+ '("%e"
    mode-line-front-space
+   mode-line-position
+   "║"
+   mode-line-frame-identification
+   mode-line-buffer-identification
+   "║"
    (:propertize (""
                  mode-line-mule-info
                  mode-line-client
@@ -64,10 +69,13 @@
                  mode-line-remote)
                 display
                 (min-width (5.0)))
-   " ║ "
+   (vc-mode vc-mode)
    mode-line-misc-info
-   mode-line-modes
+   minions-mode-line-modes
    mode-line-end-spaces))
+
+;; ** Headerline
+;; NOTE: most of the mouse click events don't work in header-line-format
 
 ;; TODO: fix minor-mode-alist, so i can put the file name back in the modeline
 
