@@ -22,10 +22,32 @@
 
 ;;* Dev Python
 
-
 (setq python-indent-offset 4)
 
-;;** pyenv
+;;** formatting
+
+;; (with-eval-after-load 'apheleia
+;;   (add-to-list 'apheleia-mode-alist '(python-mode . yapf)))
+
+;;** LSP
+
+;;*** pylsp
+
+(with-eval-after-load 'eglot
+  (add-to-list
+   'eglot-server-programs
+   '(python-mode . ("pylsp"))))
+
+;;** Fly
+
+;;*** Flymake
+
+;; python-flymake-command:
+;; '("flake8" "-") or ("pylint" "--from-stdin" "stdin")
+
+;;** Environment
+
+;;*** pyenv
 
 (defun dc/pyenv-version (pyenv-root &optional rel-path)
   ;; TODO: typically set rel-path to default-directory
@@ -58,8 +80,9 @@
                                               "../python/.pythonversion")
       dc/ipykernel-default-spec-path (expand-file-name (format "3.10.11")))
 
+;;** Notebooks
 
-;;** EIN
+;;*** EIN
 
 ;; (setup (:pkg ein :straight t :type git :flavor melpa
 ;;              :host github :repo "millejoh/emacs-ipython-notebook"))
@@ -70,22 +93,9 @@
 ;; (ein:query-divine-authorization-tokens-key "http://127.0.0.1:8888")
 ;; (ein:$kernel-session-id "python3")
 
-;;** pylsp
+;;*** jupyter
 
-(with-eval-after-load 'eglot
-  (add-to-list
-   'eglot-server-programs
-   '(python-mode . ("pylsp"))))
-
-;;** formatting
-
-;; (with-eval-after-load 'apheleia
-;;   (add-to-list 'apheleia-mode-alist '(python-mode . yapf)))
-
-
-;;** jupyter
-
-;;*** emacs-jupyter
+;;**** emacs-jupyter
 
 ;; both the :kernel and the :session must be set in the same #+HEADER_ARGS line
 ;; if they aren't (plist-set ...)

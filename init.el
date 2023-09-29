@@ -250,16 +250,33 @@ Guix channel.")
 (setq minions-prominent-modes
       '(superword-mode
         subword-mode
-        2C-mode)
+        2C-mode
+        multiple-cursors-mode)
       minions-demoted-modes nil)
 
 ;;**** Prominent
 
 (add-to-list 'minions-prominent-modes 'combobulate-mode)
 (add-to-list 'minions-prominent-modes 'apheleia-mode)
-(add-to-list 'minions-prominent-modes 'undo-tree)
+
+;; editor
+(add-to-list 'minions-prominent-modes 'undo-tree-mode)
+(add-to-list 'minions-prominent-modes 'smartparens-mode)
+
+;; customize overwrite-mode-binary and overwrite-mode-textual
+(add-to-list 'minions-prominent-modes 'overwrite-mode)
+(add-to-list 'minions-prominent-modes 'view-mode)
+
+;; org-like
+(add-to-list 'minions-prominent-modes 'cdlatex-mode)
+(add-to-list 'minions-prominent-modes 'outline-mode)
 
 ;;**** Demoted
+
+(add-to-list 'minions-demoted-modes 'rainbow-mode)
+(add-to-list 'minions-demoted-modes 'rainbow-delimiters-mode)
+(add-to-list 'minions-demoted-modes 'super-savemode)
+(add-to-list 'minions-demoted-modes 'ws-butler-mode)
 
 ;;*** Core Init
 

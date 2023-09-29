@@ -29,7 +29,15 @@
 ;; runs (flycheck-error-level-interesting-p (get-char-property pos 'flycheck-error))
 
 (setup (:pkg flymake)
-  (:option flymake-mode-line-lighter " ♠ MK"))
+  (:option flymake-mode-line-lighter  "│♠ MK"))
+
+;; also:
+;; flymake-proc-ignored-file-name-regexps
+;; flymake-proc-proc-xml-program
+
+;; (with-eval-after-load 'flymake
+;;   (add-to-list 'flymake-proc-allowed-file-name-masks
+;;                ("\\.xml\\'" flymake-proc-xml-init)))
 
 (add-to-list 'minions-prominent-modes 'flycheck-mode)
 
@@ -37,27 +45,23 @@
 
 ;; This is a quick survey of flycheck and org-babel functionality
 ;; https://github.com/jkitchin/scimax/commit/9a039cfc5fcdf0114a72d23d34b78a8b3d4349c9
+
 (setup (:pkg flycheck)
   (:option flycheck-emacs-lisp-load-path 'inherit
            flycheck-highlighting-mode 'columns
-           flycheck-mode-line-prefix " ♠ CHK")
+           flycheck-mode-line-prefix "│♠ CHK")
   (:also-load flycheck-guile)
   (:also-load flycheck-package)
   (:with-hook window-setup-hook
     (:hook global-flycheck-mode)))
+;; use M-x flycheck-error-list-set-filter to change (f, F in the list buffer)
 
-;; `(conditional 4 level-face (delimiters "" ""))
-
-(add-to-list 'minions-prominent-modes 'flycheck-mode)
+(setq-default flycheck-navigation-minimum-level 'error
+              flycheck-error-list-minimum-level 'warning)
 
 (setq flycheck-global-modes '(emacs-lisp-mode
                               sh-mode bash-ts-mode
                               python-mode python-ts-mode))
-
-(setq dc/flycheck-highlighting-style-default flycheck-highlighting-style
-      dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
-      flycheck-
-      dc/flycheck-warnings-have-underlines nil)
 
 (defun dc/toggle-flycheck-highlighting-style ()
   "Don't taze me bro."
@@ -70,18 +74,17 @@
        flycheck-highlighting-mode
        (flycheck-refresh-fringes-and-margins)))
 
+(with-eval-after-load 'flycheck
+  (setq dc/flycheck-highlighting-style-default flycheck-highlighting-style
+        dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
+        dc/flycheck-warnings-have-underlines nil))
+
 ;; see .emacs.doom/modules/checkers/javascript/config.el
 ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 ;; (flycheck-add-mode 'javascript-eslint 'typescript-mode)
 ;; (flycheck-add-mode 'javascript-eslint 'typescript-tsx-mode)
 ;; (flycheck-add-mode 'typescript-tslint 'typescript-tsx-mode)
 ;; tide not completely compatible with LSP
-
-;; use M-x flycheck-error-list-set-filter to change (f, F in the list buffer)
-(setq-default flycheck-navigation-minimum-level 'error
-              flycheck-error-list-minimum-level 'warning)
-
-;;*** Troubleshoot
 
 ;;*** Tweaks
 
@@ -117,5 +120,7 @@
 ;; (defface dc/flycheck-warning-no-underline
 ;;   '((t :inherit warning))
 ;;   "Flycheck face for warnings.")
+
+(add-to-list 'minions-prominent-modes 'flycheck-mode)
 
 (provide 'dc-fly)
