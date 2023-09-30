@@ -110,6 +110,11 @@
 
 ;;*** Group
 
+(setq gnus-group-line-format "%-40,40c │%7y│%5T│%5R│%B%M%S%p│\n"
+      gnus-group-uncollapsed-levels 2)
+
+;; gnus-group-highlight
+
 ;;*** Summary
 
 (setup (:pkg gnus)
