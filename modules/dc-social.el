@@ -61,7 +61,7 @@
 ;; {nntp:news.gmane.io} (opened)
 ;; {nnimap:imap.gmail.com} (opened)
 
-;;*** Startup Files
+;;*** Startup
 
 ;; don't read the newsrc file, but write to it
 (setq gnus-read-newsrc-file nil
@@ -113,7 +113,11 @@
 (setq gnus-group-line-format "%-40,40c │%7y│%5T│%5R│%B%M%S%p│\n"
       gnus-group-uncollapsed-levels 2)
 
-;; gnus-group-highlight
+;;*** Server
+
+;; the %h formatter needs type conversion to set the length
+(setq gnus-server-line-format "%-8,8s │ %-8,8a │ %-14,14c | %-16,16w %h\n")
+;; (dc/gnus-format-alist-translate gnus-server-line-format-alist)
 
 ;;*** Summary
 
@@ -155,6 +159,10 @@
 ;;*** Interface
 
 ;; gnus-buffer-configuration
+
+;;**** Gnus Visual
+
+;; variable: gnus-visual
 
 ;;**** Window Layout
 
@@ -295,12 +303,61 @@
 
 ;;** Gnus Support
 
+;; TODO update to translate the types (these are chars like \s \b and \n
 (defun dc/gnus-format-alist-translate (alist)
   (mapcar (lambda (a)
             (let ((key (if (numberp (car a))
                            (char-to-string (car a))
                          (concat "&" (symbol-name (car a))))))
               (cons (concat "%" key) (cdr a)))) alist))
+
+
+;;*** Demons
+
+;;**** Support
+
+(defun dc/gnus-demon-scan-mail-unless-closed (servers)
+  (save-window-excursion
+    (let (server
+          (nnmail-fetched-sources (list t))
+          (servers (seq-intersection
+                    gnus-opened-servers servers
+                    (lambda (a b) (eq (car a) (car b))))))
+      (while (setq server (car (pop servers)))
+        (and (gnus-check-backend-function 'request-scan (car server))
+             (eq 'nnimap (car server))
+             ;; exits early if the server is closed
+             (not (eq 'closed (gnus-server-status server)))
+             (message "Reading mail from %s" (pp-to-string server))
+	           (or (gnus-server-opened server)
+		             (gnus-open-server server))
+	           (gnus-request-scan nil server))))))
+
+;;**** Handlers
+
+(defun dc/gnus-demon-setup ()
+
+  ;; close connections after emacs is idle for 30 minutes
+  (gnus-demon-add-handler
+   'gnus-demon-close-connections nil 30)
+
+  ;; assuming the imap server is specified by gnus-select-method at
+  ;; gnus-startup.
+  (let ((nnimap-methods (list (list gnus-select-method))))
+
+    ;; this still may not work
+    (gnus-demon-add-handler
+     (apply-partially #'dc/gnus-demon-scan-mail-unless-closed
+                      nnimap-methods) 10 nil))
+
+  (gnus-demon-init))
+
+;; this will reopen the server even after it's been disconnected.
+;; (gnus-demon-add-handler
+;;  'gnus-demon-scan-mail 10 nil)
+
+(add-hook 'gnus-started-hook #'dc/gnus-demon-setup)
+
 
 ;;** Mail
 
