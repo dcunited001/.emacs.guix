@@ -120,11 +120,22 @@
            gnus-large-newsgroup 4000
            gnus-secondary-select-methods '(;; (nnimap "imap.gmail.com")
                                            (nntp "news.gmane.io"))
-           gnus-message-archive-group "\"[Gmail]/Sent Mail\""
-           ;; gnus-interactive-exit nil
-           ;; gnus-novice-user nil
-           ;; gnus-expert-user t
-           )
+           gnus-message-archive-group "\"[Gmail]/Sent Mail\"")
+
+  ;; gnus-interactive-exit nil
+  ;; gnus-novice-user nil
+  ;; gnus-expert-user t
+
+  (setq gnus-summary-line-format "%U%R%z %d %B%-3L %[%f%] %s\n"
+        gnus-sum-thread-tree-root            "☼──► "
+        gnus-sum-thread-tree-false-root      "○┬─► "
+        gnus-sum-thread-tree-vertical        "│"
+        gnus-sum-thread-tree-leaf-with-other "├──► "
+        gnus-sum-thread-tree-single-leaf     "└──► "
+        gnus-sum-thread-tree-indent          " "
+        gnus-sum-thread-tree-single-indent   "■ "
+        gnus-summary-newsgroup-prefix        "⇒ "
+        gnus-summary-to-prefix               "→ ")
 
   (:with-hook gnus-summary-mode-hook
     (:hook bug-reference-mode))
@@ -143,7 +154,9 @@
 ;;**** Window Layout
 
 ;; definitely, definitely use the trees
-(setq gnus-use-trees t)
+(setq gnus-use-trees t
+      gnus-generate-tree-function 'gnus-generate-horizontal-tree)
+
 
 ;; use gnus-add-configuration to modify gnus-buffer-configuration (must run
 ;; after gnus starts)
@@ -170,6 +183,7 @@
   (dolist (mode '(gnus-group-mode-hook gnus-summary-mode-hook gnus-browse-mode-hook))
     (add-hook mode #'hl-line-mode)))
 
+;; https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org#make-all-mails-visible-important
 
 (with-eval-after-load 'gnus
   ;; @see https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/gnus-guide-en.org
@@ -273,6 +287,15 @@
     (local-set-key (kbd "C-c C-y") 'hydra-message/body))
 
   (add-hook 'message-mode-hook 'message-mode-hook-hydra-setup))
+
+;;** Gnus Support
+
+(defun dc/gnus-format-alist-translate (alist)
+  (mapcar (lambda (a)
+            (let ((key (if (numberp (car a))
+                           (char-to-string (car a))
+                         (concat "&" (symbol-name (car a))))))
+              (cons (concat "%" key) (cdr a)))) alist))
 
 ;;** Mail
 
