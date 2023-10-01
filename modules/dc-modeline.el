@@ -44,8 +44,10 @@
 ;;** Modeline
 
 ;; (min-width 10.0) is specified in (:propertize)
-;; "║%l↔%c║" ;; "|%l↓%c→|" " 
-(setq mode-line-position-column-line-format '("↓%l →%c ║ ")
+;; "║%l↔%c║"
+;; "|%l↓%c→|"
+;; "↓%l →%c "
+(setq mode-line-position-column-line-format '("│%l ► %c│")
       mode-line-compact nil
       mode-line-percent-position nil)
 
@@ -61,19 +63,23 @@
  mode-line-format
  '("%e"
    mode-line-front-space
-   mode-line-position
+   mode-line-remote
+   "│"
+   mode-line-client
    "║"
+   mode-line-mule-info
+   mode-line-position
    mode-line-frame-identification
    mode-line-buffer-identification
-   "║"
+   " │"
+
    (:propertize (""
-                 mode-line-mule-info
-                 mode-line-client
-                 mode-line-modified
-                 mode-line-remote)
+                 mode-line-modified)
                 display
                 (min-width (5.0)))
+   "║"
    (vc-mode vc-mode)
+   " "
    mode-line-misc-info
    minions-mode-line-modes
    mode-line-end-spaces))

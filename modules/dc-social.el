@@ -32,6 +32,7 @@
   (elfeed-org))
 
 ;;** GNUS
+
 ;; - stores messages in gnus-directory, ~/News
 ;; - stores mail (archive/drafts) in gnus-..., ~/Mail
 ;; - fetches from NNTPSERVER or /etc/nntpserver
@@ -42,24 +43,31 @@
 ;;   - gnus-directory (set to SAVEDIR if defined)
 (require 'bug-reference)
 
-;; see video for information https://www.youtube.com/watch?v=hbCXqDT1iNI
-;;
-;; if you have auth-sources set up for imap.gmail.com, /when gnus starts/
-;;
-;; then it should pull your gmail:
+;;*** Setup
 
-;;      301: INBOX
-;;      302: [Gmail]/All Mail
-;;      101: [Gmail]/Important
-;;      317: [Gmail]/Spam
-;;        0: [Gmail]/Starred
+(setup (:pkg gnus)
+  ;; https://www.gnu.org/software/emacs/manual/html_mono/gnus.html#Changing-Servers
+  ;; .newsrc breaks when your 'gnus-select-method changes
+  ;; gnus-select-method '(nnnil)
+  (:option gnus-select-method '(nnimap "imap.gmail.com")
+           gnus-large-newsgroup 4000
+           gnus-secondary-select-methods '(;; (nnimap "imap.gmail.com")
+                                           (nntp "news.gmane.io"))
+           gnus-message-archive-group "\"[Gmail]/Sent Mail\"")
 
-;; and pressing ^ will get you to the groups:
+  ;; gnus-interactive-exit nil
+  ;; gnus-novice-user nil
+  ;; gnus-expert-user t
+  (:with-hook gnus-group-mode-hook
+    (:hook gnus-topic-mode))
+  (:with-hook gnus-summary-mode-hook
+    (:hook bug-reference-mode))
+  (:with-hook gnus-after-getting-new-news-hook
+    (:hook #'gnus-notifications)))
 
-;; {nnfolder:archive} (opened)
-;; {nndraft:} (opened)
-;; {nntp:news.gmane.io} (opened)
-;; {nnimap:imap.gmail.com} (opened)
+(setup gnus-art
+  (:with-hook gnus-article-mode-hook
+    (:hook bug-reference-mode)))
 
 ;;*** Startup
 
@@ -79,14 +87,13 @@
 ;; gnus-claim-lock
 ;; gnus-release-lock
 
-;;*** Group
-
-
 ;;*** Async
 (setq gnus-asynchronous t
       gnus-use-article-prefetch 20)
 
 ;;*** Agent
+
+
 
 ;;*** Article
 (setq gnus-article-over-scroll nil
@@ -110,7 +117,14 @@
 
 ;;*** Group
 
-(setq gnus-group-line-format "%-40,40c │%7y│%5T│%5R│%B%M%S%p│\n"
+;; open summary buffer ─► seen
+;; open article ─► read
+;; hit ! to tick ─► ticked
+;;
+
+;; | n-ticked | n~untouched | n-read |  ;;;  n-unseen
+;; M: marked B: summary-open | S: subscr, %L sub-level
+(setq gnus-group-line-format "%M%B%p│%-42,42c│%3T│%4I│%7y│%L%S %d\n"
       gnus-group-uncollapsed-levels 2)
 
 ;;*** Server
@@ -121,40 +135,16 @@
 
 ;;*** Summary
 
-(setup (:pkg gnus)
-  ;; https://www.gnu.org/software/emacs/manual/html_mono/gnus.html#Changing-Servers
-  ;; .newsrc breaks when your 'gnus-select-method changes
-  ;; gnus-select-method '(nnnil)
-  (:option gnus-select-method '(nnimap "imap.gmail.com")
-           gnus-large-newsgroup 4000
-           gnus-secondary-select-methods '(;; (nnimap "imap.gmail.com")
-                                           (nntp "news.gmane.io"))
-           gnus-message-archive-group "\"[Gmail]/Sent Mail\"")
-
-  ;; gnus-interactive-exit nil
-  ;; gnus-novice-user nil
-  ;; gnus-expert-user t
-
-  (setq gnus-summary-line-format "%U%R%z %d %B%-3L %[%f%] %s\n"
-        gnus-sum-thread-tree-root            "☼──► "
-        gnus-sum-thread-tree-false-root      "○┬─► "
-        gnus-sum-thread-tree-vertical        "│"
-        gnus-sum-thread-tree-leaf-with-other "├•─► "
-        gnus-sum-thread-tree-single-leaf     "└•─► "
-        gnus-sum-thread-tree-indent          " "
-        gnus-sum-thread-tree-single-indent   "■ "
-        gnus-summary-newsgroup-prefix        "⇒ "
-        gnus-summary-to-prefix               "→ ")
-
-  (:with-hook gnus-summary-mode-hook
-    (:hook bug-reference-mode))
-
-  (:with-hook gnus-after-getting-new-news-hook
-    (:hook #'gnus-notifications)))
-
-(setup gnus-art
-  (:with-hook gnus-article-mode-hook
-    (:hook bug-reference-mode)))
+(setq gnus-summary-line-format "%U%R%z %d %B%-3L %[%f%] %s\n"
+      gnus-sum-thread-tree-root            "☼──► "
+      gnus-sum-thread-tree-false-root      "○┬─► "
+      gnus-sum-thread-tree-vertical        "│"
+      gnus-sum-thread-tree-leaf-with-other "├•─► "
+      gnus-sum-thread-tree-single-leaf     "└•─► "
+      gnus-sum-thread-tree-indent          " "
+      gnus-sum-thread-tree-single-indent   "■ "
+      gnus-summary-newsgroup-prefix        "⇒ "
+      gnus-summary-to-prefix               "→ ")
 
 ;;*** Interface
 
