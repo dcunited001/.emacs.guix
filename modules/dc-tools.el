@@ -40,15 +40,18 @@
 (setup (:pkg buttercup))
 
 ;;** Arch
-(setup (:pkg aurel :straight t :type git :flavor melpa :host github :repo "alezost/aurel"))
+(setup (:pkg aurel :straight t :type git :flavor melpa
+             :host github :repo "alezost/aurel"))
 ;;** Guix
 
 (setup (:pkg guix)
-  (:option guix-read-package-name-function #'guix-read-package-name-at-point)
+  (:option guix-read-package-name-function
+           #'guix-read-package-name-at-point)
   (:with-mode guix-derivation-mode
     (:file-match "\\/gnu\\/store\\/.*\\.drv\\'"))
   (:with-mode guix-build-log-mode
-    (:file-match "\\/var\\/log\\/guix\\/drvs\\/.*\\.drv\\'")))
+    (:file-match "\\/var\\/log\\/guix\\/drvs\\/.*\\.drv\\'"))
+  (require 'guix-profiles))
 
 (cl-dolist (m '(guix-devel-mode guix-build-log-mode guix-derivation-mode))
   (add-to-list 'minions-prominent-modes m))

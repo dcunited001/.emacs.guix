@@ -125,7 +125,25 @@
 ;; | n-ticked | n~untouched | n-read |  ;;;  n-unseen
 ;; M: marked B: summary-open | S: subscr, %L sub-level
 (setq gnus-group-line-format "%M%B%p│%-42,42c│%3T│%4I│%7y│%L%S %d\n"
-      gnus-group-uncollapsed-levels 2)
+      gnus-group-uncollapsed-levels 3
+      gnus-level-subscribed 6
+      gnus-level-default-subscribed 4)
+
+;;**** Topics
+
+;; "%i└─♦ %(%{%n%}%) %gg:%a (%G:%A) ]%v\n"
+;; "%i╚═♦ %(%{%n%}%) »───« %a in %g »───« %G in %A »───♦  %v\n"
+
+;; needs too many hacks, may not work
+;;
+;; dc/gnus-topic-indent-max (* 5 gnus-topic-indent-level)
+;;
+;; (concat "%i└─•─"
+;;         "%4,4~(form (make-string dc/gnus-topic-indent-max (string-to-char \"─\")))@"
+;;         "« %(%{%n%}%) »───« %G in %A »───♦  %v\n")
+(setq gnus-topic-indent-level 2
+      gnus-topic-line-format
+      (concat "%i└─•────« %(%{%n%}%) »───« %G%v »───♦ %-56=%7A \n"))
 
 ;;*** Server
 
@@ -142,7 +160,7 @@
       gnus-sum-thread-tree-leaf-with-other "├•─► "
       gnus-sum-thread-tree-single-leaf     "└•─► "
       gnus-sum-thread-tree-indent          " "
-      gnus-sum-thread-tree-single-indent   "■ "
+      gnus-sum-thread-tree-single-indent   "■    "
       gnus-summary-newsgroup-prefix        "⇒ "
       gnus-summary-to-prefix               "→ ")
 
@@ -351,6 +369,14 @@
 
 ;;** Mail
 
+;; potentially problematic sendmail options (configure later)
+;; (setq mail-specify-envelope-from t
+;;       message-sendmail-envelope-from 'header
+;;       mail-envelope-from 'header)
+
+;; req action to unfold threads (maybe disable this)
+(setq gnus-thread-hide-subtree t)
+
 (with-eval-after-load 'gnus
   (setq mail-user-agent 'message-user-agent ;default
 
@@ -360,13 +386,19 @@
         mail-signature "David Conner\n"
         message-signature "David Conner\n"
 
+        mm-discouraged-alternatives '("text/html" "text/richtext")
+
+        ;; this needs to be set after loading gnus
+        mm-automatic-display (remove "text/html" mm-automatic-display)
+
         message-citation-line-function #'message-insert-formatted-citation-line
         message-citation-line-format (concat "> From: %f\n"
                                              "> Date: %a, %e %b %Y %T %z\n"
                                              ">")
         message-ignored-cited-headers ""
         ;; message-confirm-send nil
-        ;; message-kill-buffer-on-exit t
+        message-kill-buffer-on-exit t
+
         message-wide-reply-confirm-recipients t)
 
   (add-hook 'message-setup-hook #'message-sort-headers)
