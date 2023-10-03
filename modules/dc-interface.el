@@ -387,12 +387,14 @@
 
 ;;*** Dired
 (setup recentf
+  (:with-hook window-setup-hook
+    (:hook recentf-mode))
   (:option recentf-max-saved-items 200
            recentf-max-menu-items 13
            recentf-menu-filter #'recentf-filter-changer))
 
 (with-eval-after-load 'recentf
-  (recentf-mode)
+  ;; (recentf-mode +1) ; needs to be enabled later.
   (add-to-list 'recentf-exclude (rx (and line-start "/gnu/store"))))
 
 ;;*** Window Management
