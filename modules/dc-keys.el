@@ -216,6 +216,20 @@
    "<f2> lnf" #'nist-webbook-formula
    "<f2> lnn" #'nist-webbook-name
 
+   ;; local variables
+   "<f2> M-l" '(:ignore t :which-key "LOCAL VARS")
+   "<f2> M-l da" #'add-dir-local-variable
+   "<f2> M-l aF" #'add-file-local-variable
+   "<f2> M-l af" #'add-file-local-variable-prop-line
+   "<f2> M-l dd" #'delete-dir-local-variable
+   "<f2> M-l dF" #'delete-file-local-variable
+   "<f2> M-l df" #'delete-file-local-variable-prop-line
+   "<f2> M-l k" #'kill-local-variable
+   "<f2> M-l m" #'make-local-variable
+   "<f2> M-l M" #'make-variable-buffer-local
+   "<f2> M-l h" #'apropos-local-variable
+   "<f2> M-l H" #'array-display-local-variables
+
    "<f2> O" #'aw-show-dispatch-help
 
    ;; "<f2> p"  '(:ignore t :wk "POPUP")
