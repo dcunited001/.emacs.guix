@@ -237,10 +237,18 @@
 
    ;; "<f2> #" '(:ignore t :which-key "TRAMP")
    "<f2> T" '(:ignore t :which-key "TRAMP")
+   "<f2> Tb" #'tramp-cleanup-all-buffers
    "<f2> Tc" #'tramp-cleanup-connection
-   "<f2> TC" #'tramp-cleanup-all-buffers
+   "<f2> TC" #'tramp-cleanup-this-connection
    "<f2> T M-c" #'tramp-cleanup-all-connections
    "<f2> TM" #'tramp-compat-set-file-modes
+   "<f2> Td" #'tramp-setup-debug-buffer
+
+   ;; tramp-change-syntax
+   ;; tramp-rename-files
+   ;; tramp-rename-these-files
+   ;; tramp-unload-tramp
+   ;; tramp-change-syntax?
 
    "<f2> r" #'repology
 
