@@ -218,7 +218,7 @@
 
    ;; local variables
    "<f2> M-l" '(:ignore t :which-key "LOCAL VARS")
-   "<f2> M-l da" #'add-dir-local-variable
+   "<f2> M-l ad" #'add-dir-local-variable
    "<f2> M-l aF" #'add-file-local-variable
    "<f2> M-l af" #'add-file-local-variable-prop-line
    "<f2> M-l dd" #'delete-dir-local-variable
