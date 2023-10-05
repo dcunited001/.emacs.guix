@@ -1685,12 +1685,63 @@
 ;;*** text-mode
 
 ;;**** org-mode
+
+;;***** org-sidebar
+
+;; split out to define separate keys?
 (general-define-key
- :keymaps '(org-mode-map org-sidebar-map org-sidebar-tree-map)
+ :keymaps '(org-mode-map)
  :wk-full-keys nil
  :prefix "<f7>"
  "SPC" #'org-sidebar-tree-toggle
- "C-SPC" #'org-sidebar-toggle)
+ "C-SPC" #'org-sidebar-toggle
+ "q SPC" #'org-ql-view-sidebar
+ "M-q" #'org-sidebar-ql)
+
+;; org-sidebar will create empty/conusing results
+;; org-ql-view-list-map
+;; org-sidebar-map
+;; org-sidebar-tree-map
+
+;; org-sidebar-tree-map
+
+;; | cycle               | <tab>            |
+;; | cycle-global        | S-<iso-lefttab>  |
+;; | cycle-global        | S-<tab>          |
+;; | cycle-global        | <backtab>        |
+;; | cycle-mouse         | <triple-mouse-2> |
+;; | cycle-mouse         | <double-mouse-2> |
+;; | cycle-mouse         | <mouse-2>        |
+;; | jump                | <return>         |
+;; | jump-branches-mouse | <drag-mouse-1>   |
+;; | jump-entries-mouse  | <drag-mouse-2>   |
+;; | jump-mouse          | <triple-mouse-1> |
+;; | jump-mouse          | <double-mouse-1> |
+;; | jump-mouse          | <mouse-1>        |
+
+;;***** org-ql
+
+(general-define-key
+ :keymaps '(org-mode-map)
+ :wk-full-keys nil
+ :prefix "<f7>"
+ "C-q r" #'org-ql-refile)
+
+;; org-ql-sparse-tree
+;; org-ql-view-recent-items
+;; org-ql-search
+;; org-ql-refile
+;; org-ql-find (-in-agenda, in-org-directory)
+
+;; org-ql-view-map:
+
+;; org-ql-view-recent-items
+
+;; | c      | org-ql-view-customize |
+;; | g or r | org-ql-view-customize |
+;; | v      | org-ql-view-dispatch  |
+
+;; the org ql transient dispatch gives more commands
 
 ;;**** sgml-mode
 

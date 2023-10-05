@@ -283,6 +283,7 @@ Guix channel.")
 (require 'dw-core)
 
 (require 'dc-support)
+(require 'dc-network)
 
 (setq dc/eld-path (thread-last no-littering-etc-directory
                                (expand-file-name "dc")

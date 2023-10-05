@@ -264,6 +264,7 @@
 ;;*** Agenda
 
 (defun dc/org-init-agenda-h ()
+
   (setup org-agenda
     (:option
      ;; start with empty org-agenda-files
@@ -313,8 +314,6 @@
      )
 
     (org-clock-auto-clockout-insinuate))
-
-  (setup (:pkg org-ql))
 
   ;; needs 1.3-pre for :take selector, guix @ 1.2
   (setup (:pkg org-super-agenda :straight t :type git :flavor melpa
@@ -912,12 +911,84 @@ capture was not aborted."
 
 ;;*** UI
 
+;;**** QL
+
+;;*** Org QL
+
+;; TODO figure out how to close the sidebar (i guess it 's better this way lol)
+;;
+;; also, it would be a circular dep (org-sidebar dep on org-ql)
+;;
+;; example of closing org-sidebar-window
+;;
+;; https://github.com/alphapapa/org-sidebar/blob/master/org-sidebar.el#L199-L208
+
+;; org-ql-find uses non-sexp syntax
+
+;; https://github.com/alphapapa/org-ql#non-sexp-query-syntax
+
+;; TODO construct from org-todo-keywords (a bit messy/brittle)
+;;
+(defvar dc/org-ql-select-todos-without-id
+  '(and (todo)
+        (not (todo "DONE" "IDEA" "KILL"))
+        (not (property "ID")))
+  "An `org-ql' query that selects TODO items without an ID")
+
+;; org-ql is read-only
+;; (defun dc/org-ql-auto-assign-ids ()
+;;   (interactive)
+;;   (org-ql-select (current-buffer) dc/org-ql-select-todos-without-id))
+
+;; a bit too much data to gtd
+;; (org-element-parse-buffer)
+
+;; https://orgmode.org/manual/Matching-tags-and-properties.html
+;; https://orgmode.org/manual/Special-Properties.html
+;; https://scripter.co/looping-through-org-mode-headings/#match-strings
+
+(defun dc/org-element-create-ids (&optional match scope)
+  (interactive)
+  (let ((match (or match "+TODO={.+}-TODO=\"DONE\"-TODO=\"IDEA\"-TODO=\"KILL\""))
+        ;; (or match "+ID={.+}+TODO=\"TODO\"")
+        ;; (match (or match "+ID={.+}"))
+        ;; (match (or match "+ID={[[:alpha:]]}+TODO=\"DONE\""))
+        (scope (or scope (current-buffer))))
+
+    ;; TODO: fix so this allows all org-element scopes
+    ;; (org-ql--ensure-buffer scope) ; hmmm, not working
+    ;; i think org-element checks anyways
+
+    (let ((res nil)
+          (modified-flag nil))
+      (org-map-entries
+       (lambda ()
+         (let ((entry (org-element-at-point)))
+           (push entry res)
+           (unless (org-element-property :ID entry)
+             (org-id-get-create)
+             (setq modified-flag t)
+             (forward-line))))
+       match)
+
+      ;; i hope i don't run out of uuid's
+      (with-output-to-temp-buffer "*muh-temp-buffer*"
+        (pp res)))))
+
+(defun dc/org-init-ql-h ()
+  (setup (:pkg org-ql)))
+
 ;;**** Sidebar
 
 (defun dc/org-init-sidebar-h ()
-  (setup (:pkg org-sidebar)
-    (:option org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-source
-             org-sidebar-jump-indirect nil)))
+  (setup (:pkg org-sidebar)))
+
+(defun dc/toggle-org-sidebar-tree-narrow ()
+  (if org-sidebar-jump-indirect
+      (setq org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-source
+            org-sidebar-jump-indirect nil)
+    (setq org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-indirect
+          org-sidebar-jump-indirect t)))
 
 (defun dc/org-init-popup-rules-h ()
 
