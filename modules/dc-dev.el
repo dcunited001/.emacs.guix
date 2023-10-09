@@ -495,9 +495,12 @@ compilation was initiated from compile-mode."
 
 ;;*** Common Lisp
 
-(setup (:pkg sly)
-  (:disabled)
-  (:file-match "\\.lisp\\'"))
+(setup lisp-mode
+  (:with-mode lisp-mode
+    (:file-match "\\.lisp\\'")
+    (:file-match "\\.asd\\'")))
+
+(setup (:pkg sly))
 
 ;;*** Scheme
 
