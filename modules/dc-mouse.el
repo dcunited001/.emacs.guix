@@ -182,4 +182,24 @@
  "S-<wheel-down>" #'forward-paragraph
  "S-<wheel-up>" #'backward-paragraph)
 
+;; (eq ,mouse-n ,(+ 5 btn-n))
+
+;; mouse-13 -- btn 8 (res shift)
+
+;; upper pair
+;; mouse-14 -- btn  9  (back):
+;; mouse-15 -- btn  10 (front):
+
+;; lower pair
+;; mouse-8  -- BACK (back)
+;; mouse-9  -- FWD (front)
+
+;; mouse-12 -- btn 7 (cycle prof)
+
+;; to match buttons on wacom
+;; (wacom has 9 buttons, profile has 5 mouse-n)
+;; (g503 has 4 extra buttons, and 1 extra scroll functions)
+
+
+
 (provide 'dc-mouse)

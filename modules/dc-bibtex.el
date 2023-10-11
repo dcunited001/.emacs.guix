@@ -75,10 +75,14 @@
 " ;; (file-name-as-directory dc/aca-articles-directory)
 
            bibtex-autokey-year-length 4
+           bibtex-autokey-names 2
+           bibtex-autokey-names-stretch 1
            bibtex-autokey-name-year-separator "-"
            bibtex-autokey-year-title-separator "-"
            bibtex-autokey-titleword-separator "-"
            bibtex-autokey-titlewords 3
+           ;; remove colon from default: [.!?:;]\|--
+           bibtex-autokey-title-terminators "[.!?;]\\|--"
            bibtex-autokey-titlewords-stretch 1
            bibtex-autokey-titleword-length 5))
 

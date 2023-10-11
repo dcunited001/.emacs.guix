@@ -494,9 +494,6 @@
 (leader-def
   :wk-full-keys nil
 
-  "g" '(:ignore t :which-key "GIT")
-  "gL"  'git-link
-
   "j"   '(:ignore t :which-key "JUMP")
   "jj"  '(avy-goto-char :which-key "jump to char")
   "jw"  '(avy-goto-word-0 :which-key "jump to word")
@@ -687,6 +684,7 @@
  "m" #'consult-man
  "r" #'consult-ripgrep
  "s" #'consult-line-multi               ; "L"
+ "S" #'swiper
  "M-s" #'consult-yasnippet
  "M-S" #'consult-yasnippet-visit-snippet-file
  "u" #'consult-focus-lines
@@ -1501,14 +1499,65 @@
   "tl" #'markdown-toggle-url-hiding
   "tm" #'markdown-toggle-markup-hiding
   "tw" #'markdown-toggle-wiki-links
-  "tx" #'markdown-toggle-gfm-checkbox
-  )
+  "tx" #'markdown-toggle-gfm-checkbox)
 
 ;;*** v VCS
 
+;; TODO can magit-wip-mode be localized?
+
 (leader-def
   :keymaps '(global)
-  "vg" #'magit-status)
+
+  ;; git link
+  "v M-g l" #'git-link
+  "v M-g c" #'git-link-commit
+  "v M-g h" #'git-link-homepage
+
+  ;; magit
+  "v SPC" #'magit-status
+
+  ;; magit: recommended bindings
+  "vg" #'magit-file-dispatch
+  "vs" #'magit-stage-file
+  "vs" #'magit-stage-buffer-file
+  "vu" #'magit-unstage-file
+  "vu" #'magit-unstage-buffer-file
+
+  "v,x" #'magit-file-untrack
+  "v,r" #'magit-file-rename
+  "v,k" #'magit-file-delete
+  "v,c" #'magit-file-checkout
+
+  "vD" #'magit-diff
+  "vd" #'magit-diff-buffer-file
+
+  "vL" #'magit-log
+  "vl" #'magit-log-buffer-file
+  "vt" #'magit-log-trace-definition
+  "vM" #'magit-log-merged
+
+  "vB" #'magit-blame
+  "vb" #'magit-blame-addition
+  "vr" #'magit-blame-removal            ; only blobs
+  "vf" #'magit-blame-reverse            ; only blobs
+  "vm" #'magit-blame-echo
+  "vq" #'magit-blame-quit
+
+  "vp" #'magit-blob-previous
+  "vn" #'magit-blob-next
+
+  "vv" #'magit-find-file
+  "vV" #'magit-blob-visit-file
+  ;; "vg" #'magit-status-here
+  "vG" #'magit-display-repository-buffer
+  "vc" #'magit-commit
+  "ve" #'magit-edit-line-commit
+
+  ;; magit: there's always more
+  ;; "r" #'magit-list-repositories
+  ;; "g" #'magit-find-git-config-file
+  ;; "f" #'magit-commit-fixup
+  )
 
 ;; TODO: forge keybinds/functionality
 
@@ -1551,60 +1600,6 @@
 ;;  "c"  #'forge-create-post
 ;;  "e"  '(:ignore t :which-key "edit"))
 
-;; (:prefix-map ("v" . "versioning")
-;;        :desc "Git revert file"             "R"   #'vc-revert
-;;        :desc "Kill link to remote"         "y"   #'+vc/browse-at-remote-kill
-;;        :desc "Kill link to homepage"       "Y"   #'+vc/browse-at-remote-kill-homepage
-;;        (:when (modulep! :ui vc-gutter)
-;;         :desc "Git revert hunk"            "r"   #'+vc-gutter/revert-hunk
-;;         :desc "Git stage hunk"             "s"   #'+vc-gutter/stage-hunk
-;;         :desc "Git time machine"           "t"   #'git-timemachine-toggle
-;;         :desc "Jump to next hunk"          "n"   #'+vc-gutter/next-hunk
-;;         :desc "Jump to previous hunk"      "p"   #'+vc-gutter/previous-hunk)
-;;        (:when (modulep! :tools magit)
-;;         :desc "Magit dispatch"             "/"   #'magit-dispatch
-;;         :desc "Magit file dispatch"        "."   #'magit-file-dispatch
-;;         :desc "Forge dispatch"             "'"   #'forge-dispatch
-;;         :desc "Magit status"               "g"   #'magit-status
-;;         :desc "Magit status here"          "G"   #'magit-status-here
-;;         :desc "Magit file delete"          "x"   #'magit-file-delete
-;;         :desc "Magit blame"                "B"   #'magit-blame-addition
-;;         :desc "Magit clone"                "C"   #'magit-clone
-;;         :desc "Magit fetch"                "F"   #'magit-fetch
-;;         :desc "Magit buffer log"           "L"   #'magit-log-buffer-file
-;;         :desc "Git stage file"             "S"   #'magit-stage-file
-;;         :desc "Git unstage file"           "U"   #'magit-unstage-file
-;;         (:prefix ("f" . "find")
-;;          :desc "Find file"                 "f"   #'magit-find-file
-;;          :desc "Find gitconfig file"       "g"   #'magit-find-git-config-file
-;;          :desc "Find commit"               "c"   #'magit-show-commit
-;;          :desc "Find issue"                "i"   #'forge-visit-issue
-;;          :desc "Find pull request"         "p"   #'forge-visit-pullreq)
-;;         (:prefix ("o" . "open in browser")
-;;          :desc "Browse file or region"     "."   #'+vc/browse-at-remote
-;;          :desc "Browse homepage"           "h"   #'+vc/browse-at-remote-homepage
-;;          :desc "Browse remote"             "r"   #'forge-browse-remote
-;;          :desc "Browse commit"             "c"   #'forge-browse-commit
-;;          :desc "Browse an issue"           "i"   #'forge-browse-issue
-;;          :desc "Browse a pull request"     "p"   #'forge-browse-pullreq
-;;          :desc "Browse issues"             "I"   #'forge-browse-issues
-;;          :desc "Browse pull requests"      "P"   #'forge-browse-pullreqs)
-;;         (:prefix ("l" . "list")
-;;          (:when (modulep! :tools gist)
-;;           :desc "List gists"               "g"   #'gist-list)
-;;          :desc "List repositories"         "r"   #'magit-list-repositories
-;;          :desc "List submodules"           "s"   #'magit-list-submodules
-;;          :desc "List issues"               "i"   #'forge-list-issues
-;;          :desc "List pull requests"        "p"   #'forge-list-pullreqs
-;;          :desc "List notifications"        "n"   #'forge-list-notifications)
-;;         (:prefix ("c" . "create")
-;;          :desc "Initialize repo"           "r"   #'magit-init
-;;          :desc "Clone repo"                "R"   #'magit-clone
-;;          :desc "Commit"                    "c"   #'magit-commit-create
-;;          :desc "Fixup"                     "f"   #'magit-commit-fixup
-;;          :desc "Issue"                     "i"   #'forge-create-issue
-;;          :desc "Pull request"              "p"   #'forge-create-pullreq)))
-
 ;;*** w WORKSPACE
 
 ;; TODO: ensure that similar functionality is accounted for
@@ -1624,8 +1619,6 @@
 ;;        :desc "Save session"                 "s" #'doom/save-session
 ;;        :desc "Load session"                 "l" #'doom/load-session
 ;;        :desc "Load last autosaved session"  "L" #'doom/quickload-session
-;;        :desc "Undo window config"           "u" #'winner-undo
-;;        :desc "Redo window config"           "U" #'winner-redo
 
 ;;** Lang
 
@@ -1661,6 +1654,7 @@
 ;;**** js2-mode
 
 ;;**** :js2-refactor
+
 ;; '(:prefix ("r" . "refactor")
 ;;           (:prefix ("a" . "add/arguments"))
 ;;           (:prefix ("b" . "barf"))
@@ -1860,26 +1854,6 @@ translated on keymaps."
 ;; (map! :leader
 ;;       :desc "Evaluate line/region"        "e"   #'+eval/line-or-region
 
-;;       (:prefix ("l" . "<localleader>")) ; bound locally
-
-;;       ;;; <leader> q --- quit/restart
-;;       (:prefix-map ("q" . "quit/restart")
-;;        :desc "Restart emacs server"         "d" #'+default/restart-server
-;;        :desc "Delete frame"                 "f" #'delete-frame
-;;        :desc "Clear current frame"          "F" #'doom/kill-all-buffers
-;;        :desc "Kill Emacs (and daemon)"      "K" #'save-buffers-kill-emacs
-;;        :desc "Quit Emacs"                   "q" #'kill-emacs
-;;        :desc "Save and quit Emacs"          "Q" #'save-buffers-kill-terminal
-;;        :desc "Quick save current session"   "s" #'doom/quicksave-session
-;;        :desc "Restore last session"         "l" #'doom/quickload-session
-;;        :desc "Save session to file"         "S" #'doom/save-session
-;;        :desc "Restore session from file"    "L" #'doom/load-session
-;;        :desc "Restart & restore Emacs"      "r" #'doom/restart-and-restore
-;;        :desc "Restart Emacs"                "R" #'doom/restart)
-
-;;       ;;; <leader> & --- snippets
-
-;;       ;; APPs
 ;;       ;;; <leader> M --- mu4e
 ;;       (:when (modulep! :email mu4e)
 ;;        (:prefix-map ("M" . "mu4e")
@@ -1901,80 +1875,24 @@ translated on keymaps."
 
 ;;; Global & plugin keybinds
 
-;; (map! "C-'" #'imenu
-
-;;       ;;; search
-;;       (:when (modulep! :completion ivy)
-;;         "C-S-s"        #'swiper
-;;         "C-S-r"        #'ivy-resume)
-;;       (:when (modulep! :completion helm)
-;;         "C-S-s"        #'swiper-helm
-;;         "C-S-r"        #'helm-resume)
-
 ;;       ;;; buffer management
 ;;       "C-x b"       #'switch-to-buffer
 ;;       "C-x 4 b"     #'switch-to-buffer-other-window
 ;;       (:when (modulep! :ui workspaces)
 ;;         "C-x B"       #'switch-to-buffer
 ;;         "C-x 4 B"     #'switch-to-buffer-other-window
-;;         (:when (modulep! :completion ivy)
-;;           "C-x 4 b"   #'+ivy/switch-workspace-buffer-other-window))
 ;;       "C-x C-b"     #'ibuffer
-;;       "C-x K"       #'doom/kill-this-buffer-in-all-windows
 
-;;       ;;; company-mode
-;;       "C-;" #'+company/complete
-;;       (:after company
-;;         :map company-active-map
-;;         "C-o"        #'company-search-kill-others
-;;         "C-n"        #'company-select-next
-;;         "C-p"        #'company-select-previous
 ;;         "C-h"        #'company-quickhelp-manual-begin
 ;;         "C-S-h"      #'company-show-doc-buffer
 ;;         "C-s"        #'company-search-candidates
 ;;         "M-s"        #'company-filter-candidates
-;;         [C-tab]      #'company-complete-common-or-cycle
-;;         [tab]        #'company-complete-common-or-cycle
-;;         [backtab]    #'company-select-previous
-;;         "C-RET"      (cond ((modulep! :completion vertico)  #'completion-at-point)
-;;                            ((modulep! :completion ivy)      #'counsel-company)
-;;                            ((modulep! :completion helm)     #'helm-company))
-;;         "C-<return>" (cond ((modulep! :completion vertico)  #'completion-at-point)
-;;                            ((modulep! :completion ivy)      #'counsel-company)
-;;                            ((modulep! :completion helm)     #'helm-company))
-;;         :map company-search-map
-;;         "C-n"        #'company-search-repeat-forward
-;;         "C-p"        #'company-search-repeat-backward
-;;         "C-s"        (cmd! (company-search-abort) (company-filter-candidates)))
 
 ;;       ;;; expand-region
 ;;       "C-="  #'er/expand-region
 
-;;       ;;; flycheck
-;;       (:after flycheck
-;;         :map flycheck-error-list-mode-map
-;;         "C-n" #'flycheck-error-list-next-error
-;;         "C-p" #'flycheck-error-list-previous-error
-;;         "RET" #'flycheck-error-list-goto-error)
-
-;;       ;;; help and info
-;;       (:after help-mode
-;;         :map help-mode-map
-;;         "o" #'link-hint-open-link
-;;         ">" #'help-go-forward
-;;         "<" #'help-go-back
-;;         "n" #'forward-button
-;;         "p" #'backward-button)
 ;;       (:after helpful
 ;;         :map helpful-mode-map
-;;         "o" #'link-hint-open-link)
-;;       (:after apropos
-;;         :map apropos-mode-map
-;;         "o" #'link-hint-open-link
-;;         "n" #'forward-button
-;;         "p" #'backward-button)
-;;       (:after info
-;;         :map Info-mode-map
 ;;         "o" #'link-hint-open-link)
 
 ;;       ;;; ivy & counsel
@@ -1988,35 +1906,6 @@ translated on keymaps."
 ;;           "C-SPC" #'ivy-call-and-recenter ; preview
 ;;           "M-RET" #'+ivy/git-grep-other-window-action)
 ;;         "C-M-y"   #'counsel-yank-pop)
-
-;;       ;;; neotree
-;;       (:when (modulep! :ui neotree)
-;;         "<f9>"    #'+neotree/open
-;;         "<C-f9>"  #'+neotree/find-this-file
-;;         (:after neotree
-;;           :map neotree-mode-map
-;;           "q"     #'neotree-hide
-;;           "RET"   #'neotree-enter
-;;           "SPC"   #'neotree-quick-look
-;;           "v"     #'neotree-enter-vertical-split
-;;           "s"     #'neotree-enter-horizontal-split
-;;           "c"     #'neotree-create-node
-;;           "D"     #'neotree-delete-node
-;;           "g"     #'neotree-refresh
-;;           "r"     #'neotree-rename-node
-;;           "R"     #'neotree-refresh
-;;           "h"     #'+neotree/collapse-or-up
-;;           "l"     #'+neotree/expand-or-open
-;;           "n"     #'neotree-next-line
-;;           "p"     #'neotree-previous-line
-;;           "N"     #'neotree-select-next-sibling-node
-;;           "P"     #'neotree-select-previous-sibling-node))
-
-;;       ;;; popups
-;;       (:when (modulep! :ui popup)
-;;         "C-x p"   #'+popup/other
-;;         "C-`"     #'+popup/toggle
-;;         "C-~"     #'+popup/raise)
 
 ;;       ;;; smartparens
 ;;       (:after smartparens
@@ -2032,11 +1921,6 @@ translated on keymaps."
 ;;         "C-M-k"           #'sp-kill-sexp
 ;;         "C-M-t"           #'sp-transpose-sexp
 ;;         "C-M-<backspace>" #'sp-splice-sexp)
-
-;;       ;;; treemacs
-;;       (:when (modulep! :ui treemacs)
-;;         "<f9>"   #'+treemacs/toggle
-;;         "<C-f9>" #'treemacs-find-file))
 
 ;; (map! :leader
 ;;       (:when (modulep! :editor fold)
