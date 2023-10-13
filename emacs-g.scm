@@ -436,6 +436,7 @@
 
                   "emacs-emacsql"
 
+                  "emacs-plantuml"
                   "emacs-graphviz-dot-mode"
                   "emacs-gnuplot"
 

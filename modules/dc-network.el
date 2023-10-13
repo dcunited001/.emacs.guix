@@ -28,7 +28,13 @@
 ;; TLS1.2 options to get it to conform more to TLS1.3 ... it depends on how
 ;; GnuTLS handles things.
 
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"
-      network-security-level  'high)
+;; this may cause problems when connecting to servers (for DOI, etc)
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"
+;;       network-security-level  'high)
+
+;;*** TLS defaults
+
+;; (setq gnutls-algorithm-priority nil ;; "NORMAL:-VERS-TLS1.3"
+;;       network-security-level  'medium)
 
 (provide 'dc-network)
