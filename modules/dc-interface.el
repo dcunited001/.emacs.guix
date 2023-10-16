@@ -413,6 +413,32 @@
   ;; (recentf-mode +1) ; needs to be enabled later.
   (add-to-list 'recentf-exclude (rx (and line-start "/gnu/store"))))
 
+;; i've been frustrated with dired suggestions for years, but everytime i go to
+;; customize it, i have to agree that it's the correct behavior. however, i then
+;; seem to forget to keep window state salient when calling dired functions.
+;;
+;; dired-dwim-target 'dired-dwim-target-recent
+
+;; just to note: the current behavior will cycle through open dired buffers with
+;; the below pseudo-logic. it then appends the results to the dired history and
+;; youll be at the middle of your dired history with the dwim targets below.
+
+;; (map (λ () (apply is-visible ....)) (windows ⊗ tabs ⊗ frames))
+
+;; press M-n to iterate through the dired-dwim-targets
+;; press M-p to iterate through the above dired history
+
+;; keeping this _in mind_ it should work very well, but i have yet to
+;; satisfactorily resolve this (i forget to make it a habit... pair programming
+;; would have really, really changed my life and 100x my adoption of good emacs
+;; habits. it's not that i'm stupid or incompetent. it's that i'm stubborn
+;; enough to continue using emacs no matter what while never getting any
+;; feedback. no signal, no change. if i don't use emacs, then i'm making the
+;; problem of finding people to teach someone harder; i should be the change i
+;; wish to see in the world.)
+
+;; anyways, this is a huge problem if it doesn't work for you.
+
 ;;*** Window Management
 
 (setup (:pkg avy))
