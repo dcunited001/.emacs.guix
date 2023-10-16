@@ -590,8 +590,11 @@
 ;;**** globals (consult)
 (general-define-key
  :keymaps 'global
+ :wk-full-keys nil
 
- "C-x d" #'consult-dir
+ "C-x d" '(:ignore t :which-key "DIR")
+ "C-x d a" #'consult-dir                ;consult-dir all sources
+ "C-x d d" #'dc/consult-dir-recentf
  "C-x C-d" #'dired
  "C-s" #'consult-line
  "C-M-j" #'consult-buffer

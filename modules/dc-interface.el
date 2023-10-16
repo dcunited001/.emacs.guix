@@ -244,23 +244,39 @@
 ;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
 ;; https://protesilaos.com/emacs/pulsar
 (require 'imenu)
+
+;; where hooks are unavailable, append commands to pulsar-pulse-functions
 (setup (:pkg pulsar)
   (:option pulsar-pulse t
            pulsar-delay 0.055
            pulsar-iterations 10
            pulsar-face 'pulsar-magenta
            pulsar-highlight-face 'pulsar-yellow)
-  (:with-hook consult-after-jump-hook   ; runs on most preview actions
-    imenu-after-jump-hook               ; runs on imenu selection
-    (:hook pulsar-recenter-middle)
-    (:hook pulsar-reveal-entry))
+
+  ;; runs on most preview actions
+  (:with-hook 'consult-after-jump-hook  ; runs on imenu selection
+    (:hook pulsar-recenter-middle))
+  ;; TODO pulsar-reveal-entry is specific org-mode/outline-mode
+  ;; (:hook pulsar-reveal-entry)
   (:with-hook next-error-hook
     (:hook #'pulsar-pulse-line-red))
   ;; TODO pulse on ace-window jump
   (:with-hook window-configuration-change-hook
-    (:hook pulsar-reveal-entry))
-  ;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
-  (require 'pulsar)
+    (:hook pulsar-reveal-entry)))
+;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
+
+(with-eval-after-load 'pulsar
+  (dolist (f '(ace-window
+               bufler
+               buf-move-up
+               buf-move-down
+               buf-move-left
+               buf-move-right
+               popper-cycle
+               popper-toggle-latest
+               popper-toggle-type))
+    (add-to-list 'pulsar-pulse-functions f))
+
   (pulsar-global-mode 1))
 
 ;;*** Font
@@ -867,7 +883,19 @@
 
 (with-eval-after-load 'consult
   (setup (:pkg consult-dir)
-    (:option consult-dir-project-list-function #'consult-dir-project-dirs)))
+    (:option consult-dir-project-list-function #'consult-dir-project-dirs
+             consult-dir-sources '(consult-dir--source-bookmark
+                                   consult-dir--source-default
+                                   consult-dir--source-project
+                                   consult-dir--source-recentf))))
+
+(defun dc/consult-dir-recentf ()
+  "Call `consult-dir' with only the recentf source."
+  (interactive)
+  (let ((consult-dir-sources '(consult-dir--source-recentf)))
+    (consult-dir)))
+
+;; TODO: useful custom consult-dir sources that aren't already simple?
 
 ;;**** Consult Flyspell
 
