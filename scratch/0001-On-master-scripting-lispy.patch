@@ -1,0 +1,39 @@
+diff --git a/modules/dc-interface.el b/modules/dc-interface.el
+index 86628a3..58915c7 100644
+--- a/modules/dc-interface.el
++++ b/modules/dc-interface.el
+@@ -279,6 +279,34 @@
+ 
+   (pulsar-global-mode 1))
+ 
++;; NOTE: naively scripting lispy is likely to end badly.
++;;
++;; scripting in a post-command hook may be alright, but you must account for
++;; lispy--remember, ensuring the _application_ of function-composition is
++;; idempotent, and ensuring you don't unintentionally yield an infinite loop
++
++;; lispy-mark-list with arg > 1 marks argth in list
++(defun dc/pulsar-lipsy-region ()
++  "Handler to pulse after lispy-eval"
++  (interactive "p")
++
++  (let bnd-post
++    (save-excursion
++      (cond ((use-region-p)
++             (setq bnd-post (cons (region-beginning) (region-end))))
++            ((lispy-right-p)
++             (lispy-back 1)
++             (let ((beg (point)))
++               (setq bnd-post (cons beg (point))))
++             (lispy-forward 1))
++            ((lispy-left-p)
++             (lispy-forward 1)
++             (let ((end (point)))
++               (setq bnd-post (cons (point) end)))
++             (lispy-back 1)))
++      ;;;  then hightlight region and call (pulsar--pulse
++      )))
++
+ ;;*** Font
+ 
+ (setq emojify-display-style 'unicode
