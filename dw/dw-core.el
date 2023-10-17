@@ -75,19 +75,7 @@
   (which-key-mode)
   (which-key-setup-side-window-bottom))
 
-(setup (:pkg general)
-  ;; this will create a new keymap and bork the old ones
-  ;; :prefix-command 'leader-prefix-command
-  ;; :prefix-map 'leader-map
-
-  (general-create-definer leader-def
-    :prefix "C-c")
-
-  (general-create-definer global-leader-def
-    :prefix "C-x")
-
-  (general-create-definer local-leader-def
-    :prefix "C-c l"))
+(setup (:pkg general))
 
 ;;*** Editing Configuration
 

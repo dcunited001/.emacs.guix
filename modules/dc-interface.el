@@ -254,17 +254,20 @@
            pulsar-highlight-face 'pulsar-yellow)
 
   ;; runs on most preview actions
-  (:with-hook 'consult-after-jump-hook  ; runs on imenu selection
-    (:hook pulsar-recenter-middle))
+  (:with-hook consult-after-jump-hook  ; runs on imenu selection
+    (:hook #'pulsar-recenter-middle))
   ;; TODO pulsar-reveal-entry is specific org-mode/outline-mode
   ;; (:hook pulsar-reveal-entry)
+  (:with-hook prev-error-hook
+    (:hook #'pulsar-pulse-line-red))
   (:with-hook next-error-hook
     (:hook #'pulsar-pulse-line-red))
-  ;; TODO pulse on ace-window jump
   (:with-hook window-configuration-change-hook
-    (:hook pulsar-reveal-entry)))
+    (:hook #'pulsar-pulse-line)))
 ;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
 
+;; changes to pulsar-pulse-functions are effective when pulsar-mode 
+;; loads in a new buffer (the post-command-hooks are buffer-local)
 (with-eval-after-load 'pulsar
   (dolist (f '(ace-window
                bufler
@@ -272,11 +275,20 @@
                buf-move-down
                buf-move-left
                buf-move-right
+	             xref-find-apropos
+	             xref-find-definitions
+	             xref-find-definitions-other-window
+	             xref-find-definitions-other-frame
+	             xref-find-definitions-at-mouse
+	             xref-find-references
+	             xref-go-back
+	             xref-go-forward
+	             ;; TODO eglot
+	             ;; TODO info
                popper-cycle
                popper-toggle-latest
                popper-toggle-type))
     (add-to-list 'pulsar-pulse-functions f))
-
   (pulsar-global-mode 1))
 
 ;;*** Font
@@ -448,8 +460,17 @@
            aw-minibuffer-flag t)
   (ace-window-display-mode 1))
 
-(defun dc/ace-frame-jump ()
-  (interactive "P"))
+(defun dc/ace-frame-jump (arg)
+  "Select `ace-window' with `ARG' using `'visible' scope.  The first
+window of each frame will by default be keyed first.  in KDE,
+frames either minimized or not on the current desktop do still
+get keyed.  in i3, frames in another desktop are still
+enumerated.  if they are in the scratchpad, they are enumerated
+last even if they're open.  Frames open in a console get keyed,
+but can't be jumped to or from."
+  (interactive "p")
+  (let ((aw-scope 'visible))
+    (call-interactively #'ace-window arg)))
 
 (setup winner
   (winner-mode))

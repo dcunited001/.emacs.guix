@@ -25,12 +25,10 @@
 ;;* Keys Pre
 ;; see ./emacs/$version/lisp/bindings.el for defaults
 
-;;** Setup
-
 (setq mode-line-defining-kbd-macro " K♫ ")
 (add-to-list 'minions-prominent-modes 'defining-kbd-macro)
 
-;;*** unbind function keys
+;;** Unbind Keys
 ;; or use the following (which may only work for general definitions)
 ;; (general-auto-unbind-keys)
 
@@ -75,11 +73,12 @@
     "M-S-<left>"                        ;translate to M/C-<left/right>
     "M-S-<right>"
 
-    "C-x f"                             ;set-fill-column
+    ;; should [remap] dired. not sure how to remap to a which-key prefix
     "C-x d"                             ;make dired a map
+    "C-x f"                             ;set-fill-column
     ))
 
-;;**** trying to pack a lambda into a symbol
+;;*** trying to pack a lambda into a symbol
 ;; (fset 'dc/unbind-key (macroexpand-all '(unbind-key k)))
 ;; (seq-do (symbol-function 'dc/unbind-key) dc/keys-unbound-at-init)
 
@@ -92,13 +91,9 @@
 
 (dc/unbind-keys dc/keymaps-unbound-at-init)
 
-;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
-;; and if you buy right now, we'll double your function keys
-;; chromebooks and macbooks not applicable
+;;** Which Keys
 
-;;* Which Keys
-
-;;** Special Keys
+;;*** Special Keys
 
 ;; NOTE: which-keys-special-keys will assemble a regexp like the following
 ;;       which, in the which-keys--propertize-key, matches on the "key"
@@ -159,9 +154,84 @@
 
 ;; TODO: customize which-key-group-description-face to include background
 
+;;** Keymaps
+
+;; defining these AoT, since general-create-definer given :prefix-map will
+;; create if it doesn't exist. not much of a difference, in the end, but i may
+;; bind these smaller keymaps to other keys (like mouse buttons)
+
+;; there may be a problem with trying to bind C-c to a keymap globally,
+;; depending on how emacs assembles its keymaps.
+(defvar dc/leader-map (make-sparse-keymap)
+  "Global `C-c' keymap so prefixes can be rebound.")
+
+;;*** Definers
+
+;; only use keybindings in map variable names when they are global. and even
+;; then, it's better to create small composable keymaps.
+
+(general-create-definer cx-def
+  :prefix-map 'ctl-x-map
+  :prefix-command 'ctl-x-map)
+
+(general-create-definer leader-def
+  :prefix-map 'dc/leader-map
+  :prefix-command 'dc/leader-map)
+
+(general-define-key
+ :keymap 'global
+ "C-c" '(:prefix-command dc/leader-map))
+
+;;*** Keymap Aliases
+
+(keymap-global-set "<f2>" ctl-x-map)
+
+;; see also:
+;; - https://github.com/noctuid/general.el#keymapstate-aliases
+;; - https://www.gnu.org/software/emacs/manual/html_node/elisp/Prefix-Keys.html
+
+;;**** Notes on keymap aliases
+
+;; -------------------------------------------------------------------
+;; setting function keys as prefixes doesn't work very well in xterm/console
+
+;; console: req. kmscon or loadkeys (which is hardware specific) and even then
+;; doesn't work well AFAIR
+
+;; xterm (or alacritty/konsole/etc): this does seem to work, but may require
+;; some custom config ... per terminal-emulator
+
+;; -------------------------------------------------------------------
+;; (keymap-global-set "<f12>" ctl-c-map)
+
+;; there is no ctl-c map. the approach in dc-keys-old.el is messy and screws up
+;; the which-key labels, but it does completely set <f12> as C-c where you need
+;; it.
+
+;; -------------------------------------------------------------------
+;; TODO xkb: setup "AltGr-<f_x>" -> "<f_x+12>"
+;; and if you buy right now, we'll double your function keys
+;; chromebooks and macbooks not applicable
+;; -------------------------------------------------------------------
+
 ;;* Keys
 
 ;;** Help
+
+(general-define-key
+ :keymaps 'help-map
+
+ ;; "<f2>" '(:keymap dc/quick-map)
+
+ ;; can insert values with embark
+ "M-v" #'getenv
+ "M-k" #'describe-keymap
+ "B" #'embark-bindings
+ "M-b" #'embark-bindings-in-keymap
+ "M-m" #'consult-minor-mode-menu
+ "M-f" #'list-faces-display)
+
+;;** Quick Map
 
 ;; NOTE: need to specify both global & help so f1 will substitute as C-h
 ;;
@@ -169,187 +239,176 @@
 ;; set on <f1> prefixs
 ;;
 ;; general.el suggests managing which-key alists directly in some cases
-(defun dc/init-keybinds-quick ()
-  ;; (dolist (pfx '("C-h" "<f1>")))
 
-  (general-define-key
-   :keymaps '(global help)
-   :wk-full-keys nil
-   :prefix "<f1>"
-   "<f2>" '(:ignore t :which-key "QUICK")
+(general-create-definer quick-def
+  :prefix-map 'dc/quick-map
+  :prefix-command 'dc/quick-map)
 
-   "<f2> a" '(:ignore t :which-key "ALERT")
-   "<f2> ao" #'alert--log-open-log
-   "<f2> a M-c" #'alert--log-clear-log
-   "<f2> ad" #'alert--log-enable-debugging
-   "<f2> aD" #'alert--log-disable-debugging
-   "<f2> al" #'alert--log-disable-logging
-   "<f2> aL" #'alert--log-enable-logging
-   "<f2> am" #'alert--log-enable-messaging
-   "<f2> aM" #'alert--log-disable-messaging
+(general-define-key
+ :keymaps 'help-map
+ "<f2>" '(:prefix-command dc/quick-map :wk "QUICK"))
 
+;; (defun dc/init-keybinds-quick ())
+;; (dolist (pfx '("C-h" "<f1>")))
 
-   "<f2> b" '(:ignore t :which-key "BUFFER ENV")
-   "<f2> bd" #'buffer-env-describe
-   "<f2> bu" #'buffer-env-update
-   "<f2> br" #'buffer-env-reset
+;; TODO: how to unquote/splat (append (list ...) (list)) directly with
+;; `(,identity 'foo 'bar)
 
-   "<f2> d" #'docker
+(quick-def
+  "a" '(:ignore t :which-key "ALERT")
+  "ao" #'alert--log-open-log
+  "a M-c" #'alert--log-clear-log
+  "ad" #'alert--log-enable-debugging
+  "aD" #'alert--log-disable-debugging
+  "al" #'alert--log-disable-logging
+  "aL" #'alert--log-enable-logging
+  "am" #'alert--log-enable-messaging
+  "aM" #'alert--log-disable-messaging
 
-   ;; already accessible from docker
-   ;; "<f2> M-d" #'docker-compose
+  "b" '(:ignore t :which-key "BUFFER ENV")
+  "bd" #'buffer-env-describe
+  "bu" #'buffer-env-update
+  "br" #'buffer-env-reset
 
-   "<f2> D" '(:ignore t :which-key "DESKTOP")
-   "<f2> Ds" #'desktop-save-in-desktop-dir
-   "<f2> DS" #'desktop-save
-   "<f2> Dr" #'desktop-read
+  "d" #'docker
 
-   "<f2> e" #'envrc-command-map
-   "<f2> E" '(:ignore t :which-key "ENVRC")
-   "<f2> Er" #'envrc-reload-all
-   "<f2> Eg" #'envrc-global-mode
+  ;; already accessible from docker
+  ;; "M-d" #'docker-compose
 
-   "<f2> h" #'shortdoc
+  "D" '(:ignore t :which-key "DESKTOP")
+  "Ds" #'desktop-save-in-desktop-dir
+  "DS" #'desktop-save
+  "Dr" #'desktop-read
 
-   ;; lookups
-   "<f2> l" '(:ignore t :which-key "LOOKUP")
-   "<f2> ln" '(:ignore t :which-key "NIST")
-   "<f2> lnf" #'nist-webbook-formula
-   "<f2> lnn" #'nist-webbook-name
+  "e" #'envrc-command-map
+  "E" '(:ignore t :which-key "ENVRC")
+  "Er" #'envrc-reload-all
+  "Eg" #'envrc-global-mode
 
-   ;; local variables
-   "<f2> M-l" '(:ignore t :which-key "LOCAL VARS")
-   "<f2> M-l ad" #'add-dir-local-variable
-   "<f2> M-l aF" #'add-file-local-variable
-   "<f2> M-l af" #'add-file-local-variable-prop-line
-   "<f2> M-l dd" #'delete-dir-local-variable
-   "<f2> M-l dF" #'delete-file-local-variable
-   "<f2> M-l df" #'delete-file-local-variable-prop-line
-   "<f2> M-l k" #'kill-local-variable
-   "<f2> M-l m" #'make-local-variable
-   "<f2> M-l M" #'make-variable-buffer-local
-   "<f2> M-l h" #'apropos-local-variable
-   "<f2> M-l H" #'array-display-local-variables
+  "h" #'shortdoc
 
-   "<f2> O" #'aw-show-dispatch-help
+  ;; lookups
+  "l" '(:ignore t :which-key "LOOKUP")
+  "ln" '(:ignore t :which-key "NIST")
+  "lnf" #'nist-webbook-formula
+  "lnn" #'nist-webbook-name
 
-   ;; "<f2> p"  '(:ignore t :wk "POPUP")
-   "<f2> P" #'pomm
+  ;; local variables
+  "M-l" '(:ignore t :which-key "LOCAL VARS")
+  "M-l ad" #'add-dir-local-variable
+  "M-l aF" #'add-file-local-variable
+  "M-l af" #'add-file-local-variable-prop-line
+  "M-l dd" #'delete-dir-local-variable
+  "M-l dF" #'delete-file-local-variable
+  "M-l df" #'delete-file-local-variable-prop-line
+  "M-l k" #'kill-local-variable
+  "M-l m" #'make-local-variable
+  "M-l M" #'make-variable-buffer-local
+  "M-l h" #'apropos-local-variable
+  "M-l H" #'array-display-local-variables
 
-   ;; "<f2> #" '(:ignore t :which-key "TRAMP")
-   "<f2> T" '(:ignore t :which-key "TRAMP")
-   "<f2> Tb" #'tramp-cleanup-all-buffers
-   "<f2> Tc" #'tramp-cleanup-connection
-   "<f2> TC" #'tramp-cleanup-this-connection
-   "<f2> T M-c" #'tramp-cleanup-all-connections
-   "<f2> TM" #'tramp-compat-set-file-modes
-   "<f2> Td" #'tramp-setup-debug-buffer
+  "O" #'aw-show-dispatch-help
 
-   ;; tramp-change-syntax
-   ;; tramp-rename-files
-   ;; tramp-rename-these-files
-   ;; tramp-unload-tramp
-   ;; tramp-change-syntax?
+  ;; "p"  '(:ignore t :wk "POPUP")
+  "P" #'pomm
 
-   "<f2> r" #'repology
+  ;; "#" '(:ignore t :which-key "TRAMP")
+  "T" '(:ignore t :which-key "TRAMP")
+  "Tb" #'tramp-cleanup-all-buffers
+  "Tc" #'tramp-cleanup-connection
+  "TC" #'tramp-cleanup-this-connection
+  "T M-c" #'tramp-cleanup-all-connections
+  "TM" #'tramp-compat-set-file-modes
+  "Td" #'tramp-setup-debug-buffer
 
-   "<f2> t" '(:ignore t :which-key "THEME")
-   "<f2> tr" #'ef-themes-load-random
-   "<f2> ts" #'ef-themes-select
-   "<f2> tt" #'ef-themes-toggle
+  ;; tramp-change-syntax
+  ;; tramp-rename-files
+  ;; tramp-rename-these-files
+  ;; tramp-unload-tramp
+  ;; tramp-change-syntax?
 
-   ;; TODO check tramp-completion-use-auth-sources
-   "<f2> Tg" #'tramp-crypt-add-directory
+  "r" #'repology
 
-   ;; vterm
-   "<f2> M-v" #'vterm
+  "t" '(:ignore t :which-key "THEME")
+  "tr" #'ef-themes-load-random
+  "ts" #'ef-themes-select
+  "tt" #'ef-themes-toggle
 
-   ;; needs tramp-default-rename-alist
-   ;; "<f2> Tr" #'tramp-rename-these-files
-   ;; "<f2> TR" #'tramp-rename-files
-   ;; "<f2> Td" #'tramp-setup-debug-buffer
-   ;; #'tramp-change-syntax ;; default/simplified/separate
+  ;; TODO check tramp-completion-use-auth-sources
+  "Tg" #'tramp-crypt-add-directory
 
-   "<f2> $" '(:ignore t :which-key "STRAIGHT")
+  ;; vterm
+  "M-v" #'vterm
 
-   ;; straight -* utils
-   "<f2> $4" #'straight-get-recipe
-   "<f2> $$" #'straight-pull-recipe-repositories
-   "<f2> $v" #'straight-visit-package
-   "<f2> $V" #'straight-visit-website
-   "<f2> $d" #'straight-dependencies
-   "<f2> $D" #'straight-dependents
-   ;; "<f2> $" #'straight-use-package
+  ;; needs tramp-default-rename-alist
+  ;; "Tr" #'tramp-rename-these-files
+  ;; "TR" #'tramp-rename-files
+  ;; "Td" #'tramp-setup-debug-buffer
+  ;; #'tramp-change-syntax ;; default/simplified/separate
 
-   ;; straight -package
-   "<f2> $F" #'straight-pull-package
-   "<f2> $ M-F" #'straight-fetch-package
-   "<f2> $P" #'straight-push-package
-   "<f2> $C" #'straight-check-package
-   "<f2> $R" #'straight-rebuild-package
-   "<f2> $M" #'straight-merge-package
-   "<f2> $N" #'straight-normalize-package
+  "$" '(:ignore t :which-key "STRAIGHT")
 
-   ;; straight -and-deps
-   "<f2> $&" '(:ignore t :which-key "AND DEPS")
-   "<f2> $& M-f" #'straight-fetch-package-and-deps
-   "<f2> $&F" #'straight-pull-package-and-deps
-   "<f2> $&m" #'straight-merge-package-and-deps
+  ;; straight -* utils
+  "$4" #'straight-get-recipe
+  "$$" #'straight-pull-recipe-repositories
+  "$v" #'straight-visit-package
+  "$V" #'straight-visit-website
+  "$d" #'straight-dependencies
+  "$D" #'straight-dependents
+  ;; "$" #'straight-use-package
 
-   ;; straight -all
-   "<f2> $f" #'straight-pull-all
-   "<f2> $ M-f" #'straight-fetch-all
-   "<f2> $p" #'straight-push-all
-   "<f2> $c" #'straight-check-all
-   "<f2> $r" #'straight-rebuild-all
-   "<f2> $M" #'straight-merge-all       ;oh boy!
-   "<f2> $N" #'straight-normalize-all
+  ;; straight -package
+  "$F" #'straight-pull-package
+  "$ M-F" #'straight-fetch-package
+  "$P" #'straight-push-package
+  "$C" #'straight-check-package
+  "$R" #'straight-rebuild-package
+  "$M" #'straight-merge-package
+  "$N" #'straight-normalize-package
 
-   ;; thesaurus
-   "<f2> M-t t" #'synosaurus-choose-and-insert
-   "<f2> M-t M-t" #'synosaurus-choose-and-insert
+  ;; straight -and-deps
+  "$&" '(:ignore t :which-key "AND DEPS")
+  "$& M-f" #'straight-fetch-package-and-deps
+  "$&F" #'straight-pull-package-and-deps
+  "$&m" #'straight-merge-package-and-deps
 
-   ;; vcs ops: merge, normalize
-   ;; pull/fetch/merge-package-and-deps
-   ;; freeze/thaw-versions
-   ;; use-package-mode
-   ;; watcher-start/stop
-   "<f2> 0" '(:ignore t :which-key "0x0")
-   "<f2> 0-" #'0x0-dwim
-   "<f2> 0t" #'0x0-upload-text
-   "<f2> 0f" #'0x0-upload-file
-   "<f2> 0k" #'0x0-upload-kill-ring
-   "<f2> 0p" #'0x0-popup
-   "<f2> 0u" #'0x0-shorten-uri)
+  ;; straight -all
+  "$f" #'straight-pull-all
+  "$ M-f" #'straight-fetch-all
+  "$p" #'straight-push-all
+  "$c" #'straight-check-all
+  "$r" #'straight-rebuild-all
+  "$M" #'straight-merge-all             ;oh boy!
+  "$N" #'straight-normalize-all
 
-  (when (featurep 'consult-gh)
-    (general-define-key
-     :keymaps '(global help)
-     :wk-full-keys nil
-     :prefix "<f1>"
-     ;; use #'embark-select with SPC for embark integration
-     "<f2> g" '(:ignore t :which-key "GH")
-     "<f2> gc" #'consult-gh-repo-clone
-     "<f2> gf" #'consult-gh-find-file
-     "<f2> g M-f" #'consult-gh-repo-fork
-     "<f2> gi" #'consult-gh-search-issues
-     "<f2> go" #'consult-gh-orgs
-     "<f2> gr" #'consult-gh-search-repos
-     "<f2> gR" #'consult-gh-default-repos)))
+  ;; thesaurus
+  "M-t t" #'synosaurus-choose-and-insert
+  "M-t M-t" #'synosaurus-choose-and-insert
 
-(defun dc/init-keybinds-help ()
-  (dolist (pfx '("C-h" "<f1>"))
-    (general-define-key
-     :keymaps '(global help)
-     :prefix pfx
+  ;; vcs ops: merge, normalize
+  ;; pull/fetch/merge-package-and-deps
+  ;; freeze/thaw-versions
+  ;; use-package-mode
+  ;; watcher-start/stop
+  "0" '(:ignore t :which-key "0x0")
+  "0-" #'0x0-dwim
+  "0t" #'0x0-upload-text
+  "0f" #'0x0-upload-file
+  "0k" #'0x0-upload-kill-ring
+  "0p" #'0x0-popup
+  "0u" #'0x0-shorten-uri)
 
-     ;; can insert values with embark
-     "M-v" #'getenv
-     "M-k" #'describe-keymap
-     "B" #'embark-bindings
-     "M-b" #'embark-bindings-in-keymap
-     "M-m" #'consult-minor-mode-menu
-     "M-f" #'list-faces-display)))
+(when (featurep 'consult-gh)
+  (quick-def
+    ;; use #'embark-select with SPC for embark integration
+    "g" '(:ignore t :which-key "GH")
+    "gc" #'consult-gh-repo-clone
+    "gf" #'consult-gh-find-file
+    "g M-f" #'consult-gh-repo-fork
+    "gi" #'consult-gh-search-issues
+    "go" #'consult-gh-orgs
+    "gr" #'consult-gh-search-repos
+    "gR" #'consult-gh-default-repos))
 
 (general-define-key
  :keymaps '(Info-mode-map)
@@ -367,55 +426,60 @@
 
 ;; this prefix should find itself associated with
 ;; editor features, global state and outward-looking functions
-(global-leader-def
-  :keymaps '(global)
-  :wk-full-keys nil
 
-  ;; C-u commands very useful!
-  "o" #'ace-window
-  "C-d" #'consult-dir
+(cx-def
+ :wk-full-keys nil
 
-  ;; "C-x M-f" #'set-fill-column
+ ;; C-u commands very useful!
+ "o" #'ace-window
+ "C-d" #'consult-dir
 
-  "M-f" #'find-file-at-point
-  "f" '(:ignore t :wk "FIND/FILE")
-  "ff" #'consult-recent-file
-  "fl" #'find-library
-  "fL" #'find-library-name
-  "fs" #'find-sibling-file
-  "fS" #'find-sibling-file-search
-  ;; "f" #'
-  ;; "f" #'
-  ;; "f" #'
-  ;; "f" #'
+ ;; "C-x M-f" #'set-fill-column
 
-  "fF" '(:ignore t :wk "FILL")
-  "fFc" #'set-fill-column
-  "fFp" #'set-fill-prefix
+ "M-f" #'find-file-at-point
+ "f" '(:ignore t :wk "FIND/FILE")
+ "ff" #'consult-recent-file
+ "fl" #'find-library
+ "fL" #'find-library-name
 
-  "g" #'guix
-  ;; "M-g" '(:ignore t :which-key "GUIX")
-  ;; "M-g x" #'guix-extended-command
-  ;; "M-g M-h" #'guix-hash
-  ;; "M-g M-b" #'guix-switch-to-buffer
-  ;; "M-g M-r" #'guix-switch-to-repl
+ "fs" #'find-sibling-file
+ "fS" #'find-sibling-file-search
 
-  "G" '(:ignore t :which-key "DEBBUGS")
-  "Gb" #'debbugs-gnu-bugs
-  "Gg" #'debbugs-gnu-guix-search
-  "Gs" #'debbugs-gnu-search
-  "Gp" #'debbugs-gnu-package
+ ;; find-sibling-file commands need to (let ((sibling-file-rules)) ...)
 
-  "l" #'pulsar-pulse-line
-  "L" #'pulsar-highlight-dwim
+ ;; find .h files for .c
+ ;; ("\\([^/]+\\)\\.c\\'" "\\1.h")
 
-  "T" #'tldr
-  "<left>" #'winner-undo
-  "<right>" #'winner-redo
-  "X M-e" #'esup
+ ;; find other worktrees/versions:
+ ;; ("src/emacs/[^/]+/\\(.*\\)\\'" "src/emacs/.*/\\1\\'")
 
-  "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form"))
-  "M-e" #'eval-last-sexp)
+ "fF" '(:ignore t :wk "FILL")
+ "fFc" #'set-fill-column
+ "fFp" #'set-fill-prefix
+
+ "g" #'guix
+ ;; "M-g" '(:ignore t :which-key "GUIX")
+ ;; "M-g x" #'guix-extended-command
+ ;; "M-g M-h" #'guix-hash
+ ;; "M-g M-b" #'guix-switch-to-buffer
+ ;; "M-g M-r" #'guix-switch-to-repl
+
+ "G" '(:ignore t :which-key "DEBBUGS")
+ "Gb" #'debbugs-gnu-bugs
+ "Gg" #'debbugs-gnu-guix-search
+ "Gs" #'debbugs-gnu-search
+ "Gp" #'debbugs-gnu-package
+
+ "l" #'pulsar-pulse-line
+ "L" #'pulsar-highlight-dwim
+
+ "T" #'tldr
+ "<left>" #'winner-undo
+ "<right>" #'winner-redo
+ "X M-e" #'esup
+
+ "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form"))
+ "M-e" #'eval-last-sexp)
 
 ;;**** kmacro and
 
@@ -423,25 +487,14 @@
                   "C-x )"                            ;kmacro-end-macro
                   "C-x e"))                          ;kmacro-end-and-call-macro
 
-(global-leader-def
-  :keymaps '(global)
-  :wk-full-keys nil
-
-  "(" #'ignore
-  ")" #'ignore
-
-  ;; TODO maybe rebind eval here
-  "e" '(:ignore t :wk "EVAL"))
-
-;; but e is a very common character, so it's
-;; valuable as a future mnemonic
-;;
-;; eval-last-sexp is covered by lispy
+(cx-def
+ "(" #'ignore
+ ")" #'ignore)
 
 ;;*** leader-key (C-c, f12)
 
-;; this prefix should find itself associated with
-;; project mgmt, minor mode features and inward-looking functions
+;; this prefix should find itself associated with project mgmt, minor mode
+;; features and inward-looking functions
 
 ;;*** UI
 
@@ -506,7 +559,21 @@
 ;;  :wk-full-keys nil
 ;;  "<f2>" '(:prefix-command global-leader-prefix-command))
 
-;;** Interface
+;; (general-define-key
+;;  :keymaps 'global
+;;  :wk-full-keys nil
+;;  "<f7>" '(:prefix ctl-x-map))
+
+;; (define-key global-map "")
+
+;; (general-define-key
+;;  :keymaps 'global
+;;  :wk-full-keys nil
+;;  "<f9>" '(:def ctl-x-map :keymap ctl-x-map))
+
+;; this works in vanilla emacs
+;; (keymap-global-set "<f7>" ctl-x-map)
+;; (keymap-local-set "<f8>" ctl-x-map)
 
 ;;*** minibuffer-local-map
 
@@ -589,6 +656,9 @@
  [remap yank-pop]                      #'consult-yank-pop)
 
 ;;**** globals (consult)
+
+;; TODO: transition these to use [remap ...]
+
 (general-define-key
  :keymaps 'global
  :wk-full-keys nil
@@ -609,16 +679,16 @@
  "C-x M-:" #'consult-complex-command ;; orig. repeat-complex-command
 
  "C-x b" #'bufler
- "C-c t b" #'bufler-sidebar
+
  "C-x M-b" #'consult-buffer ;; orig. switch-to-buffer
  "C-x B" #'ibuffer
 
- "C-x 4 b" #'consult-buffer-other-window ;; orig. switch-to-buffer-other-window
- "C-x 5 b" #'consult-buffer-other-frame  ;; orig. switch-to-buffer-other-frame
- "C-x r b" #'consult-bookmark            ;; orig. bookmark-jump
- "C-x p b" #'consult-project-buffer      ;; orig. project-switch-to-buffer
+ ;; "C-x 4 b" #'consult-buffer-other-window ;; orig. switch-to-buffer-other-window
+ ;; "C-x 5 b" #'consult-buffer-other-frame ;; orig. switch-to-buffer-other-frame
+ ;; "C-x r b" #'consult-bookmark ;; orig. bookmark-jump
+ "C-x p b" #'consult-project-buffer ;; orig. project-switch-to-buffer
 
- ;; Custom M-# bindings for fast register access
+ ;; ;; Custom M-# bindings for fast register access
  "M-#" #'consult-register-load
  "M-'" #'consult-register-store ;; orig. abbrev-prefix-mark (unrelated
  "C-M-#" #'consult-register
@@ -651,7 +721,7 @@
  :wk-full-keys nil
  "C" #'goto-char
  "e" #'consult-compile-error
- "f" '(:ignore t :which-key "FLY")
+ "f" '(:ignore t :wk "FLY")
  "fc" #'consult-flycheck
  "fm" #'consult-flymake
 
@@ -709,7 +779,7 @@
 ;;   :keymaps 'global
 ;;   "a" #'embark-act)
 
-;;*** vertico-map
+;;**** vertico-map
 
 ;; "C-S-r"        #'vertico-repeat
 
@@ -729,7 +799,7 @@
  "C-x C-d" #'consult-dir
  "C-x C-j" #'consult-dir-jump-file)
 
-;;*** corfu-map
+;;**** corfu-map
 
 ;; https://github.com/minad/corfu#key-bindings
 ;; corfu includes key remaps for common emacs functions
@@ -782,7 +852,6 @@
 ;;**** cape
 
 (leader-def
-  :keymaps '(global)
   :wk-full-keys nil
   "p" '(:ignore t :which-key "CAPF")
   "p p"  #'completion-at-point
@@ -806,28 +875,19 @@
 
 ;;*** Bookmarks, Registers
 
-(global-leader-def
-  :keymaps '(global)
-  :wk-full-keys nil
-  "rB" '(:ignore t :which-key "BURLY")
-  "rBo" #'burly-open-bookmark
-  "rBO" #'burly-open-url
-  "rBw" #'burly-bookmark-windows
-  "rBf" #'burly-bookmark-frames
-  "rBB" #'burly-kill-buffer-url
-  "rBF" #'burly-kill-frames-url
-  "rBW" #'burly-kill-windows-url)
+(general-define-key
+ :keymaps '(ctl-x-r-map)
+ :wk-full-keys nil
+ "B" '(:ignore t :which-key "BURLY")
+ "Bo" #'burly-open-bookmark
+ "BO" #'burly-open-url
+ "Bw" #'burly-bookmark-windows
+ "Bf" #'burly-bookmark-frames
+ "BB" #'burly-kill-buffer-url
+ "BF" #'burly-kill-frames-url
+ "BW" #'burly-kill-windows-url)
 
 ;;*** Window Management
-
-;;*** Jump
-
-(leader-def
-  :wk-full-keys nil
-  "j"   '(:ignore t :which-key "jump")
-  "jj"  '(avy-goto-char :which-key "jump to char")
-  "jw"  '(avy-goto-word-0 :which-key "jump to word")
-  "jl"  '(avy-goto-line :which-key "jump to line"))
 
 ;;*** Shell
 
@@ -875,28 +935,29 @@
 
 ;;*** Prefixes (C-c)
 
+;; these prefixes should only be defined once. i think the which-key problem
+;; results from the labels not being rebuilt. instead of the commands you'd
+;; expect to see, these labels on the global map are shown
+
 (leader-def
-  :keymaps 'global
   :wk-full-keys nil
   "c" '(:ignore t :wk "CODE")
   "e" '(:ignore t :wk "EVAL")
   "f" '(:ignore t :wk "FILE")
   "i" '(:ignore t :wk "INSERT")
-  "l" '(:ignore t :wk "LOCAL")
-  "m" '(:ignore t :wk "M/CURSOR")
-  "n" '(:ignore t :wk "ORG/NOTES")
+  ;; "m" '(:ignore t :wk "M/CURSOR")
+  ;; "n" '(:ignore t :wk "ORG/NOTES")
   "o" '(:ignore t :wk "OPEN")
-  "p" '(:ignore t :wk "PROJECT")
   "q" '(:ignore t :wk "QUIT")
   "r" '(:ignore t :wk "REMOTE")
   "s" '(:ignore t :wk "SEARCH")
-  "t" '(:ignore t :wk "TOGGLE")
+  ;; "t" '(:ignore t :wk "TOGGLE")
   "v" '(:ignore t :wk "VCS")
   "w" '(:ignore t :wk "WORKSPACE")
 
-  "&" '(:ignore t :wk "SNIPPET")
-  "7" '(:ignore t :wk "SNIPPET")
-  "!" '(:ignore t :wk "FLYCHECK")
+  ;; "&" '(:ignore t :wk "SNIPPET")
+  ;; "7" '(:ignore t :wk "SNIPPET")
+  "!" '(:ignore t :wk "FLYMAKE")
   "1" '(:ignore t :wk "FLYCHECK")
 
   ;; "C-f" '(:ignore t :wk "FOLD") ;; imenu > folding
@@ -904,39 +965,44 @@
 
 ;;*** & 7 SNIPPETS
 
-(defun dc/init-keybinds-yasnippet ()
-  (dolist (pfx '("&" "7"))
-    (leader-def
-      :keymaps '(yas-minor-mode-map)
-      :wk-full-keys nil
-      ;; doesn't generate :wk
-      ;; :prefix (concat "C-c " pfx)
+;; TODO consider moving the snippets bindings (and just use consult)
 
-      pfx '(:ignore t :wk "SNIPPETS")
-      (concat pfx "n") #'yas-new-snippet
-      (concat pfx "i") #'yas-insert-snippet
-      (concat pfx "/") #'yas-visit-snippet-file
-      (concat pfx "r") #'yas-reload-all
-      ;; "c" #'aya-create
-      ;; "e" #'aya-expand
-      )))
+(general-define-key
+ :keymaps '(yas-minor-mode-map)
+ :prefix "C-c"
+ :wk-full-keys nil
+
+ "7" '(:ignore t :wk "SNIPPETS")
+ "7n" #'yas-new-snippet
+ "7i" #'yas-insert-snippet
+ "7/" #'yas-visit-snippet-file
+ "7r" #'yas-reload-all
+ ;; "7c" #'aya-create
+ ;; "7e" #'aya-expand
+
+ "&" '(:ignore t :wk "SNIPPETS")
+ "&n" #'yas-new-snippet
+ "&i" #'yas-insert-snippet
+ "&/" #'yas-visit-snippet-file
+ "&r" #'yas-reload-all)
 
 ;; this looped setup runs fine
-(dc/init-keybinds-yasnippet)
+;; (dc/init-keybinds-yasnippet)
 
 ;;*** ! 1 Flycheck
+
+;; the +FLY prefix shows up the most often in which-keys
 ;; flycheck-mode-map requires having invoked the mode
-(with-eval-after-load 'flycheck
-  (general-translate-key
-    nil '(flycheck-mode-map)
-    "C-c 1" "C-c !"
-    "<f12> 1" "C-c !"
-    "<f12> 1" "C-c !"))
+;; (with-eval-after-load 'flycheck
+;;   (general-translate-key
+;;     nil '(flycheck-mode-map)
+;;     "C-c 1" "C-c !"
+;;     "<f12> 1" "C-c !"
+;;     "<f12> 1" "C-c !"))
 
 ;;*** c CODE
 
 (leader-def
-  :keymaps 'global
   :wk-full-keys nil
   "cc" #'compile
   "cC" #'recompile
@@ -957,26 +1023,23 @@
 ;;**** LSP
 ;; TODO: LSP UI bindings?
 
-;;        (:when (and (modulep! :tools lsp) (not (modulep! :tools lsp +eglot)))
-;;         :desc "LSP Code actions"                      "a"   #'lsp-execute-code-action
-;;         :desc "LSP Organize imports"                  "o"   #'lsp-organize-imports
-;;         :desc "LSP Rename"                            "r"   #'lsp-rename
-;;         :desc "LSP"                                   "l"   #'+default/lsp-command-map
-;;         (:when (modulep! :completion ivy)
-;;          :desc "Jump to symbol in current workspace" "j"   #'lsp-ivy-workspace-symbol
-;;          :desc "Jump to symbol in any workspace"     "J"   #'lsp-ivy-global-workspace-symbol)
-;;         (:when (modulep! :completion helm)
-;;          :desc "Jump to symbol in current workspace" "j"   #'helm-lsp-workspace-symbol
-;;          :desc "Jump to symbol in any workspace"     "J"   #'helm-lsp-global-workspace-symbol)
-;;         (:when (modulep! :completion vertico)
-;;          :desc "Jump to symbol in current workspace" "j"   #'consult-lsp-symbols
-;;          :desc "Jump to symbol in any workspace"     "J"   (cmd!! #'consult-lsp-symbols 'all-workspaces))
-;;         (:when (modulep! :ui treemacs +lsp)
-;;          :desc "Errors list"                         "X"   #'lsp-treemacs-errors-list
-;;          :desc "Incoming call hierarchy"             "y"   #'lsp-treemacs-call-hierarchy
-;;          :desc "Outgoing call hierarchy"             "Y"   (cmd!! #'lsp-treemacs-call-hierarchy t)
-;;          :desc "References tree"                     "R"   (cmd!! #'lsp-treemacs-references t)
-;;          :desc "Symbols"                             "S"   #'lsp-treemacs-symbols))
+;; :when (and (modulep! :tools lsp) (not (modulep! :tools lsp +eglot)))
+
+;; :desc "LSP Code actions"
+;; "a"   #'lsp-execute-code-action
+;; :desc "LSP Organize imports"
+;; "o"   #'lsp-organize-imports
+;; :desc "LSP Rename"
+;; "r"   #'lsp-rename
+;; :desc "LSP"
+;; "l"   #'+default/lsp-command-map
+
+;; :when (modulep! :completion vertico)
+
+;; :desc "Jump to symbol in current workspace"
+;; "j"   #'consult-lsp-symbols
+;; :desc "Jump to symbol in any workspace"
+;; "J"   (cmd!! #'consult-lsp-symbols 'all-workspaces)
 
 ;;**** EGLOT
 
@@ -996,7 +1059,6 @@
 
  ;; "cj" #'consult-eglot-symbols
  "cr" #'eglot-rename)
-
 
 ;; TODO: eglot requires too many keystrokes
 ;; (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)
@@ -1021,34 +1083,70 @@
 ;;*** i INSERT
 
 (leader-def
-  :keymaps 'global
   :wk-full-keys nil
   "ie" #'emojify-insert-emoji
   ;; "if" #'+default/insert-file-path
   ;; "iF" (cmd!! #'+default/insert-file-path t)
-  "is" #'yas-insert-snippet
   ;; "iy" #'+default/yank-pop
   "iu" #'insert-char)
 
-;;*** l LOCAL
 ;;*** m M/CURSOR
 
-(leader-def
-  :keymaps 'global
-  "ml" #'mc/edit-lines
-  "mn" #'mc/mark-next-like-this
-  "mN" #'mc/unmark-next-like-this
-  "mp" #'mc/mark-previous-like-this
-  "mP" #'mc/unmark-previous-like-this
-  "mt" #'mc/mark-all-like-this
-  "mm" #'mc/mark-all-like-this-dwim
-  "me" #'mc/edit-ends-of-lines
-  "ma" #'mc/edit-beginnings-of-lines
-  "ms" #'mc/mark-sgml-tag-pair
-  "md" #'mc/mark-all-like-this-in-defun
-  "m <mouse-1>" #'mc/add-cursor-on-click)
+(general-create-definer multiple-cursors-def
+  :prefix-map 'dc/multiple-cursors-map
+  :prefix-command 'dc/multiple-cursors-map)
+
+(general-define-key
+ :keymaps 'dc/leader-map
+ "m" '(:prefix-command dc/multiple-cursors-map :wk "MULTIBALL"))
+
+(multiple-cursors-def
+  "l" #'mc/edit-lines
+  "n" #'mc/mark-next-like-this
+  "N" #'mc/unmark-next-like-this
+  "p" #'mc/mark-previous-like-this
+  "P" #'mc/unmark-previous-like-this
+  "t" #'mc/mark-all-like-this
+  "m" #'mc/mark-all-like-this-dwim
+  "e" #'mc/edit-ends-of-lines
+  "a" #'mc/edit-beginnings-of-lines
+  "s" #'mc/mark-sgml-tag-pair
+  "d" #'mc/mark-all-like-this-in-defun
+  "<mouse-1>" #'mc/add-cursor-on-click)
 
 ;;*** n ORG
+
+(general-create-definer org-x1-def
+  :prefix-map 'dc/org-x1-map
+  :prefix-command 'dc/org-x1-map)
+
+(general-define-key
+ :keymaps 'org-mode-map
+ "C-x 1" '(:prefix-command dc/org-x1-map :wk "ORG"))
+
+(general-create-definer org-agenda-global-def
+  :prefix-map 'dc/org-agenda-global-map
+  :prefix-command 'dc/org-agenda-global-map)
+
+(general-define-key
+ :keymaps 'dc/leader-map
+ "r" '(:prefix-command dc/org-agenda-global-map :wk "AGENDA"))
+
+(general-create-definer org-roam-global-def
+  :prefix-map 'dc/org-roam-global-map
+  :prefix-command 'dc/org-roam-global-map)
+
+(general-define-key
+ :keymaps 'dc/leader-map
+ "nr" '(:prefix-command dc/org-roam-global-map :wk "ROAM"))
+
+(general-create-definer org-clock-global-def
+  :prefix-map 'dc/org-clock-global-map
+  :prefix-command 'dc/org-clock-global-map)
+
+(general-define-key
+ :keymaps 'ctl-x-map
+ "1" '(:prefix-command dc/org-clock-global-map :wk "CLOCK"))
 
 ;;  ... wellll that is unfortunate
 ;; (nthcdr 0 '(lambda (foo bar) '(1 2 3 )))
@@ -1057,7 +1155,7 @@
 ;; (eql t 1)
 ;; (declare-function org-clock-in-complex-plane)
 ;; (apply-partially #'org-clock-in (lsh 1 2)) ;req setf then push
-;;
+
 ;; it makes a lot more sense after seeing it evaluated,
 ;; the names/terminology were confusing.
 ;; it does exactly what you're told that lisp does
@@ -1078,186 +1176,159 @@
   (interactive "P")
   (org-clock-in (list (ash 1 6)) start-time))
 
-(global-leader-def
-  :keymaps '(org-mode-map)
-  :wk-full-keys nil
+(org-x1-def
+  "s" #'org-schedule
+  "d" #'org-deadline
+  "c" #'org-ctrl-c-ctrl-c
 
-  "1" '(:ignore t :wk "AGENDA")
-  "12" '(:ignore t :wk "ORG")
+  "2" '(:ignore t :wk "ORG")
+  " <tab>" #'dc/org-clock-in-recent                        ; 4 select from recent
+  "2 <tab>" #'dc/org-clock-in-continue-from-last-timestamp ; 64 continuously
+  "23 <tab>" #'dc/org-clock-in-and-mark-default            ; 16 mark default
 
-  "1s" #'org-schedule
-  "1d" #'org-deadline
-  "1c" #'org-ctrl-c-ctrl-c
+  ;; "2a" #'org-archive-subtree-default
+  ;; "2b" #'org-toggle-checkbox
+  "2c" #'org-columns
+  "2e" #'org-clock-modify-effort-estimate
+  "2f" #'org-emphasize
+  "2j" #'org-clock-goto
+  "2l" #'org-latex-preview
+  "2n" #'org-next-link
+  "2o" #'org-clock-out
+  "2p" #'org-previous-link
+  "2q" #'org-clock-cancel
+  ;; "2r" #'org-toggle-radio-button
+  ;; "2s" #'org-archive-subtree
+  "2t" #'org-toggle-time-stamp-overlays
+  ;; "2u" #'org-dblock-update
+  "2v" #'org-toggle-inline-images
+  ;; "2w" #'org-cut-special
+  "2x" #'org-clock-in-last
+  ;; "2y" #'org-paste-special
+  "2z" #'org-resolve-clocks)
 
-  ;; wut control characters
-  "1 <tab>" #'dc/org-clock-in-recent    ; 4 select from recent
-  "12 <tab>" #'dc/org-clock-in-continue-from-last-timestamp  ; 64 continuously
-  "123 <tab>" #'dc/org-clock-in-and-mark-default   ; 16 mark default
+(org-clock-global-def
+ "o" #'org-clock-out
+ "M-c" #'org-clock-cancel               ; and remove start time
+ ;; "1C" #'+org/toggle-last-clock
+ "g" #'org-clock-goto
+ "z" #'org-resolve-clocks
+ "q" #'org-clock-cancel
+ "j" #'org-clock-goto
+ "d" #'org-clock-display
+ "x" #'org-clock-in-last
+ "e" #'org-clock-modify-effort-estimate)
 
-  ;; "12a" #'org-archive-subtree-default
-  ;; "12b" #'org-toggle-checkbox
-  "12c" #'org-columns
-  "12e" #'org-clock-modify-effort-estimate
-  "12f" #'org-emphasize
-  "12j" #'org-clock-goto
-  "12l" #'org-latex-preview
-  "12n" #'org-next-link
-  "12o" #'org-clock-out
-  "12p" #'org-previous-link
-  "12q" #'org-clock-cancel
-  ;; "12r" #'org-toggle-radio-button
-  ;; "12s" #'org-archive-subtree
-  "12t" #'org-toggle-time-stamp-overlays
-  ;; "12u" #'org-dblock-update
-  "12v" #'org-toggle-inline-images
-  ;; "12w" #'org-cut-special
-  "12x" #'org-clock-in-last
-  ;; "12y" #'org-paste-special
-  "12z" #'org-resolve-clocks)
+(org-agenda-global-def
+  "a" #'org-agenda                     ; nan
 
-(global-leader-def
-  :keymaps '(global org-mode-map)
-  :wk-full-keys nil
+  "M-C" #'org-clock-cancel            ; and remove start time
+  "g" #'org-clock-goto
+  "o" #'org-clock-goto
 
-  "1o" #'org-clock-out
-  "1 M-c" #'org-clock-cancel            ; and remove start time
-  ;; "1C" #'+org/toggle-last-clock
-  "1g" #'org-clock-goto
+  "l" #'org-store-link
+  " M-l" #'org-insert-link
+  "m" #'org-tags-view
 
-  "1z" #'org-resolve-clocks
-  "1q" #'org-clock-cancel "1j" #'org-clock-goto
-  "1d" #'org-clock-display
-  "1x" #'org-clock-in-last
-  "1e" #'org-clock-modify-effort-estimate)
+  "n" #'org-capture
+  "N" #'org-capture-goto-target
+  "t" #'org-todo-list
 
-(leader-def
-  :keymaps 'global
-  :wk-full-keys nil
-  "n" '(:ignore t :wk "ORG/NOTES")
-  "na" #'org-agenda                     ; nan
-  ;; "ns" #'org-schedule
-  ;; "nd" #'org-deadline
 
-  ;; "nC" #'+org/toggle-last-clock
-  "n M-C" #'org-clock-cancel            ; and remove start time
-  "ng" #'org-clock-goto
-  "no" #'org-clock-goto
+  "v" #'org-search-view)
 
-  ;; "n." #'+default/search-notes-for-symbol-at-point
-  ;; "nb" #'citar-open-notes
+;; "C" #'+org/toggle-last-clock
+;; "." #'+default/search-notes-for-symbol-at-point
+;; "b" #'citar-open-notes
+;; TODO: "oc"  '(org-capture t :which-key "capture"); universal arg?
+;; " M-n"  #'org-toggle-narrow-to-subtree
+;; "s" #'+default/org-notes-search
+;; "S" #'+default/org-notes-headlines
+;; "y" #'+org/export-to-clipboard
+;; "Y" #'+org/export-to-clipboard-as-rich-text
 
-  "nl" #'org-store-link
-  "n M-l" #'org-insert-link
-  "nm" #'org-tags-view
-
-  ;; TODO: "oc"  '(org-capture t :which-key "capture"); universal arg?
-  "nn" #'org-capture
-  "nN" #'org-capture-goto-target
-  ;; "n M-n"  #'org-toggle-narrow-to-subtree
-  "nt" #'org-todo-list
-
-  ;; "ns" #'+default/org-notes-search
-  ;; "nS" #'+default/org-notes-headlines
-
-  "nv" #'org-search-view
-  ;; "ny" #'+org/export-to-clipboard
-  ;; "nY" #'+org/export-to-clipboard-as-rich-text
-
-  "nr" '(:ignore t :wk "ROAM")
-
-  "nra" #'org-roam-node-random
-  "nrf" #'org-roam-node-find
-  "nrF" #'org-roam-ref-find
-  "nrg" #'org-roam-graph
-  "nri" #'org-roam-node-insert
-  "nrL" #'org-roam-link-replace-all
-  "nrn" #'org-roam-capture
-  "nrr" #'org-roam-buffer-toggle
-  "nrs" #'org-roam-db-sync
-  "nrt" #'org-roam-tag-add
-  "nrT" #'org-roam-tag-remove
-
-  ;; in terms of paredit commands
-  "nr M-}" #'org-roam-extract-subtree       ; barf
-  "nr M-)" #'org-roam-refile                ; slurp
-  "nr M-r" #'org-roam-promote-entire-buffer ; raise (or M-u, up)
-  "nr M-?" #'org-roam-demote-entire-buffer  ; convolute (or M-d, down)
-
-  "nrd" '(:ignore t :wk "DAILY")
-  "nrd-" #'org-roam-dailies-find-directory
-  "nrdb" #'org-roam-dailies-goto-previous-note
-  "nrdd" #'org-roam-dailies-goto-date
-  "nrdD" #'org-roam-dailies-capture-date
-  "nrdf" #'org-roam-dailies-goto-next-note
-  "nrdm" #'org-roam-dailies-goto-tomorrow
-  "nrdM" #'org-roam-dailies-capture-tomorrow
-  "nrdn" #'org-roam-dailies-capture-today
-  "nrdt" #'org-roam-dailies-goto-today
-  "nrdT" #'org-roam-dailies-capture-today
-  "nrdy" #'org-roam-dailies-goto-yesterday
-  "nrdY" #'org-roam-dailies-capture-yesterday)
-
-;; (general-define-key
-;;  :keymaps 'search-map
-;;  "M-r" #'dw-counsel-rg-org-files)
-
-(leader-def
-  :keymaps 'org-mode-map
-  :wk-full-keys nil
-  "4" 'org-archive-subtree
-
-  "n" '(:ignore t :wk "ORG/NOTES")
-  "nr" '(:ignore t :wk "ROAM")
-  "nrR" #'org-roam-buffer-display-dedicated
-  "nr M-r" #'org-roam-link-replace-all
-
-  "nx" '(org-export-dispatch t)
-  ;; TODO: "nx" '(org-export-dispatch t) ; universal arg?
-  )
-
-(local-leader-def
-  :keymaps 'org-mode-map
-  "a" #'org-roam-alias-add
-  "A" #'org-roam-alias-remove
+(org-roam-global-def
+  "a" #'org-roam-node-random
+  "f" #'org-roam-node-find
+  "F" #'org-roam-ref-find
+  "g" #'org-roam-graph
+  "i" #'org-roam-node-insert
+  "L" #'org-roam-link-replace-all
+  "n" #'org-roam-capture
+  "r" #'org-roam-buffer-toggle
+  "s" #'org-roam-db-sync
   "t" #'org-roam-tag-add
   "T" #'org-roam-tag-remove
-  "r" #'org-roam-ref-add
-  "R" #'org-roam-ref-remove)
+
+  ;; in terms of paredit commands
+  "M-}" #'org-roam-extract-subtree       ; barf
+  "M-)" #'org-roam-refile                ; slurp
+  "M-r" #'org-roam-promote-entire-buffer ; raise (or M-u, up)
+  "M-?" #'org-roam-demote-entire-buffer  ; convolute (or M-d, down)
+
+  "d" '(:ignore t :wk "DAILY")
+  "d-" #'org-roam-dailies-find-directory
+  "db" #'org-roam-dailies-goto-previous-note
+  "dd" #'org-roam-dailies-goto-date
+  "dD" #'org-roam-dailies-capture-date
+  "df" #'org-roam-dailies-goto-next-note
+  "dm" #'org-roam-dailies-goto-tomorrow
+  "dM" #'org-roam-dailies-capture-tomorrow
+  "dn" #'org-roam-dailies-capture-today
+  "dt" #'org-roam-dailies-goto-today
+  "dT" #'org-roam-dailies-capture-today
+  "dy" #'org-roam-dailies-goto-yesterday
+  "dY" #'org-roam-dailies-capture-yesterday)
+
+
+(general-define-key
+ :keymaps 'org-mode-map
+ :prefix "C-c"
+ :wk-full-keys nil
+ "4" 'org-archive-subtree
+
+ "n" '(:ignore t :wk "ORG/NOTES")
+ "nr" '(:ignore t :wk "ROAM")
+ "nrR" #'org-roam-buffer-display-dedicated
+ "nr M-r" #'org-roam-link-replace-all
+
+ ;; "nx" '(org-export-dispatch t)
+ ;; TODO: "nx" '(org-export-dispatch t) ; universal arg?
+ )
+
+;; TODO: make a keymap for org-???-functions
+;; (local-leader-def
+;;   :keymaps 'org-mode-map
+
+;;   "a" #'org-roam-alias-add
+;;   "A" #'org-roam-alias-remove
+;;   "t" #'org-roam-tag-add
+;;   "T" #'org-roam-tag-remove
+;;   "r" #'org-roam-ref-add
+;;   "R" #'org-roam-ref-remove)
 
 ;;*** o OPEN
 
 ;; "o" nil ; we need to unbind it first as Org claims this prefix
-;; "o" . "open")
+;; "o" . "open"
 ;; "b"  #'browse-url-of-file
 ;; "d"  #'+debugger/start
 ;; "r"  #'+eval/open-repl-other-window
 ;; "R"  #'+eval/open-repl-same-window
-;;        :desc "Dired"              "-"  #'dired-jump
 
-;;        (:when (modulep! :term vterm)
+;; :when (modulep! :term vterm)
 ;; "t" #'+vterm/toggle
-;; "T" #'+vterm/here)
-;;        (:when (modulep! :term eshell)
+;; "T" #'+vterm/here
+
+;; :when (modulep! :term eshell)
 ;; "e" #'+eshell/toggle
-;; "E" #'+eshell/here)
-
-;;        (:when (modulep! :tools docker)
-;; "D" #'docker)
-
-;;        (:when (modulep! :email mu4e)
-;; "m" #'=mu4e)
-
-;;        (:when (modulep! :email notmuch)
-;; "m" #'=notmuch)
+;; "E" #'+eshell/here
 
 ;;*** p PROJECTILE
 
+;; TODO: move project keybindings out of projectile section (C-c p #'capf)
+
 ;; TODO: rebind C-x C-f to #'project-find-file, C-u C-x C-f to #'find-file
-
-(general-define-key
- :keymaps 'global
-
- "C-x p f" #'project-find-file)
 
 (defun dc/instead-use-M-g ()
   (interactive)
@@ -1265,6 +1336,8 @@
 
 (general-define-key
  :keymaps 'project-prefix-map
+
+ "f" #'project-find-file
  ;; "k" #'dw/close-project-tab
  "k" #'project-kill-buffers
  ;; "f" #'consult-ripgrep
@@ -1285,10 +1358,6 @@
 ;; "SL" 'project-cmake-load-settings
 ;; "U" 'project-cmake-debug
 
-
-
-
-
 ;; "p" . "project")
 ;;        :desc "Search project for symbol"   "." #'+default/search-project-for-symbol-at-point
 ;; "F" #'doom/find-file-in-other-project
@@ -1308,56 +1377,61 @@
 
 ;;*** r REF
 
-(leader-def
-  :keymaps '(org-mode-map latex-mode-map)
-  :wk-full-keys nil
-  "r" '(:ignore t :which-key "REF")
-  ;; "r]" #'org-ref-insert-cite-link
-  ;; "r]" #'org-ref-insert-cite-link
-  "r]" #'org-ref-insert-cite-link
+(general-define-key
+ :keymaps '(org-mode-map latex-mode-map)
+ :prefix "C-c"
+ :wk-full-keys nil
 
-  ;; TODO: google scholar? (mostly in hydra)
+ "t" '(:ignore t :which-key "TOGGLE")
+ "t©" #'cdlatex-mode
 
-  ;; org-link: adds arxiv
-  "ra" '(:ignore t :which-key "arXiv")
-  "rab" #'arxiv-get-pdf-add-bibtex-entry
-  "raB" #'arxiv-add-bibtex-entry
-  "rap" #'arxiv-get-pdf
+ "r" '(:ignore t :which-key "REF")
+ ;; "r]" #'org-ref-insert-cite-link
+ ;; "r]" #'org-ref-insert-cite-link
+ "r]" #'org-ref-insert-cite-link
 
-  "rb" '(:ignore t :which-key "bibtex")
-  "r M-b" #'org-ref-build-full-bibliography
+ ;; TODO: google scholar? (mostly in hydra)
 
-  "rd" '(:ignore t :which-key "doi")
+ ;; org-link: adds arxiv
+ "ra" '(:ignore t :which-key "arXiv")
+ "rab" #'arxiv-get-pdf-add-bibtex-entry
+ "raB" #'arxiv-add-bibtex-entry
+ "rap" #'arxiv-get-pdf
 
-  "rh" '(:ignore t :which-key "hydras")
-  "rhb" #'org-ref-bibtex-hydra/body
-  "rhc" #'org-ref-citation-hydra/body
-  "rhd" #'doi-link-follow/body
-  "rhi" #'org-ref-insert-link-hydra/body
-  "rhS" #'scopus-hydra/body
+ "rb" '(:ignore t :which-key "bibtex")
+ "r M-b" #'org-ref-build-full-bibliography
 
-  "ri" '(:ignore t :which-key "isbn")
-  "rib" #'isbn-to-bibtex
-  "ril" #'isbn-to-bibtex-lead
-  "ric" #'org-ref-isbn-clean-bibtex-entry
-  "rio" #'isbn-to-bibtex-open-library
+ "rd" '(:ignore t :which-key "doi")
 
-  ;; org-link: adds pmid, pmcid, nihmsid, pubmed-search, pubmed-clinical
-  "rp" '(:ignore t :which-key "pubmed")
-  "rpp" #'pubmed
-  "rpC" #'pubmed-clinical-search
-  "rpC" #'pubmed-clinical
-  "rps" #'pubmed-simple-search
-  "rpS" #'pubmed-advanced
+ "rh" '(:ignore t :which-key "hydras")
+ "rhb" #'org-ref-bibtex-hydra/body
+ "rhc" #'org-ref-citation-hydra/body
+ "rhd" #'doi-link-follow/body
+ "rhi" #'org-ref-insert-link-hydra/body
+ "rhS" #'scopus-hydra/body
 
-  ;; org-link: adds eid, scopus-search, scopus-advanced-search, scopusid
-  "rS" '(:ignore t :which-key "scopus")
-  "rSs" #'scopus-basic-search
-  "rSS" #'scopus-advanced-search
-  "rSe" #'scopus-open-eid
-  "rSa" #'scopus-related-by-author-url
-  "rSk" #'scopus-related-by-keyword-url
-  "rSr" #'scopus-related-by-references-url)
+ "ri" '(:ignore t :which-key "isbn")
+ "rib" #'isbn-to-bibtex
+ "ril" #'isbn-to-bibtex-lead
+ "ric" #'org-ref-isbn-clean-bibtex-entry
+ "rio" #'isbn-to-bibtex-open-library
+
+ ;; org-link: adds pmid, pmcid, nihmsid, pubmed-search, pubmed-clinical
+ "rp" '(:ignore t :which-key "pubmed")
+ "rpp" #'pubmed
+ "rpC" #'pubmed-clinical-search
+ "rpC" #'pubmed-clinical
+ "rps" #'pubmed-simple-search
+ "rpS" #'pubmed-advanced
+
+ ;; org-link: adds eid, scopus-search, scopus-advanced-search, scopusid
+ "rS" '(:ignore t :which-key "scopus")
+ "rSs" #'scopus-basic-search
+ "rSS" #'scopus-advanced-search
+ "rSe" #'scopus-open-eid
+ "rSa" #'scopus-related-by-author-url
+ "rSk" #'scopus-related-by-keyword-url
+ "rSr" #'scopus-related-by-references-url)
 
 ;; Doom: REMOTE
 
@@ -1380,20 +1454,6 @@
 
 ;;*** s SEARCH
 
-;; "s" . "search")
-;;        :desc "Search project for symbol"    "." #'+default/search-project-for-symbol-at-point
-;; "b"
-;;        (cond ((modulep! :completion vertico)   #'consult-line)
-;;              ((modulep! :completion ivy)       #'swiper)
-;;              ((modulep! :completion helm)      #'swiper))
-;; "B"
-;;        (cond ((modulep! :completion vertico)   (cmd!! #'consult-line-multi 'all-buffers))
-;;              ((modulep! :completion ivy)       #'swiper-all)
-;;              ((modulep! :completion helm)      #'swiper-all))
-
-;; "d" #'+default/search-cwd
-;; "D" #'+default/search-other-cwd
-
 ;;        :desc "Search .emacs.d"              "e" #'+default/search-emacsd
 ;;        :desc "Locate file"                  "f" #'+lookup/file
 ;;        :desc "Jump to visible link"         "l" #'link-hint-open-link
@@ -1405,10 +1465,6 @@
 ;;        :desc "Search project"               "p" #'+default/search-project
 ;;        :desc "Search other project"         "P" #'+default/search-other-project
 ;;        :desc "Search buffer"                "s" #'+default/search-buffer
-;;        :desc "Search buffer for thing at point" "S"
-;;        (cond ((modulep! :completion vertico)   #'+vertico/search-symbol-at-point)
-;;              ((modulep! :completion ivy)       #'swiper-isearch-thing-at-point)
-;;              ((modulep! :completion helm)      #'swiper-isearch-thing-at-point))
 ;;        :desc "Dictionary"                   "t" #'+lookup/dictionary-definition
 ;;        :desc "Thesaurus"                    "T" #'+lookup/synonyms)
 
@@ -1429,89 +1485,105 @@
 ;; D: desc
 ;; f: flycheck
 
-(leader-def
-  :keymaps 'global
+(general-create-definer toggle-def
+  :prefix-map 'dc/toggle-map
+  :prefix-command 'dc/toggle-map)
+
+(general-define-key
+ :keymaps 'dc/leader-map
+ "t" '(:prefix-command dc/toggle-map :wk "TOGGLE"))
+
+(toggle-def
   :wk-full-keys nil
-  "t1" #'flycheck-mode
-  "t!" #'flymake-mode
-  "tc" '(:ignore t :wk "COMPLETION")
-  "tcc" #'dc/toggle-completion-ignore-case
-  "tcb" #'dc/toggle-read-buffer-completion-ignore-case
-  "tcf" #'dc/toggle-read-file-name-completion-ignore-case
-  "tC" #'global-display-fill-column-indicator-mode
-  "t M-C" #'corfu-mode
-  "t M-c" #'corfu-popupinfo-mode
-  "t D" #'toggle-debug-on-error
-  "tF" #'format-other-mode
-  "t M-f" #'toggle-frame-fullscreen
-  "tG" #'git-timemachine-toggle
-  "t M-g" #'gud-tooltip-mode
-  ;; "ti" #'highlight-indent-guides-mode
-  ;; "tI" #'doom/toggle-indent-style"
-  "tl" #'display-line-numbers-mode
-  ;; "tp" #'org-tree-slide-mode
-  "ts" #'flyspell-mode
-  "tß" #'superword-mode
-  "t§" #'subword-mode
-  "tv" #'visual-line-mode
-  "tV" #'visual-fill-column-mode
-  "t C-v" #'vertico-multiform-mode
-  "t M-v" #'visible-mode
-  ;; "tw" #'visual-line-mode
-  ;; "tw" #'+word-wrap-mode
-  "tN" #'dc/toggle-native-comp-async-report-warnings-errors)
+  "1" #'flycheck-mode
+  "!" #'flymake-mode
+  "b" #'bufler-sidebar
+  "c" '(:ignore t :wk "COMPLETION")
+  "cc" #'dc/toggle-completion-ignore-case
+  "cb" #'dc/toggle-read-buffer-completion-ignore-case
+  "cf" #'dc/toggle-read-file-name-completion-ignore-case
+  "C" #'global-display-fill-column-indicator-mode
+  "M-C" #'corfu-mode
+  "M-c" #'corfu-popupinfo-mode
+  "D" #'toggle-debug-on-error
+  "F" #'format-other-mode
+  "M-f" #'toggle-frame-fullscreen
+  "G" #'git-timemachine-toggle
+  "M-g" #'gud-tooltip-mode
+  ;; "i" #'highlight-indent-guides-mode
+  ;; "I" #'doom/toggle-indent-style"
+  "l" #'display-line-numbers-mode
+  ;; "p" #'org-tree-slide-mode
+  "s" #'flyspell-mode
+  "ß" #'superword-mode
+  "§" #'subword-mode
+  "v" #'visual-line-mode
+  "V" #'visual-fill-column-mode
+  "C-v" #'vertico-multiform-mode
+  "M-v" #'visible-mode
+  ;; "w" #'visual-line-mode
+  ;; "w" #'+word-wrap-mode
+  "N" #'dc/toggle-native-comp-async-report-warnings-errors)
 
 ;; TODO map this to a list of *-ts-modes
-(leader-def
-  :keymaps '(prog-mode)
-  "tt" #'treesit-explore-mode)
-
-;; the toggle-map overwrites the keybind
-(leader-def
-  :keymaps 'org-mode-map
-  "t ©" #'cdlatex-mode
-  "tt" #'org-todo)
+(general-define-key
+ :keymaps '(prog-mode-map org-mode-map)
+ :prefix "C-c t"
+ "t" #'treesit-explore-mode)
 
 ;;**** dired toggles
-(leader-def
-  :keymaps '(dired-mode-map)
-  :wk-full-keys nil
-  "td" '(:ignore t :wk "DIRED")
-  "tda" #'dired-async-mode
-  "tdA" #'all-the-icons-dired-mode
-  "tdc" #'dired-collapse-mode
-  "tdf" #'dired-filter-mode
-  "tdg" #'turn-on-gnus-dired-mode
-  "tdh" #'dired-hide-details-mode
-  "tdi" #'dired-utils-format-information-line-mode
-  "tdo" #'dired-omit-mode
-  "tdv" #'dired-virtual-mode
-  "tdc" #'dired-collapse-mode)
+
+(general-create-definer dired-toggle-def
+  :prefix-map 'dc/dired-toggle-map
+  :prefix-command 'dc/dired-toggle-map)
+
+(general-define-key
+ :keymaps 'dired-mode-map
+ "C-c td" '(:prefix-command dc/dired-toggle-map :wk "DIRED"))
+
+(dired-toggle-def
+  "a" #'dired-async-mode
+  "A" #'all-the-icons-dired-mode
+  "c" #'dired-collapse-mode
+  "f" #'dired-filter-mode
+  "g" #'turn-on-gnus-dired-mode
+  "h" #'dired-hide-details-mode
+  "i" #'dired-utils-format-information-line-mode
+  "o" #'dired-omit-mode
+  "v" #'dired-virtual-mode
+  "c" #'dired-collapse-mode)
 
 ;;**** org toggles
+
 (leader-def
   :keymaps '(org-mode-map)
   "tf" #'org-table-toggle-formula-debugger
   "to" #'org-table-toggle-coordinate-overlays)
 
 ;;**** markdown toggles
-(leader-def
-  :keymaps '(markdown-mode-map)
-  "te" #'markdown-toggle-math
-  "tf" #'markdown-toggle-fontify-code-blocks-natively
-  "ti" #'markdown-toggle-inline-images
-  "tl" #'markdown-toggle-url-hiding
-  "tm" #'markdown-toggle-markup-hiding
-  "tw" #'markdown-toggle-wiki-links
-  "tx" #'markdown-toggle-gfm-checkbox)
+
+(general-create-definer markdown-toggle-def
+  :prefix-map 'dc/markdown-toggle-map
+  :prefix-command 'dc/markdown-toggle-map)
+
+(general-define-key
+ :keymaps 'markdown-mode-map
+ "C-c tm" '(:prefix-command dc/markdown-toggle-map :wk "MARKDOWN"))
+
+(markdown-toggle-def
+ "e" #'markdown-toggle-math
+ "f" #'markdown-toggle-fontify-code-blocks-natively
+ "i" #'markdown-toggle-inline-images
+ "l" #'markdown-toggle-url-hiding
+ "m" #'markdown-toggle-markup-hiding
+ "w" #'markdown-toggle-wiki-links
+ "x" #'markdown-toggle-gfm-checkbox)
 
 ;;*** v VCS
 
 ;; TODO can magit-wip-mode be localized?
 
 (leader-def
-  :keymaps '(global)
-
   ;; git link
   "v M-g l" #'git-link
   "v M-g c" #'git-link-commit
@@ -1637,13 +1709,15 @@
 
 ;;*** lisp-mode
 
-(local-leader-def
-  :keymaps '(emacs-lisp-mode-map)
+ ;; to debug with lispy, use xe (like C-x C-e) which i think works now
+ ;; that i have a new versiion of lispy
 
-  ;; to debug with lispy, use xe (like C-x C-e) which i think works now
-  ;; that i have a new versiion of lispy
-  "i" #'edebug-instrument-callee
-  "I" #'edebug-remove-instrumentation)
+(general-define-key
+ :keymaps '(emacs-lisp-mode-map)
+ :prefix "C-c l"
+
+ "i" #'edebug-instrument-callee
+ "I" #'edebug-remove-instrumentation)
 
 ;;**** clojure-mode
 
@@ -1660,25 +1734,23 @@
 ;;**** :js2-refactor
 
 ;; '(:prefix ("r" . "refactor")
-;;           (:prefix ("a" . "add/arguments"))
-;;           (:prefix ("b" . "barf"))
-;;           (:prefix ("c" . "contract"))
-;;           (:prefix ("d" . "debug"))
-;;           (:prefix ("e" . "expand/extract"))
-;;           (:prefix ("i" . "inject/inline/introduce"))
-;;           (:prefix ("l" . "localize/log"))
-;;           (:prefix ("o" . "organize"))
-;;           (:prefix ("r" . "rename"))
-;;           (:prefix ("s" . "slurp/split/string"))
-;;           (:prefix ("t" . "toggle"))
-;;           (:prefix ("u" . "unwrap"))
-;;           (:prefix ("v" . "var"))
-;;           (:prefix ("w" . "wrap"))
-;;           (:prefix ("3" . "ternary")))
+;;     (:prefix ("a" . "add/arguments"))
+;;     (:prefix ("b" . "barf"))
+;;     (:prefix ("c" . "contract"))
+;;     (:prefix ("d" . "debug"))
+;;     (:prefix ("e" . "expand/extract"))
+;;     (:prefix ("i" . "inject/inline/introduce"))
+;;     (:prefix ("l" . "localize/log"))
+;;     (:prefix ("o" . "organize"))
+;;     (:prefix ("r" . "rename"))
+;;     (:prefix ("s" . "slurp/split/string"))
+;;     (:prefix ("t" . "toggle"))
+;;     (:prefix ("u" . "unwrap"))
+;;     (:prefix ("v" . "var"))
+;;     (:prefix ("w" . "wrap"))
+;;     (:prefix ("3" . "ternary")))
 
 ;;**** terraform-mode
-
-
 
 ;;*** text-mode
 
@@ -1747,78 +1819,14 @@
 
 ;;** Mode-Specific
 
+;; TODO: bind this in the mode
+(defvar x509-mode-map (make-sparse-keymap))
+
 ;; ahhhh ok, so the x509 "e" key shows you the params for the command
-(local-leader-def
-  :keymaps '(x509-mode-map)
-  "d" #'x509-dwim)
-
-;;* Keys Post
-
-;;** Run Looped Keybinds
-;; TODO there must be something affecting how help bindings are setup
-;; this must run after emacs sets up
-;; the f1 bindings aren't translated from C-h. must be happening in emacs
-(add-hook 'emacs-startup-hook #'dc/init-keybinds-quick)
-(add-hook 'emacs-startup-hook #'dc/init-keybinds-help)
-
-;;** Map leader-keys to all maps
-
-(general-translate-key
-  nil '(global)
-  "<f2>" "C-x"
-  "<f12>" "C-c")
-;; (dc/translated-keymaps-set-keys
-;;  'global
-;;  "<f2>" "C-x"
-;;  "<f12>" "C-c")
-
-(defvar dc/translated-keypairs
-  '("<f2>" "C-x"
-    "<f12>" "C-c"))
-
-(defun dc/keymaps-list-collect ()
-  (cl-loop for s being the symbols if
-           (and (boundp s)
-                (keymapp (symbol-value s)))
-           collect s))
-
-(defun dc/keymaps-list-collect-atoms ()
-  (let (r)
-    (mapatoms
-     (lambda (s) (if (and (boundp s)
-                          (keymapp (symbol-value s)))
-                     (push s r)))) r))
-
-;; causes errors like "void variable menu-function-18" if function-based keymaps
-;; are mixed-in. see easy-menu.el:
-;; https://web.mit.edu/Emacs/source/emacs/lisp/emacs-lisp/easymenu.el
-(defvar dc/keymaps-list
-  (dc/keymaps-list-collect))
-
-(defun dc/translated-keymaps-set-keys (kms pairs)
-  "Set PAIRS to be translated on KMS keymaps."
-  (apply #'general-translate-key nil kms pairs))
-
-(defun dc/ensure-translated-keymap-variables-set ()
-  "Using General.el, ensure desired pairs of key combinations are
-translated on keymaps."
-  (dc/translated-keymaps-set-keys
-   (seq-filter (lambda (km) (not (fboundp km)))
-               dc/keymaps-list)
-   dc/translated-keypairs))
-
-;; an approach using (define-key ...) seems to require reading the prefix from
-;; each keymap, even if using (defvar-keymap)
-;; (defvar dc/translated-keypairs '(("<f2>" "C-x") ("<f12>" "C-c")))
-
-;; (mapc (lambda (km) (fboundp km)) (take (length dc/keymaps-list) dc/keymaps-list))
-;; (length (seq-filter (lambda (km) (fboundp km)) (take (length dc/keymaps-list) dc/keymaps-list)))
-;; (length (seq-filter (lambda (km) (boundp km)) (take (length dc/keymaps-list) dc/keymaps-list)))
-;; (length (seq-filter (lambda (km) (not (fboundp km))) (take (length dc/keymaps-list) dc/keymaps-list)))
-
-(dc/ensure-translated-keymap-variables-set)
-
-(provide 'dc-keys)
+(general-define-key
+ :keymaps '(x509-mode-map)
+ :prefix "C-c l"
+ "d" #'x509-dwim)
 
 ;;*** Embark (Doom)
 ;; (  (embark-define-keymap +vertico/embark-doom-package-map
@@ -1837,101 +1845,13 @@ translated on keymaps."
 
 ;; *** General.el Examples
 
-;; :major-modes
-;; (general-define-key
-;;  :keymaps 'emacs-lisp-mode-map
-;;  :major-modes t
-;;  ...)
+;;* Post
 
-;; (general-define-key
-;;  :keymaps '(no-follow-convention-mode-keymap1
-;;             org-mode-map)
-;;  :major-modes '(no-follow-convention-mode t)
-;;  ...)
+;; the keybindings riding on the help-map must initialize after emacs starts.
+;; some caution is needed when breaking their components into keymaps.
 
-;; (map! "C-:" #'company-box-doc-manually
-;;       "C-<tab>" #'company-yasnippet
-;;       "C-M-;" #'company-yasnippet)
+;; (add-hook 'emacs-startup-hook #'dc/init-keybinds-quick)
+;; (add-hook 'emacs-startup-hook #'dc/init-keybinds-help)
+;; (add-hook 'emacs-startup-hook #'dc/keymaps-bind-to-maps)
 
-;;*** ./.emacs.doom/modules/config/default/+emacs-bindings.el
-
-;; (map! :leader
-;;       :desc "Evaluate line/region"        "e"   #'+eval/line-or-region
-
-;;       ;;; <leader> M --- mu4e
-;;       (:when (modulep! :email mu4e)
-;;        (:prefix-map ("M" . "mu4e")
-;;         :desc "Open email app" "M" #'=mu4e
-;;         :desc "Compose email"  "c" #'+mu4e/compose))
-
-;;       ;;; <leader> I --- IRC
-;;       (:when (modulep! :app irc)
-;;        (:prefix-map ("I" . "irc")
-;;         :desc "Open irc app"       "I" #'=irc
-;;         :desc "Next unread buffer" "a" #'tracking-next-buffer
-;;         :desc "Quit irc"           "q" #'+irc/quit
-;;         :desc "Reconnect all"      "r" #'circe-reconnect-all
-;;         :desc "Send message"       "s" #'+irc/send-message
-;;         (:when (modulep! :completion ivy)
-;;          :desc "Jump to channel"  "j" #'+irc/ivy-jump-to-channel)
-;;         (:when (modulep! :completion vertico)
-;;          :desc "Jump to channel"  "j" #'+irc/vertico-jump-to-channel)))
-
-;;; Global & plugin keybinds
-
-;;       ;;; buffer management
-;;       "C-x b"       #'switch-to-buffer
-;;       "C-x 4 b"     #'switch-to-buffer-other-window
-;;       (:when (modulep! :ui workspaces)
-;;         "C-x B"       #'switch-to-buffer
-;;         "C-x 4 B"     #'switch-to-buffer-other-window
-;;       "C-x C-b"     #'ibuffer
-
-;;         "C-h"        #'company-quickhelp-manual-begin
-;;         "C-S-h"      #'company-show-doc-buffer
-;;         "C-s"        #'company-search-candidates
-;;         "M-s"        #'company-filter-candidates
-
-;;       ;;; expand-region
-;;       "C-="  #'er/expand-region
-
-;;       (:after helpful
-;;         :map helpful-mode-map
-;;         "o" #'link-hint-open-link)
-
-;;       ;;; ivy & counsel
-;;       (:when (modulep! :completion ivy)
-;;         (:after ivy
-;;           :map ivy-minibuffer-map
-;;           "TAB"   #'ivy-alt-done
-;;           "C-g"   #'keyboard-escape-quit)
-;;         (:after counsel
-;;           :map counsel-ag-map
-;;           "C-SPC" #'ivy-call-and-recenter ; preview
-;;           "M-RET" #'+ivy/git-grep-other-window-action)
-;;         "C-M-y"   #'counsel-yank-pop)
-
-;;       ;;; smartparens
-;;       (:after smartparens
-;;         :map smartparens-mode-map
-;;         "C-M-a"           #'sp-beginning-of-sexp
-;;         "C-M-e"           #'sp-end-of-sexp
-;;         "C-M-f"           #'sp-forward-sexp
-;;         "C-M-b"           #'sp-backward-sexp
-;;         "C-M-n"           #'sp-next-sexp
-;;         "C-M-p"           #'sp-previous-sexp
-;;         "C-M-u"           #'sp-up-sexp
-;;         "C-M-d"           #'sp-down-sexp
-;;         "C-M-k"           #'sp-kill-sexp
-;;         "C-M-t"           #'sp-transpose-sexp
-;;         "C-M-<backspace>" #'sp-splice-sexp)
-
-;; (map! :leader
-;;       (:when (modulep! :editor fold)
-;;        (:prefix ("C-f" . "fold")
-;;         "C-d"     #'vimish-fold-delete
-;;         "C-a C-d" #'vimish-fold-delete-all
-;;         "C-f"     #'+fold/toggle
-;;         "C-a C-f" #'+fold/close-all
-;;         "C-u"     #'+fold/open
-;;         "C-a C-u" #'+fold/open-all)))
+(provide 'dc-keys)
