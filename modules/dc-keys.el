@@ -76,6 +76,7 @@
     "M-S-<right>"
 
     "C-x f"                             ;set-fill-column
+    "C-x d"                             ;make dired a map
     ))
 
 ;;**** trying to pack a lambda into a symbol
