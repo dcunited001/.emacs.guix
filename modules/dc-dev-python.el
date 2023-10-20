@@ -24,6 +24,9 @@
 
 (setq python-indent-offset 4)
 
+(add-to-list 'major-mode-remap-alist
+             '(python-mode . python-ts-mode))
+
 ;;** formatting
 
 ;; (with-eval-after-load 'apheleia

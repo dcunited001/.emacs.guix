@@ -180,11 +180,17 @@
 
 (general-define-key
  :keymap 'global
+ ;; "<f2>" '(:prefix-command ctl-x-map)
+ ;; "<f12>" '(:prefix-command dc/leader-map)
  "C-c" '(:prefix-command dc/leader-map))
+
+;; mapping the function keys above only affects general.el keybindings
+(keymap-global-set "<f2>" ctl-x-map)
+(keymap-global-set "<f12>" dc/leader-map)
 
 ;;*** Keymap Aliases
 
-(keymap-global-set "<f2>" ctl-x-map)
+
 
 ;; see also:
 ;; - https://github.com/noctuid/general.el#keymapstate-aliases
@@ -1555,10 +1561,23 @@
 
 ;;**** org toggles
 
-(leader-def
-  :keymaps '(org-mode-map)
-  "tf" #'org-table-toggle-formula-debugger
-  "to" #'org-table-toggle-coordinate-overlays)
+(general-unbind org-mode-map
+  "tf"
+  "to")
+
+(general-create-definer org-toggle-def
+  :prefix-map 'dc/org-toggle-map
+  :prefix-command 'dc/org-toggle-map)
+
+(general-define-key
+ :keymaps 'org-mode-map
+ "C-c t" '(:prefix-command dc/org-toggle-map :wk "TOGGLE"))
+
+(general-define-key
+ :keymaps '(dc/org-toggle-map)
+
+ "f" #'org-table-toggle-formula-debugger
+ "o" #'org-table-toggle-coordinate-overlays)
 
 ;;**** markdown toggles
 

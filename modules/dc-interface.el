@@ -936,6 +936,13 @@ but can't be jumped to or from."
                                    consult-dir--source-project
                                    consult-dir--source-recentf))))
 
+;; dc/consult-dir-recentf fails by dynamic/lexical binding issues if consult-dir
+;; hasn't yet run with the normal value of `consult-dir-sources'.
+(setq-default consult-dir-sources '(consult-dir--source-bookmark
+                                    consult-dir--source-default
+                                    consult-dir--source-project
+                                    consult-dir--source-recentf))
+
 (defun dc/consult-dir-recentf ()
   "Call `consult-dir' with only the recentf source."
   (interactive)

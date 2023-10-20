@@ -59,9 +59,11 @@
 (setq-default flycheck-navigation-minimum-level 'error
               flycheck-error-list-minimum-level 'warning)
 
-(setq flycheck-global-modes '(emacs-lisp-mode
-                              sh-mode bash-ts-mode
-                              python-mode python-ts-mode))
+;; 'emacs-lisp-mode
+(setq flycheck-global-modes '(sh-mode
+                              bash-ts-mode
+                              python-mode
+                              python-ts-mode))
 
 (defun dc/toggle-flycheck-highlighting-style ()
   "Don't taze me bro."
