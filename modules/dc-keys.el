@@ -1532,8 +1532,9 @@
   "N" #'dc/toggle-native-comp-async-report-warnings-errors)
 
 ;; TODO map this to a list of *-ts-modes
+;; NOTE for some reason, this seems to be overriding "t"'s self-insert functionality
 (general-define-key
- :keymaps '(prog-mode-map org-mode-map)
+ :keymaps '(prog-mode-map)
  :prefix "C-c t"
  "t" #'treesit-explore-mode)
 
@@ -1561,9 +1562,13 @@
 
 ;;**** org toggles
 
-(general-unbind org-mode-map
-  "tf"
-  "to")
+;; (general-unbind org-mode-map
+;;   "tf"
+;;   "to")
+
+;; (general-define-key
+;;  :keymaps 'org-mode-map
+;;  "t" #'self-insert-command)
 
 (general-create-definer org-toggle-def
   :prefix-map 'dc/org-toggle-map
@@ -1577,7 +1582,8 @@
  :keymaps '(dc/org-toggle-map)
 
  "f" #'org-table-toggle-formula-debugger
- "o" #'org-table-toggle-coordinate-overlays)
+ "o" #'org-table-toggle-coordinate-overlays
+ "t" #'treesit-explore-mode)
 
 ;;**** markdown toggles
 
