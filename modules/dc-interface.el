@@ -119,6 +119,28 @@
   ;; -bufer-vc-(refresh,remote,state)
   (:option bufler-indent-per-level 3))
 
+
+;; TODO: find better way to advice bufler-select-buffer, but combining the
+;; interactive functions with alternate specs is complicated. bufler uses
+;; cl-defun specs.
+
+;; TODO: implement bufler-switch-advice
+(defun dc/toggle-bufler-switch-advice ()
+  "Toggle the `ace-window' advice function on `bufler-switch-buffer'"
+  (interactive)
+  (let* ((f 'bufler-switch-buffer)
+         (sf (symbol-function f))
+         (place :before)
+         (adf #'ace-select-window)
+         (is-advice (advice--p (advice--symbol-function f))))
+    (if is-advice
+        ;; is advice should be (advice oclosure), since it's interactive
+        (advice-remove f adf)
+      (advice-add f place adf))))
+
+(with-eval-after-load 'bufler
+  (advice-add 'bufler-switch-buffer :before #'ace-select-window))
+
 ;;*** Minibuffer
 
 ;;**** Minibuffer history
