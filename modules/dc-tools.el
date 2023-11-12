@@ -48,13 +48,19 @@
   (:option guix-read-package-name-function
            #'guix-read-package-name-at-point)
   (:with-mode guix-derivation-mode
-    (:file-match "\\/gnu\\/store\\/.*\\.drv\\'"))
+    (:file-match "\\/gnu\\/store\\/.*\\.drv\\'")
+    (:hook lispy-mode))
   (:with-mode guix-build-log-mode
     (:file-match "\\/var\\/log\\/guix\\/drvs\\/.*\\.drv\\'"))
   (require 'guix-profiles))
 
-(cl-dolist (m '(guix-devel-mode guix-build-log-mode guix-derivation-mode))
-  (add-to-list 'minions-prominent-modes m))
+(with-eval-after-load 'guix
+  (cl-dolist (m '(guix-devel-mode
+                  guix-build-log-mode
+                  guix-derivation-mode))
+    (add-to-list 'minions-prominent-modes m)))
+
+
 
 ;; (setq auto-mode-alist (cddr auto-mode-alist))
 

@@ -684,7 +684,9 @@
  ;; C-x bindings (ctl-x-map
  "C-x M-:" #'consult-complex-command ;; orig. repeat-complex-command
 
+ ;; TODO: remap these?
  "C-x b" #'bufler
+ "C-x C-b" #'bufler-switch-buffer
 
  "C-x M-b" #'consult-buffer ;; orig. switch-to-buffer
  "C-x B" #'ibuffer
