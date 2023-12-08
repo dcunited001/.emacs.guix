@@ -122,8 +122,9 @@ be explicitly required after loading"
     ;; ok now they're loading
     (:hook dc/reload-org-ref-hydras)))
 
-;; https://github.com/emacs-citar/citar
-(setup (:pkg citar)
+;; https://github.com/emacs-citar/citar 
+(setup (:pkg citar :straight t :type git :flavor git :inherit nil
+             :host github :repo "emacs-citar/citar" :branch "main")
   (:option citar-org-roam-subdir (file-name-base dc/aca-notes-path)
            citar-library-paths dc/aca-library-paths
            ;; citar-library-file-extensions: filters possible files more quickly
@@ -162,7 +163,8 @@ be explicitly required after loading"
 ;;            ("Roam" "Docs" "Resources" "Topics" "Issues")))
 
 ;; https://github.com/emacs-citar/citar-org-roam
-(setup (:pkg citar-org-roam)
+(setup (:pkg citar-org-roam  :straight t :type git :flavor git :inherit nil
+             :host github :repo "emacs-citar/citar-org-roam" :branch "main")
   (:option citar-org-roam-note-title-template "${title} - ${author}"
            citar-org-roam-capture-template-key "nc"))
 

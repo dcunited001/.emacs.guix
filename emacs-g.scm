@@ -539,9 +539,9 @@
                   ;; "emacs-engrave-faces"
                   "emacs-parsebib"
                   "emacs-biblio"
-                  "emacs-math-symbol-lists"
-                  "emacs-citar"
-                  "emacs-citar-org-roam"))
+                  ;; "emacs-citar"
+                  ;; "emacs-citar-org-roam"
+                  "emacs-math-symbol-lists"))
    guix-emacs-vhash))
 
 ;;** Org
