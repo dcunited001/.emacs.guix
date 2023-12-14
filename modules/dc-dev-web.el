@@ -28,6 +28,9 @@
 ;; uses json-beautify -> json-pretty-print to format
 (setup (:pkg json-mode))
 
+(with-eval-after-load 'json-mode
+  (add-to-list 'major-mode-remap-alist '(json-mode . json-ts-mode)))
+
 (setup (:pkg jq-mode)
   (:file-match "\\.jq\\'"))
 
