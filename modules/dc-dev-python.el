@@ -117,7 +117,11 @@
 	           (:tangle . "no")
 	           (:eval . "never-export"))))
 
-(with-eval-after-load 'jupyter
+(with-eval-after-load 'jupyter-autoloads
+  (require 'jupyter)
+  (require 'ob-jupyter)
+
+
   ;; kernels installed via poetry still aren't being found. but this allows me
   ;; to load kernels installed via pyenv
   ;;
@@ -126,25 +130,25 @@
   ;; for tramp paths. it seems this handling of default-directory is to
   ;; establish consistent behavior.
 
-  (defun jupyter-runtime-directory ()
-    "Return the runtime directory used by Jupyter.
-Create the directory if necessary.  If `default-directory' is a
-remote directory, return the runtime directory on that remote.
+  ;; (defun jupyter-runtime-directory ()
+  ;;     "Return the runtime directory used by Jupyter.
+  ;; Create the directory if necessary.  If `default-directory' is a
+  ;; remote directory, return the runtime directory on that remote.
 
-As a side effect, the variable `jupyter-runtime-directory' is set
-to the local runtime directory if it is nil."
-    (unless jupyter-runtime-directory
-      (setq jupyter-runtime-directory
-            ;; (let ((default-directory (expand-file-name "~" user-emacs-directory)))
-            ;;   (jupyter-command "--runtime-dir"))
-            (jupyter-command "--runtime-dir")))
-    (let ((dir (if (file-remote-p default-directory)
-                   (jupyter-command "--runtime-dir")
-                 jupyter-runtime-directory)))
-      (unless dir
-        (error "Can't obtain runtime directory from jupyter shell command"))
-      (prog1 (setq dir (concat (file-remote-p default-directory) dir))
-        (make-directory dir 'parents))))
+  ;; As a side effect, the variable `jupyter-runtime-directory' is set
+  ;; to the local runtime directory if it is nil."
+  ;;     (unless jupyter-runtime-directory
+  ;;       (setq jupyter-runtime-directory
+  ;;             ;; (let ((default-directory (expand-file-name "~" user-emacs-directory)))
+  ;;             ;;   (jupyter-command "--runtime-dir"))
+  ;;             (jupyter-command "--runtime-dir")))
+  ;;     (let ((dir (if (file-remote-p default-directory)
+  ;;                    (jupyter-command "--runtime-dir")
+  ;;                  jupyter-runtime-directory)))
+  ;;       (unless dir
+  ;;         (error "Can't obtain runtime directory from jupyter shell command"))
+  ;;       (prog1 (setq dir (concat (file-remote-p default-directory) dir))
+  ;;         (make-directory dir 'parents))))
 
   ;; TODO: this generates the org-babel-FN:jupyter-LANG aliases
   ;;
@@ -172,6 +176,12 @@ to the local runtime directory if it is nil."
     (org-babel-jupyter-aliases-from-kernelspecs nil default-ipykernel-spec))
 
   ;; before (org-babel-do-load-languages ...) which is where ob-jupyter is req.
+  ;;
+  ;; NOTE: 12/13/2023 ... which will never be successful on arch (and guix?)
+  ;; since the main jupyter kernel is installed under the pyenv 3.10.11
+  ;;
+  ;; a solution would be to remove the changes to default directory above and
+  ;; set ~/.python-version and ... which has been confusing in the past
   (add-to-list 'dc/org-babel-load-languages '(jupyter . t) t))
 
 (defun dc/jupyter-refresh-kernels ()

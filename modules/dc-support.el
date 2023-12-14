@@ -37,6 +37,8 @@ This is a variadic `cl-pushnew'."
     `(dolist (,var (list ,@values) (with-no-warnings ,place))
        (cl-pushnew ,var ,place :test #'equal))))
 
+;;** Editor
+
 ;;** Templates
 
 (defun dc/read-template-from-file (file)
