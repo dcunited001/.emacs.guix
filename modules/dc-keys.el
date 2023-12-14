@@ -1917,14 +1917,16 @@
 
 ;;** Main Keymaps
 
+;; TODO: trying to bind these-maps more than once doesn't work (without breaking console)
+
 ;; These need to be rebound after general.el is done
 
-(general-define-key
- :keymaps 'global
- "<f3>" '(:prefix-command search-map))
+;; (general-define-key
+;;  :keymaps 'global
+;;  "<f3>" '(:prefix-command search-map))
 
-(general-define-key
- :keymaps 'global
- "<f4>" '(:prefix-command goto-map))
+;; (general-define-key
+;;  :keymaps 'global
+;;  "<f4>" '(:prefix-command goto-map))
 
 (provide 'dc-keys)
