@@ -395,7 +395,7 @@
    (list->vlist '("emacs-guix"
                   "emacs-geiser"
                   "emacs-geiser-guile"
-                  "emacs-geiser-racket"
+                  ;; "emacs-geiser-racket"
 
                   "emacs-nix-mode"
 

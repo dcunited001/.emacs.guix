@@ -177,29 +177,29 @@ Guix channel.")
 ;;   they're doing here and typically leave notes wherever. doesn't
 ;;   matter. </joking>
 
-(setq dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
+(setq-default dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
 
-      ;; see 'org-bibtex-types for the 14 official types
-      ;; dc/aca-bibtex-types (list :article :book :techreport :manual)
-      dc/aca-subpaths (list "articles" "books" "texts")
+              ;; see 'org-bibtex-types for the 14 official types
+              ;; dc/aca-bibtex-types (list :article :book :techreport :manual)
+              dc/aca-subpaths (list "articles" "books" "texts")
 
-      ;; both citar and org-ref want these to end in a slash
-      ;; citar magically agrees on on the citekey org-ref uses to create PDF's
-      dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
+              ;; both citar and org-ref want these to end in a slash
+              ;; citar magically agrees on on the citekey org-ref uses to create PDF's
+              dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
 
-      dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
-      dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
-      dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
-      dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
-      dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
-      dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
+              dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
+              dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
+              dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
+              dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
+              dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
+              dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
 
-      dc/aca-library-paths (list dc/aca-texts-directory
-                                 dc/aca-articles-directory
-                                 dc/aca-books-directory)
-      dc/aca-bibtex-files (list dc/aca-texts-bibtex
-                                dc/aca-articles-bibtex
-                                dc/aca-books-bibtex))
+              dc/aca-library-paths (list dc/aca-texts-directory
+                                         dc/aca-articles-directory
+                                         dc/aca-books-directory)
+              dc/aca-bibtex-files (list dc/aca-texts-bibtex
+                                        dc/aca-articles-bibtex
+                                        dc/aca-books-bibtex))
 
 (dolist (el dc/aca-bibtex-files)
   (unless (file-exists-p el)

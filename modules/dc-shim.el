@@ -22,6 +22,12 @@
 
 ;;* Shim
 
+;;** Auto Mode Alist
+
+;;*** Fix config files
+
+(add-to-list 'auto-mode-alist '("config\\.scm\\'" . scheme-mode) t)
+
 ;;** PDF View
 
 ;; TODO: figure out what generated this in auto-mode-alist

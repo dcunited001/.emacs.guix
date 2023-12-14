@@ -570,7 +570,10 @@ compilation was initiated from compile-mode."
 
 ;;*****  Racket
 ;; evaluating scheme with lispy req. emacs-guile-racket loaded
-(setup (:pkg geiser-racket))
+;; (setup (:pkg geiser-racket))
+
+;; racket is too large and req. compilation. instead use this hack
+(defun geiser-racket--language () 'racket)
 
 ;;*****  Gambit Scheme
 

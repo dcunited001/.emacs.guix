@@ -747,8 +747,7 @@
  "rr" #'consult-org-roam-search
  "rb" #'consult-org-roam-backlinks
  "rf" #'consult-org-roam-file-find
- "rl" #'consult-org-roam-forward-links
- )
+ "rl" #'consult-org-roam-forward-links)
 
 ;;**** search-map (consult)
 ;; M-s bindings
@@ -910,34 +909,69 @@
 ;; TODO: determine why the lispy-x hydra req. manual eval to run
 ;;  shows in message buffer sometimes.
 
-;; most of these are already bound under the lispy-x functionality
-;; https://github.com/abo-abo/lispy#features
+;; (defun dc/special-lispy-eval-and-comment ()
+;;   (interactive))
+
+;; unused in lispy: ?XTYUL
 
 (general-define-key
  :keymaps '(lispy-mode-map)
- "M-<up>" #'lispy-outline-prev
- "M-<down>" #'lispy-outline-next
+ "M-<up>" #'outline-backward-same-level ;; #'lispy-outline-prev
+ "M-<down>" #'outline-forward-same-level ;; #'lispy-outline-next
+ "M-<left>" #'outline-up-heading ;; #'lispy-outline-left
+ "M-<right>" #'lispy-outline-right
+ ;; [remap lispy-outline-promote] #'outline-promote
+ ;; [remap lispy-outline-demote] #'outline-demote
+
+ "M-S-<up>" #'outline-move-subtree-up
+ "M-S-<down>" #'outline-move-subtree-down
+ "M-S-<left>" #'outline-demote
+ "M-S-<right>" #'outline-promote
+
+ ;; "E" #'lispy-eval-and-comment
+ "é" #'lispy-eval-and-insert            ;e
 
  "å" #'lispy-to-cond                    ;w
  "á" #'lispy-to-lambda                  ;a
  "ß" #'lispy-to-ifs                     ;d
  "ð" #'lispy-to-defun                   ;s
 
- ;; altgr+wads (on us intl altgr + deadkeys, maybe custom keyboard)
- "Å" #'lispy-move-up                    ;W
- "Á" #'lispy-move-left                  ;A
- "§" #'lispy-move-down                  ;D
- "Ð" #'lispy-move-right                 ;S
-
- ;; "Å" #'lispy-move-outline-up         ;W
- ;; "§" #'lispy-move-outline-up         ;S
- ;; altgr+] and altgr+}
- "»" #'lispy-stringify
- "”" #'lispy-unstringify
+ "»" #'lispy-stringify                  ;]
+ "”" #'lispy-unstringify                ;}
 
  ;; altgr+jk
- "œ" #'lispy-insert-outline-left
- "ï" #'lispy-insert-outline-below)
+ "œ" #'lispy-insert-outline-left        ;j
+ "ï"  #'lispy-insert-outline-below
+
+ "¬" #'outline-insert-heading           ;/
+ [remap lispy-shifttab] #'outline-cycle-buffer)
+
+;; | nN pP | ñÑ öÖ |
+;; | fF bB | fF ·/ | (same f)
+;; | aA eE | áé ÁÉ |
+;; | dD uU | ðÐ úÚ |
+;; | vV    | ®™    |
+
+;; composed altgr chars can be mapped?
+;; "ɇ" #'outline-insert-heading ; (altgr+b)e
+
+;;  ;; altgr+wads (on us intl altgr + deadkeys, maybe custom keyboard)
+;;  "Å" #'lispy-move-up                    ;W
+;;  ;; "Á" #'lispy-move-left               ;A
+;;  "§" #'lispy-move-down                  ;D
+;;  ;; "Ð" #'lispy-move-right              ;S
+
+;;  ;; "Å" #'lispy-move-outline-up      ;W
+;;  ;; "§" #'lispy-move-outline-up      ;S
+;;  "»" #'lispy-stringify
+;;  "”" #'lispy-unstringify
+
+;;  ;; altgr+jk
+;;  "œ" #'lispy-insert-outline-left
+;;  "ï" #'lispy-insert-outline-below
+
+;; most of these are already bound under the lispy-x functionality
+;; https://github.com/abo-abo/lispy#features
 
 ;;** Doom
 
@@ -1736,8 +1770,8 @@
 
 ;;*** lisp-mode
 
- ;; to debug with lispy, use xe (like C-x C-e) which i think works now
- ;; that i have a new versiion of lispy
+;; to debug with lispy, use xe (like C-x C-e) which i think works now
+;; that i have a new versiion of lispy
 
 (general-define-key
  :keymaps '(emacs-lisp-mode-map)
@@ -1880,5 +1914,17 @@
 ;; (add-hook 'emacs-startup-hook #'dc/init-keybinds-quick)
 ;; (add-hook 'emacs-startup-hook #'dc/init-keybinds-help)
 ;; (add-hook 'emacs-startup-hook #'dc/keymaps-bind-to-maps)
+
+;;** Main Keymaps
+
+;; These need to be rebound after general.el is done
+
+(general-define-key
+ :keymaps 'global
+ "<f3>" '(:prefix-command search-map))
+
+(general-define-key
+ :keymaps 'global
+ "<f4>" '(:prefix-command goto-map))
 
 (provide 'dc-keys)
