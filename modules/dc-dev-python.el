@@ -52,6 +52,20 @@
 
 ;;*** pyenv
 
+(let* ((pyenv-python-version "3.12.1")
+      (pyenv-python-root
+       (format "/data/lang/.pyenv/versions/%s" pyenv-python-version))
+      (guix-python-root
+       (string-join (list (getenv "GUIX_EXTRA") "pythondev" "pythondev") "/")))
+  (setq dc/python-root (cond (dw/is-guix-system guix-python-root)
+                             (dw/is-guix-system pyenv-python-root))))
+
+;; =============================================
+;; TODO: fix pyenv code.... i never have time to get this working on arch AND
+;; guix AND kde AND i3 AND wayland AND sway.... some parts are *incredibly*
+;; divergent and don't exactly lend themselves to easy reuse or modularity.
+;; those parts have *almost nothing to do with guix*.........
+
 (defun dc/pyenv-version (pyenv-root &optional rel-path)
   ;; TODO: typically set rel-path to default-directory
   (if-let* ((pyversion-file (file-truename
@@ -78,10 +92,16 @@
 
 
 (setq dc/pyenv-root (or (getenv "PYENV_ROOT") "/data/lang/.pyenv")
-      dc/pyenv-default-version "3.10.11"
+      dc/pyenv-default-version "3.12.1"
       dc/pyenv-root-version (dc/pyenv-version dc/pyenv-root
                                               "../python/.pythonversion")
       dc/ipykernel-default-spec-path (expand-file-name (format "3.10.11")))
+
+;;  i like literally want to use a python cli to generate palettes from imagres
+;;  but maybe run it in jupyter... omfg 3 hours later. and 3 months later, same
+;;  problem. i need jupyter to run on a fucking network.
+
+;; =============================================
 
 ;;** Notebooks
 
@@ -139,23 +159,29 @@
   ;;
   ;; wherever it runs from the above (jupyter-available-kernelspecs t) needs to
   ;; complete if refresh is specified.
-  (let ((default-ipykernel-spec
-         '(("python3"
-            "/data/lang/.pyenv/versions/3.10.11/share/jupyter/kernels/python3"
-            :argv ["python"
-                   "-m"
-                   "ipykernel_launcher"
-                   "-f"
-                   "{connection_file}"]
-            :env nil
-            :display_name "Python 3 (ipykernel)"
-            :language "python"
-            :interrupt_mode "signal"
-            :metadata (:debugger t)))))
+  ;; (let ((default-ipykernel-spec
+  ;;        (make-jupyter-kernelspec
+  ;;         :name "Python 3 (ipykernel)"
+  ;;         :plist '(:argv ["python"
+  ;;                         "-m"
+  ;;                         "ipykernel_launcher"
+  ;;                         "-f"
+  ;;                         "{connection_file}"]
+  ;;                        :env nil
+  ;;                        :display_name "Python 3 (ipykernel)"
+  ;;                        :language "python"
+  ;;                        :interrupt_mode "signal"
+  ;;                        :metadata (:debugger t))
+  ;;         :resource-directory
+  ;;         (expand-file-name
+  ;;          "share/jupyter/kernels/python3" dc/python-root))))
 
-    ;; (... &rest refresh specs)
-    (org-babel-jupyter-aliases-from-kernelspecs nil default-ipykernel-spec))
+  ;;   ;; (... &rest refresh specs)
+  ;;   ;; (org-babel-jupyter-aliases-from-kernelspecs nil default-ipykernel-spec)
+  ;;   default-ipykernel-spec)
 
+
+  ;; (org-babel-jupyter-aliases-from-kernelspecs)
   ;; before (org-babel-do-load-languages ...) which is where ob-jupyter is req.
   ;;
   ;; NOTE: 12/13/2023 ... which will never be successful on arch (and guix?)
