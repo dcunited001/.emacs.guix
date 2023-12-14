@@ -66,8 +66,13 @@
 
 (setup (:pkg magit)
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
+
            magit-wip-mode-lighter "│§ WIP"
-           magit-blame-mode-lighter "│§ BLAME"))
+           magit-blame-mode-lighter "│§ BLAME"
+
+           ;; t show diffchars when point on hunk
+           ;; 'all to always show diffchars
+           magit-diff-refine-hunk t))
 
 (setup (:pkg magit-todos)
   (:with-hook emacs-startup-hook
