@@ -33,6 +33,11 @@
   (:hook #'dc/setup-jq-for-yaml)
   (:unbind "C-M-i"))
 
+(add-hook 'yaml-ts-mode #'dc/setup-jq-for-yaml)
+(add-to-list 'major-mode-remap-alist '(yaml-mode . yaml-ts-mode))
+
+(require 'yaml-ts-mode)
+(unbind-key "C-M-i" 'yaml-ts-mode-map)
 
 ;; TODO: change number completion candidites or orderless matching
 ;; - too many candidiates and server responses are too long
