@@ -6,27 +6,28 @@
 # --
 
 ;; yaml-language-server has telemetry (and is based off the same shitty vscode
-;; template that couldn't be bothered to include an `lsp-server -h` commandline
+;; template that couldn't be bothered to include an Y commandline
 ;; option. vscode so EZ
 
 ((yaml-ts-mode
   . ((eglot-workspace-configuration
       . (:yaml
          (:format
-          (:enable t)
-          (:singleQuote nil)
-          (:bracketSpacing t)
-          (:proseWrap "preserve")       ; preserve/always/never
-          (:printWidth fill-column))
-         (:validate t)
-         (:hover t)
-         (:completion t)
-         (:schemas '())
+          (:enable t
+                   :singleQuote nil
+                   :bracketSpacing t
+                   ;; preserve/always/never
+                   :proseWrap "preserve"
+                   :printWidth 80))
+         :validate t
+         :hover t
+         :completion t
+         :schemas ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" "/docker-compose.*.yml"]
 
-         (:schemaStore
-          ;; (:url ...) fileglobs need to be configured to fetch
-          (:enable t))
+         ;; (:url ...) must configure fileglobs AND url to fetch
+         :schemaStore (:enable t
+                               :url "https://schemastore.org/api/json/catalog.json")
 
          ;; custom tags for the parser to use
-         (:customTags nil)
-         (:maxItemsComputed 5000))))))
+         :customTags nil
+         :maxItemsComputed 5000)))))
