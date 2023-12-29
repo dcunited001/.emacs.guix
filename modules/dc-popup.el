@@ -46,8 +46,9 @@
 
 ;; TODO: handle other popups for docker?
 (setq dc/popper-rx-docker
-      (rx (and line-start "*docker-"
-               (or "containers" "images" "networks" "volumes") "*")))
+      ;; * docker-compose buffers have a space
+      (rx (and line-start "*" (zero-or-one " ") "docker-"
+               (or "containers" "images" "networks" "volumes" "compose") "*")))
 
 ;; TODO advise popper to close/reopen poppup on tab-switch (eats the frame, winner-undo)
 

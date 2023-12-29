@@ -287,6 +287,12 @@ compilation was initiated from compile-mode."
   ;; TODO: c-mode-hook is hooked in c-mode-hook?
   ;; (:with-hook c-mode-hook
   ;;   (:hook eglot-ensure))
+
+  ;; TODO: maybe configure eglot defaults
+  ;; (setq-default eglot-workspace-configuration '(:lsp-server-key (:config ...)))
+
+  ;; about to configure this for yaml, but it needs yaml schema-specific glob
+  ;; patterns anyways
   )
 
 (with-eval-after-load 'eglot

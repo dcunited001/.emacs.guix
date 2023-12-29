@@ -1,0 +1,32 @@
+# -*- mode: snippet -*-
+# name: dir-yaml-lsp
+# key: <dir<yaml
+# uuid: dir-yaml-lsp
+# group: eglot
+# --
+
+;; yaml-language-server has telemetry (and is based off the same shitty vscode
+;; template that couldn't be bothered to include an `lsp-server -h` commandline
+;; option. vscode so EZ
+
+((yaml-ts-mode
+  . ((eglot-workspace-configuration
+      . (:yaml
+         (:format
+          (:enable t)
+          (:singleQuote nil)
+          (:bracketSpacing t)
+          (:proseWrap "preserve")       ; preserve/always/never
+          (:printWidth fill-column))
+         (:validate t)
+         (:hover t)
+         (:completion t)
+         (:schemas '())
+
+         (:schemaStore
+          ;; (:url ...) fileglobs need to be configured to fetch
+          (:enable t))
+
+         ;; custom tags for the parser to use
+         (:customTags nil)
+         (:maxItemsComputed 5000))))))

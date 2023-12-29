@@ -1,0 +1,67 @@
+# -*- mode: snippet -*-
+# name: dir-py-rope-lsp
+# key: <dir<pylsp
+# uuid: dir-py-rope-lsp
+# group: eglot
+# --
+
+((python-ts-mode
+  . ((eglot-workspace-configuration
+      . (:pylsp
+         (:configurationSources
+          ["pycodestyle"]
+          :plugins
+          (
+           :autopep8 (:enabled t)
+
+           :flake8
+           (:config nil
+                    :enabled :json-false
+                    :exclude []
+                    :executable "flake8"
+                    :extendIgnore []
+                    :filename nil
+                    :hangClosing nil
+                    :ignore []
+                    :indentSize nil
+                    :maxComplexity nil
+                    :maxLineLength nil
+
+                    ;; ["file_path.py:W305,W304"]
+                    :perFileIgnores []
+                    :select nil)
+
+           :mccabe (:enabled t :threshold 15) ; integer: 15 (default)
+           :preload (:enabled t :modules [])
+
+           :pycodestyle
+           (:enabled t
+                     :exclude []
+                     :filename []
+                     :hangClosing nil
+                     :ignore []
+                     :indentSize nil
+                     :maxLineLength nil
+                     :select nil)
+
+           :pydocstyle
+           (:addIgnore []
+                       :addSelect []
+                       ;; string: "google", "numpy" or "pep257"
+                       :convention nil
+                       :enabled :json-false
+                       :ignore []
+                       :match "(?!test_).*\\.py"
+                       :matchDir "[^\\.].*"
+                       :select nil)
+           :pyflakes (:enabled t)
+           :pylint (:args [] :enabled :json-false :executable nil)
+
+           :rope (:extensionModules nil :ropeFolder nil)
+           :rope_completion (:eager :json-false :enabled :json-false)
+           :rope_autoimport
+           (:code_actions (:enabled t)
+                          :completions (:enabled t)
+                          :enabled :json-false
+                          :memory :json-false)
+           :yapf (:enabled t))))))))
