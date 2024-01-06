@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: jqsrc
+# key: <jq
+# uuid: jqsrc
+# group:
+# --
+#+NAME: $1
+#+HEADERS: :results output silent
+#+BEGIN_SRC jq :stdin injq :cmd-line "-rj"
+$0
+
+#. | your | query
+#  | here | @text
+# 1: (if yas-modified-p "#+NAME:") 1
+#+END_SRC
