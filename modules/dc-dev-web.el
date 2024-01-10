@@ -86,6 +86,12 @@
 
 ;;** HTML
 
+;;*** Web Mode
+
+;; TODO: remove web-mode (mhtml uses treesitter).
+
+;; html files are still associating with mhtml-mode
+
 (setup (:pkg web-mode)
   (:file-match "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
   (setq-default web-mode-code-indent-offset 2)

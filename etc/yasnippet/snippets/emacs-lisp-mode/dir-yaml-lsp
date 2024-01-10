@@ -6,8 +6,8 @@
 # --
 
 ;; yaml-language-server has telemetry (and is based off the same shitty vscode
-;; template that couldn't be bothered to include an Y commandline
-;; option. vscode so EZ
+;; template that couldn't be bothered to include a --help commandline option.
+;; vscode so EZ
 
 ((yaml-ts-mode
   . ((eglot-workspace-configuration

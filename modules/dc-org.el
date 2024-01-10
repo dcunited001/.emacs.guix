@@ -711,9 +711,11 @@ capture was not aborted."
   (let ((filename (file-name-nondirectory path)))
     (expand-file-name
      filename
-     (or
-      (and (project-current) (cdr (project-current)))
-      (user-error "Couldn't detect a project")))))
+     (dc/project-local-root t)
+     ;; (or
+     ;;  (and (project-current) (cdr (project-current)))
+     ;;  (user-error "Couldn't detect a project"))
+     )))
 
 (defun dc/org-capture-project-todo-file ()
   (dc/org-capture-local-root dc/org-capture-todo-file))

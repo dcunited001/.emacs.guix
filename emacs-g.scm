@@ -356,6 +356,7 @@
                   ;; "tree-sitter-cl"
                   "tree-sitter-cpp"
                   "tree-sitter-css"
+                  "tree-sitter-html"
                   ;; "tree-sitter-elm"
                   ;; "tree-sitter-org"
                   ;; "tree-sitter-php"
@@ -436,7 +437,7 @@
 
                   "emacs-emacsql"
 
-                  "emacs-plantuml-mode"
+                  ;; "emacs-plantuml-mode"
                   "emacs-graphviz-dot-mode"
                   "emacs-gnuplot"
 
