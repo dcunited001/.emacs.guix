@@ -235,7 +235,7 @@
                   "emacs-yasnippet"
                   ;; "emacs-doom-snippets"
                   "emacs-yasnippet-snippets"
-                  "emacs-emmet-mode"
+                  ;; "emacs-emmet-mode"
 
                   "emacs-visual-fill-column"
                   ))
@@ -361,8 +361,7 @@
                   ;; "tree-sitter-org"
                   ;; "tree-sitter-php"
                   "tree-sitter-bash"
-                  ;; "tree-sitter-html"
-                  ;; "tree-sitter-java"
+                  "tree-sitter-java"
                   "tree-sitter-json"
                   "tree-sitter-ruby"
                   "tree-sitter-rust"

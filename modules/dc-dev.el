@@ -618,8 +618,10 @@ compilation was initiated from compile-mode."
 ;;** Snippets
 
 ;;*** Snippets
-(setup (:pkg emmet)
-  (:hook-into sgml-mode css-mode nxml-mode html-mode))
+(setup (:pkg emmet-mode :straight t :type git :flavor melpa
+             :host github :repo "smihica/emmet-mode")
+  (:hook-into sgml-mode css-mode nxml-mode html-mode mhtml-mode))
+
 
 ;; yas-snippet-dirs:
 ;;
