@@ -1,0 +1,50 @@
+# -*- mode: snippet -*-
+# -*- mode: snippet -*-
+# name: dir-css-lsp
+# key: <dir<css
+# uuid: dir-css-lsp
+# group: eglot
+# --
+
+(${1:$$(yas-choose-value '("css" "scss" "less"))}-mode
+ . ((eglot-workspace-configuration
+     .
+     (:$1
+      (
+        :validate t
+        :completion (:triggerPropertyValueCompletion t)
+        :trace (:server "messages") ;; off/messages/verbose
+
+        ;; json paths defining custom CSS properties, @directives, pseudo
+        ;; and classes elements.
+        ;; (:experimental (:customData '("./path/to/???.json")))
+
+
+        ;; validProperties: do not check these as unknown
+        :lint
+        (
+         ;; ignore/warning/error
+         :validProperties nil
+         :unknownAtRules "warning"
+         :idSelector "warning"
+         :float "warning" ;; ignore
+         :important "ignore"
+         :propertyIgnoredDueToDisplay "warning"
+         :unknownVendorSpecificProperties "ignore"
+         :ieHack "ignore"
+         :unknownProperties "warning"
+         :argumentsInColorFunction "error"
+         :hexColorLength "error"
+         :fontFaceProperties "warning"
+         :zeroUnits "warning"                   ;; ignore
+         :universalSelector "warning"           ;; ignore
+         :boxModel "warning"                    ;; ignore
+         :importStatement "warning" ;; ignore (imports do not load in parallel)
+         :duplicateProperties "warning" ;; ignore
+
+         ;; when using vendor-specific prefix, include the standard property
+         :vendorPrefix "ignore"
+
+         ;; include all other vendor-specific properties
+         :compatibleVendorPrefixes "ignore"
+         :emptyRules "warning"))))))

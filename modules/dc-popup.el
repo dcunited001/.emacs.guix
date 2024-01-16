@@ -79,6 +79,7 @@
         "^\\*\\(?:Occur\\|unsent mail.*?\\|message\\)\\*"
         "^\\*Flycheck errors\\*"
         "^\\*Flycheck errors\\*"
+        "^\\*Flymake diagnostics.*"
         "^\\*vc-diff"
         ;; NOTE: what are outline, annotation.el? can't get outline to work.
         ;; i've used outline as minor mode (org inherits from it, lispy uses it)
@@ -116,6 +117,10 @@
 
 (add-to-list 'popper-reference-buffers
              '(dc/popper-shell-output-empty-p . hide))
+
+(defun dc/popper-echo-setup ()
+  (require 'popper-echo)
+  (popper-echo-mode))
 
 ;; (require 'dc-popper-popup-rules)
 (setup (:pkg popper)
