@@ -23,6 +23,11 @@
 
 ;;* Web
 
+;; To get HTML, CSS, JSON, and eslint LSP's install this
+;; npm install -g vscode-langservers-extracted
+
+;; https://www.npmjs.com/package/vscode-langservers-extracted
+
 ;;** JSON
 
 ;; uses json-beautify -> json-pretty-print to format
@@ -83,6 +88,16 @@
 ;;*** ESXML
 
 
+;;** CSS
+
+;; https://github.com/emacs-lsp/lsp-mode/blob/master/clients/lsp-css.el
+
+(with-eval-after-load 'css-mode
+  (add-to-list 'major-mode-remap-alist '(css-mode . css-ts-mode)))
+
+;;*** SASS
+
+;;*** LESS
 
 ;;** HTML
 

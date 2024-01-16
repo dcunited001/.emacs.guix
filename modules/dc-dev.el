@@ -235,8 +235,9 @@ compilation was initiated from compile-mode."
 
 ;;*** Eglot
 
-(defun dc/eglot-organize-imports () (interactive)
-	     (eglot-code-actions nil nil "source.organizeImports" t))
+(defun dc/eglot-organize-imports ()
+  (interactive)
+	(eglot-code-actions nil nil "source.organizeImports" t))
 
 ;; once hooked, eglot-managed-mode will toggle these
 (defun dc/eglot-setup-buffer ()
@@ -262,9 +263,11 @@ compilation was initiated from compile-mode."
            eglot-send-changes-idle-time 0.5
            ;; other common options: xref, imenu, eldoc
            ;; also see (eglot--setq-saving...)
-           eglot-stay-out-of '(flymake)
-           eglot-extend-to-xref t       ;TODO: assess eglot-extend-to-xref
 
+           ;; NOTE: This fucks up flymake buffers everywhere:
+           ;; eglot-stay-out-of '(flymake) ;; it's a per-project setting
+
+           eglot-extend-to-xref t       ;TODO: assess eglot-extend-to-xref
            eglot-menu-string "Æ"
 
            ;; see note about popups/point in

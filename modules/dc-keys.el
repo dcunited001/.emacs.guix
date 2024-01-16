@@ -1085,19 +1085,41 @@
 
 ;;**** EGLOT
 
+;; see the `eglot-menu', whose options change depending on the result of
+;; (eglot--server-capable :lsp-capability)
+
 (general-define-key
  :keymaps 'eglot-mode-map
  :prefix "M-g"
  :wk-full-keys nil
  "c" '(:ignore t :which-keys "CODE")
  "cs" #'consult-eglot-symbols
- "ca" #'eglot-code-actions
- ;; "cai" #'eglot-code-action-inline
+ "cd" #'eldoc-doc-buffer
+
+ ;; eglot delegates to flymake for a error interface (NOT FLYCHECK GDMT)
+ "c M-d" '(:ignore t :which-keys "diagnostics")
+ "c M-d d" #'flymake-show-buffer-diagnostics
+ "c M-d M-d" #'flymake-show-project-diagnostics
+
+ ;; code actions (still haven't ever seen one of these happen so IDK)
+ "ca" '(:ignore t :which-keys "ACTIONS")
+ "caa" #'eglot-code-actions
+ "cao" #'eglot-code-action-organize-imports
+ "cax" #'eglot-code-action-extract
+ "cai" #'eglot-code-action-inline
+ "car" #'eglot-code-action-rewrite
+ "caq" #'eglot-code-action-quickfix
 
  "cf" '(:ignore t :which-keys "FIND")
  "cfd" #'eglot-find-declaration
  "cfi" #'eglot-find-implementation
  "cft" #'eglot-find-typeDefinition
+ ;; xref-find-definitions
+ ;; xref-find-apropos
+ ;; xref-find-find-references
+
+ "cF" #'eglot-format
+ "c M-f" #'eglot-format-buffer
 
  ;; "cj" #'consult-eglot-symbols
  "cr" #'eglot-rename)
