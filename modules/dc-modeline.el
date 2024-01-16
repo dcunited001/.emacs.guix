@@ -95,7 +95,10 @@
   "Compose Eglot's mode-line."
   (let* ((server (eglot-current-server))
          ;; NOTE: this just limits the server nick to 7 chars
-         (nick (and server (substring (eglot-project-nickname server) 0 6)))
+         (nickname (and server (eglot-project-nickname server)))
+         ;; if it's less than 6, it errors out
+         (nick (and server (substring nickname
+                                      0 (and (> (length nickname) 5) 6))))
          (pending (and server (hash-table-count
                                (jsonrpc--request-continuations server))))
          (last-error (and server (jsonrpc-last-error server))))
