@@ -430,6 +430,12 @@
 
 ;;** 0x0
 
+;; The emacs package(s) have a creative commons license and there are two
+;; different versions. they have incompatible interfaces.
+
+;; sr.ht/~pkal/nullpointer-emacs
+;; sr.ht/~willvaughn/emacs-0x0
+
 (defun dc/0x0-set-retention-policy ()
   "Change retention for 0x0 servers"
 
@@ -446,7 +452,7 @@
            collect `(,tag ,@cfg)))
 
 ;; retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
-(setup (:pkg 0x0 :straight t :host gitlab :repo "willvaughn/emacs-0x0"))
+(setup (:pkg 0x0 :straight t :host sourcehut :repo "willvaughn/emacs-0x0"))
 
 (with-eval-after-load '0x0
   (setq 0x0-servers (dc/0x0-set-retention-policy)))
