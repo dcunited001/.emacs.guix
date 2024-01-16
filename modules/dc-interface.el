@@ -537,6 +537,42 @@ but can't be jumped to or from."
 
 ;;*** Timers
 
+;;**** GC Timer
+
+;; TODO: didn't have time to test GC notifications...
+;; potential dumb mistakes...
+
+(defvar dc/gc-events-count 0 "Collect GC events")
+(defvar dc/gc-notify-interval 0 "Collect GC events")
+(defun dc/gc-notify-start (&optional secs)
+  (interactive)
+  ;; TODO: univ arg
+  (let ((secs (or secs 60)))
+    (setq dc/gc-events-count 0
+          dc/gc-notify-interval secs)
+    (unless (memq #'dc/gc-events-inc post-gc-hook)
+      (add-hook 'post-gc-hook #'dc/gc-events-inc)
+      (run-with-timer secs t #'dc/gc-notify))))
+
+(defun dc/gc-notify-stop ()
+  (interactive)
+  (when (memq #'dc/gc-events-inc post-gc-hook)
+    (remove-hook 'post-gc-hook #'dc/gc-events-inc)
+    (cancel-function-timers #'dc/gc-notify)))
+
+(defun dc/gc-events-inc ()
+  (set 'dc/gc-events-count (+ dc/gc-events-count 1)))
+
+(defun dc/gc-notify ()
+  (when (> dc/gc-events-count 0)
+    (alert (format "%s events occured (%s seconds)."
+                   dc/gc-events-count
+                   dc/gc-notify-interval)
+           :title "Emacs GC:")
+    (setq dc/gc-events-count 0)))
+
+;;**** tmr.el
+
 ;; TODO: bind `tmr' and `C-u tmr' to a key
 (setup (:pkg tmr))
 
