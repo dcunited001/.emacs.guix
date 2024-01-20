@@ -296,7 +296,11 @@ compilation was initiated from compile-mode."
 
   ;; about to configure this for yaml, but it needs yaml schema-specific glob
   ;; patterns anyways
-  )
+
+  ;; increase process read size from 4k to 512K
+  ;; see: https://emacs-lsp.github.io/lsp-mode/page/performance/#tuning
+  ;; and: https://github.com/doomemacs/doomemacs/blob/master/lisp/doom-start.el#L77
+  (setq read-process-output-max (expt 2 19)))
 
 (with-eval-after-load 'eglot
   ;; "emacs-consult-eglot" ;; 0.2.0 on guix does not include fix to #14

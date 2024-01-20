@@ -285,6 +285,8 @@ Guix channel.")
 (require 'dc-support)
 (require 'dc-network)
 
+;; no backup files
+(setq make-backup-files nil)
 (setq dc/eld-path (thread-last no-littering-etc-directory
                                (expand-file-name "dc")
                                (file-name-as-directory)))
@@ -361,4 +363,4 @@ Guix channel.")
 ;;**** Start the Daemon
 (server-start)
 
-(setq gc-cons-threshold (* 20 (expt 2 20)))
+(setq gc-cons-threshold (* 50 (expt 2 20)))
