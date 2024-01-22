@@ -181,8 +181,9 @@
                   "emacs-emojify"
                   "emacs-all-the-icons"
                   "emacs-all-the-icons-dired"
-                  "emacs-rainbow-mode"
-                  "emacs-kind-icon"))
+                  ;; TODO: readd when guix emacs-kind-icon is current
+                  ;; "emacs-kind-icon"
+                  "emacs-rainbow-mode"))
    guix-emacs-vhash))
 
 ;;** Keys

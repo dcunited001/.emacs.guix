@@ -837,8 +837,11 @@ but can't be jumped to or from."
 
 ;;*** Kind Icon
 
-(setup (:pkg kind-icon)
-  (:load-after corfu)
+(setup ;; (:pkg kind-icon)
+    (:pkg kind-icon :straight t
+          :type git :host github :repo "emacs-straight/kind-icon"
+          :files ("*" (:exclude ".git")))
+    (:load-after corfu)
   (:option kind-icon-default-face 'corfu-default)
   (:when-loaded
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
