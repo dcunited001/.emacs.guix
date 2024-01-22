@@ -585,6 +585,11 @@ but can't be jumped to or from."
                         (or (tmr--timer-description (car tmr--timers)) ""))
                 'tab-bar '(:foreground "orange"))))
 
+;;*** Doom
+
+;; really hard to live without this one.
+(require 'dc-interface-doom)
+
 ;; ** Speedbar
 
 (setup (:pkg speedbar)
