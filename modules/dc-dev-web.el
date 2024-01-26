@@ -77,6 +77,10 @@
                     (markdown-header-face-5 . 1.0)))
       (set-face-attribute (car face) nil :weight 'normal :height (cdr face)))))
 
+(with-eval-after-load 'markdown-mode
+  (add-hook 'markdown-mode-hook #'visual-line-mode)
+  (add-hook 'markdown-mode-hook (lambda () (setq-local truncate-lines nil))))
+
 ;;** Markup
 
 ;;*** NXML
@@ -101,26 +105,47 @@
 
 ;;** HTML
 
-;;*** Web Mode
+(add-to-list
+ 'eglot-server-programs
+ `((html-ts-mode mhtml-mode web-mode) .
+   ,(a-get* eglot-server-programs 'html-mode)))
 
-;; TODO: remove web-mode (mhtml uses treesitter).
+;;*** html-ts-mode
+
+(setup (:pkg html-ts-mode :straight t :type git :host github :repo "mickeynp/html-ts-mode"
+             :flavor melpa :files ("html-ts-mode.el"))
+  ;; TODO: tidy refuses to format things without <!DOCTYPE> and i'm in liquid...
+  ;; (cl-dolist (webml '(html-mode html-ts-mode mhtml-mode web-mode))
+  ;;   (add-to-list 'apheleia-mode-alist `(,webml . html-tidy)))
+  (:file-match "\\.html?\\'"))
+
+;;*** Web Mode
 
 ;; html files are still associating with mhtml-mode
 
+;; (pop apheleia-mode-alist)
+
 (setup (:pkg web-mode)
-  (:file-match "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
+  ;; (:file-match "\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
+  (:file-match "\\.\\(ejs\\|tsx\\|jsx\\)\\'")
   (setq-default web-mode-code-indent-offset 2)
   (setq-default web-mode-markup-indent-offset 2)
   (setq-default web-mode-attribute-indent-offset 2))
 
 ;;*** Processes
 
+
+;;**** Servers
+
+;; impatient-mode allows emacs to function as a web-server
+
 ;; 1. Start the server with `httpd-start'
 ;; 2. Use `impatient-mode' on any buffer
-(setup (:pkg impatient-mode :straight t))
-(setup (:pkg skewer-mode))
+;; (setup (:pkg impatient-mode :straight t))
 
-(with-eval-after-load 'simple-httpd
-  (add-to-list 'httpd-mime-types '("wasm" . "application/wasm")))
+;; (setup (:pkg skewer-mode))
+
+;; (with-eval-after-load 'simple-httpd
+;;   (add-to-list 'httpd-mime-types '("wasm" . "application/wasm")))
 
 (provide 'dc-dev-web)

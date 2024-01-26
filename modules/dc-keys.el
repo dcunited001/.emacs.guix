@@ -1896,6 +1896,26 @@
 
 ;; the org ql transient dispatch gives more commands
 
+;;**** markup modes
+
+;; NOTE: combobulate processes data from keybindings events
+;; https://github.com/mickeynp/combobulate
+;; changing combobulate prefix requires setting this (and maybe restart)
+
+;;  (setq combobulate-key-prefix "C-c o")
+
+
+(general-define-key
+ :keymaps '(html-ts-mode-map web-mode-map mhtml-mode-map xml-mode-map)
+ :prefix "<f3>"
+ "<f3>" #'dc/emmet-expansion-push)
+
+;; (general-define-key
+;;  :keymaps '(html-ts-mode-map web-mode-map mhtml-mode-map xml-mode-map)
+;;  :prefix "C-c o"
+;;  "o" #'combobulate)
+
+
 ;;**** sgml-mode
 
 ;;**** html-mode

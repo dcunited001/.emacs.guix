@@ -223,7 +223,8 @@ compilation was initiated from compile-mode."
 ;; https://github.com/mickeynp/combobulate
 (setup (:pkg combobulate :straight t :type git
              :host github :repo "mickeynp/combobulate"
-             :files (:defaults)))
+             :files (:defaults))
+  (:hook-into html-ts-mode css-ts-mode))
 
 ;; TODO: setup combobulate for python-ts and yaml-ts
 
@@ -235,19 +236,32 @@ compilation was initiated from compile-mode."
 
 ;;*** Eglot
 
+;; these are unnecessary, since dc/eglot-setup-buffer adds buffer-local hooks
 (defun dc/eglot-organize-imports ()
   (interactive)
-	(eglot-code-actions nil nil "source.organizeImports" t))
+  (if (eglot-managed-p)
+	    (eglot-code-actions nil nil "source.organizeImports" t)))
+
+(defun dc/eglot-format-buffer ()
+  (interactive)
+  (if (and (eglot-managed-p)
+           (not (a-get apheleia-mode-alist major-mode)))
+      (eglot-format-buffer)))
 
 ;; once hooked, eglot-managed-mode will toggle these
 (defun dc/eglot-setup-buffer ()
   ;; generally: if depth <= 0, add-hook prepends and otherwise, it appends
   ;; it defaults to zero.
+
+  ;; if it's managed
   (if (eglot-managed-p)
-      (progn
-        (add-hook 'before-save-hook #'eglot-format-buffer nil t)
-        (add-hook 'before-save-hook #'dc/eglot-organize-imports nil t))
-    (remove-hook 'before-save-hook #'dc/eglot-organize-imports t)
+      ;; set depth (10) to organize imports before formatting
+      (add-hook 'before-save-hook #'dc/eglot-organize-imports 10 t)
+    (remove-hook 'before-save-hook #'dc/eglot-organize-imports t))
+  ;; if it's managed and unless apheleia formats
+  (if (and (eglot-managed-p)
+           (not (a-get apheleia-mode-alist major-mode)))
+      (add-hook 'before-save-hook #'eglot-format-buffer 11 t)
     (remove-hook 'before-save-hook #'eglot-format-buffer t)))
 
 ;; TODO: hook on eglot-managed-mode (via karthink & plt). gets eglot to work
@@ -276,8 +290,8 @@ compilation was initiated from compile-mode."
            eglot-confirm-server-initiated-edits nil)
 
   ;; TODO: maybe hook this (aphelia may need to be toggled off)
-  ;; (:with-hook eglot-managed-mode-hook
-  ;;   (:hook #'dc/eglot-setup-buffer))
+  (:with-hook eglot-managed-mode-hook
+    (:hook #'dc/eglot-setup-buffer))
 
   (require 'eglot)
 
@@ -622,10 +636,37 @@ compilation was initiated from compile-mode."
 ;;** Snippets
 
 ;;*** Snippets
+
+(defvar dc/kill-ring '() "A list of interesting lines from this session")
+
+;; not actually what i was going for (ends up in kill-ring, but not in expr)
+(defun dc/kill-ring-push (arg)
+  (interactive "P")
+  (let* ((here (point))
+         (beg (when (use-region-p) (region-beginning)))
+         (end (when (use-region-p) (region-end)))
+         (expr (copy-region-as-kill beg end)))
+    ;; (pp `(,beg ,end ,expr))
+    (add-to-list 'dc/emmet-expansions expr)))
+
+(defvar dc/emmet-expansions '() "A list of emmet expansions from this session")
+(defun dc/emmet-expansion-push (arg)
+  (interactive "P")
+  (add-to-list 'dc/emmet-expansions (emmet-expr-on-line)))
+
+;; previous body (something gets nil i donno)
+;; here is maybe necessary bc emmet-expr-on-line is a macro
+;; (let* ((here (point))
+;;        (beg (when (use-region-p) (region-beginning)))
+;;        (end (when (use-region-p) (region-end)))
+;;        (expr (copy-region-as-kill beg end)))
+;;   (add-to-list 'dc/emmet-expansions (emmet-expr-on-line))
+;; (goto-char here)
+;;)
+
 (setup (:pkg emmet-mode :straight t :type git :flavor melpa
              :host github :repo "smihica/emmet-mode")
-  (:hook-into sgml-mode css-mode nxml-mode html-mode mhtml-mode))
-
+  (:hook-into sgml-mode css-mode nxml-mode html-ts-mode web-mode html-mode mhtml-mode))
 
 ;; yas-snippet-dirs:
 ;;
