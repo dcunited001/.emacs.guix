@@ -230,7 +230,9 @@
                   "emacs-super-save"    ;auto-save on activity
                   "emacs-ws-butler"     ;trim
                   ;; "emacs-reformatter"
-                  "emacs-apheleia"      ;autoformat without jumping
+
+                  ;; apheleia package doesn't include bin/apheleia-npx
+                  ;; "emacs-apheleia"      ;autoformat without jumping
                   "emacs-undo-tree"
 
                   "emacs-yasnippet"

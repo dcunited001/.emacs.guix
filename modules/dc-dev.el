@@ -396,8 +396,10 @@ compilation was initiated from compile-mode."
 
 ;;*** Aphelia
 
-;; html tidy's usage of exit-status-codes doesn't jive with apheleia ... but i
-;; reallllly don't want to install node _where it should be unnecessary_
+
+
+;; html tidy's extra warnings doesn't jive with apheleia ... but i reallllly
+;; don't want to install node _where it should be unnecessary_ (i gave up)
 ;;
 ;; (html-tidy . ("tidy" "-q" "--tidy-mark" "no" "-indent"))
 ;; (xml-tidy . ("tidy" "-q" "--tidy-mark" "no" "-indent" "-xml"))
@@ -435,13 +437,31 @@ compilation was initiated from compile-mode."
                          (or (buffer-file-name)
                              (cdr (assoc major-mode
                                          dc/apheleia-clang-modes))
-                             ".c")))))
+                             ".c")))
+
+        ;; NOTE: tidy just seems to error out with apheleia
+        (html-tidy "tidy" "--quiet" "yes"
+                   "--tidy-mark" "no"
+                   "--vertical-space" "no" ;; prevents wrapping inside empty
+                   "--show-body-only" "auto"
+                   "--doctype" "omit"
+                   "-indent"
+
+                   (when (derived-mode-p 'nxml-mode) "-xml")
+                   (apheleia-formatters-indent "--indent-with-tabs" "--indent-spaces"
+                                               (cond
+                                                ((derived-mode-p 'nxml-mode)
+                                                 'nxml-child-indent)
+                                                ((derived-mode-p 'web-mode)
+                                                 'web-mode-indent-style)))
+                   (apheleia-formatters-fill-column "-wrap"))))
 
 ;; (a-get apheleia-formatters 'html-tidy)
 ;; (a-get apheleia-mode-alist 'html-mode)
 ;; (a-get apheleia-mode-alist 'json-mode)
 
-(setup (:pkg apheleia)
+(setup (:pkg apheleia :straight t :type git :flavor melpa :host github :repo "radian-software/apheleia"
+             :files (:defaults ("scripts" "scripts/formatters") "apheleia-pkg.el"))
   (:option apheleia-mode-lighter "│¶"))
 
 (with-eval-after-load 'apheleia

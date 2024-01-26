@@ -83,6 +83,9 @@
 
 ;;** Markup
 
+;; older package
+;; (setup (:pkg tidy :type git :host github :repo "emacsmirror/tidy"))
+
 ;;*** NXML
 
 (setq nxml-slash-auto-complete-flag t)
@@ -115,9 +118,12 @@
 (setup (:pkg html-ts-mode :straight t :type git :host github :repo "mickeynp/html-ts-mode"
              :flavor melpa :files ("html-ts-mode.el"))
   ;; TODO: tidy refuses to format things without <!DOCTYPE> and i'm in liquid...
-  ;; (cl-dolist (webml '(html-mode html-ts-mode mhtml-mode web-mode))
-  ;;   (add-to-list 'apheleia-mode-alist `(,webml . html-tidy)))
+  (cl-dolist (webml '(html-mode html-ts-mode mhtml-mode web-mode))
+    (add-to-list 'apheleia-mode-alist `(,webml . prettier-html)))
   (:file-match "\\.html?\\'"))
+
+(with-eval-after-load 'html-ts-mode
+  (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode)))
 
 ;;*** Web Mode
 
