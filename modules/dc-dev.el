@@ -321,6 +321,77 @@ compilation was initiated from compile-mode."
   (setup (:pkg consult-eglot :straight t :type git :flavor melpa
                :host github :repo "mohkale/consult-eglot")))
 
+;;**** eglot configs
+
+(defvar dc/lsp-url-pattern "https://raw.githubusercontent.com/emacs-lsp/lsp-mode/master/clients/lsp-%s.el")
+
+(defun dc/read-lisp-into-list (file)
+  (with-temp-buffer
+    (save-excursion
+      (insert "'(\n")
+      (insert-file-contents file)
+      (goto-char (point-max))
+      (insert "\n)\n"))
+    ;; (pp (current-buffer))
+    (read (current-buffer))))
+
+(require 'url)
+(defun dc/download-lsp-into-temp (mode)
+  (let* ((url (format dc/lsp-url-pattern mode))
+         (tmp (make-temp-file "emacs-lsp-download"))
+         (tmpfile (url-copy-file url tmp t))
+         (lsp-mode-list (dc/read-lisp-into-list tmp)))
+    ;; lsp-mode-list
+    (delete-file tmp)
+    (cl-loop for el in (cadr lsp-mode-list)
+             until (eq (car el) 'lsp-register-custom-settings)
+             finally return el)))
+
+;; use with C-u C-x C-e, then transform with regexp
+(defun dc/lsp-mode-config-emit (mode)
+  (let ((lsp-cfg (dc/download-lsp-into-temp mode)))
+    (cadadr lsp-cfg)))
+
+;; (dc/lsp-mode-config-emit "html")
+;; (("html.trace.server" lsp-html-trace-server)
+;;  ("html.autoClosingTags" lsp-html-auto-closing-tags t)
+;;  ("html.validate.styles" lsp-html-validate-styles t)
+;;  ("html.validate.scripts" lsp-html-validate-scripts t)
+;;  ("html.suggest.html5" lsp-html-suggest-html5 t)
+;;  ("html.format.wrapAttributes" lsp-html-format-wrap-attributes)
+;;  ("html.format.extraLiners" lsp-html-format-extra-liners)
+;;  ("html.format.endWithNewline" lsp-html-format-end-with-newline t)
+;;  ("html.format.indentHandlebars" lsp-html-format-indent-handlebars t)
+;;  ("html.format.maxPreserveNewLines" lsp-html-format-max-preserve-new-lines)
+;;  ("html.format.preserveNewLines" lsp-html-format-preserve-new-lines t)
+;;  ("html.format.indentInnerHtml" lsp-html-format-indent-inner-html t)
+;;  ("html.format.contentUnformatted" lsp-html-format-content-unformatted)
+;;  ("html.format.unformatted" lsp-html-format-unformatted)
+;;  ("html.format.wrapLineLength" lsp-html-format-wrap-line-length)
+;;  ("html.format.enable" lsp-html-format-enable t)
+;;  ("html.experimental.customData" lsp-html-experimental-custom-data))
+
+;; lsp-client-settings is a local var in lsp-mode.el, set per mode.
+;; it affects the (lsp-configuration-section "html") behavior
+;; (lsp-client-settings downloaded-lsp-config)
+;; setting (lsp-use-plists t) affects lsp-mmode internals
+
+;; this returns JSON with unevaled lsp-mode symbols as strings
+;; (json-serialize (lsp-configuration-section "html"))
+
+;; this chokes on unknown symbols
+;; (json-encode-plist (lsp-configuration-section "html"))
+
+;; this works, oddly enough, but requires recursively calling yaml-fn on all branches
+;; (yaml--hash-table-to-plist (lsp-configuration-section "html"))
+
+;; i'm not sure why cadadr works (it may be a object like a closure)
+
+;; (let ((downloaded-lsp-config (cadadr tmp-lisp))
+;;       (lsp-client-settings downloaded-lsp-config))
+;;   (lsp-configuration-section "html"))
+
+
 ;;** Formatting
 
 ;;*** Aphelia

@@ -31,3 +31,11 @@
          ;; custom tags for the parser to use
          :customTags nil
          :maxItemsComputed 5000)))))
+
+
+;; schemas:
+
+;; docker-compose "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json" "/docker-compose.*.yml"
+;; jekyll: "https://json.schemastore.org/jekyll" "_config.yml"
+
+;; ansible (many schemas): "https://ansible.readthedocs.io/projects/lint/rules/schema/?h=schema"

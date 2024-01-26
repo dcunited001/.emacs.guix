@@ -6,6 +6,13 @@
 # group: eglot
 # --
 
+;; For "actual documentation", rare for VSCode LSP, see:
+;; https://github.com/microsoft/vscode-css-languageservice/blob/main/docs/customData.md
+
+;; Much of this can be configured with customData
+
+;; TODO: too many features, fix performance
+
 (${1:$$(yas-choose-value '("css" "scss" "less"))}-mode
  . ((eglot-workspace-configuration
      .
