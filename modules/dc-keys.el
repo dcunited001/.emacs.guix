@@ -434,58 +434,58 @@
 ;; editor features, global state and outward-looking functions
 
 (cx-def
- :wk-full-keys nil
+  :wk-full-keys nil
 
- ;; C-u commands very useful!
- "o" #'ace-window
- "C-d" #'consult-dir
+  ;; C-u commands very useful!
+  "o" #'ace-window
+  "C-d" #'consult-dir
 
- ;; "C-x M-f" #'set-fill-column
+  ;; "C-x M-f" #'set-fill-column
 
- "M-f" #'find-file-at-point
- "f" '(:ignore t :wk "FIND/FILE")
- "ff" #'consult-recent-file
- "fl" #'find-library
- "fL" #'find-library-name
+  "M-f" #'find-file-at-point
+  "f" '(:ignore t :wk "FIND/FILE")
+  "ff" #'consult-recent-file
+  "fl" #'find-library
+  "fL" #'find-library-name
 
- "fs" #'find-sibling-file
- "fS" #'find-sibling-file-search
+  "fs" #'find-sibling-file
+  "fS" #'find-sibling-file-search
 
- ;; find-sibling-file commands need to (let ((sibling-file-rules)) ...)
+  ;; find-sibling-file commands need to (let ((sibling-file-rules)) ...)
 
- ;; find .h files for .c
- ;; ("\\([^/]+\\)\\.c\\'" "\\1.h")
+  ;; find .h files for .c
+  ;; ("\\([^/]+\\)\\.c\\'" "\\1.h")
 
- ;; find other worktrees/versions:
- ;; ("src/emacs/[^/]+/\\(.*\\)\\'" "src/emacs/.*/\\1\\'")
+  ;; find other worktrees/versions:
+  ;; ("src/emacs/[^/]+/\\(.*\\)\\'" "src/emacs/.*/\\1\\'")
 
- "fF" '(:ignore t :wk "FILL")
- "fFc" #'set-fill-column
- "fFp" #'set-fill-prefix
+  "fF" '(:ignore t :wk "FILL")
+  "fFc" #'set-fill-column
+  "fFp" #'set-fill-prefix
 
- "g" #'guix
- ;; "M-g" '(:ignore t :which-key "GUIX")
- ;; "M-g x" #'guix-extended-command
- ;; "M-g M-h" #'guix-hash
- ;; "M-g M-b" #'guix-switch-to-buffer
- ;; "M-g M-r" #'guix-switch-to-repl
+  "g" #'guix
+  ;; "M-g" '(:ignore t :which-key "GUIX")
+  ;; "M-g x" #'guix-extended-command
+  ;; "M-g M-h" #'guix-hash
+  ;; "M-g M-b" #'guix-switch-to-buffer
+  ;; "M-g M-r" #'guix-switch-to-repl
 
- "G" '(:ignore t :which-key "DEBBUGS")
- "Gb" #'debbugs-gnu-bugs
- "Gg" #'debbugs-gnu-guix-search
- "Gs" #'debbugs-gnu-search
- "Gp" #'debbugs-gnu-package
+  "G" '(:ignore t :which-key "DEBBUGS")
+  "Gb" #'debbugs-gnu-bugs
+  "Gg" #'debbugs-gnu-guix-search
+  "Gs" #'debbugs-gnu-search
+  "Gp" #'debbugs-gnu-package
 
- "l" #'pulsar-pulse-line
- "L" #'pulsar-highlight-dwim
+  "l" #'pulsar-pulse-line
+  "L" #'pulsar-highlight-dwim
 
- "T" #'tldr
- "<left>" #'winner-undo
- "<right>" #'winner-redo
- "X M-e" #'esup
+  "T" #'tldr
+  "<left>" #'winner-undo
+  "<right>" #'winner-redo
+  "X M-e" #'esup
 
- "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form"))
- "M-e" #'eval-last-sexp)
+  "C-e" (lambda () (interactive) (message "Instead use C-M-x to eval top form"))
+  "M-e" #'eval-last-sexp)
 
 ;;**** kmacro and
 
@@ -494,8 +494,8 @@
                   "C-x e"))                          ;kmacro-end-and-call-macro
 
 (cx-def
- "(" #'ignore
- ")" #'ignore)
+  "(" #'ignore
+  ")" #'ignore)
 
 ;;*** leader-key (C-c, f12)
 
@@ -1272,16 +1272,16 @@
   "2z" #'org-resolve-clocks)
 
 (org-clock-global-def
- "o" #'org-clock-out
- "M-c" #'org-clock-cancel               ; and remove start time
- ;; "1C" #'+org/toggle-last-clock
- "g" #'org-clock-goto
- "z" #'org-resolve-clocks
- "q" #'org-clock-cancel
- "j" #'org-clock-goto
- "d" #'org-clock-display
- "x" #'org-clock-in-last
- "e" #'org-clock-modify-effort-estimate)
+  "o" #'org-clock-out
+  "M-c" #'org-clock-cancel               ; and remove start time
+  ;; "1C" #'+org/toggle-last-clock
+  "g" #'org-clock-goto
+  "z" #'org-resolve-clocks
+  "q" #'org-clock-cancel
+  "j" #'org-clock-goto
+  "d" #'org-clock-display
+  "x" #'org-clock-in-last
+  "e" #'org-clock-modify-effort-estimate)
 
 (org-agenda-global-def
   "a" #'org-agenda                     ; nan
@@ -1654,13 +1654,13 @@
  "C-c tm" '(:prefix-command dc/markdown-toggle-map :wk "MARKDOWN"))
 
 (markdown-toggle-def
- "e" #'markdown-toggle-math
- "f" #'markdown-toggle-fontify-code-blocks-natively
- "i" #'markdown-toggle-inline-images
- "l" #'markdown-toggle-url-hiding
- "m" #'markdown-toggle-markup-hiding
- "w" #'markdown-toggle-wiki-links
- "x" #'markdown-toggle-gfm-checkbox)
+  "e" #'markdown-toggle-math
+  "f" #'markdown-toggle-fontify-code-blocks-natively
+  "i" #'markdown-toggle-inline-images
+  "l" #'markdown-toggle-url-hiding
+  "m" #'markdown-toggle-markup-hiding
+  "w" #'markdown-toggle-wiki-links
+  "x" #'markdown-toggle-gfm-checkbox)
 
 ;;*** v VCS
 
