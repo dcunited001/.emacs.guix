@@ -258,11 +258,17 @@ compilation was initiated from compile-mode."
       ;; set depth (10) to organize imports before formatting
       (add-hook 'before-save-hook #'dc/eglot-organize-imports 10 t)
     (remove-hook 'before-save-hook #'dc/eglot-organize-imports t))
+
   ;; if it's managed and unless apheleia formats
   (if (and (eglot-managed-p)
            (not (a-get apheleia-mode-alist major-mode)))
       (add-hook 'before-save-hook #'eglot-format-buffer 11 t)
-    (remove-hook 'before-save-hook #'eglot-format-buffer t)))
+    (remove-hook 'before-save-hook #'eglot-format-buffer t))
+
+  (if ws-butler-mode
+      (if (eglot-managed-p)
+          (remove-hook 'before-save-hook #'ws-butler-before-save t)
+        (add-hook 'before-save-hook #'ws-butler-before-save nil t))))
 
 ;; TODO: hook on eglot-managed-mode (via karthink & plt). gets eglot to work
 ;; well with eldoc
@@ -454,7 +460,8 @@ compilation was initiated from compile-mode."
                                                  'nxml-child-indent)
                                                 ((derived-mode-p 'web-mode)
                                                  'web-mode-indent-style)))
-                   (apheleia-formatters-fill-column "-wrap"))))
+                   (apheleia-formatters-fill-column "-wrap"))
+        (eglot . #'eglot-format-buffer)))
 
 ;; (a-get apheleia-formatters 'html-tidy)
 ;; (a-get apheleia-mode-alist 'html-mode)

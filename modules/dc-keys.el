@@ -1910,6 +1910,10 @@
  :prefix "<f3>"
  "<f3>" #'dc/emmet-expansion-push)
 
+(general-define-key
+ :keymaps '(html-ts-mode-map web-mode-map mhtml-mode-map xml-mode-map)
+ "C-M-i" #'completion-at-point)
+
 ;; (general-define-key
 ;;  :keymaps '(html-ts-mode-map web-mode-map mhtml-mode-map xml-mode-map)
 ;;  :prefix "C-c o"

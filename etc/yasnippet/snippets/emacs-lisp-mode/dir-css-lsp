@@ -8,6 +8,7 @@
 
 ;; For "actual documentation", rare for VSCode LSP, see:
 ;; https://github.com/microsoft/vscode-css-languageservice/blob/main/docs/customData.md
+;; https://github.com/microsoft/vscode-extension-samples/tree/main/custom-data-sample
 
 ;; Much of this can be configured with customData
 
