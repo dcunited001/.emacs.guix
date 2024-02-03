@@ -99,6 +99,8 @@
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
 
+;;**** Bufler
+
 (setup (:pkg bufler :straight t :type git :flavor melpa
              :host github :repo "alphapapa/bufler.el"
              :files (:defaults (:exclude "helm-bufler.el")
@@ -119,10 +121,119 @@
   ;; -bufer-vc-(refresh,remote,state)
   (:option bufler-indent-per-level 3))
 
+;; NOTE: bufler-defauto-group: conditions defining "auto" groups
+;; https://github.com/alphapapa/bufler.el/blob/master/bufler.el#L1100-L1170
+
+
+;;***** Bufler defgroups
+
+
+(with-eval-after-load 'bufler
+
+  ;; + the bufler-defauto-group macro must be compiled (for subsequent calls to
+  ;;   eval-and-compile). This /may/ only affect auto-projectile.
+  ;;
+  ;; + Overriding bufler-defauto-group may be a bad idea.
+  ;;
+  ;; + one can not simply define new groups ... or at least not in this manner
+  ;;
+  ;; + (bufler-defgroups ...) wraps a quasiquoted `(cl-macrolet ... ,@groups)
+  ;;   and i am thoroughly confused. there is a handoff to the cl-fdsa "realm"
+  ;;   where side effects mostly(?) disappear. are they confined to an obarray?
+  ;;   IDK
+  (bufler-defauto-group directory
+    (propertize (concat "δ· " (file-truename (buffer-local-value 'default-directory buffer)))
+                'face 'magit-section-heading))
+
+  (bufler-defauto-group project
+    (when-let* ((project (bufler-project-current nil (buffer-local-value 'default-directory buffer)))
+                (project-root (bufler-project-root project)))
+      (concat "·¶ " project-root)))
+
+  ;; memoize bufler defaults
+  (setq dc/bufler-groups-defaults bufler-groups)
+
+  ;; + changed org-roam to org-roam-directory
+  ;; + removed projectile group
+  ;; + removed helm
+  ;; + add auto-tramp
+  (setf bufler-groups
+        (bufler-defgroups
+          ;; Subgroup collecting all named workspaces.
+          (group (auto-workspace))
+          (group (auto-tramp)
+                 (auto-directory)
+                 (auto-mode))
+          (group
+           ;; Subgroup collecting all `help-mode' and `info-mode' buffers.
+           (group-or "*Help/Info*"
+                     (mode-match "*Help*" (rx bos "help-"))
+                     (mode-match "*Info*" (rx bos "info-"))))
+          (group
+           ;; Subgroup collecting all special buffers (i.e. ones that are not
+           ;; file-backed), except `magit-status-mode' buffers (which are allowed to fall
+           ;; through to other groups, so they end up grouped with their project buffers).
+           (group-and
+            "*Special*"
+            (lambda (buffer)
+              (unless (or (funcall (mode-match "Magit" (rx bos "magit-status")) buffer)
+                          (funcall (mode-match "Dired" (rx bos "dired")) buffer)
+                          (funcall (auto-file) buffer))
+                "*Special*")))
+           (group
+            ;; Subgroup collecting these "special special" buffers
+            ;; separately for convenience.
+            (name-match "**Special**"
+                        (rx bos "*" (or "Messages" "Warnings" "scratch" "Backtrace") "*")))
+           (group
+            ;; Subgroup collecting all other Magit buffers, grouped by directory.
+            (mode-match "*Magit* (non-status)" (rx bos (or "magit" "forge") "-"))
+            (auto-directory))
+           (auto-mode))
+          (dir user-emacs-directory)
+          (group
+           (dir (if (bound-and-true-p org-roam-directory)
+                    org-roam-directory
+                  "~/org"))
+           (group
+            ;; Subgroup collecting indirect Org buffers, grouping them by file.
+            ;; This is very useful when used with `org-tree-to-indirect-buffer'.
+            (auto-indirect)
+            (auto-file))
+           ;; Group remaining buffers by whether they're file backed, then by mode.
+           (group-not "*special*" (auto-file))
+           (auto-mode))
+          ;; Subgroup collecting buffers in a version-control project,
+          ;; grouping them by directory.
+          (group (auto-project)
+                 (group-or "*Special*"
+                           (mode-match "Magit" (rx bos "magit-status"))
+                           (mode-match "Dired" (rx bos "dired")))
+                 (auto-mode)
+                 ;; (group-not
+                 ;;  "*Special*"
+                 ;;  (lambda (buffer)
+                 ;;    (unless (or (funcall (mode-match "Magit" (rx bos "magit-status")) buffer)
+                 ;;                (funcall (mode-match "Dired" (rx bos "dired")) buffer)
+                 ;;                (funcall (auto-file) buffer))
+                 ;;      "*Special*")))
+                 ;; decorates buffers with indication
+                 ;; (auto-special) ;; special buffers already consumed
+                 ;; (auto-mode) ;; overload
+                 ;; (auto-directory ;; overload
+                 )
+          (group
+           (auto-directory)
+           (auto-mode))))
+
+  ;; memoize the current settings
+  (setq dc/bufler-groups-custom bufler-groups))
 
 ;; TODO: find better way to advice bufler-select-buffer, but combining the
 ;; interactive functions with alternate specs is complicated. bufler uses
 ;; cl-defun specs.
+
+;;***** Bufler advice
 
 ;; TODO: implement bufler-switch-advice
 (defun dc/toggle-bufler-switch-advice ()
@@ -289,7 +400,7 @@
     (:hook #'pulsar-pulse-line)))
 ;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
 
-;; changes to pulsar-pulse-functions are effective when pulsar-mode 
+;; changes to pulsar-pulse-functions are effective when pulsar-mode
 ;; loads in a new buffer (the post-command-hooks are buffer-local)
 (with-eval-after-load 'pulsar
   (dolist (f '(ace-window
@@ -841,7 +952,7 @@ but can't be jumped to or from."
     (:pkg kind-icon :straight t
           :type git :host github :repo "emacs-straight/kind-icon"
           :files ("*" (:exclude ".git")))
-    (:load-after corfu)
+  (:load-after corfu)
   (:option kind-icon-default-face 'corfu-default)
   (:when-loaded
     (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))

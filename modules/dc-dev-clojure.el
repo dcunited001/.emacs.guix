@@ -121,6 +121,7 @@
   (:option cider-use-overlays t
            cider-save-file-on-load nil  ; t(magnars)
            cider-prompt-for-symbol nil
+           cider-offer-to-open-cljs-app-in-browser nil
 
            ;; appearance
            cider-font-lock-dynamically nil ;nilkoa ;abo-abo

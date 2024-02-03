@@ -248,8 +248,10 @@ compilation was initiated from compile-mode."
            (not (a-get apheleia-mode-alist major-mode)))
       (eglot-format-buffer)))
 
-;; once hooked, eglot-managed-mode will toggle these
+;; eglot, apheleia and ws-butler don't always get along
 (defun dc/eglot-setup-buffer ()
+  ;; to locally update once hooked, eglot-managed-mode will toggle these
+
   ;; generally: if depth <= 0, add-hook prepends and otherwise, it appends
   ;; it defaults to zero.
 
