@@ -1594,7 +1594,9 @@
  :prefix "C-c t"
  "t" #'treesit-explore-mode)
 
-;;**** dired toggles
+;;**** dired
+
+;;***** dired toggles 
 
 (general-create-definer dired-toggle-def
   :prefix-map 'dc/dired-toggle-map
@@ -1602,7 +1604,9 @@
 
 (general-define-key
  :keymaps 'dired-mode-map
- "C-c td" '(:prefix-command dc/dired-toggle-map :wk "DIRED"))
+ "C-c td" '(:prefix-command dc/dired-toggle-map :wk "DIRED")
+ ;; altgr-i
+ "í" #'dired-kill-subdir)
 
 (dired-toggle-def
   "a" #'dired-async-mode
