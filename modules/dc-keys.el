@@ -185,12 +185,15 @@
  "C-c" '(:prefix-command dc/leader-map))
 
 ;; mapping the function keys above only affects general.el keybindings
-(keymap-global-set "<f2>" ctl-x-map)
-(keymap-global-set "<f12>" dc/leader-map)
+;;
+;; TODO: consider removing <f2> and <f12> remaps (removes hands from home row
+;; and there's little value in configuring code ¶oint chars if my keybindings
+;; are not console compatible)
+;; 
+;; (keymap-global-set "<f2>" ctl-x-map)
+;; (keymap-global-set "<f12>" dc/leader-map)
 
 ;;*** Keymap Aliases
-
-
 
 ;; see also:
 ;; - https://github.com/noctuid/general.el#keymapstate-aliases
@@ -685,11 +688,12 @@
  "C-x M-:" #'consult-complex-command ;; orig. repeat-complex-command
 
  ;; TODO: remap these?
- "C-x b" #'bufler
- "C-x C-b" #'bufler-switch-buffer
+ "C-x b"   #'consult-buffer
+ "C-x C-b" #'ibuffer
+ "C-x M-b" #'bufler
 
- "C-x M-b" #'consult-buffer ;; orig. switch-to-buffer
- "C-x B" #'ibuffer
+ "C-x M-b"  #'bufler-switch-buffer
+ "C-x B"    #'display-buffer
 
  ;; "C-x 4 b" #'consult-buffer-other-window ;; orig. switch-to-buffer-other-window
  ;; "C-x 5 b" #'consult-buffer-other-frame ;; orig. switch-to-buffer-other-frame
@@ -1048,15 +1052,6 @@
   :wk-full-keys nil
   "cc" #'compile
   "cC" #'recompile
-  ;; "d" #'+lookup/definition
-  ;; "D" #'+lookup/references
-  ;; "e" #'+eval/buffer-or-region
-  ;; "E" #'+eval/region-and-replace
-  ;; "f" #'+format/region-or-buffer
-  ;; "i" #'+lookup/implementations
-  ;; "k" #'+lookup/documentation
-  ;; "s" #'+eval/send-region-to-repl
-  ;; "t" #'+lookup/type-definition
   "cw" #'delete-trailing-whitespace
   ;; "W" #'doom/deletr-trailing-newlines
   ;; "x" #'+default/diagnostics
@@ -1401,12 +1396,15 @@
 (general-define-key
  :keymaps 'project-prefix-map
 
- "f" #'project-find-file
  ;; "k" #'dw/close-project-tab
  "k" #'project-kill-buffers
  ;; "f" #'consult-ripgrep
  ;; "f" #'dc/instead-use-M-g
  "f" #'project-find-file)
+
+;; "f" #'dc/project-find-regexp
+;; "M-f" #'project-find-file
+
 
 ;;**** CMake
 

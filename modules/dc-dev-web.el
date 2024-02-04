@@ -118,11 +118,6 @@
 (setup (:pkg html-ts-mode :straight t :type git :host github :repo "mickeynp/html-ts-mode"
              :flavor melpa :files ("html-ts-mode.el"))
   ;; TODO: tidy refuses to format things without <!DOCTYPE> and i'm in liquid...
-  
-  (dolist (webml '(html-mode html-ts-mode mhtml-mode web-mode))
-    ;; aphelia: prettier instead of prettier-html, so it relies on .prettierrc
-    ;; (remove-from-list 'apheleia-mode-alist `(,webml . prettier-html))
-    (add-to-list 'apheleia-mode-alist `(,webml . prettier)))
   (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
   (:file-match "\\.html?\\'"))
 

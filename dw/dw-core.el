@@ -68,7 +68,7 @@
 ;;*** Core Key Bindings
 
 (setup (:pkg which-key)
-  (:option which-key-idle-delay 1.0
+  (:option which-key-idle-delay 2.0
            which-key-idle-secondary-delay 0.05
            which-key-lighter "│WK")
   (require 'which-key)

@@ -297,7 +297,6 @@ compilation was initiated from compile-mode."
            ;; eglot-auto-display-help-buffer nil
            eglot-confirm-server-initiated-edits nil)
 
-  ;; TODO: maybe hook this (aphelia may need to be toggled off)
   (:with-hook eglot-managed-mode-hook
     (:hook #'dc/eglot-setup-buffer))
 
@@ -402,7 +401,7 @@ compilation was initiated from compile-mode."
 
 ;;** Formatting
 
-;;*** Aphelia
+;;*** Apheleia
 
 
 
@@ -478,12 +477,18 @@ compilation was initiated from compile-mode."
   (setq apheleia-formatters (a-merge apheleia-formatters
                                      dc/apheleia-formatters))
 
-  ;; setup formatters per mode
-  ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
+  ;; clang formatters
   (add-to-list 'apheleia-mode-alist '(lisp-data-mode . lisp-indent))
   (cl-dolist (aclang-mode dc/apheleia-clang-modes)
     (add-to-list 'apheleia-mode-alist `(,(car aclang-mode) . clang-format)))
 
+  ;; web formatters
+  (dolist (webml '(html-mode html-ts-mode mhtml-mode web-mode))
+    ;; aphelia: prettier instead of prettier-html, so it relies on .prettierrc
+    ;; (remove-from-list 'apheleia-mode-alist `(,webml . prettier-html))
+    (add-to-list 'apheleia-mode-alist `(,webml . prettier)))
+
+  ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
   (add-to-list 'minions-prominent-modes 'apheleia-mode)
   (apheleia-global-mode +1))
 

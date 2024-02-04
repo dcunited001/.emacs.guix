@@ -127,6 +127,7 @@
 
 ;;***** Bufler defgroups
 
+;; TODO: refactor the memoization of dc/bufler-groups-.*
 
 (with-eval-after-load 'bufler
 
@@ -816,12 +817,34 @@ but can't be jumped to or from."
         (tab-bar-select-tab (+ 1 (mod (- arg) num-tabs)))
       (tab-previous))))
 
+;;** Search
+
+;;*** Grep 
+
+;; NOTE: the grep-files-aliases seems to work with rgrep, but not
+;; project-find-regepx
+(with-eval-after-load 'grep
+  (cl-dolist (a '(("tt" . "*[-_][Tt]est*")
+                  ("ss" . "*[-_][Ss]spec*")
+                  ("ht" . "*.html")
+                  ("xx" . "*.xml")
+                  ("jj" . "*.json")
+                  ("yy" . "*.yml *.yaml")
+                  ("tt" . "todo.org")
+                  ("nn" . "notes.org")
+                  ("dr" . ".dir-locals.el")
+                  ("mm" . "*[Mm]ain*")
+                  ("gi" . ".gitignore")))
+    (add-to-list 'grep-files-aliases a)))
+
+(defun dc/project-find-regexp (regexp)
+  (interactive (list (project--read-regexp)))
+  (let ((current-prefix-arg (ash #x1 2)))
+    (project-find-regexp regexp)))
 
 ;;** Completion
 
 ;;*** Vertico
-
-;;
 (setq vertico-multiform-categories
       '((bookmark reverse grid)
         (buffer reverse grid)           ; works for ido
