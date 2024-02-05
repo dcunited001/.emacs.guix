@@ -194,8 +194,9 @@ compilation was initiated from compile-mode."
 (setup treesit
   ;; something is automatically setting up major-mode-remap-alist
   (:option treesit-language-source-alist
-           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
-             (qml . ("https://github.com/yuja/tree-sitter-qmljs")))))
+           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml")))))
+
+;; (qml . ("https://github.com/yuja/tree-sitter-qmljs"))
 
 ;; tree sitter extra grammars get installed to
 ;; .emacs.g/tree-sitter/libtree-sitter-qml.so
@@ -476,7 +477,7 @@ when a new treesitter gramar has been added to the Guix profile."
 (with-eval-after-load 'apheleia
   ;; setup formatters
   (setq-default apheleia-formatters (a-merge apheleia-formatters
-                                     dc/apheleia-formatters))
+                                             dc/apheleia-formatters))
 
   ;; clang formatters
   (add-to-list 'apheleia-mode-alist '(lisp-data-mode . lisp-indent))
@@ -564,8 +565,8 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;; TODO: remove? wtf?
 (setq-default dc/formatter-check-xml (dc/when-exec-found "xmllint"
-                                                 'xml-format-xmllint-executable
-                                                 (xml-format-on-save-mode +1)))
+                                                         'xml-format-xmllint-executable
+                                                         (xml-format-on-save-mode +1)))
 (setup (:pkg xml-format :straight t :type git :flavor melpa
              :host github :repo "wbolster/emacs-xml-format")
   (:with-hook nxml-mode-hook
