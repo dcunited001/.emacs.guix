@@ -28,6 +28,9 @@
 
 (add-to-list 'auto-mode-alist '("config\\.scm\\'" . scheme-mode) t)
 
+;;*** Fix cmake files
+(add-to-list 'auto-mode-alist '("^CMakeLists\\.txt$\\'" . cmake-ts-mode))
+
 ;;** PDF View
 
 ;; TODO: figure out what generated this in auto-mode-alist

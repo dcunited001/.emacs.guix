@@ -31,10 +31,37 @@
 (setup (:pkg qml-ts-mode)
   (:file-match "\\.qml\\'"))
 
+;; NOTE: until this merged into 29.1 pgtk from upstream, this is necessary for
+;; qml-ts-mode
+(defvar js--treesit-sentence-nodes
+  '("import_statement"
+    "debugger_statement"
+    "expression_statement"
+    "if_statement"
+    "switch_statement"
+    "for_statement"
+    "for_in_statement"
+    "while_statement"
+    "do_statement"
+    "try_statement"
+    "with_statement"
+    "break_statement"
+    "continue_statement"
+    "return_statement"
+    "throw_statement"
+    "empty_statement"
+    "labeled_statement"
+    "variable_declaration"
+    "lexical_declaration"
+    "jsx_element"
+    "jsx_self_closing_element")
+  "Nodes that designate sentences in JavaScript.
+See `treesit-thing-settings' for more information.")
+
 ;;*** Project CMake
 
 (require 'cmake-ts-mode)
-(add-to-list 'auto-mode-alist '("^CMakeLists\\.txt$\\'" . cmake-ts-mode))
+;; added to auto-make-alist in dc-shim.el
 
 ;; https://github.com/juanjosegarciaripoll/project-cmake
 
