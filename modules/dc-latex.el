@@ -38,7 +38,7 @@
 ;;             fill-nobreak-predicate (cons #'texmathp fill-nobreak-predicate))
 
 ;; TODO smartparens-latex package?
-;; TODO (setq LaTeX-section-hook '(...))
+;; TODO (setq-default LaTeX-section-hook '(...))
 ;; TODO Provide proper indentation for LaTeX "itemize", "enumerate", and
 ;;   "description" environments. See
 ;;   http://emacs.stackexchange.com/questions/3083/how-to-indent-items-in-latex-auctex-itemize-environments.
@@ -78,7 +78,7 @@
 
   ;; LaTeX-fill-break-at-separators nil
   ;; LaTeX-item-indent 0
-  (setq LaTeX-section-hook
+  (setq-default LaTeX-section-hook
         '(LaTeX-section-heading
           LaTeX-section-title
           LaTeX-section-toc
@@ -90,7 +90,7 @@
   ;; TODO: try engrave-faces elsewhere: repl's and scrpts via emacsclient -c
   ;;
   ;; (require 'engrave-faces-ansi)
-  ;; (setq engrave-faces-ansi-color-mode '3-bit)
+  ;; (setq-default engrave-faces-ansi-color-mode '3-bit)
 
   (setup (:pkg engrave-faces :straight t :type git
                :host github :repo "tecosaur/engrave-faces"

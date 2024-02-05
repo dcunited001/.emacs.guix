@@ -26,7 +26,7 @@
 
 (straight-use-package '(org :type built-in))
 
-;; (setq org-capture-templates
+;; (setq-default org-capture-templates
 ;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \
 ;;          In %:journal, %:pages.")))
 
@@ -64,9 +64,10 @@
 ;;*** Files
 
 (defun dc/org-init-org-directory-h ()
+  ;; TODO org-directory/etc: change to setq-default?
   (unless org-directory
-    (setq-default org-directory (or (getenv "ORG_DIRECTORY")
-                                    (file-name-as-directory "~/org"))))
+    (setq org-directory (or (getenv "ORG_DIRECTORY")
+                            (file-name-as-directory "~/org"))))
   (unless org-id-locations-file
     (setq org-id-locations-file (expand-file-name ".orgids" org-directory)))
 
@@ -259,7 +260,7 @@
 (if (executable-find "playsound")
     (advice-add 'org-clock-play-sound :override #'dc/org-clock-play-sound)
   (warn "org-clock-sound: Can't find `playsound`. Not overriding org-clock-play-sound")
-  (setq org-clock-sound nil))
+  (setq-default org-clock-sound nil))
 
 ;;*** Agenda
 
@@ -288,7 +289,7 @@
                                                "%TAGS") " "))
 
     (and (file-exists-p dc/emacs-sound-theme-path)
-         (setq org-clock-sound (expand-file-name "complete.oga"
+         (setq-default org-clock-sound (expand-file-name "complete.oga"
                                                  dc/emacs-sound-theme-path)))
 
     (setq-default
@@ -629,7 +630,7 @@ capture was not aborted."
 
 ;;*** Babel
 
-;; set with (setq org-confirm-evaluate #'dc/org-babel-dont-confirm-shell-elisp)
+;; set with (setq-default org-confirm-evaluate #'dc/org-babel-dont-confirm-shell-elisp)
 (defun dc/org-babel-dont-confirm-shell-elisp (lang body)
   (not (or (string= lang "emacs-lisp")
            (string= lang "shell"))))
@@ -830,7 +831,7 @@ capture was not aborted."
 (defun dc/org-init-export-h ()
 
   ;; from tecosaur
-  (setq org-export-headline-levels 5)
+  (setq-default org-export-headline-levels 5)
 
   ;; TODO https://tecosaur.github.io/emacs-config/config.html#maths-notation-conveniences
 
@@ -843,7 +844,7 @@ capture was not aborted."
 
   ;; TODO get booktabs to produce better tables
   ;; (and get table.el to export multicol cells)
-  ;; (setq org-latex-tables-booktabs t)
+  ;; (setq-default org-latex-tables-booktabs t)
   ;; org-latex-tables-centered t ; default
 
   ;; TODO beamer export: https://tecosaur.github.io/emacs-config/config.html#beamer-export
@@ -1092,7 +1093,7 @@ capture was not aborted."
 
   ;;*** Options
 
-  (setq org-tag-persistent-alist
+  (setq-default org-tag-persistent-alist
         '((:startgroup . nil)
           ("VIS" . ?v)
           ("ISH" . ?!)

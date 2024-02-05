@@ -5,7 +5,7 @@
         (current-terminal))
     (dolist (term term-list)
       (when (eq t (terminal-live-p term))
-        (setq current-terminal term)))
+        (setq-default current-terminal term)))
     current-terminal))
 
 ;; (terminal-parameter (dc/current-terminal) 'gpm-mouse-active)

@@ -44,7 +44,7 @@
 (setup (:pkg typescript-mode)
   (:file-match "\\.ts\\'")
   ;; (:hook eglot-ensure)
-  (setq typescript-indent-level 2))
+  (setq-default typescript-indent-level 2))
 
 (defun dw/set-js-indentation ()
   (setq-default js-indent-level 2)
@@ -58,7 +58,7 @@
   (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
 
   ;; Don't use built-in syntax checking
-  (setq js2-mode-show-strict-warnings nil)
+  (setq-default js2-mode-show-strict-warnings nil)
 
   ;; Set up proper indentation in JavaScript and JSON files
   (add-hook 'js2-mode-hook #'dw/set-js-indentation)
@@ -67,7 +67,7 @@
 ;;** Markdown
 
 (setup (:pkg markdown-mode)
-  (setq markdown-command "marked")
+  (setq-default markdown-command "marked")
   (:file-match "\\.md\\'")
   (:when-loaded
     (dolist (face '((markdown-header-face-1 . 1.2)
@@ -88,7 +88,7 @@
 
 ;;*** NXML
 
-(setq nxml-slash-auto-complete-flag t)
+(setq-default nxml-slash-auto-complete-flag t)
 
 ;;*** SGML
 

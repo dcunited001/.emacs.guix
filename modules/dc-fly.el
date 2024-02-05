@@ -68,7 +68,7 @@
 (defun dc/toggle-flycheck-highlighting-style ()
   "Don't taze me bro."
   (interactive)
-  (setq flycheck-highlighting-style
+  (setq-default flycheck-highlighting-style
         (if flycheck-highlighting-style
             nil
           dc/flycheck-highlighting-style-default))
@@ -77,7 +77,7 @@
        (flycheck-refresh-fringes-and-margins)))
 
 (with-eval-after-load 'flycheck
-  (setq dc/flycheck-highlighting-style-default flycheck-highlighting-style
+  (setq-default dc/flycheck-highlighting-style-default flycheck-highlighting-style
         dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
         dc/flycheck-warnings-have-underlines nil))
 

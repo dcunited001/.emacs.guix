@@ -34,7 +34,7 @@
 
 ;;*** User
 
-(setq user-full-name "David Conner"
+(setq-default user-full-name "David Conner"
       user-mail-address (or (getenv "EMAIL") "noreply@te.xel.io"))
 
 ;;*** Emacs Config
@@ -123,13 +123,13 @@ Guix channel.")
 ;; NOTE guile-load-compiled-path not needed when .scm and .go are in the same
 ;; directory. this happens in a guix checkout, but not for the channels.
 (defun dc/guix-reset-paths ()
-  (setq guix-load-path (list (expand-file-name "share/guile/site/3.0"
+  (setq-default guix-load-path (list (expand-file-name "share/guile/site/3.0"
                                                guix-pulled-profile))
         guix-load-compiled-path (list (expand-file-name "lib/guile/3.0/site-ccache"
                                                         guix-pulled-profile))))
 
 ;; this points to the profile for `guix shell`
-(setq dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
+(setq-default dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
                                (dc/guix-profile-get-default-path))
       dc/emacs-sound-theme-path (file-name-as-directory
                                  (expand-file-name
@@ -138,7 +138,7 @@ Guix channel.")
 
 ;;*** Org Paths
 
-(setq org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
+(setq-default org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
       org-roam-file-extensions '("org")
       org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
       org-roam-directory (thread-first org-roam-directory
@@ -159,7 +159,7 @@ Guix channel.")
 ;;*** Org Babel Load Languages
 
 ;; this is appended to in dc-dev-*.el, then loaded in dc-org.el
-(setq dc/org-babel-load-languages
+(setq-default dc/org-babel-load-languages
       '((emacs-lisp . t)
         (shell . t)
         (python . t)

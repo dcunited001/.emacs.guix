@@ -216,7 +216,7 @@
 ;; TODO: tramp: configure tramp-remote-path and basic tramp-connection properties
 
 ;; (unless (bound-and-true-p tramp-remote-path)
-;;   (setq tramp-remote-path
+;;   (setq-default tramp-remote-path
 ;;         '("~/.guix-profile/bin"
 ;;           "~/.guix-profile/sbin"
 ;;           "/run/current-system/profile/bin"

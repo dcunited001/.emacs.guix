@@ -46,14 +46,14 @@
 ;; dups are removed, req. strings
 
 (let ((eld-file (expand-file-name "Info-manuals-by-category.eld" dc/eld-path)))
-  (setq dc/Info-manuals-by-category (dc/eld-unserialize eld-file)))
+  (setq-default dc/Info-manuals-by-category (dc/eld-unserialize eld-file)))
 
 ;; TODO: add gpm, gettext, libc?, basics, rest of software-dev, localization
 ;; TODO: setup info-path? (this only includes manuals on arch profiles)
 ;; TODO: find out which info-manuals arent contained in the uniqued keys
 
 ;; TODO: convert to string
-(setq dc/Info-manual-default-categories
+(setq-default dc/Info-manual-default-categories
       '(emacs guile guix shell disk boot org magit emacs-ui emacs-completion make))
 (defun dc/Info-manuals (&optional categories)
   (let ((categories (or categories dc/Info-manual-default-categories)))
@@ -74,7 +74,7 @@
            Info-apropos-manuals (dc/Info-manuals))
 
 
-  ;; TODO: (setq Info-apropos-manuals)
+  ;; TODO: (setq-default Info-apropos-manuals)
   (require 'info+)
   (Info-breadcrumbs-in-mode-line-mode +1)
   (Info-persist-history-mode +1))

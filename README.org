@@ -314,7 +314,7 @@ From there, the =todo.org= for projects can be appended.
 This is initially set as:
 
 #+begin_example emacs-lisp
-(setq org-refile-targets `((nil :maxlevel . 3)
+(setq-default org-refile-targets `((nil :maxlevel . 3)
       (org-agenda-files :maxlevel . 2)
       (org-default-notes-file :maxlevel . 2))
       org-outline-path-complete-in-steps nil

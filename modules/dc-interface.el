@@ -31,7 +31,7 @@
 ;;*** Tooltips
 
 ;; there are realgud/dap integrations for inspecting vars/etc with tooltip
-(setq tooltip-delay 0.7                 ;2.0
+(setq-default tooltip-delay 0.7                 ;2.0
       tooltip-short-delay 0.1)          ;0.5
 
 ;; TODO: determine whether there are possible issues with pgtk/wayland?
@@ -57,7 +57,7 @@
         ("Asia/Shanghai" "Shanghai")
         ("Asia/Kolkata" "Hyderabad")))
 
-(setq display-time-world-time-format "%a, %d %b %I:%M %p %Z"
+(setq-default display-time-world-time-format "%a, %d %b %I:%M %p %Z"
       display-time-format "%l:%M %p %b %d W%U"
       display-time-load-average-threshold 0.0)
 
@@ -71,7 +71,7 @@
       scroll-step 1 ;; keyboard scroll one line at a time
       use-dialog-box nil) ;; Disable dialog boxes since they weren't working in Mac OSX
 
-(setq visible-bell t)
+(setq-default visible-bell t)
 
 ;; (set-frame-parameter (selected-frame) 'alpha-background 90)
 ;; (add-to-list 'default-frame-alist '(alpha-background 90))
@@ -81,12 +81,13 @@
 ;; Use UTF-8 by default
 (set-default-coding-systems 'utf-8)
 
-;;(setq large-file-warning-threshold nil)
-(setq vc-follow-symlinks t
+;;(setq-default large-file-warning-threshold nil)
+(setq-default vc-follow-symlinks t
       ;; "Disable all version control. makes startup and opening files much
       ;; faster except git and svn which I actually use" - jkitchin
       vc-handled-backends '(Git SVN))
-(setq ad-redefinition-action 'accept)
+(setq-default ad-redefinition-action 'accept)
+
 
 ;;*** Buffers
 
@@ -428,7 +429,7 @@
 
 ;;*** Font
 
-(setq emojify-display-style 'unicode
+(setq-default emojify-display-style 'unicode
       ;; default '(ascii unicode github)
       emojify-emoji-styles '(unicode github))
 
@@ -465,7 +466,7 @@
 ;;   - any change req. reloading the mode
 ;;   - changing vertical-border does not req. reload
 ;; (window-divider-mode +1)
-(setq window-divider-default-right-width 3
+(setq-default window-divider-default-right-width 3
       window-divider-default-bottom-width 3)
 
 ;;*** Images
@@ -660,7 +661,7 @@ but can't be jumped to or from."
   (interactive)
   ;; TODO: univ arg
   (let ((secs (or secs 60)))
-    (setq dc/gc-events-count 0
+    (setq-default dc/gc-events-count 0
           dc/gc-notify-interval secs)
     (unless (memq #'dc/gc-events-inc post-gc-hook)
       (add-hook 'post-gc-hook #'dc/gc-events-inc)
@@ -681,7 +682,7 @@ but can't be jumped to or from."
                    dc/gc-events-count
                    dc/gc-notify-interval)
            :title "Emacs GC:")
-    (setq dc/gc-events-count 0)))
+    (setq-default dc/gc-events-count 0)))
 
 ;;**** tmr.el
 
@@ -759,7 +760,7 @@ but can't be jumped to or from."
 
 (setup (:pkg tabspaces :straight t)
   (tabspaces-mode 1)
-  (setq tabspaces-default-tab "Main"
+  (setq-default tabspaces-default-tab "Main"
         ;; NOTE: this remaps switch-to-buffer to the tabspaces command,
         ;; but it's available through C-c TAB b
         ;; tabspaces-use-filtered-buffers-as-default t
@@ -845,7 +846,7 @@ but can't be jumped to or from."
 ;;** Completion
 
 ;;*** Vertico
-(setq vertico-multiform-categories
+(setq-default vertico-multiform-categories
       '((bookmark reverse grid)
         (buffer reverse grid)           ; works for ido
         (command reverse)
@@ -887,7 +888,7 @@ but can't be jumped to or from."
 ;; (Man reverse grid) ;also doesn't display grid
 ;; (xref-location grid) ;doesn't display grid
 
-(setq vertico-multiform-commands
+(setq-default vertico-multiform-commands
       '(("flyspell-correct-*" grid reverse (vertico-grid-annotate . 20))
         (org-refile grid reverse indexed)
         (consult-yank-pop indexed)
@@ -1013,7 +1014,7 @@ but can't be jumped to or from."
               orderless-style-dispatchers nil))
 
 ;; TODO: try as a buffer-local variable in various text-mode/prog-mode
-;; (setq completion-cycle-threshold 29)
+;; (setq-default completion-cycle-threshold 29)
 
 (setup (:pkg orderless)
   (require 'orderless)
@@ -1034,7 +1035,7 @@ but can't be jumped to or from."
                                  orderless-literal
                                  orderless-regexp)))
 
-  (setq completion-category-overrides
+  (setq-default completion-category-overrides
         '((command (styles orderless+initialism))
           (function (styles orderless+initialism))
           (symbol (styles orderless+initialism))
@@ -1269,7 +1270,7 @@ but can't be jumped to or from."
 ;;             (display-time-mode 1)
 ;;             (display-battery-mode 1)
 
-;;             (setq tab-bar-show t)
+;;             (setq-default tab-bar-show t)
 ;;             (tab-bar-mode 1)
 ;;             (tab-bar-rename-tab "Main")))
 

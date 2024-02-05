@@ -22,7 +22,7 @@
 
 ;;* Dev Python
 
-(setq python-indent-offset 4)
+(setq-default python-indent-offset 4)
 
 (add-to-list 'major-mode-remap-alist
              '(python-mode . python-ts-mode))

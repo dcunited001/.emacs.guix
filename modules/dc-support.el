@@ -77,7 +77,7 @@ along with KEYBIND, if present"
        (defun ,toggle-sym ()
          (list ,toggle-docstring)
          (interactive)
-         (setq ,name (not ,name)))
+         (setq-default ,name (not ,name)))
        ,(if keybind `(map! ,keybind #',toggle-sym)))))
 
 ;;*** When Exec Found

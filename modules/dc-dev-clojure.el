@@ -36,7 +36,7 @@
 (require 'dash)
 (require 'a)
 
-(setq dc/major-mode-clojure
+(setq-default dc/major-mode-clojure
       '(("\\(?:build\\|profile\\)\\.boot\\'" . clojure-mode)
         ("\\.cljs\\'" . clojurescript-mode)
         ("\\.cljc\\'" . clojurec-mode)
@@ -115,7 +115,7 @@
 
 ;;**** CIDER
 ;; (add-hook 'cider-mode-hook #'clj-refactor-mode)
-;; (setq org-babel-clojure-backend 'cider)
+;; (setq-default org-babel-clojure-backend 'cider)
 
 (setup (:pkg cider)
   (:option cider-use-overlays t

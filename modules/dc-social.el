@@ -378,6 +378,7 @@
 (setq gnus-thread-hide-subtree t)
 
 (with-eval-after-load 'gnus
+  ;; TODO: setq-default?
   (setq mail-user-agent 'message-user-agent ;default
 
         message-send-mail-function #'smtpmail-send-it

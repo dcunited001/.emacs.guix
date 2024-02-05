@@ -46,7 +46,7 @@
 (setq epg-pinentry-mode 'loopback)
 ;; (setq epg-pinentry-mode 'ask)
 
-(setq epg-user-id user-mail-address)
+(setq-default epg-user-id user-mail-address)
 ;; (setq epg-debug t)
 
 ;;** auth-source-pass

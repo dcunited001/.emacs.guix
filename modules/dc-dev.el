@@ -101,7 +101,7 @@
 
 ;;*** Comint
 
-(setq comint-prompt-read-only t)
+(setq-default comint-prompt-read-only t)
 
 ;;**** Sentinel for comint buffers
 
@@ -185,7 +185,7 @@ compilation was initiated from compile-mode."
 ;;
 ;; (process-contact process &optional key no-block)
 
-(setq compilation-environment '("TERM=xterm-256color"))
+(setq-default compilation-environment '("TERM=xterm-256color"))
 
 (defun my/advice-compilation-filter (f proc string)
   (funcall f proc (xterm-color-filter string)))
@@ -288,7 +288,7 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; TODO: hook on eglot-managed-mode (via karthink & plt). gets eglot to work
 ;; well with eldoc
 ;;
-;; (setq eldoc-documentation-strategy
+;; (setq-default eldoc-documentation-strategy
 ;;       'eldoc-documentation-compose-eagerly)
 
 (setup (:pkg eglot)
@@ -487,7 +487,7 @@ when a new treesitter gramar has been added to the Guix profile."
 
 (with-eval-after-load 'apheleia
   ;; setup formatters
-  (setq apheleia-formatters (a-merge apheleia-formatters
+  (setq-default apheleia-formatters (a-merge apheleia-formatters
                                      dc/apheleia-formatters))
 
   ;; clang formatters
@@ -575,7 +575,7 @@ when a new treesitter gramar has been added to the Guix profile."
 (defvar xml-format-xmllint-executable)
 
 ;; TODO: remove? wtf?
-(setq dc/formatter-check-xml (dc/when-exec-found "xmllint"
+(setq-default dc/formatter-check-xml (dc/when-exec-found "xmllint"
                                                  'xml-format-xmllint-executable
                                                  (xml-format-on-save-mode +1)))
 (setup (:pkg xml-format :straight t :type git :flavor melpa
@@ -707,11 +707,11 @@ when a new treesitter gramar has been added to the Guix profile."
   (add-to-list 'geiser-guile-manual-lookup-nodes "Guix"))
 
 ;; geiser will load ~/.guile-geiser and not ~/.guile (defaults)
-;; (setq geiser-guile-init-file "~/.guile-geiser")
-;; (setq geiser-guile-load-init-file nil)
+;; (setq-default geiser-guile-init-file "~/.guile-geiser")
+;; (setq-default geiser-guile-load-init-file nil)
 
 ;; NOTE autodoc does not seem to be crashing REPLs anymore
-;; (setq geiser-repl-autodoc-p nil)
+;; (setq-default geiser-repl-autodoc-p nil)
 
 ;;*****  Racket
 ;; evaluating scheme with lispy req. emacs-guile-racket loaded
@@ -722,10 +722,10 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;*****  Gambit Scheme
 
-;; (setq geiser-default-implementation 'gambit)
-;; (setq geiser-active-implementations '(gambit guile)))
-;; (setq geiser-repl-default-port 44555) ; For Gambit Scheme
-;; (setq geiser-implementations-alist '(((regexp "\\.scm$") gambit)
+;; (setq-default geiser-default-implementation 'gambit)
+;; (setq-default geiser-active-implementations '(gambit guile)))
+;; (setq-default geiser-repl-default-port 44555) ; For Gambit Scheme
+;; (setq-default geiser-implementations-alist '(((regexp "\\.scm$") gambit)
 ;;                                      ((regexp "\\.sld") gambit))
 
 ;;**** Mesche

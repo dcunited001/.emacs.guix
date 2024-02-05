@@ -48,7 +48,7 @@
 
 ;;** Clipboard
 
-;; (setq mouse-yank-at-point t)
+;; (setq-default mouse-yank-at-point t)
 
 ;;** Mousemaps
 
