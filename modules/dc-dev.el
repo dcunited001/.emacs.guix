@@ -85,18 +85,6 @@
 
 ;;** Docs
 
-(setup xref
-  (:option xref-file-name-display 'project-relative
-           ;; conflicts with consult-xref config
-           ;; xref-show-definitions-function #'xref-show-definitions-completing-read
-           ;; xref-show-xrefs-function #'xref-show-definitions-buffer
-
-           xref-search-program
-           (cond
-            ((executable-find "ugrep") 'ugrep)
-            ((or (executable-find "ripgrep") (executable-find "rg")) 'ripgrep)
-            (t 'grep))))
-
 ;;** Compiling
 
 ;;*** Comint

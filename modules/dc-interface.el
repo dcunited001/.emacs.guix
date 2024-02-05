@@ -88,6 +88,49 @@
       vc-handled-backends '(Git SVN))
 (setq-default ad-redefinition-action 'accept)
 
+;;** Search
+
+;;*** Xref
+
+;; xref needs to be loaded before pulsar, xref-find-* can't xref itself (and
+;; help-mode points to the wrong locations). (setup xref ...) may be what's
+;; causing this to happen
+
+(require 'xref)
+
+(setq xref-file-name-display 'project-relative
+      ;; conflicts with consult-xref config
+      ;; xref-show-definitions-function #'xref-show-definitions-completing-read
+      ;; xref-show-xrefs-function #'xref-show-definitions-buffer
+
+      xref-search-program
+      (cond
+       ((executable-find "ugrep") 'ugrep)
+       ((or (executable-find "ripgrep") (executable-find "rg")) 'ripgrep)
+       (t 'grep)))
+
+;;*** Grep 
+
+;; NOTE: the grep-files-aliases seems to work with rgrep, but not
+;; project-find-regepx
+(with-eval-after-load 'grep
+  (cl-dolist (a '(("tt" . "*[-_][Tt]est*")
+                  ("ss" . "*[-_][Ss]spec*")
+                  ("ht" . "*.html")
+                  ("xx" . "*.xml")
+                  ("jj" . "*.json")
+                  ("yy" . "*.yml *.yaml")
+                  ("tt" . "todo.org")
+                  ("nn" . "notes.org")
+                  ("dr" . ".dir-locals.el")
+                  ("mm" . "*[Mm]ain*")
+                  ("gi" . ".gitignore")))
+    (add-to-list 'grep-files-aliases a)))
+
+(defun dc/project-find-regexp (regexp)
+  (interactive (list (project--read-regexp)))
+  (let ((current-prefix-arg (ash #x1 2)))
+    (project-find-regexp regexp)))
 
 ;;*** Buffers
 
@@ -745,6 +788,13 @@ but can't be jumped to or from."
 ;; TODO: move mode-line-position to tab-bar
 ;; (req. tracking state per frame?)
 
+;; see
+;; cl-defgeneric project-
+;; and cl-defmethod project*
+(defun dc/tab-bar-tab-name-project ()
+  
+  )
+
 (setq tab-bar-close-button-show nil
       tab-bar-format '(tab-bar-format-history
                        tab-bar-format-tabs-groups
@@ -818,30 +868,6 @@ but can't be jumped to or from."
         (tab-bar-select-tab (+ 1 (mod (- arg) num-tabs)))
       (tab-previous))))
 
-;;** Search
-
-;;*** Grep 
-
-;; NOTE: the grep-files-aliases seems to work with rgrep, but not
-;; project-find-regepx
-(with-eval-after-load 'grep
-  (cl-dolist (a '(("tt" . "*[-_][Tt]est*")
-                  ("ss" . "*[-_][Ss]spec*")
-                  ("ht" . "*.html")
-                  ("xx" . "*.xml")
-                  ("jj" . "*.json")
-                  ("yy" . "*.yml *.yaml")
-                  ("tt" . "todo.org")
-                  ("nn" . "notes.org")
-                  ("dr" . ".dir-locals.el")
-                  ("mm" . "*[Mm]ain*")
-                  ("gi" . ".gitignore")))
-    (add-to-list 'grep-files-aliases a)))
-
-(defun dc/project-find-regexp (regexp)
-  (interactive (list (project--read-regexp)))
-  (let ((current-prefix-arg (ash #x1 2)))
-    (project-find-regexp regexp)))
 
 ;;** Completion
 
