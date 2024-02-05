@@ -171,6 +171,10 @@
 
 ;;** Linux
 
+;;*** Device Tree
+
+(setup (:pkg dts-mode))
+
 ;;*** Journalctl Mode
 (setup (:pkg journalctl-mode :straight t))
 

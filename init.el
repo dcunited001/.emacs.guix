@@ -105,7 +105,7 @@ Guix channel.")
 ;; TODO: update service definitions and settle on environment variables
 
 (defun dc/guix-profile-get-default-path ()
-  (expand-file-name "~/.guix-extra-profiles/emacs-g/emacs-g/"))
+  (expand-file-name "emacs-g/emacs-g" (getenv "GUIX_EXTRA")))
 
 (defun dc/guix-guile-paths (&optional profile-path)
   "Return `load-path' and `load-compiled-path' for a guix
@@ -321,6 +321,7 @@ Guix channel.")
 (require 'dc-dev-web)
 (require 'dw-swagger)
 ;; (require 'dw-dev-web)
+(require 'dc-dev-cpp)
 (require 'dc-dev-clojure)
 (require 'dc-dev-scala)
 (require 'dc-dev-python)

@@ -303,6 +303,7 @@
                   "emacs-burly"
                   "emacs-elf-mode"
                   "emacs-syslog-mode"
+                  "emacs-dts-mode"
                   "emacs-x509-mode"
                   "emacs-ssh-config-mode"
                   "emacs-tldr"
@@ -356,6 +357,7 @@
                   "tree-sitter-c"
                   "tree-sitter-cpp"
                   "tree-sitter-cmake"
+                  "tree-sitter-qmljs"
                   ;; "tree-sitter-r"
                   "tree-sitter-go"
                   "tree-sitter-gomod"
@@ -389,8 +391,7 @@
                   ;; "tree-sitter-markdown-gfm"
 
                   ;; this requires -L $HOME/.dotfiles and a custom package
-                  "tree-sitter-tcl"
-                  ))
+                  "tree-sitter-tcl"))
    guix-emacs-vhash))
 
 ;;** Lang
@@ -459,6 +460,9 @@
                   "emacs-arduino-mode"
 
                   "emacs-bazel"
+
+                  ;; KDE
+                  "emacs-qml-ts-mode"
 
                   ;; TODO decide on whether to include CCLS
                   "ccls"

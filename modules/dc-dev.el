@@ -206,15 +206,28 @@ compilation was initiated from compile-mode."
 (setup treesit
   ;; something is automatically setting up major-mode-remap-alist
   (:option treesit-language-source-alist
-           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml")))))
+           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
+             (qml . ("https://github.com/yuja/tree-sitter-qmljs")))))
 
-;; TODO: where does this install? any way to reduce startup time after updates?
+;; tree sitter extra grammars get installed to
+;; .emacs.g/tree-sitter/libtree-sitter-qml.so
+
+;; TODO: where does this install?  any way to reduce startup time after updates?
 ;; ... and by itself this isn't very useful. also, doom only provides treesitter
-;;      navigation functionality to evil users
-(cl-loop for lang-key
-         in (a-keys treesit-language-source-alist)
-         unless (treesit-language-available-p lang-key)
-         do (treesit-install-language-grammar lang-key))
+;; navigation functionality to evil users
+(with-eval-after-load 'treesit
+  (cl-loop for lang-key
+           in (a-keys treesit-language-source-alist)
+           unless (treesit-language-available-p lang-key)
+           do (treesit-install-language-grammar lang-key)))
+
+(defun dc/treesit-bump-extra-load-path ()
+  "Prepend the `lib/treesit' from the symlinked guix profile to
+`treesit-extra-load-path'. This avoids the need to restart emacs
+when a new treesitter gramar has been added to the Guix profile."
+  (let* ((emacs-g-profile (dc/guix-profile-get-default-path))
+         (fresh-treesit (expand-file-name "lib/tree-sitter" emacs-g-profile)))
+    (add-to-list 'treesit-extra-load-path fresh-treesit)))
 
 ;;*** Combobulate
 

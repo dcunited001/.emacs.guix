@@ -109,7 +109,7 @@
         "^\\*Python"
         "*\\sbt"
         "^\\*EGLOT"
-        ;; "^\\*tree-sitter explorer" ;; doesn't work with popper
+        ;; "^\\*tree-sitter explorer" ;; with popper, it doesn't present updates to buffer
         " output\\*$"
         "^\\*TeX \\(?:Help\\|errors\\)"
         "^\\*Ledger Report"

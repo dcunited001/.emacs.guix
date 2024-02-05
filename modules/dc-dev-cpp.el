@@ -26,13 +26,22 @@
 
 ;;** CMake Projects
 
+;;*** KDE
+
+(setup (:pkg qml-ts-mode)
+  (:file-match "\\.qml\\'"))
+
 ;;*** Project CMake
+
+(require 'cmake-ts-mode)
+(add-to-list 'auto-mode-alist '("^CMakeLists\\.txt$\\'" . cmake-ts-mode))
 
 ;; https://github.com/juanjosegarciaripoll/project-cmake
 
 ;; to integrate with eglot/clang
 (setup (:pkg project-cmake :straight t :type git
              :host github :repo "juanjosegarciaripoll/project-cmake")
+  (require 'project-cmake)
   (require 'eglot)
   (project-cmake-scan-kits)
   (project-cmake-eglot-integration))
