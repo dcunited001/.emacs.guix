@@ -584,6 +584,11 @@
 
 (setup (:pkg burly))
 
+;;*** Activities
+
+(setup (:pkg activities :straight t :type git :flavor melpa
+             :host github :repo "alphapapa/activities.el"))
+
 ;;** UI
 
 (defun dc/forcing-function (msg)

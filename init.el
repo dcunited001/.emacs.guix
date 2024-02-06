@@ -29,6 +29,7 @@
 (defconst EMACS29+    (> emacs-major-version 28))
 (defconst MODULES     (featurep 'dynamic-modules))
 (defconst NATIVECOMP  (featurep 'native-compile))
+(defconst DBUS_FOUND (not (null (getenv "DBUS_SESSION"))))
 
 ;;** Early Vars
 
@@ -158,12 +159,19 @@ Guix channel.")
 
 ;;*** Org Babel Load Languages
 
-;; this is appended to in dc-dev-*.el, then loaded in dc-org.el
-(setq-default dc/org-babel-load-languages
+;; this is appended to in dc-dev-*.el, then loaded in dc-shim.el
+;;
+;; NOTE: at some point, jupyter presented an issue regarding jupyter kernelspecs
+;; being required when the symbols are loaded by (org-babel-do-load-languages
+;; ...)
+;;
+;; I guess everything else can be determined here
+(setq dc/org-babel-load-languages
       '((emacs-lisp . t)
         (shell . t)
         (python . t)
-        (jq . t)))
+        (jq . t)
+	(restclient . t)))
 
 ;;**** Org Ref & Bibtex
 
@@ -365,3 +373,5 @@ Guix channel.")
 (server-start)
 
 (setq gc-cons-threshold (* 50 (expt 2 20)))
+
+(alert "Emacs server ready." :title "Emacs GC:")

@@ -50,4 +50,6 @@
 ;; the alert-style is dispatched on the plist values in the rules, so
 ;; configuring things like category or mode is helpful
 
+(alert "Loading interface" :title "Emacs:")
+
 (provide 'dc-alert)

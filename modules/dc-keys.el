@@ -274,6 +274,14 @@
   "am" #'alert--log-enable-messaging
   "aM" #'alert--log-disable-messaging
 
+
+  "@" '(:ignore t :which-key "SWAGG")
+  "@r" #'swagg-request
+  "@R" #'swagg-request-with-rest-block
+  "@f" #'swagg-request-with-fetch
+  "@i" #'swagg-invalidate-cache
+  "@d" #'swagg-display-headers
+
   "b" '(:ignore t :which-key "BUFFER ENV")
   "bd" #'buffer-env-describe
   "bu" #'buffer-env-update

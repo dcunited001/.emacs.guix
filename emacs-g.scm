@@ -596,7 +596,8 @@
 
                   ;; ;; babel
                   ;; "emacs-restclient"
-                  "emacs-ob-restclient"))
+                  ;; "emacs-ob-restclient"
+		  ))
    guix-emacs-vhash))
 
 ;;*** Org: Straight

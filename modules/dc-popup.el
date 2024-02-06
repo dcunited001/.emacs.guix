@@ -122,6 +122,10 @@
   (require 'popper-echo)
   (popper-echo-mode))
 
+;; (setq popper-echo-transform-function #'popper-message-shorten)
+;; (setq popper-echo-dispatch-keys '(?0 ?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9)
+;;       popper-echo-dispatch-actions t)
+
 ;; (require 'dc-popper-popup-rules)
 (setup (:pkg popper)
   (:option popper-group-function #'popper-group-by-project

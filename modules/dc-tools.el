@@ -257,11 +257,18 @@
 
 ;;*** Restclient
 ;; TODO: configure restclient
-;; (setup (:pkg restclient))
-;; (setup (:pkg ob-restclient))
+(setup (:pkg restclient :straight t :type git :flavor melpa
+             :host github :repo "pashky/restclient.el")
+             :files '("restclient.el" "restclient-pkg.el" "restclient.jq"))
+(setup (:pkg ob-restclient :straight t :type git :flavor melpa
+             :host github :repo "alf/ob-restclient.el"))
 
 ;;*** OpenAPI
 ;; TODO configure openapi-yaml-mode
+
+;; Using straight:
+(setup (:pkg swagg :straight t :type git :flavor melpa
+             :host github :repo "isamert/swagg.el"))
 
 ;;*** GraphQL
 ;; TODO configure graphql & ob-graphql

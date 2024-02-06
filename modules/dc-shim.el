@@ -57,7 +57,19 @@
   ;; this is complicated because it changes the order
   (setq auto-mode-alist (a-dissoc auto-mode-alist "\\.ya?ml\\'")))
 
-;;** Report
+
+;;** Babel
+
+(defun dc/org-babel-do-load-languages ()
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   dc/org-babel-load-languages))
+
+(dc/org-babel-do-load-languages)
+
+;;* Report
+
+;; TODO: make this a notification, if DBUS is there
 (message "init.el finished loading")
 
 (provide 'dc-shim)
