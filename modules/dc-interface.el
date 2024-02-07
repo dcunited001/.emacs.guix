@@ -32,7 +32,7 @@
 
 ;; there are realgud/dap integrations for inspecting vars/etc with tooltip
 (setq-default tooltip-delay 0.7                 ;2.0
-      tooltip-short-delay 0.1)          ;0.5
+              tooltip-short-delay 0.1)          ;0.5
 
 ;; TODO: determine whether there are possible issues with pgtk/wayland?
 ;; (tooltip-mode -1)       ; Disable tooltips
@@ -58,8 +58,8 @@
         ("Asia/Kolkata" "Hyderabad")))
 
 (setq-default display-time-world-time-format "%a, %d %b %I:%M %p %Z"
-      display-time-format "%l:%M %p %b %d W%U"
-      display-time-load-average-threshold 0.0)
+              display-time-format "%l:%M %p %b %d W%U"
+              display-time-load-average-threshold 0.0)
 
 ;;*** Mouse
 
@@ -83,9 +83,9 @@
 
 ;;(setq-default large-file-warning-threshold nil)
 (setq-default vc-follow-symlinks t
-      ;; "Disable all version control. makes startup and opening files much
-      ;; faster except git and svn which I actually use" - jkitchin
-      vc-handled-backends '(Git SVN))
+              ;; "Disable all version control. makes startup and opening files much
+              ;; faster except git and svn which I actually use" - jkitchin
+              vc-handled-backends '(Git SVN))
 (setq-default ad-redefinition-action 'accept)
 
 ;;** Search
@@ -473,8 +473,8 @@
 ;;*** Font
 
 (setq-default emojify-display-style 'unicode
-      ;; default '(ascii unicode github)
-      emojify-emoji-styles '(unicode github))
+              ;; default '(ascii unicode github)
+              emojify-emoji-styles '(unicode github))
 
 ;; Set the font face based on platform
 
@@ -510,7 +510,7 @@
 ;;   - changing vertical-border does not req. reload
 ;; (window-divider-mode +1)
 (setq-default window-divider-default-right-width 3
-      window-divider-default-bottom-width 3)
+              window-divider-default-bottom-width 3)
 
 ;;*** Images
 
@@ -710,7 +710,7 @@ but can't be jumped to or from."
   ;; TODO: univ arg
   (let ((secs (or secs 60)))
     (setq-default dc/gc-events-count 0
-          dc/gc-notify-interval secs)
+                  dc/gc-notify-interval secs)
     (unless (memq #'dc/gc-events-inc post-gc-hook)
       (add-hook 'post-gc-hook #'dc/gc-events-inc)
       (run-with-timer secs t #'dc/gc-notify))))
@@ -816,11 +816,11 @@ but can't be jumped to or from."
 (setup (:pkg tabspaces :straight t)
   (tabspaces-mode 1)
   (setq-default tabspaces-default-tab "Main"
-        ;; NOTE: this remaps switch-to-buffer to the tabspaces command,
-        ;; but it's available through C-c TAB b
-        ;; tabspaces-use-filtered-buffers-as-default t
-        tabspaces-remove-to-default t
-        tabspaces-include-buffers '("*scratch*")))
+                ;; NOTE: this remaps switch-to-buffer to the tabspaces command,
+                ;; but it's available through C-c TAB b
+                ;; tabspaces-use-filtered-buffers-as-default t
+                tabspaces-remove-to-default t
+                tabspaces-include-buffers '("*scratch*")))
 
 
 ;;**** Tab Management
@@ -878,34 +878,34 @@ but can't be jumped to or from."
 
 ;;*** Vertico
 (setq-default vertico-multiform-categories
-      '((bookmark reverse grid)
-        (buffer reverse grid)           ; works for ido
-        (command reverse)
-        (consult-compile-error buffer)
-        ;; (consult-flymake-error)
-        (consult-grep buffer)
-        (consult-git-log-grep-result buffer)
-        (consult-info reverse)
-        ;; (consult-kmacro)
-        (consult-location buffer)
-        ;; (consult-imenu buffer)
-        (consult-man reverse grid (vertigo-cycle . t))
-        (consult-xref buffer)
-        (environment-variable reverse grid)
-        (expression reverse)                    ; for repeat-complex-command
-        (file reverse grid)
-        (imenu buffer)
-        (info-menu reverse grid)
-        (kill-ring reverse grid)
-        (minor-mode reverse)
-        (consult-org-heading reverse grid)
-        ;; (symbol)
-        ;; not sure what symbol-help category refers to
-        (symbol-help reverse grid (vertico-grid-annotate . 20))
-        (theme reverse grid)
-        (unicode-name grid reverse)
-        (yasnippet grid reverse (vertico-cycle . t))
-        (t)))
+              '((bookmark reverse grid)
+                (buffer reverse grid)           ; works for ido
+                (command reverse)
+                (consult-compile-error buffer)
+                ;; (consult-flymake-error)
+                (consult-grep buffer)
+                (consult-git-log-grep-result buffer)
+                (consult-info reverse)
+                ;; (consult-kmacro)
+                (consult-location buffer)
+                ;; (consult-imenu buffer)
+                (consult-man reverse grid (vertigo-cycle . t))
+                (consult-xref buffer)
+                (environment-variable reverse grid)
+                (expression reverse)                    ; for repeat-complex-command
+                (file reverse grid)
+                (imenu buffer)
+                (info-menu reverse grid)
+                (kill-ring reverse grid)
+                (minor-mode reverse)
+                (consult-org-heading reverse grid)
+                ;; (symbol)
+                ;; not sure what symbol-help category refers to
+                (symbol-help reverse grid (vertico-grid-annotate . 20))
+                (theme reverse grid)
+                (unicode-name grid reverse)
+                (yasnippet grid reverse (vertico-cycle . t))
+                (t)))
 
 ;; (consult-imenu buffer)
 
@@ -920,12 +920,12 @@ but can't be jumped to or from."
 ;; (xref-location grid) ;doesn't display grid
 
 (setq-default vertico-multiform-commands
-      '(("flyspell-correct-*" grid reverse (vertico-grid-annotate . 20))
-        (org-refile grid reverse indexed)
-        (consult-yank-pop indexed)
-        ;; (consult-lsp-diagnostics)
-        (consult-flycheck reverse)
-        (consult-flymake reverse)))
+              '(("flyspell-correct-*" grid reverse (vertico-grid-annotate . 20))
+                (org-refile grid reverse indexed)
+                (consult-yank-pop indexed)
+                ;; (consult-lsp-diagnostics)
+                (consult-flycheck reverse)
+                (consult-flymake reverse)))
 
 (setup (:pkg vertico)
   (:option vertico-cycle t
@@ -1067,10 +1067,10 @@ but can't be jumped to or from."
                                  orderless-regexp)))
 
   (setq-default completion-category-overrides
-        '((command (styles orderless+initialism))
-          (function (styles orderless+initialism))
-          (symbol (styles orderless+initialism))
-          (variable (styles orderless+initialism)))))
+                '((command (styles orderless+initialism))
+                  (function (styles orderless+initialism))
+                  (symbol (styles orderless+initialism))
+                  (variable (styles orderless+initialism)))))
 
 ;; TODO: enumerating possible keys for completion-category-overrides?
 ;; TODO: determine whether to add orderless-affix-dispatch-alist

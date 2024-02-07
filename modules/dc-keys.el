@@ -189,7 +189,7 @@
 ;; TODO: consider removing <f2> and <f12> remaps (removes hands from home row
 ;; and there's little value in configuring code ¶oint chars if my keybindings
 ;; are not console compatible)
-;; 
+;;
 ;; (keymap-global-set "<f2>" ctl-x-map)
 ;; (keymap-global-set "<f12>" dc/leader-map)
 
@@ -274,13 +274,28 @@
   "am" #'alert--log-enable-messaging
   "aM" #'alert--log-disable-messaging
 
+  "@" '(:ignore t :which-key "ACTIVITIES")
 
-  "@" '(:ignore t :which-key "SWAGG")
-  "@r" #'swagg-request
-  "@R" #'swagg-request-with-rest-block
-  "@f" #'swagg-request-with-fetch
-  "@i" #'swagg-invalidate-cache
-  "@d" #'swagg-display-headers
+  "@@" #'activities-list
+  "@M" #'activities-mode
+  "@K" #'activities-kill
+  "@D" #'activities-discard
+  "@N" #'activities-new
+  "@R" #'activities-resume
+  "@D" #'activities-revert
+  "@$" #'activities-save-all
+  "@Q" #'activities-suspend
+  "@B" #'activities-switch
+  "@T" #'activities-tabs-mode
+
+  "M-a" '(:ignore t :which-key "SWAGG")
+
+  "M-a r" #'swagg-request
+  "M-a R" #'swagg-request-with-rest-block
+  "M-a f" #'swagg-request-with-fetch
+  "M-a i" #'swagg-invalidate-cache
+  "M-a d" #'swagg-display-headers
+
 
   "b" '(:ignore t :which-key "BUFFER ENV")
   "bd" #'buffer-env-describe
@@ -697,11 +712,11 @@
 
  ;; TODO: remap these?
  "C-x b"   #'consult-buffer
- "C-x C-b" #'ibuffer
- "C-x M-b" #'bufler
+ "C-x M-b" #'ibuffer
+ "C-x C-b" #'bufler
 
- "C-x M-b"  #'bufler-switch-buffer
- "C-x B"    #'display-buffer
+ "C-x ·"  #'bufler-switch-buffer
+ "C-x B"   #'display-buffer
 
  ;; "C-x 4 b" #'consult-buffer-other-window ;; orig. switch-to-buffer-other-window
  ;; "C-x 5 b" #'consult-buffer-other-frame ;; orig. switch-to-buffer-other-frame
@@ -1604,7 +1619,7 @@
 
 ;;**** dired
 
-;;***** dired toggles 
+;;***** dired toggles
 
 (general-create-definer dired-toggle-def
   :prefix-map 'dc/dired-toggle-map
