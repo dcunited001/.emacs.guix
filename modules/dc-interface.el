@@ -722,7 +722,11 @@
   (autoload 'dired-omit-mode "dired-x")
   (:hook #'hl-line-mode)
   (:hook #'dc/hide-icons-in-guix))
+(setq-default
+ ;; dired-dwim-target 'dired-dwim-target-recent
 
+ ;; next window on frame
+ dired-dwim-target #'dc/dired-dwim)
 
 (setup recentf
   (:with-hook window-setup-hook
