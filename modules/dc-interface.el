@@ -126,7 +126,7 @@
                     (mapcar #'buffer-name)) ","))
             xref--history)))
 
-;;*** Grep 
+;;*** Grep
 
 ;; NOTE: the grep-files-aliases seems to work with rgrep, but not
 ;; project-find-regepx
@@ -622,6 +622,20 @@
 (setup (:pkg activities :straight t :type git :flavor melpa
              :host github :repo "alphapapa/activities.el"))
 
+;; is it possible to sync these to other computers? activities get saved to:
+;;
+;; + serialization: .emacs.g/var/persist/activities-activities
+;; + bookmark: .emacs.g/var/bookmarks.el
+
+;; there are three structs:
+;;
+;; (cl-defstruct activities-buffer (bookmark nil) (filename nil) (name nil) (local-variables nil) (etc nil))
+;; (cl-defstruct activities-activity name default last etc)
+;; (cl-defstruct activities-activity-state (window-state nil) (etc nil))
+;;
+;; activities--bufferize-window-state and other functions provide examples of
+;; cl-labels to traverse trees (i think?)
+
 ;;** UI
 
 (defun dc/forcing-function (msg)
@@ -639,17 +653,22 @@
 ;; ("/ssh:myhost:/data/myproj/worktree/site/_data/_data"
 ;;  "/ssh:myhost:/data/myproj/worktree/site/_data/site<www2>"
 ;;  "/ssh:myhost:/data/myproj/worktree/site/_data/www2</ssh:myhost:>")
-;; 
+;;
 ;; at times, it returns nil when it shouldnt (i think because everything gets
 ;; filtered out) and i mean the last thing i want to do is make this behavior
 ;; more unpredictable than it was
+;;
+;;
 
 ;; also, (dear future self, ...) please note that consult/vertico functionality
 ;; makes this much simpler.
-;; 
+;;
 ;; + C-r C-s to search history
 ;; + M-n C-p
 ;; + C-n C-p
+;;
+;; C-r C-s would, but copies the current minibuffer value to the new History
+;; minibuffer. Apparently I can (kill-whole-line) with C-S-backspace
 ;;
 ;; The file system structure on my system is fairly simple to type even for 5-6
 ;; subdirectories ... but it's still a PITA to clear it out (and cognitive
@@ -658,7 +677,10 @@
 
 (defun dc/dired-dwim ()
   ;; list open dired buffers in project
-  (if-let* ((pr (project-current t)))
+  ;;
+  ;; if (project-current t), then outside of a project it loops when you select
+  ;; "..." choose a dir
+  (if-let* ((pr (project-current)))
       (->>
        (project-buffers pr)
        (seq-filter
@@ -684,7 +706,7 @@
            dired-omit-verbose nil
            dired-hide-details-hide-symlink-targets nil
            delete-by-moving-to-trash nil
-           
+
            ;; dired-dwim-target 'dired-dwim-target-recent
            dired-dwim-target #'dc/dired-dwim ;; next window on frame
 
@@ -908,7 +930,7 @@ but can't be jumped to or from."
 ;; cl-defgeneric project-
 ;; and cl-defmethod project*
 (defun dc/tab-bar-tab-name-project ()
-  
+
   )
 
 (setq tab-bar-close-button-show nil
