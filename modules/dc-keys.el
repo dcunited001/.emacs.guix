@@ -277,16 +277,16 @@
   "@" '(:ignore t :which-key "ACTIVITIES")
 
   "@@" #'activities-list
-  "@M" #'activities-mode
-  "@K" #'activities-kill
-  "@D" #'activities-discard
-  "@N" #'activities-new
-  "@R" #'activities-resume
-  "@D" #'activities-revert
+  "@m" #'activities-mode
+  "@k" #'activities-kill
+  "@d" #'activities-discard
+  "@n" #'activities-new
+  "@r" #'activities-resume
+  "@d" #'activities-revert
   "@$" #'activities-save-all
-  "@Q" #'activities-suspend
-  "@B" #'activities-switch
-  "@T" #'activities-tabs-mode
+  "@q" #'activities-suspend
+  "@b" #'activities-switch
+  "@t" #'activities-tabs-mode
 
   "M-a" '(:ignore t :which-key "SWAGG")
 
@@ -713,9 +713,9 @@
  ;; TODO: remap these?
  "C-x b"   #'consult-buffer
  "C-x M-b" #'ibuffer
- "C-x C-b" #'bufler
+ "C-x ·" #'bufler                       ; C-x altgr-b
 
- "C-x ·"  #'bufler-switch-buffer
+ "C-x C-b" #'bufler-switch-buffer
  "C-x B"   #'display-buffer
 
  ;; "C-x 4 b" #'consult-buffer-other-window ;; orig. switch-to-buffer-other-window

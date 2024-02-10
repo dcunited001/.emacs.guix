@@ -28,6 +28,25 @@
 
 (setup notifications)
 
+;; TODO: maybe use alerts instead
+(defun dc/reminder-straight-fetch-on-action (id key)
+  (when (and (equal key "update")
+             (y-or-n-p "Update `straight.el'? "))
+    (progn (straight-fetch-all)
+           (notifications-notify
+            :title "Emacs: straight.el"
+            :body "Fetch complete."))))
+
+(defun dc/reminder-straight-fetch ()
+  (notifications-notify
+   :title "Emacs: straight.el"
+   :body "Repositories last updated %s. Update now?"
+   :actions '("update" "Update")
+   :on-action #'dc/reminder-straight-fetch-on-action))
+
+(when DBUS_FOUND
+    (add-hook 'emacs-startup-hook #'dc/reminder-straight-fetch))
+
 ;;** Alert.el
 
 ;; main lib: https://github.com/jwiegley/alert

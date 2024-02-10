@@ -24,6 +24,9 @@
 
 ;;** Docs
 
+;;*** Dash
+
+
 ;;*** TLDR
 (setup (:pkg tldr))
 

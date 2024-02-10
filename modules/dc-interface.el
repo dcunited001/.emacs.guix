@@ -109,6 +109,23 @@
        ((or (executable-find "ripgrep") (executable-find "rg")) 'ripgrep)
        (t 'grep)))
 
+;; TODO find a way to close the stack buffers, but this notes the files i visited
+(defun dc/pp-xref-stack (&optional arg)
+  (interactive "p")
+
+  ;; FIXME: (statement returns correctly when outside of let blockdoesn't return anything ... no time)
+  (let ((xref--history
+         (if (> 1 arg)
+             xref--history
+           (list (car xref--history)))))
+    (mapcar (lambda (xr)
+              (string-join
+               (->> xr
+                    ;; (identity)
+                    (mapcar #'marker-buffer)
+                    (mapcar #'buffer-name)) ","))
+            xref--history)))
+
 ;;*** Grep 
 
 ;; NOTE: the grep-files-aliases seems to work with rgrep, but not
@@ -168,10 +185,26 @@
 ;; NOTE: bufler-defauto-group: conditions defining "auto" groups
 ;; https://github.com/alphapapa/bufler.el/blob/master/bufler.el#L1100-L1170
 
+;; (setq dc/bufler-special
+;;       (quote (group-and "*Special*"
+;;                         (lambda (buffer)
+;;                           (unless (or (funcall (mode-match "Magit" (rx bos "magit-status"))
+;;                                                buffer)
+;;                                       (funcall (mode-match "Dired" (rx bos "dired"))
+;;                                                buffer)
+;;                                       (funcall (auto-file) buffer))
+;;                             "*Special*"))))
+
+;;       dc/bufler-special-special)
 
 ;;***** Bufler defgroups
 
 ;; TODO: refactor the memoization of dc/bufler-groups-.*
+;;
+;; + this also seems to lock the bufler-groups in place ... until i (setf
+;;   by-reference) .... hmmm
+;;
+;; (setf bufler-groups dc/bufler-groups-defaults)
 
 (with-eval-after-load 'bufler
 
@@ -576,7 +609,7 @@
 
 (setup (:pkg highlight-symbol)
   (:option highlight-symbol-idle-delay 0.5)
-  (:hook-into fundamental-mode))
+  (:hook-into prog-mode))
 
 ;;** Bookmarks
 
@@ -598,6 +631,65 @@
 ;; TODO: make interactive (apply-partially #'dc/forcing-function "use M-g instead of C-x pf for #'consult-ripgrep")
 
 ;;*** Dired
+
+;; this works, but has some issues & could be cleaned up
+;;
+;; - tramp buffers look like this
+;;
+;; ("/ssh:myhost:/data/myproj/worktree/site/_data/_data"
+;;  "/ssh:myhost:/data/myproj/worktree/site/_data/site<www2>"
+;;  "/ssh:myhost:/data/myproj/worktree/site/_data/www2</ssh:myhost:>")
+;; 
+;; at times, it returns nil when it shouldnt (i think because everything gets
+;; filtered out) and i mean the last thing i want to do is make this behavior
+;; more unpredictable than it was
+
+(defun dc/dired-dwim ()
+  ;; list open dired buffers in project
+  (if-let* ((pr (project-current t)))
+      (->>
+       (project-buffers pr)
+       (seq-filter
+        (lambda (buffer)
+          (let ((name (buffer-name buffer))
+                (file (buffer-file-name buffer)))
+            (and (or (not (string= (substring name 0 1) " "))
+                     file)
+                 (not (eq buffer (current-buffer)))
+                 (or file (not Buffer-menu-files-only))))))
+       ;; (mapcar #'buffer-name)
+       (seq-filter
+        (lambda (b)
+          (eq 'dired-mode (with-current-buffer b major-mode))))
+       (mapcar
+        (lambda (b)
+          (let ((-buffer-file-name (with-current-buffer b default-directory)))
+            (expand-file-name (buffer-name b))))))
+    (dired-dwim-target-next)))
+
+(setup dired
+  (:option dired-listing-switches "-agho --group-directories-first"
+           dired-omit-verbose nil
+           dired-hide-details-hide-symlink-targets nil
+           delete-by-moving-to-trash nil
+           
+           ;; dired-dwim-target 'dired-dwim-target-recent
+           dired-dwim-target #'dc/dired-dwim ;; next window on frame
+
+           ;; NOTE: apparently defaults to: "\\`[.]?#\\|\\`[.][.]?\\'" ...
+           dired-omit-files (string-join
+                             '("^.DS_Store\\'"
+                               "^.project\\(?:ile\\)?\\'"
+                               "^.\\(svn\\)\\'"
+                               "^.ccls-cache\\'"
+                               "\\(?:\\.js\\)?\\.meta\\'"
+                               "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
+                             "\\|"))
+  (autoload 'dired-omit-mode "dired-x")
+  (:hook #'hl-line-mode)
+  (:hook #'dc/hide-icons-in-guix))
+
+
 (setup recentf
   (:with-hook window-setup-hook
     (:hook recentf-mode))
@@ -633,7 +725,14 @@
 ;; problem of finding people to teach someone harder; i should be the change i
 ;; wish to see in the world.)
 
-;; anyways, this is a huge problem if it doesn't work for you.
+;; anyways, this is a huge  problem if it doesn't work for you.
+
+;;**** wdired-mode
+
+;; For simple renames in directory (avoiding the suggestions)
+
+;; Use M-x wdired-mode: C-x C-q and C-c C-c to save
+
 
 ;;*** Window Management
 

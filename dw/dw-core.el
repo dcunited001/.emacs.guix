@@ -111,26 +111,6 @@
   (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
     (all-the-icons-dired-mode 1)))
 
-(setup dired
-  (:option dired-listing-switches "-agho --group-directories-first"
-           dired-omit-verbose nil
-           dired-hide-details-hide-symlink-targets nil
-           delete-by-moving-to-trash nil
-           dired-dwim-target 'dired-dwim-target-recent
-
-           ;; NOTE: apparently defaults to: "\\`[.]?#\\|\\`[.][.]?\\'" ...
-           dired-omit-files (string-join
-                             '("^.DS_Store\\'"
-                               "^.project\\(?:ile\\)?\\'"
-                               "^.\\(svn\\)\\'"
-                               "^.ccls-cache\\'"
-                               "\\(?:\\.js\\)?\\.meta\\'"
-                               "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
-                             "\\|"))
-  (autoload 'dired-omit-mode "dired-x")
-  (:hook #'hl-line-mode)
-  (:hook #'dc/hide-icons-in-guix))
-
 ;; https://www.gnu.org/software/emacs/manual/html_node/gnus/Other-modes.html#Dired
 ;; (:hook #'turn-on-gnus-dired-mode)
 
