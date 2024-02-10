@@ -117,10 +117,9 @@ be explicitly required after loading"
              :host github :repo "jkitchin/org-ref" :branch "master"
              :files (:defaults "doi-utils.el" "nist-webook.el" "org-ref-arxiv.el"
                                "org-ref-bibtex.el" "org-ref-isbn.el" "org-ref-pubmed.el"
-                               "org-ref-scifinder.el" "org-ref-scopus.el"))
-  (:with-hook emacs-startup-hook
-    ;; ok now they're loading
-    (:hook dc/reload-org-ref-hydras)))
+                               "org-ref-scifinder.el" "org-ref-scopus.el")))
+
+(add-hook 'emacs-startup-hook #'dc/reload-org-ref-hydras t)
 
 ;; https://github.com/emacs-citar/citar 
 (setup (:pkg citar :straight t :type git :flavor git :inherit nil
