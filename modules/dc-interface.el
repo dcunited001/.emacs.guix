@@ -644,6 +644,18 @@
 ;; filtered out) and i mean the last thing i want to do is make this behavior
 ;; more unpredictable than it was
 
+;; also, (dear future self, ...) please note that consult/vertico functionality
+;; makes this much simpler.
+;; 
+;; + C-r C-s to search history
+;; + M-n C-p
+;; + C-n C-p
+;;
+;; The file system structure on my system is fairly simple to type even for 5-6
+;; subdirectories ... but it's still a PITA to clear it out (and cognitive
+;; overload to jump tracks to thinking about my file structure when i just want
+;; to diff/rename files)
+
 (defun dc/dired-dwim ()
   ;; list open dired buffers in project
   (if-let* ((pr (project-current t)))
