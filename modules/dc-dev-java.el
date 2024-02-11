@@ -20,18 +20,9 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(setup (:pkg scala-mode :straight t :type git :flavor melpa
-             :host github :repo "hvesalai/emacs-scala-mode"))
+(setup (:pkg groovy-mode :straight t :type git :flavor melpa
+             :host github :repo "Groovy-Emacs-Modes/groovy-emacs-modes"
+             :files ("*groovy*.el" "groovy-mode-pkg.el"))
+  (:file-match "\\.gradle\\'"))
 
-;; sbt-mode is for comint buffers, .sbt files should still use scala
-(setup (:pkg sbt-mode :straight t :type git :flavor melpa
-             :host github :repo "hvesalai/emacs-sbt-mode"
-             :fork (:host github :protocol ssh :repo "dcunited001/emacs-sbt-mode"))
-  ;; -Djline.terminal=none is default
-  ;; -Dsbt.supershell=false is suggested
-  (:option sbt:program-options '("-Djline.terminal=none"
-                                 "-Dsbt.supershell=false")))
-
-;; TODO: also suggested is a fix for the minibuffer
-
-(provide 'dc-dev-scala)
+(provide 'dc-dev-java)
