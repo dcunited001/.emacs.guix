@@ -193,7 +193,9 @@ compilation was initiated from compile-mode."
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
 (setup treesit
   ;; something is automatically setting up major-mode-remap-alist
-  (:option treesit-language-source-alist
+  (:option treesit-extra-load-path
+           (list (expand-file-name ".local/lib/tree-sitter" (getenv "HOME")))
+           treesit-language-source-alist
            '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml")))))
 
 ;; (qml . ("https://github.com/yuja/tree-sitter-qmljs"))
