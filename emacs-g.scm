@@ -60,23 +60,9 @@
    guix-emacs-vhash))
 
 ;;** Fonts
-;; some fontconfig may be necessary.
-;; if it's configured on the base system, then installing there will probobly work
-(set! guix-emacs-vhash
-  (vhash-consq
-   'font
-   (list->vlist '("font-juliamono"
-                  "font-jetbrains-mono"
-                  ;; "font-sarasa-gothic" ;iosevka-based
-                  "font-iosevka"
-                  "font-iosevka-aile"
-                  "font-iosevka-slab"
-                  "font-iosevka-term"
-                  "font-iosevka-term-slab"
-                  "font-iosevka-etoile"
-                  "font-iosevka-curly"
-                  "font-iosevka-curly-slab"))
-   guix-emacs-vhash))
+
+;; some fontconfig may be necessary.  if it's configured on the base system,
+;; then installing there will probobly work hash
 
 ;;* Emacs
 

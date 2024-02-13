@@ -555,7 +555,9 @@
 
 (setup (:pkg editorconfig)
   (:option editorconfig-trim-whitespaces-mode
-           'ws-butler-mode))
+           'ws-butler-mode)
+  (:with-hook emacs-startup-hook
+    (:hook editorconfig-mode)))
 
 ;;*** Indentation
 
