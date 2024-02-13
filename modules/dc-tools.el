@@ -261,8 +261,8 @@
 ;;*** Restclient
 ;; TODO: configure restclient
 (setup (:pkg restclient :straight t :type git :flavor melpa
-             :host github :repo "pashky/restclient.el")
-             :files '("restclient.el" "restclient-pkg.el" "restclient.jq"))
+             :host github :repo "pashky/restclient.el"
+             :files ("restclient.el" "restclient-pkg.el" "restclient.jq")))
 (setup (:pkg ob-restclient :straight t :type git :flavor melpa
              :host github :repo "alf/ob-restclient.el"))
 

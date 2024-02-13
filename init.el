@@ -36,7 +36,7 @@
 ;;*** User
 
 (setq-default user-full-name "David Conner"
-      user-mail-address (or (getenv "EMAIL") "noreply@te.xel.io"))
+              user-mail-address (or (getenv "EMAIL") "noreply@te.xel.io"))
 
 ;;*** Emacs Config
 
@@ -125,37 +125,37 @@ Guix channel.")
 ;; directory. this happens in a guix checkout, but not for the channels.
 (defun dc/guix-reset-paths ()
   (setq-default guix-load-path (list (expand-file-name "share/guile/site/3.0"
-                                               guix-pulled-profile))
-        guix-load-compiled-path (list (expand-file-name "lib/guile/3.0/site-ccache"
-                                                        guix-pulled-profile))))
+                                                       guix-pulled-profile))
+                guix-load-compiled-path (list (expand-file-name "lib/guile/3.0/site-ccache"
+                                                                guix-pulled-profile))))
 
 ;; this points to the profile for `guix shell`
 (setq-default dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
-                               (dc/guix-profile-get-default-path))
-      dc/emacs-sound-theme-path (file-name-as-directory
-                                 (expand-file-name
-                                  "share/sounds/freedesktop/stereo"
-                                  dc/guix-profile-path)))
+                                       (dc/guix-profile-get-default-path))
+              dc/emacs-sound-theme-path (file-name-as-directory
+                                         (expand-file-name
+                                          "share/sounds/freedesktop/stereo"
+                                          dc/guix-profile-path)))
 
 ;;*** Org Paths
 
 (setq-default org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
-      org-roam-file-extensions '("org")
-      org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
-      org-roam-directory (thread-first org-roam-directory
-                                       (expand-file-name org-directory)
-                                       (file-truename)
-                                       (file-name-as-directory))
+              org-roam-file-extensions '("org")
+              org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
+              org-roam-directory (thread-first org-roam-directory
+                                               (expand-file-name org-directory)
+                                               (file-truename)
+                                               (file-name-as-directory))
 
 
-      ;; gets set by no-littering anyways
-      ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
+              ;; gets set by no-littering anyways
+              ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
 
-      dc/org-roam-n-dailies 5
-      dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
-                                                   dc/emacs-d)
-      dc/org-roam-dailies-template (expand-file-name "daily-default.org"
-                                                     dc/org-roam-templates-path))
+              dc/org-roam-n-dailies 5
+              dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
+                                                           dc/emacs-d)
+              dc/org-roam-dailies-template (expand-file-name "daily-default.org"
+                                                             dc/org-roam-templates-path))
 
 ;;*** Org Babel Load Languages
 
@@ -171,7 +171,7 @@ Guix channel.")
         (shell . t)
         (python . t)
         (jq . t)
-	(restclient . t)))
+	      (restclient . t)))
 
 ;;**** Org Ref & Bibtex
 

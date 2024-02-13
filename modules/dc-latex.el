@@ -79,11 +79,11 @@
   ;; LaTeX-fill-break-at-separators nil
   ;; LaTeX-item-indent 0
   (setq-default LaTeX-section-hook
-        '(LaTeX-section-heading
-          LaTeX-section-title
-          LaTeX-section-toc
-          LaTeX-section-section
-          LaTeX-section-label)))
+                '(LaTeX-section-heading
+                  LaTeX-section-title
+                  LaTeX-section-toc
+                  LaTeX-section-section
+                  LaTeX-section-label)))
 
 (defun dc/setup-engrave-faces ()
 

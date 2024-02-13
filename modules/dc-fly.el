@@ -69,17 +69,17 @@
   "Don't taze me bro."
   (interactive)
   (setq-default flycheck-highlighting-style
-        (if flycheck-highlighting-style
-            nil
-          dc/flycheck-highlighting-style-default))
+                (if flycheck-highlighting-style
+                    nil
+                  dc/flycheck-highlighting-style-default))
   (and flycheck-mode
        flycheck-highlighting-mode
        (flycheck-refresh-fringes-and-margins)))
 
 (with-eval-after-load 'flycheck
   (setq-default dc/flycheck-highlighting-style-default flycheck-highlighting-style
-        dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
-        dc/flycheck-warnings-have-underlines nil))
+                dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
+                dc/flycheck-warnings-have-underlines nil))
 
 ;; see .emacs.doom/modules/checkers/javascript/config.el
 ;; (flycheck-add-mode 'javascript-eslint 'web-mode)

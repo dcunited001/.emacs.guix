@@ -54,7 +54,7 @@
 
 ;; TODO: convert to string
 (setq-default dc/Info-manual-default-categories
-      '(emacs guile guix shell disk boot org magit emacs-ui emacs-completion make))
+              '(emacs guile guix shell disk boot org magit emacs-ui emacs-completion make))
 (defun dc/Info-manuals (&optional categories)
   (let ((categories (or categories dc/Info-manual-default-categories)))
     (thread-last categories

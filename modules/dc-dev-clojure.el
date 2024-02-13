@@ -37,10 +37,10 @@
 (require 'a)
 
 (setq-default dc/major-mode-clojure
-      '(("\\(?:build\\|profile\\)\\.boot\\'" . clojure-mode)
-        ("\\.cljs\\'" . clojurescript-mode)
-        ("\\.cljc\\'" . clojurec-mode)
-        ("\\.\\(clj\\|cljd\\|dtm\\|edn\\)\\'" . clojure-mode)))
+              '(("\\(?:build\\|profile\\)\\.boot\\'" . clojure-mode)
+                ("\\.cljs\\'" . clojurescript-mode)
+                ("\\.cljc\\'" . clojurec-mode)
+                ("\\.\\(clj\\|cljd\\|dtm\\|edn\\)\\'" . clojure-mode)))
 
 (defun dc/toggle-clojure-ts-remaps ()
   "Toggle clojurelike modes from handling being handled by tree-sitter."
