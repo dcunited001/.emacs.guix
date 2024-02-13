@@ -209,7 +209,8 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'editor
-   (list->vlist '("emacs-origami-el"
+   (list->vlist '("emacs-editorconfig"
+                  "emacs-origami-el"
                   "emacs-drag-stuff"
                   "emacs-tmr"
 
@@ -240,8 +241,7 @@
                   "emacs-yasnippet-snippets"
                   ;; "emacs-emmet-mode"
 
-                  "emacs-visual-fill-column"
-                  ))
+                  "emacs-visual-fill-column"))
    guix-emacs-vhash))
 
 ;;*** Editor: Straight

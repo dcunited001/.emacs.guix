@@ -553,6 +553,10 @@
 
 ;;** Editor
 
+(setup (:pkg editorconfig)
+  (:option editorconfig-trim-whitespaces-mode
+           'ws-butler-mode))
+
 ;;*** Indentation
 
 (setq-default tab-width 2
