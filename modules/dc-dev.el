@@ -489,9 +489,9 @@ when a new treesitter gramar has been added to the Guix profile."
   ;; web formatters
   (dolist (webml '(html-mode html-ts-mode mhtml-mode web-mode))
     ;; aphelia: prettier instead of prettier-html, so it relies on .prettierrc
-    ;; (remove-from-list 'apheleia-mode-alist `(,webml . prettier-html))
+    ;; (setq apheleia-mode-alist (delete `(,webml . prettier-html) apheleia-mode-alist))
     (add-to-list 'apheleia-mode-alist `(,webml . prettier)))
-
+  
   ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
   (add-to-list 'minions-prominent-modes 'apheleia-mode)
   (apheleia-global-mode +1))

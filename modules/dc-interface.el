@@ -620,9 +620,17 @@
 ;;*** Activities
 
 (setup (:pkg activities :straight t :type git :flavor melpa
-             :host github :repo "alphapapa/activities.el"))
+             :host github :repo "alphapapa/activities.el")
+  (:with-hook emacs-startup-hook
+    (:hook activities-tabs-mode)))
 
-;; is it possible to sync these to other computers? activities get saved to:
+;; is it possible to sync these to other computers?
+;;
+;; maybe ... by copying persist/activities-activites, it seems to load
+;; activities on the same emacs profile deployed to multiple computers, if all
+;; file paths are identical. no idea how this could play out
+;; 
+;; activities get saved to:
 ;;
 ;; + serialization: .emacs.g/var/persist/activities-activities
 ;; + bookmark: .emacs.g/var/bookmarks.el

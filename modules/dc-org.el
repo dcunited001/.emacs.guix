@@ -290,7 +290,7 @@
 
     (and (file-exists-p dc/emacs-sound-theme-path)
          (setq-default org-clock-sound (expand-file-name "complete.oga"
-                                                 dc/emacs-sound-theme-path)))
+                                                         dc/emacs-sound-theme-path)))
 
     (setq-default
      ;; Different colors for different priority levels
@@ -828,7 +828,11 @@ capture was not aborted."
 (defun dc/org-init-formatting-h ()
   (setup (:pkg org-make-toc)
     (:option org-toc-default-depth 1)
-    (:hook-into org-mode)))
+    ;; seems to be globally set in before-save-hook for some reason, which is
+    ;; causing issues with aphelia formatting
+    ;;
+    ;; (:hook-into org-mode)
+    ))
 
 (defun dc/org-init-plot-h ()
   ;; TODO configure/style org plot
@@ -1096,36 +1100,36 @@ capture was not aborted."
   ;;*** Options
 
   (setq-default org-tag-persistent-alist
-        '((:startgroup . nil)
-          ("VIS" . ?v)
-          ("ISH" . ?!)
-          ("GO" . ?G)
-          ("FIN" . ?$) (:newline . nil)
-          (:endgroup . nil) (:startgroup . nil)
-          ("AUTO" . ?a)
-          ("NET" . ?n)
-          ("FS" . ?f)
-          ("DO" . ?d)
-          ("AU" . ?@)
-          ("ID" . ?#)
-          ("DF" . ?.) (:newline . nil)
-          (:endgroup . nil) (:startgroup . nil)
-          ("CODEX" . ?%)
-          ("3D" . ?3)
-          ("CAD" . ?C)
-          ("WS" . ?w)
-          ("ART" . ?A)
-          ("MUS" . ?M)
-          ("LEARN" . ?L)
-          ("EDU" . ?E)
-          ("HOME" . ?H)
-          ("FAB" . ?F) (:newline . nil)
-          (:endgroup . nil) (:startgroup . nil)
-          ("MEET" . ?M)
-          ("MSG" . ?m)
-          ("EV" . ?V)
-          ("CON" . ?c) (:newline . nil)
-          (:endgroup . nil))))
+                '((:startgroup . nil)
+                  ("VIS" . ?v)
+                  ("ISH" . ?!)
+                  ("GO" . ?G)
+                  ("FIN" . ?$) (:newline . nil)
+                  (:endgroup . nil) (:startgroup . nil)
+                  ("AUTO" . ?a)
+                  ("NET" . ?n)
+                  ("FS" . ?f)
+                  ("DO" . ?d)
+                  ("AU" . ?@)
+                  ("ID" . ?#)
+                  ("DF" . ?.) (:newline . nil)
+                  (:endgroup . nil) (:startgroup . nil)
+                  ("CODEX" . ?%)
+                  ("3D" . ?3)
+                  ("CAD" . ?C)
+                  ("WS" . ?w)
+                  ("ART" . ?A)
+                  ("MUS" . ?M)
+                  ("LEARN" . ?L)
+                  ("EDU" . ?E)
+                  ("HOME" . ?H)
+                  ("FAB" . ?F) (:newline . nil)
+                  (:endgroup . nil) (:startgroup . nil)
+                  ("MEET" . ?M)
+                  ("MSG" . ?m)
+                  ("EV" . ?V)
+                  ("CON" . ?c) (:newline . nil)
+                  (:endgroup . nil))))
 
 (provide 'dc-org)
 
