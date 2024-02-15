@@ -81,6 +81,15 @@
   (add-hook 'markdown-mode-hook #'visual-line-mode)
   (add-hook 'markdown-mode-hook (lambda () (setq-local truncate-lines nil))))
 
+;;** Astro 
+
+;; requires treesitter grammars: astro-ts, css, html and typescript-tsx
+;;
+;; astro-ts isn't provided by guix and is specified in dc-dev
+
+(setup (:pkg astro-ts-mode :straight t :type git :flavor melpa
+             :host github :repo "Sorixelle/astro-ts-mode"))
+
 ;;** Markup
 
 ;; older package

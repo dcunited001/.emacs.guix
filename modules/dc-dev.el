@@ -196,7 +196,8 @@ compilation was initiated from compile-mode."
   (:option treesit-extra-load-path
            (list (expand-file-name ".local/lib/tree-sitter" (getenv "HOME")))
            treesit-language-source-alist
-           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml")))))
+           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
+             (astro . ("https://github.com/virchau13/tree-sitter-astro")))))
 
 ;; (qml . ("https://github.com/yuja/tree-sitter-qmljs"))
 
