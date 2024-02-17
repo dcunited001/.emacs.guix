@@ -342,6 +342,7 @@
   "O" #'aw-show-dispatch-help
 
   ;; "p"  '(:ignore t :wk "POPUP")
+  "p" #'proced
   "P" #'pomm
 
   ;; "#" '(:ignore t :which-key "TRAMP")
@@ -1803,6 +1804,13 @@
 ;;        :desc "Save session"                 "s" #'doom/save-session
 ;;        :desc "Load session"                 "l" #'doom/load-session
 ;;        :desc "Load last autosaved session"  "L" #'doom/quickload-session
+
+;;** Tools
+
+(general-define-key
+ :keymaps 'proced-mode-map
+ ;; can also sort by clicking the header
+ "sh" #'proced-sort-header)
 
 ;;** Lang
 

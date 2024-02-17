@@ -86,6 +86,9 @@
 ;; TODO: interactive: magit-tbdiff-with-base
 ;; TODO: interactive: magit-tbdiff-save
 
+;; (with-eval-after-load 'magit
+;;  (require 'dc-vcs-magit))
+
 ;;*** Ghub
 
 (defun dc/ensure-ghub-graphql ()
