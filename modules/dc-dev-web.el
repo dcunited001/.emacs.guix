@@ -88,7 +88,8 @@
 ;; astro-ts isn't provided by guix and is specified in dc-dev
 
 (setup (:pkg astro-ts-mode :straight t :type git :flavor melpa
-             :host github :repo "Sorixelle/astro-ts-mode"))
+             :host github :repo "Sorixelle/astro-ts-mode")
+  (:file-match "\\.astro?\\'"))
 
 ;;** Markup
 
