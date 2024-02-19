@@ -283,7 +283,28 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; (setq-default eldoc-documentation-strategy
 ;;       'eldoc-documentation-compose-eagerly)
 
-(setup (:pkg eglot)
+(setq dc/eglot-events-buffer-configs
+      `((default . (:size 2000000 :format full))
+        (debug . (:size ,(expt 2 (+ 2 4 20)) :format json))))
+(setq-default eglot-events-buffer-config
+              (alist-get 'debug dc/eglot-events-buffer-configs))
+
+(defun dc/toggle-eglot-events-buffer-size (&optional arg)
+  "Toggle `:size' and `:format' for `eglot-events-buffer'."
+  (interactive "p")
+  ;; TODO: what to do with arg?
+
+  ;; local? default?
+  (let ((eglot-defaults (alist-get 'default dc/eglot-events-buffer-configs))
+        (eglot-debug (alist-get 'debug dc/eglot-events-buffer-configs)))
+    (setq-local eglot-events-buffer-config
+                (if (eq eglot-events-buffer-config eglot-defaults)
+                    eglot-debug
+                  eglot-defaults))))
+
+(setup (:pkg eglot :straight t :type git
+             :host github :repo "emacs-straight/eglot"
+             :files ("*" (:exclude ".git")))
   (:option eglot-autoshutdown t
            eglot-sync-connect 1
            eglot-connect-timeout 15
@@ -295,12 +316,12 @@ when a new treesitter gramar has been added to the Guix profile."
            ;; eglot-stay-out-of '(flymake) ;; it's a per-project setting
 
            eglot-extend-to-xref t       ;TODO: assess eglot-extend-to-xref
-           eglot-menu-string "Æ"
+           ;; eglot-menu-string "Æ"
 
            ;; see note about popups/point in
            ;; .emacs.doom/modules/tools/lsp/+eglot.el
            ;; eglot-auto-display-help-buffer nil
-           eglot-confirm-server-initiated-edits nil)
+           eglot-confirm-server-initiated-edits 'confirm)
 
   (:with-hook eglot-managed-mode-hook
     (:hook #'dc/eglot-setup-buffer))
@@ -333,7 +354,17 @@ when a new treesitter gramar has been added to the Guix profile."
   (setup (:pkg consult-eglot :straight t :type git :flavor melpa
                :host github :repo "mohkale/consult-eglot")))
 
-;;**** eglot configs
+;;**** eglot automation
+
+;; a dir-local class may be more appropriate
+
+(defun dc/emit-dir-local-hook (hook fn)
+  "Configure a hook stored in dir-locals."
+  ;; TODO test to see if add-dir-local-variable does this
+  (message "Need to read in and re-emit the dir-locals to add evals"))
+
+
+;;**** eglot configs via lsp-mode
 
 (defvar dc/lsp-url-pattern "https://raw.githubusercontent.com/emacs-lsp/lsp-mode/master/clients/lsp-%s.el")
 

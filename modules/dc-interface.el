@@ -487,16 +487,16 @@
                buf-move-down
                buf-move-left
                buf-move-right
-	             xref-find-apropos
-	             xref-find-definitions
-	             xref-find-definitions-other-window
-	             xref-find-definitions-other-frame
-	             xref-find-definitions-at-mouse
-	             xref-find-references
-	             xref-go-back
-	             xref-go-forward
-	             ;; TODO eglot
-	             ;; TODO info
+               xref-find-apropos
+               xref-find-definitions
+               xref-find-definitions-other-window
+               xref-find-definitions-other-frame
+               xref-find-definitions-at-mouse
+               xref-find-references
+               xref-go-back
+               xref-go-forward
+               ;; TODO eglot
+               ;; TODO info
                popper-cycle
                popper-toggle-latest
                popper-toggle-type))
@@ -534,6 +534,93 @@
                       :height (dw/system-settings-get 'emacs/variable-face-size)))
 
 (add-hook 'emacs-startup-hook #'dc/reset-fonts)
+
+;;**** Icons
+
+
+;; from https://github.com/domtronn/all-the-icons.el/issues/120
+(defun dc/font-installed-p (font-name)
+  "Check if font with FONT-NAME is available. Returns a font-entity."
+  ;; call font-face-attributes on a font-entity
+  (find-font (font-spec :name font-name)))
+
+(defun dc/load-all-the-icons ()
+  ;; TODO: handle this separately and refactor
+  ;; (-all-the-icons (dc/font-installed-p "all-the-icons"))
+
+  (setq dc/nerd-font-entity
+        (let* ((iosevka-nerd (dc/font-installed-p "Iosevka Nerd Font"))
+               (firacode-nerd (dc/font-installed-p "FiraCode Nerd Font")))
+          (or firacode-nerd iosevka-nerd))
+        dc/nerd-font (when dc/nerd-font-entity
+                       (font-face-attributes dc/nerd-font-entity)))
+
+  ;; (unless (dc/font-installed-p "all-the-icons")
+  ;;   (notification "..."))
+
+  (when dc/nerd-font
+    (setq all-the-icons-nerd-fonts-family
+          (plist-get dc/nerd-font :family)))
+
+  (setup (:pkg all-the-icons :straight t :type git :flavor melpa
+               :host github :repo "domtronn/all-the-icons.el"
+               :files (:defaults "data" "all-the-icons-pkg.el")))
+  (require 'all-the-icons)
+
+  ;; You must run (all-the-icons-install-fonts) after installing this package!
+  (setup (:pkg all-the-icons-dired :straight t :flavor melpa
+               :host github :repo "wyuenho/all-the-icons-dired")
+    (:option all-the-icons-dired-lighter "│ic☼ns"))
+  (require 'all-the-icons-dired)
+
+  (setup (:pkg all-the-icons-nerd-fonts :straight t
+               :host github :repo "mohkale/all-the-icons-nerd-fonts"))
+  (require 'all-the-icons-nerd-fonts)
+
+  (setup (:pkg all-the-icons-completion :straight t
+               :host github :repo "iyefrat/all-the-icons-completion"))
+  (require 'all-the-icons-completion)
+
+  (setup (:pkg all-the-icons-gnus :straight t :type git :flavor melpa
+               :host github :repo "nlamirault/all-the-icons-gnus"))
+  (require 'all-the-icons-gnus))
+
+(defun dc/font-reminder (font-name)
+  "Show an alert if `font-name' is not found."
+  ;; (nerd-icons-install-fonts)
+  ;; (all-the-icons-install-fonts)
+  (unless (dc/font-installed-p font-name)
+    (notifications-notify
+     :title "Emacs: Fonts"
+     :body (format "Font '%s' not found!" font-name))))
+
+(defun dc/setup-all-the-icons (&optional arg)
+  (interactive "p")
+  ;; https://github.com/nlamirault/all-the-icons-gnus/issues/4
+  ;; (add-hook 'gnus-load-hook #'all-the-icons-gnus-setup)
+
+  ;; ATI-dired is hooked in dired setup (will fail if ATI isn't loaded)
+  (dc/font-reminder "all-the-icons")
+  (all-the-icons-completion-mode)
+  (all-the-icons-nerd-fonts-prefer))
+
+;; get ready to load the icons (even if it's not a graphical session)
+(dc/load-all-the-icons)
+
+;; try to configure them them, if it's a emacs is non-server
+(if (and (display-graphic-p) dc/nerd-font)
+    ;; the icons are present in a console (but not in a terminal-p.......
+    (add-hook 'emacs-startup-hook #'dc/setup-all-the-icons)
+  (notifications-notify
+   :title "Emacs: "
+   :body (format "Font '%s' not found!" font-name)))
+
+;; (dc/setup-all-the-icons)
+
+(defun dc/hide-icons-in-guix ()
+  ;; hide icons in guix (not interactive)
+  (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
+    (all-the-icons-dired-mode 1)))
 
 ;;*** Window Dividers
 ;; - requires window-divider-mode being on
@@ -635,7 +722,7 @@
 ;; maybe ... by copying persist/activities-activites, it seems to load
 ;; activities on the same emacs profile deployed to multiple computers, if all
 ;; file paths are identical. no idea how this could play out
-;; 
+;;
 ;; activities get saved to:
 ;;
 ;; + serialization: .emacs.g/var/persist/activities-activities
@@ -951,6 +1038,10 @@ but can't be jumped to or from."
 
   )
 
+;;  'current-tab
+;;
+;; tab-bar-tab-group-face-default
+
 (setq tab-bar-close-button-show nil
       tab-bar-format '(tab-bar-format-history
                        tab-bar-format-tabs-groups
@@ -1028,9 +1119,10 @@ but can't be jumped to or from."
 ;;** Completion
 
 ;;*** Vertico
+
 (setq-default vertico-multiform-categories
               '((bookmark reverse grid)
-                (buffer reverse grid)           ; works for ido
+                (buffer reverse grid)   ; works for ido
                 (command reverse)
                 (consult-compile-error buffer)
                 ;; (consult-flymake-error)
@@ -1043,8 +1135,10 @@ but can't be jumped to or from."
                 (consult-man reverse grid (vertigo-cycle . t))
                 (consult-xref buffer)
                 (environment-variable reverse grid)
-                (expression reverse)                    ; for repeat-complex-command
-                (file reverse grid)
+                (expression reverse)    ; for repeat-complex-command
+
+                (file reverse grid (vertico-grid-annotate . 20))
+                ;; (file reverse grid)
                 (imenu buffer)
                 (info-menu reverse grid)
                 (kill-ring reverse grid)
@@ -1057,6 +1151,14 @@ but can't be jumped to or from."
                 (unicode-name grid reverse)
                 (yasnippet grid reverse (vertico-cycle . t))
                 (t)))
+
+
+;;**** Other Completion Categories
+
+;; + color: read-color
+;;
+;; + tab: consult-buffer-other-tab, tab-bar-select-tab-by-name, dired-other-tab
+
 
 ;; (consult-imenu buffer)
 
@@ -1238,34 +1340,38 @@ but can't be jumped to or from."
 (setup (:pkg consult)
   (:option consult-async-min-input 3
            consult-async-input-debounce 0.3
-           consult-async-input-throttle 0.5)
+           consult-async-input-throttle 0.5
+           consult-grep-max-columns 116 ; < 1.5 * 80
+           consult-narrow-key "<"
+           ;; consult-preview-key '("C-SPC")
+           consult-preview-key '("S-<down>" "S-<up>"))
   (require 'consult)
   (:also-load wgrep)
   (:also-load consult-xref)
 
   (defun dw/get-project-root ()
     (when (fboundp 'projectile-project-root)
-      (projectile-project-root)))
+      (projectile-project-root))))
 
-  ;; TODO: tune consult-preview settings
-  ;; see https://github.com/minad/consult#live-previews
-  ;; consult-preview-key 'any ;useful when calling inside (let ((...)) ...)
-  ;; consult-preview-max-size 10485760
-  ;; consult-preview-raw-size 524288
-  ;; consult-preview-max-count 10
-  ;; consult-preview-excluded-files '(regexp list...)
+;; TODO: tune consult-preview settings
+;; see https://github.com/minad/consult#live-previews
+;; consult-preview-key 'any ;useful when calling inside (let ((...)) ...)
+;; consult-preview-max-size 10485760
+;; consult-preview-raw-size 524288
+;; consult-preview-max-count 10
+;; consult-preview-excluded-files '(regexp list...)
 
-  ;; TODO: update the text with the currently selected completion candidate
-  ;; (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
+;; TODO: update the text with the currently selected completion candidate
+;; (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
 
 
-  ;; TODO: Optionally make narrowing help available in the minibuffer.
-  ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+;; TODO: Optionally make narrowing help available in the minibuffer.
+;; You may want to use `embark-prefix-help-command' or which-key instead.
+;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
-  ;; consult-narrow-key "C-=" ; doesn't work
-  ;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
-  (:option consult-narrow-key "<f12> ="))
+;; consult-narrow-key "C-=" ; doesn't work
+;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
+
 
 ;;**** Consult Minibuffer Fix
 
@@ -1290,10 +1396,11 @@ but can't be jumped to or from."
         xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
-  (consult-customize consult-theme :preview-key '(:debounce 0.2 any))
+  (consult-customize
+   consult-theme :preview-key nil
+   ;; Hide full buffer list by default (use "b" prefix)
+   consult--source-buffer :hidden t :default nil)
 
-  ;; Hide full buffer list by default (still available with "b" prefix)
-  (consult-customize consult--source-buffer :hidden t :default nil)
   ;; (consult-customize consult--source-buffer)
 
   ;; Set consult-workspace buffer list
@@ -1314,11 +1421,7 @@ but can't be jumped to or from."
 
 (with-eval-after-load 'consult
   (setup (:pkg consult-dir)
-    (:option consult-dir-project-list-function #'consult-dir-project-dirs
-             consult-dir-sources '(consult-dir--source-bookmark
-                                   consult-dir--source-default
-                                   consult-dir--source-project
-                                   consult-dir--source-recentf))))
+    (:option consult-dir-project-list-function #'consult-dir-project-dirs)))
 
 ;; dc/consult-dir-recentf fails by dynamic/lexical binding issues if consult-dir
 ;; hasn't yet run with the normal value of `consult-dir-sources'.
@@ -1344,10 +1447,7 @@ but can't be jumped to or from."
 ;;**** Consult Yasnippet
 
 (with-eval-after-load 'yasnippet
-  (setup (:pkg consult-yasnippet)
-    ;; (:option consult-yasnippet-use-thing-at-point t
-    ;;          consult-yasnippet-always-overwrite-thing-at-point t)
-    )
+  (setup (:pkg consult-yasnippet))
   (consult-customize consult-yasnippet :preview-key '(:debounce 0.25 any)))
 
 ;;**** Consult Magit

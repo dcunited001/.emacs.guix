@@ -1143,6 +1143,20 @@
  ;; "cj" #'consult-eglot-symbols
  "cr" #'eglot-rename)
 
+(general-define-key
+ :keymaps 'eglot-mode-map
+ :prefix "M-G"
+ :wk-full-keys nil
+ "E" '(:ignore t :which-keys "EGLOT")
+ "EB" #'eglot-events-buffer
+ "E <SPC>" #'eglot-show-workspace-configuration
+ "EE" #'eglot-stderr-buffer
+ "EI" #'eglot-inlay-hints-mode
+ "EC" #'eglot-clear-status
+ "EU" #'eglot-upgrade-eglot
+ "EL" #'eglot-list-connections)
+
+
 ;; TODO: eglot requires too many keystrokes
 ;; (define-key eglot-mode-map (kbd "C-c C-a") #'eglot-code-actions)
 ;; (define-key eglot-mode-map (kbd "C-c C-r") #'eglot-rename)

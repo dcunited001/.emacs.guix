@@ -236,12 +236,22 @@ Guix channel.")
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
 (let ((deps-from-guix
-       '(pdf-tools org which-key hydra eglot magit compat
+       '(pdf-tools org which-key hydra magit compat ; eglot
                    embark consult corfu cape vertigo marginalia
                    flycheck
                    orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
+
+;;*** Load Eglot Early
+
+;; The newer version of eglot 0.17 has a lot of improvements over what's bundled
+;; with 29.1 and 29.2. This seems to load eglot through straight
+
+(setup (:pkg eglot :straight t :type git
+             :host github :repo "emacs-straight/eglot"
+             :files ("*" (:exclude ".git")))
+  (require 'eglot))
 
 ;;** Core
 

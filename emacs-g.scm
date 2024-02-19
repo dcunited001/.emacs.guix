@@ -13,6 +13,8 @@
 ;;
 ;; https://www.reddit.com/r/emacs/comments/rxg6z8/comment/hri3mrs/?context=3
 (define emacs-pkg
+  ;; NOTE: (define (emacs-29.2 (package (inherit emacs..)))) to bump version
+
   (if (getenv "DEBUG_EMACS")
       "emacs-next-pgtk-debug"
       ;; "emacs-next-pgtk"
@@ -165,8 +167,9 @@
    (list->vlist '("emacs-info-plus"
                   "emacs-alert"
                   "emacs-emojify"
-                  "emacs-all-the-icons"
-                  "emacs-all-the-icons-dired"
+                  ;; "emacs-all-the-icons"
+                  ;; "emacs-all-the-icons-dired"
+                  ;; "emacs-all-the-icons-completion"
                   ;; TODO: readd when guix emacs-kind-icon is current
                   ;; "emacs-kind-icon"
                   "emacs-rainbow-mode"))
@@ -338,7 +341,7 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'tree-sitter
-   (list->vlist '("tree-sitter"))                  		  
+   (list->vlist '("tree-sitter"))
    guix-emacs-vhash))
 ;; "tree-sitter-cli"
 
@@ -545,7 +548,7 @@
                   ;; ;; babel
                   ;; "emacs-restclient"
                   ;; "emacs-ob-restclient"
-		  ))
+      ))
    guix-emacs-vhash))
 
 ;;*** Org: Straight

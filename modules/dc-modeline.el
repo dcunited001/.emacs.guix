@@ -41,6 +41,10 @@
   (when (autoloadp (symbol-function sym))
     (cl-pushnew sym minor-mode-list)))
 
+;;** Icons
+
+;; TODO: https://github.com/domtronn/all-the-icons.el/wiki/Mode-Line
+
 ;;** Modeline
 
 ;; (min-width 10.0) is specified in (:propertize)
@@ -59,7 +63,7 @@
 ;;    mode-line-misc-info
 ;;    mode-line-modes))
 
-(setq-default
+(setq
  mode-line-format
  '("%e"
    mode-line-front-space
@@ -91,56 +95,5 @@
 
 
 ;; TODO: ensure this doesn't become incompatible with what's underneath
-(defun eglot--mode-line-format ()
-  "Compose Eglot's mode-line."
-  (let* ((server (eglot-current-server))
-         ;; NOTE: this just limits the server nick to 7 chars
-         (nickname (and server (eglot-project-nickname server)))
-         ;; if it's less than 6, it errors out
-         (nick (and server (substring nickname
-                                      0 (and (> (length nickname) 5) 6))))
-         (pending (and server (hash-table-count
-                               (jsonrpc--request-continuations server))))
-         (last-error (and server (jsonrpc-last-error server))))
-    (append
-     `(,(propertize
-         eglot-menu-string
-         'face 'eglot-mode-line
-         'mouse-face 'mode-line-highlight
-         'help-echo "Eglot: Emacs LSP client\nmouse-1: Display minor mode menu"
-         'keymap (let ((map (make-sparse-keymap)))
-                   (define-key map [mode-line down-mouse-1] eglot-menu)
-                   map)))
-     (when nick
-       `(":"
-         ,(propertize
-           nick
-           'face 'eglot-mode-line
-           'mouse-face 'mode-line-highlight
-           'help-echo (format "Project '%s'\nmouse-1: LSP server control menu" nick)
-           'keymap (let ((map (make-sparse-keymap)))
-                     (define-key map [mode-line down-mouse-1] eglot-server-menu)
-                     map))
-         ,@(when last-error
-             `("/" ,(eglot--mode-line-props
-                     "error" 'compilation-mode-line-fail
-                     '((mouse-3 eglot-clear-status  "Clear this status"))
-                     (format "An error occurred: %s\n" (plist-get last-error
-                                                                  :message)))))
-         ,@(when (cl-plusp pending)
-             `("/" ,(eglot--mode-line-props
-                     (format "%d" pending) 'warning
-                     '((mouse-3 eglot-forget-pending-continuations
-                                "Forget pending continuations"))
-                     "Number of outgoing, \
-still unanswered LSP requests to the server\n")))
-         ,@(cl-loop for pr hash-values of (eglot--progress-reporters server)
-                    when (eq (car pr)  'eglot--mode-line-reporter)
-                    append `("/" ,(eglot--mode-line-props
-                                   (format "%s%%%%" (or (nth 4 pr) "?"))
-                                   'eglot-mode-line
-                                   nil
-                                   (format "(%s) %s %s" (nth 1 pr)
-                                           (nth 2 pr) (nth 3 pr))))))))))
 
 (provide 'dc-modeline)

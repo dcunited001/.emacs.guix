@@ -89,7 +89,22 @@
 
 (setup (:pkg astro-ts-mode :straight t :type git :flavor melpa
              :host github :repo "Sorixelle/astro-ts-mode")
-  (:file-match "\\.astro?\\'"))
+  (:file-match "\\.astro?\\'")
+  (add-to-list 'eglot-server-programs
+               '(astro-ts-mode
+                 "astro-ls" "--stdio"
+                 :initializationOptions
+                 (:typescript (:tsdk "./node_modules/typescript/lib")))
+               ;; '(astro-ts-mode
+               ;;   . ("astro-ls" "--stdio"
+               ;;      :initializationOptions
+               ;;      (:typescript (:tsdk "./node_modules/typescript/lib"))))
+               )
+  (require 'astro-ts-mode)
+  (add-hook 'astro-ts-mode-hook
+            (lambda () (setq-local completion-at-point-functions
+                                   (delete 'html-mode--complete-at-point
+                                           completion-at-point-functions)))))
 
 ;;** Markup
 
