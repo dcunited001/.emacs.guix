@@ -81,12 +81,17 @@
   (add-hook 'markdown-mode-hook #'visual-line-mode)
   (add-hook 'markdown-mode-hook (lambda () (setq-local truncate-lines nil))))
 
-;;** Astro 
+;;** Astro
 
 ;; requires treesitter grammars: astro-ts, css, html and typescript-tsx
 ;;
 ;; astro-ts isn't provided by guix and is specified in dc-dev
 
+;; NOTE: eglot in astro-ts-mode definitely seems to require eglot 0.17 (0.12.x
+;; did not worK). it also does not like it when there are two LSP servers
+;; running ... but whatever VSCode runs doesn't seem to bother eglot's
+;; connection to AstroLS
+;;
 (setup (:pkg astro-ts-mode :straight t :type git :flavor melpa
              :host github :repo "Sorixelle/astro-ts-mode")
   (:file-match "\\.astro?\\'")
