@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: dir-ts-lsp
+# key: <dir<ts
+# uuid: dir-ts-lsp
+# group: eglot
+# --
+
+((nil
+  .
+  (foovar . ()))
+ ;; the guix .dir-locals doesn't set these hooks as local
+ (typescript-ts-mode
+  (eval . (add-hook #'eglot-ensure nil t)))
+ (astro-ts-mode
+  (eval . (add-hook #'eglot-ensure nil t))))
