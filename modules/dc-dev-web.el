@@ -64,6 +64,16 @@
   (add-hook 'js2-mode-hook #'dw/set-js-indentation)
   (add-hook 'json-mode-hook #'dw/set-js-indentation))
 
+;;*** Eglot Biome
+
+;; TODO: get biome's LSP to coordinate communication to LSP
+;; biome can run with the vscode.scm startup manifest
+
+;; (add-to-list
+;;  'eglot-server-programs
+;;  `((javascript-mode jsx-mode typescript-mode typescript-tsx-mode) .
+;;    ,(a-get* eglot-server-programs 'javascript-mode)))
+
 ;;** Markdown
 
 (setup (:pkg markdown-mode)
@@ -106,6 +116,8 @@
                ;;      (:typescript (:tsdk "./node_modules/typescript/lib"))))
                )
   (require 'astro-ts-mode)
+  (add-to-list 'major-mode-remap-alist '(astro-mode . astro-ts-mode))
+  (add-to-list 'org-src-lang-modes '("astro" . astro-ts))
   (add-hook 'astro-ts-mode-hook
             (lambda () (setq-local completion-at-point-functions
                                    (delete 'html-mode--complete-at-point

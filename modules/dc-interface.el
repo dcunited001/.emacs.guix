@@ -548,15 +548,16 @@
   ;; TODO: handle this separately and refactor
   ;; (-all-the-icons (dc/font-installed-p "all-the-icons"))
 
+  ;; (unless (dc/font-installed-p "all-the-icons")
+  ;;   (notification "..."))
+
+  ;; TODO: dc/font-installed-p doesn't work while server is loading
   (setq dc/nerd-font-entity
         (let* ((iosevka-nerd (dc/font-installed-p "Iosevka Nerd Font"))
                (firacode-nerd (dc/font-installed-p "FiraCode Nerd Font")))
           (or firacode-nerd iosevka-nerd))
         dc/nerd-font (when dc/nerd-font-entity
                        (font-face-attributes dc/nerd-font-entity)))
-
-  ;; (unless (dc/font-installed-p "all-the-icons")
-  ;;   (notification "..."))
 
   (when dc/nerd-font
     (setq all-the-icons-nerd-fonts-family
@@ -599,23 +600,19 @@
   ;; https://github.com/nlamirault/all-the-icons-gnus/issues/4
   ;; (add-hook 'gnus-load-hook #'all-the-icons-gnus-setup)
 
-  ;; ATI-dired is hooked in dired setup (will fail if ATI isn't loaded)
-  (dc/font-reminder "all-the-icons")
-  (all-the-icons-completion-mode)
-  (all-the-icons-nerd-fonts-prefer))
+  (when (display-graphic-p)
+    (dc/load-all-the-icons)
 
-;; get ready to load the icons (even if it's not a graphical session)
-(dc/load-all-the-icons)
+    ;; ATI-dired is hooked in dired setup (will fail if ATI isn't loaded)
+    (dc/font-reminder "all-the-icons")
+    (all-the-icons-completion-mode)
+    (all-the-icons-nerd-fonts-prefer)
+    (remove-hook 'server-after-make-frame-hook #'dc/setup-all-the-icons)
+    (notifications-notify
+     :title "Emacs: "
+     :body "Loaded fonts")))
 
-;; try to configure them them, if it's a emacs is non-server
-(if (and (display-graphic-p) dc/nerd-font)
-    ;; the icons are present in a console (but not in a terminal-p.......
-    (add-hook 'emacs-startup-hook #'dc/setup-all-the-icons)
-  (notifications-notify
-   :title "Emacs: "
-   :body (format "Font '%s' not found!" font-name)))
-
-;; (dc/setup-all-the-icons)
+(add-hook 'server-after-make-frame-hook #'dc/setup-all-the-icons)
 
 (defun dc/hide-icons-in-guix ()
   ;; hide icons in guix (not interactive)
