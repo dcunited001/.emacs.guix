@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# key: dcactivity
+# name: <dcact
+# uuid: dcactivity
+# group: activities.el
+# --
+(dc/make-activity
+ "${1:"Activity Name"}"
+ nil
+ (find-file "${2:"Primary Directory"}")
+ (split-window nil nil 'right)
+ ;; (find-file "/data/repo")
+ (split-window nil nil 'left)
+ ;; (magit-status)
+ (split-window nil nil 'below))
+
