@@ -29,6 +29,17 @@
 (setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo")
       project-kill-buffers-display-buffer-list t)
 
+;; from SystemCrafters Code Dive: Project.el
+;;
+;; this helps if project.el is temporarily broken for a project/type and I don't
+;; have time to fix it or to grok through the common-lisp types for project.el
+;;
+;; looking forward to using the defgeneric/defmethod ... eventually
+(defun dc/project-current-directory-override-set (arg)
+  "Function to help remember how to set `project-current-directory-override'"
+  (interactive "D")
+  (add-dir-local-variable nil 'project-current-directory-override arg))
+
 ;;*** Project Switching
 
 ;; (with-eval-after-load 'magit
