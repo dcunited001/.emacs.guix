@@ -1,12 +1,12 @@
 # -*- mode: snippet -*-
-# name: jqsrc
+# name: jq
 # key: <jq
-# uuid: jqsrc
+# uuid: jq
 # group:
 # --
 #+NAME: $1
 #+HEADERS: :results output silent
-#+BEGIN_SRC jq :stdin injq :cmd-line "-rj"
+#+BEGIN_SRC jq${2:$$(yas-choose-value '("" " :stdin injq"))}${3:$$(yas-choose-value '("" " :cmd-line -rj"))}
 $0
 
 #. | your | query

@@ -248,13 +248,13 @@
      ((eq org-clock-sound t) (beep t) (beep t))
      ((stringp org-clock-sound)
       (let ((file (expand-file-name org-clock-sound)))
-	      (if (file-exists-p file)
-	          (if (executable-find "playsound")
-		            (start-process "org-clock-play-notification" nil
-			                         "playsound" file)
-	            (condition-case nil
-		              (play-sound-file file)
-		            (error (beep t) (beep t))))))))))
+        (if (file-exists-p file)
+            (if (executable-find "playsound")
+                (start-process "org-clock-play-notification" nil
+                               "playsound" file)
+              (condition-case nil
+                  (play-sound-file file)
+                (error (beep t) (beep t))))))))))
 
 ;; hmmmm is it possible to (cl-flet (( #'function-by-symbol)) ... )?
 (if (executable-find "playsound")
@@ -662,10 +662,32 @@ capture was not aborted."
              org-link-elisp-confirm-function 'y-or-n-p
              org-link-shell-confirm-function 'y-or-n-p))
 
+
+
+  ;; TODO: test advice for deciding on babel's :async backend
+  ;; NOTE: ob-comint requires org-mode 9.7 and '(:async yes :session anything)
+  (setup ob-comint)
+  (setup (:pkg ob-async)
+    (:option ob-async-no-async-languages-alist '("ipython")))
+
+  ;; see ob-async-inject-variables (injected into emacs-lisp async block)
+  ;;
+  ;; also, for julia:
+  ;;
+  ;; (add-hook 'ob-async-pre-execute-src-block-hook
+  ;;       '(lambda ()
+  ;;          (setq inferior-julia-program-name "/usr/local/bin/julia")))
+
   ;; TODO org-babel's default async (no session) behavior may cause problems with
   ;; org-exports (if latex/html exports with evaluation doesn't work, this may be the cause)
   ;; (after! ob
   ;;         (add-to-list 'org-babel-default-lob-header-args '(:sync)))
+
+  (with-eval-after-load 'ob-async
+    ;; DOOM: https://github.com/doomemacs/doomemacs/tree/master/modules/lang/org/config.el#L217C3-L251C51
+    (advice-add
+     'ob-async-org-babel-execute-src-block
+     :around #'+org-babel-disable-async-maybe-a '(name "doom/org-babel-disable-async-maybe-a")))
 
   (setup (:pkg ob-smiles :straight t)))
 
@@ -701,6 +723,51 @@ capture was not aborted."
 
 (defun dc/org-init-babel-lazy-loader-h ()
   )
+
+;;**** Babel Async
+
+(defvar +org-babel-native-async-langs '(python)
+  "Languages that will use `ob-comint' instead of `ob-async' for `:async'.")
+
+(defun +org-babel-disable-async-maybe-a (fn &optional orig-fn arg info params)
+    "Use ob-comint where supported, disable async altogether where it isn't.
+
+We have access to two async backends: ob-comint or ob-async,
+which have different requirements. This advice tries to pick the
+best option between them, falling back to synchronous execution
+otherwise. Without this advice, they die with an error; terrible
+UX!
+
+Note: ob-comint support will only kick in for languages listed in
+`+org-babel-native-async-langs'.
+
+Also adds support for a `:sync' parameter to override `:async'."
+    (if (null orig-fn)
+        (funcall fn orig-fn arg info params)
+      (let* ((info (or info (org-babel-get-src-block-info)))
+             (params (org-babel-merge-params (nth 2 info) params)))
+        (if (or (assq :sync params)
+                (not (assq :async params))
+                (member (car info) ob-async-no-async-languages-alist)
+                ;; ob-comint requires a :session, ob-async does not, so fall
+                ;; back to ob-async if no :session is provided.
+                (unless (member (alist-get :session params) '("none" nil))
+                  (unless (memq (let* ((lang (nth 0 info))
+                                       (lang (cond ((symbolp lang) lang)
+                                                   ((stringp lang) (intern lang)))))
+                                  (or (alist-get
+                                       lang
+                                       ;; +org-babel-mode-alist
+                                       dc/org-babel-load-languages)
+                                      lang))
+                                +org-babel-native-async-langs)
+                    (message "Org babel: %s :session is incompatible with :async. Executing synchronously!"
+                             (car info))
+                    (sleep-for 0.2))
+                  t))
+            (funcall orig-fn arg info params)
+          (funcall fn orig-fn arg info params)))))
+
 
 ;;*** Capture
 

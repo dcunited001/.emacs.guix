@@ -839,7 +839,7 @@ when a new treesitter gramar has been added to the Guix profile."
 
 (with-eval-after-load 'yasnippet
   (when dc/guix-checkout-path
-    (add-to-list 'yas-snippet-dirs dc/guix-checkout-path nil)))
+    (add-to-list 'yas-snippet-dirs dc/guix-checkout-path t)))
 
 (setup (:pkg yasnippet-snippets))
 

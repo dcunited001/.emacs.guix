@@ -613,6 +613,9 @@
 (general-define-key
  :keymaps 'minibuffer-local-map
 
+ ;; instead just use "C-S-<backspace>" #'kill-whole-line (no need to remap defaults)
+ "C-<backspace>" #'delete-minibuffer-contents
+
  "C-r" #'consult-history
  "C-." #'embark-act
  "C-;" #'embark-dwim

@@ -198,6 +198,7 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'editor
+
    (list->vlist '("emacs-editorconfig"
                   "emacs-origami-el"
                   "emacs-drag-stuff"
@@ -288,16 +289,27 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'tools
-   (list->vlist '("emacs-debbugs"
-                  "emacs-burly"
+   (list->vlist '("emacs-burly"
+
+                  ;; bugtracking
+                  "emacs-debbugs"
+
+                  ;; linux
                   "emacs-elf-mode"
                   "emacs-syslog-mode"
                   "emacs-dts-mode"
                   "emacs-x509-mode"
                   "emacs-ssh-config-mode"
+
+                  ;; misc
                   "emacs-tldr"
                   "emacs-google-translate"
+
+                  ;; processes/services
                   "emacs-prodigy"
+                  "emacs-detached"
+
+                  ;; tests
                   "emacs-buttercup"
                   "emacs-esup"))
    guix-emacs-vhash))
@@ -548,7 +560,7 @@
                   ;; ;; babel
                   ;; "emacs-restclient"
                   ;; "emacs-ob-restclient"
-      ))
+                  "emacs-ob-async"))
    guix-emacs-vhash))
 
 ;;*** Org: Straight

@@ -20,7 +20,11 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-;; Dev CPP
+;;* Dev CPP
+
+;;** GDB
+
+(setq-default gdb-many-windows t)
 
 ;;** Clang Projects
 
