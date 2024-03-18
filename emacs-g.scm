@@ -557,10 +557,11 @@
                   "emacs-pandoc-mode"   ; for conversions outside of org-mode
                   ;; "emacs-org-pandoc-import" ; dep on pandoc
 
-                  ;; ;; babel
+                  ;; babel
+                  ;; "emacs-ob-async"
                   ;; "emacs-restclient"
                   ;; "emacs-ob-restclient"
-                  "emacs-ob-async"))
+                  ))
    guix-emacs-vhash))
 
 ;;*** Org: Straight
