@@ -80,9 +80,9 @@
 ;;*** Editing Configuration
 
 ;; issues with whitespace added into other buffers (idk why)
-;; (setup (:pkg ws-butler)
-;;   ;; (:hook-into text-mode prog-mode)
-;;   (:hook-into text-mode))
+(setup (:pkg ws-butler)
+  ;; (:hook-into text-mode)
+  (:hook-into text-mode prog-mode))
 
 (setup (:pkg super-save)
   (:delay)

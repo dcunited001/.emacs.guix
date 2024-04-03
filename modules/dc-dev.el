@@ -275,7 +275,7 @@ when a new treesitter gramar has been added to the Guix profile."
   (if ws-butler-mode
       (if (eglot-managed-p)
           (remove-hook 'before-save-hook #'ws-butler-before-save t)
-        (add-hook 'before-save-hook #'ws-butler-before-save nil t))))
+        (add-hook 'before-save-hook #'ws-butler-before-save nil 5 t))))
 
 ;; TODO: hook on eglot-managed-mode (via karthink & plt). gets eglot to work
 ;; well with eldoc

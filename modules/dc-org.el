@@ -645,6 +645,7 @@ capture was not aborted."
 (defun dc/org-init-babel-h ()
   (setup ob
     (require 'ob-dot)
+    (require 'ob-sqlite)
 
     ;; org-confirm-babel-evaluate: set to a function later
     ;; org-src-preserve-indentation:
