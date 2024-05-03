@@ -249,6 +249,34 @@
 
 ;;* Services
 
+;;** Management
+
+;;*** SystemD
+
+;; loads for buffers that match systemd-autoload-regexp
+(setup (:pkg systemd))
+
+(with-eval-after-load 'flycheck
+  ;; TODO: GUIX: check for executable at: (flycheck-define-checker systemd-analyze ...)
+  (if (and IS-LINUX
+           (null dw/is-guix-system))
+      (add-hook 'systemd-mode-hook #'flycheck-mode)))
+
+;;*** Prodigy.el
+
+;;*** Detach.el
+
+(setup (:pkg detached))
+
+(defun dc/detached-kbd-setup ()
+  ;; trying out detached. just lazily load for now
+  (interactive)
+  (detached-init)
+  (general-define-key
+   :keymaps 'global
+   "C-c d" '(:prefix-command detached-action-map :wk "DETACHED")
+   [remap detached-open-session #'detached-consult-session]))
+
 ;;** Configuration Management
 
 ;;*** SALTSTACK
@@ -294,6 +322,33 @@
   )
 
 ;; (setup (:pkg dynamic-graphs :straight t))
+
+;;*** D2
+
+;; diagrams generated from Go binary.
+
+;; TODO: finish babel configuration for d2-mode
+
+;; d2-mode.el sets up basic params for babel integration (there is also ob-d2.el, but
+;;  it somewhat overlaps
+
+(defvar dc/d2-snippets-dir "straight/repos/d2-mode/snippets"
+  "Path to snippets included with d2-mode.")
+
+(setup (:pkg d2-mode :straight t :type git :flavor melpa
+             :host github :repo "andorsk/d2-mode")
+  (:file-match "\\.d2\\'")
+  (:option d2-location "/usr/bin/d2"
+           ;; d2-tmp-dir ;; tmp files
+           ;; d2-flags ""
+           d2-output-format ".svg"))
+
+;; these just need to be brought into snippets dir
+;;
+;; (with-eval-after-load 'd2-mode
+;;   (let* ((d2-snippets (expand-file-name dc/d2-snippets-dir dc/emacs-d)))
+;;     (when (file-exists-p d2-snippets)
+;;       (add-to-list 'yas-snippet-dirs (expand-file-name dc/d2-snippets-dir dc/emacs-d) t))))
 
 ;;*** Mermaid
 

@@ -79,6 +79,11 @@
   (Info-breadcrumbs-in-mode-line-mode +1)
   (Info-persist-history-mode +1))
 
+;;* RFCs
+
+;; TODO: setup rfc-mode https://github.com/galdor/rfc-mode
+;; (setq rfc-mode-directory (expand-file-name "~/rfc/"))
+
 ;;* Eldoc
 
 ;; there are also configurations for org & eglot
@@ -91,10 +96,6 @@
 ;; currently 'truncate-sym-name-if-fit. eglot may change this
 ;; eldoc-echo-area-use-multiline-p nil
 
-;;* Discover
-
-;; TODO: try pkg: discover.el https://github.com/mickeynp/discover.el
-;; TODO: try pkg: discover-my-major https://framagit.org/steckerhalter/discover-my-major
 
 ;;* Shortdoc
 
@@ -122,5 +123,10 @@
     (apply-partially
      :no-eval (mapcar (apply-partially '* 10 7 6) '(4 3))
      :result '(1680 1260))))
+
+;;* Discover
+
+;; TODO: try pkg: discover.el https://github.com/mickeynp/discover.el
+;; TODO: try pkg: discover-my-major https://framagit.org/steckerhalter/discover-my-major
 
 (provide 'dc-info)

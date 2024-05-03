@@ -128,6 +128,16 @@
 
 ;;*** Grep
 
+(defvar dc/grep-ignored-directories '("po")
+  "directories to pass to grep tools")
+
+;; ripgrep:
+;; - prefer using .rgignore, .gitignore or --ignore-file
+;; - some regexp pref comparison stats are cherry-picked
+
+(defvar dc/ripgrep-args '("-g \"!/po\"")
+  "args to pass to ripgrep")
+
 ;; NOTE: the grep-files-aliases seems to work with rgrep, but not
 ;; project-find-regepx
 (with-eval-after-load 'grep
@@ -142,7 +152,9 @@
                   ("dr" . ".dir-locals.el")
                   ("mm" . "*[Mm]ain*")
                   ("gi" . ".gitignore")))
-    (add-to-list 'grep-files-aliases a)))
+    (add-to-list 'grep-files-aliases a))
+  (cl-dolist (d dc/grep-ignored-directories)
+    (add-to-list 'grep-find-ignored-directories d)))
 
 (defun dc/project-find-regexp (regexp)
   (interactive (list (project--read-regexp)))
@@ -1335,14 +1347,22 @@ but can't be jumped to or from."
 ;;*** Consult
 
 (setup (:pkg consult)
-  (:option consult-async-min-input 3
-           consult-async-input-debounce 0.3
-           consult-async-input-throttle 0.5
-           consult-grep-max-columns 116 ; < 1.5 * 80
-           consult-narrow-key "<"
+  (:option consult-narrow-key "<"
            ;; consult-preview-key '("C-SPC")
-           consult-preview-key '("S-<down>" "S-<up>"))
+           consult-preview-key '("S-<down>" "S-<up>")
+
+           ;; async timing
+           consult-async-min-input 3
+           consult-async-input-debounce 0.3
+           consult-async-input-throttle 0.5)
   (require 'consult)
+
+  ;; CLI tools
+  (:option consult-grep-max-columns 116 ; < 1.5 * 80
+
+           ;; ripgrep
+           consult-ripgrep-args
+           (string-join `(,consult-ripgrep-args ,@dc/ripgrep-args) " "))
   (:also-load wgrep)
   (:also-load consult-xref)
 

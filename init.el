@@ -357,6 +357,7 @@ Guix channel.")
 ;;** Apps
 
 (require 'dc-social)
+;; (require 'dc-applications)
 ;; (require 'dw-media)
 ;; (require 'dw-system)
 ;; (require 'dc-games)

@@ -32,6 +32,11 @@
                   "git:send-email"
                   "sound-theme-freedesktop"
                   "tidy-html"
+
+                  ;; detached.el
+                  "dtach"
+
+                  ;; aspell
                   "aspell"
                   "aspell-dict-en"
                   ;; "aspell-dict-la"
@@ -300,6 +305,7 @@
                   "emacs-dts-mode"
                   "emacs-x509-mode"
                   "emacs-ssh-config-mode"
+                  "emacs-systemd-mode"
 
                   ;; misc
                   "emacs-tldr"
@@ -446,7 +452,7 @@
 ;; Packages bringing python to the party
 (set! guix-emacs-vhash
   (vhash-consq
-   'latex
+   'python
    (list->vlist '("python-yamllint"
                   "python-yapf"))
    guix-emacs-vhash))
@@ -454,11 +460,10 @@
 ;;*** Jupyter
 (set! guix-emacs-vhash
   (vhash-consq
-   'latex
+   'jupyter
    (list->vlist '("emacs-zmq"
                   "emacs-jupyter"))
    guix-emacs-vhash))
-
 ;;*** Clojure
 ;; "emacs-clomacs" ?
 
@@ -467,6 +472,12 @@
 ;;*** Scheme
 
 ;;*** XML
+
+(set! guix-emacs-vhash
+  (vhash-consq
+   'xml
+   (list->vlist '("emacs-esxml"))
+   guix-emacs-vhash))
 
 ;;*** Julia
 
