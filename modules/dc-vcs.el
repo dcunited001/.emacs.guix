@@ -64,7 +64,7 @@
 
 ;;** Magit
 
-(setup (:pkg magit)
+(setup (:pkg magit :straight t)
   (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
 
            magit-wip-mode-lighter "│§ WIP"
@@ -74,7 +74,7 @@
            ;; 'all to always show diffchars
            magit-diff-refine-hunk t))
 
-(setup (:pkg magit-todos)
+(setup (:pkg magit-todos :straight t)
   (:with-hook emacs-startup-hook
     (:hook magit-todos-mode)))
 
@@ -99,15 +99,16 @@
   (require 'glab)
   (require 'gtea))
 
-(setup (:pkg ghub)
+(setup (:pkg ghub :straight t)
   (:with-hook emacs-startup-hook
     (:hook #'dc/ensure-ghub-graphql)))
 
-;; graphql propagates ghub input, but only for 'graphql-examples
-(setup (:pkg graphql))
+;; graphql propagates ghub input, but only for 'graphql-examples (ehh?)
+
+(setup (:pkg graphql :straight t))
 
 ;;*** Forge
-(setup (:pkg forge)
+(setup (:pkg forge :straight t)
   (:option forge-pull-notifications t))
 
 (with-eval-after-load 'forge

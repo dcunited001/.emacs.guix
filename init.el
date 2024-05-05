@@ -236,7 +236,7 @@ Guix channel.")
 ;; correct entryies in load-paths, but I haven't had problems yet.
 
 (let ((deps-from-guix
-       '(pdf-tools org which-key hydra magit compat ; eglot
+       '(pdf-tools org which-key hydra compat ; magit eglot
                    embark consult corfu cape vertigo marginalia
                    flycheck
                    orderless kind-icon)))

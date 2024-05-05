@@ -274,10 +274,13 @@
                   "emacs-git-link"
                   ;; "emacs-git-email"
                   "emacs-git-timemachine"
-                  "emacs-magit"
-                  "emacs-magit-todos"
-                  ;; "emacs-ghub"
-                  "emacs-forge"
+
+                  ;; until magit-4 is published, use straight packages (also re-enable graphql above)
+                  ;; "emacs-magit"
+                  ;; "emacs-magit-todos"
+                  ;; "emacs-forge"
+
+;;;; "emacs-ghub" ;; propagated by graphql
                   "emacs-srht"
 
                   "emacs-repo"
@@ -418,7 +421,7 @@
                   "emacs-graphviz-dot-mode"
                   "emacs-gnuplot"
 
-                  "emacs-graphql"
+                  ;; "emacs-graphql"
                   "emacs-graphql-mode"
 
                   ;; "emacs-eglot"
