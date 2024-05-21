@@ -112,6 +112,7 @@
    (list->vlist '(
                   "emacs-pinentry"
                   "pinentry-emacs"
+                  "emacs-pass"
                   "emacs-password-store"
                   "emacs-auth-source-pass"))
    guix-emacs-vhash))
