@@ -1824,10 +1824,22 @@
 
 ;;** Tools
 
+;;*** Proced
+
 (general-define-key
  :keymaps 'proced-mode-map
  ;; can also sort by clicking the header
  "sh" #'proced-sort-header)
+
+;;*** Systemd
+
+;; auto-load-alist
+
+;;*** Prodigy.el
+
+;;*** Detached.el
+
+;; TODO: move keybinds here from dc-tools.el
 
 ;;** Lang
 

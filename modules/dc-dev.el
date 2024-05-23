@@ -727,7 +727,8 @@ when a new treesitter gramar has been added to the Guix profile."
   (add-to-list 'geiser-guile-manual-lookup-nodes "Geiser")
   (add-to-list 'geiser-guile-manual-lookup-nodes "Guile Reference")
   (add-to-list 'geiser-guile-manual-lookup-nodes "Guile Library")
-  (add-to-list 'geiser-guile-manual-lookup-nodes "Guix"))
+  (add-to-list 'geiser-guile-manual-lookup-nodes "Guix")
+  (add-to-list 'dc/org-babel-load-languages '(scheme . t)))
 
 ;; geiser will load ~/.guile-geiser and not ~/.guile (defaults)
 ;; (setq-default geiser-guile-init-file "~/.guile-geiser")

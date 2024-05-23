@@ -28,6 +28,7 @@
    (list->vlist `("nss-certs"
                   ,emacs-pkg
                   "emacs-setup"
+                  "emacs-rec-mode"
                   "git"
                   "git:send-email"
                   "sound-theme-freedesktop"

@@ -171,7 +171,9 @@ Guix channel.")
         (shell . t)
         (python . t)
         (jq . t)
-	      (restclient . t)))
+	      (restclient . t)
+        ;; GNU recutils
+        (rec . t)))
 
 ;;**** Org Ref & Bibtex
 

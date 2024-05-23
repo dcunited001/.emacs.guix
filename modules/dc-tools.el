@@ -63,7 +63,16 @@
                   guix-derivation-mode))
     (add-to-list 'minions-prominent-modes m)))
 
+;;*** Recutils
 
+;; Guix package search results are output in the recutils format
+
+;; rec-mode and ob-rec are both in emacs-rec-mode
+(setup (:pkg rec-mode))
+
+(with-eval-after-load 'rec-mode
+  (require 'ob-rec)
+  (add-to-list 'dc/org-babel-load-languages '(rec . t)))
 
 ;; (setq auto-mode-alist (cddr auto-mode-alist))
 
@@ -151,7 +160,7 @@
   (:option syslog-setup-on-load t))
 
 (add-to-list 'auto-mode-alist
-	           '("\\(messages\\(\\.[0-9]\\)?\\|SYSLOG\\|\\.s?trace\\)\\'" . syslog-mode))
+             '("\\(messages\\(\\.[0-9]\\)?\\|SYSLOG\\|\\.s?trace\\)\\'" . syslog-mode))
 
 ;; customize syslog-notes-files or set in .dir-locals.el to memoize notes files
 ;; the notes files are  *.elc files

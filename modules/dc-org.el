@@ -635,13 +635,6 @@ capture was not aborted."
   (not (or (string= lang "emacs-lisp")
            (string= lang "shell"))))
 
-;; this needs to be called later
-(defun dc/org-babel-do-load-languages ()
-  ;; TODO: doom ignores org-babel-do-load-languages and lazy loads
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   dc/org-babel-load-languages))
-
 (defun dc/org-init-babel-h ()
   (setup ob
     (require 'ob-dot)
