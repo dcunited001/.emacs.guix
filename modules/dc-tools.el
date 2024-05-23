@@ -204,6 +204,20 @@
 
 ;;* Network
 
+;;** password-store.el
+
+;;** Pass.el
+
+;; Pass.el mostly is used to edit/manage the (a) password store.  pass-view-mode
+;; derives from nil and functions a bit like dired.
+
+(setup (:pkg pass)
+  ;; these are defaults
+  (:option pass-show-keybindings t
+           pass-username-field "username"
+           pass-username-fallback-on-filename nil
+           pass-suppress-confirmations nil))
+
 ;;** Terraform
 
 ;; mostly a major-mode only
