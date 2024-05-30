@@ -675,6 +675,11 @@ when a new treesitter gramar has been added to the Guix profile."
 (setup (:pkg scheme-mode)
   (:file-match "\\.sld\\'"))
 
+;;**** ARES
+
+(setup (:pkg arei)
+  (:option arei-mode-auto nil))
+
 ;;**** GEISER
 
 (setup (:pkg geiser)

@@ -305,6 +305,13 @@
 ;;*** SALTSTACK
 ;; (use-package! salt-mode)
 
+;;* Data
+
+;;** Structure
+
+;; this is found in the protocolbuffers/protobuf repository
+(setup (:pkg protobuf-mode))
+
 ;;** Database
 
 ;;** API

@@ -711,6 +711,10 @@
 
 (setup (:pkg highlight-symbol)
   (:option highlight-symbol-idle-delay 0.5)
+
+  ;; try text-mode, but it may not work well if docs are long ...
+  ;; can't think of why i haven't done this.
+  (:hook-into text-mode)
   (:hook-into prog-mode))
 
 ;;** Bookmarks

@@ -50,8 +50,12 @@
 ;; (setq epg-debug t)
 
 ;;** auth-source-pass
-;; (setup (:pkg auth-source-pass)
-;;   (auth-source-pass-enable))
+
+;; this doesn't provide any interactive functions
+
+(setup (:pkg auth-source-pass)
+  ;; (:option auth-source-pass-filename ...)
+  (auth-source-pass-enable))
 
 ;;** oauth2
 ;; (setup (:pkg oauth2 :straight t))

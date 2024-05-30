@@ -375,16 +375,33 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'lang
-   (list->vlist '("emacs-guix"
+   (list->vlist '("emacs-nix-mode"
+
+                  ;; GUIX
+                  "emacs-guix"
+
+                  ;; GEISER
                   "emacs-geiser"
                   "emacs-geiser-guile"
                   ;; "emacs-geiser-racket"
 
-                  "emacs-nix-mode"
+                  ;; ARES
+                  "emacs-eros"          ; req for arei.el
+                  "emacs-sesman"        ; req for arei.el
+                  "emacs-arei"
+
+                  ;; install guile-ares-rs in project/directory.  if
+                  ;; arei-mode-auto non-nil, it enables itself on all scheme
+                  ;; buffers when required. after emacs init, it can be added to
+                  ;; projects, but be wary of potential conflicts if Geiser/Arei
+                  ;; access the same Emacs features.
+
+                  ;; For simplicity, avoid Lispy's evaluation functionality,
+                  ;; since that expects Geiser. At least some of Lispy's
+                  ;; features should work), since
 
                   ;; "emacs-elisp-refs"
                   "emacs-elisp-demos"
-                  "emacs-eros"
 
                   "emacs-clojure-mode"
                   ;; "emacs-clojure-snippets"
@@ -416,6 +433,8 @@
                   "emacs-json-mode"
                   "emacs-json-snatcher"
                   "emacs-json-reformat"
+
+                  "emacs-protobuf-mode"
 
                   "emacs-emacsql"
 
