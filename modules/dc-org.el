@@ -666,8 +666,7 @@ capture was not aborted."
   ;; advised. doom still has this set up though.
   ;; (setup (:pkg ob-async)
   ;;  (:option ob-async-no-async-languages-alist '("ipython")))
-
-  (setup (:pkg ob-smiles :straight t)))
+  )
 
 ;; NOTE: the advice-add here needs to properly bind the closure
 ;; - follow defadvice! down to subr.el

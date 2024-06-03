@@ -405,11 +405,37 @@
 
 ;;* Misc
 
-;;*** Science
-(setup (:pkg smiles-mode :straight t))
+;;** Science
+
+;;*** Chemistry
+
+(setup (:pkg smiles-mode :straight t :type git :flavor melpa
+             :repo "https://repo.or.cz/smiles-mode.git"))
+
+;; last two cmds in ob-smiles.el cause issues. compilation issue?
+;;
+;; - org-link-set-parameters needs 'ol to be loaded (?)
+;; - org-element-map shouldn't be running until blocks eval'd... but idk
+
+;; instead, load explicitly (must run from an org file)
+
+(defun dc/ob-smiles-setup ()
+  (interactive)
+  (setup (:pkg ob-smiles :straight t :type git :flavor melpa
+               :repo "https://repo.or.cz/ob-smiles.git")
+    (add-to-list 'dc/org-babel-load-languages '(smiles . t))
+    (dc/org-babel-do-load-languages)))
+
+;;** Writing
+
+;;*** Kanji
+
+(setup (:pkg kanji-mode))
 
 ;;*** Translation
-(setup (:pkg google-translate)
+
+(setup (:pkg google-translate :straight t :type git :flavor melpa
+             :host github :repo "atykhonov/google-translate")
   (:option google-translate-backend-method 'curl)
   ;; (:bind "C-T" #'my-google-translate-at-point)
   (defun google-translate--search-tkk ()
@@ -421,8 +447,14 @@
         (google-translate-at-point)
       (google-translate-at-point-reverse))))
 
-;; TODO: ....ob-translate wants to clone org with straight...
-;; (setup (:pkg ob-translate :straight t)
-;;   (:load-after 'google-translate))
+;; this seems to be doing something similar (google-translate doesn't seem to
+;; finish loading, (with-eval-after-load ...) never calls (setup ...)
+;; then init blows up in dc-shim.el
+(defun dc/ob-translate-setup ()
+  (interactive)
+  (setup (:pkg ob-translate :straight t :type git :flavor melpa
+               :host github :repo "krisajenkins/ob-translate"))
+  (add-to-list 'dc/org-babel-load-languages '(translate . t))
+  (dc/org-babel-do-load-languages))
 
 (provide 'dc-tools)

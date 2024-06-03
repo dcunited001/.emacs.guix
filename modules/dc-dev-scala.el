@@ -25,10 +25,9 @@
 
 ;; sbt-mode is for comint buffers, .sbt files should still use scala
 (setup (:pkg sbt-mode :straight t :type git :flavor melpa
-             :host github :repo "hvesalai/emacs-sbt-mode"
-             :fork (:host github :protocol ssh :repo "dcunited001/emacs-sbt-mode"))
-  ;; -Djline.terminal=none is default
-  ;; -Dsbt.supershell=false is suggested
+             ;; the fork enables using tramp when running SBT in docker
+             ;; :fork (:host github :protocol ssh :repo "dcunited001/emacs-sbt-mode")
+             :host github :repo "hvesalai/emacs-sbt-mode")
   (:option sbt:program-options '("-Djline.terminal=none"
                                  "-Dsbt.supershell=false")))
 

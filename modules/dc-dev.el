@@ -653,13 +653,39 @@ when a new treesitter gramar has been added to the Guix profile."
 ;;    - workaround removed https://github.com/doomemacs/doomemacs/commit/b57d4c8d710e39c70c2fc9fa61cf0e85159ef0bb
 ;; - read-symbol-positions-list void in emacs29
 ;;   - https://github.com/Wilfred/elisp-refs/issues/35
-;; (setup (:pkg elisp-depmap :straight t :host gitlab :repo "mtekman/elisp-depmap.el")
-;;   (:option elisp-depmap-exec-file (getenv "GRAPHVIZ_DOT"))
-;;   (:bind
-;;    ("C-c M-d" . elisp-depmap-graphviz-digraph)
-;;    ("C-c M-g" . elisp-depmap-graphviz)
-;;    ("C-c M-s" . elisp-depmap-makesummarytable))
-;;   (defvar read-symbol-positions-list nil))
+
+;;**** Elisp Depmap
+
+;; this works, but the graphs have the "longitis." it's not counting edges
+;; properly. The graph doesn't have edges, so it then doesn't balance well.
+
+;; if you use -Kfdp, it kinda balances them, but still no edges.
+
+;; its perhaps still useful to manually add them to the graphviz lol
+
+;; `M-x elisp-depmap-makesummarytable` is still very useful. while the info is
+;; mostly already available from emacs help (and perhaps embark), this gives an
+;; org-table that's easy to chunk up if more analysis is needed.
+
+;; so, for example, if i wanted to quickly analyze the codebases of arel.el for
+;; Guile to integrate it with lispy (add a le-arel.el), then it helps to to have
+;; a central list of things to find connections for in arel, lispy, sesman,
+;; cider and geiser.
+
+(setup (:pkg elisp-depmap :straight t :host  gitlab :repo "mtekman/elisp-depmap.el")
+  ;; (getenv "GRAPHVIZ_DOT") ;; -exec-file is a path to the created .dot file
+  (:option elisp-depmap-exec-file (expand-file-name  "depmap/elisp-graphviz.dot"
+                                                     dc/emacs-d)
+           elisp-depmap-exec-outext "svg"
+           ;; tried: fdp, sfdp, neato, dot.
+           elisp-depmap-exec-commandargs "-Kfdp")
+  ;; (:bind
+  ;;  ("C-c M-d" . elisp-depmap-graphviz-digraph)
+  ;;  ("C-c M-g" . elisp-depmap-graphviz)
+  ;;  ("C-c M-s" . elisp-depmap-makesummarytable))
+
+  ;; this needs to be declared
+  (defvar read-symbol-positions-list nil))
 
 ;;*** Common Lisp
 
@@ -677,8 +703,10 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;**** ARES
 
-(setup (:pkg arei)
-  (:option arei-mode-auto nil))
+
+
+;; (setup (:pkg arei)
+;;   (:option arei-mode-auto nil))
 
 ;;**** GEISER
 

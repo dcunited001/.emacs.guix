@@ -41,7 +41,6 @@
 ;;*** Emacs Config
 
 ;;**** Paths
-
 (setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
       dc/emacs-d (expand-file-name "~/.emacs.g/")
       dc/emacs-cache (expand-file-name "~/.cache/emacs/")
@@ -112,9 +111,12 @@ Guix channel.")
   "Return `load-path' and `load-compiled-path' for a guix
  `profile-path'"
 
-  ;; guix-profile(?), guix-home-profile(?), guix-user-profile(?),
-  ;; guix-pulled-profile(?)
-  ;; guix-system-profile (lacks ? method)
+  ;; each of these has a method ending with "?" except guix-system-profile
+  ;;
+  ;; guix-profile\??, guix-home-profile\??, guix-user-profile\??,
+  ;; guix-pulled-profile\??, guix-system-profile
+  ;;
+  ;;  (lacks ? method)
   (let ((profile-path (or profile-path guix-pulled-profile)))
     `((load-path . ,(expand-file-name "share/guile/3.0/site"
                                       profile-path))

@@ -314,7 +314,6 @@
 
                   ;; misc
                   "emacs-tldr"
-                  "emacs-google-translate"
 
                   ;; processes/services
                   "emacs-prodigy"
@@ -600,9 +599,6 @@
    guix-emacs-vhash))
 
 ;;*** Org: Straight
-;; "smiles"
-;; "ob-smiles"
-;; "ob-"
 
 ;;*** Org Babel
 ;;*** Org Capture
@@ -616,6 +612,7 @@
    'natlang
    (list->vlist '("emacs-spell-fu"
                   ;; "emacs-wordgen" ;very cool, but too dynamic
+                  "emacs-kanji"
 
                   ;; pulls in wordnet as propagated input
                   "emacs-synosaurus"))
