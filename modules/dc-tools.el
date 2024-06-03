@@ -215,6 +215,11 @@
 
 ;;** password-store.el
 
+;; access the password store
+
+(setup (:pkg password-store)
+  (:option password-store-time-before-clipboard-restore 15))
+
 ;;** Pass.el
 
 ;; Pass.el mostly is used to edit/manage the (a) password store.  pass-view-mode
