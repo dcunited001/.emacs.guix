@@ -655,6 +655,17 @@
   (:with-hook emacs-startup-hook
     (:hook editorconfig-mode)))
 
+;;*** Re-Builder
+
+;; https://www.masteringemacs.org/article/re-builder-interactive-regexp-builder
+
+(setup re-builder
+  ;; reb-re-syntax: sets the default regexp system (no PCRE available), change
+  ;; with C-c TAB.
+  ;;
+  ;; rx, string, read (deprecated: sregex, lisp-re)
+  (:option reb-re-syntax 're))
+
 ;;*** Indentation
 
 (setq-default tab-width 2
@@ -1440,6 +1451,8 @@ but can't be jumped to or from."
     "Set workspace buffer list for consult-buffer.")
   (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
+;;**** Consult Dir
+
 (with-eval-after-load 'consult
   (setup (:pkg consult-dir)
     (:option consult-dir-project-list-function #'consult-dir-project-dirs)))
@@ -1490,6 +1503,7 @@ but can't be jumped to or from."
       (require 'consult-recoll)
       (consult-customize consult-recoll :preview-key "C-M-m"))))
 
+  ;; - or `consult-codesearch-csearchindex' in .dir-locals
 ;;*** Marginalia
 
 (setup (:pkg marginalia)

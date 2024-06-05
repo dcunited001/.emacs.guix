@@ -2,8 +2,7 @@
 #+DESCRIPTION: Sporked from daviwil/dotfiles
 
 Based on the =.emacs.d= config in the [[https://github.com/daviwil/dotfiles/tree/guix-home][guix-home branch of daviwil/dotfiles]]. His
-config allows you to easily combine dependencies pulled from straight or
-guix.
+config allows you to easily combine dependencies pulled from straight or guix.
 
 #+begin_quote
 Considering the guix packages just updated Emacs 29 -> 30 underneath me while
@@ -12,11 +11,15 @@ I was migrating dotfiles and I only noticed in the `guix pull` output...
 ... then I think that this system may work out alright.
 #+end_quote
 
+Note: the Guix manifest for this project -- the =emacs-g.scm= file which should
+be =manifest.scm= -- probably includes some custom packages only found in my
+dotfiles channel. [[https://www.reddit.com/r/NixOS/comments/131fvqs/can_someone_explain_to_me_what_a_flake_is_like_im/][As soon as you nix.flake, everone else will too.]]
+
 * Setup
 
 Assumed file paths are found in =./init.el=
 
-Emacs paths & variables.
+Emacs paths & variables
 
 |------------------+------------------------+-------------------------|
 | var              | value                  | description             |
@@ -38,7 +41,7 @@ Org paths & variables
 | org-roam-db-location |                      | may exhibit problems with syncthing |
 |----------------------+----------------------+-------------------------------------|
 
-Other files:
+Other files
 
 |-----+-------+-------------|
 | var | value | description |

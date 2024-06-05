@@ -387,7 +387,7 @@
                   ;; ARES
                   "emacs-eros"          ; req for arei.el
                   "emacs-sesman"        ; req for arei.el
-                  "emacs-arei"
+                  ;; "emacs-arei"       ; install with straight
 
                   ;; install guile-ares-rs in project/directory.  if
                   ;; arei-mode-auto non-nil, it enables itself on all scheme
