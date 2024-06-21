@@ -270,12 +270,23 @@
     (:option
      ;; start with empty org-agenda-files
      org-agenda-files '()
+
+     ;; org-habit
+     org-habit-show-habits t            ; default
+     org-habit-show-habits-only-for-today nil
+
+     ;; org-clock
      org-clock-auto-clockout-timer 300
      org-clock-history-length 25
 
      org-clock-in-switch-to-state "STRT"
      org-clock-out-switch-to-state "HOLD"
      org-clock-out-remove-zero-time-clocks t
+
+     ;; org-clock-persist
+     org-clock-persist t
+     org-clock-persist-query-save t
+     org-clock-persist-query-resume nil     ; default
 
      ;; org-log-into-drawer t ;; use #+STARTUP: logdrawer
      org-log-done 'time

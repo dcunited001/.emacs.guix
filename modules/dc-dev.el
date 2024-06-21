@@ -645,6 +645,8 @@ when a new treesitter gramar has been added to the Guix profile."
 
 (add-to-list 'minions-prominent-modes 'edebug-mode)
 
+(setup (:pkg casual-edebug :straight t))
+
 ;; NOTE: doesn't work (separate debugging system, hoped to get lucky)
 ;; (add-to-list 'gud-tooltip-modes 'emacs-lisp-mode)
 

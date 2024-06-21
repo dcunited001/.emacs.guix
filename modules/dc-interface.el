@@ -1050,6 +1050,11 @@ but can't be jumped to or from."
 
 (set-fringe-mode 10)       ; Give some breathing room
 
+;;*** Evaluation Overlays (eros)
+
+(setup (:pkg eros-mode)
+  (:when-loaded (eros-mode +1)))
+
 ;;*** Tabs
 
 ;; TODO: move mode-line-position to tab-bar
@@ -1503,7 +1508,16 @@ but can't be jumped to or from."
       (require 'consult-recoll)
       (consult-customize consult-recoll :preview-key "C-M-m"))))
 
+;;**** Consult Codesearch
+
+(defun dc/consult-codesearch-setup ()
+  ;; three interactive functions: consult-codesearch,-build-index,find-file
+  ;;
+  ;; - set CSEARCHINDEX in direnv
   ;; - or `consult-codesearch-csearchindex' in .dir-locals
+  (setup (:pkg consult-codesearch :straight t :type git :flavor melpa
+               :host github :repo "youngker/consult-codesearch.el")))
+
 ;;*** Marginalia
 
 (setup (:pkg marginalia)
