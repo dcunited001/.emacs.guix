@@ -17,6 +17,36 @@ dotfiles channel. [[https://www.reddit.com/r/NixOS/comments/131fvqs/can_someone_
 
 * Setup
 
+#+begin_quote
+Doom Emacs wasn't built in a day.
+#+end_quote
+
+... So expect some snags along the way.
+
+#+begin_quote
+Not a bene: maintaining the profile currently requires (in this order).
+
++ Run =M-x straight-pull-all= before closing the emacs server
++ Run =gmacs -- -q= for a fresh process. Keep the server open for a great good.
++ =M-:= and run =(load (expand-file-name "init.el" dc/emacs-d))=
++ Then =M-x straight-rebuild-all=
+
+Or maybe just delete =~/.emacs.g/straight/repos/straight.el/straight.eln= and
+run =M-x straight-rebuild-all= after probably one error, followed by
+=straight-rebuild-all=. This avoids the need for =obarray= gymnastics.
+
+Or travel in time and try to fix Doom Emacs environment/dotfiles from
+configuring Guile scheme incorrectly.
+#+end_quote
+
+If the Guix profile contains an updated version of Emacs /whose/ =*.eln= /is no
+longer compatible/, you may get weird behavior. I'm not sure what kind of wierd
+that is, which is exactly the kind of /undefined/ that I'd prefer to avoid. I
+haven't had many problems in the past, but keeping =~/.emacs.g/straight= does
+seem to improve performance.
+
+** Paths
+
 Assumed file paths are found in =./init.el=
 
 Emacs paths & variables
@@ -294,6 +324,11 @@ are active and both think they own all the files.
 
 * Notes
 
+TL;DR; for a better teleological overview on workflow why & how for...
+
++ org-agenda :: see [[http://doc.norang.ca/org-mode.html][Organize Your Life In Plain Text]] or [[https://www.youtube.com/@koenighaunstetten][Rainer König's Youtube]]
++ org-roam zettelkasten :: see [[https://github.com/Vidianos-Giannitsis/Dotfiles/blob/master/emacs/.emacs.d/libs/zettelkasten.org][Vidianos-Giannitsis/Dotfiles/emacs/.emacs.d/libs/Zettelkasten.org]]
+
 ** Org Agenda
 
 *** Priorities
@@ -334,11 +369,11 @@ control when needed.
 ** Learning Org Agenda
 
 For an overview from an experienced org-agenda user, see [[http://doc.norang.ca/org-mode.html][Organize Your Life In
-Plain Text]]. It's pretty much the definitive guide on the subject. There are
-also these videos from [[https://www.youtube.com/@koenighaunstetten][Rainer König]], which are by far the best videos for
-explaining the "why" behind using org-agenda's features in addition to the
-how. And it's the why that's very difficult to figure out on your own without
-being able to simply immitate someone else's patterns.
+Plain Text]]. It's pretty much the definitive guide on the subject. There are also
+these videos from [[https://www.youtube.com/@koenighaunstetten][Rainer König]], which are by far the best videos for explaining
+the "why" behind using org-agenda's features in addition to the how. And it's
+the why that's very difficult to figure out on your own without being able to
+simply immitate someone else's patterns.
 
 There are features of org-agenda which if you don't use, then you're not really
 using org-agenda -- in which case you're likely generating large volumes of text

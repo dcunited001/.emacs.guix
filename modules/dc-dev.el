@@ -223,6 +223,12 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;*** Combobulate
 
+;; NOTE: need to understand how the macro (with-navigation-nodes ...) operates
+;; on -manipulation-edit-procedures (see -edit-cluster-dwim)
+;;
+;; the edit procedures are defined per-language (html, json, js, yaml, etc), but
+;; how do i know whether I'm on one of these special node types?
+
 ;; requires tempo,treesit
 
 ;; https://github.com/mickeynp/combobulate
@@ -645,7 +651,14 @@ when a new treesitter gramar has been added to the Guix profile."
 
 (add-to-list 'minions-prominent-modes 'edebug-mode)
 
-(setup (:pkg casual-edebug :straight t))
+;; TODO: toggle-debug-on-quit; (edebug-goto-here)
+
+;; TODO: setup casual-edebug
+
+;; - set trace mode (step?, trace, go?)
+;; - see also eros (overlays)
+
+;; (setup (:pkg casual-edebug :straight t))
 
 ;; NOTE: doesn't work (separate debugging system, hoped to get lucky)
 ;; (add-to-list 'gud-tooltip-modes 'emacs-lisp-mode)

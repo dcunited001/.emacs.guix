@@ -193,7 +193,7 @@ Guix channel.")
 
               ;; see 'org-bibtex-types for the 14 official types
               ;; dc/aca-bibtex-types (list :article :book :techreport :manual)
-              dc/aca-subpaths (list "articles" "books" "texts")
+              dc/aca-subpaths (list "articles" "books" "texts" "collections")
 
               ;; both citar and org-ref want these to end in a slash
               ;; citar magically agrees on on the citekey org-ref uses to create PDF's
@@ -205,13 +205,18 @@ Guix channel.")
               dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
               dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
               dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
+              dc/aca-collections-directory (expand-file-name "collections/" dc/aca-doc-root)
+              dc/aca-collections-bibtex (expand-file-name "noter/collections.bib" org-roam-directory)
 
               dc/aca-library-paths (list dc/aca-texts-directory
                                          dc/aca-articles-directory
-                                         dc/aca-books-directory)
+                                         dc/aca-books-directory
+                                         dc/aca-collections-directory)
               dc/aca-bibtex-files (list dc/aca-texts-bibtex
                                         dc/aca-articles-bibtex
-                                        dc/aca-books-bibtex))
+                                        dc/aca-books-bibtex
+                                        dc/aca-collections-bibtex))
+
 
 (dolist (el dc/aca-bibtex-files)
   (unless (file-exists-p el)
