@@ -380,9 +380,9 @@
 (setup (:pkg ef-themes)
   (:option ef-themes-mixed-fonts t
            ef-themes-to-toggle '(ef-bio ef-cherie))
-  ;; i open other emacs windows often and i like theme to look distinct so
-  ;; buffers don't start munching each other's files (apparently tramp handles
-  ;; this well...  so maybe not a problem))
+  ;; i open other emacs +windows+... emacs processes often and i like theme 2
+  ;; look distinct so buffers don't start munching each other's files
+  ;; (apparently tramp handles this well...  so maybe not a problem))
   (:with-hook emacs-startup-hook (:hook ef-themes-load-random))
   (:with-hook desktop-after-read-hook
     (:hook ;; #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))
@@ -1052,7 +1052,7 @@ but can't be jumped to or from."
 
 ;;*** Evaluation Overlays (eros)
 
-(setup (:pkg eros-mode)
+(setup (:pkg eros :straight t)
   (:when-loaded (eros-mode +1)))
 
 ;;*** Tabs

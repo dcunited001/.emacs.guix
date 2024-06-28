@@ -719,6 +719,7 @@ when a new treesitter gramar has been added to the Guix profile."
 ;;**** ARES
 
 ;; sesman-browser-link-with-buffer: guix.el needed to make this simple
+(setup (:pkg sesman :straight t))
 
 (setup (:pkg arei :straight t :host sourcehut :repo "abcdw/emacs-arei")
   (:option arei-mode-auto nil))

@@ -94,9 +94,7 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'config
-   (list->vlist '(
-                  ;; "emacs-gcmh" ;; hmmmmm
-                  ))
+   (list->vlist '("emacs-gcmh"))
    guix-emacs-vhash))
 
 ;;*** Input
@@ -385,9 +383,9 @@
                   ;; "emacs-geiser-racket"
 
                   ;; ARES
-                  "emacs-eros"          ; req for arei.el
-                  "emacs-sesman"        ; req for arei.el
-                  ;; "emacs-arei"       ; install with straight
+                  ;; "emacs-eros"          ; req for arei.el
+                  ;; "emacs-sesman"        ; req for arei.el
+                  ;;; "emacs-arei"       ; install with straight
 
                   ;; install guile-ares-rs in project/directory.  if
                   ;; arei-mode-auto non-nil, it enables itself on all scheme
@@ -402,13 +400,13 @@
                   ;; "emacs-elisp-refs"
                   "emacs-elisp-demos"
 
-                  "emacs-clojure-mode"
-                  ;; "emacs-clojure-snippets"
-                  "emacs-cider"
-                  ;; "emacs-clj-deps-new"
-                  "emacs-clj-refactor"
-                  "emacs-parseedn"
-                  "emacs-parseclj"
+                  ;; "emacs-clojure-mode"
+                  ;;; "emacs-clojure-snippets"
+                  ;; "emacs-cider"
+                  ;;; "emacs-clj-deps-new"
+                  ;; "emacs-clj-refactor"
+                  ;; "emacs-parseedn"
+                  ;; "emacs-parseclj"
 
                   ;; "emacs-scala-mode"
                   ;; "emacs-sbt-mode"

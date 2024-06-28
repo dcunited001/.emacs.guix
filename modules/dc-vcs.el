@@ -46,8 +46,14 @@
 
 ;;** Git
 
+;; + (git-link) doesn't work for repositories inside a repo superproject
+;;
+;; + C-u `git-link' does work, but needs to have `git-link-use-commit' set
+
 (setup (:pkg git-link)
-  (:option git-link-open-in-browser t))
+  (:option git-link-open-in-browser t
+           git-link-use-commit t))
+
 
 ;;*** Git Timemachine
 ;; control-f8, like facebook's conference

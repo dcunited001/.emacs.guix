@@ -60,7 +60,7 @@
     (add-to-list 'major-mode-remap-alist '(clojurec-mode . clojure-ts-mode))))
 
 ;;*** Clojure
-(setup (:pkg clojure-mode)
+(setup (:pkg clojure-mode :straight t)
   (:option clojure-toplevel-inside-comment-form t
            clojure-thread-all-but-last t
 
@@ -72,7 +72,7 @@
   ;; (:hook format-other-mode)
   )
 
-(setup (:pkg clojure-ts-mode
+(setup (:pkg clojure-ts-mode :straight t
              :straight t
              :host github
              :repo "clojure-emacs/clojure-ts-mode"
@@ -80,7 +80,7 @@
 
 ;; TODO jarchive-setup (karthink)
 
-(setup (:pkg clj-refactor)
+(setup (:pkg clj-refactor :straight t)
   (:option
 
    ;; ns
@@ -102,8 +102,8 @@
    ;; cljr-warn-on-eval nil
    ))
 
-(setup (:pkg parseedn))
-(setup (:pkg parseclj))
+(setup (:pkg parseedn :straight t))
+(setup (:pkg parseclj :straight t))
 
 ;; TODO: zprint-mode?
 ;; (add-hook 'clojure-mode-hook 'zprint-mode)

@@ -15,7 +15,9 @@
 ;; The default is 800 kilobytes.  Measured in bytes.
 ;; hitting this 30 times in startup with 50 MB
 ;; 27 with 100 MB
-(setq gc-cons-threshold (* 100 (expt 2 20)))
+
+;; (setq gc-cons-threshold (* 100 (expt 2 20)))
+(setq gc-cons-threshold most-positive-fixnum)
 
 ;;** System Identification
 
@@ -189,33 +191,37 @@ Guix channel.")
 ;;   they're doing here and typically leave notes wherever. doesn't
 ;;   matter. </joking>
 
-(setq-default dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
+(setq-default
+ dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
 
-              ;; see 'org-bibtex-types for the 14 official types
-              ;; dc/aca-bibtex-types (list :article :book :techreport :manual)
-              dc/aca-subpaths (list "articles" "books" "texts" "collections")
+ ;; for the 14 official types
+ ;; + see 'org-bibtex-types
+ ;; + or https://bibtex.eu/types/
+ ;;
+ ;; + dc/aca-bibtex-types (list :article :book :techreport :manual)
+ dc/aca-subpaths (list "article" "book" "text" "incollection")
 
-              ;; both citar and org-ref want these to end in a slash
-              ;; citar magically agrees on on the citekey org-ref uses to create PDF's
-              dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
+ ;; both citar and org-ref want these to end in a slash
+ ;; citar magically agrees on on the citekey org-ref uses to create PDF's
+ dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
 
-              dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
-              dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
-              dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
-              dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
-              dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
-              dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
-              dc/aca-collections-directory (expand-file-name "collections/" dc/aca-doc-root)
-              dc/aca-collections-bibtex (expand-file-name "noter/collections.bib" org-roam-directory)
+ dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
+ dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
+ dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
+ dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
+ dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
+ dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
+ dc/aca-collections-directory (expand-file-name "collections/" dc/aca-doc-root)
+ dc/aca-collections-bibtex (expand-file-name "noter/collections.bib" org-roam-directory)
 
-              dc/aca-library-paths (list dc/aca-texts-directory
-                                         dc/aca-articles-directory
-                                         dc/aca-books-directory
-                                         dc/aca-collections-directory)
-              dc/aca-bibtex-files (list dc/aca-texts-bibtex
-                                        dc/aca-articles-bibtex
-                                        dc/aca-books-bibtex
-                                        dc/aca-collections-bibtex))
+ dc/aca-library-paths (list dc/aca-texts-directory
+                            dc/aca-articles-directory
+                            dc/aca-books-directory
+                            dc/aca-collections-directory)
+ dc/aca-bibtex-files (list dc/aca-texts-bibtex
+                           dc/aca-articles-bibtex
+                           dc/aca-books-bibtex
+                           dc/aca-collections-bibtex))
 
 
 (dolist (el dc/aca-bibtex-files)
@@ -309,6 +315,13 @@ Guix channel.")
 
 (require 'dw-core)
 
+(setup (:pkg gcmh)
+  (:option gcmh-idle-delay 'auto
+           gcmh-idle-delay-factor 10
+           gcmh-high-cons-threshold (* 16 (expt 2 20)))
+  (:with-hook 'server-after-make-frame-hook
+    (:hook #'gcmh-mode)))
+
 (require 'dc-support)
 (require 'dc-network)
 
@@ -392,6 +405,8 @@ Guix channel.")
 ;;**** Start the Daemon
 (server-start)
 
-(setq gc-cons-threshold (* 50 (expt 2 20)))
+;; doom hooks gcmh-mode when the first buffer is loaded.
+;; (setq gc-cons-threshold (* 50 (expt 2 20)))
+(setq gc-cons-threshold (* 16 (expt 2 20)))
 
 (alert "Emacs server ready." :title "Emacs GC:")

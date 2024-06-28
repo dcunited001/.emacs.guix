@@ -26,7 +26,7 @@
 
 ;;*** Fix config files
 
-(add-to-list 'auto-mode-alist '("config\\.scm\\'" . scheme-mode) t)
+(add-to-list 'auto-mode-alist '("config\\.scm\\'" . scheme-mode))
 
 ;;*** Fix cmake files
 (add-to-list 'auto-mode-alist '("^CMakeLists\\.txt$\\'" . cmake-ts-mode))
@@ -38,8 +38,8 @@
 
 ;; ("\\.\\(?:PDF\\|EPUB\\|CBZ\\|FB2\\|O?XPS\\|DVI\\|OD[FGPST]\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|epub\\|cbz\\|fb2\\|o?xps\\|djvu\\|dvi\\|od[fgpst]\\|docx\\|xlsx?\\|pptx?\\)\\'" . doc-view-mode-maybe)
 
-;; (add-to-list 'auto-mode-alist `(,(rx ".pdf'") . pdf-view-mode))
-;;
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+
 
 ;; (setq org-noter-supported-modes '(pdf-view-mode doc-view-mode nov-mode djvu-read-mode))
 

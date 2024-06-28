@@ -366,11 +366,15 @@
   (setup (:pkg org-noter :straight t :type git :flavor melpa
                :host github
                :repo "org-noter/org-noter"
-               :files ("*.el" "modules" "org-noter-pkg.el"
+               :files ("*.el" "modules/*.el"
+                       "other/org-noter-citar.el"
                        (:exclude "*-test-utils.el" "*-devel.el")))
-    (:option org-noter-notes-search-path dc/aca-notes-path)
+    (:option org-noter-notes-search-path dc/aca-notes-path
+             org-noter-supported-modes '(pdf-view-mode))
     (with-eval-after-load 'org-noter
-      (require 'org-noter-pdf))))
+      (require 'org-noter-pdf)
+      ;; NOTE: this module isn't baked in by default
+      (require 'org-noter-citar))))
 
 ;;*** Roam
 

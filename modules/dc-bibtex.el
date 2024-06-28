@@ -43,7 +43,7 @@
            bibtex-completion-notes-path dc/aca-notes-path
            bibtex-file-path dc/aca-notes-path
 
-           ;; TODO template for org-bibtex-type :book and maybe :techmanual
+           ;; TODO org-bibtex-type templates :book, :text, :techmanual (maybe)
            bibtex-completion-display-formats
 
            '((article
@@ -149,10 +149,51 @@ be explicitly required after loading"
      :target
      (file+head
       "noter/${citar-citekey}.org"
-      "#+title: (${citar-date}) ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n+ file :: ${citar-citekey}.pdf\n\n* Notes\n:PROPERTIES:\n:END:\n\n")))
+      ;; TODO: fix the NOTER_DOCUMENT (also may need to be under a node anyways)
+      ":PROPERTIES:
+:NOTER_DOCUMENT: %(dc/citar-get-citekey-files \"%{citar-citekey}\")
+:END:
+#+title: (${citar-date}) ${note-title}.
+#+created: %U
+#+last_modified: %U
+
++ file :: ${citar-citekey}.pdf
+
+* Notes
+:PROPERTIES:
+:END:
+"
+      )))
   (citar-org-roam-mode)
   (require 'citar-embark)
   (citar-embark-mode))
+
+;; alternative hooks (these won't work because of lexical binding (i think)
+;; 'org-capture-before-finalize-hook -- citekey not in closure
+;; 'org-roam-capture-preface-hook -- ominous docstring
+;; 'org-roam-capture-new-node-hook -- just right
+;; (add-hook 'org-roam-capture-new-node-hook
+;;           #'dc/org-roam-citar-add-noter-document)
+
+(defun dc/citar-get-citekey-files (citekey)
+  (gethash citekey
+           (citar--get-resources citekey
+                                 (mapcar (lambda (source)
+                                           (plist-get source :items))
+                                         citar-file-sources))))
+
+(defun dc/org-roam-citar-add-noter-document ()
+  (if (bound-and-true-p citekey)
+      (pp citekey)
+    (message "citekey not found"))
+  (when-let ((citekey (bound-and-true-p citekey))
+             ;; nil if not found, list if found
+             (citefiles (dc/citar-get-citekey-files citekey)))
+    ;; (cl-dolist 'cf citefiles)
+    ;; only add first in list
+    (org-roam-property-add "NOTER_DOCUMENT" (car citefiles))))
+
+
 
 ;; `("n" topics
 ;;   plain "%?" :unnarrowed t
