@@ -161,7 +161,7 @@
   (let ((current-prefix-arg (ash #x1 2)))
     (project-find-regexp regexp)))
 
-;;*** Buffers
+;;** Buffers
 
 ;; Revert Dired and other buffers
 (setq global-auto-revert-non-file-buffers t
@@ -172,7 +172,7 @@
 ;; Revert buffers when the underlying file has changed
 (global-auto-revert-mode 1)
 
-;;**** Bufler
+;;*** Bufler
 
 (setup (:pkg bufler :straight t :type git :flavor melpa
              :host github :repo "alphapapa/bufler.el"
@@ -209,7 +209,7 @@
 
 ;;       dc/bufler-special-special)
 
-;;***** Bufler defgroups
+;;**** Bufler defgroups
 
 ;; TODO: refactor the memoization of dc/bufler-groups-.*
 ;;
@@ -323,7 +323,7 @@
 ;; interactive functions with alternate specs is complicated. bufler uses
 ;; cl-defun specs.
 
-;;***** Bufler advice
+;;**** Bufler advice
 
 ;; TODO: implement bufler-switch-advice
 (defun dc/toggle-bufler-switch-advice ()
@@ -342,9 +342,9 @@
 (with-eval-after-load 'bufler
   (advice-add 'bufler-switch-buffer :before #'ace-select-window))
 
-;;*** Minibuffer
+;;** Minibuffer
 
-;;**** Minibuffer history
+;;*** Minibuffer history
 
 ;; TODO: review savehist-file: .emacs.g/var/savehist.el
 (setup savehist
@@ -356,7 +356,7 @@
   (put 'minibuffer-history 'history-length 25)
   (put 'kill-ring 'history-length 25))
 
-;;**** Recursive Minibuffers
+;;*** Recursive Minibuffers
 
 ;; fixes for vertico/consult
 (defun dc/crm-indicator (args)
@@ -639,7 +639,15 @@
      :title "Emacs: "
      :body "Loaded fonts")))
 
+;; NOTE: this isn't running when there is not a server....
+;; (add-hook 'after-make-frame-functions (lambda (fdsa) (alert "fdsa")))
 (add-hook 'server-after-make-frame-hook #'dc/setup-all-the-icons)
+
+;; NOTE: this doesn't run
+;; (add-hook 'after-make-frame-functions
+;;           (lambda (frame)
+;;             (unless (bound-and-true-p dc/nerd-font-entity)
+;;               (dc/setup-all-the-icons))))
 
 (defun dc/hide-icons-in-guix ()
   ;; hide icons in guix (not interactive)
