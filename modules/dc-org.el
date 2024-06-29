@@ -408,8 +408,6 @@
 ;;      (dc/delete-from-capture-list "nc" org-roam-capture-templates))
 
 (defun dc/org-init-roam-h ()
-  (require 'doom-org-roam2)
-
   (setup (:pkg org-roam)
     (:option
      org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
@@ -491,7 +489,7 @@
       "Ensure the server is active, then open the roam graph."
       (interactive)
       (unless org-roam-ui-mode (org-roam-ui-mode 1))
-      (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port))))
+      (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port)))))
 
 ;;**** Roam Slugs
 
