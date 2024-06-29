@@ -721,8 +721,26 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; sesman-browser-link-with-buffer: guix.el needed to make this simple
 (setup (:pkg sesman :straight t))
 
+;; When `arei-mode-auto' is non-nil, arei-mode enabled in scheme buffers when
+;; required. The executables from `guile-ares-rs' need to be in path. It could
+;; be added to projects. Until I have more time, I'm worried about potential
+;; conflicts if Geiser/Arei access the same Emacs features. Geiser has been a
+;; huge readblack. :(
+
+;; For simplicity, avoid Lispy's evaluation functionality, since that expects
+;; Geiser. Most of Lispy's features should work, but some may init Geiser. Lispy
+;; is unlikely for now, since each implementation is REPL-specific and usually
+;; around 3,000 LOC... The CIDER implementation should be a good reference, but
+;; it would still be challenging (not something I'm likely to do well...)
+
 (setup (:pkg arei :straight t :host sourcehut :repo "abcdw/emacs-arei")
-  (:option arei-mode-auto nil))
+  ;; doesn't disable loading the hooks because, `arei-mode-auto' retains its
+  ;; compiled-in value from the final `with-eval-after-load' default. Hopefully
+  ;; I can start using it soon
+  (:option arei-mode-auto t))
+
+(with-eval-after-load 'arei
+  (require 'sesman))
 
 ;;**** GEISER
 

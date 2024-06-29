@@ -149,11 +149,8 @@ be explicitly required after loading"
      :target
      (file+head
       "noter/${citar-citekey}.org"
-      ;; TODO: fix the NOTER_DOCUMENT (also may need to be under a node anyways)
-      ":PROPERTIES:
-:NOTER_DOCUMENT: %(dc/citar-get-citekey-files \"%{citar-citekey}\")
-:END:
-#+title: (${citar-date}) ${note-title}.
+      ;; NOTE: The NOTER_DOCUMENT must be under a heading
+      "#+title: (${citar-date}) ${note-title}.
 #+created: %U
 #+last_modified: %U
 
@@ -161,6 +158,7 @@ be explicitly required after loading"
 
 * Notes
 :PROPERTIES:
+# :NOTER_DOCUMENT: %(dc/citar-get-citekey-files \"%{citar-citekey}\")
 :END:
 "
       )))

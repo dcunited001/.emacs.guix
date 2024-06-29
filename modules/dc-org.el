@@ -400,6 +400,13 @@
 
 ;; org-roam-node-display-template
 
+(defun dc/delete-from-capture-list (key capture-list)
+  (delq (-find (lambda (x) (equal (car x) key)) capture-list)
+        capture-list))
+
+;; (setq org-roam-capture-templates
+;;      (dc/delete-from-capture-list "nc" org-roam-capture-templates))
+
 (defun dc/org-init-roam-h ()
   (require 'doom-org-roam2)
 

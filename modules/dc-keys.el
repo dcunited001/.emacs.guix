@@ -445,7 +445,8 @@
 
 (general-define-key
  :keymaps '(Info-mode-map)
- "a" #'info-apropos)
+ "a" #'info-apropos
+ "C-o" #'casual-info-tmenu)
 
 ;;** Globals
 
@@ -806,6 +807,8 @@
 
 (general-define-key
  :keymaps 'isearch-mode-map
+
+ "<f2>" #'casual-isearch-tmenu
 
  "M-e" #'consult-isearch-history   ;; orig. isearch-edit-string
  "M-s e" #'consult-isearch-history ;; orig. isearch-edit-string
@@ -1620,6 +1623,7 @@
   "s" #'flyspell-mode
   "ß" #'superword-mode
   "§" #'subword-mode
+  ;; "M-u" #'dc/toggle-casual-unicode
   "v" #'visual-line-mode
   "V" #'visual-fill-column-mode
   "C-v" #'vertico-multiform-mode
@@ -1823,6 +1827,12 @@
 ;;        :desc "Load last autosaved session"  "L" #'doom/quickload-session
 
 ;;** Tools
+
+;;*** Calc
+
+(general-define-key
+ :keymaps '(calc-mode-map calc-alg-map)
+ "C-o" #'casual-calc-tmenu)
 
 ;;*** Proced
 

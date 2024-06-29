@@ -40,23 +40,25 @@
 
 (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
 
-
-;; (setq org-noter-supported-modes '(pdf-view-mode doc-view-mode nov-mode djvu-read-mode))
-
-;; (setq org-noter-supported-modes '(pdf-view-mode nov-mode djvu-read-mode))
-
 ;;** Treesitter Auto Mode Alist
 
 ;; TODO: perhaps add yaml-ts-mode to extant snippets
 
+;; =============================================
+;;
+;; ... omfg it /WAS/ changing the order ... !@#$
+;;
+;; ... causing auto-mode-alist adjustments to elicit paradoxical behavior
+;;
+;; ---------------------------------------------
 ;; something is automatically setting up major-mode-remap-alist (I think!)
-(with-eval-after-load 'treesit
-  ;; this doesn't work bc it uses eq
-  ;; (delq "\\.ya?ml\\'" auto-mode-alist)
+;; (with-eval-after-load 'treesit
+;;   ;; this doesn't work bc it uses eq
+;;   ;; (delq "\\.ya?ml\\'" auto-mode-alist)
 
-  ;; this is complicated because it changes the order
-  (setq auto-mode-alist (a-dissoc auto-mode-alist "\\.ya?ml\\'")))
-
+;;   ;; this is complicated because it changes the order
+;;   (setq auto-mode-alist (a-dissoc auto-mode-alist "\\.ya?ml\\'")))
+;; ---------------------------------------------
 
 ;;** Babel
 

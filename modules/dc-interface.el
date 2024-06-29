@@ -376,6 +376,21 @@
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 (add-hook 'window-setup-hook #'minibuffer-depth-indicate-mode)
 
+;;** Look and Feel
+
+;;*** Casual
+
+
+
+;;*** casual-isearch
+(setup (:pkg casual-isearch :straight t))
+
+;;*** casual-info
+(setup (:pkg casual-info :straight t))
+
+;;*** casual-calc
+(setup (:pkg casual-calc :straight t))
+
 ;;*** Themes
 (setup (:pkg ef-themes)
   (:option ef-themes-mixed-fonts t
@@ -737,9 +752,13 @@
 ;;*** Activities
 
 (setup (:pkg activities :straight t :type git :flavor melpa
-             :host github :repo "alphapapa/activities.el")
-  (:with-hook emacs-startup-hook
-    (:hook activities-tabs-mode)))
+             :host github :repo "alphapapa/activities.el"))
+
+;; activities-tabs-mode prevents the frame from getting named. more frames
+;; gives more options anyways.
+
+;; (:with-hook emacs-startup-hook (:hook activities-tabs-mode))
+
 
 ;; is it possible to sync these to other computers?
 ;;
