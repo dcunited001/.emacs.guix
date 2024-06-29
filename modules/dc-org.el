@@ -493,9 +493,6 @@
       (unless org-roam-ui-mode (org-roam-ui-mode 1))
       (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port))))
 
-  ;; (advice-add #'org-roam-link-follow-link :filter-args #'org-roam-link-follow-link-with-description-a)
-  (advice-add #'org-roam-link-replace-at-point :override #'org-roam-link-replace-at-point-a))
-
 ;;**** Roam Slugs
 
 (defun dc/org-roam-insert-slug ()
@@ -529,6 +526,8 @@
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+;;***** Roam Capture: Daviwil
+
 (defun dw/org-roam-goto-month ()
   (interactive)
   (org-roam-capture- :goto (when (org-roam-node-from-title-or-alias (format-time-string "%Y-%B")) '(4))
@@ -558,11 +557,13 @@
                             (my/org-roam-filter-by-tag "Project"))
                      :templates (list dw/org-roam-project-template)))
 
+;;***** Roam Capture: System Crafters
+
+
+
 (defun my/org-roam-refresh-agenda-list ()
   (interactive)
   (setq org-agenda-files (my/org-roam-list-notes-by-tag "Project")))
-
-;;**** Roam Org Elements
 
 (defun my/org-roam-find-project ()
   (interactive)
@@ -828,6 +829,7 @@ capture was not aborted."
   ;; DOOM: ./modules/lang/org/config.el
   (pushnew! org-link-abbrev-alist
             '("github"      . "https://github.com/%s")
+            '("gitlab"      . "https://gitlab.com/%s")
             '("nyxt"        . "https://nyxt.atlas.engineer/documentation#%s")
             '("youtube"     . "https://youtube.com/watch?v=%s")
             '("google"      . "https://google.com/search?q=")

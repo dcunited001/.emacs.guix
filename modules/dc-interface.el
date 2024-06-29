@@ -325,20 +325,6 @@
 
 ;;**** Bufler advice
 
-;; TODO: implement bufler-switch-advice
-(defun dc/toggle-bufler-switch-advice ()
-  "Toggle the `ace-window' advice function on `bufler-switch-buffer'"
-  (interactive)
-  (let* ((f 'bufler-switch-buffer)
-         (sf (symbol-function f))
-         (place :before)
-         (adf #'ace-select-window)
-         (is-advice (advice--p (advice--symbol-function f))))
-    (if is-advice
-        ;; is advice should be (advice oclosure), since it's interactive
-        (advice-remove f adf)
-      (advice-add f place adf))))
-
 (with-eval-after-load 'bufler
   (advice-add 'bufler-switch-buffer :before #'ace-select-window))
 
@@ -380,16 +366,21 @@
 
 ;;*** Casual
 
-
-
-;;*** casual-isearch
-(setup (:pkg casual-isearch :straight t))
-
-;;*** casual-info
+;;**** casual-info
 (setup (:pkg casual-info :straight t))
 
-;;*** casual-calc
+;;**** casual-calc
 (setup (:pkg casual-calc :straight t))
+
+;;**** casual-isearch
+(setup (:pkg casual-isearch :straight t))
+
+;;**** casual-avy
+
+;; + Avy can jump across windows?
+;; + Copy functionality is useful
+
+(setup (:pkg casual-avy :straight t))
 
 ;;*** Themes
 (setup (:pkg ef-themes)
@@ -766,7 +757,6 @@
 ;; gives more options anyways.
 
 ;; (:with-hook emacs-startup-hook (:hook activities-tabs-mode))
-
 
 ;; is it possible to sync these to other computers?
 ;;

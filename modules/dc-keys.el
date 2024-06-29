@@ -240,6 +240,13 @@
  "M-m" #'consult-minor-mode-menu
  "M-f" #'list-faces-display)
 
+;;*** Info
+
+(general-define-key
+ :keymaps '(Info-mode-map)
+ "a" #'info-apropos
+ "C-o" #'casual-info-tmenu)
+
 ;;** Quick Map
 
 ;; NOTE: need to specify both global & help so f1 will substitute as C-h
@@ -443,11 +450,6 @@
     "gr" #'consult-gh-search-repos
     "gR" #'consult-gh-default-repos))
 
-(general-define-key
- :keymaps '(Info-mode-map)
- "a" #'info-apropos
- "C-o" #'casual-info-tmenu)
-
 ;;** Globals
 
 (general-define-key
@@ -579,6 +581,10 @@
 ;;**** Ace Jump
 ;; TODO change popper from M-`
 
+(general-define-key
+ :keymaps '(global-map)
+ "<f3>" #'casual-avy-tmenu)
+
 (leader-def
   :wk-full-keys nil
 
@@ -704,7 +710,10 @@
  "C-x d a" #'consult-dir                ;consult-dir all sources
  "C-x d d" #'dc/consult-dir-recentf
  "C-x C-d" #'dired
- "C-s" #'consult-line
+
+ "C-s" #'isearch-forward
+ "C-S" #'consult-line
+
  "C-M-j" #'consult-buffer
  "C-M-l" #'consult-imenu
  ;; "C-M-." #'embark-act
@@ -808,7 +817,8 @@
 (general-define-key
  :keymaps 'isearch-mode-map
 
- "<f2>" #'casual-isearch-tmenu
+ ;; "<f2>" #'casual-isearch-tmenu
+ "C-o" #'casual-isearch-tmenu
 
  "M-e" #'consult-isearch-history   ;; orig. isearch-edit-string
  "M-s e" #'consult-isearch-history ;; orig. isearch-edit-string

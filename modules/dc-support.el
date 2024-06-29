@@ -60,13 +60,50 @@ This is a variadic `cl-pushnew'."
 (defalias 'ppel #'pp-emacs-lisp-code)
 (defalias 'ppme #'pp-macroexpand-last-sexp)
 
+;;*** Advice
+
+;;**** Toggle Advice
+
+;; TODO: parameterize bufler-switch-advice with: (f place before)
+;; as: dc/toggle-advised-command and dc/toggle-advised-function
+
+(defun dc/toggle-bufler-switch-advice ()
+  "Toggle the `ace-window' advice function on `bufler-switch-buffer'"
+  (interactive)
+  (let* ((f 'bufler-switch-buffer)
+         ;; unused
+         (sf (symbol-function f))
+         (place :before)
+         (adf #'ace-select-window)
+         (is-advice (advice--p (advice--symbol-function f))))
+    (if is-advice
+        ;; is advice should be (advice oclosure), since it's interactive
+        (advice-remove f adf)
+      (advice-add f place adf))))
+
+(defun dc/toggle-advised-command (fsym place fn)
+  "Toggle an advised function `fn' on function symbol `fsym'."
+  ;; TODO: extend with keywords to more fully mirror the advice-add spec
+  (interactive)
+  ;; check args?
+  (let* ((is-advice (advice--p (advice--symbol-function fsym))))
+    (if is-advice
+        ;; is advice should be (advice oclosure), since it's interactive
+        (advice-remove fsym fn)
+      (advice-add fsym place fn))))
+
+;; doesn't quite work when focus is removed from help-buffer
+;; (dc/toggle-advised-command 'help-view-source :before #'ace-select-window)
+
 ;;*** Macros
+
+;;**** Toggle Variables
 
 ;; NOTE: if parsing the body to extract bindings is necessary,
 ;; use macroexp-parse-body
 (defmacro dc/toggleable-boolean (name &optional keybind)
   "Define an interactive defun to toggle the variable NAME
-along with KEYBIND, if present"
+along with KEYBIND, if present. (keybind is probably broken)."
   (declare (indent defun))
   (let* ((symname (symbol-name (or (intern-soft name) (defvar name))))
          (toggle-name (format "dc/toggle-%s" symname))
@@ -78,7 +115,8 @@ along with KEYBIND, if present"
          (list ,toggle-docstring)
          (interactive)
          (setq-default ,name (not ,name)))
-       ,(if keybind `(map! ,keybind #',toggle-sym)))))
+       ;; ,(if keybind `(map! ,keybind #',toggle-sym))
+       )))
 
 ;;*** When Exec Found
 
@@ -101,8 +139,6 @@ doesn't exist."
            ;;   ,@body)
            ,@body
          (warn "Could not find %s (remote: %s)" ,formatter-cmd remote?)))))
-
-;;*** Toggle Variables
 
 ;;** Extract Data
 
