@@ -96,7 +96,6 @@
 ;; help-mode points to the wrong locations). (setup xref ...) may be what's
 ;; causing this to happen
 
-(require 'xref)
 
 (setq xref-file-name-display 'project-relative
       ;; conflicts with consult-xref config
@@ -373,7 +372,11 @@
 (setup (:pkg casual-calc :straight t))
 
 ;;**** casual-isearch
-(setup (:pkg casual-isearch :straight t))
+;; casual-isearch-tmenu and other symbols aren't loading
+;; straight/setup aren't requiring the package (even after eval)
+(require 'isearch)
+(and (setup (:pkg casual-isearch :straight t))
+     (require 'casual-isearch))
 
 ;;**** casual-avy
 
@@ -1171,6 +1174,7 @@ but can't be jumped to or from."
                 (buffer reverse grid)   ; works for ido
                 (command reverse)
                 (consult-compile-error buffer)
+                (consult-compile-multi grid (vertico-grid-annotate . 20))
                 ;; (consult-flymake-error)
                 (consult-grep buffer)
                 (consult-git-log-grep-result buffer)
@@ -1534,6 +1538,16 @@ but can't be jumped to or from."
   ;; - or `consult-codesearch-csearchindex' in .dir-locals
   (setup (:pkg consult-codesearch :straight t :type git :flavor melpa
                :host github :repo "youngker/consult-codesearch.el")))
+
+;;**** Consult Compile-Multi
+
+(with-eval-after-load 'consult-compile  ; in dc-dev
+  (setup (:pkg consult-compile-multi :straight t :type git :flavor melpa
+               :host github :repo "mohkale/compile-multi"
+               :files ("extensions/consult-compile-multi/*.el"
+                       "consult-compile-multi-pkg.el"))
+    ;; (:option consult-compile-multi-narrow ...)
+    ))
 
 ;;*** Marginalia
 

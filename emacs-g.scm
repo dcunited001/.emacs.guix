@@ -2,7 +2,11 @@
 (use-modules (ice-9 vlist)
              (ice-9 match)
              ;; (ice-9 pretty-print)
-             (gnu packages guile))
+             (guix transformations)
+             (gnu packages guile)
+             (gnu packages emacs)
+             (gnu packages emacs-xyz)
+             (ellipsis packages emacs-xyz))
 
 ;; export DEBUG=1 when running update-emacs-g
 ;;
@@ -33,6 +37,7 @@
                   "git:send-email"
                   "sound-theme-freedesktop"
                   "tidy-html"
+                  "shellcheck"
 
                   ;; detached.el
                   "dtach"
@@ -125,7 +130,6 @@
    (list->vlist '("emacs-vertico"
                   "emacs-corfu"
                   "emacs-orderless"
-
                   "emacs-consult"
                   "emacs-consult-yasnippet"
                   "emacs-consult-org-roam"
@@ -135,7 +139,6 @@
                   ;; "emacs-consult-eglot" ;; 0.2.0 does not include fix to #14
                   "emacs-consult-bibtex"
                   "emacs-cape"
-
                   "emacs-wgrep"
                   "emacs-marginalia"
                   "emacs-embark"))
@@ -278,14 +281,14 @@
                   "emacs-git-timemachine"
 
                   ;; until magit-4 is published, use straight packages (also re-enable graphql above)
-                  ;; "emacs-magit"
+                  "emacs-magit"
                   ;; "emacs-magit-todos"
                   ;; "emacs-forge"
 
 ;;;; "emacs-ghub" ;; propagated by graphql
                   "emacs-srht"
 
-                  "emacs-repo"
+                  ;; transform: "emacs-repo"
                   "emacs-repology"
                   ))
    guix-emacs-vhash))
@@ -653,10 +656,10 @@
    (assemble-pkg-vlist guix-emacs-vhash))
   '(
 
-    ;; n/a, unless improved tab behavior
-    ;; "emacs-perspective"
+      "emacs-xref"
+      "emacs-project"
+      "emacs-jsonrpc"
 
-    "emacs-project"
     "emacs-projectile"
     "ripgrep"                     ; For counsel-projectile-rg (doom?) and others
 

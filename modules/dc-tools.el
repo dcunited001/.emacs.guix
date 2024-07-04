@@ -207,7 +207,12 @@
 ;; (rpm-spec-mode :type git :flavor melpa :host github :repo "stigbjorlykke/rpm-spec-mode")
 
 ;;** Builds
-(setup (:pkg makefile-executor :straight t))
+
+;; configure in dc-dev instead?
+
+;; (runs a formatted %string)
+;; (setup (:pkg makefile-executor :straight t))
+
 ;; TODO project-aware dispatch of (makefile-executor-...)
 ;; - equivalent to doom's (+make/run)
 

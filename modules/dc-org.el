@@ -170,11 +170,26 @@
   (plist-put org-format-latex-options :scale 1.5)
 
   ;;** Refile
-  (setq org-refile-targets `((nil :maxlevel . 3)
-                             (org-agenda-files :maxlevel . 2)
-                             (org-default-notes-file :maxlevel . 2))
-        org-outline-path-complete-in-steps nil
-        org-refile-use-outline-path 'file)
+
+  ;; TODO: customize refile targets! accepts function in list (or use
+  ;; .dir-locals where needed)
+
+  (defun dc/org-refile-project-current-targets ()
+    (let* ((may-prompt t)                ; should i passthrough prompt?
+          (p (dc/project-local-root may-prompt))
+          (files (list dc/org-capture-todo-file)))
+      (mapcar (apply-partially #'file-name-concat p) files)))
+
+  ;; dc/project-local-root: override by setting 'project-current-directory-override'
+  ;;
+  ;; NOTE: it blows up if nil, so org-refile may need a nil-coelescing wrapper
+  (setq-default org-refile-targets
+                `((nil . (:maxlevel . 3))
+                  (dc/org-refile-project-current-targets . (:maxlevel 2))
+                  (org-agenda-files . (:maxlevel . 2))
+                  (org-default-notes-file . (:maxlevel . 2)))
+                org-outline-path-complete-in-steps nil
+                org-refile-use-outline-path 'file)
 
   ;; Automatic indent detection in org files is meaningless
   ;; (add-to-list 'doom-detect-indentation-excluded-modes 'org-mode)
@@ -406,6 +421,25 @@
 
 ;; (setq org-roam-capture-templates
 ;;      (dc/delete-from-capture-list "nc" org-roam-capture-templates))
+
+;; =============================================
+;; TODO: org-roam-refile:
+;; ---------------------------------------------
+
+;; this gives you a bit of flexibility for global refiles to roam nodes without
+;; the hassel of plan, config emacs, update doc/project configs. it has
+;; basically zero dependencies on org-refile (org-roam has few deps on
+;; org-agenda, which is entirely for the best
+
+;; IMO: there's emacs ... then there's emacs+(org) ...  then theres
+;; emacs+(org+agenda)+(not gonna help if you dont use it habitually/correctly)
+
+;; ---------------------------------------------
+;; org-reverse-note-order would be useful for org-roam-refile
+
+;; (setq-default org-reverse-note-order
+;; (list (cons (rx ...) 't))
+;; ---------------------------------------------
 
 (defun dc/org-init-roam-h ()
   (setup (:pkg org-roam)

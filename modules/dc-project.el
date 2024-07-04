@@ -22,12 +22,14 @@
 ;; SOFTWARE.
 
 ;;* Project
-(require 'project)
 
 ;;** Project.el
 
 (setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo")
       project-kill-buffers-display-buffer-list t)
+
+(setq-default project-compilation-buffer-name-function #'project-prefixed-buffer-name
+              compile-multi-default-directory #'dc/project-local-root)
 
 ;; from SystemCrafters Code Dive: Project.el
 ;;
@@ -81,14 +83,17 @@
     (when tab-index
       (tab-bar-close-tab (1+ tab-index)))))
 
+;;*** Project.el Backends
 
+;; These should useally be done in the `'dc-dev-lang' module
 
-;; projectile-auto-discover is nil
-;; trigger project auto-discovery with projectile-discover-projects-in-search-path
-
+;; https://vannilla.org/write/1609258895/article.html
 
 
 ;;** Projectile
+
+;; projectile-auto-discover is nil
+;; trigger project auto-discovery with projectile-discover-projects-in-search-path
 
 ;; NOTE: I'm not currently using this
 

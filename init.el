@@ -3,6 +3,10 @@
 (require 'a)
 (require 'xdg)
 
+;; features
+;; c-emacs-features
+;; system-configuration-features
+
 ;;* Init
 
 ;; Profile emacs startup
@@ -253,20 +257,38 @@ Guix channel.")
 (let ((deps-from-guix
        '(pdf-tools org which-key hydra compat ; magit eglot
                    embark consult corfu cape vertigo marginalia
+                   xref project eldoc eglot jsonrpc flymake track-changes
                    flycheck
                    orderless kind-icon)))
   (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
         deps-from-guix))
 
-;;*** Load Eglot Early
+;;*** Require Early Packages
 
 ;; The newer version of eglot 0.17 has a lot of improvements over what's bundled
 ;; with 29.1 and 29.2. This seems to load eglot through straight
 
-(setup (:pkg eglot :straight t :type git
-             :host github :repo "emacs-straight/eglot"
-             :files ("*" (:exclude ".git")))
-  (require 'eglot))
+(require 'eglot)
+(require 'project)
+(require 'xref)
+(require 'eldoc)
+(require 'jsonrpc)
+
+(defun dc/straight-flatten-dependencies (&rest pkgnames)
+  (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependencies pkgnames)))))
+
+(defun dc/straight-flatten-dependents (&rest pkgnames)
+  (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependendents pkgnames)))))
+
+;; eglot:
+;; ("compat" "eldoc" "external-completion" "flymake" "jsonrpc" "project" "seq" "track-changes" "xref")
+;;
+;; consult:
+;; nil (not loaded by straight this session)
+;;
+;; consult-eglot:
+;; ("compat" "consult" "eglot" "eldoc" "external-completion" "flymake" "jsonrpc" "project" "seq" "track-changes" "xref")
+
 
 ;;** Core
 

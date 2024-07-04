@@ -161,9 +161,22 @@ compilation was initiated from compile-mode."
   (when (not (derived-mode-p 'grep-mode))
     (dc/compilation-start-alert proc)))
 
-(setup compile
-  (:option compilation-scroll-output t
-           compilation-start-hook #'dc/compilation-start-hook))
+
+(with-eval-after-load 'compile
+  (setup (:pkg compile-multi :straight t :type git :flavor melpa
+               :host github :repo "mohkale/compile-multi")))
+
+;; example of customizing comint
+;;
+;; https://github.com/hvesalai/emacs-sbt-mode/blob/master/sbt-mode-comint.el
+
+;; compilation-shell-minor-mode works with shell-mode (or comint-mode derivatives)
+;;
+;; https://www.masteringemacs.org/article/compiling-running-scripts-emacs
+
+(require 'compile)
+(setq-default compilation-scroll-output t
+              compilation-start-hook #'dc/compilation-start-hook)
 
 ;; TODO: compile-mode-hook
 
@@ -833,6 +846,9 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;** Shell
 
+;; there is also flycheck-shellcheck, but the same functionality is built into emacs
+;; (require 'flymake-shellcheck)
+
 ;;*** VTerm
 
 ;; TODO: per-project vterm
@@ -896,6 +912,8 @@ when a new treesitter gramar has been added to the Guix profile."
   (:with-hook org-mode-hook
     (:hook yas-minor-mode))
   (:with-hook LaTeX-mode-hook
+    (:hook yas-minor-mode))
+  (:with-hook latex-mode-hook
     (:hook yas-minor-mode))
   (:with-hook yaml-mode-hook
     (:hook yas-minor-mode))

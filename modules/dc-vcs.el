@@ -46,14 +46,24 @@
 
 ;;** Git
 
-;; + (git-link) doesn't work for repositories inside a repo superproject
+;; + inside a superproject, git-link breaks if there isn't an "origin"
 ;;
-;; + C-u `git-link' does work, but needs to have `git-link-use-commit' set
+;; + set `git-link-use-commit' and use `C-u' `git-link'
+
 
 (setup (:pkg git-link)
   (:option git-link-open-in-browser t
            git-link-use-commit t))
 
+;; test ; (git-link--parse-remote remote-url)
+(defun dc/git-link-remote-add-gitlab (host)
+  ;; gitlab uses same homepage URL format as github
+  (add-to-list 'git-link-remote-alist
+               `(,host git-link-gitlab))
+  (add-to-list 'git-link-commit-remote-alist
+               `(,host git-link-commit-gitlab))
+  (add-to-list 'git-link-homepage-remote-alist
+               `(,host git-link-homepage-github)))
 
 ;;*** Git Timemachine
 ;; control-f8, like facebook's conference

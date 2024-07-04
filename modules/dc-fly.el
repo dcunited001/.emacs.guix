@@ -28,8 +28,8 @@
 ;; run (flycheck-error-level-interesting-at-pos-p pos)
 ;; runs (flycheck-error-level-interesting-p (get-char-property pos 'flycheck-error))
 
-(setup (:pkg flymake)
-  (:option flymake-mode-line-lighter  "│♠ MK"))
+(setq flymake-mode-line-lighter  "│♠ MK")
+(require 'flymake)
 
 ;; also:
 ;; flymake-proc-ignored-file-name-regexps
@@ -60,9 +60,7 @@
               flycheck-error-list-minimum-level 'warning)
 
 ;; 'emacs-lisp-mode
-(setq flycheck-global-modes '(sh-mode
-                              bash-ts-mode
-                              python-mode
+(setq flycheck-global-modes '(python-mode
                               python-ts-mode))
 
 (defun dc/toggle-flycheck-highlighting-style ()

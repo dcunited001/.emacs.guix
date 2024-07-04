@@ -28,6 +28,8 @@
 
 (setup notifications)
 
+;;*** Straight.el
+
 ;; TODO: maybe use alerts instead
 (defun dc/reminder-straight-fetch-on-action (id key)
   (when (and (equal key "update")
@@ -35,7 +37,8 @@
     (progn (straight-fetch-all)
            (notifications-notify
             :title "Emacs: straight.el"
-            :body "Fetch complete."))))
+            :body "Fetch complete.")))
+  (remove-hook 'server-after-make-frame-hook #'dc/reminder-straight-fetch))
 
 (defun dc/reminder-straight-fetch ()
   (notifications-notify
@@ -45,7 +48,29 @@
    :on-action #'dc/reminder-straight-fetch-on-action))
 
 (when DBUS_FOUND
-    (add-hook 'emacs-startup-hook #'dc/reminder-straight-fetch))
+  ;; emacs-startup-hook: too early
+  ;; server-after-make-frame-hook: works if server first loaded on desktop
+  (add-hook 'server-after-make-frame-hook #'dc/reminder-straight-fetch))
+
+
+;;*** Package
+
+;; IDK why it's not loading
+
+(defvar dc/reminder-packages-to-check '(casual-isearch sesman))
+
+(defun dc/reminder-packages-not-loaded ()
+  (when-let ((pkg-syms (bound-and-true-p dc/reminder-packages-to-check))
+             (unloaded-syms (seq-filter (lambda (pkg) (not (featurep pkg))) pkg-syms))
+             (unloaded (mapcar #'symbol-name unloaded-syms)))
+    (message (pp-to-string unloaded))
+    (notifications-notify
+     :title (format "Emacs: Packages not loaded.")
+     :body (format "These packages should load, but did not. %s\n\n"
+                   (string-join unloaded " "))))
+  (remove-hook 'server-after-make-frame-hook #'dc/reminder-packages-not-loaded))
+
+(add-hook 'server-after-make-frame-hook #'dc/reminder-packages-not-loaded)
 
 ;;** Alert.el
 
