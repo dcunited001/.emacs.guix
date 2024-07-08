@@ -1,13 +1,28 @@
 ;; -*- lexical-binding: t; -*-
-(require 'subr-x)
-(require 'a)
-(require 'xdg)
 
-;; features
-;; c-emacs-features
-;; system-configuration-features
+;; TODO: the gmacs process may get started with -init-directory... which is not
+;; having the intended effect.
 
 ;;* Init
+
+;; gv -> macroexp: required for `setf'
+;; env
+
+;;** ELN Cache Fix
+
+;; This would break every other emacs profile loaded.
+
+;; make the directory in 'dc-straight
+(defvar dc/emacs-eln-cache (file-name-as-directory (expand-file-name "eln-cache" user-emacs-directory)) "")
+(let* ((-other-dir-eln (file-name-directory (directory-file-name (car native-comp-eln-load-path)))))
+       (unless (eq -other-dir-eln dc/emacs-eln-cache)
+	 (setf (car native-comp-eln-load-path) dc/emacs-eln-cache)))
+;; (setq test-nc (copy-sequence native-comp-eln-load-path))
+
+(defvar dc/straight-built-in-pseudo-packages '()
+  "list of packages to append to `straight-built-in-pseudo-packages'")
+
+;;** GC Setup
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
@@ -37,7 +52,7 @@
 (defconst NATIVECOMP  (featurep 'native-compile))
 (defconst DBUS_FOUND (not (null (getenv "DBUS_SESSION"))))
 
-;;** Early Vars
+;;** Essential Vars
 
 ;;*** User
 
@@ -47,8 +62,9 @@
 ;;*** Emacs Config
 
 ;;**** Paths
-(setq dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
-      dc/emacs-d (expand-file-name "~/.emacs.g/")
+;;; dc/emacs-chemacs (expand-file-name "~/.emacs.d/")
+
+(setq dc/emacs-d (expand-file-name "~/.emacs.g/")
       dc/emacs-cache (expand-file-name "~/.cache/emacs/")
       dc/emacs-dw (expand-file-name "dw" dc/emacs-d)
       ;; dc/emacs-doom-modules (expand-file-name "doom/modules" dc/emacs-d)
@@ -57,6 +73,15 @@
 ;; Add configuration modules to load path
 (add-to-list 'load-path dc/emacs-dw)
 (add-to-list 'load-path dc/emacs-modules)
+
+;;** Straight
+
+;; Load pertinent modules
+
+;; TODO: try to move this up higher to avoid potential problems
+
+(require 'dc-straight)
+;; LOAD GCMH
 
 ;; TODO: rectify user-emacs-* variables: the no-littering package is set from
 ;; these. they need to be set before, but it's variables aren't affected by
@@ -74,9 +99,8 @@
 ;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
-;;**** Native Comp
 
-;; (setq native-comp-eln-load-path "not ~/.emacs.g/eln-cache")
+;;** Early Vars
 
 ;;*** Repo Paths
 
@@ -109,6 +133,9 @@ Guix channel.")
 (unless dc/guix-checkout-path (warn "Emacs: source-directory is not set"))
 
 ;; TODO: update service definitions and settle on environment variables
+
+;; =============================================
+;; TODO: how to bring in emacs-geiser/guile and emacs-guix?
 
 (defun dc/guix-profile-get-default-path ()
   (expand-file-name "emacs-g/emacs-g" (getenv "GUIX_EXTRA")))
@@ -233,64 +260,21 @@ Guix channel.")
     ;; (f-touch el)
     (warn "Bibtex: file does not exist %s. See 'dc-bibtex" el)))
 
-;;** Modules
-
-;; Load pertinent modules
-(require 'dw-package)
-(require 'iso-transl)
-(require 'dw-settings)
-
-;;** Straight
-
-;;*** Pseudo Packages
-
-;; alot of warnings like this when loading ghub
-;; - Required package ‘compat-29.1.4.1’ is unavailable
-;; - these reference the wrong version numbers (magit-2.21, ghub-2.0, ghub+)
-;; - see note in org roam
-
-(require 'compat)
-
-;; get straight to avoid fetching these (i'm hoping it will build against the
-;; correct entryies in load-paths, but I haven't had problems yet.
-
-(let ((deps-from-guix
-       '(pdf-tools org which-key hydra compat ; magit eglot
-                   embark consult corfu cape vertigo marginalia
-                   xref project eldoc eglot jsonrpc flymake track-changes
-                   flycheck
-                   orderless kind-icon)))
-  (mapc (apply-partially #'add-to-list 'straight-built-in-pseudo-packages)
-        deps-from-guix))
 
 ;;*** Require Early Packages
 
-;; The newer version of eglot 0.17 has a lot of improvements over what's bundled
-;; with 29.1 and 29.2. This seems to load eglot through straight
-
-(require 'eglot)
-(require 'project)
-(require 'xref)
-(require 'eldoc)
-(require 'jsonrpc)
-
-(defun dc/straight-flatten-dependencies (&rest pkgnames)
-  (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependencies pkgnames)))))
-
-(defun dc/straight-flatten-dependents (&rest pkgnames)
-  (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependendents pkgnames)))))
-
-;; eglot:
-;; ("compat" "eldoc" "external-completion" "flymake" "jsonrpc" "project" "seq" "track-changes" "xref")
-;;
-;; consult:
-;; nil (not loaded by straight this session)
-;;
-;; consult-eglot:
-;; ("compat" "consult" "eglot" "eldoc" "external-completion" "flymake" "jsonrpc" "project" "seq" "track-changes" "xref")
-
+;; (require 'eglot)
+;; (require 'project)
+;; (require 'xref)
+;; (require 'eldoc)
+;; (require 'jsonrpc)
 
 ;;** Core
+
+;; load emacs settings for system (from dotfiles)
+;; expects to (require 'map)
+
+(require 'dw-settings)
 
 ;;*** Appendables
 
@@ -353,7 +337,8 @@ Guix channel.")
                                (expand-file-name "dc")
                                (file-name-as-directory)))
 
-(load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
+;; NOTE 20240708: this should already load with 'dw-settings
+;; (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 
 ;;** UI
 
@@ -418,6 +403,8 @@ Guix channel.")
 ;;*** Shim
 
 (require 'dc-shim)
+
+;; =============================================
 
 ;;**** No ido
 
