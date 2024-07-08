@@ -137,272 +137,272 @@ Guix channel.")
 ;; =============================================
 ;; TODO: how to bring in emacs-geiser/guile and emacs-guix?
 
-(defun dc/guix-profile-get-default-path ()
-  (expand-file-name "emacs-g/emacs-g" (getenv "GUIX_EXTRA")))
-
-(defun dc/guix-guile-paths (&optional profile-path)
-  "Return `load-path' and `load-compiled-path' for a guix
- `profile-path'"
-
-  ;; each of these has a method ending with "?" except guix-system-profile
-  ;;
-  ;; guix-profile\??, guix-home-profile\??, guix-user-profile\??,
-  ;; guix-pulled-profile\??, guix-system-profile
-  ;;
-  ;;  (lacks ? method)
-  (let ((profile-path (or profile-path guix-pulled-profile)))
-    `((load-path . ,(expand-file-name "share/guile/3.0/site"
-                                      profile-path))
-      (compiled-load-path . ,(expand-file-name "lib/guile/3.0/site-ccache"
-                                               profile-path)))))
-
-;; NOTE guile-load-compiled-path not needed when .scm and .go are in the same
-;; directory. this happens in a guix checkout, but not for the channels.
-(defun dc/guix-reset-paths ()
-  (setq-default guix-load-path (list (expand-file-name "share/guile/site/3.0"
-                                                       guix-pulled-profile))
-                guix-load-compiled-path (list (expand-file-name "lib/guile/3.0/site-ccache"
-                                                                guix-pulled-profile))))
-
-;; this points to the profile for `guix shell`
-(setq-default dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
-                                       (dc/guix-profile-get-default-path))
-              dc/emacs-sound-theme-path (file-name-as-directory
-                                         (expand-file-name
-                                          "share/sounds/freedesktop/stereo"
-                                          dc/guix-profile-path)))
-
-;;*** Org Paths
-
-(setq-default org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
-              org-roam-file-extensions '("org")
-              org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
-              org-roam-directory (thread-first org-roam-directory
-                                               (expand-file-name org-directory)
-                                               (file-truename)
-                                               (file-name-as-directory))
-
-
-              ;; gets set by no-littering anyways
-              ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
-
-              dc/org-roam-n-dailies 5
-              dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
-                                                           dc/emacs-d)
-              dc/org-roam-dailies-template (expand-file-name "daily-default.org"
-                                                             dc/org-roam-templates-path))
-
-;;*** Org Babel Load Languages
-
-;; this is appended to in dc-dev-*.el, then loaded in dc-shim.el
-;;
-;; NOTE: at some point, jupyter presented an issue regarding jupyter kernelspecs
-;; being required when the symbols are loaded by (org-babel-do-load-languages
-;; ...)
-;;
-;; I guess everything else can be determined here
-(setq dc/org-babel-load-languages
-      '((emacs-lisp . t)
-        (shell . t)
-        (python . t)
-        (jq . t)
-	      (restclient . t)
-        ;; GNU recutils
-        (rec . t)))
-
-;;**** Org Ref & Bibtex
-
-;; TODO refactor slim down (auto def symbols, create paths if dc/aca-doc-root exists)
-;;
-;; - may need to ensure that the doi's exist. a macro would help, but i just
-;;   need to determine how the file/db structure would accommodate changes
-
-;; i'm not sure what structure i'll stick with. this is usually what PhD's need
-;;   zero help with, of course. the most successful PhD's have no idea what
-;;   they're doing here and typically leave notes wherever. doesn't
-;;   matter. </joking>
-
-(setq-default
- dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
-
- ;; for the 14 official types
- ;; + see 'org-bibtex-types
- ;; + or https://bibtex.eu/types/
- ;;
- ;; + dc/aca-bibtex-types (list :article :book :techreport :manual)
- dc/aca-subpaths (list "article" "book" "text" "incollection")
-
- ;; both citar and org-ref want these to end in a slash
- ;; citar magically agrees on on the citekey org-ref uses to create PDF's
- dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
-
- dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
- dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
- dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
- dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
- dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
- dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
- dc/aca-collections-directory (expand-file-name "collections/" dc/aca-doc-root)
- dc/aca-collections-bibtex (expand-file-name "noter/collections.bib" org-roam-directory)
+;; (defun dc/guix-profile-get-default-path ()
+;;   (expand-file-name "emacs-g/emacs-g" (getenv "GUIX_EXTRA")))
+
+;; (defun dc/guix-guile-paths (&optional profile-path)
+;;   "Return `load-path' and `load-compiled-path' for a guix
+;;  `profile-path'"
+
+;;   ;; each of these has a method ending with "?" except guix-system-profile
+;;   ;;
+;;   ;; guix-profile\??, guix-home-profile\??, guix-user-profile\??,
+;;   ;; guix-pulled-profile\??, guix-system-profile
+;;   ;;
+;;   ;;  (lacks ? method)
+;;   (let ((profile-path (or profile-path guix-pulled-profile)))
+;;     `((load-path . ,(expand-file-name "share/guile/3.0/site"
+;;                                       profile-path))
+;;       (compiled-load-path . ,(expand-file-name "lib/guile/3.0/site-ccache"
+;;                                                profile-path)))))
+
+;; ;; NOTE guile-load-compiled-path not needed when .scm and .go are in the same
+;; ;; directory. this happens in a guix checkout, but not for the channels.
+;; (defun dc/guix-reset-paths ()
+;;   (setq-default guix-load-path (list (expand-file-name "share/guile/site/3.0"
+;;                                                        guix-pulled-profile))
+;;                 guix-load-compiled-path (list (expand-file-name "lib/guile/3.0/site-ccache"
+;;                                                                 guix-pulled-profile))))
+
+;; ;; this points to the profile for `guix shell`
+;; (setq-default dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
+;;                                        (dc/guix-profile-get-default-path))
+;;               dc/emacs-sound-theme-path (file-name-as-directory
+;;                                          (expand-file-name
+;;                                           "share/sounds/freedesktop/stereo"
+;;                                           dc/guix-profile-path)))
+
+;; ;;*** Org Paths
+
+;; (setq-default org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
+;;               org-roam-file-extensions '("org")
+;;               org-roam-directory (or (and (boundp 'org-roam-directory) org-roam-directory) "roam")
+;;               org-roam-directory (thread-first org-roam-directory
+;;                                                (expand-file-name org-directory)
+;;                                                (file-truename)
+;;                                                (file-name-as-directory))
+
+
+;;               ;; gets set by no-littering anyways
+;;               ;; org-roam-db-location (file-name-concat no-littering-var-directory "org" "org-roam.db")
+
+;;               dc/org-roam-n-dailies 5
+;;               dc/org-roam-templates-path (expand-file-name "etc/captures/roam"
+;;                                                            dc/emacs-d)
+;;               dc/org-roam-dailies-template (expand-file-name "daily-default.org"
+;;                                                              dc/org-roam-templates-path))
+
+;; ;;*** Org Babel Load Languages
+
+;; ;; this is appended to in dc-dev-*.el, then loaded in dc-shim.el
+;; ;;
+;; ;; NOTE: at some point, jupyter presented an issue regarding jupyter kernelspecs
+;; ;; being required when the symbols are loaded by (org-babel-do-load-languages
+;; ;; ...)
+;; ;;
+;; ;; I guess everything else can be determined here
+;; (setq dc/org-babel-load-languages
+;;       '((emacs-lisp . t)
+;;         (shell . t)
+;;         (python . t)
+;;         (jq . t)
+;; 	      (restclient . t)
+;;         ;; GNU recutils
+;;         (rec . t)))
+
+;; ;;**** Org Ref & Bibtex
+
+;; ;; TODO refactor slim down (auto def symbols, create paths if dc/aca-doc-root exists)
+;; ;;
+;; ;; - may need to ensure that the doi's exist. a macro would help, but i just
+;; ;;   need to determine how the file/db structure would accommodate changes
+
+;; ;; i'm not sure what structure i'll stick with. this is usually what PhD's need
+;; ;;   zero help with, of course. the most successful PhD's have no idea what
+;; ;;   they're doing here and typically leave notes wherever. doesn't
+;; ;;   matter. </joking>
+
+;; (setq-default
+;;  dc/aca-doc-root (xdg-user-dir "DOCUMENTS")
+
+;;  ;; for the 14 official types
+;;  ;; + see 'org-bibtex-types
+;;  ;; + or https://bibtex.eu/types/
+;;  ;;
+;;  ;; + dc/aca-bibtex-types (list :article :book :techreport :manual)
+;;  dc/aca-subpaths (list "article" "book" "text" "incollection")
+
+;;  ;; both citar and org-ref want these to end in a slash
+;;  ;; citar magically agrees on on the citekey org-ref uses to create PDF's
+;;  dc/aca-notes-path (expand-file-name "noter/" org-roam-directory)
+
+;;  dc/aca-texts-directory (expand-file-name "texts/" dc/aca-doc-root)
+;;  dc/aca-texts-bibtex (expand-file-name "noter/texts.bib" org-roam-directory)
+;;  dc/aca-articles-directory (expand-file-name "articles/" dc/aca-doc-root)
+;;  dc/aca-articles-bibtex (expand-file-name "noter/articles.bib" org-roam-directory)
+;;  dc/aca-books-directory (expand-file-name "books/" dc/aca-doc-root)
+;;  dc/aca-books-bibtex (expand-file-name "noter/books.bib" org-roam-directory)
+;;  dc/aca-collections-directory (expand-file-name "collections/" dc/aca-doc-root)
+;;  dc/aca-collections-bibtex (expand-file-name "noter/collections.bib" org-roam-directory)
 
- dc/aca-library-paths (list dc/aca-texts-directory
-                            dc/aca-articles-directory
-                            dc/aca-books-directory
-                            dc/aca-collections-directory)
- dc/aca-bibtex-files (list dc/aca-texts-bibtex
-                           dc/aca-articles-bibtex
-                           dc/aca-books-bibtex
-                           dc/aca-collections-bibtex))
+;;  dc/aca-library-paths (list dc/aca-texts-directory
+;;                             dc/aca-articles-directory
+;;                             dc/aca-books-directory
+;;                             dc/aca-collections-directory)
+;;  dc/aca-bibtex-files (list dc/aca-texts-bibtex
+;;                            dc/aca-articles-bibtex
+;;                            dc/aca-books-bibtex
+;;                            dc/aca-collections-bibtex))
 
 
-(dolist (el dc/aca-bibtex-files)
-  (unless (file-exists-p el)
-    ;; (f-touch el)
-    (warn "Bibtex: file does not exist %s. See 'dc-bibtex" el)))
+;; (dolist (el dc/aca-bibtex-files)
+;;   (unless (file-exists-p el)
+;;     ;; (f-touch el)
+;;     (warn "Bibtex: file does not exist %s. See 'dc-bibtex" el)))
 
 
-;;*** Require Early Packages
+;; ;;*** Require Early Packages
 
-;; (require 'eglot)
-;; (require 'project)
-;; (require 'xref)
-;; (require 'eldoc)
-;; (require 'jsonrpc)
+;; ;; (require 'eglot)
+;; ;; (require 'project)
+;; ;; (require 'xref)
+;; ;; (require 'eldoc)
+;; ;; (require 'jsonrpc)
 
-;;** Core
+;; ;;** Core
 
-;; load emacs settings for system (from dotfiles)
-;; expects to (require 'map)
+;; ;; load emacs settings for system (from dotfiles)
+;; ;; expects to (require 'map)
 
-(require 'dw-settings)
+;; (require 'dw-settings)
 
-;;*** Appendables
+;; ;;*** Appendables
 
-;; init early to keep logic close to (require 'package) ... which I may change,
-;; since I lose control of the ordering of prominent modes.
+;; ;; init early to keep logic close to (require 'package) ... which I may change,
+;; ;; since I lose control of the ordering of prominent modes.
 
-;; In that case, i'll just run this and then fixup.
-;;
-;; `grep -re "(add-to-list 'minions-prominent-modes '.*)" >> ./modules/dc-modelines.el
+;; ;; In that case, i'll just run this and then fixup.
+;; ;;
+;; ;; `grep -re "(add-to-list 'minions-prominent-modes '.*)" >> ./modules/dc-modelines.el
 
-;; (eq t (xor (minions-demoted (or minions-promoted enabled))))
-(setq minions-prominent-modes
-      '(superword-mode
-        subword-mode
-        2C-mode
-        multiple-cursors-mode)
-      minions-demoted-modes nil)
+;; ;; (eq t (xor (minions-demoted (or minions-promoted enabled))))
+;; (setq minions-prominent-modes
+;;       '(superword-mode
+;;         subword-mode
+;;         2C-mode
+;;         multiple-cursors-mode)
+;;       minions-demoted-modes nil)
 
-;;**** Prominent
+;; ;;**** Prominent
 
-(add-to-list 'minions-prominent-modes 'combobulate-mode)
-(add-to-list 'minions-prominent-modes 'apheleia-mode)
+;; (add-to-list 'minions-prominent-modes 'combobulate-mode)
+;; (add-to-list 'minions-prominent-modes 'apheleia-mode)
 
-;; editor
-(add-to-list 'minions-prominent-modes 'undo-tree-mode)
-(add-to-list 'minions-prominent-modes 'smartparens-mode)
+;; ;; editor
+;; (add-to-list 'minions-prominent-modes 'undo-tree-mode)
+;; (add-to-list 'minions-prominent-modes 'smartparens-mode)
 
-;; customize overwrite-mode-binary and overwrite-mode-textual
-(add-to-list 'minions-prominent-modes 'overwrite-mode)
-(add-to-list 'minions-prominent-modes 'view-mode)
+;; ;; customize overwrite-mode-binary and overwrite-mode-textual
+;; (add-to-list 'minions-prominent-modes 'overwrite-mode)
+;; (add-to-list 'minions-prominent-modes 'view-mode)
 
-;; org-like
-(add-to-list 'minions-prominent-modes 'cdlatex-mode)
-(add-to-list 'minions-prominent-modes 'outline-mode)
+;; ;; org-like
+;; (add-to-list 'minions-prominent-modes 'cdlatex-mode)
+;; (add-to-list 'minions-prominent-modes 'outline-mode)
 
-;;**** Demoted
+;; ;;**** Demoted
 
-(add-to-list 'minions-demoted-modes 'rainbow-mode)
-(add-to-list 'minions-demoted-modes 'rainbow-delimiters-mode)
-(add-to-list 'minions-demoted-modes 'super-savemode)
-(add-to-list 'minions-demoted-modes 'ws-butler-mode)
+;; (add-to-list 'minions-demoted-modes 'rainbow-mode)
+;; (add-to-list 'minions-demoted-modes 'rainbow-delimiters-mode)
+;; (add-to-list 'minions-demoted-modes 'super-savemode)
+;; (add-to-list 'minions-demoted-modes 'ws-butler-mode)
 
-;;*** Core Init
+;; ;;*** Core Init
 
-(require 'dw-core)
+;; (require 'dw-core)
 
-(setup (:pkg gcmh)
-  (:option gcmh-idle-delay 'auto
-           gcmh-idle-delay-factor 10
-           gcmh-high-cons-threshold (* 16 (expt 2 20)))
-  (:with-hook 'server-after-make-frame-hook
-    (:hook #'gcmh-mode)))
+;; (setup (:pkg gcmh)
+;;   (:option gcmh-idle-delay 'auto
+;;            gcmh-idle-delay-factor 10
+;;            gcmh-high-cons-threshold (* 16 (expt 2 20)))
+;;   (:with-hook 'server-after-make-frame-hook
+;;     (:hook #'gcmh-mode)))
 
-(require 'dc-support)
-(require 'dc-network)
+;; (require 'dc-support)
+;; (require 'dc-network)
 
-;; no backup files
-(setq make-backup-files nil)
-(setq dc/eld-path (thread-last no-littering-etc-directory
-                               (expand-file-name "dc")
-                               (file-name-as-directory)))
+;; ;; no backup files
+;; (setq make-backup-files nil)
+;; (setq dc/eld-path (thread-last no-littering-etc-directory
+;;                                (expand-file-name "dc")
+;;                                (file-name-as-directory)))
 
-;; NOTE 20240708: this should already load with 'dw-settings
-;; (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
+;; ;; NOTE 20240708: this should already load with 'dw-settings
+;; ;; (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
 
-;;** UI
+;; ;;** UI
 
-;; (require 'dc-terminal)
-(require 'dc-desktop)
-(require 'dc-alert)
-(require 'dc-project)
-(require 'dc-interface)
-(require 'dc-popup)
-(require 'dc-auth)
+;; ;; (require 'dc-terminal)
+;; (require 'dc-desktop)
+;; (require 'dc-alert)
+;; (require 'dc-project)
+;; (require 'dc-interface)
+;; (require 'dc-popup)
+;; (require 'dc-auth)
 
-;;*** Info
+;; ;;*** Info
 
-(require 'dc-info)
+;; (require 'dc-info)
 
-;;** Org
+;; ;;** Org
 
-(require 'dw-org)
-(require 'dc-org)
-(require 'dc-bibtex)
+;; (require 'dw-org)
+;; (require 'dc-org)
+;; (require 'dc-bibtex)
 
-;;** Dev
+;; ;;** Dev
 
-(require 'dc-fly)
-;; (require 'dw-shell)
-(require 'dc-dev)
-(require 'dc-dev-web)
-(require 'dw-swagger)
-(require 'dc-dev-cpp)
-(require 'dc-dev-java)
-(require 'dc-dev-clojure)
-(require 'dc-dev-scala)
-(require 'dc-dev-python)
+;; (require 'dc-fly)
+;; ;; (require 'dw-shell)
+;; (require 'dc-dev)
+;; (require 'dc-dev-web)
+;; (require 'dw-swagger)
+;; (require 'dc-dev-cpp)
+;; (require 'dc-dev-java)
+;; (require 'dc-dev-clojure)
+;; (require 'dc-dev-scala)
+;; (require 'dc-dev-python)
 
-;;** System
+;; ;;** System
 
-(require 'dc-vcs)
-(require 'dc-tools)
-(require 'dc-dev-yaml)
+;; (require 'dc-vcs)
+;; (require 'dc-tools)
+;; (require 'dc-dev-yaml)
 
-(require 'dc-latex)
+;; (require 'dc-latex)
 
-;; (require 'dc-workflow)
+;; ;; (require 'dc-workflow)
 
-;;** Apps
+;; ;;** Apps
 
-(require 'dc-social)
-;; (require 'dc-applications)
-;; (require 'dw-media)
-;; (require 'dw-system)
-;; (require 'dc-games)
+;; (require 'dc-social)
+;; ;; (require 'dc-applications)
+;; ;; (require 'dw-media)
+;; ;; (require 'dw-system)
+;; ;; (require 'dc-games)
 
-;;** Keys & Mouse
+;; ;;** Keys & Mouse
 
-(require 'dc-keys)
-(require 'dc-mouse)
+;; (require 'dc-keys)
+;; (require 'dc-mouse)
 
-;;** Final
+;; ;;** Final
 
-(require 'dc-modeline)
+;; (require 'dc-modeline)
 
-;;*** Shim
+;; ;;*** Shim
 
-(require 'dc-shim)
+;; (require 'dc-shim)
 
 ;; =============================================
 
