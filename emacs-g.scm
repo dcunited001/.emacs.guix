@@ -20,40 +20,55 @@
   ;; NOTE: (define (emacs-29.2 (package (inherit emacs..)))) to bump version
 
   (if (getenv "DEBUG_EMACS")
-      "emacs-next-pgtk-debug"
+      emacs-next-pgtk-debug
       ;; "emacs-next-pgtk"
-      "emacs-pgtk"))
+      emacs-pgtk))
+
+
+(define emacs-pkgs-system
+  '(nss-certs
+    ,emacs-pkg
+    emacs-setup
+    emacs-straight.el
+    emacs-rec-mode
+    git
+    git:send-email
+    sound-theme-freedesktop
+    tidy-html
+    shellcheck
+
+    ;; detached.el
+    dtach
+
+    guile-ares-rs
+
+    ;; aspell
+    aspell
+    aspell-dict-en
+    ;; aspell-dict-la
+    aspell-dict-grc
+    aspell-dict-es
+    aspell-dict-fr
+    aspell-dict-it
+    ;; aspell-dict-ia
+    aspell-dict-de))
+
+;;* Guix Packages
+
+;;** To Transform
+
+;; emacs-repo => emacs-repo-no-magit
+
+;; (define transform
+;;   (options->transformation
+;;    '((with-graft . "emacs-repo=emacs-repo-no-magit"))))
 
 ;;* System
 ;; A ridiculous way to manage package lists? Yes ...
 (define guix-emacs-vhash
   (vhash-consq
    'system
-   (list->vlist `("nss-certs"
-                  ,emacs-pkg
-                  "emacs-setup"
-                  "emacs-rec-mode"
-                  "git"
-                  "git:send-email"
-                  "sound-theme-freedesktop"
-                  "tidy-html"
-                  "shellcheck"
-
-                  ;; detached.el
-                  "dtach"
-
-                  "guile-ares-rs"
-
-                  ;; aspell
-                  "aspell"
-                  "aspell-dict-en"
-                  ;; "aspell-dict-la"
-                  "aspell-dict-grc"
-                  "aspell-dict-es"
-                  "aspell-dict-fr"
-                  "aspell-dict-it"
-                  ;; "aspell-dict-ia"
-                  "aspell-dict-de"))
+   (list->vlist `())
    vlist-null))
 
 ;; TODO: define method to assemble a recursive alist into a package list
@@ -377,12 +392,13 @@
 (set! guix-emacs-vhash
   (vhash-consq
    'lang
-   (list->vlist '("emacs-nix-mode"
-
-                  ;; GUIX
+   (list->vlist '( ;; GUIX
                   "emacs-guix"
 
-                  ;; GEISER
+                  ;; nix-mode depends on magit-section;
+                  ;; "emacs-nix-mode"
+
+                    ;; GEISER
                   "emacs-geiser"
                   "emacs-geiser-guile"
                   ;; "emacs-geiser-racket"
@@ -390,15 +406,15 @@
                   ;; ARES
                   ;; "emacs-eros"          ; req for arei.el
                   ;; "emacs-sesman"        ; req for arei.el
-                  ;;; "emacs-arei"       ; install with straight
+                  ;; ;; "emacs-arei"       ; install with straight
 
                   ;; "emacs-elisp-refs"
                   "emacs-elisp-demos"
 
                   ;; "emacs-clojure-mode"
-                  ;;; "emacs-clojure-snippets"
+                  ;; ;; "emacs-clojure-snippets"
                   ;; "emacs-cider"
-                  ;;; "emacs-clj-deps-new"
+                  ;; ;; "emacs-clj-deps-new"
                   ;; "emacs-clj-refactor"
                   ;; "emacs-parseedn"
                   ;; "emacs-parseclj"
@@ -649,56 +665,64 @@
 ;; ;; "hledger"
 ;; "emacs-ledger-mode"
 
-(specifications->manifest
+;;* Manifest
 
- (append
-  (vlist->list
-   (assemble-pkg-vlist guix-emacs-vhash))
-  '(
+(concatenate-manifests
+ (list
+  (specifications->manifest
+
+   (append
+    (vlist->list
+     (assemble-pkg-vlist guix-emacs-vhash))
+    '(
+
+      ;; n/a, unless improved tab behavior
+      ;; "emacs-perspective"
 
       "emacs-xref"
       "emacs-project"
       "emacs-jsonrpc"
 
-    "emacs-projectile"
-    "ripgrep"                     ; For counsel-projectile-rg (doom?) and others
+      "emacs-projectile"
+      "ripgrep"                   ; For counsel-projectile-rg (doom?) and others
 
-    ;; "emacs-helpful"
+      ;; "emacs-helpful"
 
-    "emacs-flycheck"
-    ;; "emacs-flycheck-cpplint"
-    "emacs-flycheck-guile"
-    "emacs-flycheck-package"
-    ;; "emacs-flycheck-plantuml" ;straight
-    ;; "emacs-flycheck-haskell"
+      "emacs-flycheck"
+      ;; "emacs-flycheck-cpplint"
+      "emacs-flycheck-guile"
+      "emacs-flycheck-package"
+      ;; "emacs-flycheck-plantuml" ;straight
+      ;; "emacs-flycheck-haskell"
 
-    ;; n/a, evaluate against restclient
-    ;; "emacs-request"
+      ;; n/a, evaluate against restclient
+      ;; "emacs-request"
 
-    ;; "emacs-restclient"
-    ;; "emacs-ob-restclient" ; straight
+      ;; "emacs-restclient"
+      ;; "emacs-ob-restclient" ; straight
 
-    "emacs-xterm-color"
-    "emacs-exec-path-from-shell"
+      "emacs-xterm-color"
+      "emacs-exec-path-from-shell"
 
-    "emacs-tracking"
+      "emacs-tracking"
 
-    ;; n/a (telegram)
-    ;; "emacs-telega"
+      ;; n/a (telegram)
+      ;; "emacs-telega"
 
-    ;; n/a: IRC
-    ;; "emacs-erc"
-    ;; "emacs-erc-image"
-    ;; "emacs-erc-hl-nicks"
+      ;; n/a: IRC
+      ;; "emacs-erc"
+      ;; "emacs-erc-image"
+      ;; "emacs-erc-hl-nicks"
 
-    ;; gopher/gemini?
-    "emacs-elpher"
+      ;; gopher/gemini?
+      "emacs-elpher"
 
-    ;; manage daemons/services
-    ;; - does it allow per-project definition of daemons?
-    ;; "emacs-daemons"
+      ;; manage daemons/services
+      ;; - does it allow per-project definition of daemons?
+      ;; "emacs-daemons"
 
-    )))
+      )))
+  (packages->manifest (list emacs-repo-no-magit))))
 
 ;;** excluded
 ;; without external management of metadata (see org-roam's usage of sqlite),
