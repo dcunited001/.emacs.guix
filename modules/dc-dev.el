@@ -732,7 +732,8 @@ when a new treesitter gramar has been added to the Guix profile."
 ;;**** ARES
 
 ;; sesman-browser-link-with-buffer: guix.el needed to make this simple
-(setup (:pkg sesman :straight t))
+(and (setup (:pkg sesman :straight t))
+     (require 'sesman))
 
 ;; When `arei-mode-auto' is non-nil, arei-mode enabled in scheme buffers when
 ;; required. The executables from `guile-ares-rs' need to be in path. It could
@@ -751,9 +752,6 @@ when a new treesitter gramar has been added to the Guix profile."
   ;; compiled-in value from the final `with-eval-after-load' default. Hopefully
   ;; I can start using it soon
   (:option arei-mode-auto t))
-
-(with-eval-after-load 'arei
-  (require 'sesman))
 
 ;;**** GEISER
 

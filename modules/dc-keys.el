@@ -227,6 +227,8 @@
 
 ;;** Help
 
+;; (defun dc/embark)
+
 (general-define-key
  :keymaps 'help-map
 
@@ -234,7 +236,13 @@
 
  ;; can insert values with embark
  "M-v" #'getenv
+
+;;*** help-map: keybindings
  "M-k" #'describe-keymap
+ ;; not interactive, also not sure whether it works
+ ;; "C-k" (apply-partially #'embark-bindings-at-point)
+
+;*** bindings
  "B" #'embark-bindings
  "M-b" #'embark-bindings-in-keymap
  "M-m" #'consult-minor-mode-menu
@@ -392,7 +400,7 @@
   "$4" #'straight-get-recipe
   "$$" #'straight-pull-recipe-repositories
   "$v" #'straight-visit-package
-  "$V" #'straight-visit-website
+  "$V" #'straight-visit-package-website
   "$d" #'straight-dependencies
   "$D" #'straight-dependents
   ;; "$" #'straight-use-package

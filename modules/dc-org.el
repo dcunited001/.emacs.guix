@@ -680,8 +680,9 @@ capture was not aborted."
      :preview-key (kbd "M-."))
     (consult-org-roam-mode 1)))
 
-(defun dc/org-init-attachments-h ()
-  )
+;;*** Attach
+
+(defun dc/org-init-attachments-h ())
 
 ;;*** Babel
 
