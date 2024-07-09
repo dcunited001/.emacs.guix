@@ -387,15 +387,7 @@ when a new treesitter gramar has been added to the Guix profile."
 
 (defvar dc/lsp-url-pattern "https://raw.githubusercontent.com/emacs-lsp/lsp-mode/master/clients/lsp-%s.el")
 
-(defun dc/read-lisp-into-list (file)
-  (with-temp-buffer
-    (save-excursion
-      (insert "'(\n")
-      (insert-file-contents file)
-      (goto-char (point-max))
-      (insert "\n)\n"))
-    ;; (pp (current-buffer))
-    (read (current-buffer))))
+;; dc/read-lisp-data-into-list moved to 'dc-support
 
 (require 'url)
 (defun dc/download-lsp-into-temp (mode)

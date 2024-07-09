@@ -45,8 +45,12 @@
 ;;
 ;; dups are removed, req. strings
 
-(let ((eld-file (expand-file-name "Info-manuals-by-category.eld" dc/eld-path)))
-  (setq-default dc/Info-manuals-by-category (dc/eld-unserialize eld-file)))
+(let* ((eld-file (expand-file-name "Info-manuals-by-category.eld" dc/eld-path))
+       (eld-data (caadr (dc/read-lisp-into-list eld-file))))
+;; eld-data
+ (setq-default dc/Info-manuals-by-category eld-data))
+;; (car dc/Info-manuals-by-category)
+(dc/eld-unserialize (expand-file-name "Info-manuals-by-category.eld" dc/eld-path))
 
 ;; TODO: add gpm, gettext, libc?, basics, rest of software-dev, localization
 ;; TODO: setup info-path? (this only includes manuals on arch profiles)

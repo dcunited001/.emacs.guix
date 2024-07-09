@@ -26,7 +26,7 @@
 ;;** Desktop Mode
 
 ;; this module was originally intended for XDG desktop integration
-(require 'desktop)
+(straight-use-package '(desktop :type built-in))
 
 ;; i'll probably need to revisit this to ensure it works as expected
 ;; https://emacs.stackexchange.com/questions/31621/handle-stale-desktop-lock-files-after-emacs-system-crash

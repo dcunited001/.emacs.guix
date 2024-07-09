@@ -48,9 +48,22 @@ This is a variadic `cl-pushnew'."
 ;;** ELD
 
 ;; projectile already has unserialize/deserialize to/from ELD
-(require 'projectile)
-(defalias 'dc/eld-serialize 'projectile-serialize)
-(defalias 'dc/eld-unserialize 'projectile-unserialize)
+;; (straight-use-package '(projectile))
+;; (defalias 'dc/eld-serialize 'projectile-serialize)
+;; (defalias 'dc/eld-unserialize 'projectile-unserialize)
+
+;; this lacks error-handling (and it quotes all the top-level forms)
+;; (eq (dc/eld-unserialize f)
+;;     (caadr (dc/read-lisp-into-list)))
+(defun dc/read-lisp-into-list (file)
+  (with-temp-buffer
+    (save-excursion
+      (insert "'(\n")
+      (insert-file-contents file)
+      (goto-char (point-max))
+      (insert "\n)\n"))
+    ;; (pp (current-buffer))
+    (read (current-buffer))))
 
 ;;** Emacs Lisp
 
@@ -206,6 +219,6 @@ doesn't exist."
 ;; This package provides Finite State Machine library to make asynchronous
 ;; programming in Emacs Lisp easy and fun.
 ;; (setup (:pkg fsm))
-(require 'fsm)
+;; (require 'fsm)
 
 (provide 'dc-support)

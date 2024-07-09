@@ -1,10 +1,13 @@
 ;;* Guix Emacs Packages
-(use-modules (ice-9 vlist)
-             (ice-9 match)
+(use-modules ;; (ice-9 vlist)
+             ;; (ice-9 match)
              ;; (ice-9 pretty-print)
+             ;; (guix manifests)
              (guix transformations)
              (gnu packages guile)
              (gnu packages guile-xyz)
+	     (gnu packages certs)
+             (gnu packages gnupg)
              (gnu packages emacs)
              (gnu packages emacs-xyz)
              (gnu packages version-control)
@@ -38,22 +41,28 @@
 
 ;; nss-certs?
 (define emacs-pkgs-system
-  `(,emacs-pkg
+  (list
+    nss-certs
+    emacs-pkg
     aspell
     aspell-dict-en
     dtach                               ; detached.el
     git
-    git:send-email
+    (list git "send-email")
     guile-ares-rs
     ripgrep
     shellcheck
     sound-theme-freedesktop
     tidy-html
     tree-sitter
+    pinentry-emacs
 
     ;; python?
     python-yamllint
     python-yapf))
+
+(concatenate-manifests
+  (list (packages->manifest emacs-pkgs-system)))
 
 ;; ;; aspell-dict-la
 ;; aspell-dict-grc

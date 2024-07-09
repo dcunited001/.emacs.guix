@@ -80,15 +80,14 @@
 
 ;;** Magit
 
-(setup (:pkg magit :straight t)
-  (:option magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1
-
-           magit-wip-mode-lighter "│§ WIP"
-           magit-blame-mode-lighter "│§ BLAME"
-
-           ;; t show diffchars when point on hunk
-           ;; 'all to always show diffchars
-           magit-diff-refine-hunk t))
+(use-package magit :straight t
+  :init ;; TODO: move ligher to delight?
+  (setq magit-wip-mode-lighter "│§ WIP"
+	magit-blame-mode-lighter "│§ BLAME")
+  :config
+  (setq magit-display-buffer-function
+	#'magit-display-buffer-same-window-except-diff-v1)
+  :demand t)
 
 (setup (:pkg magit-todos :straight t)
   (:with-hook emacs-startup-hook
@@ -129,15 +128,15 @@
 
 (with-eval-after-load 'forge
   (add-to-list 'forge-alist
-               '("invent.kde.org"
-                 "invent.kde.org/api/v4"
-                 "invent.kde.org"
-                 forge-gitlab-repository))
+	       '("invent.kde.org"
+		 "invent.kde.org/api/v4"
+		 "invent.kde.org"
+		 forge-gitlab-repository))
   (add-to-list 'forge-alist
-               '("gitlab.freedestkop.org"
-                 "gitlab.freedesktop.org/api/v4"
-                 "gitlab.freedesktop.org"
-                 forge-gitlab-repository)))
+	       '("gitlab.freedestkop.org"
+		 "gitlab.freedesktop.org/api/v4"
+		 "gitlab.freedesktop.org"
+		 forge-gitlab-repository)))
 
 ;; https://github.com/emacs-straight/repology/blob/master/repology.el
 (setup (:pkg repology))

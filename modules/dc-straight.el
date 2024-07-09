@@ -47,25 +47,25 @@
 ;;   (add-to-list dc/straight-built-in-pseudo-packages pkg))
 ;; =============================================
 
-;;** Bootstrap
+(setq straight-use-package-by-default t)
 
 ;;; -- Install Straight.el -----
 (unless (featurep 'straight)
   (setq straight-repository-branch "develop")
   (defvar bootstrap-version)
   (let ((bootstrap-file
-         (expand-file-name
-          "straight/repos/straight.el/bootstrap.el"
-          (or (bound-and-true-p straight-base-dir)
-              user-emacs-directory)))
-        (bootstrap-version 7))
+	 (expand-file-name
+	  "straight/repos/straight.el/bootstrap.el"
+	  (or (bound-and-true-p straight-base-dir)
+	      user-emacs-directory)))
+	(bootstrap-version 7))
     (unless (file-exists-p bootstrap-file)
       (with-current-buffer
-          (url-retrieve-synchronously
-           (format "https://raw.githubusercontent.com/radian-software/straight.el/%s/install.el" "develop")
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
+	  (url-retrieve-synchronously
+	   (format "https://raw.githubusercontent.com/radian-software/straight.el/%s/install.el" "develop")
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage)))
 
 ;;** Early Config
@@ -97,14 +97,34 @@ graph & clones.")
   (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependencies pkgnames)))))
 
 (defun dc/straight-flatten-dependents (&rest pkgnames)
-  (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependendents pkgnames)))))
+  (-uniq (-sort #'string< (-flatten (mapcar #'straight-dependents pkgnames)))))
 
 ;;*** Builds
 
-;;** Use Packages
+;;** Use Package
+
+;; pick one:
+
+;; - always-demand, unless :defer t (default)
+;; - always-defer, unless :demand t
+
+;; :bind,:mode,:interpreter -> implies :defer t
+;; :demand overrides
+
+;; - :ensure,:pin are /only/ for package.el
 
 ;; (require 'use-package)
-(straight-use-package 'use-package)
+(straight-use-package '(use-package :type built-in))
+
+(use-package magit :straight t
+  :init ;; TODO: move ligher to delight?
+  (setq magit-wip-mode-lighter "│§ WIP"
+	magit-blame-mode-lighter "│§ BLAME")
+  :config
+  (setq magit-display-buffer-function
+	#'magit-display-buffer-same-window-except-diff-v1)
+  :demand t)
+
 
 ;;** Load Path
 

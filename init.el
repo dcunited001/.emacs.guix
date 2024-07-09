@@ -19,8 +19,47 @@
 	 (setf (car native-comp-eln-load-path) dc/emacs-eln-cache)))
 ;; (setq test-nc (copy-sequence native-comp-eln-load-path))
 
+
+;; TODO: check for byte-compile
+(defun dc/native-comp-state (&optional feat)
+  (mapcar
+   (lambda (sym)
+     (let* ((libsym sym)
+	    (lib (symbol-name libsym))
+	    libname libeln)
+       ;; FIXME (libname file-error "Can't find library" "lcms2")
+       (when (setq libname (condition-case err
+			       (find-library-name lib)
+			     (error err)))
+	 ;; FIXME (libeln wrong-type-argument stringp
+	 ;; (file-error "Can't find library" "multi-tty"))
+	 (setq libeln (condition-case err
+			  (comp-el-to-eln-filename libname)
+			(error err))))
+       `(,libsym :lib ,lib :libname ,libname :libeln ,libeln)))
+   (or feat features)))
+
+;; using this method could end up being more complicated, depending on
+;; how the eln binary's expect to interoperate. Load order could cause
+;; issues:
+;;
+;; - if earlier higher-order built-in packages loaded first, then
+;; - later lower-order packages are rebuilt by straight the first
+;; - packages may not have their `elc' or `eln' updated
+
+(defvar dc/native-comp-state-on-load (dc/native-comp-state)
+  "List of emacs `features' with native-comp details.")
+
+
 (defvar dc/straight-built-in-pseudo-packages '()
   "list of packages to append to `straight-built-in-pseudo-packages'")
+
+(defvar dc/straight-to-build '() ;; maybe project, elgot
+  "list of packages to append to `straight-to-build'")
+
+(defvar dc/straight-not-build
+  (mapcar #'car dc/native-comp-state-on-load)
+  "list of packages to append to `straight-not-build'")
 
 ;;** GC Setup
 
@@ -328,8 +367,8 @@ Guix channel.")
 ;;   (:with-hook 'server-after-make-frame-hook
 ;;     (:hook #'gcmh-mode)))
 
-;; (require 'dc-support)
-;; (require 'dc-network)
+(require 'dc-support)
+(require 'dc-network)
 
 ;; ;; no backup files
 ;; (setq make-backup-files nil)

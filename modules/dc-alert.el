@@ -26,6 +26,7 @@
 
 ;; emacs built with d-bus and its socket are required
 
+(straight-use-package '(notifications :type built-in))
 (setup notifications)
 
 ;;*** Straight.el
