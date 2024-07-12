@@ -267,9 +267,16 @@ guix shell -E "^EMAIL$" \
      -- emacsclient -c "$@"
 #+end_src
 
-*** Shepherd
+*** TODO: Shepherd
 
-*** SystemD
+Shepherd handles service mgmt, but soon this will be specified in Guix Home. 
+For now, the service is spec'd by scheme in =~/.config/shepherd=
+
+*** TODO: SystemD
+
+*** XDG Desktop
+
+
 
 *** Guix Home
 

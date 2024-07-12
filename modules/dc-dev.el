@@ -226,6 +226,7 @@ compilation was initiated from compile-mode."
            unless (treesit-language-available-p lang-key)
            do (treesit-install-language-grammar lang-key)))
 
+;; not used in config
 (defun dc/treesit-bump-extra-load-path ()
   "Prepend the `lib/treesit' from the symlinked guix profile to
 `treesit-extra-load-path'. This avoids the need to restart emacs
@@ -838,6 +839,10 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;; there is also flycheck-shellcheck, but the same functionality is built into emacs
 ;; (require 'flymake-shellcheck)
+(use-package flymake-shellcheck :straight (:type built-in)
+  :commands flymake-shellcheck-load
+  :init
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
 
 ;;*** VTerm
 
@@ -889,52 +894,5 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; "~/.emacs.g/etc/yasnippet/snippets/")
 
 ;; TODO yas creates new snippets in yas--default-user-snippets-dir
-
-;;*** Yasnippet Snippets
-
-;; NOTE: all yas/ functions are deprecated
-
-(defun dc/yasnippet-set-default ()
-  (let ((yas-def (org-file-contents (dc/emacs-etc "yasnippet/yasdefault"))))
-    (setq yas-new-snippet-default yas-def)))
-
-(setup (:pkg yasnippet)
-  (:with-hook org-mode-hook
-    (:hook yas-minor-mode))
-  (:with-hook LaTeX-mode-hook
-    (:hook yas-minor-mode))
-  (:with-hook latex-mode-hook
-    (:hook yas-minor-mode))
-  (:with-hook yaml-mode-hook
-    (:hook yas-minor-mode))
-  (:with-hook prog-mode-hook
-    (:hook yas-minor-mode))
-  (:with-hook window-setup-hook
-    (:hook #'dc/yasnippet-set-default)
-    (:hook #'yas-reload-all)))
-
-(with-eval-after-load 'yasnippet
-  (when dc/guix-checkout-path
-    (add-to-list 'yas-snippet-dirs dc/guix-checkout-path t)))
-
-(setup (:pkg yasnippet-snippets))
-
-;;*** Doom Snippets
-
-;; (with-eval-after-load 'doom-snippets
-;;   (setup (:pkg yasnippet)
-;;     ;; This should work with multiple hooks, but doesn't seem to add them
-;;     ;; also doesn't seem to add prog-mode-hooks either
-;;     ;; (:with-hook org-mode-hook
-;;     ;;   (:hook yas-minor-mode))
-;;     ;; (:with-hook prog-mode-hook
-;;     ;;   (:hook yas-minor-mode))
-;;     (require 'yasnippet)
-;;     (doom-snippets-initialize)
-;;     (yas-reload-all)))
-
-;; (setup (:pkg doom-snippets :straight t :type git :host github
-;;              :repo "dcunited001/snippets" :files ("*.el" "*"))
-;;   (:option doom-snippets-enable-short-helpers t))
 
 (provide 'dc-dev)

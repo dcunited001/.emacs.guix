@@ -125,7 +125,6 @@ graph & clones.")
 	#'magit-display-buffer-same-window-except-diff-v1)
   :demand t)
 
-
 ;;** Load Path
 
 ;; '("/home/dc/.emacs.straight2/straight/build/bind-key"
@@ -180,3 +179,27 @@ graph & clones.")
 
 ;; (defvar dc/emacs-init-file user-init-file "")
 ;; (defvar dc/emacs-init-dir (directory-file-name user-emacs-directory) "")
+
+
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 
+;; 

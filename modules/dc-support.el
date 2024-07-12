@@ -22,11 +22,13 @@
 
 ;;* Support
 
-;;** No Littering Paths
+;;** System Identification
 
-(defalias 'dc/emacs-etc #'no-littering-expand-etc-file-name)
-(defalias 'dc/emacs-var #'no-littering-expand-var-file-name)
-
+(defvar dw/is-guix-system (and (eq system-type 'gnu/linux)
+                               (with-temp-buffer
+                                 (insert-file-contents "/etc/os-release")
+                                 (search-forward "ID=guix" nil t))
+                               t))
 ;;** Doom
 
 ;; DOOM: ./lisp/core/doom-lib.el

@@ -146,7 +146,9 @@
 
 ;;*** Elf Mode
 ;; Interact with ELF binaries
-(setup (:pkg elf-mode))
+(use-package elf-mode
+  :command elf-mode
+  :init (add-to-list 'magic-mode-alist (cons "ELF" 'elf-mode)))
 
 ;;*** Crontab Mode
 (setup (:pkg crontab-mode :straight t))

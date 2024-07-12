@@ -26,8 +26,7 @@
 
 ;; emacs built with d-bus and its socket are required
 
-(straight-use-package '(notifications :type built-in))
-(setup notifications)
+(use-package notifications :straight (:type built-in))
 
 ;;*** Straight.el
 
@@ -71,15 +70,17 @@
                    (string-join unloaded " "))))
   (remove-hook 'server-after-make-frame-hook #'dc/reminder-packages-not-loaded))
 
-(add-hook 'server-after-make-frame-hook #'dc/reminder-packages-not-loaded)
+;; with depth 25
+(add-hook 'server-after-make-frame-hook #'dc/reminder-packages-not-loaded 25)
 
 ;;** Alert.el
 
 ;; main lib: https://github.com/jwiegley/alert
 
-(setup (:pkg alert)
-  (:option alert-default-style 'libnotify
-           alert-log-level 'normal))
+(use-package alert :straight t
+  :init
+  (setq alert-default-style 'libnotify
+        alert-log-level 'normal))
 
 ;; alert-styles
 ;; 'notifications: bundled with emacs to be OS/WM-agnostic compatible with all

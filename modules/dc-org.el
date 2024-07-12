@@ -24,7 +24,7 @@
 
 ;;* Org
 
-(straight-use-package '(org :type built-in))
+(use-package :straight (org :type built-in))
 
 ;; (setq-default org-capture-templates
 ;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \

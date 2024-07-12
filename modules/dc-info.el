@@ -50,7 +50,7 @@
 ;; eld-data
  (setq-default dc/Info-manuals-by-category eld-data))
 ;; (car dc/Info-manuals-by-category)
-(dc/eld-unserialize (expand-file-name "Info-manuals-by-category.eld" dc/eld-path))
+;; (dc/eld-unserialize (expand-file-name "Info-manuals-by-category.eld" dc/eld-path))
 
 ;; TODO: add gpm, gettext, libc?, basics, rest of software-dev, localization
 ;; TODO: setup info-path? (this only includes manuals on arch profiles)
@@ -59,6 +59,7 @@
 ;; TODO: convert to string
 (setq-default dc/Info-manual-default-categories
               '(emacs guile guix shell disk boot org magit emacs-ui emacs-completion make))
+
 (defun dc/Info-manuals (&optional categories)
   (let ((categories (or categories dc/Info-manual-default-categories)))
     (thread-last categories
@@ -69,19 +70,22 @@
 ;;** Info+
 
 ;; (prin1-to-string 'emacs)
-(setup (:pkg info+ :straight t :type git :host github :repo "emacsmirror/info-plus")
-  (:option Info-breadcrumbs-depth 4
-           Info-breadcrumbs-depth-internal 6
-           Info-breadcrumbs-in-header-flag t
-           Info-saved-history-file (expand-file-name "info-history"
-                                                     no-littering-var-directory)
-           Info-apropos-manuals (dc/Info-manuals))
 
+(use-package info+
+  :demand t
+  :init
+  (setq-default Info-breadcrumbs-depth 4
+		Info-breadcrumbs-depth-internal 6
+		Info-breadcrumbs-in-header-flag t
+		Info-saved-history-file (expand-file-name
+					 "info-history"
+					 no-littering-var-directory)
+		Info-apropos-manuals (dc/Info-manuals))
 
   ;; TODO: (setq-default Info-apropos-manuals)
-  (require 'info+)
-  (Info-breadcrumbs-in-mode-line-mode +1)
-  (Info-persist-history-mode +1))
+  :config
+  (add-hook 'emacs-startup-hook #'Info-breadcrumbs-in-mode-line-mode)
+  (add-hook 'emacs-startup-hook #'Info-persist-history-mode +1))
 
 ;;* RFCs
 
@@ -91,11 +95,13 @@
 ;;* Eldoc
 
 ;; there are also configurations for org & eglot
+(use-package eldoc :straight (:type built-in)
+  ;; TODO delight,
+  :init
+  (setq eldoc-idle-delay 0.1
+	eldoc-minor-mode-string "│εL"))
 
-(setq eldoc-idle-delay 0.1
-      eldoc-minor-mode-string "│εL")
-
-(add-to-list 'minions-prominent-modes 'eldoc-mode)
+;; (add-to-list 'minions-prominent-modes 'eldoc-mode)
 
 ;; currently 'truncate-sym-name-if-fit. eglot may change this
 ;; eldoc-echo-area-use-multiline-p nil
@@ -107,9 +113,11 @@
 
 ;; https://www.masteringemacs.org/article/emacs-builtin-elisp-cheat-sheet
 
-(setup shortdoc
-  (:with-hook ef-themes-post-load-hook
-    (:hook (lambda () (dc/update-face 'shortdoc-section 'ef-themes-heading-3)))))
+(use-package shortdoc :straight (:type built-in))
+  ;; TODO: fix ef-themes cycling; also move faces below into use-pkg
+  ;; :config
+  ;; (add-hook 'ef-themes-post-load-hook
+  ;; 	    (lambda () (dc/update-face 'shortdoc-section 'ef-themes-heading-3)))
 
 (with-eval-after-load 'shortdoc
 

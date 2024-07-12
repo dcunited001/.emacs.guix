@@ -48,15 +48,19 @@
 
 ;; ䷅ -> ䷃
 ;; 23 -> 4 (oh no!)
-(setup (:pkg i-ching :straight t :type git :flavor melpa
-             :host github :repo "zzkt/i-ching")
-  (:option i-ching-randomness-source 'pseudo
-           i-ching-divination-method 'yarrow-stalks))
+(use-package i-ching :straight t
+  :init
+  (setq i-ching-randomness-source 'pseudo
+	i-ching-divination-method 'yarrow-stalks))
 
 ;;** Opening Files
 
-(setup (:pkg openwith)
-  (require 'openwith)
+;; :config requires defuns (orignal setup config)
+;; (require 'openwith)
+
+(use-package openwith :straight t
+
+  :config
   (setq openwith-associations
         (list
          (list (openwith-make-extension-regexp
@@ -65,10 +69,10 @@
                   "ogm" "ogg" "mkv"))
                "mpv"
                '(file))
+	 ;; Removed jpg because Telega was causing feh to be opened...
          (list (openwith-make-extension-regexp
                 '("xbm" "pbm" "pgm" "ppm" "pnm"
-                  "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
-               ;; causing feh to be opened...
+                  "png" "gif" "bmp" "tif" "jpeg"))
                "feh"
                '(file))
          (list (openwith-make-extension-regexp

@@ -24,80 +24,55 @@
 
 ;;* Core
 
-;;** System Identification
-
-(defvar dw/is-guix-system (and (eq system-type 'gnu/linux)
-                               (with-temp-buffer
-                                 (insert-file-contents "/etc/os-release")
-                                 (search-forward "ID=guix" nil t))
-                               t))
-
-;;** Config Paths
-
-;;*** No Littering
-
 ;; Use no-littering to automatically set common paths to the new user-emacs-directory
-(setup (:pkg no-littering)
-  (require 'no-littering))
-
-;;*** Custom File
-
-;; Keep customization settings in a temporary file (thanks Ambrevar!)
-(setq custom-file
-      (if (boundp 'server-socket-dir)
-          (expand-file-name "custom.el" server-socket-dir)
-        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-(load custom-file t)
-
-;;*** Features
-
-(setq desktop-dirname (file-name-concat no-littering-var-directory "desktop/")
-      bookmark-default-file (file-name-concat no-littering-var-directory "bookmarks.el")
-      tabspaces-session-file (file-name-concat no-littering-var-directory "tabsession.el"))
-
-;;*** Native Compilation
-
-;; Silence compiler warnings as they can be pretty disruptive
-(setq-default native-comp-async-report-warnings-errors nil)
 
 ;; Set the right directory to store the native comp cache
-(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
+;; (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
 
 ;;** Editor
 
 ;;*** Core Key Bindings
 
-(setup (:pkg which-key)
-  (:option which-key-idle-delay 2.0
-           which-key-idle-secondary-delay 0.05
-           which-key-lighter "│WK")
-  (require 'which-key)
+(use-package which-key :straight t
+  :after general
+  :init
+  (setq which-key-idle-delay 2.0
+        which-key-idle-secondary-delay 0.05
+        which-key-lighter "│WK")
+  :config
   (which-key-mode)
   (which-key-setup-side-window-bottom))
 
-(setup (:pkg general))
+(use-package general :straight t :demand t)
 
 ;;*** Editing Configuration
 
 ;; issues with whitespace added into other buffers (idk why)
-(setup (:pkg ws-butler)
-  ;; (:hook-into text-mode)
-  (:hook-into text-mode prog-mode))
+(use-package ws-butler :straight t
+  :hook
+  ((text-mode prog-mode) . ws-butler-mode))
 
-(setup (:pkg super-save)
-  (:delay)
-  (:when-loaded
-    (super-save-mode +1)
-    (setq super-save-auto-save-when-idle t)))
+;; (use-package super-save
+;;   super-save-mode +1
+  
+;;   (:delay)
+;;   (:when-loaded
+;;     (super-save-mode +1)
+;;     (setq super-save-auto-save-when-idle t)))
 
-(setup (:require paren)
-  (:option show-paren-style 'mixed)
-  (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
+;; TODO: face (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
+
+(use-package paren :straight (:type built-in)
+  :demand t
+  :init
+  (setq show-paren-style 'mixed)
+  :config
   (show-paren-mode 1))
 
 ;;*** Dired
 
-(setup (:pkg dired-collapse))
+(use-package dired :straight (:type built-in))
+(use-package dired-collapse :straight t)
 
 ;; TODO: GNUS dired mode
 
@@ -229,9 +204,9 @@
                     "mpg" "flv" "ogg" "mov" "mid" "midi" "wav"
                     "aiff" "flac")))
 
-(setup (:require dired-rainbow)
-  (:with-hook window-setup-hook
-    (:hook #'dc/dired-rainbow-setup)))
+(use-package dired-rainbow :straight t
+  :hook
+  (window-setup-hook #'dc/dired-rainbow-setup))
 
 ;;*** Make Help More Helpful
 

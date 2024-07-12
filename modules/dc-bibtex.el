@@ -32,8 +32,9 @@
 
 ;; (string-join (mapcar #'file-name-directory dc/aca-bibtex-files) ":")
 
-(setup (:pkg oc)
-  (:option org-cite-global-bibliography dc/aca-bibtex-files))
+(use-package oc :straight (:type "built-in")
+  :init
+  (setq org-cite-global-bibliography dc/aca-bibtex-files))
 
 ;; also: oc-basic, oc-csl, oc-bibtex, oc-natbib, oc-biblatex
 
