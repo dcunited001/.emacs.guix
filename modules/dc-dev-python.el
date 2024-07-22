@@ -22,10 +22,12 @@
 
 ;;* Dev Python
 
-(setq-default python-indent-offset 4)
-
-(add-to-list 'major-mode-remap-alist
-             '(python-mode . python-ts-mode))
+(use-package python-mode :straight (:type built-in) :demand t
+  :custom
+  (python-indent-offset 4)
+  :init
+  (add-to-list 'major-mode-remap-alist
+               '(python-mode . python-ts-mode)))
 
 ;;** formatting
 
@@ -35,11 +37,6 @@
 ;;** LSP
 
 ;;*** pylsp
-
-(with-eval-after-load 'eglot
-  (add-to-list
-   'eglot-server-programs
-   '(python-mode . ("pylsp"))))
 
 ;;** Fly
 
@@ -71,24 +68,23 @@
 ;;   - https://github.com/emacs-jupyter/jupyter/issues/446
 ;; - may fix https://github.com/emacs-jupyter/jupyter/issues/481 & 483
 
-(setup (:pkg jupyter :straight t :type git :flavor melpa
-             :host github :repo "emacs-jupyter/jupyter"
-             :files (:defaults "Makefile" "widget.html" "js" "jupyter-pkg.el"))
-  (:option org-babel-default-header-args:jupyter-python
-           ;; TODO set :results
-           '((:results . "both")
-	           (:session . "jupyter-python")
-	           ;; (:kernel . "python3")
-	           (:pandoc . "t")
-	           ;; (:exports . "both")
-	           (:cache .   "no")
-	           (:noweb . "no")
-	           (:hlines . "no")
-	           (:tangle . "no")
-	           (:eval . "never-export"))))
+(use-package jupyter :straight t :defer t
+  :custom
+  (org-babel-default-header-args:jupyter-python
+   ;; TODO set :results
+   '((:results . "both")
+	   (:session . "jupyter-python")
+	   ;; (:kernel . "python3")
+	   (:pandoc . "t")
+	   ;; (:exports . "both")
+	   (:cache .   "no")
+	   (:noweb . "no")
+	   (:hlines . "no")
+	   (:tangle . "no")
+	   (:eval . "never-export")))
 
-(with-eval-after-load 'jupyter-autoloads
-  (require 'jupyter)
+  ;; TODO move to emacs-startup-hook or similar?
+  :config
   (require 'ob-jupyter)
 
   ;; TODO: this finds the kernelspecs, but only sets one alias for each

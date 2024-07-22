@@ -28,51 +28,54 @@
 
 
 ;;*** TLDR
-(setup (:pkg tldr))
+(use-package tldr :straight t :defer t)
 
 ;;* Systems
 
 ;;** Emacs
 
 ;; benchmarking init
-(setup (:pkg esup)
-  (:option esup-depth 0))
+(use-package esup :straight t
+  :disabled
+  :custom
+  (esup-depth 0))
 
 ;;*** Testing
 
-(setup (:pkg buttercup))
+(use-package buttercup :straight t :disabled)
 
 ;;** Arch
-(setup (:pkg aurel :straight t :type git :flavor melpa
-             :host github :repo "alezost/aurel"))
+(use-package aurel :straight t :disabled)
+
 ;;** Guix
 
-(setup (:pkg guix)
-  (:option guix-read-package-name-function
-           #'guix-read-package-name-at-point)
-  (:with-mode guix-derivation-mode
-    (:file-match "\\/gnu\\/store\\/.*\\.drv\\'")
-    (:hook lispy-mode))
-  (:with-mode guix-build-log-mode
-    (:file-match "\\/var\\/log\\/guix\\/drvs\\/.*\\.drv\\'"))
-  (require 'guix-profiles))
+;; (use-package guix :straight t
+;;   (:option guix-read-package-name-function
+;;            #'guix-read-package-name-at-point)
+;;   (:with-mode guix-derivation-mode
+;;     (:file-match "\\/gnu\\/store\\/.*\\.drv\\'")
+;;     (:hook lispy-mode))
+;;   (:with-mode guix-build-log-mode
+;;     (:file-match "\\/var\\/log\\/guix\\/drvs\\/.*\\.drv\\'"))
+;;   (require 'guix-profiles))
 
-(with-eval-after-load 'guix
-  (cl-dolist (m '(guix-devel-mode
-                  guix-build-log-mode
-                  guix-derivation-mode))
-    (add-to-list 'minions-prominent-modes m)))
+;; (with-eval-after-load 'guix
+;;   (cl-dolist (m '(guix-devel-mode
+;;                   guix-build-log-mode
+;;                   guix-derivation-mode))
+;;     (add-to-list 'minions-prominent-modes m)))
 
 ;;*** Recutils
 
 ;; Guix package search results are output in the recutils format
 
 ;; rec-mode and ob-rec are both in emacs-rec-mode
-(setup (:pkg rec-mode))
-
-(with-eval-after-load 'rec-mode
+(use-package rec-mode :straight t
+  :defer t
+  :config
   (require 'ob-rec)
-  (add-to-list 'dc/org-babel-load-languages '(rec . t)))
+  (add-to-list 'dc/org-babel-load-languages '(rec . t))
+  (dc/org-babel-do-load-languages))
 
 ;; (setq auto-mode-alist (cddr auto-mode-alist))
 
@@ -118,15 +121,16 @@
 
 ;;** Nix
 
-(setup (:pkg nix-mode)
-  (:file-match "\\.nix\\'"))
-
-(setup (:pkg ob-nix :type git :flavor melpa
-             :host codeberg :repo "theesm/ob-nix"))
+;; TODO for nix: interpreter-mode-alist?
+(use-package nix-mode :straight t :defer t :mode "\\.nix\\'")
+(use-package ob-nix :straight t :defer t :after nix-mode
+  :config
+  (add-to-list 'dc/org-babel-load-languages '(nix . t))
+  (dc/org-babel-do-load-languages))
 
 ;;** Containerd
 
-(setup (:pkg docker))
+(use-package docker :straight t :defer t)
 
 ;; (add-to-list
 ;; 'docker-image-run-custom-args
@@ -138,31 +142,31 @@
 ;;** Unix
 
 ;;*** Firestarter
-;; Interact with -*- vars: t; -*-
-(setup (:pkg firestarter :straight t)
-  (:option firestarter-default-type t)
-  (require 'firestarter)
-  (firestarter-mode))
+;; -*- firestarter: "shell command"; -*- run command on save
+(use-package firestarter :straight t :disabled
+  :custom
+  (firestarter-default-type t))
+
+;  :config
+;  (firestarter-mode)
 
 ;;*** Elf Mode
 ;; Interact with ELF binaries
-(use-package elf-mode
-  :command elf-mode
-  :init (add-to-list 'magic-mode-alist (cons "ELF" 'elf-mode)))
+(use-package elf-mode :straight t
+  :commands elf-mode
+  :magic ("ELF" . 'elf-mode))
 
 ;;*** Crontab Mode
-(setup (:pkg crontab-mode :straight t))
+(use-package crontab-mode :straight t :demand t)
 
 ;;*** Syslog Mode
 
 ;; this branch removes (toggle-read-only) so it loads strace_notes.el on (syslog-mode)
-(setup (:pkg syslog-mode :type git :flavor melpa :host github
-             :repo "dcunited001/syslog-mode"
-             :branch "dcunited001-read-only")
-  (:option syslog-setup-on-load t))
-
-(add-to-list 'auto-mode-alist
-             '("\\(messages\\(\\.[0-9]\\)?\\|SYSLOG\\|\\.s?trace\\)\\'" . syslog-mode))
+(use-package syslog-mode :straight (:type git :flavor melpa :host github
+				:repo "dcunited001/syslog-mode"
+				:branch "dcunited001-read-only")
+  :custom (syslog-setup-on-load t)
+  :mode ("\\(messages\\(\\.[0-9]\\)?\\|SYSLOG\\|\\.s?trace\\)\\'" . syslog-mode))
 
 ;; customize syslog-notes-files or set in .dir-locals.el to memoize notes files
 ;; the notes files are  *.elc files
@@ -187,19 +191,18 @@
 
 ;;*** Device Tree
 
-(setup (:pkg dts-mode))
+(use-package dts-mode :straight t :defer t)
 
 ;;*** Journalctl Mode
-(setup (:pkg journalctl-mode :straight t))
+(use-package journalctl-mode :straight t :defer t
+  :commands journalctl)
 
 ;;** Red Hat
 ;; an emacs package that integrates a mock workflow would help quite a bit
 
 ;; nbarrientos/archive-rpm: simple and it helps.
 ;; I don't have enough exp to be sure of workflow support, but it helped a lot
-(setup (:pkg archive-rpm :straight t
-             :type git :flavor melpa
-             :host github :repo "nbarrientos/archive-rpm"))
+(use-package archive-rpm :straight t)
 
 ;; Other straight packages
 ;; emacsattic/rpm: last updated 14 years ago, probably good but probably not current
@@ -224,26 +227,27 @@
 
 ;; access the password store
 
-(setup (:pkg password-store)
-  (:option password-store-time-before-clipboard-restore 15))
+(use-package password-store :straight t :demand t
+  :custom (password-store-time-before-clipboard-restore 15))
 
 ;;** Pass.el
 
 ;; Pass.el mostly is used to edit/manage the (a) password store.  pass-view-mode
 ;; derives from nil and functions a bit like dired.
 
-(setup (:pkg pass)
+(use-package pass :straight t :after password-store :demand t
   ;; these are defaults
-  (:option pass-show-keybindings t
-           pass-username-field "username"
-           pass-username-fallback-on-filename nil
-           pass-suppress-confirmations nil))
+  :custom
+  (pass-show-keybindings t)
+  (pass-username-field "username")
+  (pass-username-fallback-on-filename nil)
+  (pass-suppress-confirmations nil))
 
 ;;** Terraform
 
 ;; mostly a major-mode only
-(setup (:pkg terraform)
-  (:option terraform-format-on-save t))
+(use-package terraform-mode :straight t
+  :custom (terraform-format-on-save t))
 ;; (:hook #'eglot-ensure)
 
 ;;** SSH
@@ -259,28 +263,21 @@
 ;;           "~/.guix-profile/sbin"
 ;;           "/run/current-system/profile/bin"
 ;;           )))
-(setup (:pkg tramp)
-  (:option tramp-default-method "ssh"))
-
-;; the guix emacs build prepends guix search paths to tramp-remote-path
-(with-eval-after-load 'tramp
-  (require 'tramp-container))
+(use-package tramp :straight t :demand t
+  ;; the guix emacs build prepends guix search paths to tramp-remote-path
+  :config (require 'tramp-container)
+  ;; TODO (add-hook 'emacs-startup-hook 'tramp-container)
+  :custom (tramp-default-method "ssh"))
 
 ;;*** SSH Config Mode
-(setup (:pkg ssh-config-mode))
+(use-package ssh-config-mode :straight t)
 
 ;;*** x509 Mode
 ;; Inspect details on Certificates, CA's and CSR's
-(setup (:pkg x509-mode)
-  (cl-dolist (modespec '(("\\.pem$" . x509-mode)
-                         ("\\.cer$" . x509-mode)
-                         ("\\.der$" . x509-mode)
-                         ("\\.crt$" . x509-mode)
-                         ("\\.crl$" . x509-mode)))
-    (add-to-list 'auto-mode-alist modespec)))
-
-;; (with-eval-after-load 'x509-mode
-;;   (add-hook 'x509-mode-hook #'(lambda () (call-interactively 'x509-dwim))))
+(use-package x509-mode :straight t
+ ;; TODO x509-mode-hook: jumping straight to x509 doesn't work well
+ ;; :hook (x509-mode-hook . (lambda () (call-interactively 'x509-dwim)))
+ :mode ((rx "." (| "pem" "cer" "der" "crt" "crl") eos) . x509-mode))
 
 ;;* Services
 
@@ -289,19 +286,19 @@
 ;;*** SystemD
 
 ;; loads for buffers that match systemd-autoload-regexp
-(setup (:pkg systemd))
-
-(with-eval-after-load 'flycheck
-  ;; TODO: GUIX: check for executable at: (flycheck-define-checker systemd-analyze ...)
-  (if (and IS-LINUX
-           (null dw/is-guix-system))
+(use-package systemd :straight (:type built-in) :defer t
+  :config
+  (if (and IS-LINUX (null dw/is-guix-system))
       (add-hook 'systemd-mode-hook #'flycheck-mode)))
+
+;; TODO: GUIX: check for executable at: (flycheck-define-checker systemd-analyze ...)
 
 ;;*** Prodigy.el
 
 ;;*** Detach.el
 
-(setup (:pkg detached))
+;; TODO: customize detached.el (plan to use .dir-locals.el
+(use-package detached :straight t :defer t)
 
 (defun dc/detached-kbd-setup ()
   ;; trying out detached. just lazily load for now
@@ -322,7 +319,7 @@
 ;;** Structure
 
 ;; this is found in the protocolbuffers/protobuf repository
-(setup (:pkg protobuf-mode))
+(use-package protobuf-mode :straight t :defer t)
 
 ;;** Database
 
@@ -330,25 +327,36 @@
 
 ;;*** Restclient
 ;; TODO: configure restclient
-(setup (:pkg restclient :straight t :type git :flavor melpa
-             :host github :repo "pashky/restclient.el"
-             :files ("restclient.el" "restclient-pkg.el" "restclient.jq")))
-(setup (:pkg ob-restclient :straight t :type git :flavor melpa
-             :host github :repo "alf/ob-restclient.el"))
+(use-package restclient :defer t
+  :straight (:type git :flavor melpa
+		   :host github :repo "pashky/restclient.el"
+		   :files ("restclient.el" "restclient-pkg.el" "restclient.jq")))
+
+;; (use-package ob-restclient :after restclient :straight t :defer t
+;;   :config
+;;   (require 'ob-restclient)
+;;   (if-let* ((lang (and  'restclient))
+;;             (add-to-list 'dc/org-babel-load-languages '(restclient . t))
+;;             (dc/org-babel-do-load-languages))))
+
+;; TODO here, add restclient to ob-do-load-lang
 
 ;;*** OpenAPI
 ;; TODO configure openapi-yaml-mode
 
 ;; Using straight:
-(setup (:pkg swagg :straight t :type git :flavor melpa
-             :host github :repo "isamert/swagg.el"))
+(use-package swagg :straight t :defer t)
 
 ;;*** GraphQL
 ;; TODO configure graphql & ob-graphql
 ;; ob-graphql requires graphql-mode, which does not depend on graphql
-(setup (:pkg graphql-mode))
-(setup (:pkg ob-graphql :straight t :type git :flavor melpa
-             :host github :repo "jdormit/ob-graphql"))
+(use-package graphql-mode :straight t :defer t)
+(use-package ob-graphql :straight t
+  :defer t :after graphql-mode
+  :config
+  (add-to-list 'dc/org-babel-load-languages '(graphql . t))
+  (dc/org-babel-do-load-languages))
+;;  (:type git :flavor melpa :host github :repo "jdormit/ob-graphql")
 
 ;; (with-eval-after-load ... (in org)...
 ;; TODO: package: dynamic-graphs?
@@ -359,9 +367,9 @@
 ;;*** GNU Plot
 
 ;;*** Graphviz/Dot
-(setup (:pkg graphviz-dot-mode)
-  ;; TODO setup graphviz
-  )
+
+;; TODO setup graphviz
+(use-package graphviz-dot-mode :straight t)
 
 ;; (setup (:pkg dynamic-graphs :straight t))
 
@@ -377,13 +385,13 @@
 (defvar dc/d2-snippets-dir "straight/repos/d2-mode/snippets"
   "Path to snippets included with d2-mode.")
 
-(setup (:pkg d2-mode :straight t :type git :flavor melpa
-             :host github :repo "andorsk/d2-mode")
-  (:file-match "\\.d2\\'")
-  (:option d2-location "/usr/bin/d2"
-           ;; d2-tmp-dir ;; tmp files
-           ;; d2-flags ""
-           d2-output-format ".svg"))
+(use-package d2-mode :straight t :defer t
+  :mode "\\.d2\\'"
+  :custom
+  (d2-location "/usr/bin/d2")
+  ;; d2-tmp-dir ;; tmp files
+  ;; d2-flags ""
+  (d2-output-format ".svg"))
 
 ;; these just need to be brought into snippets dir
 ;;
@@ -396,22 +404,22 @@
 
 ;; run from docker/podman, nice
 ;; https://github.com/mermaid-js/mermaid-cli#alternative-installations
-(setup (:pkg mermaid-mode :straight t :type git :flavor melpa
-             :host github :repo "abrochard/mermaid-mode")
-  (require 'mermaid-mode)
+(use-package mermaid-mode :straight t :defer t
   ;; also mermaid-mmdc-location, mermaid-flags
-  (:option mermaid-output-format ".svg"))
+  :custom (mermaid-output-format ".svg"))
 
 ;; both pkgs define org-babel-execute:mermaid.  ensure ob-mermaid loads after.
 ;; depending on how straight builds load-path, different functions could run.
 ;; https://github.com/abrochard/mermaid-mode/blob/master/mermaid-mode.el#L102-L121
-(with-eval-after-load 'mermaid-mode
-  ;; ob-mermaid basically only provides org-babel-execute:mermaid and formatting
-  (setup (:pkg ob-mermaid :straight t :type git :flavor melpa
-               :host github :repo "arnm/ob-mermaid")))
+
+;; ob-mermaid basically only provides org-babel-execute:mermaid and formatting
+(use-package ob-mermaid :straight t :defer t :after mermaid-mode
+  :config
+  (add-to-list 'dc/org-babel-load-languages '(mermaid . t))
+  (dc/org-babel-do-load-languages))
 
 ;; only necessary if (executable-find ...) returns nil
-;; (:option ob-mermaid-cli-path "mmdc")
+;; :custom (ob-mermaid-cli-path "mmdc")
 
 ;;*** PlantUML
 
@@ -421,8 +429,7 @@
 
 ;;*** Chemistry
 
-(setup (:pkg smiles-mode :straight t :type git :flavor melpa
-             :repo "https://repo.or.cz/smiles-mode.git"))
+(use-package smiles-mode :straight t :defer t)
 
 ;; last two cmds in ob-smiles.el cause issues. compilation issue?
 ;;
@@ -431,24 +438,23 @@
 
 ;; instead, load explicitly (must run from an org file)
 
-(defun dc/ob-smiles-setup ()
-  (interactive)
-  (setup (:pkg ob-smiles :straight t :type git :flavor melpa
-               :repo "https://repo.or.cz/ob-smiles.git")
+  (use-package ob-smiles :straight t :defer t :after smiles-mode
+    :config
     (add-to-list 'dc/org-babel-load-languages '(smiles . t))
-    (dc/org-babel-do-load-languages)))
+    (dc/org-babel-do-load-languages))
 
 ;;** Writing
 
 ;;*** Kanji
 
-(setup (:pkg kanji-mode))
+(use-package kanji-mode :straight t :defer t)
 
 ;;*** Translation
 
-(setup (:pkg google-translate :straight t :type git :flavor melpa
-             :host github :repo "atykhonov/google-translate")
-  (:option google-translate-backend-method 'curl)
+(use-package google-translate :straight t :defer t
+  :custom
+  (google-translate-backend-method 'curl)
+
   ;; (:bind "C-T" #'my-google-translate-at-point)
   (defun google-translate--search-tkk ()
     (list 430675 2721866130))
@@ -462,11 +468,12 @@
 ;; this seems to be doing something similar (google-translate doesn't seem to
 ;; finish loading, (with-eval-after-load ...) never calls (setup ...)
 ;; then init blows up in dc-shim.el
+
 (defun dc/ob-translate-setup ()
   (interactive)
-  (setup (:pkg ob-translate :straight t :type git :flavor melpa
-               :host github :repo "krisajenkins/ob-translate"))
-  (add-to-list 'dc/org-babel-load-languages '(translate . t))
-  (dc/org-babel-do-load-languages))
+  (use-package ob-translate :straight t :defer t :after google-translate
+    :config
+    (add-to-list 'dc/org-babel-load-languages '(translate . t))
+    (dc/org-babel-do-load-languages)))
 
 (provide 'dc-tools)

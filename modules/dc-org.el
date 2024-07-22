@@ -24,7 +24,107 @@
 
 ;;* Org
 
-(use-package :straight (org :type built-in))
+;;** Modules
+
+;; to load org quickly, these modules need to be set before org-mode first loads
+;;
+;; TODO org is set with :demand t
+
+
+;;*** Tempo
+
+(use-package org :straight (:type built-in) :demand t
+  ;; use like `<sh' or call `org-insert-structure-template' to get a menu
+  :config
+  (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
+  (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
+  (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("go" . "src go"))
+  (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
+  (add-to-list 'org-structure-template-alist '("json" . "src json")))
+
+;; TODO: org-screen (org-contrib)
+;;
+;; [[file:/home/dc/.guix-extra-profiles/emacs-g/emacs-g/share/emacs/site-lisp/org-contrib-0.5/org-screen.el]]
+;;
+;; + Use M-x org-screen to connect to a named screen session with term-mode
+;; + it creates an org-link to the session with the [[screen][url protocol]]
+;;   which requires allowing elisp uri protocol
+;; + enable elisp links in buffer (setq-local org-confirm-elisp-link-function nil)
+
+;;TODO orgtbl-sqlinsert: Convert Org tables to SQL insertions
+
+;;** Appearance
+
+;; (use-package ox-latex :straight t :after (org) :demand t)
+
+;; after ox-latex?
+(use-package org-appear :straight t :after (org) :demand t
+  :hook (org-mode-hook . org-appear-mode))
+
+(use-package org :straight (:type built-in) :demand t
+  :custom
+  (org-indirect-buffer-display 'current-window)
+
+  ;; turned off by org-indent-mode when the following is set (default)
+  ;; (org-adapt-indentation nil)
+  ;; (org-indent-mode-turns-off-org-adapt-indentation t)
+
+  (org-capture-bookmark nil)
+  (org-cycle-separator-lines 2)
+  (org-eldoc-breadcrumb-separator " → ")
+  (org-ellipsis " ▾")
+  (org-enforce-todo-dependencies t)
+  ;; (org-entities-user '(("flat"  "\\flat" nil "" "" "266D" "♭")
+  ;;                      ("sharp" "\\sharp" nil "" "" "266F" "♯")))
+  (org-fontify-done-headline t)
+  (org-fontify-quote-and-verse-blocks t)
+  ;; org-fontify-whole-heading-line t
+  (org-hide-block-startup nil)
+  (org-hide-emphasis-markers nil)
+  (org-hide-macro-markers nil)
+  ;; (org-hide-leading-stars t)
+  (org-image-actual-width nil)
+  (org-imenu-depth 6)
+  (org-priority-default ?A)
+  (org-priority-highest ?A)
+  (org-priority-lowest ?E)
+  (org-priority-faces '((?A . error)
+                        (?B . error)
+                        (?C . warning)
+                        (?D . warning)
+                        (?E . success)))
+  ;; (org-startup-folded nil)
+  (org-startup-folded 'content
+                      "`showeverything' is org's default, but it doesn't respect
+`org-hide-block-startup' (#+startup: hideblocks), archive trees,
+hidden drawers, or VISIBILITY properties. `nil' is equivalent, but
+respects these settings.")
+  (org-startup-indented t)
+  ;; (org-tags-column 0) ; -77
+  (org-use-sub-superscripts '{})
+
+  :config
+  ;;*** Latex display
+  ;; (require 'ox-latex) ;; defined in org.el, not ox-latex
+  (plist-put org-format-latex-options :scale 1.5)
+
+  ;; DOOM: +org-todo-* faces
+  ;;
+  ;; HACK Face specs fed directly to `org-todo-keyword-faces' don't respect
+  ;;      underlying faces like the `org-todo' face does, so we define our own
+  ;;      intermediary faces that extend from org-todo.
+  ;;
+  ;; (with-no-warnings ...) ?
+  :custom-face
+  ;;   (FACE SPEC [NOW [COMMENT]])
+  (+org-todo-active ((t (:inherit (bold font-lock-constant-face org-todo)))) nil "")
+  (+org-todo-project ((t (:inherit (bold font-lock-doc-face org-todo)))) nil "")
+  (+org-todo-onhold ((t (:inherit (bold warning org-todo)))) nil "")
+  (+org-todo-cancel  ((t (:inherit (bold error org-todo)))) nil ""))
 
 ;; (setq-default org-capture-templates
 ;;   '((?b "* READ %?\n\n%a\n\n%:author (%:year): %:title\n   \
@@ -74,100 +174,39 @@
   (setq org-calendars-directory
         (file-name-as-directory (file-name-concat org-directory "calendars"))))
 
-;;*** Appearance
+;;*** Org Modern
+
+;; TODO try org-modern. it is unlikely to conflict but other packages that
+;; customize faces will no longer be hooked in ...
+
+;; (setup (:pkg org-modern)
+;;   (global-org-modern-mode))
+;; customs:
+;; -label-border 'auto
+;; -star '( stars...)
+;; -hide-stars 'leading
+;; -timestamp t
+;; -table t
+;; -priority t
+;; -list '((a . list))
+;; -checkbox '((a . list))
+;; -horizontal-rule t
+;; -todo t
+;; -todo-faces nil; '((a . list))
+;; -priority-faces nil; '((a . list))
+;; -tag t
+;; -block-name t
+;; -block-fringe 0
+;; -keyword t
+;; -footnote '('defs 'refs)
+;; -internal-target t
+;; -radio-target choice
+;; -statitistics t
+;; -progress list
+;;
+;; org-modern-faces:
 
 (defun dc/org-init-appearance-h ()
-  ;; TODO try org-modern. it is unlikely to conflict but other packages that
-  ;; customize faces will no longer be hooked in ...
-
-  ;; ... and i didn't know that (append ... ) supports thee whenlets. it's great
-  ;; when evil is not half/dis/advised and features like xref just work (sorry
-  ;; doom). i'm sure it works for 99% of the emacs users who use avim. just not
-  ;; me.
-
-  ;; (setup (:pkg org-modern)
-  ;;   (global-org-modern-mode))
-  ;; customs:
-  ;; -label-border 'auto
-  ;; -star '( stars...)
-  ;; -hide-stars 'leading
-  ;; -timestamp t
-  ;; -table t
-  ;; -priority t
-  ;; -list '((a . list))
-  ;; -checkbox '((a . list))
-  ;; -horizontal-rule t
-  ;; -todo t
-  ;; -todo-faces nil; '((a . list))
-  ;; -priority-faces nil; '((a . list))
-  ;; -tag t
-  ;; -block-name t
-  ;; -block-fringe 0
-  ;; -keyword t
-  ;; -footnote '('defs 'refs)
-  ;; -internal-target t
-  ;; -radio-target choice
-  ;; -statitistics t
-  ;; -progress list
-  ;;
-  ;; org-modern-faces:
-
-  (setup (:pkg org-appear)
-    (:hook-into org-mode))
-
-  (setq org-indirect-buffer-display 'current-window
-        ;; turned off by org-indent-mode when the following is set (default)
-        ;; org-adapt-indentation nil
-        ;; org-indent-mode-turns-off-org-adapt-indentation t
-
-        org-capture-bookmark nil
-        org-cycle-separator-lines 2
-        org-edit-src-content-indentation 0 ; no effect when org-src-preserve-indentation
-        org-eldoc-breadcrumb-separator " → "
-        org-ellipsis " ▾"
-        org-enforce-todo-dependencies t
-        ;; org-entities-user '(("flat"  "\\flat" nil "" "" "266D" "♭")
-        ;;                     ("sharp" "\\sharp" nil "" "" "266F" "♯"))
-        org-fontify-done-headline t
-        org-fontify-quote-and-verse-blocks t
-        ;; org-fontify-whole-heading-line t
-        org-hide-block-startup nil
-        org-hide-emphasis-markers nil
-        org-hide-macro-markers nil
-        ;; org-hide-leading-stars t
-        org-image-actual-width nil
-        org-imenu-depth 6
-        org-priority-default ?A
-        org-priority-highest ?A
-        org-priority-lowest ?E
-        org-priority-faces '((?A . error)
-                             (?B . error)
-                             (?C . warning)
-                             (?D . warning)
-                             (?E . success))
-        org-src-fontify-natively t
-        ;; `showeverything' is org's default, but it doesn't respect
-        ;; `org-hide-block-startup' (#+startup: hideblocks), archive trees,
-        ;; hidden drawers, or VISIBILITY properties. `nil' is equivalent, but
-        ;; respects these settings.
-        ;; org-startup-folded nil
-        org-startup-folded 'content
-        org-startup-indented t
-        ;; org-tags-column 0 ; -77
-        org-use-sub-superscripts '{})
-
-  ;; HACK Face specs fed directly to `org-todo-keyword-faces' don't respect
-  ;;      underlying faces like the `org-todo' face does, so we define our own
-  ;;      intermediary faces that extend from org-todo.
-  (with-no-warnings
-    (custom-declare-face '+org-todo-active  '((t (:inherit (bold font-lock-constant-face org-todo)))) "")
-    (custom-declare-face '+org-todo-project '((t (:inherit (bold font-lock-doc-face org-todo)))) "")
-    (custom-declare-face '+org-todo-onhold  '((t (:inherit (bold warning org-todo)))) "")
-    (custom-declare-face '+org-todo-cancel  '((t (:inherit (bold error org-todo)))) ""))
-
-  ;;*** Latex display
-  (require 'ox-latex)
-  (plist-put org-format-latex-options :scale 1.5)
 
   ;;** Refile
 
@@ -175,9 +214,9 @@
   ;; .dir-locals where needed)
 
   (defun dc/org-refile-project-current-targets ()
-    (let* ((may-prompt t)                ; should i passthrough prompt?
-          (p (dc/project-local-root may-prompt))
-          (files (list dc/org-capture-todo-file)))
+    (let* ((may-prompt t)               ; should i passthrough prompt?
+           (p (dc/project-local-root may-prompt))
+           (files (list dc/org-capture-todo-file)))
       (mapcar (apply-partially #'file-name-concat p) files)))
 
   ;; dc/project-local-root: override by setting 'project-current-directory-override'
@@ -701,16 +740,16 @@ capture was not aborted."
     ;; - daviwil set to nil, t in .emacs.network
     ;; - see notes on org-adapt-indentation above
 
-    (:option org-confirm-babel-evaluate t
-             org-src-preserve-indentation t
-             org-src-tab-acts-natively t
+    ;; (:option org-confirm-babel-evaluate t
+    ;;          org-src-preserve-indentation t
+    ;;          org-src-tab-acts-natively t
 
-             ;; default, works pretty well, may obviate the defadvice! below
-             org-src-window-setup 'reorganize-frame
+    ;;          ;; default, works pretty well, may obviate the defadvice! below
+    ;;          org-src-window-setup 'reorganize-frame
 
-             ;; org-confirm-babel-evaluate nil
-             org-link-elisp-confirm-function 'y-or-n-p
-             org-link-shell-confirm-function 'y-or-n-p))
+    ;;          ;; org-confirm-babel-evaluate nil
+    ;;          org-link-elisp-confirm-function 'y-or-n-p
+    ;;          org-link-shell-confirm-function 'y-or-n-p))
 
   ;; TODO: test advice for deciding on babel's :async backend
   ;; NOTE: ob-comint requires org-mode 9.7 and '(:async yes :session anything)
@@ -895,6 +934,7 @@ capture was not aborted."
   ;; https://tecosaur.github.io/emacs-config/config.html#org-plot
   )
 
+
 (defun dc/org-init-export-h ()
 
   ;; from tecosaur
@@ -1066,66 +1106,9 @@ capture was not aborted."
 
 ;; (defun dc/org-init-smartparens-h ())
 
-;;*** Tempo and Eldoc
-
-(with-eval-after-load 'org
-  (setup (:pkg org-contrib))
-
-  ;; TODO org-eldoc doesn't seem to document thing
-  (require 'org-eldoc)
-
-  ;; TODO configure org-tempo
-  (setup (:pkg org-tempo)
-    (:when-loaded
-      (add-to-list 'org-structure-template-alist '("sh" . "src sh"))
-      (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-      (add-to-list 'org-structure-template-alist '("li" . "src lisp"))
-      (add-to-list 'org-structure-template-alist '("sc" . "src scheme"))
-      (add-to-list 'org-structure-template-alist '("ts" . "src typescript"))
-      (add-to-list 'org-structure-template-alist '("py" . "src python"))
-      (add-to-list 'org-structure-template-alist '("go" . "src go"))
-      (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
-      (add-to-list 'org-structure-template-alist '("json" . "src json")))))
-
 ;;** Org Setup
 (setup (:pkg org)
   (:hook dc/org-mode-setup)
-
-  ;;** Modules
-  ;; For descriptions, M-x customize-variable org-modules
-  (setq org-modules
-        '(org-id
-          ol-info
-          ol-man
-          ol-doi
-          ol-bibtex
-          ol-gnus
-          ;; ol-git-link
-          org-crypt
-          ;; org-bookmark?
-          ol-bookmark
-          ;; ol-notmuch
-          org-protocol
-          org-notify))
-
-  ;;*** other org-modules
-  ;; org-mouse
-  ;; org-tempo: Fast completion for structures
-  ;; ol-bibtex
-  ;; - https://fossies.org/linux/emacs/lisp/org/ol-bibtex.el
-  ;; - https://www.andy-roberts.net/res/writing/latex/bibentries.pdf
-  ;; org-ctags
-  ;; org-collector
-  ;; org-checklist
-  ;; org-annotate-file: Annotate a file with Org syntax
-  ;; org-notify
-  ;; org-panel: reminders
-  ;; org-screen
-  ;; org-registry: registry for org links
-  ;; org-secretary: Team management with Org
-  ;; orgtbl-sqlinsert: Convert Org tables to SQL insertions
-  ;; org-toc: table of contents
-  ;; org-track: keep up with org development
 
   (dc/org-init-org-directory-h)
   (dc/org-init-appearance-h)

@@ -26,14 +26,33 @@
 
 (setq-default gdb-many-windows t)
 
+;;*** Gud
+
+(use-package gud :straight (:type built-in)
+  :defer t)
+
+(use-package gdb-mi :straight (:type built-in)
+  :defer t
+  :after gud)
+
+;;*** Realgud
+
+(use-package realgud :straight t :defer t
+  :after (:all gud gdb-mi))
+
 ;;** Clang Projects
 
 ;;** CMake Projects
 
 ;;*** KDE
 
-(setup (:pkg qml-ts-mode)
-  (:file-match "\\.qml\\'"))
+;; https://github.com/xhcoding/qml-ts-mode
+(use-package qml-ts-mode
+  :disabled
+  :straight (:type git :flavor melpa
+                   :host github :repo xhcoding/qml-ts-mode)
+  :defer t
+  :mode (rx ".qml" eos))
 
 ;; NOTE: until this merged into 29.1 pgtk from upstream, this is necessary for
 ;; qml-ts-mode
@@ -64,16 +83,29 @@ See `treesit-thing-settings' for more information.")
 
 ;;*** Project CMake
 
-(require 'cmake-ts-mode)
+;; REMOVE: this shuold already happen
+;; :mode ((rx bos "CMakeLists.txt" eos) . cmake-ts-mode)
+
+(use-package cmake-ts-mode :straight (:type built-in) :defer t)
+
 ;; added to auto-make-alist in dc-shim.el
+
+;; (cmake-project :type git :flavor melpa
+;;  :host github :repo "alamaison/emacs-cmake-project")
 
 ;; https://github.com/juanjosegarciaripoll/project-cmake
 
-;; to integrate with eglot/clang
-(setup (:pkg project-cmake :straight t :type git
-             :host github :repo "juanjosegarciaripoll/project-cmake")
-  (require 'project-cmake)
-  (require 'eglot)
+;; NOTE project-cmake:
+;;
+;; - wraps eglot-ensure
+;;\
+;; - adds ((c++-mode c-mode)...) to eglot-server-programs
+(use-package  project-cmake
+  :straight (:type git :host github :repo "juanjosegarciaripoll/project-cmake")
+  :after (:all cmake-ts-mode eglot)
+  :defer t
+  :config
+  ;; to integrate with eglot/clang
   (project-cmake-scan-kits)
   (project-cmake-eglot-integration))
 

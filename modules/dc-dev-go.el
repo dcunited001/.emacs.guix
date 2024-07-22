@@ -9,12 +9,12 @@
 ;;                              &context (project--within-roots-fallback
 ;;                                        (eql nil))) ...)
 
-(add-hook 'project-find-functions
-          #'dc/project-find-go-module)
-
 ;; TODO: finish configuring go-mode and gopls
 
-(require 'go-mode)
+(use-package go-mode :straight (:type built-in) :defer t
+  :config
+  (add-hook 'project-find-functions #'dc/project-find-go-module))
+
 ;; (add-hook 'go-mode-hook 'eglot-ensure)
 
 ;; Optional: install eglot-format-buffer as a save hook.

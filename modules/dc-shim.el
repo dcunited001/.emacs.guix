@@ -26,10 +26,11 @@
 
 ;;*** Fix config files
 
-(add-to-list 'auto-mode-alist '("config\\.scm\\'" . scheme-mode))
+;; (add-to-list 'auto-mode-alist '("config\\.scm\\'" . scheme-mode))
 
 ;;*** Fix cmake files
-(add-to-list 'auto-mode-alist '("^CMakeLists\\.txt$\\'" . cmake-ts-mode))
+;; necessary?
+;; (add-to-list 'auto-mode-alist '("^CMakeLists\\.txt$\\'" . cmake-ts-mode))
 
 ;;** PDF View
 
@@ -62,12 +63,12 @@
 
 ;;** Babel
 
-(defun dc/org-babel-do-load-languages ()
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   dc/org-babel-load-languages))
-
-(dc/org-babel-do-load-languages)
+;; NOTE: maybe not the best place for this
+(add-hook 'org-mode-hook #'dc/org-babel-do-load-languages -25)
+(add-hook 'org-mode-hook
+          (lambda () (remove-hook
+                      'org-mode-hook
+                      #'dc/org-babel-do-load-languages +25)))
 
 ;;* Report
 

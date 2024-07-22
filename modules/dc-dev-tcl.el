@@ -23,20 +23,19 @@
 
 ;;* Dev TCL
 
-(provide 'dc-dev-tcl)
-
 ;;** TCL Mode
 
-(setup (:pkg tcl-mode)     ; derived from prog-mode
-  ;; defaults for defcustoms
-  ;; (:option tcl-help-directory-list nil
-  ;;          tcl-use-smart-word-finder t
-  ;;          tcl-application "wish"
-  ;;          tcl-command-switches nil
-  ;;          tcl-command-prompt "^\\(% \\|\\)"
-  ;;          inferior-tcl-source-command "source %s\n"
-  ;;          tcl-escaped-newline)
-  )
+;; derived from prog-mode
+(use-package tcl-mode :straight t :defer t)
+
+;; defaults for defcustoms
+;; (:option tcl-help-directory-list nil
+;;          tcl-use-smart-word-finder t
+;;          tcl-application "wish"
+;;          tcl-command-switches nil
+;;          tcl-command-prompt "^\\(% \\|\\)"
+;;          inferior-tcl-source-command "source %s\n"
+;;          tcl-escaped-newline)
 
 ;;** TCL Repl
 ;; (inferior-tcl-mode)  ; derived from comint-mode
@@ -50,3 +49,5 @@
 ;; Soar language (tcl derivative?)
 ;; https://github.com/soartech/soar-language-server
 ;; TCL integration script in: ./integrations/emacs/lsp-soar.el
+
+(provide 'dc-dev-tcl)

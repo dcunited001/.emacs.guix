@@ -31,38 +31,39 @@
 ;;** JSON
 
 ;; uses json-beautify -> json-pretty-print to format
-(setup (:pkg json-mode))
-
-(with-eval-after-load 'json-mode
+(use-package json-mode :straight t :defer t
+  :init
   (add-to-list 'major-mode-remap-alist '(json-mode . json-ts-mode)))
 
-(setup (:pkg jq-mode)
-  (:file-match "\\.jq\\'"))
+(use-package jq-mode :straight t :defer t
+  :mode ((rx "." (| "jq") eos) . jq-mode))
 
 ;;** Javascript
 
-(setup (:pkg typescript-mode)
-  (:file-match "\\.ts\\'")
+(use-package typescript-mode :straight t :defer t
+  :mode ((rx "." (| "ts") eos) . typescript-mode)
   ;; (:hook eglot-ensure)
-  (setq-default typescript-indent-level 2))
+  :custom
+  (typescript-indent-level 2))
 
 (defun dw/set-js-indentation ()
   (setq-default js-indent-level 2)
   ;; (setq-default evil-shift-width js-indent-level)
   (setq-default tab-width 2))
 
-(setup (:pkg js2-mode)
-  (:file-match "\\.jsx?\\'")
+(use-package js2-mode :straight t :defer t
+  :mode ((rx "." (| "js" "jsx") eos) . js2-mode)
 
-  ;; Use js2-mode for Node scripts
-  (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
+  ;; TODO set :magic js2-mode for Node scripts
+  ;; (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
 
   ;; Don't use built-in syntax checking
-  (setq-default js2-mode-show-strict-warnings nil)
+  :custom
+  (js2-mode-show-strict-warnings nil)
 
   ;; Set up proper indentation in JavaScript and JSON files
-  (add-hook 'js2-mode-hook #'dw/set-js-indentation)
-  (add-hook 'json-mode-hook #'dw/set-js-indentation))
+  :hook
+  ((js2-mode-hook js2-mode-hook) . dw/set-js-indentation))
 
 ;;*** Eglot Biome
 
@@ -76,20 +77,22 @@
 
 ;;** Markdown
 
-(setup (:pkg markdown-mode)
-  (setq-default markdown-command "marked")
-  (:file-match "\\.md\\'")
-  (:when-loaded
-    (dolist (face '((markdown-header-face-1 . 1.2)
-                    (markdown-header-face-2 . 1.1)
-                    (markdown-header-face-3 . 1.0)
-                    (markdown-header-face-4 . 1.0)
-                    (markdown-header-face-5 . 1.0)))
-      (set-face-attribute (car face) nil :weight 'normal :height (cdr face)))))
+(use-package markdown-mode :straight t :defer t
+  :custom
+  (markdown-command "marked")
 
-(with-eval-after-load 'markdown-mode
-  (add-hook 'markdown-mode-hook #'visual-line-mode)
-  (add-hook 'markdown-mode-hook (lambda () (setq-local truncate-lines nil))))
+  :mode ((rx "." (| "md" "mdx") eos) . markdown-mode)
+  :hook
+  (markdown-mode-hook . visual-line-mode)
+  (markdown-mode-hook . (lambda () (setq-local truncate-lines nil))))
+
+;; (:when-loaded
+;;   (dolist (face '((markdown-header-face-1 . 1.2)
+;;                   (markdown-header-face-2 . 1.1)
+;;                   (markdown-header-face-3 . 1.0)
+;;                   (markdown-header-face-4 . 1.0)
+;;                   (markdown-header-face-5 . 1.0)))
+;;     (set-face-attribute (car face) nil :weight 'normal :height (cdr face))))
 
 ;;** Astro
 
@@ -102,26 +105,25 @@
 ;; running ... but whatever VSCode runs doesn't seem to bother eglot's
 ;; connection to AstroLS
 ;;
-(setup (:pkg astro-ts-mode :straight t :type git :flavor melpa
-             :host github :repo "Sorixelle/astro-ts-mode")
-  (:file-match "\\.astro?\\'")
-  (add-to-list 'eglot-server-programs
-               '(astro-ts-mode
-                 "astro-ls" "--stdio"
-                 :initializationOptions
-                 (:typescript (:tsdk "./node_modules/typescript/lib")))
-               ;; '(astro-ts-mode
-               ;;   . ("astro-ls" "--stdio"
-               ;;      :initializationOptions
-               ;;      (:typescript (:tsdk "./node_modules/typescript/lib"))))
-               )
-  (require 'astro-ts-mode)
+;; (:pkg astro-ts-mode :straight t :type git :flavor melpa
+;;              :host github :repo "Sorixelle/astro-ts-mode")
+
+(defun dc/astro-fix-completion ()
+  (setq-local completion-at-point-functions
+              (delete 'html-mode--complete-at-point
+                      completion-at-point-functions)))
+
+(use-package astro-ts-mode :straight t :defer t
+  :init
   (add-to-list 'major-mode-remap-alist '(astro-mode . astro-ts-mode))
-  (add-to-list 'org-src-lang-modes '("astro" . astro-ts))
-  (add-hook 'astro-ts-mode-hook
-            (lambda () (setq-local completion-at-point-functions
-                                   (delete 'html-mode--complete-at-point
-                                           completion-at-point-functions)))))
+  :hook
+  (astro-ts-mode-hook . dc/astro-fix-completion))
+
+;; TODO: move to dc-org?
+(use-package astro-ts-mode :straight t :defer t
+  :mode ((rx "." (| "astro") eos) . astro-ts-mode)
+  :after org
+  (add-to-list 'org-src-lang-modes '("astro" . astro-ts)))
 
 ;;** Markup
 
@@ -130,7 +132,9 @@
 
 ;;*** NXML
 
-(setq-default nxml-slash-auto-complete-flag t)
+(use-package nxml-mode :straight (:type built-in)
+  :custom
+  (nxml-slash-auto-complete-flag t))
 
 ;;*** SGML
 
@@ -141,7 +145,8 @@
 
 ;; https://github.com/emacs-lsp/lsp-mode/blob/master/clients/lsp-css.el
 
-(with-eval-after-load 'css-mode
+(use-package css-mode :straight (:type built-in) :defer t
+  :init
   (add-to-list 'major-mode-remap-alist '(css-mode . css-ts-mode)))
 
 ;;*** SASS
@@ -150,18 +155,17 @@
 
 ;;** HTML
 
-(add-to-list
- 'eglot-server-programs
- `((html-ts-mode mhtml-mode web-mode) .
-   ,(a-get* eglot-server-programs 'html-mode)))
-
 ;;*** html-ts-mode
 
-(setup (:pkg html-ts-mode :straight t :type git :host github :repo "mickeynp/html-ts-mode"
-             :flavor melpa :files ("html-ts-mode.el"))
+(use-package html-ts-mode
+  :straight (:type git :host github :repo "mickeynp/html-ts-mode"
+                   :flavor melpa :files ("html-ts-mode.el"))
+  :defer t
+  :mode ((rx "." (| "htm" "html") eos) . html-ts-mode)
+
+  :init
   ;; TODO: tidy refuses to format things without <!DOCTYPE> and i'm in liquid...
-  (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode))
-  (:file-match "\\.html?\\'"))
+  (add-to-list 'major-mode-remap-alist '(mhtml-mode . html-ts-mode)))
 
 ;;*** Web Mode
 
@@ -169,12 +173,14 @@
 
 ;; (pop apheleia-mode-alist)
 
-(setup (:pkg web-mode)
+(use-package web-mode :straight (:type built-in)
+  :defer t
   ;; (:file-match "\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'")
-  (:file-match "\\.\\(ejs\\|tsx\\|jsx\\)\\'")
-  (setq-default web-mode-code-indent-offset 2)
-  (setq-default web-mode-markup-indent-offset 2)
-  (setq-default web-mode-attribute-indent-offset 2))
+  ;; :mode ((rx "." (| "ejs" "tsx" "jsx") eos) . web-mode)
+  :custom
+  (web-mode-code-indent-offset 2)
+  (web-mode-markup-indent-offset 2)
+  (web-mode-attribute-indent-offset 2))
 
 ;;*** Processes
 

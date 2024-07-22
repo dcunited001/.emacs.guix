@@ -35,10 +35,10 @@
 
 ;;*** Paren Matching
 
-(setup (:pkg smartparens)
-  (:hook-into prog-mode text-mode))
-
-(with-eval-after-load 'smartparens
+(use-package smartparens :straight t :demand t
+  :hook
+  ((prog-mode text-mode) . smartparens-mode)
+  :config
   ;; this would load smartparens for all the langs
   ;; essentially (require 'smartparens-lang)
   ;; (require 'smartparens-config)
@@ -47,27 +47,27 @@
   (require 'smartparens-latex)
   (require 'smartparens-markdown))
 
-(with-eval-after-load 'yasnippet
+(use-package smartparens :straight t
+  :after yasnippet
   (advice-add #'yas-expand :before #'sp-remove-active-pair-overlay))
 
-(setup (:pkg rainbow-delimiters)
-  (:hook-into prog-mode geiser-repl-mode))
+(use-package rainbow-delimiters :straight t :demand t
+  :hook
+  ((prog-mode geiser-repl-mode) . rainbow-delimiters-mode))
 
-(setup (:pkg rainbow-mode)
-  (:hook-into org-mode
-              emacs-lisp-mode
-              web-mode
-              typescript-mode
-              js2-mode))
+(use-package rainbow-mode :straight t :demand t
+  :hook
+  ((org-mode  emacs-lisp-mode  web-mode  typescript-mode js2-mode) . rainbow-mode))
 
 ;;*** Direnv
 
-(setup (:pkg envrc)
-  (:option envrc-on-lighter '("│Æ=" (:propertize "on" face envrc-mode-line-on-face))
-           envrc-none-lighter '("│Æ=" (:propertize "none" face envrc-mode-line-none-face))
-           envrc-error-lighter '("│Æ=" (:propertize "err" face envrc-mode-line-error-face)))
-  (add-to-list 'minions-prominent-modes 'envrc-mode)
-  (add-hook 'emacs-startup-hook #'envrc-global-mode))
+(use-package envrc
+  ;; TODO: delight?
+  :custom
+  (envrc-on-lighter '("│Æ=" (:propertize "on" face envrc-mode-line-on-face)))
+  (envrc-none-lighter '("│Æ=" (:propertize "none" face envrc-mode-line-none-face)))
+  (envrc-error-lighter '("│Æ=" (:propertize "err" face envrc-mode-line-error-face)))
+  :hook (emacs-startup-hook . envrc-global-mode))
 
 ;; (setup (:pkg buffer-env)
 
@@ -89,7 +89,9 @@
 
 ;;*** Comint
 
-(setq-default comint-prompt-read-only t)
+(use-package comint :straight (:type built-in)
+  :custom
+  (comint-prompt-read-only t))
 
 ;;**** Sentinel for comint buffers
 
@@ -104,8 +106,9 @@
   (set-process-sentinel (get-buffer-process (current-buffer))
                         #'dc/shell-kill-buffer-sentinel))
 
-(dolist (hook '(ielm-mode-hook term-exec-hook comint-exec-hook))
-  (add-hook hook 'dc/kill-process-buffer-on-exit))
+(use-package ielm :straight (:type built-in) :demand t
+  :hook
+  ((ielm-mode-hook term-exec-hook comint-exec-hook) . dc/kill-process-buffer-on-exit))
 
 ;;*** M-x compile
 
@@ -161,10 +164,8 @@ compilation was initiated from compile-mode."
   (when (not (derived-mode-p 'grep-mode))
     (dc/compilation-start-alert proc)))
 
+;;*** Compile
 
-(with-eval-after-load 'compile
-  (setup (:pkg compile-multi :straight t :type git :flavor melpa
-               :host github :repo "mohkale/compile-multi")))
 
 ;; example of customizing comint
 ;;
@@ -174,9 +175,20 @@ compilation was initiated from compile-mode."
 ;;
 ;; https://www.masteringemacs.org/article/compiling-running-scripts-emacs
 
-(require 'compile)
-(setq-default compilation-scroll-output t
-              compilation-start-hook #'dc/compilation-start-hook)
+(use-package compile :straight (:type built-in)
+  :custom
+  (compilation-scroll-output t)
+  (compilation-start-hook #'dc/compilation-start-hook)
+  (compilation-environment '("TERM=xterm-256color"))
+  :config
+  (advice-add 'compilation-filter :around #'my/advice-compilation-filter))
+
+
+;;**** Compile Multi
+(use-package compile-multi :straight t :after compile)
+
+;; TODO: configure (:option consult-compile-multi-narrow ...)
+(use-package consult-compile-multi :straight t :after compile-multi)
 
 ;; TODO: compile-mode-hook
 
@@ -186,12 +198,8 @@ compilation was initiated from compile-mode."
 ;;
 ;; (process-contact process &optional key no-block)
 
-(setq-default compilation-environment '("TERM=xterm-256color"))
-
 (defun my/advice-compilation-filter (f proc string)
   (funcall f proc (xterm-color-filter string)))
-
-(advice-add 'compilation-filter :around #'my/advice-compilation-filter)
 
 (defun dw/auto-recompile-buffer ()
   (interactive)
@@ -204,27 +212,26 @@ compilation was initiated from compile-mode."
 ;;** Treesitter
 ;; TODO setup major-mode-remap-alist
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
-(setup treesit
+(use-package treesit :straight (:type built-in)
+  :demand t
   ;; something is automatically setting up major-mode-remap-alist
-  (:option treesit-extra-load-path
-           (list (expand-file-name ".local/lib/tree-sitter" (getenv "HOME")))
-           treesit-language-source-alist
-           '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
-             (astro . ("https://github.com/virchau13/tree-sitter-astro")))))
+  :custom
+  (treesit-extra-load-path
+   (list (expand-file-name ".local/lib/tree-sitter" (getenv "HOME"))))
+  (treesit-language-source-alist
+   '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
+     (astro . ("https://github.com/virchau13/tree-sitter-astro"))))
+  :config
+
+  (cl-loop for lang-key
+           in (a-keys treesit-language-source-alist)
+           unless (treesit-language-available-p lang-key)
+           do (treesit-install-language-grammar lang-key)))
 
 ;; (qml . ("https://github.com/yuja/tree-sitter-qmljs"))
 
 ;; tree sitter extra grammars get installed to
 ;; .emacs.g/tree-sitter/libtree-sitter-qml.so
-
-;; TODO: where does this install?  any way to reduce startup time after updates?
-;; ... and by itself this isn't very useful. also, doom only provides treesitter
-;; navigation functionality to evil users
-(with-eval-after-load 'treesit
-  (cl-loop for lang-key
-           in (a-keys treesit-language-source-alist)
-           unless (treesit-language-available-p lang-key)
-           do (treesit-install-language-grammar lang-key)))
 
 ;; not used in config
 (defun dc/treesit-bump-extra-load-path ()
@@ -246,10 +253,10 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; requires tempo,treesit
 
 ;; https://github.com/mickeynp/combobulate
-(setup (:pkg combobulate :straight t :type git
-             :host github :repo "mickeynp/combobulate"
-             :files (:defaults))
-  (:hook-into html-ts-mode css-ts-mode))
+
+(use-package combobulate :straight t :defer t
+  :hook
+  ((html-ts-mode css-mode) . combobulate-mode))
 
 ;; TODO: setup combobulate for python-ts and yaml-ts
 
@@ -303,12 +310,6 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; (setq-default eldoc-documentation-strategy
 ;;       'eldoc-documentation-compose-eagerly)
 
-(setq dc/eglot-events-buffer-configs
-      `((default . (:size 2000000 :format full))
-        (debug . (:size ,(expt 2 (+ 2 4 20)) :format json))))
-(setq-default eglot-events-buffer-config
-              (alist-get 'debug dc/eglot-events-buffer-configs))
-
 (defun dc/toggle-eglot-events-buffer-size (&optional arg)
   "Toggle `:size' and `:format' for `eglot-events-buffer'."
   (interactive "p")
@@ -322,57 +323,8 @@ when a new treesitter gramar has been added to the Guix profile."
                     eglot-debug
                   eglot-defaults))))
 
-(setup (:pkg eglot :straight t :type git
-             :host github :repo "emacs-straight/eglot"
-             :files ("*" (:exclude ".git")))
-  (:option eglot-autoshutdown t
-           eglot-sync-connect 1
-           eglot-connect-timeout 15
-           eglot-send-changes-idle-time 0.5
-           ;; other common options: xref, imenu, eldoc
-           ;; also see (eglot--setq-saving...)
-
-           ;; NOTE: This fucks up flymake buffers everywhere:
-           ;; eglot-stay-out-of '(flymake) ;; it's a per-project setting
-
-           eglot-extend-to-xref t       ;TODO: assess eglot-extend-to-xref
-           ;; eglot-menu-string "Æ"
-
-           ;; see note about popups/point in
-           ;; .emacs.doom/modules/tools/lsp/+eglot.el
-           ;; eglot-auto-display-help-buffer nil
-           eglot-confirm-server-initiated-edits 'confirm)
-
-  (:with-hook eglot-managed-mode-hook
-    (:hook #'dc/eglot-setup-buffer))
-
-  (require 'eglot)
-
-  ;; TODO: Is this needed now?
-  (add-to-list
-   'eglot-server-programs
-   '((js2-mode typescript-mode) .
-     ("typescript-language-server" "--stdio")))
-
-  ;; TODO: c-mode-hook is hooked in c-mode-hook?
-  ;; (:with-hook c-mode-hook
-  ;;   (:hook eglot-ensure))
-
-  ;; TODO: maybe configure eglot defaults
-  ;; (setq-default eglot-workspace-configuration '(:lsp-server-key (:config ...)))
-
-  ;; about to configure this for yaml, but it needs yaml schema-specific glob
-  ;; patterns anyways
-
-  ;; increase process read size from 4k to 512K
-  ;; see: https://emacs-lsp.github.io/lsp-mode/page/performance/#tuning
-  ;; and: https://github.com/doomemacs/doomemacs/blob/master/lisp/doom-start.el#L77
-  (setq read-process-output-max (expt 2 19)))
-
-(with-eval-after-load 'eglot
-  ;; "emacs-consult-eglot" ;; 0.2.0 on guix does not include fix to #14
-  (setup (:pkg consult-eglot :straight t :type git :flavor melpa
-               :host github :repo "mohkale/consult-eglot")))
+(use-package consult-eglot :straight t :after eglot :demand t)
+(use-package consult-eglot-embark :straight t :after eglot :demand t)
 
 ;;**** eglot automation
 
@@ -382,7 +334,6 @@ when a new treesitter gramar has been added to the Guix profile."
   "Configure a hook stored in dir-locals."
   ;; TODO test to see if add-dir-local-variable does this
   (message "Need to read in and re-emit the dir-locals to add evals"))
-
 
 ;;**** eglot configs via lsp-mode
 
@@ -516,17 +467,19 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; (a-get apheleia-mode-alist 'html-mode)
 ;; (a-get apheleia-mode-alist 'json-mode)
 
-(setup (:pkg apheleia :straight t :type git :flavor melpa :host github :repo "radian-software/apheleia"
-             :files (:defaults ("scripts" "scripts/formatters") "apheleia-pkg.el"))
-  (:option apheleia-mode-lighter "│¶"))
+;; (t :type git :flavor melpa :host github :repo "radian-software/apheleia"
+;;    :files (:defaults ("scripts" "scripts/formatters") "apheleia-pkg.el"))
 
-(with-eval-after-load 'apheleia
-  ;; setup formatters
-  (setq-default apheleia-formatters (a-merge apheleia-formatters
-                                             dc/apheleia-formatters))
+(use-package apheleia :straight t :demand t
+  :delight "│¶" ;; apheleia-mode-lighter
+
+  :config
+  (setq apheleia-formatters
+        (a-merge apheleia-formatters dc/apheleia-formatters))
 
   ;; clang formatters
   (add-to-list 'apheleia-mode-alist '(lisp-data-mode . lisp-indent))
+
   (cl-dolist (aclang-mode dc/apheleia-clang-modes)
     (add-to-list 'apheleia-mode-alist `(,(car aclang-mode) . clang-format)))
 
@@ -537,7 +490,6 @@ when a new treesitter gramar has been added to the Guix profile."
     (add-to-list 'apheleia-mode-alist `(,webml . prettier)))
   
   ;; (add-to-list 'apheleia-mode-alist '(emacs-lisp-mode . lisp-indent))
-  (add-to-list 'minions-prominent-modes 'apheleia-mode)
   (apheleia-global-mode +1))
 
 ;;*** Indentation
@@ -558,12 +510,11 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;; TODO: on init, this runs before ef-themes has defined faces
 ;; Invalid face: highlight-indent-guides-odd-face
-(setup (:pkg highlight-indent-guides)
-  (:option highlight-indent-guides-method 'column)
-  (:hook-into yaml-mode))
-
-(with-eval-after-load 'highlight-indent-guides
-  (add-hook 'ef-themes-post-load-hook #'dc/fix-highlight-indent-colors))
+(use-package highlight-indent-guides :straight t :defer t
+  :custom (highlight-indent-guides-method 'column)
+  :hook
+  (yaml-mode . highlight-indent-guides-mode)
+  (ef-themes-post-load-hook . dc/fix-highlight-indent-colors))
 
 (defun dc/indent-buffer ()
   (interactive)
@@ -610,52 +561,61 @@ when a new treesitter gramar has been added to the Guix profile."
 (defvar xml-format-xmllint-executable)
 
 ;; TODO: remove? wtf?
-(setq-default dc/formatter-check-xml (dc/when-exec-found "xmllint"
-                                                         'xml-format-xmllint-executable
-                                                         (xml-format-on-save-mode +1)))
-(setup (:pkg xml-format :straight t :type git :flavor melpa
-             :host github :repo "wbolster/emacs-xml-format")
-  (:with-hook nxml-mode-hook
-    (:hook (dc/when-exec-found "xmllint"
-                               'xml-format-xmllint-executable
-                               (xml-format-on-save-mode +1)))))
+(setq-default dc/formatter-check-xml
+              (dc/when-exec-found "xmllint"
+                                  'xml-format-xmllint-executable
+                                  (xml-format-on-save-mode +1)))
+
+(use-package xml-format :straight t :defer t
+  :hook
+  (nxml-mode-hook . dc/formatter-check-xml))
 
 ;;** Lisps
 
-(setup (:pkg lispy :straight t :type git :flavor melpa
-             :host github :repo "abo-abo/lispy"
-             :files (:defaults "lispy-clojure.clj"
-                               "lispy-clojure.cljs"
-                               "le-scheme.el"
-                               "lispy-pkg.el"))
+(use-package lispy :straight (:type git :flavor melpa
+                                    :host github :repo "abo-abo/lispy"
+                                    :files (:defaults "lispy-clojure.clj"
+                                                      "lispy-clojure.cljs"
+                                                      "le-scheme.el"
+                                                      "lispy-pkg.el"))
+  :demand t
+  :custom
+  (lispy-compat '(cider edebug))
 
-  (:option lispy-compat '(cider edebug))
-  (:hook #'turn-off-smartparens-mode)
-  (:hook-into emacs-lisp-mode
-              lisp-data-mode
-              scheme-mode
-              ielm-mode
-              scheme-mode
-              geiser-repl-mode
-              ;; racket-mode
-              ;; hy-mode
-              ;; lfe-mode
-              ;; dune-mode
-              ;; fennel-mode
-              clojure-mode)
+  :config
+  (advice-add 'lispy-goto-symbol-elisp
+              :override #'xref-find-definitions '(name "dc/nanon"))
+
+  :after smartparens
+
+  :hook
+  ;; (lispy-mode . #'turn-off-smartparens-mode)
+  ((emacs-lisp-mode
+    lisp-data-mode
+    scheme-mode
+    ielm-mode
+    scheme-mode
+    geiser-repl-mode
+    ;; racket-mode
+    ;; hy-mode
+    ;; lfe-mode
+    ;; dune-mode
+    ;; fennel-mode
+    clojure-mode) . lispy-mode)
 
   ;; TODO if overriding doesn't work, catch the error and switch
   ;; (defun dc/lispy-catch-goto-symbol ())
-
-  (advice-add 'lispy-goto-symbol-elisp :override #'xref-find-definitions '(name "dc/nanon")))
+  )
 
 ;;*** Emacs Lisp
 
-(setup emacs-lisp-mode)
+;; thanks for the advice djgoku
+(use-package elisp-demos :straight t :demand t
+  :config
+  (advice-add 'describe-function-1
+              :after #'elisp-demos-advice-describe-function-1))
 
 (setq dash-fontify-mode-lighter "DASH")
-
-(add-to-list 'minions-prominent-modes 'edebug-mode)
 
 ;; TODO: toggle-debug-on-quit; (edebug-goto-here)
 
@@ -663,8 +623,6 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;; - set trace mode (step?, trace, go?)
 ;; - see also eros (overlays)
-
-;; (setup (:pkg casual-edebug :straight t))
 
 ;; NOTE: doesn't work (separate debugging system, hoped to get lucky)
 ;; (add-to-list 'gud-tooltip-modes 'emacs-lisp-mode)
@@ -693,40 +651,99 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; a central list of things to find connections for in arel, lispy, sesman,
 ;; cider and geiser.
 
-(setup (:pkg elisp-depmap :straight t :host  gitlab :repo "mtekman/elisp-depmap.el")
-  ;; (getenv "GRAPHVIZ_DOT") ;; -exec-file is a path to the created .dot file
-  (:option elisp-depmap-exec-file (expand-file-name  "depmap/elisp-graphviz.dot"
-                                                     dc/emacs-d)
-           elisp-depmap-exec-outext "svg"
-           ;; tried: fdp, sfdp, neato, dot.
-           elisp-depmap-exec-commandargs "-Kfdp")
-  ;; (:bind
-  ;;  ("C-c M-d" . elisp-depmap-graphviz-digraph)
-  ;;  ("C-c M-g" . elisp-depmap-graphviz)
-  ;;  ("C-c M-s" . elisp-depmap-makesummarytable))
+;; this defvar is definitely still required for elisp-depmap
+(defvar read-symbol-positions-list nil)
 
-  ;; this needs to be declared
-  (defvar read-symbol-positions-list nil))
+;; (defun dc/project-elisp-depmap-graphviz-digraph ()
+;;   (interactive))
+
+
+;; NOTE: seems to filter defvar read-symbol-positions-list from results
+(defun dc/project-elisp-depmap-graphviz-digraph (&optional fnshapekeys)
+  (interactive)
+  ;; TODO: check or handle non-file buffers
+  (let* ((elisp-depmap-exec-file
+          (expand-file-name
+           (format "_%s.dot"
+                   (file-name-base (buffer-file-name (current-buffer))))
+           (project-root (project-current t))))
+         ;; (elisp-subcluster-groups
+         ;;  (or function-shapes elisp-depmap-graph-subclustergroups))
+         (elisp-depmap-parse-function-shapes
+          (or (and fnshapekeys
+                   (listp fnshapekeys)
+                   (map-filter (lambda (k) (memq k fnshapekeys))
+                               elisp-depmap-parse-function-shapes))
+              elisp-depmap-parse-function-shapes)))
+
+    (elisp-depmap-graphviz-digraph)))
+
+;; (let ((fnshapekeys '(defun defcustom)))
+;;   (map-filter (lambda (k) (memq k fnshapekeys))
+;;               elisp-depmap-parse-function-shapes))
+
+;; (:bind
+;;  ("C-c M-d" . elisp-depmap-graphviz-digraph)
+;;  ("C-c M-g" . elisp-depmap-graphviz)
+;;  ("C-c M-s" . elisp-depmap-makesummarytable))
+
+(use-package elisp-depmap :straight t :defer t
+
+  ;; (getenv "GRAPHVIZ_DOT") ;; -exec-file is a path to the created .dot file
+  :custom
+  (elisp-depmap-exec-file
+   ;; (expand-file-name  "depmap/elisp-graphviz.dot" dc/emacs-d)
+
+   "Not intended to be an absolute path.")
+  (elisp-depmap-exec-outext "svg")
+  ;; "-Kfdp"
+  (elisp-depmap-exec-commandargs
+   nil "tried: fdp, sfdp, neato, dot.")
+
+  (elisp-depmap-graph-linemod 5)
+
+  ;; (elisp-depmap-graph-subcluster-groups
+  ;;  (:variables (setq setq-local defvar defvar-local defcustom))
+  ;;  (:functions (defun defsubst defmacro)))
+
+  ;; reduce complexity of graph for now
+  (elisp-depmap-parse-function-shapes
+   (;; (setq . underline)
+    ;; (setq-local . underline)
+    ;; (defvar . underline)
+    ;; (defvar-local . underline)
+    (defcustom . plain)
+    (defun . tab)
+    ;; (defsubst . component)
+    (defmacro . trapezium)
+    (defgeneric . trapezium)
+    (defmethod . trapezium))))
 
 ;;*** Common Lisp
 
-(setup lisp-mode
-  (add-to-list 'auto-mode-alist '("\\.lisp\\'" . lisp-mode))
-  (add-to-list 'auto-mode-alist '("\\.asd\\'" . lisp-mode)))
 
-(setup (:pkg sly))
+(use-package lisp-mode :straight (:type built-in)
+  :mode ((rx "." (| "lisp" "asd") eos) . lisp-mode))
+
+
+(use-package sly :straight t :defer t
+  :custom
+  (inferior-lisp-program "sbcl"))
 
 ;;*** Scheme
 
 ;; Include .sld library definition files
-(setup (:pkg scheme-mode)
-  (:file-match "\\.sld\\'"))
+(use-package scheme-mode :straight (:type built-in)
+  :mode ((rx "." (| "sld") eos) . scheme-mode))
 
 ;;**** ARES
 
 ;; sesman-browser-link-with-buffer: guix.el needed to make this simple
-(and (setup (:pkg sesman :straight t))
-     (require 'sesman))
+
+(use-package sesman :straight t :defer t)
+(use-package arei :straight (:host sourcehut :repo "abcdw/emacs-arei")
+  :defer t :after sesman
+  (arei-mode-auto t))
 
 ;; When `arei-mode-auto' is non-nil, arei-mode enabled in scheme buffers when
 ;; required. The executables from `guile-ares-rs' need to be in path. It could
@@ -740,31 +757,31 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; around 3,000 LOC... The CIDER implementation should be a good reference, but
 ;; it would still be challenging (not something I'm likely to do well...)
 
-(setup (:pkg arei :straight t :host sourcehut :repo "abcdw/emacs-arei")
-  ;; doesn't disable loading the hooks because, `arei-mode-auto' retains its
-  ;; compiled-in value from the final `with-eval-after-load' default. Hopefully
-  ;; I can start using it soon
-  (:option arei-mode-auto t))
+;; doesn't disable loading the hooks because, `arei-mode-auto' retains its
+;; compiled-in value from the final `with-eval-after-load' default. Hopefully
+;; I can start using it soon
 
 ;;**** GEISER
 
-(setup (:pkg geiser)
-  (:option geiser-default-implementation 'guile
-           ;; evaluating scheme with lispy req. emacs-guile-racket loaded
-           geiser-active-implementations '(guile racket)
-           geiser-implementations-alist '(((regexp "\\.scm$") guile))
+(use-package geiser :straight t :defer t
+  :custom
+  (geiser-default-implementation 'guile)
+  (geiser-implementations-alist '(((regexp "\\.scm$") guile)))
 
-           ;; these need to be correct
-           geiser-repl-per-project-p t
-           geiser-repl-add-project-paths t
+  (geiser-active-implementations
+   '(guile racket) "lispy-eval on scheme req. emacs-guile-racket loaded")
 
-           geiser-debug-always-display-sexp-after t
-           ;; geiser-debug-long-sexp-lines 6
+  ;; these need to be correct
+  (geiser-repl-per-project-p t)
+  (geiser-repl-add-project-paths t)
 
-           ;; requires guile-colorized (ice-9 colorized)
-           geiser-debug-treat-ansi-colors 'colors
+  (geiser-debug-always-display-sexp-after t)
+  ;; (geiser-debug-long-sexp-lines 6)
 
-           geiser-repl-highlight-output-p t))
+  (geiser-debug-treat-ansi-colors
+   'colors "Requires guile-colorized (ice-9 colorized)")
+
+  (geiser-repl-highlight-output-p t))
 
 ;;***** Guile prompt regex
 
@@ -780,19 +797,21 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;***** Guile init files
 
-(setup (:pkg geiser-guile)
-  (:option geiser-guile-manual-lookup-other-window t ;; default: nil
-           ;; geiser-guile-extra-keywords nil
-           geiser-guile-show-debug-help t
-           geiser-guile-warning-level 'medium))
+(use-package geiser-guile :straight t :defer t :after geiser
+  :custom
+  (geiser-guile-manual-lookup-other-window t) ;; default: nil
+  ;; geiser-guile-extra-keywords nil
+  (geiser-guile-show-debug-help t)
+  (geiser-guile-warning-level 'medium)
 
-;; The Paths are added to both %`load-path' and %load-compiled path,
-;; and only if they are not already present. (in .dir-locals.el)
-;; geiser-guile-load-path
+  ;; The Paths are added to both %`load-path' and %load-compiled path,
+  ;; and only if they are not already present. (in .dir-locals.el)
+  ;; geiser-guile-load-path
 
-;; NOTE: it loads geiser-guile, even _without_ the emacs-geiser-guile package
-;; i had compat. issues with this about 6 months ago (just in case)
-(with-eval-after-load 'geiser-guile
+  ;; NOTE: it loads geiser-guile, even _without_ the emacs-geiser-guile package
+  ;; i had compat. issues with this about 6 months ago (just in case)
+
+  :config
   ;; TODO: (add-to-list 'geiser-guile-manual-lookup-nodes '(...))
   ;; default: '("Guile" "guile-2.0")
   (add-to-list 'geiser-guile-manual-lookup-nodes "Geiser")
@@ -841,7 +860,10 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; (require 'flymake-shellcheck)
 (use-package flymake-shellcheck :straight (:type built-in)
   :commands flymake-shellcheck-load
-  :init
+  ;; the command loads the diagnostics locally the script's buffer.
+  ;; load it like this bc maybe you don't want it on all the time.
+  ;; you still need to hook flymake
+  :config
   (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
 
 ;;*** VTerm
@@ -849,13 +871,16 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; TODO: per-project vterm
 ;; https://github.com/doomemacs/doomemacs/blob/master/modules/term/vterm/autoload.el
 
-(setup (:pkg vterm)
-  (:option vterm-max-scrollback 1000
-           vterm-set-bold-hightbright t))
+(use-package vterm :straight t :defer t
+  :custom
+  (vterm-max-scrollback 1000)
+  (vterm-set-bold-hightbright t))
 
 ;;** Snippets
 
-;;*** Snippets
+;;*** Yasnippet
+
+;;*** Emmet
 
 (defvar dc/kill-ring '() "A list of interesting lines from this session")
 
@@ -884,9 +909,15 @@ when a new treesitter gramar has been added to the Guix profile."
 ;; (goto-char here)
 ;;)
 
-(setup (:pkg emmet-mode :straight t :type git :flavor melpa
-             :host github :repo "smihica/emmet-mode")
-  (:hook-into sgml-mode css-mode nxml-mode html-ts-mode web-mode html-mode mhtml-mode))
+(use-package emmet-mode :straight t :defer t
+  :hook
+  ((sgml-mode
+    css-mode
+    nxml-mode
+    html-ts-mode
+    web-mode
+    html-mode
+    mhtml-mode) . emmet-mode))
 
 ;; yas-snippet-dirs:
 ;;

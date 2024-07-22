@@ -25,11 +25,23 @@
 
 ;;** Project.el
 
-(setq project-vc-extra-root-markers '(".project.el" ".projectile" ".repo")
-      project-kill-buffers-display-buffer-list t)
-
-(setq-default project-compilation-buffer-name-function #'project-prefixed-buffer-name
-              compile-multi-default-directory #'dc/project-local-root)
+;; :delight "│π →"
+(use-package project :straight t :demand t
+  :custom
+  (project-vc-extra-root-markers '(".project.el" ".projectile" ".repo"))
+  (project-kill-buffers-display-buffer-list t)
+  (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
+  (compile-multi-default-directory 'dc/project-local-root)
+  (project-switch-commands
+   ;; if the key is absent, corresponding command must exist in
+   ;; project-prefix-map
+   '((project-find-file "Find file")
+     (project-find-regexp "Find regexp")
+     (project-find-dir "Find directory")
+     (project-vc-dir "VC-Dir")
+     (project-eshell "Eshell")
+     (magit-status "Magit Status" ?g)
+     (magit-project-status "Magit Project Status" ?G))))
 
 ;; from SystemCrafters Code Dive: Project.el
 ;;
@@ -41,22 +53,6 @@
   "Function to help remember how to set `project-current-directory-override'"
   (interactive "D")
   (add-dir-local-variable nil 'project-current-directory-override arg))
-
-;;*** Project Switching
-
-;; (with-eval-after-load 'magit
-;;   (setq project-switch-commands #'magit-status))
-
-(setq project-switch-commands
-      ;; key is optional, but if absent a corresponding command must exist in
-      ;; project-prefix-map
-      '((project-find-file "Find file")
-        (project-find-regexp "Find regexp")
-        (project-find-dir "Find directory")
-        (project-vc-dir "VC-Dir")
-        (project-eshell "Eshell")
-        (magit-status "Magit Status" ?g)
-        (magit-project-status "Magit Project Status" ?G)))
 
 ;;*** Interface Support
 
@@ -89,16 +85,14 @@
 
 ;; https://vannilla.org/write/1609258895/article.html
 
-
 ;;** Projectile
 
 ;; projectile-auto-discover is nil
 ;; trigger project auto-discovery with projectile-discover-projects-in-search-path
 
 ;; NOTE: I'm not currently using this
-
-(setq projectile-project-search-path '(("/data/repo/" . 1)
-                                       ("/data/ecto/" . 3))
-      projectile-mode-line-prefix "│π →")
+;; (setq projectile-project-search-path '(("/data/repo/" . 1)
+;;                                        ("/data/ecto/" . 3))
+;;       projectile-mode-line-prefix "│π →")
 
 (provide 'dc-project)

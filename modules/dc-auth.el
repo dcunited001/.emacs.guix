@@ -53,11 +53,15 @@
 
 ;; this doesn't provide any interactive functions
 
-(setup (:pkg auth-source-pass)
-  ;; (:option auth-source-pass-filename ...)
+(use-package auth-source-pass :straight t
+  :demand t
+  ;;:init (setq-default auth-source-pass-filename ...)
+  :config
   (auth-source-pass-enable))
 
 ;;** oauth2
 ;; (setup (:pkg oauth2 :straight t))
 
 (provide 'dc-auth)
+
+;; auth-source-gopass: "triplem/auth-source-gopass"

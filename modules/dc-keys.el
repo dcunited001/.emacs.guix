@@ -25,8 +25,8 @@
 ;;* Keys Pre
 ;; see ./emacs/$version/lisp/bindings.el for defaults
 
-(setq mode-line-defining-kbd-macro " K♫ ")
-(add-to-list 'minions-prominent-modes 'defining-kbd-macro)
+(use-package kmacro :straight (:type built-in)
+  :delight " K♫ ")
 
 ;;** Unbind Keys
 ;; or use the following (which may only work for general definitions)
@@ -76,6 +76,7 @@
     ;; should [remap] dired. not sure how to remap to a which-key prefix
     "C-x d"                             ;make dired a map
     "C-x f"                             ;set-fill-column
+    "C-x x f"                           ;font-lock-update => C-x x M-f
     ))
 
 ;;*** trying to pack a lambda into a symbol
@@ -107,31 +108,18 @@
 ;; NOTE: which-key-local-map-descriptions-face highlights what's listed
 ;;       on the (current-local-map) keymap
 
-(setup (:pkg which-key)
-  (:option which-key-side-window-location 'bottom ;; 'top
-           which-key-frame-max-height 20          ; default
-           which-key-min-display-lines 8
-           which-key-popup-type 'side-window ; default
-           ;; also: 'custom 'frame (not a child frame for me)
-           ;; 'minibuffer (probably inconsistent with consult)
-           which-key-special-keys
-           '(
-             ;; regexp cause problems here "*" "^"
-             "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ;; "-" "="
-             ;; "10" "11" "12" ;; bc function keys
-             ;; and the vowels (to visually space)
-             "a$" "e" "i" "o" "u" "y"
-             "A$" "E" "I" "O" "U" "Y")
-           which-key-highlighted-command-list
-           `(
-             (,(rx string-start (or "consult-" "embark-")) 'ef-themes-heading-8)
-             (,(rx string-start (or "org-clock-")) 'ef-themes-heading-8)))
-  (:with-hook ef-themes-post-load-hook
-    (:hook (lambda ()
-             (dc/update-face 'which-key-separator-face
-                             'epa-string)
-             (dc/update-face 'which-key-local-map-description-face
-                             'ef-themes-heading-5)))))
+;; NOTE: reopen which-key
+
+(use-package which-key :straight t
+  ;; TODO: check for loading
+  ;; :demand t
+  :hook
+  (ef-themes-post-load-hook
+   . (lambda ()
+       (dc/update-face 'which-key-separator-face
+		       'epa-string)
+       (dc/update-face 'which-key-local-map-description-face
+		       'ef-themes-heading-5))))
 
 ;; TODO: many of the overwritten replacements aren't labelled correctly
 ;; e.g. <f12> for C-c, but I may remove many of these. they are okay, but

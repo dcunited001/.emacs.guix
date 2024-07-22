@@ -34,7 +34,6 @@
 (setq shackle-rules '()
       shackle-default-rule '())
 
-(setup (:pkg shackle))
-
+(use-package shackle :straight t :demand t)
 
 (provide 'dc-shackle)

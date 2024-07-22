@@ -29,8 +29,6 @@
 
 ;;* Popups
 
-(require 'a)
-
 ;; TODO: setup shackle and set popper-display-control nil
 
 (defun dc/popper-shell-output-empty-p (buf)
@@ -43,14 +41,13 @@
          (hmin (or (and (> 30 hmax) (floor (* 0.75 ))) 25)))
     (fit-window-to-buffer win hmax hmin)))
 
-
 ;; TODO: handle other popups for docker?
 (setq dc/popper-rx-docker
       ;; * docker-compose buffers have a space
       (rx (and line-start "*" (zero-or-one " ") "docker-"
                (or "containers" "images" "networks" "volumes" "compose") "*")))
 
-;; TODO advise popper to close/reopen poppup on tab-switch (eats the frame, winner-undo)
+;; todo advise popper to close/reopen poppup on tab-switch (eats the frame, winner-undo)
 
 (setq popper-reference-buffers
       '(("Output\\*$" . hide)
@@ -62,11 +59,12 @@
         "^\\*shell.*\\*$"  shell-mode   ;shell as a popup
         "^\\*term.*\\*$"   term-mode    ;term as a popup
         "^\\*vterm.*\\*$"  vterm-mode   ;vterm as a popup
-        dc/popper-rx-docker
+        ;; TODO: dc/popper-rx-docker "No clause matching fn-name"
         docker-image-mode
         docker-container-mode
         docker-volume-mode
         docker-network-mode
+        "^\\*firestarter\\*"
         "^\\*envrc\\*"
         "^\\*Customize"
         "^ \\*undo-tree\\*"
@@ -127,10 +125,13 @@
 ;;       popper-echo-dispatch-actions t)
 
 ;; (require 'dc-popper-popup-rules)
-(setup (:pkg popper)
-  (:option popper-group-function #'popper-group-by-project
-           popper-display-control t
-           popper-window-height #'dc/popper-fit-window-height)
-  (popper-mode))
+(use-package popper :straight t
+  :demand t
+  :custom
+  (popper-group-function 'popper-group-by-project)
+  (popper-display-control t)
+  (popper-window-height 'dc/popper-fit-window-height))
+  :config
+  (popper-mode)
 
 (provide 'dc-popup)

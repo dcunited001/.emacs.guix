@@ -134,12 +134,14 @@
 ;; - prefer using .rgignore, .gitignore or --ignore-file
 ;; - some regexp pref comparison stats are cherry-picked
 
-(defvar dc/ripgrep-args '("-g \"!/po\"")
+(defvar dc/ripgrep-args "-g \"!/po\""
   "args to pass to ripgrep")
 
 ;; NOTE: the grep-files-aliases seems to work with rgrep, but not
 ;; project-find-regepx
-(with-eval-after-load 'grep
+
+(use-package grep :straight (:type built-in)
+  :config
   (cl-dolist (a '(("tt" . "*[-_][Tt]est*")
                   ("ss" . "*[-_][Ss]spec*")
                   ("ht" . "*.html")
@@ -173,26 +175,6 @@
 
 ;;*** Bufler
 
-(setup (:pkg bufler :straight t :type git :flavor melpa
-             :host github :repo "alphapapa/bufler.el"
-             :files (:defaults (:exclude "helm-bufler.el")
-                               "bufler-pkg.el"))
-  ;; bufler:
-  ;; -buffer-mode-annotate-preds
-  ;; -cache-timeout, -cache-related-dirs-p
-  ;; -columns & -column-name-max-width
-  ;; -filter-buffer(-functions,-buffer-mode,/buffer-name-regexp)
-  ;; -filter-buffer-modes
-  ;; -filter-buffer-name-regexp
-  ;; -path-separator
-  ;; -groups
-  ;; -indent-per-level
-  ;; -initial-face-depth
-  ;; -list-(display,group)-buffer-action
-  ;; -mode-hook
-  ;; -bufer-vc-(refresh,remote,state)
-  (:option bufler-indent-per-level 3))
-
 ;; NOTE: bufler-defauto-group: conditions defining "auto" groups
 ;; https://github.com/alphapapa/bufler.el/blob/master/bufler.el#L1100-L1170
 
@@ -205,20 +187,11 @@
 ;;                                                buffer)
 ;;                                       (funcall (auto-file) buffer))
 ;;                             "*Special*"))))
-
 ;;       dc/bufler-special-special)
 
-;;**** Bufler defgroups
+;;**** Bufler defauto-groups
 
-;; TODO: refactor the memoization of dc/bufler-groups-.*
-;;
-;; + this also seems to lock the bufler-groups in place ... until i (setf
-;;   by-reference) .... hmmm
-;;
-;; (setf bufler-groups dc/bufler-groups-defaults)
-
-(with-eval-after-load 'bufler
-
+(defun dc/bufler-setup-defauto-groups ()
   ;; + the bufler-defauto-group macro must be compiled (for subsequent calls to
   ;;   eval-and-compile). This /may/ only affect auto-projectile.
   ;;
@@ -240,8 +213,18 @@
       (concat "·¶ " project-root)))
 
   ;; memoize bufler defaults
-  (setq dc/bufler-groups-defaults bufler-groups)
+  (setq dc/bufler-groups-defaults bufler-groups))
 
+;;**** Bufler defgroups
+
+;; TODO: refactor the memoization of dc/bufler-groups-.*
+;;
+;; + this also seems to lock the bufler-groups in place ... until i (setf
+;;   by-reference) .... hmmm
+;;
+;; (setf bufler-groups dc/bufler-groups-defaults)
+
+(defun dc/bufler-setup-groups ()
   ;; + changed org-roam to org-roam-directory
   ;; + removed projectile group
   ;; + removed helm
@@ -318,23 +301,50 @@
   ;; memoize the current settings
   (setq dc/bufler-groups-custom bufler-groups))
 
-;; TODO: find better way to advice bufler-select-buffer, but combining the
-;; interactive functions with alternate specs is complicated. bufler uses
-;; cl-defun specs.
+;;**** Bufler package
 
-;;**** Bufler advice
+(use-package bufler :straight (:type git :flavor melpa
+				     :host github :repo "alphapapa/bufler.el"
+				     :files (:defaults (:exclude "helm-bufler.el")
+						       "bufler-pkg.el"))
+  :init
+  (setq bufler-indent-per-level 3)
+  :config
+  (dc/bufler-setup-defauto-groups)
+  (dc/bufler-setup-groups)
 
-(with-eval-after-load 'bufler
+  ;; TODO: find better way to advise bufler-select-buffer. combining
+  ;; the interactive functions with alternate specs is
+  ;; complicated. bufler uses cl-defun specs.
   (advice-add 'bufler-switch-buffer :before #'ace-select-window))
+
+;; bufler:
+;; -buffer-mode-annotate-preds
+;; -cache-timeout, -cache-related-dirs-p
+;; -columns & -column-name-max-width
+;; -filter-buffer(-functions,-buffer-mode,/buffer-name-regexp)
+;; -filter-buffer-modes
+;; -filter-buffer-name-regexp
+;; -path-separator
+;; -groups
+;; -indent-per-level
+;; -initial-face-depth
+;; -list-(display,group)-buffer-action
+;; -mode-hook
+;; -bufler-vc-(refresh,remote,state)
 
 ;;** Minibuffer
 
 ;;*** Minibuffer history
 
 ;; TODO: review savehist-file: .emacs.g/var/savehist.el
-(setup savehist
-  (setq history-length 50)
-  (setq kill-ring-max 50)
+(use-package savehist :straight (:type built-in)
+  :demand t
+  :init
+  (setq history-length 50
+	kill-ring-max 50)
+
+  :config
   (savehist-mode 1)
 
   ;; Individual history elements can be configured separately
@@ -366,36 +376,35 @@
 ;;*** Casual
 
 ;;**** casual-info
-(setup (:pkg casual-info :straight t))
+(use-package casual-info :straight t :demand t :after avy)
 
 ;;**** casual-calc
-(setup (:pkg casual-calc :straight t))
-
-;;**** casual-isearch
-;; casual-isearch-tmenu and other symbols aren't loading
-;; straight/setup aren't requiring the package (even after eval)
-(require 'isearch)
-(and (setup (:pkg casual-isearch :straight t))
-     (require 'casual-isearch))
+(use-package casual-calc :straight t :demand t :after avy)
 
 ;;**** casual-avy
-
 ;; + Avy can jump across windows?
 ;; + Copy functionality is useful
+(use-package casual-avy :straight t :demand t :after avy)
 
-(setup (:pkg casual-avy :straight t))
+;;**** casual-isearch
+(use-package casual-isearch :straight t :demand t :after isearch)
+
+;; casual-isearch-tmenu and other symbols aren't loading
+;; straight/setup aren't requiring the package (even after eval)
 
 ;;*** Themes
-(setup (:pkg ef-themes)
-  (:option ef-themes-mixed-fonts t
-           ef-themes-to-toggle '(ef-bio ef-cherie))
-  ;; i open other emacs +windows+... emacs processes often and i like theme 2
-  ;; look distinct so buffers don't start munching each other's files
-  ;; (apparently tramp handles this well...  so maybe not a problem))
-  (:with-hook emacs-startup-hook (:hook ef-themes-load-random))
-  (:with-hook desktop-after-read-hook
-    (:hook ;; #'(lambda () (ef-themes-select (car ef-themes-to-toggle)))
-     (lambda () (ef-themes-select (car ef-themes-to-toggle))))))
+
+;;**** ef-themes
+
+;; the index of the theme in each list doesn't really correspond to its complement
+;; - but this would perhaps break in the future anyways.
+(defun dc/ef-themes-get-index-for-alternate (theme-sym variant)
+    (if-let* ((themes-name (concat "ef-themes-" (symbol-name variant) "-themes"))
+              (themes-sym (intern themes-name))
+              (themes-list (and (boundp themes-sym)
+                                (symbol-value themes-sym))))
+        (cl-position theme-sym themes-list)
+      (error "dc/ef-themes-get-index: some thing happen.")))
 
 (defun dc/update-face (face1 face2)
   "Swap `face1' with the spec of `face2'."
@@ -405,35 +414,38 @@
             (spec (cadar (get face2 'theme-face))))
       (face-spec-set face1 spec)))
 
-(with-eval-after-load 'ef-themes
-  ;; the index of the theme in each list doesn't really correspond to its complement
-  ;; - but this would perhaps break in the future anyways.
-  (defun dc/ef-themes-get-index-for-alternate (theme-sym variant)
-    (if-let* ((themes-name (concat "ef-themes-" (symbol-name variant) "-themes"))
-              (themes-sym (intern themes-name))
-              (themes-list (and (boundp themes-sym)
-                                (symbol-value themes-sym))))
-        (cl-position theme-sym themes-list)
-      (error "dc/ef-themes-get-index: some thing happen.")))
+(defun dc/ef-themes-get-current-index (theme-sym)
+  (let ((all-themes (-interleave ef-themes-dark-themes
+                                 ef-themes-light-themes)))
+    (/ (cl-position theme-sym all-themes) 2)))
 
-  (defun dc/ef-themes-get-current-index (theme-sym)
-    (let ((all-themes (-interleave ef-themes-dark-themes
-                                   ef-themes-light-themes)))
-      (/ (cl-position theme-sym all-themes) 2)))
+(defun dc/current-theme ()
+  ;; (car (reverse custom-enabled-themes))
+  ;; nevermind, it's a stack
+  (car custom-enabled-themes))
 
-  (defun dc/current-theme ()
-    ;; (car (reverse custom-enabled-themes))
-    ;; nevermind, it's a stack
-    (car custom-enabled-themes))
+(defun dc/current-theme-is-ef-theme ()
+  (equal "ef-" (substring (symbol-name (dc/current-theme)) 0 3)))
 
-  (defun dc/current-theme-is-ef-theme ()
-    (equal "ef-" (substring (symbol-name (dc/current-theme)) 0 3)))
+(defun dc/current-theme-is-toggled-ef-theme ()
+  (and (dc/current-theme-is-ef-theme)
+       (memq (car custom-enabled-themes) ef-themes-to-toggle)))
 
-  (defun dc/current-theme-is-toggled-ef-theme ()
-    (and (dc/current-theme-is-ef-theme)
-         (memq (car custom-enabled-themes) ef-themes-to-toggle))))
+(use-package ef-themes :straight t
+  :demand t
+  :init
+  (setq ef-themes-mixed-fonts t
+        ef-themes-to-toggle '(ef-bio ef-cherie))
+
+  ;; i open other emacs +windows+... emacs processes often and i like theme 2
+  ;; look distinct so buffers don't start munching each other's files
+  ;; (apparently tramp handles this well...  so maybe not a problem))
+  :hook
+  (emacs-startup-hook . ef-themes-load-random)
+  (desktop-after-read-hook . (lambda () (ef-themes-select (car ef-themes-to-toggle)))))
 
 ;;*** Pomodoro's
+
 ;; from https://github.com/BonfaceKilz/emacs.d
 ;; pomm integrates with libnotify/polybar, so there's a chance i might use it
 ;; https://github.com/SqrtMinusOne/pomm.el
@@ -452,16 +464,18 @@
        ((eq (a-get* pomm--state 'current 'kind) 'short-break)
         (ef-themes--load-theme (cadr ef-themes-to-toggle))))))
 
-(setup (:pkg pomm :straight t)
-  (:option pomm-state-file-location
-           (expand-file-name "pomm" no-littering-var-directory)
-           pomm-third-time-state-file-location
-           (expand-file-name "pomm-third-time" no-littering-var-directory))
-  ;; (add-hook 'pomm-on-tick-hook 'pomm-update-mode-line-string)
-  (add-hook 'pomm-on-status-changed-hook #'dc/pomm-toggle-update-theme)
-  (add-hook 'pomm-on-status-changed-hook #'pomm-update-mode-line-string))
+(use-package pomm :straight t
+  :demand t
+  :init
+  (setq pomm-state-file-location
+        (expand-file-name "pomm" no-littering-var-directory)
+        pomm-third-time-state-file-location
+        (expand-file-name "pomm-third-time" no-littering-var-directory))
+  :hook
+  ((#'dc/pomm-toggle-update-theme #'pomm-update-mode-line-string) . 'pomm-on-status-changed-hook))
 
 ;; Other options
+
 ;; pomm-csv-history-file ;only creates history CSV when this is set
 ;; (expand-file-name "pomm.csv" no-littering-var-directory)
 ;; needs to call "$toolcmd --options " with path/to/audio.wav
@@ -472,36 +486,23 @@
 
 ;;*** Cursor
 
-
 ;;*** Pulse
 ;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
 ;; https://protesilaos.com/emacs/pulsar
-(require 'imenu)
 
 ;; where hooks are unavailable, append commands to pulsar-pulse-functions
-(setup (:pkg pulsar)
-  (:option pulsar-pulse t
-           pulsar-delay 0.055
-           pulsar-iterations 10
-           pulsar-face 'pulsar-magenta
-           pulsar-highlight-face 'pulsar-yellow)
+(use-package pulsar :straight t
+  :demand t
+  :init
+  (setq pulsar-pulse t
+        pulsar-delay 0.055
+        pulsar-iterations 10
+        pulsar-face 'pulsar-magenta
+        pulsar-highlight-face 'pulsar-yellow)
 
-  ;; runs on most preview actions
-  (:with-hook consult-after-jump-hook  ; runs on imenu selection
-    (:hook #'pulsar-recenter-middle))
-  ;; TODO pulsar-reveal-entry is specific org-mode/outline-mode
-  ;; (:hook pulsar-reveal-entry)
-  (:with-hook prev-error-hook
-    (:hook #'pulsar-pulse-line-red))
-  (:with-hook next-error-hook
-    (:hook #'pulsar-pulse-line-red))
-  (:with-hook window-configuration-change-hook
-    (:hook #'pulsar-pulse-line)))
-;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
-
-;; changes to pulsar-pulse-functions are effective when pulsar-mode
-;; loads in a new buffer (the post-command-hooks are buffer-local)
-(with-eval-after-load 'pulsar
+  ;; changes to pulsar-pulse-functions are effective when pulsar-mode
+  ;; loads in a new buffer (the post-command-hooks are buffer-local)
+  :config
   (dolist (f '(ace-window
                bufler
                buf-move-up
@@ -522,7 +523,19 @@
                popper-toggle-latest
                popper-toggle-type))
     (add-to-list 'pulsar-pulse-functions f))
-  (pulsar-global-mode 1))
+  (pulsar-global-mode 1)
+
+  ;; runs on most preview actions
+
+  :hook
+  ; runs on imenu selection
+  (#'pulsar-recenter-middle . consult-after-jump-hook)
+  ((#'pulsar-pulse-line-red) . (prev-error-hook next-error-hook))
+  (#'pulsar-pulse-line . window-configuration-change-hook))
+
+;; TODO pulsar-reveal-entry is specific org-mode/outline-mode
+;; (:hook pulsar-reveal-entry)
+;; (add-to-list 'window-selection-change-functions #'pulsar-reveal-entry)
 
 ;;*** Font
 
@@ -554,101 +567,11 @@
                       :weight 'light
                       :height (dw/system-settings-get 'emacs/variable-face-size)))
 
-(add-hook 'emacs-startup-hook #'dc/reset-fonts)
-
-;;**** Icons
-
-
-;; from https://github.com/domtronn/all-the-icons.el/issues/120
-(defun dc/font-installed-p (font-name)
-  "Check if font with FONT-NAME is available. Returns a font-entity."
-  ;; call font-face-attributes on a font-entity
-  (find-font (font-spec :name font-name)))
-
-(defun dc/load-all-the-icons ()
-  ;; TODO: handle this separately and refactor
-  ;; (-all-the-icons (dc/font-installed-p "all-the-icons"))
-
-  ;; (unless (dc/font-installed-p "all-the-icons")
-  ;;   (notification "..."))
-
-  ;; TODO: dc/font-installed-p doesn't work while server is loading
-  (setq dc/nerd-font-entity
-        (let* ((iosevka-nerd (dc/font-installed-p "Iosevka Nerd Font"))
-               (firacode-nerd (dc/font-installed-p "FiraCode Nerd Font")))
-          (or firacode-nerd iosevka-nerd))
-        dc/nerd-font (when dc/nerd-font-entity
-                       (font-face-attributes dc/nerd-font-entity)))
-
-  (when dc/nerd-font
-    (setq all-the-icons-nerd-fonts-family
-          (plist-get dc/nerd-font :family)))
-
-  (setup (:pkg all-the-icons :straight t :type git :flavor melpa
-               :host github :repo "domtronn/all-the-icons.el"
-               :files (:defaults "data" "all-the-icons-pkg.el")))
-  (require 'all-the-icons)
-
-  ;; You must run (all-the-icons-install-fonts) after installing this package!
-  (setup (:pkg all-the-icons-dired :straight t :flavor melpa
-               :host github :repo "wyuenho/all-the-icons-dired")
-    (:option all-the-icons-dired-lighter "│ic☼ns"))
-  (require 'all-the-icons-dired)
-
-  (setup (:pkg all-the-icons-nerd-fonts :straight t
-               :host github :repo "mohkale/all-the-icons-nerd-fonts"))
-  (require 'all-the-icons-nerd-fonts)
-
-  (setup (:pkg all-the-icons-completion :straight t
-               :host github :repo "iyefrat/all-the-icons-completion"))
-  (require 'all-the-icons-completion)
-
-  (setup (:pkg all-the-icons-gnus :straight t :type git :flavor melpa
-               :host github :repo "nlamirault/all-the-icons-gnus"))
-  (require 'all-the-icons-gnus))
-
-(defun dc/font-reminder (font-name)
-  "Show an alert if `font-name' is not found."
-  ;; (nerd-icons-install-fonts)
-  ;; (all-the-icons-install-fonts)
-  (unless (dc/font-installed-p font-name)
-    (notifications-notify
-     :title "Emacs: Fonts"
-     :body (format "Font '%s' not found!" font-name))))
-
-(defun dc/setup-all-the-icons (&optional arg)
-  (interactive "p")
-  ;; https://github.com/nlamirault/all-the-icons-gnus/issues/4
-  ;; (add-hook 'gnus-load-hook #'all-the-icons-gnus-setup)
-
-  (when (display-graphic-p)
-    (dc/load-all-the-icons)
-
-    ;; ATI-dired is hooked in dired setup (will fail if ATI isn't loaded)
-    (dc/font-reminder "all-the-icons")
-    (all-the-icons-completion-mode)
-    (all-the-icons-nerd-fonts-prefer)
-    (remove-hook 'server-after-make-frame-hook #'dc/setup-all-the-icons)
-    (notifications-notify
-     :title "Emacs: "
-     :body "Loaded fonts")))
-
-;; NOTE: this isn't running when there is not a server....
-;; (add-hook 'after-make-frame-functions (lambda (fdsa) (alert "fdsa")))
-(add-hook 'server-after-make-frame-hook #'dc/setup-all-the-icons)
-
-;; NOTE: this doesn't run
-;; (add-hook 'after-make-frame-functions
-;;           (lambda (frame)
-;;             (unless (bound-and-true-p dc/nerd-font-entity)
-;;               (dc/setup-all-the-icons))))
-
-(defun dc/hide-icons-in-guix ()
-  ;; hide icons in guix (not interactive)
-  (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
-    (all-the-icons-dired-mode 1)))
+(use-package faces :straight (:type built-in)
+  :hook (#'dc/reset-fonts . emacs-startup-hook))
 
 ;;*** Window Dividers
+
 ;; - requires window-divider-mode being on
 ;;   - window-divider-default-places t sets to both 'bottom and 'right
 ;; - M-x customize-face on window-divider to change fgcolor
@@ -661,58 +584,83 @@
 ;;*** Images
 
 ;; my build doesn't have webp ... but just in case
-(add-hook 'emacs-startup-hook
-          (lambda () (setq image-types (remq 'webp image-types))))
+(add-hook 'emacs-startup-hook (lambda () (setq image-types (remq 'webp image-types))))
 
 ;;** Editor
 
-(setup (:pkg editorconfig)
-  (:option editorconfig-trim-whitespaces-mode
-           'ws-butler-mode)
-  (:with-hook emacs-startup-hook
-    (:hook editorconfig-mode)))
+(use-package editorconfig :straight t
+  :demand t
+  :init
+  (setq editorconfig-trim-whitespaces-mode 'ws-butler-mode)
+  :hook
+  (editorconfig-mode . emacs-startup-hook))
 
 ;;*** Re-Builder
 
 ;; https://www.masteringemacs.org/article/re-builder-interactive-regexp-builder
 
-(setup re-builder
+(use-package re-builder :straight (:type built-in)
   ;; reb-re-syntax: sets the default regexp system (no PCRE available), change
   ;; with C-c TAB.
   ;;
   ;; rx, string, read (deprecated: sregex, lisp-re)
-  (:option reb-re-syntax 're))
+  :init
+  (setq-default reb-re-syntax 're))
 
 ;;*** Indentation
 
-(setq-default tab-width 2
-              indent-tabs-mode nil)
+(setq-default tab-width 2 indent-tabs-mode nil)
 
 ;;*** Fills & Alignment
 
 (setq-default fill-column 80)
 
-(global-display-fill-column-indicator-mode)
+(use-package display-fill-column-indicator :straight (:type built-in)
+  :demand t
+  :config
+  (global-display-fill-column-indicator-mode))
 
 ;;**** Visual Fill Column
 
-(setup (:pkg visual-fill-column)
-  ;; (:hook-into org-mode)
-  (:hook-into message-mode)
-  (:option visual-fill-column-width nil ; 110
-           visual-fill-column-center-text nil)) ;; t
+;; (use-package visual-line-mode :straight (:type built-in)
+;;  :demand t
+
+;; (visual-fill-column :type git :flavor melpa :host codeberg :repo "joostkremers/visual-fill-column")
+
+(use-package visual-fill-column :straight t
+  :demand t
+  :init
+  ;; visual-fill-column in simple.el
+  (setq-default visual-fill-column-width nil ; 110
+		            visual-fill-column-center-text nil) ;; t
+
+  ;; visual-fill-column-enable-sensible-window-split ;customize values mixed up?
+
+  :hook
+  ((org-mode-hook message-mode) . visual-fill-column-mode))
 
 ;;*** Selection
-(delete-selection-mode +1)
+(use-package delsel :straight (:type built-in)
+  :demand t
+  :config
+  (delete-selection-mode +1))
 
-;;*** Clipbaord
+;;**** Clipboard
+
 ;; TODO: ensure these variables do not change
 ;; - can be tested with middle click
 ;; - https://www.emacswiki.org/emacs/CopyAndPaste#h5o-3
-(setq select-enable-primary nil
-      select-enable-clipboard t
-      x-select-enable-primary nil
-      x-select-enable-clipboard t)
+
+
+;; x-select vars are obselete
+;; x-select-enable-primary nil
+;; x-select-enable-clipboard t
+
+(use-package select :straight (:type built-in)
+  :demand t
+  :init
+  (setq-default select-enable-primary nil
+		select-enable-clipboard t))
 
 ;; TODO: (setq kill-ring-max 25)
 
@@ -728,33 +676,42 @@
 
 ;;*** Undo
 
-(setup (:pkg undo-tree)
-  (:option undo-tree-auto-save-history nil
-           undo-tree-mode-lighter "│Ü¿"))
-
-(with-eval-after-load 'undo-tree
+(use-package undo-tree :straight t
+  :demand t
+  :init
+  (setq undo-tree-auto-save-history nil
+        undo-tree-mode-lighter "│Ü¿")
+  :config
   (global-undo-tree-mode 1))
 
 ;;** Highlighting
 
-(setup (:pkg highlight-symbol)
-  (:option highlight-symbol-idle-delay 0.5)
-
-  ;; try text-mode, but it may not work well if docs are long ...
-  ;; can't think of why i haven't done this.
-  (:hook-into text-mode)
-  (:hook-into prog-mode))
+;; try text-mode, but it may not work well if docs are long ...
+;; can't think of why i haven't done this.
+(use-package highlight-symbol :straight t
+  :demand t
+  :init
+  (setq highlight-symbol-idle-delay 0.5)
+  :hook ((text-mode prog-mode) . highlight-symbol-mode))
 
 ;;** Bookmarks
 
 ;;*** Burly
 
-(setup (:pkg burly))
+;; TODO: set burly-frameset-filter-alist to ensure/prevent some frames are stored
+;; accepts filter function
+
+;; TODO:
+
+
+
+(use-package burly :straight t :demand t)
 
 ;;*** Activities
 
-(setup (:pkg activities :straight t :type git :flavor melpa
-             :host github :repo "alphapapa/activities.el"))
+(use-package activities
+  :straight (:type git :flavor melpa
+		   :host github :repo "alphapapa/activities.el"))
 
 ;; activities-tabs-mode prevents the frame from getting named. more frames
 ;; gives more options anyways.
@@ -846,43 +803,45 @@
             (expand-file-name (buffer-name b))))))
     (dired-dwim-target-next)))
 
-(setup dired
-  (:option dired-listing-switches "-agho --group-directories-first"
-           dired-omit-verbose nil
-           dired-hide-details-hide-symlink-targets nil
-           delete-by-moving-to-trash nil
+(use-package dired :straight (:type built-in)
+  :demand t
+  :init
+  (setq dired-listing-switches "-agho --group-directories-first"
+        dired-omit-verbose nil
+        dired-hide-details-hide-symlink-targets nil
+        delete-by-moving-to-trash nil
 
-           ;; dired-dwim-target 'dired-dwim-target-recent
-           dired-dwim-target #'dc/dired-dwim ;; next window on frame
+        ;; dired-dwim-target 'dired-dwim-target-recent
+        dired-dwim-target #'dc/dired-dwim ;; next window on frame
 
-           ;; NOTE: apparently defaults to: "\\`[.]?#\\|\\`[.][.]?\\'" ...
-           dired-omit-files (string-join
-                             '("^.DS_Store\\'"
-                               "^.project\\(?:ile\\)?\\'"
-                               "^.\\(svn\\)\\'"
-                               "^.ccls-cache\\'"
-                               "\\(?:\\.js\\)?\\.meta\\'"
-                               "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
-                             "\\|"))
+        ;; NOTE: apparently defaults to: "\\`[.]?#\\|\\`[.][.]?\\'" ...
+        dired-omit-files (string-join
+                          '("^.DS_Store\\'"
+                            "^.project\\(?:ile\\)?\\'"
+                            "^.\\(svn\\)\\'"
+                            "^.ccls-cache\\'"
+                            "\\(?:\\.js\\)?\\.meta\\'"
+                            "\\.\\(?:elc\\|o\\|pyo\\|swp\\|class\\)\\'")
+                          "\\|")
+        ;; dired-dwim-target 'dired-dwim-target-recent
+        ;; next window on frame (formerly setq-default)
+        dired-dwim-target #'dc/dired-dwim)
   (autoload 'dired-omit-mode "dired-x")
-  (:hook #'hl-line-mode)
-  (:hook #'dc/hide-icons-in-guix))
-(setq-default
- ;; dired-dwim-target 'dired-dwim-target-recent
+  :hook
+  ((hl-line-mode dc/hide-icons-in-guix) . dired-mode-hook))
 
- ;; next window on frame
- dired-dwim-target #'dc/dired-dwim)
-
-(setup recentf
-  (:with-hook window-setup-hook
-    (:hook recentf-mode))
-  (:option recentf-max-saved-items 200
-           recentf-max-menu-items 13
-           recentf-menu-filter #'recentf-filter-changer))
-
-(with-eval-after-load 'recentf
+(use-package recentf :straight (:type built-in)
+  :demand t
+  :init
+  (setq recentf-max-saved-items 200
+        recentf-max-menu-items 13
+        recentf-menu-filter #'recentf-filter-changer)
+  :config
+  (add-to-list 'recentf-exclude (rx (and line-start "/gnu/store")))
+  :hook
+  ;;(window-setup-hook . recentf-mode)
   ;; (recentf-mode +1) ; needs to be enabled later.
-  (add-to-list 'recentf-exclude (rx (and line-start "/gnu/store"))))
+  (emacs-startup-hook . recentf-mode))
 
 ;; i've been frustrated with dired suggestions for years, but everytime i go to
 ;; customize it, i have to agree that it's the correct behavior. however, i then
@@ -919,11 +878,13 @@
 
 ;;*** Window Management
 
-(setup (:pkg avy))
-(setup (:pkg ace-window)
-  (:option aw-scope 'frame
-           aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
-           aw-minibuffer-flag t)
+(use-package avy :straight t)
+(use-package ace-window :straight t
+  :init
+  (setq aw-scope 'frame
+        aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)
+        aw-minibuffer-flag t)
+  :config
   (ace-window-display-mode 1))
 
 (defun dc/ace-frame-jump (arg)
@@ -938,11 +899,16 @@ but can't be jumped to or from."
   (let ((aw-scope 'visible))
     (call-interactively #'ace-window arg)))
 
-(setup winner
+(use-package winner :straight (:type built-in)
+  :demand t
+  :config
   (winner-mode))
 
 ;; options including moving buffer without moving pointer
-(setup (:pkg buffer-move))
+(use-package buffer-move :straight t
+  ;; REMOVE: wouldn't load initially
+  ;;(:type git :flavor melpa :host github :repo "lukhas/buffer-move")
+  :demand t)
 
 ;;*** Confirmations
 
@@ -975,8 +941,8 @@ but can't be jumped to or from."
       smerge-change-buffer-confirm t)
 
 ;;*** Hydra
-(setup (:pkg hydra)
-  (require 'hydra))
+(use-package hydra :straight t
+  :demand t)
 
 ;;*** Timers
 
@@ -1017,7 +983,7 @@ but can't be jumped to or from."
 ;;**** tmr.el
 
 ;; TODO: bind `tmr' and `C-u tmr' to a key
-(setup (:pkg tmr))
+(use-package tmr :straight t :demand t)
 
 (defun dw/tmr-mode-line ()
   (if (not (and (boundp 'tmr--timers)
@@ -1035,23 +1001,25 @@ but can't be jumped to or from."
 
 ;; ** Speedbar
 
-(setup (:pkg speedbar)
-  (:option speedbar-indentation-width 2
-           speedbar-ignored-modes
-           '(help-mode
-             custom-mode
-             eshell-mode
-             shell-mode
-             term-mode
-             vterm-mode
-             docker-image-mode
-             docker-container-mode
-             docker-volume-mode
-             docker-network-mode)))
+(use-package speedbar :straight (:type built-in)
+  :init
+  (setq speedbar-indentation-width 2
+        speedbar-ignored-modes
+        '(help-mode
+          custom-mode
+          eshell-mode
+          shell-mode
+          term-mode
+          vterm-mode
+          docker-image-mode
+          docker-container-mode
+          docker-volume-mode
+          docker-network-mode)))
 
 ;; ** PDF Tools
 
-(setup (:pkg pdf-tools))
+(use-package pdf-tools :straight t
+  :demand t)
 
 ;; (add-to-list 'window-buffer-change-functions #'dc/speedbar-refresh-if-open)
 ;; (advice-add 'window-change :after #'speedbar-refresh)
@@ -1072,8 +1040,9 @@ but can't be jumped to or from."
 
 ;;*** Evaluation Overlays (eros)
 
-(setup (:pkg eros :straight t)
-  (:when-loaded (eros-mode +1)))
+(use-package eros :straight t
+  :config
+  (eros-mode +1))
 
 ;;*** Tabs
 
@@ -1084,7 +1053,7 @@ but can't be jumped to or from."
 ;; cl-defgeneric project-
 ;; and cl-defmethod project*
 (defun dc/tab-bar-tab-name-project ()
-
+  ;; ....
   )
 
 ;;  'current-tab
@@ -1104,15 +1073,16 @@ but can't be jumped to or from."
 
 ;;**** Tabspaces
 
-(setup (:pkg tabspaces :straight t)
-  (tabspaces-mode 1)
+(use-package tabspaces :straight t
+  :init
   (setq-default tabspaces-default-tab "Main"
                 ;; NOTE: this remaps switch-to-buffer to the tabspaces command,
                 ;; but it's available through C-c TAB b
                 ;; tabspaces-use-filtered-buffers-as-default t
                 tabspaces-remove-to-default t
-                tabspaces-include-buffers '("*scratch*")))
-
+                tabspaces-include-buffers '("*scratch*"))
+  :config
+  (tabspaces-mode 1))
 
 ;;**** Tab Management
 
@@ -1209,7 +1179,6 @@ but can't be jumped to or from."
 ;;
 ;; + tab: consult-buffer-other-tab, tab-bar-select-tab-by-name, dired-other-tab
 
-
 ;; (consult-imenu buffer)
 
 ;; fonts need adjustment, causes grid to be misaligned
@@ -1230,31 +1199,32 @@ but can't be jumped to or from."
                 (consult-flycheck reverse)
                 (consult-flymake reverse)))
 
-(setup (:pkg vertico)
-  (:option vertico-cycle t
-           ;; resize-mini-frames t
-           resize-mini-windows t)
+(use-package vertico :straight t
+  :demand t
+  :custom
+  (vertico-cycle t)
+  (resize-mini-windows t)
+  ;; resize-mini-frames t
+  :config
+  (vertico-mode)
 
   ;; TODO: this is still purple
   ;; (custom-set-faces '(vertico-current ((t (:background "#3a3f5a")))))
 
-  ;; from prot's video on files/dired
-  ;;
-  ;; to clear out dired suggestions to enter a full path quickly with / or ~/
-  (:with-hook rfn-eshadow-update-overlay-hook
-    (:hook #'vertico-directory-tidy))
-
   ;; To check whether the minor mode is enabled in the current buffer,
   ;; evaluate ‘(default-value 'vertico-multiform-mode)’.
 
-  (:with-hook emacs-startup-hook
-    (:hook vertico-mode)
-    (:hook vertico-multiform-mode)
-    (:hook vertico-mouse-mode)         ;different actions for left/right click
+  :hook
+  (vertico-directory-tidy . rfn-eshadow-update-overlay-hook)
+  ;; from prot's video on files/dired
+  ;; to clear out dired suggestions to enter a full path quickly with / or ~/
 
-    ;; numbers for prefix-based completion,
-    ;; handy when toggling vertico-grid-mode
-    (:hook vertico-indexed-mode)))
+  ;; different actions for left/right click
+  ((vertico-mode vertico-multiform-mode vertico-mouse-mode) . emacs-startup-hook)
+
+  ;; numbers for prefix-based completion,
+  ;; handy when toggling vertico-grid-mode
+  (vertico-indexed-mode . vertico-mode))
 
 ;; TODO: double-check tramp remote configuration
 ;; https://github.com/minad/vertico/tree/main#tramp-hostname-and-username-completion
@@ -1268,33 +1238,42 @@ but can't be jumped to or from."
 ;;*** Corfu
 
 ;; corfu@0.34 doesn't include most of the corfu-popupinfo changes
-(setup (:pkg corfu)
-  (:option corfu-cycle t
-           corfu-auto t
-           corfu-auto-delay 0.25
-           corfu-quit-no-match 'separator
-           corfu-quit-at-boundary 'separator
-           corfu-excluded-modes '(org-mode markdown-mode)
-           corfu-count 15
-           corfu-min-width 15
-           corfu-popupinfo-max-height 15
-           corfu-popupinfo-min-height 5
-           corfu-popupinfo-direction 'right
-           corfu-popupinfo-delay '(1.0 . 0.0)
-           corfu-popupinfo-hide nil     ;don't hide in between transitions
-           corfu-preview-current nil)
+(use-package corfu :straight t
+  :demand t
+  :init
+  (setq corfu-cycle t
+        corfu-auto t
+        corfu-auto-delay 0.25
+        corfu-quit-no-match 'separator
+        corfu-quit-at-boundary 'separator
+        corfu-excluded-modes '(org-mode markdown-mode)
+        corfu-count 15
+        corfu-min-width 15
+        corfu-popupinfo-max-height 15
+        corfu-popupinfo-min-height 5
+        corfu-popupinfo-direction 'right
+        corfu-popupinfo-delay '(1.0 . 0.0)
+        corfu-popupinfo-hide nil     ;don't hide in between transitions
+        corfu-preview-current nil)
+  :config
   (global-corfu-mode 1)
   (corfu-popupinfo-mode 1))
 
-(setup (:pkg corfu-quick)
-  (:option corfu-quick1 "asdfghjkl;"))
+;; straight recipe not found (i'm not using it for now)
+;;
+;; (use-package corfu-quick :straight t
+;;   :after corfu
+;;   :init
+;;   (setq corfu-quick1 "asdfghjkl;"))
+
+
 ;; the functions that the popup provides are available via corfu
 ;; - (see dc-keys#corfu-popupinfo-map)
 ;; - without the popup, the info will be displayed in a temporary buffer
 ;; - without popupinfo, maintaining terminal-compatibly config is easier
 
 ;; corfu-terminal advises functions in corfu-doc which is deprecated
-;; (setup (:pkg corfu-terminal :straight t)
+;; (use-package corfu-terminal :straight t)
 ;;   (unless (display-graphic-p)
 ;;     (corfu-terminal-mode +1)))
 
@@ -1306,14 +1285,12 @@ but can't be jumped to or from."
 
 ;;*** Kind Icon
 
-(setup ;; (:pkg kind-icon)
-    (:pkg kind-icon :straight t
-          :type git :host github :repo "emacs-straight/kind-icon"
-          :files ("*" (:exclude ".git")))
-  (:load-after corfu)
-  (:option kind-icon-default-face 'corfu-default)
-  (:when-loaded
-    (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)))
+(use-package kind-icon :straight t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 
 ;;*** Orderless
 
@@ -1350,30 +1327,33 @@ but can't be jumped to or from."
 ;; TODO: try as a buffer-local variable in various text-mode/prog-mode
 ;; (setq-default completion-cycle-threshold 29)
 
-(setup (:pkg orderless)
-  (require 'orderless)
-  ;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
-  (:option completion-styles '(orderless basic)
-           ;; completion-styles '(orderless+initialism basic)
-           orderless-matching-styles '(orderless-prefixes
-                                       ;; orderless-initialism
-                                       orderless-regexp)
-           ;; orderless-style-dispatchers '(orderless-prefixes orderless-regexp)
-           ;; these need to be functions
-           completion-ignore-case nil
-           read-file-name-completion-ignore-case nil
-           read-buffer-completion-ignore-case t)
+;; https://github.com/oantolin/orderless#defining-custom-orderless-styles
 
-  (orderless-define-completion-style orderless+initialism
-    (orderless-matching-styles '(orderless-initialism
-                                 orderless-literal
-                                 orderless-regexp)))
+(use-package orderless :straight t
+  :init
+
+  (setq completion-styles '(orderless basic)
+        ;; completion-styles '(orderless+initialism basic)
+        orderless-matching-styles '(orderless-prefixes
+                                    ;; orderless-initialism
+                                    orderless-regexp)
+        ;; orderless-style-dispatchers '(orderless-prefixes orderless-regexp)
+        ;; these need to be functions
+        completion-ignore-case nil
+        read-file-name-completion-ignore-case nil
+        read-buffer-completion-ignore-case t)
 
   (setq-default completion-category-overrides
                 '((command (styles orderless+initialism))
                   (function (styles orderless+initialism))
                   (symbol (styles orderless+initialism))
-                  (variable (styles orderless+initialism)))))
+                  (variable (styles orderless+initialism))))
+
+  :config
+  (orderless-define-completion-style orderless+initialism
+    (orderless-matching-styles '(orderless-initialism
+                                 orderless-literal
+                                 orderless-regexp))))
 
 ;; TODO: enumerating possible keys for completion-category-overrides?
 ;; TODO: determine whether to add orderless-affix-dispatch-alist
@@ -1382,34 +1362,64 @@ but can't be jumped to or from."
 
 ;;*** WGrep
 
-(setup (:pkg wgrep)
-  (add-hook 'grep-mode-hook #'wgrep-setup))
+(use-package wgrep :straight t
+  :hook (wgrep-setup . grep-mode-hook))
 
 ;;*** Consult
 
-(setup (:pkg consult)
-  (:option consult-narrow-key "<"
-           ;; consult-preview-key '("C-SPC")
-           consult-preview-key '("S-<down>" "S-<up>")
+(defun dw/get-project-root ()
+  (when (fboundp 'projectile-project-root)
+    (projectile-project-root)))
 
-           ;; async timing
-           consult-async-min-input 3
-           consult-async-input-debounce 0.3
-           consult-async-input-throttle 0.5)
-  (require 'consult)
+(use-package consult :straight t
+  :demand t
+  :init
+  (setq consult-narrow-key "<"
+        ;; consult-preview-key '("C-SPC")
+        consult-preview-key '("S-<down>" "S-<up>")
+
+        ;; async timing
+        consult-async-min-input 3
+        consult-async-input-debounce 0.3
+        consult-async-input-throttle 0.5
+        ;; < 1.5 * 80
+        consult-grep-max-columns 116)
+  :config
+  (consult-customize
+   consult-theme :preview-key nil
+   ;; Hide full buffer list by default (use "b" prefix)
+   consult--source-buffer :hidden t :default nil)
 
   ;; CLI tools
-  (:option consult-grep-max-columns 116 ; < 1.5 * 80
+  (setq-default completion-in-region-function
+                #'dc/completion-in-region-function)
+  (setq consult-project-function #'consult--default-project-function
+        ;; completion-in-region-function #'consult-completion-in-region
 
-           ;; ripgrep
-           consult-ripgrep-args
-           (string-join `(,consult-ripgrep-args ,@dc/ripgrep-args) " "))
-  (:also-load wgrep)
-  (:also-load consult-xref)
+        consult-ripgrep-args
+        (string-join (list consult-ripgrep-args dc/ripgrep-args) " "))
 
-  (defun dw/get-project-root ()
-    (when (fboundp 'projectile-project-root)
-      (projectile-project-root))))
+  ;;  may need to be set per-mode
+  ;; if lsp/lispy/cider/geiser cause problems
+  (require 'consult-xref)
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
+  ;; Set consult-workspace buffer list
+  (defvar consult--source-workspace
+    (list :name "Workspace Buffers"
+          :narrow ?w
+          :history 'buffer-name-history
+          :category 'buffer
+          :state #'consult--buffer-state
+          :default t
+          :items (lambda () (consult--buffer-query
+                             :predicate #'tabspaces--local-buffer-p
+                             :sort 'visibility
+                             :as #'buffer-name)))
+    "Set workspace buffer list for consult-buffer.")
+  (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
 
 ;; TODO: tune consult-preview settings
 ;; see https://github.com/minad/consult#live-previews
@@ -1430,7 +1440,6 @@ but can't be jumped to or from."
 ;; consult-narrow-key "C-=" ; doesn't work
 ;; consult-narrow-key "C-c =" ; not rebound by general-translate-key'
 
-
 ;;**** Consult Minibuffer Fix
 
 ;; eval-expression uses (completion-in-region start end coll &optional pred)
@@ -1441,54 +1450,21 @@ but can't be jumped to or from."
            #'completion--in-region)
          args))
 
-(setq-default completion-in-region-function
-              #'dc/completion-in-region-function)
-
-(with-eval-after-load 'consult
-  ;; nil (temp fix) ;; #'dw/get-project-root (fixes VC)
-  (setq consult-project-function #'consult--default-project-function
-        ;; completion-in-region-function #'consult-completion-in-region
-
-        ;;  may need to be set per-mode
-        ;; if lsp/lispy/cider/geiser cause problems
-        xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-
-  (consult-customize
-   consult-theme :preview-key nil
-   ;; Hide full buffer list by default (use "b" prefix)
-   consult--source-buffer :hidden t :default nil)
-
-  ;; (consult-customize consult--source-buffer)
-
-  ;; Set consult-workspace buffer list
-  (defvar consult--source-workspace
-    (list :name "Workspace Buffers"
-          :narrow ?w
-          :history 'buffer-name-history
-          :category 'buffer
-          :state #'consult--buffer-state
-          :default t
-          :items (lambda () (consult--buffer-query
-                             :predicate #'tabspaces--local-buffer-p
-                             :sort 'visibility
-                             :as #'buffer-name)))
-
-    "Set workspace buffer list for consult-buffer.")
-  (add-to-list 'consult-buffer-sources 'consult--source-workspace))
-
 ;;**** Consult Dir
 
-(with-eval-after-load 'consult
-  (setup (:pkg consult-dir)
-    (:option consult-dir-project-list-function #'consult-dir-project-dirs)))
+(use-package consult-dir :straight t
+  :after consult
+  :demand t
+  :init
+  ;; dc/consult-dir-recentf fails by dynamic/lexical binding issues if consult-dir
+  ;; hasn't yet run with the normal value of `consult-dir-sources'.
+  (setq-default consult-dir-sources '(consult-dir--source-bookmark
+                                       consult-dir--source-default
+                                       consult-dir--source-project
+                                       consult-dir--source-recentf))
 
-;; dc/consult-dir-recentf fails by dynamic/lexical binding issues if consult-dir
-;; hasn't yet run with the normal value of `consult-dir-sources'.
-(setq-default consult-dir-sources '(consult-dir--source-bookmark
-                                    consult-dir--source-default
-                                    consult-dir--source-project
-                                    consult-dir--source-recentf))
+  :config
+  (setq consult-dir-project-list-function #'consult-dir-project-dirs))
 
 (defun dc/consult-dir-recentf ()
   "Call `consult-dir' with only the recentf source."
@@ -1500,22 +1476,22 @@ but can't be jumped to or from."
 
 ;;**** Consult Flyspell
 
-(with-eval-after-load 'flyspell
-  (setup (:pkg consult-flyspell :straight t :type git :flavor melpa
-               :host gitlab :repo "OlMon/consult-flyspell")))
+(use-package consult-flyspell :straight t
+  :after flyspell)
 
 ;;**** Consult Yasnippet
 
-(with-eval-after-load 'yasnippet
-  (setup (:pkg consult-yasnippet))
+(use-package consult-yasnippet :straight t
+  :after yasnippet
+  :config
   (consult-customize consult-yasnippet :preview-key '(:debounce 0.25 any)))
 
 ;;**** Consult Magit
 
-(with-eval-after-load 'magit
-  (setup (:pkg consult-git-log-grep :straight t :type git :flavor melpa
-               :host github :repo "ghosty141/consult-git-log-grep")
-    (:option consult-git-log-grep-open-function #'magit-show-commit)))
+(use-package consult-git-log-grep :straight t
+  :after consult magit
+  :init
+  (setq consult-git-log-grep-open-function #'magit-show-commit))
 
 ;;**** Consult Recoll
 
@@ -1523,11 +1499,12 @@ but can't be jumped to or from."
 ;; https://www.lesbonscomptes.com/recoll/usermanual/usermanual.html
 (unless t
   ;; try later
-  (with-eval-after-load 'consult
-    (setup (:pkg consult-recoll :straight t)
-      (:option consult-recoll-inline-snippets nil)
-      (require 'consult-recoll)
-      (consult-customize consult-recoll :preview-key "C-M-m"))))
+  (use-package consult-recoll :straight t
+    :after consult
+    :init
+    (setq consult-recoll-inline-snippets nil)
+    :config
+    (consult-customize consult-recoll :preview-key "C-M-m")))
 
 ;;**** Consult Codesearch
 
@@ -1536,25 +1513,16 @@ but can't be jumped to or from."
   ;;
   ;; - set CSEARCHINDEX in direnv
   ;; - or `consult-codesearch-csearchindex' in .dir-locals
-  (setup (:pkg consult-codesearch :straight t :type git :flavor melpa
-               :host github :repo "youngker/consult-codesearch.el")))
-
-;;**** Consult Compile-Multi
-
-(with-eval-after-load 'consult-compile  ; in dc-dev
-  (setup (:pkg consult-compile-multi :straight t :type git :flavor melpa
-               :host github :repo "mohkale/compile-multi"
-               :files ("extensions/consult-compile-multi/*.el"
-                       "consult-compile-multi-pkg.el"))
-    ;; (:option consult-compile-multi-narrow ...)
-    ))
+  (use-package consult-codesearch :straight t))
 
 ;;*** Marginalia
 
-(setup (:pkg marginalia)
-  (:option marginalia-annotators '(marginalia-annotators-heavy
-                                   marginalia-annotators-light
-                                   nil))
+(use-package marginalia :straight t
+  :init
+  (setq marginalia-annotators '(marginalia-annotators-heavy
+                                marginalia-annotators-light
+                                nil))
+  :config
   (marginalia-mode))
 
 
@@ -1568,7 +1536,7 @@ but can't be jumped to or from."
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
     (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
 
-(setup (:pkg cape))
+(use-package cape :straight t :demand t)
 
 (with-eval-after-load 'cape
   (dc/capf-fix<emacs-29))
@@ -1596,9 +1564,12 @@ but can't be jumped to or from."
 ;;*** Embark
 
 ;; embark-consult included and loaded with embark
-(setup (:pkg embark)
+(use-package embark :straight t :demand t
+  :config
   ;; Use Embark to show command prefix help
   (setq prefix-help-command #'embark-prefix-help-command))
+
+(use-package embark-consult :straight t :after (embark consult) :demand t)
 
 ;;** TODO: Remove
 

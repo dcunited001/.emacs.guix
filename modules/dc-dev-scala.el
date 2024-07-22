@@ -20,16 +20,18 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;; SOFTWARE.
 
-(setup (:pkg scala-mode :straight t :type git :flavor melpa
-             :host github :repo "hvesalai/emacs-scala-mode"))
+(use-package scala-mode :disabled
+  :straight (:type git :flavor melpa
+                   :host github :repo "hvesalai/emacs-scala-mode"))
 
 ;; sbt-mode is for comint buffers, .sbt files should still use scala
-(setup (:pkg sbt-mode :straight t :type git :flavor melpa
-             ;; the fork enables using tramp when running SBT in docker
-             ;; :fork (:host github :protocol ssh :repo "dcunited001/emacs-sbt-mode")
-             :host github :repo "hvesalai/emacs-sbt-mode")
-  (:option sbt:program-options '("-Djline.terminal=none"
-                                 "-Dsbt.supershell=false")))
+(use-package sbt-mode :disabled
+  ;; the fork enables using tramp when running SBT in docker
+  ;; :fork (:host github :protocol ssh :repo "dcunited001/emacs-sbt-mode")
+  :straight (:type git :flavor melpa :host github :repo "hvesalai/emacs-sbt-mode")
+  :custom
+  (sbt:program-options '("-Djline.terminal=none"
+                         "-Dsbt.supershell=false")))
 
 ;; TODO: also suggested is a fix for the minibuffer
 

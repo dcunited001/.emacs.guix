@@ -71,16 +71,15 @@
 
 ;; (prin1-to-string 'emacs)
 
-(use-package info+
-  :demand t
-  :init
-  (setq-default Info-breadcrumbs-depth 4
-		Info-breadcrumbs-depth-internal 6
-		Info-breadcrumbs-in-header-flag t
-		Info-saved-history-file (expand-file-name
-					 "info-history"
-					 no-littering-var-directory)
-		Info-apropos-manuals (dc/Info-manuals))
+(use-package info+ :straight t :demand t
+  :custom
+  (Info-breadcrumbs-depth 4)
+  (Info-breadcrumbs-depth-internal 6)
+  (Info-breadcrumbs-in-header-flag t)
+  (Info-saved-history-file (expand-file-name
+		                        "info-history"
+		                        no-littering-var-directory))
+  (Info-apropos-manuals (dc/Info-manuals))
 
   ;; TODO: (setq-default Info-apropos-manuals)
   :config
@@ -97,9 +96,9 @@
 ;; there are also configurations for org & eglot
 (use-package eldoc :straight (:type built-in)
   ;; TODO delight,
-  :init
-  (setq eldoc-idle-delay 0.1
-	eldoc-minor-mode-string "│εL"))
+  :custom
+  (eldoc-idle-delay 0.1)
+	(eldoc-minor-mode-string "│εL"))
 
 ;; (add-to-list 'minions-prominent-modes 'eldoc-mode)
 
@@ -113,14 +112,13 @@
 
 ;; https://www.masteringemacs.org/article/emacs-builtin-elisp-cheat-sheet
 
-(use-package shortdoc :straight (:type built-in))
+(use-package shortdoc :straight (:type built-in)
   ;; TODO: fix ef-themes cycling; also move faces below into use-pkg
   ;; :config
   ;; (add-hook 'ef-themes-post-load-hook
   ;; 	    (lambda () (dc/update-face 'shortdoc-section 'ef-themes-heading-3)))
 
-(with-eval-after-load 'shortdoc
-
+  :config
   (define-short-documentation-group face
     "Manipulating Faces in Emacs"
     ;; this auto-inserts the docstrings

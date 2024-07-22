@@ -31,20 +31,6 @@
 
 ;;** Editor
 
-;;*** Core Key Bindings
-
-(use-package which-key :straight t
-  :after general
-  :init
-  (setq which-key-idle-delay 2.0
-        which-key-idle-secondary-delay 0.05
-        which-key-lighter "│WK")
-  :config
-  (which-key-mode)
-  (which-key-setup-side-window-bottom))
-
-(use-package general :straight t :demand t)
-
 ;;*** Editing Configuration
 
 ;; issues with whitespace added into other buffers (idk why)

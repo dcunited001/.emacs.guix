@@ -27,17 +27,20 @@
               jq-interactive-font-lock-mode #'yaml-mode
               jq-interactive-default-options "--yaml-roundtrip"))
 
-(setup (:pkg yaml-mode)
+(use-package yaml-mode :straight t :defer t
   ;; yaml-mode is already in auto-mode-alist
   ;; (:file-match "\\.ya?ml\\'")
-  (:hook #'dc/setup-jq-for-yaml)
-  (:unbind "C-M-i"))
 
-(add-hook 'yaml-ts-mode #'dc/setup-jq-for-yaml)
-(add-to-list 'major-mode-remap-alist '(yaml-mode . yaml-ts-mode))
+  ;; (:unbind "C-M-i")
+  :hook (yaml-mode-hook . dc/setup-jq-for-yaml))
 
-(require 'yaml-ts-mode)
-(unbind-key "C-M-i" 'yaml-ts-mode-map)
+(use-package yaml-ts-mode :straight (:type built-in) :defer t
+  :init
+  (add-to-list 'major-mode-remap-alist '(yaml-mode . yaml-ts-mode))
+  :config
+  (unbind-key "C-M-i" 'yaml-ts-mode-map)
+  :hook
+  (yaml-ts-mode . dc/setup-jq-for-yaml))
 
 ;; TODO: change number completion candidites or orderless matching
 ;; - too many candidiates and server responses are too long
@@ -46,29 +49,25 @@
 
 ;;** Ansible
 
-;; either .dir-locals.el or k1LoW/emacs-ansible: required to distinguish ansible
-;; buffers from yml buffers
-(setup (:pkg ansible :straight t :type git :host github :repo "k1LoW/emacs-ansible"
-             :flavor melpa :files ("*.el" "snippets" "dict" "ansible-pkg.el")))
-
 ;; i'm not the only who thought of this
 ;; https://github.com/emacs-lsp/lsp-mode/issues/3687
 (define-derived-mode ansible-mode yaml-mode "Ansible"
   "Major mode which is YAML-mode + ansible minor mode.")
 
-(add-hook 'ansible-mode #'ansible)
-
 (define-derived-mode ansible-ts-mode yaml-ts-mode "Ansible TS"
   "Major mode which is YAML-mode + ansible minor mode.")
 
-(add-hook 'ansible-ts-mode-hook #'ansible)
-(add-hook 'ansible-ts-mode-hook #'combobulate-mode)
+;; either .dir-locals.el or k1LoW/emacs-ansible: required to distinguish ansible
+;; buffers from yml buffers
+(use-package ansible
+  :straight (:type git :host github :repo "k1LoW/emacs-ansible"
+                   :flavor melpa :files ("*.el" "snippets" "dict" "ansible-pkg.el"))
+  :defer t
+  :after yaml-ts-mode
 
-(with-eval-after-load 'eglot
-  (add-to-list
-   'eglot-server-programs
-   '((ansible-mode) .
-     ("ansible-language-server" "--stdio"))))
+  :hook
+  ((ansible-mode-hook ansible-ts-mode-hook) . ansible)
+  (ansible-ts-mode-hook . combobulate-mode))
 
 ;;** Kubernetes
 

@@ -178,6 +178,7 @@
 ;; garbage collection: gcmh.el
 (use-package gcmh :straight t
   :demand t
+  :delight
   :init
   (setq gcmh-idle-delay 'auto
 	gcmh-idle-delay-factor 10                     
@@ -203,6 +204,127 @@
 ;; (setq user-emacs-directory (expand-file-name "~/.cache/emacs/")
 ;;       url-history-file (expand-file-name "url/history" user-emacs-directory))
 
+;;*** Early Keys
+
+;;*** Core Key Bindings
+
+(use-package which-key :straight t
+  :after general
+  :init
+  (setq which-key-idle-delay 2.0
+        which-key-idle-secondary-delay 0.05
+        which-key-lighter "│WK"
+	which-key-side-window-location 'bottom ;; 'top
+        which-key-frame-max-height 20          ; default
+        which-key-min-display-lines 8
+        which-key-popup-type 'side-window ; default
+        ;; also: 'custom 'frame (not a child frame for me)
+        ;; 'minibuffer (probably inconsistent with consult)
+        which-key-special-keys
+        '(
+          ;; regexp cause problems here "*" "^"
+          "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" ;; "-" "="
+          ;; "10" "11" "12" ;; bc function keys
+          ;; and the vowels (to visually space)
+          "a$" "e" "i" "o" "u" "y"
+          "A$" "E" "I" "O" "U" "Y")
+        which-key-highlighted-command-list
+        `(
+          (,(rx string-start (or "consult-" "embark-")) 'ef-themes-heading-8)
+          (,(rx string-start (or "org-clock-")) 'ef-themes-heading-8)))
+  :config
+  (which-key-mode)
+  (which-key-setup-side-window-bottom))
+
+(use-package general :straight t :demand t)
+
+;;*** Early Packages
+
+;; TODO: maybe configure eglot defaults
+;; (setq-default eglot-workspace-configuration '(:lsp-server-key (:config ...)))
+
+;;**** Project
+
+;; maybe move project.el here
+
+;;**** Conf Mode
+;; load this early, so it messes with auto-mode-alist less
+(use-package conf-mode :straight (:type built-in))
+
+;;**** Eglot
+
+(setq dc/eglot-events-buffer-configs
+      `((default . (:size 2000000 :format full))
+        (debug . (:size ,(expt 2 (+ 2 4 20)) :format json))))
+
+(use-package eglot :straight t
+  ;; (:with-hook eglot-managed-mode-hook
+  ;;   (:hook #'dc/eglot-setup-buffer))
+
+  ;; TODO: c-mode-hook is hooked in c-mode-hook?
+  ;; (:with-hook c-mode-hook
+  ;;   (:hook eglot-ensure))
+
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-sync-connect 1)
+  (eglot-connect-timeout 15)
+  (eglot-send-changes-idle-time 0.5)
+  ;; other common options: xref, imenu, eldoc
+  ;; also see (eglot--setq-saving...)
+
+  ;; NOTE: This fucks up flymake buffers everywhere:
+  ;; (eglot-stay-out-of '(flymake)) ;; it's a per-project setting
+
+  (eglot-extend-to-xref t)              ;TODO: assess eglot-extend-to-xref
+  ;; (eglot-menu-string "Æ")
+
+  (eglot-events-buffer-config
+   (alist-get 'debug dc/eglot-events-buffer-configs))
+
+  ;; see note about popups/point in
+  ;; .emacs.doom/modules/tools/lsp/+eglot.el
+  ;; (eglot-auto-display-help-buffer nil)
+  (eglot-confirm-server-initiated-edits 'confirm)
+
+  :config
+  (add-to-list
+   ;; TODO: Is this needed now?
+   'eglot-server-programs
+   '((js2-mode typescript-mode) .
+     ("typescript-language-server" "--stdio")))
+
+  (add-to-list
+   'eglot-server-programs
+   `((html-ts-mode mhtml-mode web-mode) .
+     ,(a-get* eglot-server-programs 'html-mode)))
+
+  (add-to-list
+   'eglot-server-programs
+   '(python-mode . ("pylsp")))
+
+  (add-to-list
+   'eglot-server-programs
+   '((ansible-mode) .
+     ("ansible-language-server" "--stdio")))
+
+  ;; '(astro-ts-mode
+  ;;   . ("astro-ls" "--stdio"
+  ;;      :initializationOptions
+  ;;      (:typescript (:tsdk "./node_modules/typescript/lib"))))
+  (add-to-list 'eglot-server-programs
+               '(astro-ts-mode
+                 "astro-ls" "--stdio"
+                 :initializationOptions
+                 (:typescript (:tsdk "./node_modules/typescript/lib"))))
+
+  ;; about to configure this for yaml, but it needs yaml schema-specific glob
+  ;; patterns anyways
+
+  ;; increase process read size from 4k to 512K
+  ;; see: https://emacs-lsp.github.io/lsp-mode/page/performance/#tuning
+  ;; and: https://github.com/doomemacs/doomemacs/blob/master/lisp/doom-start.el#L77
+  (setq read-process-output-max (expt 2 19)))
 
 ;;*** Repo Paths
 
@@ -277,7 +399,7 @@ Guix channel.")
 ;;                 guix-load-compiled-path (list (expand-file-name "lib/guile/3.0/site-ccache"
 ;;                                                                 guix-pulled-profile))))
 
-;; *** Org Paths
+;;*** Org
 
 ;; ;; this points to the profile for `guix shell`
 (setq-default dc/guix-profile-path (or (getenv "GUIX_ENVIRONMENT")
@@ -287,7 +409,7 @@ Guix channel.")
                                           "share/sounds/freedesktop/stereo"
                                           dc/guix-profile-path)))
 
-;; ;;*** Org Paths
+;;*** Org Paths
 
 (setq-default org-directory (file-name-as-directory (or (getenv "ORG_DIRECTORY") "/data/org"))
               org-roam-file-extensions '("org")
@@ -305,6 +427,52 @@ Guix channel.")
               dc/org-roam-templates-path (expand-file-name "etc/captures/roam" dc/emacs-d)
               dc/org-roam-dailies-template (expand-file-name "daily-default.org" dc/org-roam-templates-path))
 
+;;**** Load Org from Emacs
+(use-package org :straight (:type built-in) :demand t
+  :custom
+
+  (org-modules
+   '(org-id
+     ol-info
+     ol-man
+
+     ;; - https://fossies.org/linux/emacs/lisp/org/ol-bibtex.el
+     ;; - https://www.andy-roberts.net/res/writing/latex/bibentries.pdf
+     ol-bibtex
+     ol-doi
+     ol-gnus
+     org-crypt
+     org-protocol
+     org-notify
+     ox-extra)
+   "For descriptions, M-x customize-variable org-modules")
+
+  (org-edit-src-content-indentation
+   0 "no effect when org-src-preserve-indentation")
+
+  (org-src-fontify-natively t)
+
+  ;; ====== org-babel ======= (move after reorganizing dc-org)
+  (org-confirm-babel-evaluate t)
+  (org-src-preserve-indentation t)
+  (org-src-tab-acts-natively t)
+
+  ;; default, works pretty well, may obviate the defadvice! below
+  (org-src-window-setup 'reorganize-frame)
+
+  ;; org-confirm-babel-evaluate nil
+  (org-link-elisp-confirm-function 'y-or-n-p)
+  (org-link-shell-confirm-function 'y-or-n-p)
+  ;; =========================
+)
+
+(use-package org-contrib :straight t :after (org) :demand t
+  :init
+  ;; (add-to-list 'org-modules 'org-screen)
+  ;; (add-to-list 'org-modules 'ol-bookmark)
+  (add-to-list 'org-modules 'org-eldoc)
+  (add-to-list 'org-modules 'org-tempo))
+
 ;;*** Org Babel Load Languages
 
 ;; this is appended to in dc-dev-*.el, then loaded in dc-shim.el
@@ -320,11 +488,15 @@ Guix channel.")
 (setq dc/org-babel-load-languages
       '((emacs-lisp . t)
         (shell . t)
-        (python . t)
-        (jq . t)
-	      (restclient . t)
-        ;; GNU recutils
-        (rec . t)))
+        ;;(rec . t) ;; GNU recutils
+        ;;(jq . t)
+	;;(restclient . t)
+        (python . t)))
+
+(defun dc/org-babel-do-load-languages ()
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   dc/org-babel-load-languages))
 
 
 ;;*** dc/aca paths
@@ -482,15 +654,16 @@ Guix channel.")
 
 ;; ;; NOTE 20240708: this should already load with 'dw-settings
 ;; ;; (load-file (expand-file-name (concat dc/emacs-chemacs "per-system-settings.el")))
+
 ;;** UI
 
-;;;; (require 'dc-terminal)
+;; (require 'dc-terminal)
 (require 'dc-desktop)
 (require 'dc-alert)
-;;(require 'dc-project)
-;;(require 'dc-interface)
-;;(require 'dc-popup)
-;;(require 'dc-auth)
+(require 'dc-project)
+(require 'dc-interface)
+(require 'dc-popup)
+(require 'dc-auth)
 
 ;;*** Info
 
@@ -498,15 +671,15 @@ Guix channel.")
 
 ;;** Org
 
-;;(require 'dw-org)
+(require 'dw-org)
 ;;(require 'dc-org)
 ;;(require 'dc-bibtex)
 
 ;;** Dev
 
-;;(require 'dc-fly)
+(require 'dc-fly)
 ;;;; (require 'dw-shell)
-;;(require 'dc-dev)
+(require 'dc-dev)
 ;;(require 'dc-dev-web)
 ;;(require 'dw-swagger)
 ;;(require 'dc-dev-cpp)
@@ -517,8 +690,8 @@ Guix channel.")
 
 ;;** System
 
-;;(require 'dc-vcs)
-;;(require 'dc-tools)
+(require 'dc-vcs)
+(require 'dc-tools)
 ;;(require 'dc-dev-yaml)
 
 ;;(require 'dc-latex)
@@ -544,7 +717,7 @@ Guix channel.")
 
 ;;*** Shim
 
-;;(require 'dc-shim)
+(require 'dc-shim)
 
 ;; =============================================
 

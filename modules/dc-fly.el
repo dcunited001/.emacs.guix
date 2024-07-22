@@ -28,40 +28,58 @@
 ;; run (flycheck-error-level-interesting-at-pos-p pos)
 ;; runs (flycheck-error-level-interesting-p (get-char-property pos 'flycheck-error))
 
-(setq flymake-mode-line-lighter  "│♠ MK")
-(require 'flymake)
+(use-package flymake :straight (:type built-in)
+ :custom
+ (flymake-mode-line-lighter  "│♠µ"))
 
-;; also:
-;; flymake-proc-ignored-file-name-regexps
-;; flymake-proc-proc-xml-program
 
-;; (with-eval-after-load 'flymake
-;;   (add-to-list 'flymake-proc-allowed-file-name-masks
-;;                ("\\.xml\\'" flymake-proc-xml-init)))
-
-(add-to-list 'minions-prominent-modes 'flycheck-mode)
+(use-package flymake-shellcheck :straight t
+  :commands flymake-shellcheck-load
+  :init
+  (dolist (m '(sh-base-mode))
+    ;; still requires invoking M-x `flymake-mode'
+    (add-hook m 'flymake-shellcheck-load)))
 
 ;;** Flycheck
 
 ;; This is a quick survey of flycheck and org-babel functionality
 ;; https://github.com/jkitchin/scimax/commit/9a039cfc5fcdf0114a72d23d34b78a8b3d4349c9
 
-(setup (:pkg flycheck)
-  (:option flycheck-emacs-lisp-load-path 'inherit
-           flycheck-highlighting-mode 'columns
-           flycheck-mode-line-prefix "│♠ CHK")
-  (:also-load flycheck-guile)
-  (:also-load flycheck-package)
-  (:with-hook window-setup-hook
-    (:hook global-flycheck-mode)))
+(use-package derived :straight (:type built-in) :demand t)
+
+(use-package flycheck :straight t
+  :custom
+  ;; display
+  (flycheck-highlighting-mode 'columns)
+  (flycheck-navigation-minimum-level 'error)
+  (flycheck-error-list-minimum-level 'warning)
+
+  (flycheck-mode-line-prefix "│♠√")
+
+  ;; code
+  (flycheck-emacs-lisp-load-path 'inherit)
+
+  ;; modes: specify these here ... but not using flycheck-global-mode
+  (flycheck-global-modes '(;emacs-lisp-mode sh-mode bash-ts-mode
+                           xml-mode nxml-mode
+                           python-mode python-ts-mode))
+
+  ;; (:also-load flycheck-guile)
+  ;; (:also-load flycheck-package)
+  :config
+  (setq-default dc/flycheck-highlighting-style-default flycheck-highlighting-style
+                dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
+                dc/flycheck-warnings-have-underlines nil)
+
+  (dolist (m flycheck-global-modes)
+    (if-let* ((da-mode-name (derived-mode-hook-name m)))
+	(add-hook da-mode-name #'flycheck-mode)
+      ;; let me know about it
+      (when DBUS_FOUND
+	(alert (format "%s's hook is giving you lip" (symbol-name da-mode-name))
+	       :title "Flycheck")))))
+
 ;; use M-x flycheck-error-list-set-filter to change (f, F in the list buffer)
-
-(setq-default flycheck-navigation-minimum-level 'error
-              flycheck-error-list-minimum-level 'warning)
-
-;; 'emacs-lisp-mode
-(setq flycheck-global-modes '(python-mode
-                              python-ts-mode))
 
 (defun dc/toggle-flycheck-highlighting-style ()
   "Don't taze me bro."
@@ -74,11 +92,6 @@
        flycheck-highlighting-mode
        (flycheck-refresh-fringes-and-margins)))
 
-(with-eval-after-load 'flycheck
-  (setq-default dc/flycheck-highlighting-style-default flycheck-highlighting-style
-                dc/flycheck-highlighting-styles `(nil ,dc/flycheck-highlighting-style-default)
-                dc/flycheck-warnings-have-underlines nil))
-
 ;; see .emacs.doom/modules/checkers/javascript/config.el
 ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
 ;; (flycheck-add-mode 'javascript-eslint 'typescript-mode)
@@ -89,9 +102,10 @@
 ;;*** Tweaks
 
 ;; fix marginalia annotations (from Doom Emacs)
-(with-eval-after-load 'marginalia
-  (add-to-list 'marginalia-command-categories
-               '(flycheck-error-list-set-filter . builtin)))
+;; NOTE 20240705: this command already has annotations
+;; also ... No annotators found for category ‘builtin’
+;;   (add-to-list 'marginalia-command-categories
+;;                '(flycheck-error-list-set-filter . builtin))
 
 ;;*** Flycheck Misc Packages
 
@@ -100,8 +114,9 @@
 
 ;;*** Consult Flycheck
 
-(with-eval-after-load 'flycheck
-  (setup (:pkg consult-flycheck :straight t)))
+;; (with-eval-after-load 'flycheck
+(use-package consult-flycheck :straight t
+  :after flycheck)
 
 ;;** Juggle flycheck faces
 
@@ -120,7 +135,5 @@
 ;; (defface dc/flycheck-warning-no-underline
 ;;   '((t :inherit warning))
 ;;   "Flycheck face for warnings.")
-
-(add-to-list 'minions-prominent-modes 'flycheck-mode)
 
 (provide 'dc-fly)
