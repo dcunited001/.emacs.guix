@@ -22,13 +22,6 @@
 
 ;;* Support
 
-;;** System Identification
-
-(defvar dw/is-guix-system (and (eq system-type 'gnu/linux)
-                               (with-temp-buffer
-                                 (insert-file-contents "/etc/os-release")
-                                 (search-forward "ID=guix" nil t))
-                               t))
 ;;** Doom
 
 ;; DOOM: ./lisp/core/doom-lib.el
@@ -40,40 +33,6 @@ This is a variadic `cl-pushnew'."
        (cl-pushnew ,var ,place :test #'equal))))
 
 ;;** Editor
-
-;;** Templates
-
-(defun dc/read-template-from-file (file)
-  (if (file-exists-p file) (org-file-contents file)
-    (error "* Template file %s not found" file)))
-
-;;** ELD
-
-;; projectile already has unserialize/deserialize to/from ELD
-;; (straight-use-package '(projectile))
-;; (defalias 'dc/eld-serialize 'projectile-serialize)
-;; (defalias 'dc/eld-unserialize 'projectile-unserialize)
-
-;; this lacks error-handling (and it quotes all the top-level forms)
-;; (eq (dc/eld-unserialize f)
-;;     (caadr (dc/read-lisp-into-list)))
-(defun dc/read-lisp-into-list (file)
-  (with-temp-buffer
-    (save-excursion
-      (insert "'(\n")
-      (insert-file-contents file)
-      (goto-char (point-max))
-      (insert "\n)\n"))
-    ;; (pp (current-buffer))
-    (read (current-buffer))))
-
-;;** Emacs Lisp
-
-;;*** Pretty Print
-
-(defalias 'ppe #'pp-eval-last-sexp)
-(defalias 'ppel #'pp-emacs-lisp-code)
-(defalias 'ppme #'pp-macroexpand-last-sexp)
 
 ;;*** Advice
 
@@ -112,27 +71,6 @@ This is a variadic `cl-pushnew'."
 
 ;;*** Macros
 
-;;**** Toggle Variables
-
-;; NOTE: if parsing the body to extract bindings is necessary,
-;; use macroexp-parse-body
-(defmacro dc/toggleable-boolean (name &optional keybind)
-  "Define an interactive defun to toggle the variable NAME
-along with KEYBIND, if present. (keybind is probably broken)."
-  (declare (indent defun))
-  (let* ((symname (symbol-name (or (intern-soft name) (defvar name))))
-         (toggle-name (format "dc/toggle-%s" symname))
-         (toggle-docstring (format "Toggle variable: %s" symname))
-         (toggle-sym (or (intern-soft toggle-name)
-                         (intern toggle-name))))
-    `(progn
-       (defun ,toggle-sym ()
-         (list ,toggle-docstring)
-         (interactive)
-         (setq-default ,name (not ,name)))
-       ;; ,(if keybind `(map! ,keybind #',toggle-sym))
-       )))
-
 ;;*** When Exec Found
 
 (defun dc/exec-found? (cmd &optional remote sym)
@@ -157,6 +95,23 @@ doesn't exist."
 
 ;;** Extract Data
 
+;; =============================================
+;; a handy regexp from lisp-mode-el (via rx.el, also in use-package.el)
+;;
+;; [[file:./lisp/emacs-lisp/lisp-mode.el.gz::rx-define lisp-mode-symbol
+;; [[file:./lisp/emacs-lisp/rx.el.gz::defun rx--translate-syntax
+;; ---------------------------------------------
+;; (rx-define lisp-mode-symbol (+ (| (syntax word)
+;;                                   (syntax symbol)
+;;                                   (: "\\" nonl))))
+;; or just: lisp-mode-symbol-regexp
+;;
+;; (rx lisp-mode-symbol) ;; => "\\(?:\\sw\\|\\s_\\|\\\\.\\)+"
+;; ---------------------------------------------
+
+;; (lisp-data-mode-syntax-table) ;; hashtable with junk
+;; but it gets increasingly sophisticated. it read simple lisp
+
 ;; TODO: add (... &key value)
 (defun dc/find-symbols-like (regexp)
   (let (vars output)
@@ -173,40 +128,6 @@ doesn't exist."
     ;;          collect (symbol-name sym)
     ;;          )
     vars))
-
-(defun dc/eval-length-toggle-truncation ()
-  (interactive)
-  ;; monoid
-  (if (not (boundp 'eval-length-toggle-truncation))
-      (setq-local eval-length-toggle-truncation 'off
-                  eval-expression-print-length-default eval-expression-print-length
-                  print-length-default print-length))
-
-  (cond ((eq eval-length-toggle-truncation 'on)
-         (setq-local eval-length-toggle-truncation 'off
-                     eval-expression-print-length eval-expression-print-length-default
-                     print-length print-length-default))
-        ((eq eval-length-toggle-truncation 'off)
-         (setq-local eval-length-toggle-truncation 'on
-                     eval-expression-print-length nil
-                     print-length nil))))
-
-(defun dc/eval-level-toggle-truncation ()
-  (interactive)
-  ;; monoid
-  (if (not (boundp 'eval-level-toggle-truncation))
-      (setq-local eval-level-toggle-truncation 'off
-                  eval-expression-print-level-default eval-expression-print-level
-                  print-level-default print-level))
-
-  (cond ((eq eval-level-toggle-truncation 'on)
-         (setq-local eval-level-toggle-truncation 'off
-                     eval-expression-print-level eval-expression-print-level-default
-                     print-level print-level-default))
-        ((eq eval-level-toggle-truncation 'off)
-         (setq-local eval-level-toggle-truncation 'on
-                     eval-expression-print-level nil
-                     print-level nil))))
 
 ;;** Libs
 

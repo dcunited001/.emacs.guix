@@ -32,6 +32,10 @@
 
 ;; (string-join (mapcar #'file-name-directory dc/aca-bibtex-files) ":")
 
+;; ol-bibtech
+;; - https://fossies.org/linux/emacs/lisp/org/ol-bibtex.el
+;; - https://www.andy-roberts.net/res/writing/latex/bibentries.pdf
+
 (use-package oc :straight (:type built-in) :demand t
   :custom
   (org-cite-global-bibliography dc/aca-bibtex-files))

@@ -234,6 +234,7 @@ comint-output-filter-functions. Default")
       tabspaces-session-file (file-name-concat no-littering-var-directory "tabsession.el"))
 
 (require 'dc-support)
+(require 'dc-util)
 
 (defvar dc/eld-path (thread-last no-littering-etc-directory
                                  (expand-file-name "dc")
