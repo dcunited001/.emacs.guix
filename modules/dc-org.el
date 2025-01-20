@@ -30,6 +30,30 @@
 ;;
 ;; TODO org is set with :demand t
 
+;; *** Other org-modules
+
+;; | ol-notmuch | org-mouse | org-ctags | org-collector | org-checklist | org-toc |
+
+;; | org-annotate-file | Annotate a file with Org syntax                      |
+;; | org-panel         | simple navigation, M-x orgpan-panel                  |
+;; | org-registry      | registry for org links                               |
+;; | org-secretary     | Team management with Org                             |
+;; | org-track         | keep up with org development                         |
+;; | org-bibtex-extras | at one point implemented a d3 graph of bibtex        |
+
+;;** Org Contrib
+
+;; ol-git-link
+;; orgtbl-sqlinsert
+;; ol-elisp-symbol
+
+;; ob-tcl
+;; ol-vm :: VM -> "view-mail"
+;; org-annotate-file?
+
+;; ox-bibtex
+;; ox-extra
+;; ox-groff
 
 ;;*** Tempo
 
@@ -241,7 +265,7 @@ respects these settings.")
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "PROJ(p)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "IDEA(i)"
-                    "|" "DONE(d)" "KILL(k)")
+           "|" "DONE(d)" "KILL(k)")
           (sequence "[ ](T)" "[-](S)" "[?](W)"
                     "|" "[X](D)")
           (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))
@@ -321,85 +345,82 @@ respects these settings.")
 (defun dc/org-init-agenda-h ()
 
   (setup org-agenda
-    (:option
-     ;; start with empty org-agenda-files
-     org-agenda-files '()
+         (:option
+          ;; start with empty org-agenda-files
+          org-agenda-files '()
 
-     ;; org-habit
-     org-habit-show-habits t            ; default
-     org-habit-show-habits-only-for-today nil
+          ;; org-habit
+          org-habit-show-habits t            ; default
+          org-habit-show-habits-only-for-today nil
 
-     ;; org-clock
-     org-clock-auto-clockout-timer 300
-     org-clock-history-length 25
+          ;; org-clock
+          org-clock-auto-clockout-timer 300
+          org-clock-history-length 25
 
-     org-clock-in-switch-to-state "STRT"
-     org-clock-out-switch-to-state "HOLD"
-     org-clock-out-remove-zero-time-clocks t
+          org-clock-in-switch-to-state "STRT"
+          org-clock-out-switch-to-state "HOLD"
+          org-clock-out-remove-zero-time-clocks t
 
-     ;; org-clock-persist
-     org-clock-persist t
-     org-clock-persist-query-save t
-     org-clock-persist-query-resume nil     ; default
+          ;; org-clock-persist
+          org-clock-persist t
+          org-clock-persist-query-save t
+          org-clock-persist-query-resume nil     ; default
 
-     ;; org-log-into-drawer t ;; use #+STARTUP: logdrawer
-     org-log-done 'time
+          ;; org-log-into-drawer t ;; use #+STARTUP: logdrawer
+          org-log-done 'time
 
-     ;; org-columns-default-format-for-agenda
-     org-columns-default-format (string-join '("%20CATEGORY(Category)"
-                                               "%65ITEM(Task)"
-                                               "%TODO"
-                                               "%6Effort(Estim){:}"
-                                               "%6CLOCKSUM(Clock)"
-                                               "%TAGS") " "))
+          ;; org-columns-default-format-for-agenda
+          org-columns-default-format (string-join '("%20CATEGORY(Category)"
+                                                    "%65ITEM(Task)"
+                                                    "%TODO"
+                                                    "%6Effort(Estim){:}"
+                                                    "%6CLOCKSUM(Clock)"
+                                                    "%TAGS") " "))
 
-    (and (file-exists-p dc/emacs-sound-theme-path)
-         (setq-default org-clock-sound (expand-file-name "complete.oga"
-                                                         dc/emacs-sound-theme-path)))
+         (and (file-exists-p dc/emacs-sound-theme-path)
+              (setq-default org-clock-sound (expand-file-name "complete.oga"
+                                                              dc/emacs-sound-theme-path)))
 
-    (setq-default
-     ;; Different colors for different priority levels
-     org-agenda-deadline-faces
-     '((1.001 . error)
-       (1.0 . org-warning)
-       (0.5 . org-upcoming-deadline)
-       (0.0 . org-upcoming-distant-deadline))
-     ;; Don't monopolize the whole frame just for the agenda
-     org-agenda-window-setup 'current-window
-     org-agenda-skip-unavailable-files t
-     ;; org-agenda-start-with-log-mode t
-     ;; Shift the agenda to show the previous 3 days and the next 7 days for
-     ;; better context on your week. The past is less important than the future.
-     org-agenda-span 10
-     org-agenda-start-on-weekday nil
-     org-agenda-start-day "-3d"
-     ;; Optimize `org-agenda' by inhibiting extra work while opening agenda
-     ;; buffers in the background. They'll be "restarted" if the user switches to
-     ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
-     org-agenda-inhibit-startup t
-     )
+         (setq-default
+          ;; Different colors for different priority levels
+          org-agenda-deadline-faces
+          '((1.001 . error)
+            (1.0 . org-warning)
+            (0.5 . org-upcoming-deadline)
+            (0.0 . org-upcoming-distant-deadline))
+          ;; org-agenda-start-with-log-mode t
+          ;; Shift the agenda to show the previous 3 days and the next 7 days for
+          ;; better context on your week. The past is less important than the future.
+          org-agenda-span 10
+          org-agenda-start-on-weekday nil
+          org-agenda-start-day "-3d"
+          ;; Optimize `org-agenda' by inhibiting extra work while opening agenda
+          ;; buffers in the background. They'll be "restarted" if the user switches to
+          ;; them anyway (see `+org-exclude-agenda-buffers-from-workspace-h')
+          org-agenda-inhibit-startup t
+          )
 
-    (org-clock-auto-clockout-insinuate))
+         (org-clock-auto-clockout-insinuate))
 
   ;; needs 1.3-pre for :take selector, guix @ 1.2
   (setup (:pkg org-super-agenda :straight t :type git :flavor melpa
-               :host github :repo "alphapapa/org-super-agenda")
+          :host github :repo "alphapapa/org-super-agenda")
 
-    (:option org-super-agenda-header-separator ""
+         (:option org-super-agenda-header-separator ""
 
-             org-super-agenda-groups
-             '((:name "Today" :time-grid t :todo "TODO")
-               ;; (:habit t)
-               (:name "Due today" :deadline today)
-               (:name "Overdue" :deadline past)
-               (:name "Due soon" :deadline future)
-               (:name "Urgent" :priority "A")
-               (:name "Crit" :priority "B")
-               (:name "No Estimate" :scheduled t)
-               (:name "No Deadline" :scheduled t)
-               (:priority<= "C" :order 1)))
+                  org-super-agenda-groups
+                  '((:name "Today" :time-grid t :todo "TODO")
+                    ;; (:habit t)
+                    (:name "Due today" :deadline today)
+                    (:name "Overdue" :deadline past)
+                    (:name "Due soon" :deadline future)
+                    (:name "Urgent" :priority "A")
+                    (:name "Crit" :priority "B")
+                    (:name "No Estimate" :scheduled t)
+                    (:name "No Deadline" :scheduled t)
+                    (:priority<= "C" :order 1)))
 
-    (org-super-agenda-mode +1)))
+         (org-super-agenda-mode +1)))
 
 ;; (defun dc/org-super-agenda-queries ())
 
@@ -418,17 +439,17 @@ respects these settings.")
   ;; TODO: does this need 'org-pdftools?
 
   (setup (:pkg org-noter :straight t :type git :flavor melpa
-               :host github
-               :repo "org-noter/org-noter"
-               :files ("*.el" "modules/*.el"
-                       "other/org-noter-citar.el"
-                       (:exclude "*-test-utils.el" "*-devel.el")))
-    (:option org-noter-notes-search-path dc/aca-notes-path
-             org-noter-supported-modes '(pdf-view-mode))
-    (with-eval-after-load 'org-noter
-      (require 'org-noter-pdf)
-      ;; NOTE: this module isn't baked in by default
-      (require 'org-noter-citar))))
+          :host github
+          :repo "org-noter/org-noter"
+          :files ("*.el" "modules/*.el"
+                  "other/org-noter-citar.el"
+                  (:exclude "*-test-utils.el" "*-devel.el")))
+         (:option org-noter-notes-search-path dc/aca-notes-path
+                  org-noter-supported-modes '(pdf-view-mode))
+         (with-eval-after-load 'org-noter
+           (require 'org-noter-pdf)
+           ;; NOTE: this module isn't baked in by default
+           (require 'org-noter-citar))))
 
 ;;*** Roam
 
@@ -482,87 +503,87 @@ respects these settings.")
 
 (defun dc/org-init-roam-h ()
   (setup (:pkg org-roam)
-    (:option
-     org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
-     ;; org-roam-node-display-template
+         (:option
+          org-roam-extract-new-file-path "${slug}-%<%Y%m%d%H%M%S>-.org"
+          ;; org-roam-node-display-template
 
-     org-roam-list-files-commands '(fd fdfind rg find)
-     org-roam-db-gc-threshold most-positive-fixnum
-     org-roam-mode-section-functions #'(org-roam-backlinks-section
-                                        org-roam-reflinks-section)
-     org-roam-completion-everywhere nil)
+          org-roam-list-files-commands '(fd fdfind rg find)
+          org-roam-db-gc-threshold most-positive-fixnum
+          org-roam-mode-section-functions #'(org-roam-backlinks-section
+                                             org-roam-reflinks-section)
+          org-roam-completion-everywhere nil)
 
-    ;; (add-to-list 'org-roam-node-template-prefixes '("doom-tags" . "#"))
-    ;; (add-to-list 'org-roam-node-template-prefixes '("doom-type" . "@"))
-    ;; (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode
+         ;; (add-to-list 'org-roam-node-template-prefixes '("doom-tags" . "#"))
+         ;; (add-to-list 'org-roam-node-template-prefixes '("doom-type" . "@"))
+         ;; (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode
 
-    ;; this should work, but seems unimplemented in org-roam
-    ;; (file "./relative/path/from/roam/template.org")
-    (setq org-roam-dailies-capture-templates
-          `(("d" "default" entry "%?" :target
-             (file+head "%<%Y-%m-%d>.org"
-                        ,(dc/read-template-from-file
-                          dc/org-roam-dailies-template)))))
+         ;; this should work, but seems unimplemented in org-roam
+         ;; (file "./relative/path/from/roam/template.org")
+         (setq org-roam-dailies-capture-templates
+               `(("d" "default" entry "%?" :target
+                  (file+head "%<%Y-%m-%d>.org"
+                             ,(dc/read-template-from-file
+                               dc/org-roam-dailies-template)))))
 
-    ;; [[file:/data/ecto/x.files/plattfot/emacs/init.el]]
-    ;; [[file:/data/ecto/x.files/sunnyhasija/doom/config.org]]
-    ;;
-    ;; check (cl-defstruct (org-roam-note ...)) for valid keys to substitute
-    (setq org-roam-capture-templates
-          (append
-           '(("n" "Note")
-             ("d" "Default"
-              plain "%?" :unnarrowed t
-              :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n"))
-             ("p" "Project"
-              plain "%?" :unnarrowed t
-              :target (file+head
-                       "projects/${slug}.org"
-                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n"))
-             ("t" "Topic"
-              plain "%?" :unnarrowed t
-              :target (file+head+olp
-                       "topics/${slug}.org"
-                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n"
-                       ("Roam" "Docs" "Resources" "Topics" "Issues")))
-             ("c" "Code"
-              plain "%?" :unnarrowed t
-              :target (file+head
-                       "code/${slug}.org"
-                       "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n")))
-           `(("z" "Zettel"
-              plain "%?" :unnarrowed t
-              :target (file+head+olp
-                       "slips/%<%Y%m%d%H%M%S>-${slug}.org"
-                       ,(string-join '("#+TITLE: ${title}"
-                                       "#+CATEGORY: slips"
-                                       "#+TAGS: ") "\n")
-                       ("Roam" "Docs" "Resources" "Issues" "Projects"))))))
+         ;; [[file:/data/ecto/x.files/plattfot/emacs/init.el]]
+         ;; [[file:/data/ecto/x.files/sunnyhasija/doom/config.org]]
+         ;;
+         ;; check (cl-defstruct (org-roam-note ...)) for valid keys to substitute
+         (setq org-roam-capture-templates
+               (append
+                '(("n" "Note")
+                  ("d" "Default"
+                   plain "%?" :unnarrowed t
+                   :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n"))
+                  ("p" "Project"
+                   plain "%?" :unnarrowed t
+                   :target (file+head
+                            "projects/${slug}.org"
+                            "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n"))
+                  ("t" "Topic"
+                   plain "%?" :unnarrowed t
+                   :target (file+head+olp
+                            "topics/${slug}.org"
+                            "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n"
+                            ("Roam" "Docs" "Resources" "Topics" "Issues")))
+                  ("c" "Code"
+                   plain "%?" :unnarrowed t
+                   :target (file+head
+                            "code/${slug}.org"
+                            "#+TITLE: ${title}\n#+DESCRIPTION: ${description}\n#+TAGS:\n\n")))
+                `(("z" "Zettel"
+                   plain "%?" :unnarrowed t
+                   :target (file+head+olp
+                            "slips/%<%Y%m%d%H%M%S>-${slug}.org"
+                            ,(string-join '("#+TITLE: ${title}"
+                                            "#+CATEGORY: slips"
+                                            "#+TAGS: ") "\n")
+                            ("Roam" "Docs" "Resources" "Issues" "Projects"))))))
 
-    ;; (setq-hook! 'org-roam-find-file-hook
-    ;;             org-id-link-to-org-use-id
-    ;;             +org-roam-link-to-org-use-id)
-    ;; (:hook turn-on-visual-line-mode)
-    (:with-hook desktop-after-read-hook
-      (:hook org-roam-db-autosync-enable)
-      (:hook dc/init-org-agenda-files)))
+         ;; (setq-hook! 'org-roam-find-file-hook
+         ;;             org-id-link-to-org-use-id
+         ;;             +org-roam-link-to-org-use-id)
+         ;; (:hook turn-on-visual-line-mode)
+         (:with-hook desktop-after-read-hook
+                     (:hook org-roam-db-autosync-enable)
+                     (:hook dc/init-org-agenda-files)))
 
   (setup (:pkg org-roam-ui)
-    (:option org-roam-dailies-directory "dailies/"
-             dc/org-roam-dailies-dir
-             (file-name-as-directory (concat org-roam-directory
-                                             org-roam-dailies-directory))
-             dc/most-recent-roam-dailies-take-last 5
-             dc/most-recent-roam-dailies
-             (-> (directory-files dc/org-roam-dailies-dir nil ".org$")
-                 (sort #'string<)
-                 (last 5)))
+         (:option org-roam-dailies-directory "dailies/"
+                  dc/org-roam-dailies-dir
+                  (file-name-as-directory (concat org-roam-directory
+                                                  org-roam-dailies-directory))
+                  dc/most-recent-roam-dailies-take-last 5
+                  dc/most-recent-roam-dailies
+                  (-> (directory-files dc/org-roam-dailies-dir nil ".org$")
+                      (sort #'string<)
+                      (last 5)))
 
-    (defun org-roam-ui-open ()
-      "Ensure the server is active, then open the roam graph."
-      (interactive)
-      (unless org-roam-ui-mode (org-roam-ui-mode 1))
-      (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port)))))
+         (defun org-roam-ui-open ()
+           "Ensure the server is active, then open the roam graph."
+           (interactive)
+           (unless org-roam-ui-mode (org-roam-ui-mode 1))
+           (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port)))))
 
 ;;**** Roam Slugs
 
@@ -629,8 +650,6 @@ respects these settings.")
                      :templates (list dw/org-roam-project-template)))
 
 ;;***** Roam Capture: System Crafters
-
-
 
 (defun my/org-roam-refresh-agenda-list ()
   (interactive)
@@ -708,16 +727,16 @@ capture was not aborted."
 
 (with-eval-after-load 'org-roam
   (setup (:pkg consult-org-roam :straight t :type git :flavor melpa
-               :host github :repo "jgru/consult-org-roam")
-    (:option consult-org-roam-grep-func #'consult-ripgrep
-             consult-org-roam-buffer-narrow-key consult-narrow-key
-             consult-org-roam-buffer-after-buffers t)
+          :host github :repo "jgru/consult-org-roam")
+         (:option consult-org-roam-grep-func #'consult-ripgrep
+                  consult-org-roam-buffer-narrow-key consult-narrow-key
+                  consult-org-roam-buffer-after-buffers t)
 
-    (require 'consult-org-roam)
-    (consult-customize
-     consult-org-roam-forward-links
-     :preview-key (kbd "M-."))
-    (consult-org-roam-mode 1)))
+         (require 'consult-org-roam)
+         (consult-customize
+          consult-org-roam-forward-links
+          :preview-key (kbd "M-."))
+         (consult-org-roam-mode 1)))
 
 ;;*** Attach
 
@@ -732,455 +751,455 @@ capture was not aborted."
 
 (defun dc/org-init-babel-h ()
   (setup ob
-    (require 'ob-dot)
-    (require 'ob-sqlite)
+         (require 'ob-dot)
+         (require 'ob-sqlite)
 
-    ;; org-confirm-babel-evaluate: set to a function later
-    ;; org-src-preserve-indentation:
-    ;; - daviwil set to nil, t in .emacs.network
-    ;; - see notes on org-adapt-indentation above
+         ;; org-confirm-babel-evaluate: set to a function later
+         ;; org-src-preserve-indentation:
+         ;; - daviwil set to nil, t in .emacs.network
+         ;; - see notes on org-adapt-indentation above
 
-    ;; (:option org-confirm-babel-evaluate t
-    ;;          org-src-preserve-indentation t
-    ;;          org-src-tab-acts-natively t
+         ;; (:option org-confirm-babel-evaluate t
+         ;;          org-src-preserve-indentation t
+         ;;          org-src-tab-acts-natively t
 
-    ;;          ;; default, works pretty well, may obviate the defadvice! below
-    ;;          org-src-window-setup 'reorganize-frame
+         ;;          ;; default, works pretty well, may obviate the defadvice! below
+         ;;          org-src-window-setup 'reorganize-frame
 
-    ;;          ;; org-confirm-babel-evaluate nil
-    ;;          org-link-elisp-confirm-function 'y-or-n-p
-    ;;          org-link-shell-confirm-function 'y-or-n-p))
+         ;;          ;; org-confirm-babel-evaluate nil
+         ;;          org-link-elisp-confirm-function 'y-or-n-p
+         ;;          org-link-shell-confirm-function 'y-or-n-p))
 
-  ;; TODO: test advice for deciding on babel's :async backend
-  ;; NOTE: ob-comint requires org-mode 9.7 and '(:async yes :session anything)
-  (setup ob-comint)
+         ;; TODO: test advice for deciding on babel's :async backend
+         ;; NOTE: ob-comint requires org-mode 9.7 and '(:async yes :session anything)
+         (setup ob-comint)
 
-  ;; NOTE: ob-async removed, since org-mode 9.7 will use ob-comint for ob-shell.
+         ;; NOTE: ob-async removed, since org-mode 9.7 will use ob-comint for ob-shell.
+         ;;
+         ;; - i'd rather look into detached.el and ob-async will warn/quit if it's
+         ;; advised. doom still has this set up though.
+         ;; (setup (:pkg ob-async)
+         ;;  (:option ob-async-no-async-languages-alist '("ipython")))
+         )
+
+  ;; NOTE: the advice-add here needs to properly bind the closure
+  ;; - follow defadvice! down to subr.el
+  ;; (cl-dolist
+  ;;     (advised '(org-indent-region org-indent-line))
+  ;;   (advice-add advised :around
+  ;;               +org-fix-window-excursions-a (fn &rest args)
+  ;;               "Suppress changes to the window config anywhere
+  ;; `org-babel-do-in-edit-buffer' is used."
+  ;;               ;; :around #'evil-org-open-below
+  ;;               ;; :around #'evil-org-open-above
+  ;;               :around #'org-indent-region
+  ;;               :around #'org-indent-line
+  ;;               (save-window-excursion (apply fn args))))
+
+  ;; (defadvice! +org-fix-newline-and-indent-in-src-blocks-a (&optional indent _arg _interactive)
+  ;;  "Mimic `newline-and-indent' in src blocks w/ lang-appropriate indentation."
+  ;;  :after #'org-return ...)
+
+  ;; (defadvice! +org-inhibit-mode-hooks-a (fn datum name &optional initialize &rest args)
+  ;;   "Prevent potentially expensive mode hooks in `org-babel-do-in-edit-buffer' ops."
+  ;;   :around #'org-src--edit-element ...)
+
+  ;; NOTE: ob will not auto-update images after updates
+  ;; - this wasn't working for me AFAIK. i usually needed to hit C-TAB twice
+  ;; (add-hook! 'org-babel-after-execute-hook
+  ;;            (defun +org-redisplay-inline-images-in-babel-result-h () ...))
+
+  ;; NOTE: use (with-eval-after-load ...) instead of (after! ...)
+  ;; (add-hook! 'org-load-hook
+
+  (defun dc/org-init-babel-lazy-loader-h ()
+    )
+
+  ;;*** Capture
+
+  ;; the logic here is copied from doom-emacs
+  (defvar dc/org-capture-todo-file "todo.org")
+  (defvar dc/org-capture-notes-file "notes.org")
+  (defvar dc/org-capture-journal-file "journal.org")
+  (defvar dc/org-capture-changelog-file "changelog.org")
+  (defvar dc/org-capture-projects-file "projects.org")
+
+  ;; I've tried this for org-capture-local-root
+  ;; (or (locate-dominating-file
+  ;;      (file-truename default-directory) filename) ... )
+
+  (defun dc/org-capture-local-root (path)
+    (let ((filename (file-name-nondirectory path)))
+      (expand-file-name
+       filename
+       (dc/project-local-root t)
+       ;; (or
+       ;;  (and (project-current) (cdr (project-current)))
+       ;;  (user-error "Couldn't detect a project"))
+       )))
+
+  (defun dc/org-capture-project-todo-file ()
+    (dc/org-capture-local-root dc/org-capture-todo-file))
+  (defun dc/org-capture-project-notes-file ()
+    (dc/org-capture-local-root dc/org-capture-notes-file))
+  (defun dc/org-capture-project-changelog-file ()
+    (dc/org-capture-local-root dc/org-capture-changelog-file))
+
+  (defun dc/org-init-capture-defaults-h ()
+    (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
+          org-capture-templates
+          '(("t" "Personal todo" entry
+             (file+headline dc/org-capture-todo-file "Inbox")
+             "* [ ] %?\n%i\n%a" :prepend t)
+
+            ("n" "Personal notes" entry
+             (file+headline dc/org-capture-notes-file "Inbox")
+             "* %u %?\n%i\n%a" :prepend t)
+
+            ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
+            ;; {todo,notes,changelog}.org file is found in a parent directory.
+            ;; Uses the basename from `dc/org-capture-todo-file',
+            ;; `dc/org-capture-changelog-file' and `dc/org-capture-notes-file'.
+            ("p" "Templates for projects")
+            ("pt" "Project-local todo" entry ; {project-root}/todo.org
+             (file+headline dc/org-capture-project-todo-file "Inbox")
+             "* TODO %?\n%i\n%a" :prepend t)
+            ("pn" "Project-local notes" entry ; {project-root}/notes.org
+             (file+headline dc/org-capture-project-notes-file "Inbox")
+             "* %U %?\n%i\n%a" :prepend t)
+            ("pc" "Project-local changelog" entry ; {project-root}/changelog.org
+             (file+headline dc/org-capture-project-changelog-file "Unreleased")
+             "* %U %?\n%i\n%a" :prepend t)
+
+            ;; Will use {org-directory}/{dc/org-capture-projects-file} and store
+            ;; these under {ProjectName}/{Tasks,Notes,Changelog} headings. They
+            ;; support `:parents' to specify what headings to put them under, e.g.
+            ;; :parents ("Projects")
+            ("o" "Centralized templates for projects")
+            ("ot" "Project todo" entry
+             (function dc/org-capture-central-project-todo-file)
+             "* TODO %?\n %i\n %a"
+             :heading "Tasks"
+             :prepend nil)
+            ("on" "Project notes" entry
+             (function dc/org-capture-central-project-notes-file)
+             "* %U %?\n %i\n %a"
+             :heading "Notes"
+             :prepend t)
+            ("oc" "Project changelog" entry
+             (function dc/org-capture-central-project-changelog-file)
+             "* %U %?\n %i\n %a"
+             :heading "Changelog"
+             :prepend t)))
+    ;; TODO doom/personal capture templates
+    (add-hook 'org-after-refile-insert-hook #'save-buffer))
+
+  (defun dc/org-init-capture-frame-h ()
+
+    )
+
+  ;;*** Hypermedia
+
+  (defun dc/org-init-custom-links-h ()
+
+    ;; DOOM: ./modules/lang/org/config.el
+    ;; Modify default file: links to colorize broken file links
+    (org-link-set-parameters
+     "file" :face (lambda (path)
+                    (if (or (file-remote-p path)
+                            ;; filter out network shares on windows (slow)
+                            (if IS-WINDOWS (string-prefix-p "\\\\" path))
+                            (file-exists-p path))
+                        'org-link
+                      '(warning org-link))))
+
+    ;; TODO: DOOM org: see +org-define-basic-link
+
+    ;; TODO: potentially load with org-link-abbrev-alist.eld
+
+    ;; DOOM: ./modules/lang/org/config.el
+    (pushnew! org-link-abbrev-alist
+              '("github"      . "https://github.com/%s")
+              '("gitlab"      . "https://gitlab.com/%s")
+              '("nyxt"        . "https://nyxt.atlas.engineer/documentation#%s")
+              '("youtube"     . "https://youtube.com/watch?v=%s")
+              '("google"      . "https://google.com/search?q=")
+              '("gimages"     . "https://google.com/images?q=%s")
+              '("gmap"        . "https://maps.google.com/maps?q=%s")
+              '("duckduckgo"  . "https://duckduckgo.com/?q=%s")
+              '("wikipedia"   . "https://en.wikipedia.org/wiki/%s")
+              '("wolfram"     . "https://wolframalpha.com/input/?i=%s")
+              '("doom-repo"   . "https://github.com/doomemacs/doomemacs/%s"))
+
+    ;; TODO: DOOM org: giant letf for doc links, http/img previews,
+    ;; TODO: DOOM org: +org--follow-search-string
+
+    (pushnew! org-link-abbrev-alist
+              `("emacsdir"    . (file-name-concat dc/emacs-d "%s"))))
+
+  ;;*** Exports
+
+  (defun dc/org-init-formatting-h ()
+    (setup (:pkg org-make-toc)
+           (:option org-toc-default-depth 1)
+           ;; seems to be globally set in before-save-hook for some reason, which is
+           ;; causing issues with aphelia formatting
+           ;;
+           ;; (:hook-into org-mode)
+           ))
+
+  (defun dc/org-init-plot-h ()
+    ;; TODO configure/style org plot
+    ;; https://tecosaur.github.io/emacs-config/config.html#org-plot
+    )
+
+
+  (defun dc/org-init-export-h ()
+
+    ;; from tecosaur
+    (setq-default org-export-headline-levels 5)
+
+    ;; TODO https://tecosaur.github.io/emacs-config/config.html#maths-notation-conveniences
+
+    ;; add :ignore tag to headings to keep content, but ignore heading
+    (require 'ox-extra)
+    (ox-extras-activate '(ignore-headlines))
+
+    ;; TODO Koma Class Templates:
+    ;; https://tecosaur.github.io/emacs-config/config.html#class-templates
+
+    ;; TODO get booktabs to produce better tables
+    ;; (and get table.el to export multicol cells)
+    ;; (setq-default org-latex-tables-booktabs t)
+    ;; org-latex-tables-centered t ; default
+
+    ;; TODO beamer export: https://tecosaur.github.io/emacs-config/config.html#beamer-export
+    ;; TODO make this start at headline level 2
+    ;; org-latex-compilers
+    ;; ("pdflatex" "xelatex" "lualatex")
+
+    ;; org-latex-pdf-process
+    ;; ("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
+    )
+
+  ;;*** Latex
+
+  (defun dc/org-init-latex-h ()
+    ;; from tecosaur
+    ;; auto-preview latex (this breaks when you change the tex-
+    ;; this relies on upstream changes to org-mode
+    ;; (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
+
+    ;; TODO https://tecosaur.github.io/emacs-config/config.html#prettier-highlighting
+    )
+
+  (defun dc/org-init-habit-h ()
+
+    )
+  (defun dc/org-init-hacks-h ()
+
+    )
+
+  ;;*** Misc
+
+  ;;**** Keys
+
+  (defun dc/catch-org-shiftselect-error (newfun oldfun &rest args)
+    (condition-case err
+        (funcall oldfun args)
+      ;; on error, run handler (funcall ...)
+      (error (funcall newfun))))
+
+  (defun dc/org-fix-buf-move ()
+    (advice-add 'org-shiftcontrolright
+                :around (apply-partially
+                         #'dc/catch-org-shiftselect-error
+                         #'buf-move-right)
+                '(name "dc/catch-org-shiftcontrolright"))
+    (advice-add 'org-shiftcontrolleft
+                :around (apply-partially
+                         #'dc/catch-org-shiftselect-error
+                         #'buf-move-left)
+                '(name "dc/catch-org-shiftcontrolright"))
+    (advice-add 'org-shiftcontrolup
+                :around (apply-partially
+                         #'dc/catch-org-shiftselect-error
+                         #'buf-move-up)
+                '(name "dc/catch-org-shiftcontrolright"))
+    (advice-add 'org-shiftcontroldown
+                :around (apply-partially
+                         #'dc/catch-org-shiftselect-error
+                         #'buf-move-down)
+                '(name "dc/catch-org-shiftcontrolright")))
+
+  (defun dc/org-init-keybinds-h ()
+    (setq org-special-ctrl-a/e t
+          org-special-ctrl-k t
+          org-M-RET-may-split-line '((default . nil)))
+    (dc/org-fix-buf-move))
+
+  ;;*** UI
+
+  ;;**** QL
+
+  ;;*** Org QL
+
+  ;; TODO figure out how to close the sidebar (i guess it 's better this way lol)
   ;;
-  ;; - i'd rather look into detached.el and ob-async will warn/quit if it's
-  ;; advised. doom still has this set up though.
-  ;; (setup (:pkg ob-async)
-  ;;  (:option ob-async-no-async-languages-alist '("ipython")))
-  )
-
-;; NOTE: the advice-add here needs to properly bind the closure
-;; - follow defadvice! down to subr.el
-;; (cl-dolist
-;;     (advised '(org-indent-region org-indent-line))
-;;   (advice-add advised :around
-;;               +org-fix-window-excursions-a (fn &rest args)
-;;               "Suppress changes to the window config anywhere
-;; `org-babel-do-in-edit-buffer' is used."
-;;               ;; :around #'evil-org-open-below
-;;               ;; :around #'evil-org-open-above
-;;               :around #'org-indent-region
-;;               :around #'org-indent-line
-;;               (save-window-excursion (apply fn args))))
-
-;; (defadvice! +org-fix-newline-and-indent-in-src-blocks-a (&optional indent _arg _interactive)
-;;  "Mimic `newline-and-indent' in src blocks w/ lang-appropriate indentation."
-;;  :after #'org-return ...)
-
-;; (defadvice! +org-inhibit-mode-hooks-a (fn datum name &optional initialize &rest args)
-;;   "Prevent potentially expensive mode hooks in `org-babel-do-in-edit-buffer' ops."
-;;   :around #'org-src--edit-element ...)
-
-;; NOTE: ob will not auto-update images after updates
-;; - this wasn't working for me AFAIK. i usually needed to hit C-TAB twice
-;; (add-hook! 'org-babel-after-execute-hook
-;;            (defun +org-redisplay-inline-images-in-babel-result-h () ...))
-
-;; NOTE: use (with-eval-after-load ...) instead of (after! ...)
-;; (add-hook! 'org-load-hook
-
-(defun dc/org-init-babel-lazy-loader-h ()
-  )
-
-;;*** Capture
-
-;; the logic here is copied from doom-emacs
-(defvar dc/org-capture-todo-file "todo.org")
-(defvar dc/org-capture-notes-file "notes.org")
-(defvar dc/org-capture-journal-file "journal.org")
-(defvar dc/org-capture-changelog-file "changelog.org")
-(defvar dc/org-capture-projects-file "projects.org")
-
-;; I've tried this for org-capture-local-root
-;; (or (locate-dominating-file
-;;      (file-truename default-directory) filename) ... )
-
-(defun dc/org-capture-local-root (path)
-  (let ((filename (file-name-nondirectory path)))
-    (expand-file-name
-     filename
-     (dc/project-local-root t)
-     ;; (or
-     ;;  (and (project-current) (cdr (project-current)))
-     ;;  (user-error "Couldn't detect a project"))
-     )))
-
-(defun dc/org-capture-project-todo-file ()
-  (dc/org-capture-local-root dc/org-capture-todo-file))
-(defun dc/org-capture-project-notes-file ()
-  (dc/org-capture-local-root dc/org-capture-notes-file))
-(defun dc/org-capture-project-changelog-file ()
-  (dc/org-capture-local-root dc/org-capture-changelog-file))
-
-(defun dc/org-init-capture-defaults-h ()
-  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
-        org-capture-templates
-        '(("t" "Personal todo" entry
-           (file+headline dc/org-capture-todo-file "Inbox")
-           "* [ ] %?\n%i\n%a" :prepend t)
-
-          ("n" "Personal notes" entry
-           (file+headline dc/org-capture-notes-file "Inbox")
-           "* %u %?\n%i\n%a" :prepend t)
-
-          ;; Will use {project-root}/{todo,notes,changelog}.org, unless a
-          ;; {todo,notes,changelog}.org file is found in a parent directory.
-          ;; Uses the basename from `dc/org-capture-todo-file',
-          ;; `dc/org-capture-changelog-file' and `dc/org-capture-notes-file'.
-          ("p" "Templates for projects")
-          ("pt" "Project-local todo" entry ; {project-root}/todo.org
-           (file+headline dc/org-capture-project-todo-file "Inbox")
-           "* TODO %?\n%i\n%a" :prepend t)
-          ("pn" "Project-local notes" entry ; {project-root}/notes.org
-           (file+headline dc/org-capture-project-notes-file "Inbox")
-           "* %U %?\n%i\n%a" :prepend t)
-          ("pc" "Project-local changelog" entry ; {project-root}/changelog.org
-           (file+headline dc/org-capture-project-changelog-file "Unreleased")
-           "* %U %?\n%i\n%a" :prepend t)
-
-          ;; Will use {org-directory}/{dc/org-capture-projects-file} and store
-          ;; these under {ProjectName}/{Tasks,Notes,Changelog} headings. They
-          ;; support `:parents' to specify what headings to put them under, e.g.
-          ;; :parents ("Projects")
-          ("o" "Centralized templates for projects")
-          ("ot" "Project todo" entry
-           (function dc/org-capture-central-project-todo-file)
-           "* TODO %?\n %i\n %a"
-           :heading "Tasks"
-           :prepend nil)
-          ("on" "Project notes" entry
-           (function dc/org-capture-central-project-notes-file)
-           "* %U %?\n %i\n %a"
-           :heading "Notes"
-           :prepend t)
-          ("oc" "Project changelog" entry
-           (function dc/org-capture-central-project-changelog-file)
-           "* %U %?\n %i\n %a"
-           :heading "Changelog"
-           :prepend t)))
-  ;; TODO doom/personal capture templates
-  (add-hook 'org-after-refile-insert-hook #'save-buffer))
-
-(defun dc/org-init-capture-frame-h ()
-
-  )
-
-;;*** Hypermedia
-
-(defun dc/org-init-custom-links-h ()
-
-  ;; DOOM: ./modules/lang/org/config.el
-  ;; Modify default file: links to colorize broken file links
-  (org-link-set-parameters
-   "file" :face (lambda (path)
-                  (if (or (file-remote-p path)
-                          ;; filter out network shares on windows (slow)
-                          (if IS-WINDOWS (string-prefix-p "\\\\" path))
-                          (file-exists-p path))
-                      'org-link
-                    '(warning org-link))))
-
-  ;; TODO: DOOM org: see +org-define-basic-link
-
-  ;; TODO: potentially load with org-link-abbrev-alist.eld
-
-  ;; DOOM: ./modules/lang/org/config.el
-  (pushnew! org-link-abbrev-alist
-            '("github"      . "https://github.com/%s")
-            '("gitlab"      . "https://gitlab.com/%s")
-            '("nyxt"        . "https://nyxt.atlas.engineer/documentation#%s")
-            '("youtube"     . "https://youtube.com/watch?v=%s")
-            '("google"      . "https://google.com/search?q=")
-            '("gimages"     . "https://google.com/images?q=%s")
-            '("gmap"        . "https://maps.google.com/maps?q=%s")
-            '("duckduckgo"  . "https://duckduckgo.com/?q=%s")
-            '("wikipedia"   . "https://en.wikipedia.org/wiki/%s")
-            '("wolfram"     . "https://wolframalpha.com/input/?i=%s")
-            '("doom-repo"   . "https://github.com/doomemacs/doomemacs/%s"))
-
-  ;; TODO: DOOM org: giant letf for doc links, http/img previews,
-  ;; TODO: DOOM org: +org--follow-search-string
-
-  (pushnew! org-link-abbrev-alist
-            `("emacsdir"    . (file-name-concat dc/emacs-d "%s"))))
-
-;;*** Exports
-
-(defun dc/org-init-formatting-h ()
-  (setup (:pkg org-make-toc)
-    (:option org-toc-default-depth 1)
-    ;; seems to be globally set in before-save-hook for some reason, which is
-    ;; causing issues with aphelia formatting
-    ;;
-    ;; (:hook-into org-mode)
-    ))
-
-(defun dc/org-init-plot-h ()
-  ;; TODO configure/style org plot
-  ;; https://tecosaur.github.io/emacs-config/config.html#org-plot
-  )
-
-
-(defun dc/org-init-export-h ()
-
-  ;; from tecosaur
-  (setq-default org-export-headline-levels 5)
-
-  ;; TODO https://tecosaur.github.io/emacs-config/config.html#maths-notation-conveniences
-
-  ;; add :ignore tag to headings to keep content, but ignore heading
-  (require 'ox-extra)
-  (ox-extras-activate '(ignore-headlines))
-
-  ;; TODO Koma Class Templates:
-  ;; https://tecosaur.github.io/emacs-config/config.html#class-templates
-
-  ;; TODO get booktabs to produce better tables
-  ;; (and get table.el to export multicol cells)
-  ;; (setq-default org-latex-tables-booktabs t)
-  ;; org-latex-tables-centered t ; default
-
-  ;; TODO beamer export: https://tecosaur.github.io/emacs-config/config.html#beamer-export
-  ;; TODO make this start at headline level 2
-  ;; org-latex-compilers
-  ;; ("pdflatex" "xelatex" "lualatex")
-
-  ;; org-latex-pdf-process
-  ;; ("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
-  )
-
-;;*** Latex
-
-(defun dc/org-init-latex-h ()
-  ;; from tecosaur
-  ;; auto-preview latex (this breaks when you change the tex-
-  ;; this relies on upstream changes to org-mode
-  ;; (add-hook 'org-mode-hook #'org-latex-preview-auto-mode)
-
-  ;; TODO https://tecosaur.github.io/emacs-config/config.html#prettier-highlighting
-  )
-
-(defun dc/org-init-habit-h ()
-
-  )
-(defun dc/org-init-hacks-h ()
-
-  )
-
-;;*** Misc
-
-;;**** Keys
-
-(defun dc/catch-org-shiftselect-error (newfun oldfun &rest args)
-  (condition-case err
-      (funcall oldfun args)
-    ;; on error, run handler (funcall ...)
-    (error (funcall newfun))))
-
-(defun dc/org-fix-buf-move ()
-  (advice-add 'org-shiftcontrolright
-              :around (apply-partially
-                       #'dc/catch-org-shiftselect-error
-                       #'buf-move-right)
-              '(name "dc/catch-org-shiftcontrolright"))
-  (advice-add 'org-shiftcontrolleft
-              :around (apply-partially
-                       #'dc/catch-org-shiftselect-error
-                       #'buf-move-left)
-              '(name "dc/catch-org-shiftcontrolright"))
-  (advice-add 'org-shiftcontrolup
-              :around (apply-partially
-                       #'dc/catch-org-shiftselect-error
-                       #'buf-move-up)
-              '(name "dc/catch-org-shiftcontrolright"))
-  (advice-add 'org-shiftcontroldown
-              :around (apply-partially
-                       #'dc/catch-org-shiftselect-error
-                       #'buf-move-down)
-              '(name "dc/catch-org-shiftcontrolright")))
-
-(defun dc/org-init-keybinds-h ()
-  (setq org-special-ctrl-a/e t
-        org-special-ctrl-k t
-        org-M-RET-may-split-line '((default . nil)))
-  (dc/org-fix-buf-move))
-
-;;*** UI
-
-;;**** QL
-
-;;*** Org QL
-
-;; TODO figure out how to close the sidebar (i guess it 's better this way lol)
-;;
-;; also, it would be a circular dep (org-sidebar dep on org-ql)
-;;
-;; example of closing org-sidebar-window
-;;
-;; https://github.com/alphapapa/org-sidebar/blob/master/org-sidebar.el#L199-L208
-
-;; org-ql-find uses non-sexp syntax
-
-;; https://github.com/alphapapa/org-ql#non-sexp-query-syntax
-
-;; TODO construct from org-todo-keywords (a bit messy/brittle)
-;;
-(defvar dc/org-ql-select-todos-without-id
-  '(and (todo)
-        (not (todo "DONE" "IDEA" "KILL"))
-        (not (property "ID")))
-  "An `org-ql' query that selects TODO items without an ID")
-
-;; org-ql is read-only
-;; (defun dc/org-ql-auto-assign-ids ()
-;;   (interactive)
-;;   (org-ql-select (current-buffer) dc/org-ql-select-todos-without-id))
-
-;; a bit too much data to gtd
-;; (org-element-parse-buffer)
-
-;; https://orgmode.org/manual/Matching-tags-and-properties.html
-;; https://orgmode.org/manual/Special-Properties.html
-;; https://scripter.co/looping-through-org-mode-headings/#match-strings
-
-(defun dc/org-element-create-ids (&optional match scope)
-  (interactive)
-  (let ((match (or match "+TODO={.+}-TODO=\"DONE\"-TODO=\"IDEA\"-TODO=\"KILL\""))
-        ;; (or match "+ID={.+}+TODO=\"TODO\"")
-        ;; (match (or match "+ID={.+}"))
-        ;; (match (or match "+ID={[[:alpha:]]}+TODO=\"DONE\""))
-        (scope (or scope (current-buffer))))
-
-    ;; TODO: fix so this allows all org-element scopes
-    ;; (org-ql--ensure-buffer scope) ; hmmm, not working
-    ;; i think org-element checks anyways
-
-    (let ((res nil)
-          (modified-flag nil))
-      (org-map-entries
-       (lambda ()
-         (let ((entry (org-element-at-point)))
-           (push entry res)
-           (unless (org-element-property :ID entry)
-             (org-id-get-create)
-             (setq modified-flag t)
-             (forward-line))))
-       match)
-
-      ;; i hope i don't run out of uuid's
-      (with-output-to-temp-buffer "*muh-temp-buffer*"
-        (pp res)))))
-
-(defun dc/org-init-ql-h ()
-  (setup (:pkg org-ql)))
-
-;;**** Sidebar
-
-(defun dc/org-init-sidebar-h ()
-  (setup (:pkg org-sidebar)))
-
-(defun dc/toggle-org-sidebar-tree-narrow ()
-  (if org-sidebar-jump-indirect
-      (setq org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-source
-            org-sidebar-jump-indirect nil)
-    (setq org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-indirect
-          org-sidebar-jump-indirect t)))
-
-(defun dc/org-init-popup-rules-h ()
-
-  )
-
-;; (defun dc/org-init-smartparens-h ())
-
-;;** Org Setup
-(setup (:pkg org)
-  (:hook dc/org-mode-setup)
-
-  (dc/org-init-org-directory-h)
-  (dc/org-init-appearance-h)
-  (dc/org-init-agenda-h)
-  (dc/org-init-noter-h)
-  (dc/org-init-roam-h)
-  (dc/org-init-attachments-h)
-  (dc/org-init-babel-h)
-  (dc/org-init-babel-lazy-loader-h)
-  (dc/org-init-capture-defaults-h)
-  (dc/org-init-capture-frame-h)
-  (dc/org-init-custom-links-h)
-  (dc/org-init-formatting-h)
-  (dc/org-init-export-h)
-  (dc/org-init-plot-h)
-  (dc/org-init-latex-h)
-  (dc/org-init-habit-h)
-  (dc/org-init-hacks-h)
-  (dc/org-init-keybinds-h)
-  (dc/org-init-popup-rules-h)
-  ;; (dc/org-init-smartparens-h)
-
-  ;;*** org-src-lang-modes
-  (push '("conf-unix" . conf-unix) org-src-lang-modes)
-
-  ;;** Agenda
-
-  ;;*** Options
-
-  (setq-default org-tag-persistent-alist
-                '((:startgroup . nil)
-                  ("VIS" . ?v)
-                  ("ISH" . ?!)
-                  ("GO" . ?G)
-                  ("FIN" . ?$) (:newline . nil)
-                  (:endgroup . nil) (:startgroup . nil)
-                  ("AUTO" . ?a)
-                  ("NET" . ?n)
-                  ("FS" . ?f)
-                  ("DO" . ?d)
-                  ("AU" . ?@)
-                  ("ID" . ?#)
-                  ("DF" . ?.) (:newline . nil)
-                  (:endgroup . nil) (:startgroup . nil)
-                  ("CODEX" . ?%)
-                  ("3D" . ?3)
-                  ("CAD" . ?C)
-                  ("WS" . ?w)
-                  ("ART" . ?A)
-                  ("MUS" . ?M)
-                  ("LEARN" . ?L)
-                  ("EDU" . ?E)
-                  ("HOME" . ?H)
-                  ("FAB" . ?F) (:newline . nil)
-                  (:endgroup . nil) (:startgroup . nil)
-                  ("MEET" . ?M)
-                  ("MSG" . ?m)
-                  ("EV" . ?V)
-                  ("CON" . ?c) (:newline . nil)
-                  (:endgroup . nil))))
-
-(provide 'dc-org)
-
-;; TODO: DOOM: configure org-crypt
-;; (use-package! org-crypt ; built-in
-;;   :commands org-encrypt-entries org-encrypt-entry org-decrypt-entries org-decrypt-entry
-;;   :hook (org-reveal-start . org-decrypt-entry)
-;;   :preface
-;;   ;; org-crypt falls back to CRYPTKEY property then `epa-file-encrypt-to', which
-;;   ;; is a better default than the empty string `org-crypt-key' defaults to.
-;;   (defvar org-crypt-key nil)
-;;   (after! org
-;;     (add-to-list 'org-tags-exclude-from-inheritance "crypt")
-;;     (add-hook! 'org-mode-hook
-;;       (add-hook 'before-save-hook 'org-encrypt-entries nil t))))
+  ;; also, it would be a circular dep (org-sidebar dep on org-ql)
+  ;;
+  ;; example of closing org-sidebar-window
+  ;;
+  ;; https://github.com/alphapapa/org-sidebar/blob/master/org-sidebar.el#L199-L208
+
+  ;; org-ql-find uses non-sexp syntax
+
+  ;; https://github.com/alphapapa/org-ql#non-sexp-query-syntax
+
+  ;; TODO construct from org-todo-keywords (a bit messy/brittle)
+  ;;
+  (defvar dc/org-ql-select-todos-without-id
+    '(and (todo)
+          (not (todo "DONE" "IDEA" "KILL"))
+          (not (property "ID")))
+    "An `org-ql' query that selects TODO items without an ID")
+
+  ;; org-ql is read-only
+  ;; (defun dc/org-ql-auto-assign-ids ()
+  ;;   (interactive)
+  ;;   (org-ql-select (current-buffer) dc/org-ql-select-todos-without-id))
+
+  ;; a bit too much data to gtd
+  ;; (org-element-parse-buffer)
+
+  ;; https://orgmode.org/manual/Matching-tags-and-properties.html
+  ;; https://orgmode.org/manual/Special-Properties.html
+  ;; https://scripter.co/looping-through-org-mode-headings/#match-strings
+
+  (defun dc/org-element-create-ids (&optional match scope)
+    (interactive)
+    (let ((match (or match "+TODO={.+}-TODO=\"DONE\"-TODO=\"IDEA\"-TODO=\"KILL\""))
+          ;; (or match "+ID={.+}+TODO=\"TODO\"")
+          ;; (match (or match "+ID={.+}"))
+          ;; (match (or match "+ID={[[:alpha:]]}+TODO=\"DONE\""))
+          (scope (or scope (current-buffer))))
+
+      ;; TODO: fix so this allows all org-element scopes
+      ;; (org-ql--ensure-buffer scope) ; hmmm, not working
+      ;; i think org-element checks anyways
+
+      (let ((res nil)
+            (modified-flag nil))
+        (org-map-entries
+         (lambda ()
+           (let ((entry (org-element-at-point)))
+             (push entry res)
+             (unless (org-element-property :ID entry)
+               (org-id-get-create)
+               (setq modified-flag t)
+               (forward-line))))
+         match)
+
+        ;; i hope i don't run out of uuid's
+        (with-output-to-temp-buffer "*muh-temp-buffer*"
+          (pp res)))))
+
+  (defun dc/org-init-ql-h ()
+    (setup (:pkg org-ql)))
+
+  ;;**** Sidebar
+
+  (defun dc/org-init-sidebar-h ()
+    (setup (:pkg org-sidebar)))
+
+  (defun dc/toggle-org-sidebar-tree-narrow ()
+    (if org-sidebar-jump-indirect
+        (setq org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-source
+              org-sidebar-jump-indirect nil)
+      (setq org-sidebar-tree-jump-fn #'org-sidebar-tree-jump-indirect
+            org-sidebar-jump-indirect t)))
+
+  (defun dc/org-init-popup-rules-h ()
+
+    )
+
+  ;; (defun dc/org-init-smartparens-h ())
+
+  ;;** Org Setup
+  (setup (:pkg org)
+         (:hook dc/org-mode-setup)
+
+         (dc/org-init-org-directory-h)
+         (dc/org-init-appearance-h)
+         (dc/org-init-agenda-h)
+         (dc/org-init-noter-h)
+         (dc/org-init-roam-h)
+         (dc/org-init-attachments-h)
+         (dc/org-init-babel-h)
+         (dc/org-init-babel-lazy-loader-h)
+         (dc/org-init-capture-defaults-h)
+         (dc/org-init-capture-frame-h)
+         (dc/org-init-custom-links-h)
+         (dc/org-init-formatting-h)
+         (dc/org-init-export-h)
+         (dc/org-init-plot-h)
+         (dc/org-init-latex-h)
+         (dc/org-init-habit-h)
+         (dc/org-init-hacks-h)
+         (dc/org-init-keybinds-h)
+         (dc/org-init-popup-rules-h)
+         ;; (dc/org-init-smartparens-h)
+
+         ;;*** org-src-lang-modes
+         (push '("conf-unix" . conf-unix) org-src-lang-modes)
+
+         ;;** Agenda
+
+         ;;*** Options
+
+         (setq-default org-tag-persistent-alist
+                       '((:startgroup . nil)
+                         ("VIS" . ?v)
+                         ("ISH" . ?!)
+                         ("GO" . ?G)
+                         ("FIN" . ?$) (:newline . nil)
+                         (:endgroup . nil) (:startgroup . nil)
+                         ("AUTO" . ?a)
+                         ("NET" . ?n)
+                         ("FS" . ?f)
+                         ("DO" . ?d)
+                         ("AU" . ?@)
+                         ("ID" . ?#)
+                         ("DF" . ?.) (:newline . nil)
+                         (:endgroup . nil) (:startgroup . nil)
+                         ("CODEX" . ?%)
+                         ("3D" . ?3)
+                         ("CAD" . ?C)
+                         ("WS" . ?w)
+                         ("ART" . ?A)
+                         ("MUS" . ?M)
+                         ("LEARN" . ?L)
+                         ("EDU" . ?E)
+                         ("HOME" . ?H)
+                         ("FAB" . ?F) (:newline . nil)
+                         (:endgroup . nil) (:startgroup . nil)
+                         ("MEET" . ?M)
+                         ("MSG" . ?m)
+                         ("EV" . ?V)
+                         ("CON" . ?c) (:newline . nil)
+                         (:endgroup . nil))))
+
+  (provide 'dc-org)
+
+  ;; TODO: DOOM: configure org-crypt
+  ;; (use-package! org-crypt ; built-in
+  ;;   :commands org-encrypt-entries org-encrypt-entry org-decrypt-entries org-decrypt-entry
+  ;;   :hook (org-reveal-start . org-decrypt-entry)
+  ;;   :preface
+  ;;   ;; org-crypt falls back to CRYPTKEY property then `epa-file-encrypt-to', which
+  ;;   ;; is a better default than the empty string `org-crypt-key' defaults to.
+  ;;   (defvar org-crypt-key nil)
+  ;;   (after! org
+  ;;     (add-to-list 'org-tags-exclude-from-inheritance "crypt")
+  ;;     (add-hook! 'org-mode-hook
+  ;;       (add-hook 'before-save-hook 'org-encrypt-entries nil t))))

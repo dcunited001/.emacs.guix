@@ -23,6 +23,17 @@
 
 ;;* Social
 
+;;** Newsticker
+
+;; what the fuck? not bad. lisp code ages well (the manual last updated in 2004)
+
+;; newsticker.el.gz
+;; newst-reader.el.gz
+;; newst-ticker.el.gz
+;; newst-backend.el.gz
+;; newst-treeview.el.gz
+;; newst-plainview.el.gz
+
 ;;** Elfeed
 
 (setup (:pkg elfeed))
@@ -437,25 +448,11 @@
 ;; sr.ht/~pkal/nullpointer-emacs
 ;; sr.ht/~willvaughn/emacs-0x0
 
-(defun dc/0x0-set-retention-policy ()
-  "Change retention for 0x0 servers"
-
-  ;; `(,tag ,@(mapcar plist-put cfg :max-age 7))
-  ;; ok you can chain the setf
-
-  ;; TODO make this accept a plist and merge
-  (cl-loop for server in 0x0-servers
-           with cfg with tag
-           do (setf tag (car server)
-                    cfg (cdr server)
-                    cfg (plist-put cfg :max-age 7)
-                    cfg (plist-put cfg :min-age 0))
-           collect `(,tag ,@cfg)))
-
 ;; retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
 (setup (:pkg 0x0 :straight t :host sourcehut :repo "willvaughn/emacs-0x0"))
 
 (with-eval-after-load '0x0
+  (require 'dc-0x0)                       ; in ~/.emacs.d/lisp
   (setq 0x0-servers (dc/0x0-set-retention-policy)))
 
 ;;** Elpher

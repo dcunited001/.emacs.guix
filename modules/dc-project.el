@@ -23,6 +23,38 @@
 
 ;;* Project
 
+;;** TODO project.el
+
+;; maybe configure:
+
+;; + project-remember-projects-under
+;; + project-forget-zombie-projects
+;; + project-forget-projects-under
+
+
+;;*** conditions:
+
+;; project-kill-buffer-conditions, project-ignore-buffer-conditions
+
+;; Each condition is either:
+;; - regex:
+;; - function: (lambda (buffer) ...) returns non-nil
+;; - a cons: (car . cdr)
+;;   * `major-mode': if buffer major-mode 'eq cdr major-mode
+;;   * `derived-mode': if buffer's major-mode derived from cdr major-mode
+;;   * `not': cdr is negation of a condition.
+;;   * `and': cdr is recursively eval'd; all have to be met
+;;   * `or': cdr is recursively eval'd; one has to be met
+
+
+;; try:
+
+;; - cl-defmethod dispatch on cl-struct
+
+;; finish:
+
+;; - dc/org-capture-todo-file
+
 ;;** Project.el
 
 ;; :delight "│π →"
@@ -81,11 +113,116 @@
     (when tab-index
       (tab-bar-close-tab (1+ tab-index)))))
 
-;;*** Project.el Backends
+;;*** Backends
+
+;; `project--value-in-dir' hack-dir-local-variables
+
+;; (defun project--value-in-dir (var dir)
+;;   (with-temp-buffer
+;;     (setq default-directory dir)
+;;     (let ((enable-local-variables :all))
+;;       (hack-dir-local-variables-non-file-buffer))
+;;     (symbol-value var)))
+
+;;**** PyProject
+
+;; from alexkehayias
+;; https://github.com/alexkehayias/emacs.d/blob/master/init.el#L587-L636
+
+(defun dc/project-in-pyproject? (dir)
+  (when-let* ((found (locate-dominating-file dir "pyproject.toml")))
+    (cons 'pyproject found)))
+
+;; (add-hook 'project-find-functions 'dc/project-in-pyproject? nil nil)
+
+;;**** Cargo
+
+;; NOTE: needs
+;; cargo metadata --no-deps --format-version 1 | jq .workspace_root
+(defun dc/project-in-cargo? (dir)
+  (when-let*
+      ((output
+        (let ((default-directory dir))
+          (shell-command-to-string "cargo metadata --no-deps --format-version 1")))
+       (js (ignore-errors (json-read-from-string output)))
+       (found (cdr (assq 'workspace_root js))))
+    (cons 'cargo found)))
+
+
+;;*** cl-defmethod
+
+;; After looking into something unrelated (pcase ...), an a-ha moment occured
+;;
+;; + The flow for these cl-defmethod lambdas should be designed in stratified
+;;   layers (see diagrams for this common-lisp abstraction).
+;;
+;; + The layers should ordered from most-specific (first functionality) to
+;;   most-specific at the bottom
+;;
+;; =============================================
+;;
+;; An example:
+;;
+;; + An ansible project that includes terraform content
+;;
+;; + has python environment, specifying most dependencies via nix/guix manifest
+;;
+;; + incorporates some kind of IoT build as a deployable artifact with source in
+;;   a git submodule (maybe). The build is expected to include names/addresses
+;;   of the innocent in its binary to be deployed onto ESP via serial port,
+;;   potentially debug symbols injected for development (multiple builds)
+;;
+;; This project:
+;;
+;; + will need to handle YAML with special treatment for ansible depending on
+;;   their path
+;;
+;; + should tweak file-find, lsp/eglot and compile functionality based on the
+;;   current buffers' modes/paths.
+;;
+;; + should imagine "stovepipes" of project.el functionality that ascend the
+;;   layers, but where the layers are stratified. For the top layers of
+;;   stovepipes should, the cl-defmethod should match only once, then specifying
+;;   a chain of functionality to execute at lower layers. Finally, the lowest layers
+;;   should execute their functionality (once), imagined as left-to-right.
+;;
+;; |-------------+---------+-----------+---------------------+-----------------------+-----|
+;; | python-mode | ansible |           | zig-mode            | c/c++                 |     |
+;; |-------------+---------+-----------+---------------------+-----------------------+-----|
+;; |             | YAML    | Terraform |                     | cmake (arduino/esp32) |     |
+;; |-------------+---------+-----------+---------------------+-----------------------+-----|
+;; | uv/poetry   |         |           | <- compile tasks -> |                       | tex |
+;; |-------------+---------+-----------+---------------------+-----------------------+-----|
+;; | Guix/Nix -> |         |           |                     |                       |     |
+;; |-------------+---------+-----------+---------------------+-----------------------+-----|
+;;
+;; =============================================
+
+;; interface:
+;; (cl-defmethod project-root (project ()) ...)
+;; (cl-defmethod project-root (project (head transient)) ...)
+
+;; https://github.com/emacs-mirror/emacs/blob/master/lisp/progmodes/project.el#L622-L631
+;; (cl-defmethod project-root ((project (head vc))) ...)
+;; (cl-defmethod project-root ((project (head vc)) &optional dirs) ...)
+
+;; https://github.com/emacs-mirror/emacs/blob/master/lisp/progmodes/project.el#L633-L652
+;; (cl-defmethod project-files ((project (head vc)) &optional dirs) ...)
+
+;; https://github.com/emacs-mirror/emacs/blob/master/lisp/progmodes/project.el#L774-L806
+;; (cl-defmethod project-ignores ((project (head vc)) dir) ...)
+
+;; https://github.com/emacs-mirror/emacs/blob/master/lisp/progmodes/project.el#L842C2-L861
+;; (cl-defmethod project-buffers ((project (head vc))) ...)
+;; (cl-defmethod project-name ((proejct (head vc))) ...)
 
 ;; These should useally be done in the `'dc-dev-lang' module
 
 ;; https://vannilla.org/write/1609258895/article.html
+
+;; example: multiple backends for cmake/autotools
+;; https://github.com/Ergus/project-multi-mode/blob/master/project-multi-mode.el
+
 
 ;;** Projectile
 
