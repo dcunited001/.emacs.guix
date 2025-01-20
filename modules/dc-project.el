@@ -28,6 +28,7 @@
 ;; :delight "│π →"
 (use-package project :straight t :demand t
   :custom
+  (project-buffers-viewer 'project-list-buffers-ibuffer)
   (project-vc-extra-root-markers '(".project.el" ".projectile" ".repo"))
   (project-kill-buffers-display-buffer-list t)
   (project-compilation-buffer-name-function 'project-prefixed-buffer-name)
@@ -45,8 +46,9 @@
 
 ;; from SystemCrafters Code Dive: Project.el
 ;;
-;; this helps if project.el is temporarily broken for a project/type and I don't
-;; have time to fix it or to grok through the common-lisp types for project.el
+;; if project.el is temporarily broken for a project/type
+;; and I don't have time to fix it
+;; or to grok through the common-lisp types
 ;;
 ;; looking forward to using the defgeneric/defmethod ... eventually
 (defun dc/project-current-directory-override-set (arg)

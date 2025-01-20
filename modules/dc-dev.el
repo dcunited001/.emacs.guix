@@ -175,31 +175,47 @@ compilation was initiated from compile-mode."
 ;;
 ;; https://www.masteringemacs.org/article/compiling-running-scripts-emacs
 
+(defun dc/compilation-colorize-buffer ()
+  (when (eq major-mode 'compilation-mode)
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+(add-hook 'compilation-filter-hook 'dc/compilation-colorize-buffer)
+
 (use-package compile :straight (:type built-in)
   :custom
-  (compilation-scroll-output t)
+  (compilation-scroll-output
+   'first-error
+   "Usually gets set to t")
+  (compilation-ask-about-save nil)
   (compilation-start-hook #'dc/compilation-start-hook)
   (compilation-environment '("TERM=xterm-256color"))
-  :config
-  (advice-add 'compilation-filter :around #'my/advice-compilation-filter))
 
+  :config
+  (advice-add 'compilation-filter :around #'my/advice-compilation-filter)
+
+  ;; from ambrevar
+  ;; (make-variable-buffer-local 'compilation-directory)
+  ;; (make-variable-buffer-local 'compile-history)
+  (make-variable-buffer-local 'compile-command))
+
+
+;; TODO my/advice-compiilation-filter is this necessary? (with dc/compilation-colorize...?)
+
+(defun my/advice-compilation-filter (f proc string)
+  (funcall f proc (xterm-color-filter string)))
 
 ;;**** Compile Multi
 (use-package compile-multi :straight t :after compile)
 
 ;; TODO: configure (:option consult-compile-multi-narrow ...)
+
 (use-package consult-compile-multi :straight t :after compile-multi)
 
 ;; TODO: compile-mode-hook
-
 ;; TODO: use (process-contact ...) with (alert ... ) to log specific commands?
 ;;
 ;; e.g. ssh/tramp
 ;;
 ;; (process-contact process &optional key no-block)
-
-(defun my/advice-compilation-filter (f proc string)
-  (funcall f proc (xterm-color-filter string)))
 
 (defun dw/auto-recompile-buffer ()
   (interactive)
@@ -212,27 +228,58 @@ compilation was initiated from compile-mode."
 ;;** Treesitter
 ;; TODO setup major-mode-remap-alist
 ;; - https://www.reddit.com/r/emacs/comments/zqshfy/comment/j0zpwyo/?utm_source=reddit&utm_medium=web2x&context=3
+
+;;*** treesit-language setup
+
+(defgroup dc/treesit () "Customizations for `treesit'" :group 'treesit)
+
+;; (defcustom dc/treesit-extra-load-path
+;;   (getenv "TREE_SITTER_GRAMMAR_PATH")
+;;   "An example of defcustom with group"
+;;   :link (info-link :tag "See Top in the Emacs Manual" "(emacs)Top")
+;;   :group dc/treesit
+;;   :type 'string)
+
+(defun dc/treesit-language-source-setup (&optional language-alist)
+  "Check for the dependencies listed in
+`treesit-language-source-setup' and download anything missing."
+  (let ((treesit-language-source-alist
+         (or language-alist treesit-language-source-alist)))
+    (cl-loop for lang-key
+             in (a-keys treesit-language-source-alist)
+             unless (treesit-language-available-p lang-key)
+             do (treesit-install-language-grammar lang-key))))
+
+(defun dc/treesit-language-check (&optional language-alist)
+  "Check for the tree-sitter grammars listed in and run callback."
+  (message "the beginning is in the toes. i stubbed ma toe.
+
+heavy refactor? or technical debt with paydayloan rates?"))
+
+;;*** treesit package
+
 (use-package treesit :straight (:type built-in)
   :demand t
   ;; something is automatically setting up major-mode-remap-alist
   :custom
   (treesit-extra-load-path
-   (list (expand-file-name ".local/lib/tree-sitter" (getenv "HOME"))))
+   (list (expand-file-name ".local/lib/tree-sitter" (getenv "HOME")))
+   "looks in treesit-extra-load-path,
+   then (concat user-emacs-directory \"/tree-sitter\" then in system dirs")
   (treesit-language-source-alist
    '((yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
-     (astro . ("https://github.com/virchau13/tree-sitter-astro"))))
-  :config
-
-  (cl-loop for lang-key
-           in (a-keys treesit-language-source-alist)
-           unless (treesit-language-available-p lang-key)
-           do (treesit-install-language-grammar lang-key)))
+     (astro . ("https://github.com/virchau13/tree-sitter-astro")))
+   "(LANG . (URL REVISION SOURCE-DIR CC C++))")
+  :config)
 
 ;; (qml . ("https://github.com/yuja/tree-sitter-qmljs"))
 
 ;; tree sitter extra grammars get installed to
 ;; .emacs.g/tree-sitter/libtree-sitter-qml.so
 
+;;=============================================
+;; maybe remove
+;;
 ;; not used in config
 (defun dc/treesit-bump-extra-load-path ()
   "Prepend the `lib/treesit' from the symlinked guix profile to
@@ -572,6 +619,8 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;** Lisps
 
+;; (aggressive-indent :type git :flavor melpa :host github :repo "Malabarba/aggressive-indent-mode")
+
 (use-package lispy :straight (:type git :flavor melpa
                                     :host github :repo "abo-abo/lispy"
                                     :files (:defaults "lispy-clojure.clj"
@@ -609,13 +658,27 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;*** Emacs Lisp
 
+;; if using (global-dash-fontify-mode +1)
+;; (setq dash-fontify-mode-lighter "DASH")
+
+(use-package elisp-mode :straight (:type built-in)
+  :hook
+  (emacs-lisp-mode . prettify-symbols-mode))
+
+;; to modify prettify-symbols-alist
+;; (add-hook 'emacs-lisp-mode-hook
+;;             (lambda ()
+;;               (push '("<=" . ?≤) prettify-symbols-alist)))
+
+;; (when (locate-library "package-lint-flymake")
+;;   (add-hook 'emacs-lisp-mode-hook #'package-lint-flymake-setup))
+
 ;; thanks for the advice djgoku
 (use-package elisp-demos :straight t :demand t
   :config
   (advice-add 'describe-function-1
               :after #'elisp-demos-advice-describe-function-1))
 
-(setq dash-fontify-mode-lighter "DASH")
 
 ;; TODO: toggle-debug-on-quit; (edebug-goto-here)
 
@@ -635,30 +698,9 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;**** Elisp Depmap
 
-;; this works, but the graphs have the "longitis." it's not counting edges
-;; properly. The graph doesn't have edges, so it then doesn't balance well.
-
-;; if you use -Kfdp, it kinda balances them, but still no edges.
-
-;; its perhaps still useful to manually add them to the graphviz lol
-
-;; `M-x elisp-depmap-makesummarytable` is still very useful. while the info is
-;; mostly already available from emacs help (and perhaps embark), this gives an
-;; org-table that's easy to chunk up if more analysis is needed.
-
-;; so, for example, if i wanted to quickly analyze the codebases of arel.el for
-;; Guile to integrate it with lispy (add a le-arel.el), then it helps to to have
-;; a central list of things to find connections for in arel, lispy, sesman,
-;; cider and geiser.
-
-;; this defvar is definitely still required for elisp-depmap
-(defvar read-symbol-positions-list nil)
-
 ;; (defun dc/project-elisp-depmap-graphviz-digraph ()
 ;;   (interactive))
 
-
-;; NOTE: seems to filter defvar read-symbol-positions-list from results
 (defun dc/project-elisp-depmap-graphviz-digraph (&optional fnshapekeys)
   (interactive)
   ;; TODO: check or handle non-file buffers
@@ -687,6 +729,8 @@ when a new treesitter gramar has been added to the Guix profile."
 ;;  ("C-c M-g" . elisp-depmap-graphviz)
 ;;  ("C-c M-s" . elisp-depmap-makesummarytable))
 
+;; this defvar is definitely still required for elisp-depmap
+(defvar read-symbol-positions-list nil)
 (use-package elisp-depmap :straight t :defer t
 
   ;; (getenv "GRAPHVIZ_DOT") ;; -exec-file is a path to the created .dot file
@@ -721,14 +765,19 @@ when a new treesitter gramar has been added to the Guix profile."
 
 ;;*** Common Lisp
 
-
 (use-package lisp-mode :straight (:type built-in)
   :mode ((rx "." (| "lisp" "asd") eos) . lisp-mode))
 
+;; (sly :type git :flavor melpa :files (:defaults "lib" "slynk" "contrib" "doc/images" (:exclude "sly-autoloads.el") "sly-pkg.el") :host github :repo "joaotavora/sly")
 
 (use-package sly :straight t :defer t
   :custom
   (inferior-lisp-program "sbcl"))
+
+;; TODO sly-quicklisp, sly-repl-ansi-color, sly-asdf
+;; TODO sly-editing-mode
+
+
 
 ;;*** Scheme
 
@@ -739,6 +788,8 @@ when a new treesitter gramar has been added to the Guix profile."
 ;;**** ARES
 
 ;; sesman-browser-link-with-buffer: guix.el needed to make this simple
+;; (and (setup (:pkg sesman :straight t))
+;;      (require 'sesman))
 
 (use-package sesman :straight t :defer t)
 (use-package arei :straight (:host sourcehut :repo "abcdw/emacs-arei")

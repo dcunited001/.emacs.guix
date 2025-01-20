@@ -78,9 +78,9 @@
 ;; main lib: https://github.com/jwiegley/alert
 
 (use-package alert :straight t
-  :init
-  (setq alert-default-style 'libnotify
-        alert-log-level 'normal))
+  :custom
+  ((alert-default-style 'libnotify)
+   (alert-log-level 'normal)))
 
 ;; alert-styles
 ;; 'notifications: bundled with emacs to be OS/WM-agnostic compatible with all

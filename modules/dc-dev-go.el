@@ -36,3 +36,5 @@
 ;; ((nil (eglot-workspace-configuration
 ;;        . ((gopls . ((staticcheck . t)
 ;; 						        (matcher . "CaseSensitive")))))))
+
+;; https://github.com/vibhavp/project-el-go/blob/main/project-go.el

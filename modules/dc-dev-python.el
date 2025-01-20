@@ -29,6 +29,8 @@
   (add-to-list 'major-mode-remap-alist
                '(python-mode . python-ts-mode)))
 
+;; TODO: :config (add-hook 'inferior-python-mode-hook 'ora-inferior-python-hook)
+
 ;;** formatting
 
 ;; (with-eval-after-load 'apheleia
@@ -98,5 +100,30 @@
 (defun dc/jupyter-refresh-kernels ()
   (interactive)
   (jupyter-available-kernelspecs t))
+
+;;** Compile
+
+(defun ora-inferior-python-hook ()
+  (setq next-error-function 'ora-comint-next-error-function))
+
+;; TODO keymap for ora-comint-next-error-function
+
+(defun ora-comint-next-error-function (n &optional reset)
+  (interactive "p")
+  (when reset
+    (setq compilation-current-error nil))
+  (let* ((msg (compilation-next-error (or n 1) nil
+                                      (or compilation-current-error
+                                          compilation-messages-start
+                                          (point-min))))
+         (loc (compilation--message->loc msg))
+         (file (caar (compilation--loc->file-struct loc)))
+         (buffer (find-file-noselect file)))
+    (pop-to-buffer buffer)
+    (goto-char (point-min))
+    (forward-line (1- (cadr loc)))
+    (back-to-indentation)
+    (unless (bolp)
+      (backward-char))))
 
 (provide 'dc-dev-python)

@@ -17,6 +17,9 @@ straight/**
 elpa/**
 scratch/**
 
+eln-cache2/
+straight2/**
+
 .cache/**
 log/**
 

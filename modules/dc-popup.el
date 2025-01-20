@@ -99,7 +99,8 @@
         ;; the calendar requires special handling
         "^ ?\\*\\(?:Agenda Com\\|Org Export Dispatcher\\)"
         "^\\*Org Agenda"
-        "^\\*Org Src"
+        ;; but this won't be set
+        ;; (when (eq org-src-window-setup 'reorganize-frame) "^\\*Org Src")
         "^\\*Org-Babel"
         "^\\*Capture\\*$\\|CAPTURE-.*$"
         "\\*ob-ipython.*"
@@ -130,8 +131,8 @@
   :custom
   (popper-group-function 'popper-group-by-project)
   (popper-display-control t)
-  (popper-window-height 'dc/popper-fit-window-height))
+  (popper-window-height 'dc/popper-fit-window-height)
   :config
-  (popper-mode)
+  (popper-mode))
 
 (provide 'dc-popup)

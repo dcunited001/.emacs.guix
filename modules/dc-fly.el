@@ -32,6 +32,12 @@
  :custom
  (flymake-mode-line-lighter  "│♠µ"))
 
+ ;; :config ; flymake-proc backend is deprecated
+ ;; ;; also:
+ ;; ;; - flymake-proc-ignored-file-name-regexps
+ ;; ;; - flymake-proc-proc-xml-program
+ ;; (add-to-list 'flymake-proc-allowed-file-name-masks
+ ;;              '("\\.xml\\'" flymake-proc-xml-init))
 
 (use-package flymake-shellcheck :straight t
   :commands flymake-shellcheck-load
@@ -44,8 +50,6 @@
 
 ;; This is a quick survey of flycheck and org-babel functionality
 ;; https://github.com/jkitchin/scimax/commit/9a039cfc5fcdf0114a72d23d34b78a8b3d4349c9
-
-(use-package derived :straight (:type built-in) :demand t)
 
 (use-package flycheck :straight t
   :custom

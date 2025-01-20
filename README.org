@@ -106,7 +106,7 @@ Update with the script below.
 + The repo needs to be cloned to the installation location first. The supporting
   scripts expect everything to be in =~/.emacs.g=
 
-#+headers: :tangle (expand-file-name ".bin/update-emacs-g" (getenv "HOME")) :tangle-mode (identity #o744)
+#+headers: :tangle (expand-file-name "bin/update-emacs-g" (getenv "HOME")) :tangle-mode (identity #o744)
 #+begin_src sh :shebang #!/bin/sh
 # hmmm +- works, but ensure DEBUG_EMACS is unset
 emacs_profile="emacs-g${DEBUG_EMACS+-debug}"
@@ -185,7 +185,7 @@ Run =M-x all-the-icons-install-fonts=
 
 Launch emacs with script
 
-#+headers: :tangle (expand-file-name ".bin/gmacs" (getenv "HOME")) :tangle-mode (identity #o744)
+#+headers: :tangle (expand-file-name "bin/gmacs" (getenv "HOME")) :tangle-mode (identity #o744)
 #+begin_src sh :shebang #!/bin/sh
 export GUIX_SOURCE=$_ECTO/guix/guix
 export EMACS_SOURCE=$_ECTO/emacs/emacs/src
@@ -196,21 +196,40 @@ emacs_profile_name="emacs-g${DEBUG_EMACS+-debug}"
 emacs_profile=$GUIX_EXTRA/$emacs_profile_name/$emacs_profile_name
 search_paths=0
 
+_print_usage() {
+    echo "usage: `basename $0` [-Z ARG} [-p ARG}  [--] ARGS..."
+    echo "-p profile/link"
+}
+
+_print_initfile_warning() {
+    echo ""
+    echo "You have a ~/.emacs file (probably custom.el)."
+    echo ""
+    echo "That will be very confusing."
+    echo ""
+    echo "It prevents $initdir/init.el from loading."
+    echo ""
+}
+
+[[ -f "$HOME/.emacs" ]] && _print_initfile_warning
+
+# TODO: add parameter to specify socket?
+
 while getopts :Zp OPT; do
     case $OPT in
-        Z|+Z)
+        Z)
             search_paths=1
             ;;
-        p|+p)
+        p)
             emacs_profile="$OPTARG"
             ;;
-	--)
+	      --)
             break
-	    ;;
-        *)
-            echo "usage: `basename $0` [+-p ARG} [--] ARGS..."
+	          ;;
+        ,*)
+            echo "usage: `basename $0` [+-Z ARG} [+-p ARG}  [--] ARGS..."
             echo "-p profile/link"
-            exit 2
+            _print_usage && exit 2
     esac
 done
 shift `expr $OPTIND - 1`
@@ -234,7 +253,7 @@ fi
 Launch emacs client with script. It really needs to be the same profile (it will
 probably try to connect anyways)
 
-#+headers: :tangle (expand-file-name ".bin/gmacsclient" (getenv "HOME")) :tangle-mode (identity #o744)
+#+headers: :tangle (expand-file-name "bin/gmacsclient" (getenv "HOME")) :tangle-mode (identity #o744)
 #+begin_src sh :shebang #!/bin/sh
 # either set DEBUG_EMACS=1 (unset completely to avoid)
 # or pass full path with -p
@@ -242,29 +261,33 @@ emacs_profile_name="emacs-g${DEBUG_EMACS+-debug}"
 emacs_profile=$GUIX_EXTRA/$emacs_profile_name/$emacs_profile_name
 search_paths=0
 
-while getopts :Zp OPT; do
+# TODO: add parameter to specify socket?
+
+_print_usage() {
+#    echo "usage: `basename $0` [-Z ARG} [-p ARG}  [--] ARGS..."
+    echo "usage: `basename $0` [-p ARG}  [--] ARGS..."
+    echo "-p profile/link"
+}
+
+while getopts p OPT; do
     case $OPT in
-        Z|+Z)
-            search_paths=1
-            ;;
-        p|+p)
+        # Z)
+        #     search_paths=1
+        #     ;;
+        p)
             emacs_profile="$OPTARG"
             ;;
-	--)
-	    break
-	    ;;
+	      --)
+	          break
+	          ;;
         *)
-            echo "usage: `basename $0` [+-p ARG} [--] ARGS..."
-            echo "-p profile/link"
-            exit 2
+            _print_usage && exit 2
     esac
 done
 shift `expr $OPTIND - 1`
 OPTIND=1
 
-guix shell -E "^EMAIL$" \
-     -p $emacs_profile \
-     -- emacsclient -c "$@"
+guix shell -E "^EMAIL$" -p $emacs_profile -- emacsclient -c "$@"
 #+end_src
 
 *** TODO: Shepherd

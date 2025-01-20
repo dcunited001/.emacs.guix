@@ -14,8 +14,8 @@
 ;; make the directory in 'dc-straight
 (defvar dc/emacs-eln-cache (file-name-as-directory (expand-file-name "eln-cache" user-emacs-directory)) "") 
 (let* ((-other-dir-eln (file-name-directory (directory-file-name (car native-comp-eln-load-path)))))
-       (unless (eq -other-dir-eln dc/emacs-eln-cache)
-	 (setf (car native-comp-eln-load-path) dc/emacs-eln-cache)))
+  (unless (eq -other-dir-eln dc/emacs-eln-cache)
+	  (setf (car native-comp-eln-load-path) dc/emacs-eln-cache)))
 ;; (setq test-nc (copy-sequence native-comp-eln-load-path))
 
 (setq-default native-comp-async-report-warnings-errors nil)
@@ -27,17 +27,17 @@
   (mapcar
    (lambda (sym)
      (let* ((libsym sym)
-	    (lib (symbol-name libsym))
-	    libname libeln)
+	          (lib (symbol-name libsym))
+	          libname libeln)
        ;; FIXME (libname file-error "Can't find library" "lcms2")
        (when (setq libname (condition-case err
-			       (find-library-name lib)
-			     (error err)))
- ;; FIXME (libeln wrong-type-argument stringp
-	 ;; (file-error "Can't find library" "multi-tty"))
-	 (setq libeln (condition-case err
-			  (comp-el-to-eln-filename libname)
-			(error err))))
+			                         (find-library-name lib)
+			                       (error err)))
+         ;; FIXME (libeln wrong-type-argument stringp
+	       ;; (file-error "Can't find library" "multi-tty"))
+	       (setq libeln (condition-case err
+			                    (comp-el-to-eln-filename libname)
+			                  (error err))))
        `(,libsym :lib ,lib :libname ,libname :libeln ,libeln)))
    (or feat features)))
 
@@ -125,18 +125,71 @@
 ;; ---------------------------------------------
 
 ;;** Common Deps From Straight
+;;** Common Deps
 
 ;; load early to ensure a consistent dependency graph for later loads
+;; this would make tweaking compilation simpler later on
+
+(use-package compat :straight t :demand t)
+
+;;*** Built-in Pkgs
+(use-package map :straight (:type built-in) :demand t)
+(use-package derived :straight (:type built-in) :demand t)
+
+(use-package ansi-term :straight (:type built-in) :defer t
+  :custom
+  (ansi-color-for-compilation-mode
+   t "Needs ansi-color-process-output ⊂
+compilation-filter-hook. Default")
+  (ansi-color-for-comint-mode
+   t "Needs ansi-color-process-output ⊂
+comint-output-filter-functions. Default")
+  (ansi-color-bold-is-bright
+   t "\"combining ANSI bold and a color produces the bright\""))
+
+;;**** Built-in Support
+(use-package xdg :straight (:type built-in) :demand t)
+
+(use-package desktop :straight (:type built-in) :demand t)
+(use-package comint :straight (:type built-in) :demand t)
+(use-package autoinsert :straight (:type built-in) :demand t
+  :config (auto-insert-mode +1))
+
+;; project -> xref ... -> project there's a circular dependency, but project
+;; doesn't require xref as a compile-time dependency...
+(use-package project :straight t :demand t)
+(use-package xref :straight (:type built-in) :demand t)
+;; (use-package xref :straight (:type built-in) :demand t)
+;;
+;; ... but straight starts with the PackageRequires header, which will build
+;; .elc & .eln using a different version of xref anyways.
+
+
+
+;; flymake -> project (eglot will break if project loads first)
+;; ..... unfortunately, since the emacs eln code is already compiled,
+;; i believe this is causing an issue.
+(use-package flymake :straight (:type built-in) :defer t)
+
+;;**** Built-in Major Modes
+
+(use-package nxml-mode :straight (:type built-in) :defer t)
+(use-package python-mode :straight (:type built-in) :defer t)
+
+;; (use-package fdsa :straight (:type built-in) :defer t)
+
+;;*** External Pkgs
 
 (use-package a :straight t :demand t)
 (use-package dash :straight t :demand t)
 (use-package f :straight t :demand t)
 
-;;** Config paths
-
-(use-package xdg :straight (:type built-in))
-
 ;; ---------------------------------------------
+
+;;*** Delight
+
+(use-package diminish :straight t :demand t)
+(use-package delight :straight t :demand t)
 
 ;;*** No Littering
 
@@ -146,8 +199,36 @@
   (defalias 'dc/emacs-etc #'no-littering-expand-etc-file-name)
   (defalias 'dc/emacs-var #'no-littering-expand-var-file-name))
 
-;;*** Features
+;;** Customizations
 
+;; TODO setup basics for defgroup
+
+;; :group GROUP
+
+;; :version VERSION :package-version (PKG . VERSION) ; the second has precedence
+;;
+;; :tag LABEL ; use label instead of item's name
+;;
+;; :load ; load a specific file before display customization buffer
+;;
+
+;; LINK-DATA may contain a tag, but this needs to be the first arg
+;;
+;; (info-link :tag "foo" "(emacs)Top")
+
+;; :link LINK-DATA ; this is great (reduces comments!)
+;;
+;; (custom-manual INFO-NODE) ; INFO-NODE specifies Info node: e.g. "(emacs)Top".
+;; (info-link INFO-NODE) ; ‘custom-manual’, but show link with the Info node name.
+;; (url-link URL)
+;; (emacs-commentary-link LIBRARY) ; Link to commentary section of LIBRARY.
+;; (emacs-library-link LIBRARY) ; Link to an Emacs Lisp LIBRARY file.
+;; (file-link FILE)
+;; (function-link FUNCTION)
+;; (variable-link VARIABLE)
+;; (custom-group-link GROUP)  ; Link to another GROUP.
+
+;;*** Features
 (setq desktop-dirname (file-name-concat no-littering-var-directory "desktop/")
       bookmark-default-file (file-name-concat no-littering-var-directory "bookmarks.el")
       tabspaces-session-file (file-name-concat no-littering-var-directory "tabsession.el"))
@@ -155,8 +236,8 @@
 (require 'dc-support)
 
 (defvar dc/eld-path (thread-last no-littering-etc-directory
-                               (expand-file-name "dc")
-                               (file-name-as-directory)) "TODO: doc.")
+                                 (expand-file-name "dc")
+                                 (file-name-as-directory)) "TODO: doc.")
 
 ;;*** dw/system-settings
 
@@ -172,7 +253,7 @@
       (if (boundp 'server-socket-dir)
           (expand-file-name "custom.el" server-socket-dir)
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-(load custom-file t)
+;; (load custom-file t)
 
 ;; ---------------------------------------------
 ;; garbage collection: gcmh.el
@@ -181,8 +262,8 @@
   :delight
   :init
   (setq gcmh-idle-delay 'auto
-	gcmh-idle-delay-factor 10                     
-	gcmh-high-cons-threshold (* 16 (expt 2 20)))
+	      gcmh-idle-delay-factor 10
+	      gcmh-high-cons-threshold (* 16 (expt 2 20)))
   ;; with depth -75 (early) ... doom loads on first frame
   ;; (add-hook 'server-after-make-frame-hook #'gcmh-mode -75)
   (add-hook 'emacs-startup-hook #'gcmh-mode 25))
@@ -214,7 +295,7 @@
   (setq which-key-idle-delay 2.0
         which-key-idle-secondary-delay 0.05
         which-key-lighter "│WK"
-	which-key-side-window-location 'bottom ;; 'top
+	      which-key-side-window-location 'bottom ;; 'top
         which-key-frame-max-height 20          ; default
         which-key-min-display-lines 8
         which-key-popup-type 'side-window ; default
@@ -252,6 +333,16 @@
 (use-package conf-mode :straight (:type built-in))
 
 ;;**** Eglot
+
+;; Configure c-mode to run ccls with podman.........
+;;
+;; https://git.sr.ht/~bkhl/dotfiles/tree/main/item/.emacs.d/configuration.org#L1009-1022
+;;
+;; and also go-ts-mode
+;;
+;; https://git.sr.ht/~bkhl/dotfiles/tree/main/item/.emacs.d/configuration.org#L1059-1073
+;;
+;; does this work?
 
 (setq dc/eglot-events-buffer-configs
       `((default . (:size 2000000 :format full))
@@ -432,24 +523,10 @@ Guix channel.")
   :custom
 
   (org-modules
-   '(org-id
-     ol-info
-     ol-man
-
-     ;; - https://fossies.org/linux/emacs/lisp/org/ol-bibtex.el
-     ;; - https://www.andy-roberts.net/res/writing/latex/bibentries.pdf
-     ol-bibtex
-     ol-doi
-     ol-gnus
-     org-crypt
-     org-protocol
-     org-notify
-     ox-extra)
+   '(org-id ol-info ol-man ol-bibtex ol-doi org-protocol org-notify ol-gnus org-crypt ox-extra)
    "For descriptions, M-x customize-variable org-modules")
 
-  (org-edit-src-content-indentation
-   0 "no effect when org-src-preserve-indentation")
-
+  (org-edit-src-content-indentation 0 "no effect when org-src-preserve-indentation")
   (org-src-fontify-natively t)
 
   ;; ====== org-babel ======= (move after reorganizing dc-org)
@@ -458,13 +535,14 @@ Guix channel.")
   (org-src-tab-acts-natively t)
 
   ;; default, works pretty well, may obviate the defadvice! below
-  (org-src-window-setup 'reorganize-frame)
+  ;; (org-src-window-setup 'reorganize-frame)
+  (org-src-window-setup 'split-window-below)
 
   ;; org-confirm-babel-evaluate nil
   (org-link-elisp-confirm-function 'y-or-n-p)
   (org-link-shell-confirm-function 'y-or-n-p)
   ;; =========================
-)
+  )
 
 (use-package org-contrib :straight t :after (org) :demand t
   :init
@@ -490,7 +568,7 @@ Guix channel.")
         (shell . t)
         ;;(rec . t) ;; GNU recutils
         ;;(jq . t)
-	;;(restclient . t)
+	      ;;(restclient . t)
         (python . t)))
 
 (defun dc/org-babel-do-load-languages ()
@@ -498,6 +576,25 @@ Guix channel.")
    'org-babel-load-languages
    dc/org-babel-load-languages))
 
+;; (defun dc/org-babel-add-load-language (langsym &optional obsym)
+;;   (if-let* ((langsym (bound-and-true-p langsym))
+;; 	    (langname (symbol-name langsym))
+;; 	    (obname (format "ob-%s" langname))
+;; 	    ;; TODO check usage of intern
+;; 	    (obsym (or obsym
+;; 		       (intern-soft langname)
+;; 		       (intern langname))))
+
+;;       ;; (let ((obadded? (memq org-babel-load-languages obsym))
+;;       ;; 	    (obloaded? (memq org-babel-load-languages obsym)))
+
+;;       ;; NOTE: would prefer a single source of truth (either dc/.. or
+;;       ;; org-babel-load-languages).
+
+;;       ;; (unless (memq org-babel-load-languages obsym) (add-to-list
+;;       ;; '))
+
+;;   ))
 
 ;;*** dc/aca paths
 
@@ -515,10 +612,10 @@ Guix channel.")
 
 (defvar dc/aca-doc-root (xdg-user-dir "DOCUMENTS") "TODO: doc dc/aca-doc-root")
 
- ;; for the 14 official types
- ;; + see 'org-bibtex-types
- ;; + or https://bibtex.eu/types/
- ;;
+;; for the 14 official types
+;; + see 'org-bibtex-types
+;; + or https://bibtex.eu/types/
+;;
 ;; + dc/aca-bibtex-types (list :article :book :techreport :manual)
 
 (setq-default
@@ -624,9 +721,9 @@ Guix channel.")
 
 (defun dc/yasnippet-template-default ()
   (let* ((tmpl-path (dc/emacs-etc "yasnippet/yasdefault")))
-	 (with-temp-buffer
-	   (insert-file-contents-literally (dc/emacs-etc "yasnippet/yasdefault"))
-	   (buffer-string))))
+	  (with-temp-buffer
+	    (insert-file-contents-literally (dc/emacs-etc "yasnippet/yasdefault"))
+	    (buffer-string))))
 
 (use-package yasnippet :straight t
   :init
@@ -637,7 +734,7 @@ Guix channel.")
 
 (use-package yasnippet-snippets :straight t
   :after yasnippet
-;;  :demand t
+  ;;  :demand t
   :hook
   ((prog-mode
     org-mode

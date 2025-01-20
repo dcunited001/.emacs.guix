@@ -202,7 +202,7 @@
 
 ;; nbarrientos/archive-rpm: simple and it helps.
 ;; I don't have enough exp to be sure of workflow support, but it helped a lot
-(use-package archive-rpm :straight t)
+(use-package archive-rpm :straight t :defer t)
 
 ;; Other straight packages
 ;; emacsattic/rpm: last updated 14 years ago, probably good but probably not current
@@ -286,7 +286,17 @@
 ;;*** SystemD
 
 ;; loads for buffers that match systemd-autoload-regexp
-(use-package systemd :straight (:type built-in) :defer t
+
+;; NOTE: systemd recipe won't do anything, since
+;; the lists of directives aren't inclued `straight-default-files-directive'
+
+(use-package systemd-mode :straight t :defer t ; nope: (:type built-in)
+  ;; skip the check
+  ;;   :config
+  ;; (if (and IS-LINUX (null dw/is-guix-system))
+  ;;     (add-hook 'systemd-mode-hook #'flycheck-mode))
+  )
+
   :config
   (if (and IS-LINUX (null dw/is-guix-system))
       (add-hook 'systemd-mode-hook #'flycheck-mode)))

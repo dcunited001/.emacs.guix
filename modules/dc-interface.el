@@ -484,8 +484,6 @@
 ;; pomm-audio-enabled t
 ;; pomm-audio-tick-enabled t
 
-;;*** Cursor
-
 ;;*** Pulse
 ;; TODO implement with pulse.el: https://blog.meain.io/2020/emacs-highlight-yanked/
 ;; https://protesilaos.com/emacs/pulsar
@@ -645,6 +643,10 @@
   :config
   (delete-selection-mode +1))
 
+;;*** Cursor
+(use-package mc :straight t :defer t)
+
+
 ;;**** Clipboard
 
 ;; TODO: ensure these variables do not change
@@ -660,7 +662,7 @@
   :demand t
   :init
   (setq-default select-enable-primary nil
-		select-enable-clipboard t))
+		            select-enable-clipboard t))
 
 ;; TODO: (setq kill-ring-max 25)
 

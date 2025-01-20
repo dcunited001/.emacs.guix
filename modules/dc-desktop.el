@@ -49,9 +49,9 @@
 ;; ䷅ -> ䷃
 ;; 23 -> 4 (oh no!)
 (use-package i-ching :straight t
-  :init
-  (setq i-ching-randomness-source 'pseudo
-	i-ching-divination-method 'yarrow-stalks))
+  :custom
+  (i-ching-randomness-source 'pseudo)
+	(i-ching-divination-method 'yarrow-stalks))
 
 ;;** Opening Files
 
@@ -69,7 +69,7 @@
                   "ogm" "ogg" "mkv"))
                "mpv"
                '(file))
-	 ;; Removed jpg because Telega was causing feh to be opened...
+	       ;; Removed jpg because Telega was causing feh to be opened...
          (list (openwith-make-extension-regexp
                 '("xbm" "pbm" "pgm" "ppm" "pnm"
                   "png" "gif" "bmp" "tif" "jpeg"))

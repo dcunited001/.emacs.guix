@@ -47,7 +47,9 @@
 ;;   (add-to-list dc/straight-built-in-pseudo-packages pkg))
 ;; =============================================
 
-(setq straight-use-package-by-default t)
+(setq straight-use-package-by-default t
+      use-package-enable-imenu-support t
+      use-package-compute-statistics t)
 
 ;;; -- Install Straight.el -----
 (unless (featurep 'straight)
